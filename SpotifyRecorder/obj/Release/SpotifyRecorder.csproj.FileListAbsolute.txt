@@ -1,0 +1,59 @@
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\libmp3lame.32.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\libmp3lame.64.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\EspionSpotify.exe.config
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\EspionSpotify.exe
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\EspionSpotify.pdb
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\NAudio.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\NAudio.Lame.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\bin\Release\NAudio.xml
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\EspionSpotify.Properties.Resources.resources
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\SpotifyRecorder.frmEspionSpotify.resources
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\SpotifyRecorder.csproj.GenerateResource.Cache
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\EspionSpotify.exe
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\EspionSpotify.pdb
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\SpotifyRecorder-1.0.3\SpotifyRecorder\obj\Release\SpotifyRecorder.csprojResolveAssemblyReference.cache
+E:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe.config
+E:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.exe
+E:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.pdb
+E:\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.32.dll
+E:\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.64.dll
+E:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe
+E:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.pdb
+E:\spotify espion\SpotifyRecorder\bin\Release\NAudio.dll
+E:\spotify espion\SpotifyRecorder\bin\Release\NAudio.Lame.dll
+E:\spotify espion\SpotifyRecorder\bin\Release\NAudio.xml
+E:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.Properties.Resources.resources
+E:\spotify espion\SpotifyRecorder\obj\Release\SpotifyRecorder.csproj.GenerateResource.Cache
+E:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.frmEspionSpotify.resources
+E:\spotify espion\SpotifyRecorder\obj\Release\SpotifyRecorder.csprojResolveAssemblyReference.cache
+F:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe.config
+F:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.exe
+F:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.pdb
+F:\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.32.dll
+F:\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.64.dll
+F:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe
+F:\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.pdb
+F:\spotify espion\SpotifyRecorder\bin\Release\NAudio.dll
+F:\spotify espion\SpotifyRecorder\bin\Release\NAudio.Lame.dll
+F:\spotify espion\SpotifyRecorder\bin\Release\NAudio.xml
+F:\spotify espion\SpotifyRecorder\obj\Release\SpotifyRecorder.csprojResolveAssemblyReference.cache
+F:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.Properties.Resources.resources
+F:\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.frmEspionSpotify.resources
+F:\spotify espion\SpotifyRecorder\obj\Release\SpotifyRecorder.csproj.GenerateResource.Cache
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.Properties.Resources.resources
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.frmEspionSpotify.resources
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\SpotifyRecorder.csproj.GenerateResource.Cache
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.32.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\libmp3lame.64.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe.config
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe.manifest
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.application
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.exe
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\EspionSpotify.pdb
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\NAudio.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\NAudio.Lame.dll
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\bin\Release\NAudio.xml
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.exe.manifest
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.application
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.exe
+C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\spotify espion\SpotifyRecorder\obj\Release\EspionSpotify.pdb
