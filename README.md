@@ -41,3 +41,4 @@ L'utilisation du navigateur Google Chrome est préférable pour un meilleur enre
 ## Techniqualités
 - .NET Framwork 4.0
 - NAudio et NAudio.Lame
+- last.fm API
