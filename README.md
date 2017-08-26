@@ -8,6 +8,8 @@ Le programme s'attache au processus de Spotify et enregistre le son provenant de
 ## Utilisation
 Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou une liste de lecture que vous aimez ou avez créée. Pour éviter de devoir attendre la fin de l'enregistrement, puisque le programme capture le son, lancez l'enregistrement la nuit et au matin tout sera terminé sans aucune publicité enregistrée.
 
+![image](https://user-images.githubusercontent.com/23088305/29743415-b9d24614-8a5f-11e7-93bb-98921b0c7b94.png)
+
 ## Fonctionnalités
 ### ...lors de la capture:
 - Ignore les publicités.
