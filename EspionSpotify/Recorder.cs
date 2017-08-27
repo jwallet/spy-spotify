@@ -60,7 +60,7 @@ namespace EspionSpotify
             if (Writer == null)
             {
                 _espionSpotifyForm.PrintStatusLine(
-                    "[!] Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit" +
+                    "//Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit" +
                     " être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration > Son > Propriétés > Avancés).");
                 return;
             }
@@ -96,8 +96,8 @@ namespace EspionSpotify
             if (Count >= _minTime) return;
 
             _espionSpotifyForm.PrintStatusLine(Count != -1
-                ? $"[!] Effacement de: {GetFileName(_path, _song, _format, false)} [<{_minTime}s]"
-                : $"[!] Effacement de: {GetFileName(_path, _song, _format, false)} [{Count}s]");
+                ? $"//Effacement de: {GetFileName(_path, _song, _format, false)} [<{_minTime}s]"
+                : $"//Effacement de: {GetFileName(_path, _song, _format, false)}");
 
             File.Delete(GetFileName(_path, _song, _format, true, true));
         }

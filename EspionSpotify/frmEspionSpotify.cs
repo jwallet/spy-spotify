@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -71,17 +72,38 @@ namespace EspionSpotify
       
         public void PrintStatusLine(string text)
         {
-            if(statusTextBox.InvokeRequired)
+            if(rtbLog.InvokeRequired)
             {
                 var del = new PrintStatusLineDelegate(PrintStatusLine);
-                statusTextBox.Invoke(del, text);
+                rtbLog.Invoke(del, text);
             }
             else
             {
-                var timeStr = DateTime.Now.ToString("HH:mm:ss");
-                statusTextBox.Text = statusTextBox.Text + $@"[{timeStr}] {text}" + Environment.NewLine;
-                statusTextBox.SelectionStart = statusTextBox.TextLength;
-                statusTextBox.ScrollToCaret();
+                var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
+                var alert = text[0] == '/';
+                var commercial = !alert && text.IndexOf(':') == 9;
+                
+                rtbLog.AppendText(timeStr);
+                if (!alert)
+                {
+                    var attrb = text.Substring(0, text.IndexOf(':'));
+                    var msg = text.Substring(text.IndexOf(':'), text.Length - text.IndexOf(':'));
+                    rtbLog.AppendText(attrb);
+                    rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
+                    rtbLog.SelectionColor = Color.DeepSkyBlue;
+                    rtbLog.AppendText(msg + Environment.NewLine);
+                    rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
+                    rtbLog.SelectionColor = commercial ? Color.White : Color.Tomato;
+                }
+                else
+                {
+                    rtbLog.AppendText(text + Environment.NewLine);
+                    rtbLog.Select(rtbLog.TextLength - text.Length - 1, text.Length);
+                    rtbLog.SelectionColor = Color.White;
+                }
+
+                rtbLog.SelectionStart = rtbLog.TextLength;
+                rtbLog.ScrollToCaret();
             }
         }
 
@@ -166,7 +188,7 @@ namespace EspionSpotify
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-            statusTextBox.Text = "";
+            rtbLog.Text = "";
         }
 
         private void dirButton_Click(object sender, EventArgs e)

@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Threading;
 using NAudio.CoreAudioApi;
 using static System.String;
 
@@ -8,7 +11,6 @@ namespace EspionSpotify
     {
         public MMDevice DefaultAudioEndPointDevice { get; set; }
         public SessionCollection SessionsDefaultAudioEndPointDevice { get; set; }
-
         public MMDeviceCollection AudioEndPointDevices { get; set; }
 
         public VolumeWin()
@@ -28,16 +30,15 @@ namespace EspionSpotify
                 DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (fNewVolume / 100);
         }
 
-        public void SetToHigh(bool bUnmute, string title, string spying)
+        public void SetToHigh(bool bUnmute, string title)
         {
             var processes = Process.GetProcesses();
+            const string spying = "Spotify";
 
             foreach (var process in processes)
             {
                 for (var i = 0; i < SessionsDefaultAudioEndPointDevice.Count; i++)
                 {
-                    if (spying != "Spotify" && spying != "chrome") continue;
-
                     if (process.ProcessName.Equals(spying) 
                         && !IsNullOrEmpty(process.MainWindowTitle) 
                         && !process.ProcessName.Equals(Process.GetCurrentProcess().ProcessName)

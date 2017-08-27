@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEspionSpotify));
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.statusTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.chkAddFolders = new System.Windows.Forms.CheckBox();
@@ -67,6 +66,7 @@
             this.clearButton = new System.Windows.Forms.Button();
             this.dirButton = new System.Windows.Forms.Button();
             this.recordButton = new System.Windows.Forms.Button();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
@@ -90,18 +90,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // statusTextBox
-            // 
-            this.statusTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusTextBox.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusTextBox.Location = new System.Drawing.Point(3, 171);
-            this.statusTextBox.Multiline = true;
-            this.statusTextBox.Name = "statusTextBox";
-            this.statusTextBox.ReadOnly = true;
-            this.statusTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.statusTextBox.Size = new System.Drawing.Size(784, 293);
-            this.statusTextBox.TabIndex = 25;
-            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.AutoSize = true;
@@ -113,7 +101,8 @@
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel2, 0, 4);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 5;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
@@ -121,7 +110,7 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(784, 162);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(790, 162);
             this.tableLayoutPanel6.TabIndex = 27;
             // 
             // tableLayoutPanel7
@@ -143,7 +132,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(778, 29);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(784, 29);
             this.tableLayoutPanel7.TabIndex = 0;
             // 
             // chkAddFolders
@@ -151,7 +140,7 @@
             this.chkAddFolders.AutoSize = true;
             this.chkAddFolders.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkAddFolders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkAddFolders.Location = new System.Drawing.Point(569, 4);
+            this.chkAddFolders.Location = new System.Drawing.Point(575, 4);
             this.chkAddFolders.Name = "chkAddFolders";
             this.chkAddFolders.Size = new System.Drawing.Size(102, 21);
             this.chkAddFolders.TabIndex = 32;
@@ -163,7 +152,7 @@
             // btnPath
             // 
             this.btnPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPath.Location = new System.Drawing.Point(506, 4);
+            this.btnPath.Location = new System.Drawing.Point(512, 4);
             this.btnPath.Name = "btnPath";
             this.btnPath.Size = new System.Drawing.Size(56, 21);
             this.btnPath.TabIndex = 27;
@@ -187,7 +176,7 @@
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPath.Location = new System.Drawing.Point(135, 4);
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(364, 20);
+            this.txtPath.Size = new System.Drawing.Size(370, 20);
             this.txtPath.TabIndex = 26;
             this.txtPath.DoubleClick += new System.EventHandler(this.directoryButton_Click);
             // 
@@ -198,7 +187,7 @@
             this.chkAddSeparator.Checked = true;
             this.chkAddSeparator.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAddSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkAddSeparator.Location = new System.Drawing.Point(678, 4);
+            this.chkAddSeparator.Location = new System.Drawing.Point(684, 4);
             this.chkAddSeparator.Name = "chkAddSeparator";
             this.chkAddSeparator.Size = new System.Drawing.Size(96, 21);
             this.chkAddSeparator.TabIndex = 29;
@@ -226,7 +215,7 @@
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(778, 29);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(784, 29);
             this.tableLayoutPanel8.TabIndex = 1;
             // 
             // cbBitRate
@@ -234,16 +223,16 @@
             this.cbBitRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cbBitRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBitRate.FormattingEnabled = true;
-            this.cbBitRate.Location = new System.Drawing.Point(479, 4);
+            this.cbBitRate.Location = new System.Drawing.Point(481, 4);
             this.cbBitRate.Name = "cbBitRate";
-            this.cbBitRate.Size = new System.Drawing.Size(295, 21);
+            this.cbBitRate.Size = new System.Drawing.Size(299, 21);
             this.cbBitRate.TabIndex = 3;
             // 
             // outputLabel
             // 
             this.outputLabel.AutoSize = true;
             this.outputLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputLabel.Location = new System.Drawing.Point(358, 1);
+            this.outputLabel.Location = new System.Drawing.Point(360, 1);
             this.outputLabel.Name = "outputLabel";
             this.outputLabel.Size = new System.Drawing.Size(114, 27);
             this.outputLabel.TabIndex = 3;
@@ -256,7 +245,7 @@
             this.rbWav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rbWav.Location = new System.Drawing.Point(196, 4);
             this.rbWav.Name = "rbWav";
-            this.rbWav.Size = new System.Drawing.Size(155, 21);
+            this.rbWav.Size = new System.Drawing.Size(157, 21);
             this.rbWav.TabIndex = 10;
             this.rbWav.Tag = "wav";
             this.rbWav.Text = "WAV";
@@ -313,14 +302,14 @@
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(778, 29);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(784, 29);
             this.tableLayoutPanel10.TabIndex = 3;
             // 
             // lblSoundCard
             // 
             this.lblSoundCard.AutoSize = true;
             this.lblSoundCard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSoundCard.Location = new System.Drawing.Point(706, 1);
+            this.lblSoundCard.Location = new System.Drawing.Point(712, 1);
             this.lblSoundCard.Name = "lblSoundCard";
             this.lblSoundCard.Size = new System.Drawing.Size(68, 27);
             this.lblSoundCard.TabIndex = 28;
@@ -343,10 +332,10 @@
             this.tbVolumeWin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbVolumeWin.Location = new System.Drawing.Point(468, 4);
+            this.tbVolumeWin.Location = new System.Drawing.Point(471, 4);
             this.tbVolumeWin.Maximum = 20;
             this.tbVolumeWin.Name = "tbVolumeWin";
-            this.tbVolumeWin.Size = new System.Drawing.Size(231, 21);
+            this.tbVolumeWin.Size = new System.Drawing.Size(234, 21);
             this.tbVolumeWin.TabIndex = 21;
             this.tbVolumeWin.Tag = "";
             this.tbVolumeWin.Scroll += new System.EventHandler(this.tbVolumeWin_Scroll);
@@ -355,7 +344,7 @@
             // 
             this.volumelabel.AutoSize = true;
             this.volumelabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.volumelabel.Location = new System.Drawing.Point(331, 1);
+            this.volumelabel.Location = new System.Drawing.Point(334, 1);
             this.volumelabel.Name = "volumelabel";
             this.volumelabel.Size = new System.Drawing.Size(89, 27);
             this.volumelabel.TabIndex = 10;
@@ -366,7 +355,7 @@
             // 
             this.lblVolume.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblVolume.AutoSize = true;
-            this.lblVolume.Location = new System.Drawing.Point(427, 8);
+            this.lblVolume.Location = new System.Drawing.Point(430, 8);
             this.lblVolume.Name = "lblVolume";
             this.lblVolume.Size = new System.Drawing.Size(33, 13);
             this.lblVolume.TabIndex = 9;
@@ -379,7 +368,7 @@
             this.tbMinTime.Location = new System.Drawing.Point(136, 4);
             this.tbMinTime.Maximum = 12;
             this.tbMinTime.Name = "tbMinTime";
-            this.tbMinTime.Size = new System.Drawing.Size(188, 21);
+            this.tbMinTime.Size = new System.Drawing.Size(191, 21);
             this.tbMinTime.TabIndex = 14;
             this.tbMinTime.Value = 3;
             this.tbMinTime.Scroll += new System.EventHandler(this.tbMinTime_Scroll);
@@ -397,26 +386,32 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Black;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.currentlyPlayingLabel, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 143);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 140);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(778, 16);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(790, 22);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 16);
+            this.label1.Size = new System.Drawing.Size(259, 22);
             this.label1.TabIndex = 0;
             this.label1.Text = "Présentement en lecture sur Spotify:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -425,10 +420,13 @@
             // 
             this.currentlyPlayingLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.currentlyPlayingLabel.AutoSize = true;
-            this.currentlyPlayingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentlyPlayingLabel.Location = new System.Drawing.Point(186, 1);
+            this.currentlyPlayingLabel.BackColor = System.Drawing.Color.Black;
+            this.currentlyPlayingLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.currentlyPlayingLabel.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.currentlyPlayingLabel.Location = new System.Drawing.Point(259, 4);
+            this.currentlyPlayingLabel.Margin = new System.Windows.Forms.Padding(0);
             this.currentlyPlayingLabel.Name = "currentlyPlayingLabel";
-            this.currentlyPlayingLabel.Size = new System.Drawing.Size(0, 13);
+            this.currentlyPlayingLabel.Size = new System.Drawing.Size(0, 14);
             this.currentlyPlayingLabel.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -449,7 +447,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(778, 29);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(784, 29);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
             // label2
@@ -518,8 +516,8 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.statusTextBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel11, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.rtbLog, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -527,6 +525,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(790, 517);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -583,7 +582,23 @@
             this.recordButton.UseVisualStyleBackColor = true;
             this.recordButton.Click += new System.EventHandler(this.recordButton_Click);
             // 
-            // frmEspionSpotify
+            // rtbLog
+            // 
+            this.rtbLog.BackColor = System.Drawing.Color.Black;
+            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbLog.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbLog.ForeColor = System.Drawing.Color.Silver;
+            this.rtbLog.Location = new System.Drawing.Point(0, 162);
+            this.rtbLog.Margin = new System.Windows.Forms.Padding(0);
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.ReadOnly = true;
+            this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbLog.Size = new System.Drawing.Size(790, 305);
+            this.rtbLog.TabIndex = 28;
+            this.rtbLog.Text = "";
+            // 
+            // FrmEspionSpotify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -619,7 +634,6 @@
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TextBox statusTextBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label lblSoundCard;
         private System.Windows.Forms.Label volumelabel;
@@ -654,6 +668,7 @@
         private System.Windows.Forms.NumericUpDown numTrack;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkCdNums;
+        private System.Windows.Forms.RichTextBox rtbLog;
     }
 }
 

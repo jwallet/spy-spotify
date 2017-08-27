@@ -40,3 +40,24 @@ C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\EspionSpotify
 C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\EspionSpotify\obj\Debug\EspionSpotify.exe
 C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\EspionSpotify\obj\Debug\EspionSpotify.pdb
 C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\EspionSpotify\obj\Debug\EspionSpotify.csprojResolveAssemblyReference.cache
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\EspionSpotify.exe.config
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.exe
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.pdb
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\libmp3lame.32.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\libmp3lame.64.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\EspionSpotify.exe.manifest
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\EspionSpotify.application
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\EspionSpotify.exe
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\EspionSpotify.pdb
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\NAudio.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\NAudio.Lame.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\PCLWebUtility.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\System.Net.Http.dll
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\NAudio.xml
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\bin\Debug\System.Net.Http.xml
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.Properties.Resources.resources
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.FrmEspionSpotify.resources
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.csproj.GenerateResource.Cache
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.exe.manifest
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.application
+C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\EspionSpotify\obj\Debug\EspionSpotify.csprojResolveAssemblyReference.cache
