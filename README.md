@@ -15,7 +15,7 @@ Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou un
 - Ignore les publicités.
 - Coupe le son des autres applications durant la session.
 - Capture le son avec une qualité audio prédéfinie.
-- Capture le son maximal de Spotify sans varier que le volume varie entre les enregistrements, même si le son de l'ordinateur est variant ou au plus bas (muêt).
+- Capture le son maximal de Spotify sans que le volume varie entre les enregistrements, même si le son de l'ordinateur est variant ou au plus bas (muêt).
 ### ...lors de l'enregistrement:
 - Ajout d'informations au nom du fichier (ex: Artiste - Titre.mp3)
 - Ajout d'informations pour la lecture du fichier : # track, titre, artiste, album, genre (si trouvé sur le web)
@@ -25,7 +25,7 @@ Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou un
 - Définir un dossier de sauvegarde
 - Définir le format audio MP3 ou WAV
 - Définir la qualité audio (basse à haute qualité)
-- Définir la durée minimale d'un enregistrement pour éliminer ceux trop courts ou lorsque vous sautez une chanson.
+- Définir la durée minimale d'un enregistrement pour éliminer ceux trop courts, lorsque vous sautez une chanson.
 - Ajouter le nom de l'artiste en tant que dossier au lieu de l'ajouter au nom du fichier `Artiste = Dossier [✓]`
 - Retirer les espace au nom du fichier `Sans_espaces [✓]`
 - Inscrire le numéro d'enregistrement actuel (compteur) [ * ](#note-pour-le-compteur):
@@ -33,7 +33,7 @@ Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou un
   - au lieu de la position CD (infos de lecture) `Remplacer le No de Track par le compteur [✓]`
 
 ## Note pour le compteur
-L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est utile lors que vous désirez concevoir un cd mp3 avec toutes les fichiers à la racine (sans dossiers) et que vous désirez que le lecteur mp3 (ex: lecteur de votre voiture) filtre l'ordre des chansons dans l'ordre que vous désirez les écouter, autrement l'ordre de ceux-ci pourrait être compromis.
+L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est utile si vous désirez concevoir un cd mp3 avec tous les fichiers à la racine (sans dossiers) et que le lecteur mp3 (ex: lecteur de votre voiture) filtre l'ordre des chansons dans l'ordre que vous désirez les écouter, autrement l'ordre de ceux-ci pourrait être compromis.
 
 ## Techniqualités
 - .NET Framwork 4.0
