@@ -59,5 +59,15 @@ namespace EspionSpotify.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Icon semblable à (Icône).
+        /// </summary>
+        internal static System.Drawing.Icon spytify {
+            get {
+                object obj = ResourceManager.GetObject("spytify", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

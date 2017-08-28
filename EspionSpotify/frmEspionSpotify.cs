@@ -90,16 +90,16 @@ namespace EspionSpotify
                     var msg = text.Substring(text.IndexOf(':'), text.Length - text.IndexOf(':'));
                     rtbLog.AppendText(attrb);
                     rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
-                    rtbLog.SelectionColor = Color.DeepSkyBlue;
+                    rtbLog.SelectionColor = Color.White;
                     rtbLog.AppendText(msg + Environment.NewLine);
                     rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                    rtbLog.SelectionColor = commercial ? Color.White : Color.Tomato;
+                    rtbLog.SelectionColor = commercial ? Color.White : Color.FromArgb(255, 20, 200, 80);
                 }
                 else
                 {
                     rtbLog.AppendText(text + Environment.NewLine);
                     rtbLog.Select(rtbLog.TextLength - text.Length - 1, text.Length);
-                    rtbLog.SelectionColor = Color.White;
+                    rtbLog.SelectionColor = Color.Silver;
                 }
 
                 rtbLog.SelectionStart = rtbLog.TextLength;

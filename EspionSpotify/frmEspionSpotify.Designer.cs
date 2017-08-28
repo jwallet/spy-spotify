@@ -37,8 +37,8 @@
             this.chkAddFolders = new System.Windows.Forms.CheckBox();
             this.btnPath = new System.Windows.Forms.Button();
             this.directoryLabel = new System.Windows.Forms.Label();
-            this.txtPath = new System.Windows.Forms.TextBox();
             this.chkAddSeparator = new System.Windows.Forms.CheckBox();
+            this.txtPath = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.cbBitRate = new System.Windows.Forms.ComboBox();
             this.outputLabel = new System.Windows.Forms.Label();
@@ -125,8 +125,8 @@
             this.tableLayoutPanel7.Controls.Add(this.chkAddFolders, 3, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnPath, 2, 0);
             this.tableLayoutPanel7.Controls.Add(this.directoryLabel, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.txtPath, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.chkAddSeparator, 4, 0);
+            this.tableLayoutPanel7.Controls.Add(this.txtPath, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -171,15 +171,6 @@
             this.directoryLabel.Text = "Dossier de sauvegarde:";
             this.directoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtPath
-            // 
-            this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPath.Location = new System.Drawing.Point(135, 4);
-            this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(370, 20);
-            this.txtPath.TabIndex = 26;
-            this.txtPath.DoubleClick += new System.EventHandler(this.directoryButton_Click);
-            // 
             // chkAddSeparator
             // 
             this.chkAddSeparator.AutoSize = true;
@@ -195,6 +186,15 @@
             this.chkAddSeparator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkAddSeparator.UseVisualStyleBackColor = true;
             this.chkAddSeparator.CheckedChanged += new System.EventHandler(this.cbAddSeparator_CheckedChanged);
+            // 
+            // txtPath
+            // 
+            this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPath.Location = new System.Drawing.Point(135, 4);
+            this.txtPath.Name = "txtPath";
+            this.txtPath.Size = new System.Drawing.Size(370, 20);
+            this.txtPath.TabIndex = 26;
+            this.txtPath.DoubleClick += new System.EventHandler(this.directoryButton_Click);
             // 
             // tableLayoutPanel8
             // 
@@ -422,7 +422,7 @@
             this.currentlyPlayingLabel.AutoSize = true;
             this.currentlyPlayingLabel.BackColor = System.Drawing.Color.Black;
             this.currentlyPlayingLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentlyPlayingLabel.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.currentlyPlayingLabel.ForeColor = System.Drawing.Color.SpringGreen;
             this.currentlyPlayingLabel.Location = new System.Drawing.Point(259, 4);
             this.currentlyPlayingLabel.Margin = new System.Windows.Forms.Padding(0);
             this.currentlyPlayingLabel.Name = "currentlyPlayingLabel";
