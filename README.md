@@ -1,5 +1,5 @@
-# Espion Spotify
-### Enregistrez Spotify durant sa lecture
+![image](https://user-images.githubusercontent.com/23088305/29755367-ddfe7a8e-8b64-11e7-8ca4-a0ae18fcb41b.png)
+### Espion Spotify: Enregistrez Spotify durant sa lecture
 Fonctionne sous Windows seulement (nécessitant [.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851)) et sous l'application de Spotify.
 
 ## Comment ça fonctionne ?
@@ -39,3 +39,5 @@ L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est util
 - .NET Framwork 4.0
 - NAudio et NAudio.Lame
 - last.fm API
+
+[*](https://user-images.githubusercontent.com/23088305/29755382-2a413cba-8b65-11e7-8e2a-affae2e68c2e.png)
