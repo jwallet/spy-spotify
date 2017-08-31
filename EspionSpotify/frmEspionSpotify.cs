@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
 using EspionSpotify.Properties;
+using MetroFramework;
 using MetroFramework.Forms;
 using NAudio.Lame;
 
 namespace EspionSpotify
 {
-    public partial class FrmEspionSpotify : MetroForm
+    public sealed partial class FrmEspionSpotify : MetroForm
     {
         private readonly VolumeWin _sound;
         private Watcher _watcher;
@@ -21,10 +23,15 @@ namespace EspionSpotify
         private bool _bCdTrack;
         private bool _bNumFile;
         private int _num;
+        public ResourceManager Rm;
 
         public FrmEspionSpotify()
         {
+            SuspendLayout();
             InitializeComponent();
+
+            Rm = new ResourceManager(typeof(english));
+            BackImage = Resources.spytify_logo;
 
             if (Settings.Default.Directory == "")
             {
@@ -40,7 +47,11 @@ namespace EspionSpotify
             _bNumFile = Settings.Default.AddNumsInfrontFile;
             _num = 1;
 
+            var indexLanguage = Settings.Default.Language;
+            var indexBitRate = Settings.Default.Bitrate;
+
             rbMp3.Checked = (Settings.Default.Format == 0);
+            rbWav.Checked = (Settings.Default.Format == 1);
             tbMinTime.Value = Settings.Default.MinLength / 5;
             tgAddSeparators.Checked = Settings.Default.AddSeparators;
             tgNumTracks.Checked = Settings.Default.AddNumsAsTrack;
@@ -49,43 +60,70 @@ namespace EspionSpotify
             txtPath.Text = Settings.Default.Directory;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
-            tip.SetToolTip(lnkClear, "Effacer l'historique");
-            tip.SetToolTip(lnkSpy, "Débuter l'espionnage");
-            tip.SetToolTip(lnkDirectory, "Ouvrir le répertoire de sauvegarde");
-            tip.SetToolTip(lnkPath, "Parcourir");
+            var language = (LanguageType)indexLanguage;
+            SetLanguage(language);
+
+            cbBitRate.SelectedIndex = indexBitRate;
+            cbLanguage.SelectedIndex = indexLanguage;
+
+            _sound = new VolumeWin();
+
+            tbVolumeWin.Value = _sound.DefaultAudioDeviceVolume;
+            lblSoundCard.Text = _sound.DefaultAudioEndPointDevice.FriendlyName;
+            lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
+
+            ResumeLayout();
+        }
+
+        private void SetLanguage(LanguageType l)
+        {
+            if (l == LanguageType.Fr)
+            {
+                Rm = new ResourceManager(typeof(french));
+                BackImage = Resources.espion_spotify_logo;
+            }
+
+            tabRecord.Text = Rm.GetString("tabRecord");
+            tabSettings.Text = Rm.GetString("tabSettings");
+            lblPath.Text = Rm.GetString("lblPath");
+            lblBitRate.Text = Rm.GetString("lblBitRate");
+            lblFormat.Text = Rm.GetString("lblFormat");
+            lblMinLength.Text = Rm.GetString("lblMinLength");
+            lblCustomize.Text = Rm.GetString("lblCustomize");
+            lblLanguage.Text = Rm.GetString("lblLanguage");
+            lblAddFolders.Text = Rm.GetString("lblAddFolders");
+            lblAddSeparators.Text = Rm.GetString("lblAddSeparators");
+            lblNumFiles.Text = Rm.GetString("lblNumFiles");
+            lblNumTracks.Text = Rm.GetString("lblNumTracks");
+            lblRecordingNum.Text = Rm.GetString("lblRecordingNum");
+
+            tip.SetToolTip(lnkClear, Rm.GetString("tipClear"));
+            tip.SetToolTip(lnkSpy, Rm.GetString("tipStartSpying"));
+            tip.SetToolTip(lnkDirectory, Rm.GetString("tipDirectory"));
+            tip.SetToolTip(lnkPath, Rm.GetString("tipPath"));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, "128kbps"},
-                {LAMEPreset.ABR_160, "160kbps (Spotify Free)"},
-                {LAMEPreset.ABR_256, "256kbps"},
-                {LAMEPreset.ABR_320, "320kbps Haute qualité (Spotify Premium)"}
+                {LAMEPreset.ABR_128, Rm.GetString("cbOptBitRate128")},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString("cbOptBitRateSpotifyFree"), Rm.GetString("cbOptBitRate160"))},
+                {LAMEPreset.ABR_256, Rm.GetString("cbOptBitRate256")},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString("cbOptBitRateSpotifyPremium"), Rm.GetString("cbOptBitRate320"))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
             cbBitRate.DisplayMember = "Value";
             cbBitRate.ValueMember = "Key";
 
-            cbBitRate.SelectedIndex = Settings.Default.Bitrate;
-            
-            _sound = new VolumeWin();
+            var langs = new Dictionary<LanguageType, string>
+            {
+                {LanguageType.En, Rm.GetString("cbOptLangEn")},
+                {LanguageType.Fr, Rm.GetString("cbOptLangFr")}
+            };
 
-            tbVolumeWin.Value = _sound.DefaultAudioDeviceVolume;
-            lblSoundCard.Text = _sound.DefaultAudioEndPointDevice.FriendlyName;
-            lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
-        }
+            cbLanguage.DataSource = new BindingSource(langs, null);
+            cbLanguage.DisplayMember = "Value";
+            cbLanguage.ValueMember = "Key";
 
-        private void SaveSettings()
-        {
-            Settings.Default.Directory = folderBrowserDialog.SelectedPath;
-            Settings.Default.MinLength = tbMinTime.Value * 5;
-            Settings.Default.Format = rbWav.Checked ? 1 : 0;
-            Settings.Default.AddSeparators = tgAddSeparators.Checked;
-            Settings.Default.AddNumsAsTrack = tgNumTracks.Checked;
-            Settings.Default.AddNumsInfrontFile = tgNumFiles.Checked;
-            Settings.Default.AddFolders = tgAddFolders.Checked;
-            Settings.Default.Bitrate = cbBitRate.SelectedIndex;
-            Settings.Default.Save();
         }
 
         public void UpdateNum(int num)
@@ -147,7 +185,7 @@ namespace EspionSpotify
             {
                 var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
                 var alert = text[0] == '/';
-                var commercial = !alert && text.IndexOf(':') == 9;
+                var commercial = !alert && text.StartsWith(Rm.GetString("varAd"));
                 
                 rtbLog.AppendText(timeStr);
                 if (!alert)
@@ -173,8 +211,6 @@ namespace EspionSpotify
 
         private void StartRecording()
         {
-            SaveSettings();
-
             var bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
 
             _watcher = new Watcher(this, txtPath.Text, bitrate, _formatValue, _sound, _minTime, 
@@ -183,7 +219,7 @@ namespace EspionSpotify
             var watcherThread = new Thread(_watcher.Run);
             watcherThread.Start();
 
-            tip.SetToolTip(lnkSpy, "Arrêter l'espionnage");
+            tip.SetToolTip(lnkSpy, Rm.GetString("tipStopSying"));
             tabSettings.Enabled = false;
             timer1.Start();
         }
@@ -192,7 +228,7 @@ namespace EspionSpotify
         {
             Watcher.Running = false;
 
-            tip.SetToolTip(lnkSpy, "Débuter l'espionnage");
+            tip.SetToolTip(lnkSpy, Rm.GetString("tipStartSpying"));
             tabSettings.Enabled = true;
             timer1.Stop();
         }
@@ -201,11 +237,11 @@ namespace EspionSpotify
         {
             if (Directory.Exists(txtPath.Text)) return true;
 
-            MessageBox.Show(
-                @"Le répertoire de sauvegarde sélectionné n'existe pas.",
-                @"Répertoire invalide",
+            MetroMessageBox.Show(this,
+                Rm.GetString("msgBodyPathNotFound"),
+                Rm.GetString("msgTitlePathNotFound"),
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBoxIcon.Question);
 
             return false;
         }
@@ -242,37 +278,52 @@ namespace EspionSpotify
         {
             var rb = sender as RadioButton;
             _formatValue = rb != null && rb.Tag.ToString() == "mp3" ? Recorder.Format.Mp3 : Recorder.Format.Wav;
+            Settings.Default.Format = (rbMp3.Checked ? 0 : 1);
+            Settings.Default.Save();
         }
 
         private void tgAddFolders_CheckedChanged(object sender, EventArgs e)
         {
             _strucDossiers = tgAddFolders.Checked;
+            Settings.Default.AddFolders = tgAddFolders.Checked;
+            Settings.Default.Save();
         }
 
         private void tgAddSeparators_CheckedChanged(object sender, EventArgs e)
         {
             _charSeparator = tgAddSeparators.Checked ? "_" : " ";
+            Settings.Default.AddSeparators = tgAddSeparators.Checked;
+            Settings.Default.Save();
         }
 
         private void tgNumFiles_CheckedChanged(object sender, EventArgs e)
         {
             _bNumFile = tgNumFiles.Checked;
+            Settings.Default.AddNumsInfrontFile = tgNumFiles.Checked;
+            Settings.Default.Save();
         }
 
         private void frmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Watcher.Ready) return;
             e.Cancel = true;
-            MessageBox.Show(
-                @"Veuillez arrêter l'écoute avant de quitter l'espion.",
-                @"Écoute en cours",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+            if (MetroMessageBox.Show(this,
+                    Rm.GetString("msgBodyCantQuit"),
+                    Rm.GetString("msgTitleCantQuit"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Watcher.Running = false;
+                Thread.Sleep(1000);
+                Close();
+            };
         }
 
         private void tgNumTracks_CheckedChanged(object sender, EventArgs e)
         {
             _bCdTrack = tgNumTracks.Checked;
+            Settings.Default.AddNumsAsTrack = tgNumTracks.Checked;
+            Settings.Default.Save();
         }
 
         private void lblNum_TextChanged(object sender, EventArgs e)
@@ -326,6 +377,8 @@ namespace EspionSpotify
             var min = (_minTime / 60);
             var sec = (_minTime % 60);
             lblMinTime.Text = min + @":" + sec.ToString("00");
+            Settings.Default.MinLength = tbMinTime.Value * 5;
+            Settings.Default.Save();
         }
 
         private void tbVolumeWin_ValueChanged(object sender, EventArgs e)
@@ -356,6 +409,24 @@ namespace EspionSpotify
         {
             var ctrl = (Control) sender;
             ctrl.Focus();
+        }
+
+        private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.Language = cbLanguage.SelectedIndex;
+            Settings.Default.Save();
+        }
+
+        private void txtPath_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.Directory = folderBrowserDialog.SelectedPath;
+            Settings.Default.Save();
+        }
+
+        private void cbBitRate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.Bitrate = cbBitRate.SelectedIndex;
+            Settings.Default.Save();
         }
     }
 }

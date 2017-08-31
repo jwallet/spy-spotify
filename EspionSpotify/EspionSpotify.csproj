@@ -11,6 +11,21 @@
     <AssemblyName>EspionSpotify</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publier\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -111,12 +126,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="english.Designer.cs">
+      <DependentUpon>english.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="french.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>french.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageType.cs" />
     <Compile Include="normalize.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Recorder.cs" />
     <Compile Include="frmEspionSpotify.cs">
@@ -129,6 +156,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VolumeWin.cs" />
     <Compile Include="Watcher.cs" />
+    <EmbeddedResource Include="english.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>english.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="french.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>french.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -136,6 +171,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEspionSpotify.resx">
       <DependentUpon>frmEspionSpotify.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -155,12 +191,12 @@
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>True</Install>
+      <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>True</Install>
+      <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +211,6 @@
     <None Include="Resources\voldown.gif" />
     <None Include="Resources\pause.gif" />
     <None Include="Resources\clear.gif" />
-    <None Include="Resources\volume.gif" />
     <None Include="Resources\plus.gif" />
     <None Include="Resources\play.gif" />
     <None Include="Resources\on.gif" />

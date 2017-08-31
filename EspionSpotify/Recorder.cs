@@ -21,7 +21,7 @@ namespace EspionSpotify
         private readonly bool _strucDossiers;
         private readonly int _compteur;
         private readonly bool _bCdTrack;
-        private readonly FrmEspionSpotify _espionSpotifyForm;
+        private readonly FrmEspionSpotify _form;
         private readonly Format _format;
         private readonly Song _song;
         public WasapiLoopbackCapture WaveIn;
@@ -37,7 +37,7 @@ namespace EspionSpotify
             Song song, int minTime, bool strucDossiers, string charSeparator, bool bCdTrack, int compteur)
         {
             SongGotDeleted = false;
-            _espionSpotifyForm = espionSpotifyForm;
+            _form = espionSpotifyForm;
             _path = path;
             _bitrate = bitrate;
             _format = format;
@@ -59,16 +59,14 @@ namespace EspionSpotify
 
             if (Writer == null)
             {
-                _espionSpotifyForm.WriteIntoConsole(
-                    "//Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit" +
-                    " être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration > Son > Propriétés > Avancés).");
+                _form.WriteIntoConsole(_form.Rm.GetString("logWriterIsNull"));
                 return;
             }
 
             WaveIn.StartRecording();
 
             Thread.Sleep(400);
-            _espionSpotifyForm.WriteIntoConsole($"Enregistrement de: {GetFileName(_path, _song, _format, false)}");
+            _form.WriteIntoConsole(string.Format(_form.Rm.GetString("logRecording"), GetFileName(_path, _song, _format, false)));
 
             while (Running)
             {
@@ -95,9 +93,11 @@ namespace EspionSpotify
 
             if (Count >= _minTime) return;
 
-            _espionSpotifyForm.WriteIntoConsole(Count != -1
-                ? $"//Effacement de: {GetFileName(_path, _song, _format, false)} [<{_minTime}s]"
-                : $"//Effacement de: {GetFileName(_path, _song, _format, false)}");
+            _form.WriteIntoConsole(Count != -1
+                ? string.Format(_form.Rm.GetString("logDeletingTooShort"),
+                    GetFileName(_path, _song, _format, false), _minTime)
+                : string.Format(_form.Rm.GetString("logDeleting"),
+                    GetFileName(_path, _song, _format, false)));
 
             File.Delete(GetFileName(_path, _song, _format, true, true));
         }

@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cbOptBitRate128" xml:space="preserve">
+    <value>128kbps</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptBitRate160" xml:space="preserve">
+    <value>160kbps</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptBitRate256" xml:space="preserve">
+    <value>256kbps</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptBitRate320" xml:space="preserve">
+    <value>320kbps</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
+    <value>{0} (Spotify Free)</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
+    <value>{0} Haute qualité (Spotify Premium)</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptLangEn" xml:space="preserve">
+    <value>English</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbOptLangFr" xml:space="preserve">
+    <value>Français</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAddFolders" xml:space="preserve">
+    <value>Regrouper les chansons d'un même artiste dans un dossier au nom de l'artiste</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAddSeparators" xml:space="preserve">
+    <value>Remplacer les espaces par des underscores "_" dans le nom des fichiers sauvegardés</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblBitRate" xml:space="preserve">
+    <value>Qualité audio (Bitrate):</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblCustomize" xml:space="preserve">
+    <value>Personnaliser:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblFormat" xml:space="preserve">
+    <value>Format audio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblLanguage" xml:space="preserve">
+    <value>Langage:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinLength" xml:space="preserve">
+    <value>Durée minimale:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumFiles" xml:space="preserve">
+    <value>Inscrire au début du nom des fichiers enregistrés l'ordre d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumTracks" xml:space="preserve">
+    <value>Remplacer le numéro de position cd (album track) par l'ordre d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblPath" xml:space="preserve">
+    <value>Dossier de sauvegarde:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingNum" xml:space="preserve">
+    <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logCommercialBreak" xml:space="preserve">
+    <value>Publicité: {0}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logDeleting" xml:space="preserve">
+    <value>//Effacement de: {0}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logDeletingTooShort" xml:space="preserve">
+    <value>//Effacement de: {0} [&lt; {1}s]</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecording" xml:space="preserve">
+    <value>Enregistrement de: {0}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyIsClosed" xml:space="preserve">
+    <value>//Spotify est fermé</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyNotRunning" xml:space="preserve">
+    <value>//Veuillez démarrer l\'application Spotify</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStarting" xml:space="preserve">
+    <value>//Début de l'espionnage</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStoping" xml:space="preserve">
+    <value>//Fin de l'espionnage</value>
+    <comment>console</comment>
+  </data>
+  <data name="logWaiting" xml:space="preserve">
+    <value>//En attente du prochain titre...</value>
+    <comment>console</comment>
+  </data>
+  <data name="logWriterIsNull" xml:space="preserve">
+    <value>//Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
+    <comment>console</comment>
+  </data>
+  <data name="msgBodyCantQuit" xml:space="preserve">
+    <value>Voulez-vous quand même quitter?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgBodyPathNotFound" xml:space="preserve">
+    <value>Le répertoire de sauvegarde sélectionné n'existe pas, sélectionner un autre.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitleCantQuit" xml:space="preserve">
+    <value>Espionnage Spotify en cours</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathNotFound" xml:space="preserve">
+    <value>Répertoire invalide</value>
+    <comment>message</comment>
+  </data>
+  <data name="tabRecord" xml:space="preserve">
+    <value>Espion</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tabSettings" xml:space="preserve">
+    <value>Paramètres</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipClear" xml:space="preserve">
+    <value>Effacer l'historique</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipDirectory" xml:space="preserve">
+    <value>Ouvrir le répertoire de sauvegarde</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipPath" xml:space="preserve">
+    <value>Parcourir</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipStartSpying" xml:space="preserve">
+    <value>Débuter l'espionnage</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipStopSying" xml:space="preserve">
+    <value>Arrêter l'espionnage</value>
+    <comment>interface</comment>
+  </data>
+  <data name="varAd" xml:space="preserve">
+    <value>Pub</value>
+    <comment>code</comment>
+  </data>
+</root>

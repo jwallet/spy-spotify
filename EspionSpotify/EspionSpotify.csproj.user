@@ -3,5 +3,13 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
     <ProjectView>ProjectFiles</ProjectView>
+    <PublishUrlHistory>publier\</PublishUrlHistory>
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>fr-FR</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
 </Project>
