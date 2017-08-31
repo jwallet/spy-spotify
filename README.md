@@ -1,5 +1,5 @@
-[*](https://user-images.githubusercontent.com/23088305/29756526-a9c9b45a-8b72-11e7-8f8d-3d6dfe479b5e.png)
-![image](https://user-images.githubusercontent.com/23088305/29756511-90ec7f12-8b72-11e7-9712-c6e08cc918e3.png)
+[*](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)
+![logo-fr](https://user-images.githubusercontent.com/23088305/29906217-7169fd92-8de1-11e7-8fa6-2183ee7b8e1c.png)
 
 ### Espion Spotify: Enregistrez Spotify durant sa lecture
 Fonctionne sous Windows seulement (nécessitant [.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851)) et sous l'application de Spotify. 
