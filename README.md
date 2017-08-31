@@ -44,8 +44,8 @@ Adding the recording order number to files `07_Artiste_-_Titre.mp3` is useful if
 - NAudio et NAudio.Lame
 - last.fm API
 
-## Download
-### [Download](https://github.com/jwallet/Espion-Spotify/releases)
+
+
 
 
 ![logo-fr](https://user-images.githubusercontent.com/23088305/29906217-7169fd92-8de1-11e7-8fa6-2183ee7b8e1c.png)
@@ -94,5 +94,5 @@ L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est util
 - NAudio et NAudio.Lame
 - last.fm API
 
-## Télécharger
-### [Télécharger](https://github.com/jwallet/Espion-Spotify/releases)
+## Download / Télécharger
+### [Download / Télécharger](https://github.com/jwallet/Espion-Spotify/releases)
