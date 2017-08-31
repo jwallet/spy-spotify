@@ -3,4 +3,5 @@
   &lt;Assembly Path="C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\packages\NAudio.Lame.1.0.5\lib\net20\NAudio.Lame.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\w1z1k\Documents\Visual Studio 2013\Projects\EspionSpotify\packages\NAudio.1.8.2\lib\net35\NAudio.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Windows\Microsoft.NET\Framework\v4.0.30319\System.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

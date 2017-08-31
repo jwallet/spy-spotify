@@ -37,7 +37,7 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int Bitrate {
             get {
                 return ((int)(this["Bitrate"]));
@@ -56,6 +56,66 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["Format"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int MinLength {
+            get {
+                return ((int)(this["MinLength"]));
+            }
+            set {
+                this["MinLength"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddFolders {
+            get {
+                return ((bool)(this["AddFolders"]));
+            }
+            set {
+                this["AddFolders"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddSeparators {
+            get {
+                return ((bool)(this["AddSeparators"]));
+            }
+            set {
+                this["AddSeparators"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddNumsInfrontFile {
+            get {
+                return ((bool)(this["AddNumsInfrontFile"]));
+            }
+            set {
+                this["AddNumsInfrontFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddNumsAsTrack {
+            get {
+                return ((bool)(this["AddNumsAsTrack"]));
+            }
+            set {
+                this["AddNumsAsTrack"] = value;
             }
         }
     }

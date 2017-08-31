@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using NAudio.CoreAudioApi;
 using NAudio.Lame;
 
 namespace EspionSpotify
@@ -16,7 +17,7 @@ namespace EspionSpotify
         private Song _lastSong;
         private Song _currentSong;
 
-        private readonly FrmEspionSpotify _espionSpotifyForm;
+        private readonly FrmEspionSpotify _form;
         private readonly LAMEPreset _bitrate;
         private readonly Recorder.Format _format;
         private readonly Process _process2Spy;
@@ -31,6 +32,7 @@ namespace EspionSpotify
 
         private bool _bWait;
         private bool _bOnCommercialBreak;
+        private bool _bSpotifyPlayIcon;
         private string _lastTitle;
         private string _title;
 
@@ -43,15 +45,6 @@ namespace EspionSpotify
         private bool NewSongIsPlaying => _currentSong != null && !_currentSong.Equals(_lastSong);
         private bool SpotifyClosedOrCrashed => _currentSong == null && _title == null;
 
-        private static bool SoundDetected
-        {
-            get
-            {
-                Thread.Sleep(500);
-                return (int)(new VolumeWin().DefaultAudioEndPointDevice.AudioMeterInformation.MasterPeakValue * 100) > 0;
-            }
-        }
-
         public Watcher(FrmEspionSpotify espionSpotifyForm, string path, LAMEPreset bitrate,
             Recorder.Format format, VolumeWin sound, int minTime, bool strucDossiers, 
             string charSeparator, bool bCdTrack, bool bNumFile, int cdNumTrack)
@@ -59,7 +52,7 @@ namespace EspionSpotify
             if (path == null) path = "";
 
             _titleSeperators = new [] {" - "};
-            _espionSpotifyForm = espionSpotifyForm;
+            _form = espionSpotifyForm;
             _path = path;
             _bitrate = bitrate;
             _format = format;
@@ -80,7 +73,7 @@ namespace EspionSpotify
             Ready = false;
             Running = true;
 
-            _espionSpotifyForm.PrintStatusLine("//Début de l\'espionnage.");
+            _form.WriteIntoConsole("//Début de l\'espionnage.");
 
             SpotifyStatusBeforeSpying();
 
@@ -93,31 +86,38 @@ namespace EspionSpotify
                 }
                 else
                 {
-                    StartRecordingSpotify();
+                    RecordSpotify();
                 }
             }
 
             if (_recorder != null) DoIKeepLastSong(true);
 
-            _espionSpotifyForm.PrintStatusLine("//Fin de l\'espionnage.");
-            _espionSpotifyForm.PrintCurrentlyPlaying("");
+            _form.WriteIntoConsole("//Fin de l\'espionnage.");
+            _form.UpdateStartButton();
+            _form.UpdatePlayingTitle("Spotify");
             Ready = true;
 
             _sound.SetToHigh(!Unmute, _title);
+        }
+
+        private static bool SoundDetected()
+        {
+            var vol = new VolumeWin();
+            return vol.DefaultAudioEndPointDevice.AudioMeterInformation.MasterPeakValue * 1000 > 0;
         }
 
         private void SpotifyStatusBeforeSpying()
         {
             if (_title == null)
             {
-                _espionSpotifyForm.PrintStatusLine("//Veuillez démarrer l\'application Spotify.");
+                _form.WriteIntoConsole("//Veuillez démarrer l\'application Spotify.");
                 Running = false;
             }
             else
             {
                 if (_title != "Spotify")
                 {
-                    _espionSpotifyForm.PrintStatusLine("//En attente du prochain titre...");
+                    _form.WriteIntoConsole("//En attente du prochain titre...");
                     _bWait = true;
                 }
                 else
@@ -136,23 +136,36 @@ namespace EspionSpotify
 
                 if (_title != _lastTitle) _bWait = false;
 
+                if (_bOnCommercialBreak)
+                {
+                    _bOnCommercialBreak = false;
+                    Thread.Sleep(500);
+
+                    if (SoundDetected())
+                    {
+                        _form.WriteIntoConsole($"Publicité: {_title}");
+                    }
+                }
+
                 Thread.Sleep(20);
             }
         }
 
-        private void StartRecordingSpotify()
+        private void RecordSpotify()
         {
             _title = GetTitle(_process2Spy);
             _currentSong = GetSong(_title);
 
             if (CommercialOrNothingPlays)
             {
+                _bOnCommercialBreak = true;
                 _lastSong = null;
                 DoIKeepLastSong(true, true);
 
-                if (SoundDetected)
+                if (_bSpotifyPlayIcon)
                 {
-                    SpotifyOnCommercialBreak();
+                    _bSpotifyPlayIcon = false;
+                    _form.UpdateIconSpotify(true);
                 }
             }
 
@@ -160,12 +173,17 @@ namespace EspionSpotify
             {
                 _lastSong = _currentSong;
 
-                if (_bOnCommercialBreak) SpotifyLeftCommercialBreak();
+                if (!_bSpotifyPlayIcon)
+                {
+                    _bSpotifyPlayIcon = true;
+                    _form.UpdateIconSpotify();
+                }
+
                 if (_recorder != null) DoIKeepLastSong();
 
                 UpdateNum();
 
-                _recorder = new Recorder(_espionSpotifyForm, _path, _bitrate, _format, _currentSong, _minTime,
+                _recorder = new Recorder(_form, _path, _bitrate, _format, _currentSong, _minTime,
                     _strucDossiers, _charSeparator, _bCdTrack, NumTrack);
 
                 var recorderThread = new Thread(_recorder.Run);
@@ -176,7 +194,7 @@ namespace EspionSpotify
 
             if (SpotifyClosedOrCrashed)
             {
-                _espionSpotifyForm.PrintStatusLine("//Spotify est fermé.");
+                _form.WriteIntoConsole("//Spotify est fermé.");
 
                 if (_recorder != null)
                 {
@@ -206,20 +224,7 @@ namespace EspionSpotify
             if (CountSecs < _minTime) NumTrack--;
 
             NumTrack++;
-            _espionSpotifyForm.UpdateCdTrackNum(NumTrack);
-        }
-
-        private void SpotifyOnCommercialBreak()
-        {
-            _espionSpotifyForm.PrintStatusLine($"Publicité: {_title}");
-            _bOnCommercialBreak = true;
-            //_sound.DefaultAudioDeviceVolume = (int)(_sound.DefaultAudioDeviceVolume * 0.5);
-        }
-
-        private void SpotifyLeftCommercialBreak()
-        {
-            _bOnCommercialBreak = false;
-            //_sound.DefaultAudioDeviceVolume = (int)(_sound.DefaultAudioDeviceVolume * 2);
+            _form.UpdateNum(NumTrack);
         }
 
         private string GetTitle(Process process2Spy)
@@ -229,7 +234,7 @@ namespace EspionSpotify
             if (process == null) return null;
             
             var title = process.MainWindowTitle;
-            _espionSpotifyForm.PrintCurrentlyPlaying(title != "Spotify" ? title : "");
+            _form.UpdatePlayingTitle(title);
 
             return title;
         }

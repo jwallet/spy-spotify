@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace EspionSpotify
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
