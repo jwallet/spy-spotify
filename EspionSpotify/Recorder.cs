@@ -26,7 +26,7 @@ namespace EspionSpotify
         private readonly Song _song;
         public WasapiLoopbackCapture WaveIn;
         public Stream Writer;
-        private const string Key = "c117eb33c9d44d34734dfdcafa7a162d";
+        private const string ApiKey = "c117eb33c9d44d34734dfdcafa7a162d";
         private const string RegexCompare = "[^0-9a-zA-Z_'()$#&=+.@!%-]";
 
         public bool SongGotDeleted { get; }
@@ -59,7 +59,7 @@ namespace EspionSpotify
 
             if (Writer == null)
             {
-                _espionSpotifyForm.PrintStatusLine(
+                _espionSpotifyForm.WriteIntoConsole(
                     "//Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit" +
                     " être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration > Son > Propriétés > Avancés).");
                 return;
@@ -68,7 +68,7 @@ namespace EspionSpotify
             WaveIn.StartRecording();
 
             Thread.Sleep(400);
-            _espionSpotifyForm.PrintStatusLine($"Enregistrement de: {GetFileName(_path, _song, _format, false)}");
+            _espionSpotifyForm.WriteIntoConsole($"Enregistrement de: {GetFileName(_path, _song, _format, false)}");
 
             while (Running)
             {
@@ -95,7 +95,7 @@ namespace EspionSpotify
 
             if (Count >= _minTime) return;
 
-            _espionSpotifyForm.PrintStatusLine(Count != -1
+            _espionSpotifyForm.WriteIntoConsole(Count != -1
                 ? $"//Effacement de: {GetFileName(_path, _song, _format, false)} [<{_minTime}s]"
                 : $"//Effacement de: {GetFileName(_path, _song, _format, false)}");
 
@@ -124,7 +124,7 @@ namespace EspionSpotify
                 var api = new XmlDocument();
                 var artist = PCLWebUtility.WebUtility.UrlEncode(_song.Artist);
                 var title = PCLWebUtility.WebUtility.UrlEncode(_song.Title);
-                try { api.Load($"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={Key}&artist={artist}&track={title}");}
+                try { api.Load($"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={ApiKey}&artist={artist}&track={title}");}
                 catch (WebException e) { Console.Write(e.Message); }
                 var apiReturn = api.DocumentElement;
 
@@ -179,7 +179,7 @@ namespace EspionSpotify
         private string GetFileName(string path, Song song, Format format, bool includePath = true, bool tryingToDelete = false)
         {
             string niceSongName;
-            var track = _compteur != -1 ? _compteur.ToString("00") + _charSeparator : null;
+            var track = _compteur != -1 ? _compteur.ToString("000") + _charSeparator : null;
             var ending = format.ToString().ToLower();
 
             if (_strucDossiers)

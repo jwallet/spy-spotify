@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace EspionSpotify
 {
-    class Normalize
+    internal class Normalize
     {
         public static string RemoveDiacritics(string text)
         {
