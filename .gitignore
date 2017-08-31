@@ -14,8 +14,10 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-bin/*
-obj/*
+bin/
+obj/
+Debug/
+Release/
 
 # Windows shortcuts
 *.lnk
