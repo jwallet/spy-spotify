@@ -35,6 +35,7 @@ namespace EspionSpotify
         private bool _bSpotifyPlayIcon;
         private string _lastTitle;
         private string _title;
+        private int _waitOneSec;
 
         private const bool Unmute = false;
 
@@ -72,6 +73,7 @@ namespace EspionSpotify
 
             Ready = false;
             Running = true;
+            _waitOneSec = 0;
 
             _form.WriteIntoConsole("//Début de l\'espionnage.");
 
@@ -136,17 +138,6 @@ namespace EspionSpotify
 
                 if (_title != _lastTitle) _bWait = false;
 
-                if (_bOnCommercialBreak)
-                {
-                    _bOnCommercialBreak = false;
-                    Thread.Sleep(500);
-
-                    if (SoundDetected())
-                    {
-                        _form.WriteIntoConsole($"Publicité: {_title}");
-                    }
-                }
-
                 Thread.Sleep(20);
             }
         }
@@ -159,6 +150,7 @@ namespace EspionSpotify
             if (CommercialOrNothingPlays)
             {
                 _bOnCommercialBreak = true;
+                _waitOneSec = 1;
                 _lastSong = null;
                 DoIKeepLastSong(true, true);
 
@@ -166,6 +158,17 @@ namespace EspionSpotify
                 {
                     _bSpotifyPlayIcon = false;
                     _form.UpdateIconSpotify(true);
+                }
+            }
+
+            if (_bOnCommercialBreak && _waitOneSec == 10)
+            {
+                _waitOneSec = 0;
+                _bOnCommercialBreak = false;
+
+                if (SoundDetected())
+                {
+                    _form.WriteIntoConsole($"Publicité: {_title}");
                 }
             }
 
@@ -204,6 +207,8 @@ namespace EspionSpotify
 
                 Running = false;
             }
+
+            if (_waitOneSec != 0) _waitOneSec++;
 
             Thread.Sleep(100);
         }

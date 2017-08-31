@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EspionSpotify.exe" size="636928">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EspionSpotify.exe" size="638976">
       <assemblyIdentity name="EspionSpotify" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>IVde3RXBePL8AcBbcHgHAHUsSEM=</dsig:DigestValue>
+        <dsig:DigestValue>X1QCmT2PALzBloEcSe/ZmQn/l+c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -138,13 +138,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="EspionSpotify.exe.config" size="1794">
+  <file name="EspionSpotify.exe.config" size="1783">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>Jpn9euFmhcy6xjRKXEiJNF2/jFs=</dsig:DigestValue>
+      <dsig:DigestValue>R7+mmKz/9Q6/dbGXtxuUBRVXEzI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libmp3lame.32.dll" size="721408">
