@@ -75,7 +75,7 @@ namespace EspionSpotify
             Running = true;
             _waitOneSec = 0;
 
-            _form.WriteIntoConsole("//Début de l\'espionnage.");
+            _form.WriteIntoConsole(_form.Rm.GetString("logStarting"));
 
             SpotifyStatusBeforeSpying();
 
@@ -94,7 +94,7 @@ namespace EspionSpotify
 
             if (_recorder != null) DoIKeepLastSong(true);
 
-            _form.WriteIntoConsole("//Fin de l\'espionnage.");
+            _form.WriteIntoConsole(_form.Rm.GetString("logStoping"));
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle("Spotify");
             Ready = true;
@@ -112,14 +112,14 @@ namespace EspionSpotify
         {
             if (_title == null)
             {
-                _form.WriteIntoConsole("//Veuillez démarrer l\'application Spotify.");
+                _form.WriteIntoConsole(_form.Rm.GetString("logSpotifyNotRunning"));
                 Running = false;
             }
             else
             {
                 if (_title != "Spotify")
                 {
-                    _form.WriteIntoConsole("//En attente du prochain titre...");
+                    _form.WriteIntoConsole(_form.Rm.GetString("logWaiting"));
                     _bWait = true;
                 }
                 else
@@ -168,7 +168,7 @@ namespace EspionSpotify
 
                 if (SoundDetected())
                 {
-                    _form.WriteIntoConsole($"Publicité: {_title}");
+                    _form.WriteIntoConsole(string.Format(_form.Rm.GetString("logCommercialBreak"), _title));
                 }
             }
 
@@ -197,7 +197,7 @@ namespace EspionSpotify
 
             if (SpotifyClosedOrCrashed)
             {
-                _form.WriteIntoConsole("//Spotify est fermé.");
+                _form.WriteIntoConsole(_form.Rm.GetString("logSpotifyIsClosed"));
 
                 if (_recorder != null)
                 {
