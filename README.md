@@ -2,7 +2,9 @@
 ![image](https://user-images.githubusercontent.com/23088305/29756511-90ec7f12-8b72-11e7-9712-c6e08cc918e3.png)
 
 ### Espion Spotify: Enregistrez Spotify durant sa lecture
-Fonctionne sous Windows seulement (nécessitant [.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851)) et sous l'application de Spotify.
+Fonctionne sous Windows seulement (nécessitant [.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851)) et sous l'application de Spotify. 
+
+Pas besoin d'un compte Spotify Premium, __un compte gratuit suffit pour l'utilisation du programme__, parcontre un compte premium à ses avantages: sans pubs et plus de choix de qualité d'enregistrement.
 
 ## Comment ça fonctionne ?
 Le programme s'attache au processus de Spotify et enregistre le son provenant de celui-ci à partir de la carte de son de l'ordinateur.
