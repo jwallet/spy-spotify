@@ -44,3 +44,5 @@ L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est util
 - .NET Framwork 4.0
 - NAudio et NAudio.Lame
 - last.fm API
+
+### [Télécharger v.0.5b](https://github.com/jwallet/Espion-Spotify/releases)
