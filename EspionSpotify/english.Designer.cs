@@ -232,15 +232,6 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ad: {0}.
-        /// </summary>
-        internal static string logCommercialBreak {
-            get {
-                return ResourceManager.GetString("logCommercialBreak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à //Removing: {0}.
         /// </summary>
         internal static string logDeleting {
@@ -417,15 +408,6 @@ namespace EspionSpotify {
         internal static string tipStopSying {
             get {
                 return ResourceManager.GetString("tipStopSying", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ad.
-        /// </summary>
-        internal static string varAd {
-            get {
-                return ResourceManager.GetString("varAd", resourceCulture);
             }
         }
     }

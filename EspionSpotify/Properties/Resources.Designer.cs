@@ -61,21 +61,83 @@ namespace EspionSpotify.Properties {
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à .
         /// </summary>
-        internal static System.Drawing.Bitmap clear {
+        internal static string cbOptBitRate128 {
             get {
-                object obj = ResourceManager.GetObject("clear", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("cbOptBitRate128", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptBitRate160 {
+            get {
+                return ResourceManager.GetString("cbOptBitRate160", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptBitRate256 {
+            get {
+                return ResourceManager.GetString("cbOptBitRate256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptBitRate320 {
+            get {
+                return ResourceManager.GetString("cbOptBitRate320", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptBitRateSpotifyFree {
+            get {
+                return ResourceManager.GetString("cbOptBitRateSpotifyFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptBitRateSpotifyPremium {
+            get {
+                return ResourceManager.GetString("cbOptBitRateSpotifyPremium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptLangEn {
+            get {
+                return ResourceManager.GetString("cbOptLangEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string cbOptLangFr {
+            get {
+                return ResourceManager.GetString("cbOptLangFr", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap espion_spotify_logo {
+        internal static System.Drawing.Bitmap clear {
             get {
-                object obj = ResourceManager.GetObject("espion_spotify_logo", resourceCulture);
+                object obj = ResourceManager.GetObject("clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -91,12 +153,228 @@ namespace EspionSpotify.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblAddFolders {
+            get {
+                return ResourceManager.GetString("lblAddFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblAddSeparators {
+            get {
+                return ResourceManager.GetString("lblAddSeparators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblBitRate {
+            get {
+                return ResourceManager.GetString("lblBitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblCustomize {
+            get {
+                return ResourceManager.GetString("lblCustomize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblFormat {
+            get {
+                return ResourceManager.GetString("lblFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblLanguage {
+            get {
+                return ResourceManager.GetString("lblLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblMinLength {
+            get {
+                return ResourceManager.GetString("lblMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblNumFiles {
+            get {
+                return ResourceManager.GetString("lblNumFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblNumTracks {
+            get {
+                return ResourceManager.GetString("lblNumTracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblPath {
+            get {
+                return ResourceManager.GetString("lblPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string lblRecordingNum {
+            get {
+                return ResourceManager.GetString("lblRecordingNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logDeleting {
+            get {
+                return ResourceManager.GetString("logDeleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logDeletingTooShort {
+            get {
+                return ResourceManager.GetString("logDeletingTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logRecording {
+            get {
+                return ResourceManager.GetString("logRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logSpotifyIsClosed {
+            get {
+                return ResourceManager.GetString("logSpotifyIsClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logSpotifyNotRunning {
+            get {
+                return ResourceManager.GetString("logSpotifyNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logStarting {
+            get {
+                return ResourceManager.GetString("logStarting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logStoping {
+            get {
+                return ResourceManager.GetString("logStoping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logWaiting {
+            get {
+                return ResourceManager.GetString("logWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string logWriterIsNull {
+            get {
+                return ResourceManager.GetString("logWriterIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap minus {
             get {
                 object obj = ResourceManager.GetObject("minus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string msgBodyCantQuit {
+            get {
+                return ResourceManager.GetString("msgBodyCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string msgBodyPathNotFound {
+            get {
+                return ResourceManager.GetString("msgBodyPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string msgTitleCantQuit {
+            get {
+                return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string msgTitlePathNotFound {
+            get {
+                return ResourceManager.GetString("msgTitlePathNotFound", resourceCulture);
             }
         }
         
@@ -167,6 +445,69 @@ namespace EspionSpotify.Properties {
             get {
                 object obj = ResourceManager.GetObject("spytify_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tabRecord {
+            get {
+                return ResourceManager.GetString("tabRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tabSettings {
+            get {
+                return ResourceManager.GetString("tabSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tipClear {
+            get {
+                return ResourceManager.GetString("tipClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tipDirectory {
+            get {
+                return ResourceManager.GetString("tipDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tipPath {
+            get {
+                return ResourceManager.GetString("tipPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tipStartSpying {
+            get {
+                return ResourceManager.GetString("tipStartSpying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        internal static string tipStopSying {
+            get {
+                return ResourceManager.GetString("tipStopSying", resourceCulture);
             }
         }
         

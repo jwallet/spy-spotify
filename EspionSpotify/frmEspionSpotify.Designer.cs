@@ -849,11 +849,11 @@ namespace EspionSpotify
             this.lnkSpy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lnkSpy.Image = global::EspionSpotify.Properties.Resources.on;
             this.lnkSpy.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lnkSpy.ImageSize = 50;
-            this.lnkSpy.Location = new System.Drawing.Point(718, 35);
+            this.lnkSpy.ImageSize = 0;
+            this.lnkSpy.Location = new System.Drawing.Point(636, 39);
             this.lnkSpy.Margin = new System.Windows.Forms.Padding(0);
             this.lnkSpy.Name = "lnkSpy";
-            this.lnkSpy.Size = new System.Drawing.Size(54, 60);
+            this.lnkSpy.Size = new System.Drawing.Size(136, 44);
             this.lnkSpy.TabIndex = 39;
             this.lnkSpy.UseSelectable = true;
             this.lnkSpy.Click += new System.EventHandler(this.lnkSpy_Click);
