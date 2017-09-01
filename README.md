@@ -1,3 +1,5 @@
+# English documentation
+
 ![logo-en](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)
 
 ### Spytify: Records Spotify while it's playing
@@ -30,10 +32,10 @@ A standard use will be something like recording an artist album or a Spotify pla
 - Choose audio format : mp3 or wav
 - Choose audio quality : low to high
 - Choose a minimal length to remove songs that are too short in time or songs that you skiped.
-- You can save all artist songs inside their own folder, but it will remove the artist of the file name.
-- You can remove from the file name any space and replace it by underscore
+- You can save all artist songs inside their own folder, but it will remove the artist of the file name. `../Artist/Title.mp3`
+- You can remove from the file name any space and replace it by underscore `Artist_-_Title.mp3`
 - Your can add a recording order number to... [*](#about-the-recording-order-number):
-  - infront of files name.
+  - infront of files name. `001 Artist - Title.mp3`
   - inside files and replace the track number.
 
 ## About the recording order number
@@ -44,9 +46,12 @@ Adding the recording order number to files `07_Artiste_-_Titre.mp3` is useful if
 - NAudio et NAudio.Lame
 - last.fm API
 
+## Download
+### [Download](https://github.com/jwallet/Espion-Spotify/releases)
 
+<br/><br/><br/>
 
-
+# Documentation en français
 
 ![logo-fr](https://user-images.githubusercontent.com/23088305/29906217-7169fd92-8de1-11e7-8fa6-2183ee7b8e1c.png)
 
@@ -80,10 +85,10 @@ Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou un
 - Définir le format audio MP3 ou WAV
 - Définir la qualité audio (basse à haute qualité)
 - Définir la durée minimale d'un enregistrement pour éliminer ceux trop courts, lorsque vous sautez une chanson.
-- Ajouter le nom de l'artiste en tant que dossier au lieu de l'ajouter au nom du fichier
-- Retirer les espace au nom du fichier
+- Ajouter le nom de l'artiste en tant que dossier au lieu de l'ajouter au nom du fichier `../Artiste/Titre.mp3`
+- Retirer les espace au nom du fichier `Artiste_-_Titre.mp3`
 - Inscrire le numéro d'enregistrement actuel (compteur) [ * ](#note-pour-le-compteur):
-  - aux fichiers
+  - aux fichiers `001 Artiste - Titre.mp3`
   - au lieu de la position CD (infos de lecture)
 
 ## Note pour le compteur
@@ -94,5 +99,5 @@ L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est util
 - NAudio et NAudio.Lame
 - last.fm API
 
-## Download / Télécharger
-### [Download / Télécharger](https://github.com/jwallet/Espion-Spotify/releases)
+## Télécharger
+### [Télécharger](https://github.com/jwallet/Espion-Spotify/releases)
