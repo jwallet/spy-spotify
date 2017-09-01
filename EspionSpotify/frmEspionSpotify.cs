@@ -80,7 +80,6 @@ namespace EspionSpotify
             if (l == LanguageType.Fr)
             {
                 Rm = new ResourceManager(typeof(french));
-                BackImage = Resources.espion_spotify_logo;
             }
 
             tabRecord.Text = Rm.GetString("tabRecord");
@@ -185,7 +184,6 @@ namespace EspionSpotify
             {
                 var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
                 var alert = text[0] == '/';
-                var commercial = !alert && text.StartsWith(Rm.GetString("varAd"));
                 
                 rtbLog.AppendText(timeStr);
                 if (!alert)
@@ -197,7 +195,7 @@ namespace EspionSpotify
                     rtbLog.SelectionColor = Color.White;
                     rtbLog.AppendText(msg + Environment.NewLine);
                     rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                    rtbLog.SelectionColor = commercial ? Color.White : Color.SpringGreen;
+                    rtbLog.SelectionColor = Color.SpringGreen;
                 }
                 else
                 {

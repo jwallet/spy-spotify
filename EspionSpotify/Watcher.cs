@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using NAudio.CoreAudioApi;
 using NAudio.Lame;
 
 namespace EspionSpotify
@@ -31,11 +30,9 @@ namespace EspionSpotify
         private readonly string[] _titleSeperators;
 
         private bool _bWait;
-        private bool _bOnCommercialBreak;
         private bool _bSpotifyPlayIcon;
         private string _lastTitle;
         private string _title;
-        private int _waitOneSec;
 
         private const bool Unmute = false;
 
@@ -72,8 +69,7 @@ namespace EspionSpotify
             if (Running) return;
 
             Ready = false;
-            Running = true;
-            _waitOneSec = 0;
+            Running = true;;
 
             _form.WriteIntoConsole(_form.Rm.GetString("logStarting"));
 
@@ -100,12 +96,6 @@ namespace EspionSpotify
             Ready = true;
 
             _sound.SetToHigh(!Unmute, _title);
-        }
-
-        private static bool SoundDetected()
-        {
-            var vol = new VolumeWin();
-            return vol.DefaultAudioEndPointDevice.AudioMeterInformation.MasterPeakValue * 1000 > 0;
         }
 
         private void SpotifyStatusBeforeSpying()
@@ -149,8 +139,6 @@ namespace EspionSpotify
 
             if (CommercialOrNothingPlays)
             {
-                _bOnCommercialBreak = true;
-                _waitOneSec = 1;
                 _lastSong = null;
                 DoIKeepLastSong(true, true);
 
@@ -158,17 +146,6 @@ namespace EspionSpotify
                 {
                     _bSpotifyPlayIcon = false;
                     _form.UpdateIconSpotify(true);
-                }
-            }
-
-            if (_bOnCommercialBreak && _waitOneSec == 10)
-            {
-                _waitOneSec = 0;
-                _bOnCommercialBreak = false;
-
-                if (SoundDetected())
-                {
-                    _form.WriteIntoConsole(string.Format(_form.Rm.GetString("logCommercialBreak"), _title));
                 }
             }
 
@@ -207,8 +184,6 @@ namespace EspionSpotify
 
                 Running = false;
             }
-
-            if (_waitOneSec != 0) _waitOneSec++;
 
             Thread.Sleep(100);
         }

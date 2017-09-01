@@ -193,10 +193,6 @@
     <value>Choose the starting position of the recording order number</value>
     <comment>interface</comment>
   </data>
-  <data name="logCommercialBreak" xml:space="preserve">
-    <value>Ad: {0}</value>
-    <comment>console</comment>
-  </data>
   <data name="logDeleting" xml:space="preserve">
     <value>//Removing: {0}</value>
     <comment>console</comment>
@@ -276,9 +272,5 @@
   <data name="tipStopSying" xml:space="preserve">
     <value>Stop spying</value>
     <comment>interface</comment>
-  </data>
-  <data name="varAd" xml:space="preserve">
-    <value>Ad</value>
-    <comment>code</comment>
   </data>
 </root>

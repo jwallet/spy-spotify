@@ -218,7 +218,6 @@
     <None Include="Resources\minus.gif" />
     <None Include="Resources\folder.gif" />
     <None Include="Resources\spytify-logo.png" />
-    <None Include="Resources\espion-spotify-logo.png" />
     <EmbeddedResource Include="Resources\spytify.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

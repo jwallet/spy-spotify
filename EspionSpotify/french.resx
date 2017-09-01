@@ -193,10 +193,6 @@
     <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
     <comment>interface</comment>
   </data>
-  <data name="logCommercialBreak" xml:space="preserve">
-    <value>Publicité: {0}</value>
-    <comment>console</comment>
-  </data>
   <data name="logDeleting" xml:space="preserve">
     <value>//Effacement de: {0}</value>
     <comment>console</comment>
@@ -276,9 +272,5 @@
   <data name="tipStopSying" xml:space="preserve">
     <value>Arrêter l'espionnage</value>
     <comment>interface</comment>
-  </data>
-  <data name="varAd" xml:space="preserve">
-    <value>Pub</value>
-    <comment>code</comment>
   </data>
 </root>
