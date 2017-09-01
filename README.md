@@ -40,7 +40,7 @@ A standard use will be something like recording an artist album or a Spotify pla
   - inside files and replace the track number.
 
 ## About the recording order number
-Adding the recording order number to files `07_Artiste_-_Titre.mp3` is useful if you want to burn songs to cds and that your mp3 player (like those in cars) orders songs by files name. You will get the a cd with songs ordered in the same order than the album. If it's a playlist, order it first on Spotify and start Spytify.
+Adding the recording order number to files `017_Artiste_-_Titre.mp3` is useful if you want to burn songs to cds and that your mp3 player (like those in cars) orders songs by files name. You will get the a cd with songs ordered in the same order than the album. If it's a playlist, order it first on Spotify and start Spytify.
 
 ## Dependencies
 - .NET Framwork 4.0
@@ -88,7 +88,7 @@ Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou un
   - au lieu de la position CD (infos de lecture)
 
 ## Note pour le compteur
-L'ajout du compteur au nom du fichier, tel que `07_Artiste_-_Titre.mp3` est utile si vous désirez concevoir un cd mp3 avec tous les fichiers à la racine (sans dossiers) et que le lecteur mp3 (ex: lecteur de votre voiture) filtre l'ordre des chansons dans l'ordre que vous désirez les écouter, autrement l'ordre de ceux-ci pourrait être compromis.
+L'ajout du compteur au nom du fichier, tel que `017_Artiste_-_Titre.mp3` est utile si vous désirez concevoir un cd mp3 avec tous les fichiers à la racine (sans dossiers) et que le lecteur mp3 (ex: lecteur de votre voiture) filtre l'ordre des chansons dans l'ordre que vous désirez les écouter, autrement l'ordre de ceux-ci pourrait être compromis.
 
 ## Techniqualités
 - .NET Framwork 4.0
