@@ -1,6 +1,7 @@
-# English documentation
 
 ![logo-en](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)
+
+# English documentation
 
 ### Spytify: Records Spotify while it's playing
 Runs on Windows only ([.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851) and Spotify Desktop app needed).
@@ -13,8 +14,8 @@ Spytify finds the Spotify process and records the sound that is coming out of it
 ## Use
 A standard use will be something like recording an artist album or a Spotify playlist that you like or created. To avoid waiting for the recording session to end, since the app does not download but records, start spying at night and let it work until sunrise. You will get all your songs automatically split into separate tracks without ads.
 
-<span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/29935589-4404d068-8e4d-11e7-9ecc-31c09c9f24f8.png"/>
-<img width="420" height="auto"  src="https://user-images.githubusercontent.com/23088305/29935628-63b13f0a-8e4d-11e7-9843-3da9884fc952.png"/></span>
+<span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/29951698-5e4ebc5a-8e92-11e7-820e-8cd50294b1f9.png"/>
+<img width="420" height="auto"  src="https://user-images.githubusercontent.com/23088305/29951688-3c0d8d42-8e92-11e7-862d-e156a1017cb1.png"/></span>
 
 ## Features
 ### App features:
@@ -53,8 +54,6 @@ Adding the recording order number to files `07_Artiste_-_Titre.mp3` is useful if
 
 # Documentation en français
 
-![logo-fr](https://user-images.githubusercontent.com/23088305/29906217-7169fd92-8de1-11e7-8fa6-2183ee7b8e1c.png)
-
 ### Espion Spotify: Enregistrez Spotify durant sa lecture
 Fonctionne sous Windows seulement (nécessitant [.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851)) et sous l'application de Spotify. 
 
@@ -65,9 +64,6 @@ Le programme s'attache au processus de Spotify et enregistre le son provenant de
 
 ## Utilisation
 Une utilisation standard serait de vouloir enregistrer un disque d'artiste ou une liste de lecture que vous aimez ou avez créée. Pour éviter de devoir attendre la fin de l'enregistrement, puisque le programme capture le son, lancez l'enregistrement la nuit et au matin tout sera terminé sans aucune publicité enregistrée.
-
-<span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/29935767-f3c17380-8e4d-11e7-8650-4ff6fb1dd736.png"/>
-<img width="420" height="auto"  src="https://user-images.githubusercontent.com/23088305/29935742-da2f06f8-8e4d-11e7-8c66-ffc379d2ca14.png"/></span>
 
 ## Fonctionnalités
 ### ...lors de la capture:
