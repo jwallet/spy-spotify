@@ -50,6 +50,8 @@ namespace EspionSpotify
             var indexLanguage = Settings.Default.Language;
             var indexBitRate = Settings.Default.Bitrate;
 
+            tcMenu.SelectedIndex = Settings.Default.TabNo;
+
             rbMp3.Checked = (Settings.Default.Format == 0);
             rbWav.Checked = (Settings.Default.Format == 1);
             tbMinTime.Value = Settings.Default.MinLength / 5;
@@ -424,6 +426,12 @@ namespace EspionSpotify
         private void cbBitRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.Bitrate = cbBitRate.SelectedIndex;
+            Settings.Default.Save();
+        }
+
+        private void tcMenu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
         }
     }
