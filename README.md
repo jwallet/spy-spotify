@@ -3,7 +3,7 @@
 #### v.0.71 -- 31/08/2017
 # English documentation
 
-### Spytify: Records Spotify while it's playing
+### Spytify: Records Spotify while it plays
 Runs on Windows only ([.NET 4.0](https://www.microsoft.com/en-ca/download/details.aspx?id=17851) and Spotify Desktop app needed).
 
 No need of a Spotify Premium account, __any free account will do__, however a premium account will give you some advantages: no ads and more audio qualities available.
