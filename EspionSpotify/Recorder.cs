@@ -53,20 +53,22 @@ namespace EspionSpotify
         {
             Running = true;
             WaveIn = new WasapiLoopbackCapture();
+
+            Writer = GetFileWriter(WaveIn);
+
             WaveIn.DataAvailable += waveIn_DataAvailable;
             WaveIn.RecordingStopped += waveIn_RecordingStopped;
-            Writer = GetFileWriter(WaveIn);
 
             if (Writer == null)
             {
-                _form.WriteIntoConsole(_form.Rm.GetString("logWriterIsNull"));
+                _form.WriteIntoConsole(_form.Rm.GetString($"logWriterIsNull"));
                 return;
             }
 
             WaveIn.StartRecording();
 
             Thread.Sleep(400);
-            _form.WriteIntoConsole(string.Format(_form.Rm.GetString("logRecording"), GetFileName(_path, _song, _format, false)));
+            _form.WriteIntoConsole(string.Format(_form.Rm.GetString($"logRecording") ?? "{0}", GetFileName(_path, _song, _format, false)));
 
             while (Running)
             {
@@ -94,9 +96,9 @@ namespace EspionSpotify
             if (Count >= _minTime) return;
 
             _form.WriteIntoConsole(Count != -1
-                ? string.Format(_form.Rm.GetString("logDeletingTooShort"),
+                ? string.Format(_form.Rm.GetString($"logDeletingTooShort") ?? "{0}",
                     GetFileName(_path, _song, _format, false), _minTime)
-                : string.Format(_form.Rm.GetString("logDeleting"),
+                : string.Format(_form.Rm.GetString($"logDeleting") ?? "{0}",
                     GetFileName(_path, _song, _format, false)));
 
             File.Delete(GetFileName(_path, _song, _format, true, true));
@@ -120,6 +122,7 @@ namespace EspionSpotify
                 var numTrackAlbum = "";
                 var albumTitle = "";
                 var style = "";
+                var albumArt = new byte[] {};
 
                 var api = new XmlDocument();
                 var artist = PCLWebUtility.WebUtility.UrlEncode(_song.Artist);
@@ -139,6 +142,31 @@ namespace EspionSpotify
                     var xmlStyle = apiReturn.SelectNodes("/lfm/track/toptags/tag/name");
                     if (xmlStyle != null && xmlStyle.Count != 0)
                         style = xmlStyle[0].InnerXml;
+                    var xmlAlbumArt = apiReturn.SelectNodes("/lfm/track/album/image");
+                    if (xmlAlbumArt != null && xmlAlbumArt.Count != 0)
+                    {
+                        var link = xmlAlbumArt[xmlAlbumArt.Count - 1].InnerXml;
+                        var request = WebRequest.Create(link);
+                        using (var response = request.GetResponse().GetResponseStream())
+                        {
+                            if (response != null)
+                            {
+                                using (var reader = new BinaryReader(response))
+                                {
+                                    using (var memory = new MemoryStream())
+                                    {
+                                        var buffer = reader.ReadBytes(1024);
+                                        while (buffer.Length > 0)
+                                        {
+                                            memory.Write(buffer, 0, buffer.Length);
+                                            buffer = reader.ReadBytes(1024);
+                                        }
+                                        albumArt = memory.ToArray();
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (_bCdTrack) numTrackAlbum = $"{_compteur}";
@@ -149,7 +177,8 @@ namespace EspionSpotify
                     Title = _song.Title,
                     Artist = _song.Artist,
                     Album = albumTitle,
-                    Genre = style
+                    Genre = style,
+                    AlbumArt = albumArt
                 };
 
                 try

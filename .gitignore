@@ -18,6 +18,7 @@ bin/
 obj/
 Debug/
 Release/
+.vs/
 
 # Windows shortcuts
 *.lnk
@@ -50,3 +51,4 @@ Release/
 Network Trash Folder
 Temporary Items
 .apdisk
+.vs/EspionSpotify/v14/.suo
