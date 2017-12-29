@@ -77,38 +77,38 @@ namespace EspionSpotify
             ResumeLayout();
         }
 
-        private void SetLanguage(LanguageType l)
+        private void SetLanguage(LanguageType languageType)
         {
-            if (l == LanguageType.Fr)
+            if (languageType == LanguageType.Fr)
             {
                 Rm = new ResourceManager(typeof(french));
             }
 
-            tabRecord.Text = Rm.GetString("tabRecord");
-            tabSettings.Text = Rm.GetString("tabSettings");
-            lblPath.Text = Rm.GetString("lblPath");
-            lblBitRate.Text = Rm.GetString("lblBitRate");
-            lblFormat.Text = Rm.GetString("lblFormat");
-            lblMinLength.Text = Rm.GetString("lblMinLength");
-            lblCustomize.Text = Rm.GetString("lblCustomize");
-            lblLanguage.Text = Rm.GetString("lblLanguage");
-            lblAddFolders.Text = Rm.GetString("lblAddFolders");
-            lblAddSeparators.Text = Rm.GetString("lblAddSeparators");
-            lblNumFiles.Text = Rm.GetString("lblNumFiles");
-            lblNumTracks.Text = Rm.GetString("lblNumTracks");
-            lblRecordingNum.Text = Rm.GetString("lblRecordingNum");
+            tabRecord.Text = Rm.GetString($"tabRecord");
+            tabSettings.Text = Rm.GetString($"tabSettings");
+            lblPath.Text = Rm.GetString($"lblPath");
+            lblBitRate.Text = Rm.GetString($"lblBitRate");
+            lblFormat.Text = Rm.GetString($"lblFormat");
+            lblMinLength.Text = Rm.GetString($"lblMinLength");
+            lblCustomize.Text = Rm.GetString($"lblCustomize");
+            lblLanguage.Text = Rm.GetString($"lblLanguage");
+            lblAddFolders.Text = Rm.GetString($"lblAddFolders");
+            lblAddSeparators.Text = Rm.GetString($"lblAddSeparators");
+            lblNumFiles.Text = Rm.GetString($"lblNumFiles");
+            lblNumTracks.Text = Rm.GetString($"lblNumTracks");
+            lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
 
-            tip.SetToolTip(lnkClear, Rm.GetString("tipClear"));
-            tip.SetToolTip(lnkSpy, Rm.GetString("tipStartSpying"));
-            tip.SetToolTip(lnkDirectory, Rm.GetString("tipDirectory"));
-            tip.SetToolTip(lnkPath, Rm.GetString("tipPath"));
+            tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
+            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
+            tip.SetToolTip(lnkDirectory, Rm.GetString($"tipDirectory"));
+            tip.SetToolTip(lnkPath, Rm.GetString($"tipPath"));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, Rm.GetString("cbOptBitRate128")},
-                {LAMEPreset.ABR_160, string.Format(Rm.GetString("cbOptBitRateSpotifyFree"), Rm.GetString("cbOptBitRate160"))},
-                {LAMEPreset.ABR_256, Rm.GetString("cbOptBitRate256")},
-                {LAMEPreset.ABR_320, string.Format(Rm.GetString("cbOptBitRateSpotifyPremium"), Rm.GetString("cbOptBitRate320"))}
+                {LAMEPreset.ABR_128, Rm.GetString($"cbOptBitRate128")},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString($"cbOptBitRateSpotifyFree") ?? "{0}", Rm.GetString($"cbOptBitRate160"))},
+                {LAMEPreset.ABR_256, Rm.GetString($"cbOptBitRate256")},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString($"cbOptBitRateSpotifyPremium") ?? "{0}", Rm.GetString($"cbOptBitRate320"))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
@@ -117,8 +117,8 @@ namespace EspionSpotify
 
             var langs = new Dictionary<LanguageType, string>
             {
-                {LanguageType.En, Rm.GetString("cbOptLangEn")},
-                {LanguageType.Fr, Rm.GetString("cbOptLangFr")}
+                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
+                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
             };
 
             cbLanguage.DataSource = new BindingSource(langs, null);
@@ -219,7 +219,7 @@ namespace EspionSpotify
             var watcherThread = new Thread(_watcher.Run);
             watcherThread.Start();
 
-            tip.SetToolTip(lnkSpy, Rm.GetString("tipStopSying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
             tabSettings.Enabled = false;
             timer1.Start();
         }
@@ -228,7 +228,7 @@ namespace EspionSpotify
         {
             Watcher.Running = false;
 
-            tip.SetToolTip(lnkSpy, Rm.GetString("tipStartSpying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
             tabSettings.Enabled = true;
             timer1.Stop();
         }
@@ -238,8 +238,8 @@ namespace EspionSpotify
             if (Directory.Exists(txtPath.Text)) return true;
 
             MetroMessageBox.Show(this,
-                Rm.GetString("msgBodyPathNotFound"),
-                Rm.GetString("msgTitlePathNotFound"),
+                Rm.GetString($"msgBodyPathNotFound"),
+                Rm.GetString($"msgTitlePathNotFound"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -308,15 +308,13 @@ namespace EspionSpotify
             if (Watcher.Ready) return;
             e.Cancel = true;
             if (MetroMessageBox.Show(this,
-                    Rm.GetString("msgBodyCantQuit"),
-                    Rm.GetString("msgTitleCantQuit"),
+                    Rm.GetString($"msgBodyCantQuit"),
+                    Rm.GetString($"msgTitleCantQuit"),
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Watcher.Running = false;
-                Thread.Sleep(1000);
-                Close();
-            };
+                    MessageBoxIcon.Question) != DialogResult.Yes) return;
+            Watcher.Running = false;
+            Thread.Sleep(1000);
+            Close();
         }
 
         private void tgNumTracks_CheckedChanged(object sender, EventArgs e)
@@ -334,8 +332,14 @@ namespace EspionSpotify
 
         private void lnkPath_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog.ShowDialog();
-            txtPath.Text = folderBrowserDialog.SelectedPath;
+            folderBrowserDialog.SelectedPath = txtPath.Text.Equals(string.Empty)
+                ? Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
+                : Path.GetDirectoryName(txtPath.Text);
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                txtPath.Text = folderBrowserDialog.SelectedPath;
+            }
         }
 
         private void lnkNumMinus_Click(object sender, EventArgs e)
