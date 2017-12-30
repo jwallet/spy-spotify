@@ -25,7 +25,13 @@ A standard use it's to start a recording session at night and let it work overni
 - Max out the volume from Spotify and records all song at the same level, even if you play with your main volume.
 ### File features:
 - Split into separate tracks and add names the file like defined in settings `Artist - Title.mp3`
-- Automatically add infos to mp3 files : # track, title, artist, album, cover art, genre (if found on Internet)
+- Automatically add infos to mp3 files if found on Internet :
+   - # track
+   - Track title
+   - Artist name
+   - Album tile
+   - Album cover art
+   - Genre
 - Records all songs under the same defined path.
 
 ## Parameters
