@@ -118,7 +118,7 @@ namespace EspionSpotify
             this.tcMenu.Location = new System.Drawing.Point(20, 60);
             this.tcMenu.Name = "tcMenu";
             this.tcMenu.SelectedIndex = 1;
-            this.tcMenu.Size = new System.Drawing.Size(760, 420);
+            this.tcMenu.Size = new System.Drawing.Size(760, 400);
             this.tcMenu.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
@@ -135,7 +135,7 @@ namespace EspionSpotify
             this.tabRecord.Location = new System.Drawing.Point(4, 38);
             this.tabRecord.Name = "tabRecord";
             this.tabRecord.Padding = new System.Windows.Forms.Padding(1);
-            this.tabRecord.Size = new System.Drawing.Size(752, 378);
+            this.tabRecord.Size = new System.Drawing.Size(752, 351);
             this.tabRecord.TabIndex = 0;
             this.tabRecord.Text = "TAB_SPY";
             this.tabRecord.VerticalScrollbarBarColor = true;
@@ -158,7 +158,7 @@ namespace EspionSpotify
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(750, 376);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(750, 349);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // tableLayoutPanel10
@@ -177,7 +177,7 @@ namespace EspionSpotify
             this.tableLayoutPanel10.Controls.Add(this.tbVolumeWin, 2, 0);
             this.tableLayoutPanel10.Controls.Add(this.iconVolume, 0, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 344);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 317);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -279,7 +279,7 @@ namespace EspionSpotify
             this.rtbLog.Name = "rtbLog";
             this.rtbLog.ReadOnly = true;
             this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbLog.Size = new System.Drawing.Size(750, 306);
+            this.rtbLog.Size = new System.Drawing.Size(750, 279);
             this.rtbLog.TabIndex = 32;
             this.rtbLog.Text = "";
             // 
@@ -336,7 +336,7 @@ namespace EspionSpotify
             this.tabSettings.Location = new System.Drawing.Point(4, 38);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.Padding = new System.Windows.Forms.Padding(1);
-            this.tabSettings.Size = new System.Drawing.Size(752, 378);
+            this.tabSettings.Size = new System.Drawing.Size(752, 358);
             this.tabSettings.TabIndex = 1;
             this.tabSettings.Text = "TAB_SETTINGS";
             // 
@@ -362,15 +362,14 @@ namespace EspionSpotify
             this.tableLayoutPanel5.Location = new System.Drawing.Point(1, 1);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.tableLayoutPanel5.RowCount = 7;
+            this.tableLayoutPanel5.RowCount = 6;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(750, 376);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(750, 356);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
             // lblLanguage
@@ -380,7 +379,7 @@ namespace EspionSpotify
             this.lblLanguage.Location = new System.Drawing.Point(3, 317);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblLanguage.Name = "lblLanguage";
-            this.lblLanguage.Size = new System.Drawing.Size(114, 24);
+            this.lblLanguage.Size = new System.Drawing.Size(114, 39);
             this.lblLanguage.TabIndex = 43;
             this.lblLanguage.Text = "LBL_LANGUAGE";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -874,11 +873,11 @@ namespace EspionSpotify
             this.BackImage = global::EspionSpotify.Properties.Resources.spytify_logo;
             this.BackImagePadding = new System.Windows.Forms.Padding(24, 12, 0, 0);
             this.BackMaxSize = 250;
-            this.ClientSize = new System.Drawing.Size(800, 500);
+            this.ClientSize = new System.Drawing.Size(800, 480);
             this.Controls.Add(this.lnkSpy);
             this.Controls.Add(this.tcMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(760, 450);
+            this.MinimumSize = new System.Drawing.Size(800, 480);
             this.Name = "FrmEspionSpotify";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Style = MetroFramework.MetroColorStyle.Green;

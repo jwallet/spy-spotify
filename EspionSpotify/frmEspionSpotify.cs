@@ -254,6 +254,7 @@ namespace EspionSpotify
             {
                 if (!DirExists()) return;
 
+                tcMenu.SelectedIndex = 0;
                 StartRecording();
                 lnkSpy.Image = Resources.off;
             }
