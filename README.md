@@ -26,7 +26,7 @@ A standard use it's to start a recording session at night and let it work overni
 ### File features:
 - Split into separate tracks and add names the file like defined in settings `Artist - Title.mp3`
 - Automatically add infos to mp3 files if found on Internet :
-   - # track
+   - \# track
    - Track title
    - Artist name
    - Album tile
