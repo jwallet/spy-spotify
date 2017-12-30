@@ -12,7 +12,7 @@ No need of a Spotify Premium account, __any free account will do__, however a pr
 Spytify finds the Spotify process and records the sound that is coming out of it on your computer sound card.
 
 ## Use
-A standard use it's to record an artist album or a Spotify playlist. Then, start your recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads.
+A standard use it's to start a recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads.
 
 <span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/29951698-5e4ebc5a-8e92-11e7-820e-8cd50294b1f9.png"/>
 <img width="420" height="auto"  src="https://user-images.githubusercontent.com/23088305/29951688-3c0d8d42-8e92-11e7-862d-e156a1017cb1.png"/></span>
