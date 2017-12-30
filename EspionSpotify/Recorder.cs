@@ -75,7 +75,7 @@ namespace EspionSpotify
 
             while (Running)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(30);
             }
 
             WaveIn.StopRecording();

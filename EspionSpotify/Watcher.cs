@@ -182,7 +182,7 @@ namespace EspionSpotify
                 }
             }
 
-            Thread.Sleep(150);
+            Thread.Sleep(100);
         }
 
         private void DoIKeepLastSong(bool updateUi = false, bool thenReset = false, bool deleteItAnyway = false)
