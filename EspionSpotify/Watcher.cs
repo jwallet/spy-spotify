@@ -39,7 +39,7 @@ namespace EspionSpotify
         public int NumTrack { get; private set; }
 
         private bool NumTrackActivated => NumTrack != -1;
-        private bool CommercialOrNothingPlays => _lastSong != null && _currentSong == null && _title != null;
+        private bool CommercialOrNothing => _lastSong != null && _currentSong == null && _title != null;
         private bool NewSongIsPlaying => _currentSong != null && !_currentSong.Equals(_lastSong);
         private bool SpotifyClosedOrCrashed => _currentSong == null && _title == null;
 
@@ -137,18 +137,6 @@ namespace EspionSpotify
             _title = GetTitle(_process2Spy);
             _currentSong = GetSong(_title);
 
-            if (CommercialOrNothingPlays)
-            {
-                _lastSong = null;
-                DoIKeepLastSong(true, true);
-
-                if (_bSpotifyPlayIcon)
-                {
-                    _bSpotifyPlayIcon = false;
-                    _form.UpdateIconSpotify(true);
-                }
-            }
-
             if (NewSongIsPlaying)
             {
                 _lastSong = _currentSong;
@@ -159,15 +147,15 @@ namespace EspionSpotify
                     _form.UpdateIconSpotify();
                 }
 
-                if (_recorder != null) DoIKeepLastSong();
-
-                UpdateNum();
+                if (_recorder != null) DoIKeepLastSong(true);
 
                 _recorder = new Recorder(_form, _path, _bitrate, _format, _currentSong, _minTime,
                     _strucDossiers, _charSeparator, _bCdTrack, NumTrack);
 
                 var recorderThread = new Thread(_recorder.Run);
                 recorderThread.Start();
+
+                UpdateNumUp();
 
                 CountSecs = 0;
             }
@@ -176,16 +164,25 @@ namespace EspionSpotify
             {
                 _form.WriteIntoConsole(_form.Rm.GetString($"logSpotifyIsClosed"));
 
-                if (_recorder != null)
-                {
-                    DoIKeepLastSong(true, false, true);
-                    _process2Spy.Dispose();
-                }
+                _process2Spy.Dispose();
 
                 Running = false;
+                return;
             }
 
-            Thread.Sleep(100);
+            if (CommercialOrNothing)
+            {
+                _lastSong = null;
+                DoIKeepLastSong(false, true);
+
+                if (_bSpotifyPlayIcon)
+                {
+                    _bSpotifyPlayIcon = false;
+                    _form.UpdateIconSpotify(true);
+                }
+            }
+
+            Thread.Sleep(150);
         }
 
         private void DoIKeepLastSong(bool updateUi = false, bool thenReset = false, bool deleteItAnyway = false)
@@ -193,15 +190,21 @@ namespace EspionSpotify
             _recorder.Count = deleteItAnyway ? -1 : CountSecs;
             _recorder.Running = false;
 
-            if (updateUi) UpdateNum();
+            if (updateUi) UpdateNumDown();
             if (thenReset) CountSecs = 0;
         }
 
-        private void UpdateNum()
+        private void UpdateNumDown()
         {
             if (!NumTrackActivated) return;
 
             if (CountSecs < _minTime) NumTrack--;
+            _form.UpdateNum(NumTrack);
+        }
+
+        private void UpdateNumUp()
+        {
+            if (!NumTrackActivated) return;
 
             NumTrack++;
             _form.UpdateNum(NumTrack);

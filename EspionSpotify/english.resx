@@ -210,7 +210,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value>//Spotify app has to run</value>
+    <value>//Spotify app is not running</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">

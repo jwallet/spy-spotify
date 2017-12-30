@@ -131,7 +131,9 @@ namespace EspionSpotify
         {
             if (lblNum.InvokeRequired)
             {
-                BeginInvoke(new Action(() => UpdateNum(num)));
+                var x = BeginInvoke(new Action(() => UpdateNum(num)));
+                x.AsyncWaitHandle.WaitOne();
+                EndInvoke(x);
             }
             else
             {
