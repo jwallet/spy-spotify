@@ -68,9 +68,8 @@ namespace EspionSpotify
                 return;
             }
 
+            Thread.Sleep(50);
             WaveIn.StartRecording();
-
-            Thread.Sleep(400);
             _form.WriteIntoConsole(string.Format(_form.Rm.GetString($"logRecording") ?? "{0}", GetFileName(_path, _song, _format, false)));
 
             while (Running)
@@ -114,7 +113,7 @@ namespace EspionSpotify
         {
             var mp3 = TagLib.File.Create(_currentFile);
 
-            var numTrackAlbum = "";
+            var numTrackAlbum = -1;
             var albumTitle = "";
             var style = "";
 
@@ -148,7 +147,7 @@ namespace EspionSpotify
             {
                 var xmlNumTrackAlbum = apiReturn.SelectNodes("/lfm/track/album/@position");
                 if (xmlNumTrackAlbum != null && xmlNumTrackAlbum.Count != 0)
-                    numTrackAlbum = xmlNumTrackAlbum[0].InnerXml;
+                    numTrackAlbum = Convert.ToInt32(xmlNumTrackAlbum[0].InnerXml);
                 var xmlAlbumTitle = apiReturn.SelectNodes("/lfm/track/album/title");
                 if (xmlAlbumTitle != null && xmlAlbumTitle.Count != 0)
                     albumTitle = xmlAlbumTitle[0].InnerXml;
@@ -157,7 +156,7 @@ namespace EspionSpotify
                     style = xmlStyle[0].InnerXml;
             }
             
-            if (numTrackAlbum != "") mp3.Tag.Track = Convert.ToUInt32(numTrackAlbum);
+            if (numTrackAlbum != -1) mp3.Tag.Track = (uint)numTrackAlbum;
             mp3.Tag.Album = albumTitle;
             mp3.Tag.Genres = new[] { style };
 
