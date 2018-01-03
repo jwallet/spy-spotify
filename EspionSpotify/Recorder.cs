@@ -29,7 +29,7 @@ namespace EspionSpotify
         private string _currentFile;
         public WasapiLoopbackCapture WaveIn;
         public Stream Writer;
-        private const string ApiKey = "c117eb33c9d44d34734dfdcafa7a162d";
+        private const string ApiKey = "c117eb33c9d44d34734dfdcafa7a162d"; //01a049d30c4e17c1586707acf5d0fb17 82eb5ead8c6ece5c162b461615495b18
         private const string RegexCompare = "[^0-9a-zA-Z_'()$#&=+.@!%-]";
 
         public bool SongGotDeleted { get; }
@@ -68,7 +68,8 @@ namespace EspionSpotify
                 return;
             }
 
-            Thread.Sleep(50);
+            Thread.Sleep(500);
+
             WaveIn.StartRecording();
             _form.WriteIntoConsole(string.Format(_form.Rm.GetString($"logRecording") ?? "{0}", GetFileName(_path, _song, _format, false)));
 
