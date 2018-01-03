@@ -41,7 +41,7 @@ A standard use it's to start a recording session at night and let it work overni
 - Choose a minimal length to remove songs that are too short in time or songs that you skiped.
 - You can save all artist songs inside their own folder, but it will remove the artist of the file name. `../Artist/Title.mp3`
 - You can remove from the file name any space and replace it by underscore `Artist_-_Title.mp3`
-- Your can add a recording order number to:
+- You can add a recording order number to... :
   - infront of files name. `001 Artist - Title.mp3`
   - inside files and replace the track number.
 
