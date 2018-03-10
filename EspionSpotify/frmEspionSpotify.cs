@@ -31,6 +31,7 @@ namespace EspionSpotify
             InitializeComponent();
 
             Rm = new ResourceManager(typeof(english));
+
             BackImage = Resources.spytify_logo;
 
             if (Settings.Default.Directory == "")
@@ -62,6 +63,8 @@ namespace EspionSpotify
             txtPath.Text = Settings.Default.Directory;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
+            SetLanguageDropDown();
+
             var language = (LanguageType)indexLanguage;
             SetLanguage(language);
 
@@ -77,12 +80,22 @@ namespace EspionSpotify
             ResumeLayout();
         }
 
+        private void SetLanguageDropDown()
+        {
+            var langs = new Dictionary<LanguageType, string>
+            {
+                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
+                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
+            };
+
+            cbLanguage.DataSource = new BindingSource(langs, null);
+            cbLanguage.DisplayMember = "Value";
+            cbLanguage.ValueMember = "Key";
+        }
+
         private void SetLanguage(LanguageType languageType)
         {
-            if (languageType == LanguageType.Fr)
-            {
-                Rm = new ResourceManager(typeof(french));
-            }
+            Rm = languageType == LanguageType.Fr ? new ResourceManager(typeof(french)) : new ResourceManager(typeof(english));
 
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");
@@ -114,17 +127,6 @@ namespace EspionSpotify
             cbBitRate.DataSource = new BindingSource(bitrates, null);
             cbBitRate.DisplayMember = "Value";
             cbBitRate.ValueMember = "Key";
-
-            var langs = new Dictionary<LanguageType, string>
-            {
-                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
-                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
-            };
-
-            cbLanguage.DataSource = new BindingSource(langs, null);
-            cbLanguage.DisplayMember = "Value";
-            cbLanguage.ValueMember = "Key";
-
         }
 
         public void UpdateNum(int num)
@@ -422,6 +424,9 @@ namespace EspionSpotify
         {
             Settings.Default.Language = cbLanguage.SelectedIndex;
             Settings.Default.Save();
+
+            var language = (LanguageType)cbLanguage.SelectedIndex;
+            SetLanguage(language);
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)

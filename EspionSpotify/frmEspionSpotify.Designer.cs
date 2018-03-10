@@ -135,7 +135,7 @@ namespace EspionSpotify
             this.tabRecord.Location = new System.Drawing.Point(4, 38);
             this.tabRecord.Name = "tabRecord";
             this.tabRecord.Padding = new System.Windows.Forms.Padding(1);
-            this.tabRecord.Size = new System.Drawing.Size(752, 351);
+            this.tabRecord.Size = new System.Drawing.Size(752, 358);
             this.tabRecord.TabIndex = 0;
             this.tabRecord.Text = "TAB_SPY";
             this.tabRecord.VerticalScrollbarBarColor = true;
@@ -158,7 +158,7 @@ namespace EspionSpotify
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(750, 349);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(750, 356);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // tableLayoutPanel10
@@ -177,7 +177,7 @@ namespace EspionSpotify
             this.tableLayoutPanel10.Controls.Add(this.tbVolumeWin, 2, 0);
             this.tableLayoutPanel10.Controls.Add(this.iconVolume, 0, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 317);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 324);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -279,7 +279,7 @@ namespace EspionSpotify
             this.rtbLog.Name = "rtbLog";
             this.rtbLog.ReadOnly = true;
             this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbLog.Size = new System.Drawing.Size(750, 279);
+            this.rtbLog.Size = new System.Drawing.Size(750, 286);
             this.rtbLog.TabIndex = 32;
             this.rtbLog.Text = "";
             // 
