@@ -151,6 +151,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ads:.
+        /// </summary>
+        internal static string lblAds {
+            get {
+                return ResourceManager.GetString("lblAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audio quality (Bitrate):.
         /// </summary>
         internal static string lblBitRate {
@@ -165,6 +174,15 @@ namespace EspionSpotify {
         internal static string lblCustomize {
             get {
                 return ResourceManager.GetString("lblCustomize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Spotify Ads (commercials and banners)..
+        /// </summary>
+        internal static string lblDisableAds {
+            get {
+                return ResourceManager.GetString("lblDisableAds", resourceCulture);
             }
         }
         
@@ -327,6 +345,24 @@ namespace EspionSpotify {
         internal static string msgBodyPathNotFound {
             get {
                 return ResourceManager.GetString("msgBodyPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?.
+        /// </summary>
+        internal static string msgEnsureAdminContent {
+            get {
+                return ResourceManager.GetString("msgEnsureAdminContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrator rights required.
+        /// </summary>
+        internal static string msgEnsureAdminTitle {
+            get {
+                return ResourceManager.GetString("msgEnsureAdminTitle", resourceCulture);
             }
         }
         

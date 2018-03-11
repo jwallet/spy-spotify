@@ -23,11 +23,13 @@ namespace EspionSpotify
         private bool _bCdTrack;
         private bool _bNumFile;
         private int _num;
-        public ResourceManager Rm;
+        public static ResourceManager Rm;
+        public static FrmEspionSpotify Instance;
 
         public FrmEspionSpotify()
         {
             SuspendLayout();
+            Instance = this;
             InitializeComponent();
 
             Rm = new ResourceManager(typeof(english));
@@ -110,6 +112,8 @@ namespace EspionSpotify
             lblNumFiles.Text = Rm.GetString($"lblNumFiles");
             lblNumTracks.Text = Rm.GetString($"lblNumTracks");
             lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
+            lblAds.Text = Rm.GetString($"lblAds");
+            lblDisableAds.Text = Rm.GetString($"lblDisableAds");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -445,6 +449,27 @@ namespace EspionSpotify
         {
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
+        }
+
+        private void tgDisableAds_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.DisableAds = ManageSpotifyAds(tgDisableAds.Checked);
+            Settings.Default.Save();
+        }
+
+        private static bool ManageSpotifyAds(bool isToggled)
+        {
+            return isToggled
+                ? ManageHosts.DisableAds(ManageHosts.HostsSystemPath)
+                : ManageHosts.EnableAds(ManageHosts.HostsSystemPath);
+        }
+
+        private void tgDisableAds_Click(object sender, EventArgs e)
+        {
+            if (!Administrator.EnsureAdmin())
+            {
+                tgDisableAds.Checked = !tgDisableAds.Checked;
+            }
         }
     }
 }

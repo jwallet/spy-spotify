@@ -157,12 +157,20 @@
     <value>Remplacer les espaces par des underscores "_" dans le nom des fichiers sauvegardés</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAds" xml:space="preserve">
+    <value>Publicités:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblBitRate" xml:space="preserve">
     <value>Qualité audio (Bitrate):</value>
     <comment>interface</comment>
   </data>
   <data name="lblCustomize" xml:space="preserve">
     <value>Personnaliser:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDisableAds" xml:space="preserve">
+    <value>Désactiver les publicités de Spotify (annonces audio et bannières internes).</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -235,6 +243,14 @@
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
     <value>Le répertoire de sauvegarde sélectionné n'existe pas, sélectionner un autre.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminContent" xml:space="preserve">
+    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et ré-essayer?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminTitle" xml:space="preserve">
+    <value>Droits d'administrateur requis</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">

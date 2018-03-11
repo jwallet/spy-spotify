@@ -157,12 +157,20 @@
     <value>Replace files name spaces by underscores "_"</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAds" xml:space="preserve">
+    <value>Ads:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblBitRate" xml:space="preserve">
     <value>Audio quality (Bitrate):</value>
     <comment>interface</comment>
   </data>
   <data name="lblCustomize" xml:space="preserve">
     <value>Customize:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDisableAds" xml:space="preserve">
+    <value>Disable Spotify Ads (commercials and banners).</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -235,6 +243,14 @@
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
     <value>This output path does not exist, select another one.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminContent" xml:space="preserve">
+    <value>Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminTitle" xml:space="preserve">
+    <value>Administrator rights required</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">
