@@ -11,6 +11,7 @@ namespace EspionSpotify
         public static readonly string HostsSystemPath = @"\System32\drivers\etc\hosts";
         private static readonly string BasePath = Environment.GetEnvironmentVariable("WINDIR");
         private static readonly string[] AdHosts = Settings.Default.AdHosts.Split(';');
+        private static readonly string HostsTitle = $"# Spotify Disabled Ad Hosts";
 
         public static bool EnableAds(string hosts) => UpdateHosts(hosts, true);
         public static bool DisableAds(string hosts) => UpdateHosts(hosts);
@@ -30,6 +31,7 @@ namespace EspionSpotify
                 sw.Write(filtredEntries);
                 if (reset) return;
 
+                sw.Write($"\r\n{HostsTitle}");
                 foreach (var h in AdHosts)
                 {
                     sw.Write($"\r\n0.0.0.0\t{h}");
@@ -65,10 +67,8 @@ namespace EspionSpotify
         private static string FilterEntries(string content)
         {
             var newContent = string.Empty;
-            var file = content.Replace("\r", string.Empty).Split('\n');
-            newContent = file
-                .Where(s => !AdHosts.Any(s.Contains))
-                .Aggregate(newContent, (current, s) => current + s.Replace("\n", string.Empty) + "\r\n");
+            var fileContent = content.Replace("\r", string.Empty).Split('\n');
+            newContent = fileContent.Where(line => !AdHosts.Any(line.Contains) && !line.Contains(HostsTitle)).Aggregate(newContent, (current, line) => current + line.Replace("\n", string.Empty) + "\r\n");
 
             return newContent.TrimEnd();
         }

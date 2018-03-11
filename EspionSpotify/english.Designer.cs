@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable Spotify Ads (commercials and banners)..
+        ///   Looks up a localized string similar to Disable Spotify audio ads.
         /// </summary>
         internal static string lblDisableAds {
             get {
@@ -264,6 +264,15 @@ namespace EspionSpotify {
         internal static string logDeletingTooShort {
             get {
                 return ResourceManager.GetString("logDeletingTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to //Error while recording: The output directory was not found..
+        /// </summary>
+        internal static string logInvalidOutput {
+            get {
+                return ResourceManager.GetString("logInvalidOutput", resourceCulture);
             }
         }
         

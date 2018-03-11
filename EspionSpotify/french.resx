@@ -170,7 +170,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Désactiver les publicités de Spotify (annonces audio et bannières internes).</value>
+    <value>Désactiver les publicités audio de Spotify</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -209,6 +209,10 @@
     <value>//Effacement de: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
+  <data name="logInvalidOutput" xml:space="preserve">
+    <value>//Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
+    <comment>interface</comment>
+  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
@@ -246,7 +250,7 @@
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminContent" xml:space="preserve">
-    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et ré-essayer?</value>
+    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?</value>
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminTitle" xml:space="preserve">

@@ -170,7 +170,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Disable Spotify Ads (commercials and banners).</value>
+    <value>Disable Spotify audio ads</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -208,6 +208,10 @@
   <data name="logDeletingTooShort" xml:space="preserve">
     <value>//Removing: {0} [&lt; {1}s]</value>
     <comment>console</comment>
+  </data>
+  <data name="logInvalidOutput" xml:space="preserve">
+    <value>//Error while recording: The output directory was not found.</value>
+    <comment>interface</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
     <value>Recording: {0}</value>

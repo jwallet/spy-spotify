@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactiver les publicités de Spotify (annonces audio et bannières internes)..
+        ///   Looks up a localized string similar to Désactiver les publicités audio de Spotify.
         /// </summary>
         internal static string lblDisableAds {
             get {
@@ -268,6 +268,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to //Erreur lors de l&apos;enregistrement: Le répertoire de sauvegarde est introuvable..
+        /// </summary>
+        internal static string logInvalidOutput {
+            get {
+                return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enregistrement de: {0}.
         /// </summary>
         internal static string logRecording {
@@ -349,7 +358,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify doit redémarrer pour obtenir les droits d&apos;administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et ré-essayer?.
+        ///   Looks up a localized string similar to Spytify doit redémarrer pour obtenir les droits d&apos;administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?.
         /// </summary>
         internal static string msgEnsureAdminContent {
             get {

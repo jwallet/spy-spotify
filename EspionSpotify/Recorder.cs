@@ -64,6 +64,11 @@ namespace EspionSpotify
 
             if (Writer == null)
             {
+                if (!Directory.Exists(_path))
+                {
+                    _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logInvalidOutput"));
+                    return;
+                }
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logWriterIsNull"));
                 return;
             }

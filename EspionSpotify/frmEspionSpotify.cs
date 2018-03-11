@@ -55,14 +55,15 @@ namespace EspionSpotify
 
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
-            rbMp3.Checked = (Settings.Default.Format == 0);
-            rbWav.Checked = (Settings.Default.Format == 1);
+            rbMp3.Checked = Settings.Default.Format == 0;
+            rbWav.Checked = Settings.Default.Format == 1;
             tbMinTime.Value = Settings.Default.MinLength / 5;
             tgAddSeparators.Checked = Settings.Default.AddSeparators;
             tgNumTracks.Checked = Settings.Default.AddNumsAsTrack;
             tgNumFiles.Checked = Settings.Default.AddNumsInfrontFile;
             tgAddFolders.Checked = Settings.Default.AddFolders;
             txtPath.Text = Settings.Default.Directory;
+            tgDisableAds.Checked = Settings.Default.DisableAds;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
             SetLanguageDropDown();
@@ -453,7 +454,9 @@ namespace EspionSpotify
 
         private void tgDisableAds_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.DisableAds = ManageSpotifyAds(tgDisableAds.Checked);
+            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
+
+            Settings.Default.DisableAds = tgDisableAds.Checked;
             Settings.Default.Save();
         }
 
