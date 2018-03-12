@@ -31,7 +31,7 @@ A standard use it's to start a recording session at night and let it work overni
    - Album cover art
    - Genre
    
-> ![image](https://user-images.githubusercontent.com/23088305/37244318-3c3acb8c-2455-11e8-8f23-8faa448348c7.png)
+> ![image](https://user-images.githubusercontent.com/23088305/37262042-1404ed96-2577-11e8-9408-648aa710b7d8.png)
 
 ## Parameters
 - Choose an output path
