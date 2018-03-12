@@ -17,7 +17,7 @@ A standard use it's to start a recording session at night and let it work overni
 
 ## Features
 ### App features:
-- Does not record ads.
+- Does not record or disable ads.
 - Mutes any other applications while spying.
 - Gets and records with the same great audio quality than Spotify.
 - Max out the volume from Spotify and records all song at the same level, even if you play with your main volume.
