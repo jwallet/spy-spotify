@@ -29,5 +29,14 @@
     <Setting Name="Language" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="TabNo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="AdHosts" Type="System.String" Scope="User">
+      <Value Profile="(Default)">s0.2mdn.net;content.bitsontherun.com;bounceexchange.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;adclick.g.doublecklick.net;doubleclick.net;googleads.g.doubleclick.net;pagead46.l.doubleclick.net;pubads.g.doubleclick.net;securepubads.g.doubleclick.net;gtssl2-ocsp.geotrust.com;googleadservices.com;partner.googleadservices.com;www.googleadservices.com;www.googletagservices.com;pagead2.googlesyndication.com;tpc.googlesyndication.com;video-ad-stats.googlesyndication.com;redirector.gvt1.com;core.insightexpressai.com;v.jwpcdn.com;media-match.com;js.moatads.com;omaze.com;www.omaze.com;ads.pubmatic.com;gads.pubmatic.com;b.scorecardresearch.com;bs.serving-sys.com;ds.serving-sys.com;adeventtracker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.com</Value>
+    </Setting>
+    <Setting Name="DisableAds" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

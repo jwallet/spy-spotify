@@ -151,6 +151,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ads:.
+        /// </summary>
+        internal static string lblAds {
+            get {
+                return ResourceManager.GetString("lblAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audio quality (Bitrate):.
         /// </summary>
         internal static string lblBitRate {
@@ -165,6 +174,15 @@ namespace EspionSpotify {
         internal static string lblCustomize {
             get {
                 return ResourceManager.GetString("lblCustomize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Spotify audio ads.
+        /// </summary>
+        internal static string lblDisableAds {
+            get {
+                return ResourceManager.GetString("lblDisableAds", resourceCulture);
             }
         }
         
@@ -250,6 +268,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to //Error while recording: The output directory was not found..
+        /// </summary>
+        internal static string logInvalidOutput {
+            get {
+                return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recording: {0}.
         /// </summary>
         internal static string logRecording {
@@ -327,6 +354,42 @@ namespace EspionSpotify {
         internal static string msgBodyPathNotFound {
             get {
                 return ResourceManager.GetString("msgBodyPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?.
+        /// </summary>
+        internal static string msgEnsureAdminContent {
+            get {
+                return ResourceManager.GetString("msgEnsureAdminContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrator rights required.
+        /// </summary>
+        internal static string msgEnsureAdminTitle {
+            get {
+                return ResourceManager.GetString("msgEnsureAdminTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} is out! Do you want to open GitHub to view the newest Spytify release?.
+        /// </summary>
+        internal static string msgNewVersionContent {
+            get {
+                return ResourceManager.GetString("msgNewVersionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version available.
+        /// </summary>
+        internal static string msgNewVersionTitle {
+            get {
+                return ResourceManager.GetString("msgNewVersionTitle", resourceCulture);
             }
         }
         

@@ -71,7 +71,7 @@ namespace EspionSpotify
             Ready = false;
             Running = true;
 
-            _form.WriteIntoConsole(_form.Rm.GetString($"logStarting"));
+            _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStarting"));
 
             SpotifyStatusBeforeSpying();
 
@@ -90,7 +90,7 @@ namespace EspionSpotify
 
             if (_recorder != null) DoIKeepLastSong(true);
 
-            _form.WriteIntoConsole(_form.Rm.GetString($"logStoping"));
+            _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle("Spotify");
             Ready = true;
@@ -102,14 +102,14 @@ namespace EspionSpotify
         {
             if (_title == null)
             {
-                _form.WriteIntoConsole(_form.Rm.GetString($"logSpotifyNotRunning"));
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotRunning"));
                 Running = false;
             }
             else
             {
                 if (_title != "Spotify")
                 {
-                    _form.WriteIntoConsole(_form.Rm.GetString($"logWaiting"));
+                    _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logWaiting"));
                     _bWait = true;
                 }
                 else
@@ -162,7 +162,7 @@ namespace EspionSpotify
 
             if (SpotifyClosedOrCrashed)
             {
-                _form.WriteIntoConsole(_form.Rm.GetString($"logSpotifyIsClosed"));
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
 
                 _process2Spy.Dispose();
 

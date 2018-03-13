@@ -157,12 +157,20 @@
     <value>Remplacer les espaces par des underscores "_" dans le nom des fichiers sauvegardés</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAds" xml:space="preserve">
+    <value>Publicités:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblBitRate" xml:space="preserve">
     <value>Qualité audio (Bitrate):</value>
     <comment>interface</comment>
   </data>
   <data name="lblCustomize" xml:space="preserve">
     <value>Personnaliser:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDisableAds" xml:space="preserve">
+    <value>Désactiver les publicités audio de Spotify</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -201,6 +209,10 @@
     <value>//Effacement de: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
+  <data name="logInvalidOutput" xml:space="preserve">
+    <value>//Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
+    <comment>interface</comment>
+  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
@@ -235,6 +247,22 @@
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
     <value>Le répertoire de sauvegarde sélectionné n'existe pas, sélectionner un autre.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminContent" xml:space="preserve">
+    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgEnsureAdminTitle" xml:space="preserve">
+    <value>Droits d'administrateur requis</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgNewVersionContent" xml:space="preserve">
+    <value>Version {0} a été publiée! Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgNewVersionTitle" xml:space="preserve">
+    <value>Nouvelle version disponible</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">

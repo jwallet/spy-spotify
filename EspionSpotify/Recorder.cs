@@ -29,7 +29,7 @@ namespace EspionSpotify
         private string _currentFile;
         public WasapiLoopbackCapture WaveIn;
         public Stream Writer;
-        private const string ApiKey = "c117eb33c9d44d34734dfdcafa7a162d";
+        private const string ApiKey = "c117eb33c9d44d34734dfdcafa7a162d"; //01a049d30c4e17c1586707acf5d0fb17 82eb5ead8c6ece5c162b461615495b18
         private const string RegexCompare = "[^0-9a-zA-Z_'()$#&=+.@!%-]";
 
         public bool SongGotDeleted { get; }
@@ -64,13 +64,19 @@ namespace EspionSpotify
 
             if (Writer == null)
             {
-                _form.WriteIntoConsole(_form.Rm.GetString($"logWriterIsNull"));
+                if (!Directory.Exists(_path))
+                {
+                    _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logInvalidOutput"));
+                    return;
+                }
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logWriterIsNull"));
                 return;
             }
 
-            Thread.Sleep(50);
+            Thread.Sleep(500);
+
             WaveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(_form.Rm.GetString($"logRecording") ?? "{0}", GetFileName(_path, _song, _format, false)));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", GetFileName(_path, _song, _format, false)));
 
             while (Running)
             {
@@ -101,9 +107,9 @@ namespace EspionSpotify
             }
 
             _form.WriteIntoConsole(Count != -1
-                ? string.Format(_form.Rm.GetString($"logDeletingTooShort") ?? "{0}",
+                ? string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? "{0}",
                     GetFileName(_path, _song, _format, false), _minTime)
-                : string.Format(_form.Rm.GetString($"logDeleting") ?? "{0}",
+                : string.Format(FrmEspionSpotify.Rm.GetString($"logDeleting") ?? "{0}",
                     GetFileName(_path, _song, _format, false)));
 
             File.Delete(_currentFile);
@@ -160,7 +166,7 @@ namespace EspionSpotify
             mp3.Tag.Album = albumTitle;
             mp3.Tag.Genres = new[] { style };
 
-            mp3.Save();
+            if (File.Exists(_currentFile)) mp3.Save();
 
             // try to get and download all available covers and save it
             if (apiReturn != null)
@@ -196,7 +202,7 @@ namespace EspionSpotify
                 }
 
                 mp3.Tag.Pictures = new IPicture[4] { extraLargePicture, largePicture, mediumPicture, smallPicture };
-                mp3.Save();
+                if (File.Exists(_currentFile)) mp3.Save();
             }
 
             mp3.Dispose();

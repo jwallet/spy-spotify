@@ -23,13 +23,15 @@ namespace EspionSpotify
         private bool _bCdTrack;
         private bool _bNumFile;
         private int _num;
-        public ResourceManager Rm;
+        public static ResourceManager Rm;
+        public static FrmEspionSpotify Instance;
 
         public FrmEspionSpotify()
         {
             SuspendLayout();
+            Instance = this;
             InitializeComponent();
-
+            
             Rm = new ResourceManager(typeof(english));
             BackImage = Resources.spytify_logo;
 
@@ -52,15 +54,18 @@ namespace EspionSpotify
 
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
-            rbMp3.Checked = (Settings.Default.Format == 0);
-            rbWav.Checked = (Settings.Default.Format == 1);
+            rbMp3.Checked = Settings.Default.Format == 0;
+            rbWav.Checked = Settings.Default.Format == 1;
             tbMinTime.Value = Settings.Default.MinLength / 5;
             tgAddSeparators.Checked = Settings.Default.AddSeparators;
             tgNumTracks.Checked = Settings.Default.AddNumsAsTrack;
             tgNumFiles.Checked = Settings.Default.AddNumsInfrontFile;
             tgAddFolders.Checked = Settings.Default.AddFolders;
             txtPath.Text = Settings.Default.Directory;
+            tgDisableAds.Checked = Settings.Default.DisableAds;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
+
+            SetLanguageDropDown();
 
             var language = (LanguageType)indexLanguage;
             SetLanguage(language);
@@ -75,14 +80,25 @@ namespace EspionSpotify
             lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
 
             ResumeLayout();
+            GitHub.NewestVersion();
+        }
+
+        private void SetLanguageDropDown()
+        {
+            var langs = new Dictionary<LanguageType, string>
+            {
+                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
+                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
+            };
+
+            cbLanguage.DataSource = new BindingSource(langs, null);
+            cbLanguage.DisplayMember = "Value";
+            cbLanguage.ValueMember = "Key";
         }
 
         private void SetLanguage(LanguageType languageType)
         {
-            if (languageType == LanguageType.Fr)
-            {
-                Rm = new ResourceManager(typeof(french));
-            }
+            Rm = languageType == LanguageType.Fr ? new ResourceManager(typeof(french)) : new ResourceManager(typeof(english));
 
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");
@@ -97,6 +113,8 @@ namespace EspionSpotify
             lblNumFiles.Text = Rm.GetString($"lblNumFiles");
             lblNumTracks.Text = Rm.GetString($"lblNumTracks");
             lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
+            lblAds.Text = Rm.GetString($"lblAds");
+            lblDisableAds.Text = Rm.GetString($"lblDisableAds");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -114,17 +132,6 @@ namespace EspionSpotify
             cbBitRate.DataSource = new BindingSource(bitrates, null);
             cbBitRate.DisplayMember = "Value";
             cbBitRate.ValueMember = "Key";
-
-            var langs = new Dictionary<LanguageType, string>
-            {
-                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
-                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
-            };
-
-            cbLanguage.DataSource = new BindingSource(langs, null);
-            cbLanguage.DisplayMember = "Value";
-            cbLanguage.ValueMember = "Key";
-
         }
 
         public void UpdateNum(int num)
@@ -254,6 +261,7 @@ namespace EspionSpotify
             {
                 if (!DirExists()) return;
 
+                tcMenu.SelectedIndex = 0;
                 StartRecording();
                 lnkSpy.Image = Resources.off;
             }
@@ -421,6 +429,9 @@ namespace EspionSpotify
         {
             Settings.Default.Language = cbLanguage.SelectedIndex;
             Settings.Default.Save();
+
+            var language = (LanguageType)cbLanguage.SelectedIndex;
+            SetLanguage(language);
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)
@@ -439,6 +450,29 @@ namespace EspionSpotify
         {
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
+        }
+
+        private void tgDisableAds_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
+
+            Settings.Default.DisableAds = tgDisableAds.Checked;
+            Settings.Default.Save();
+        }
+
+        private static bool ManageSpotifyAds(bool isToggled)
+        {
+            return isToggled
+                ? ManageHosts.DisableAds(ManageHosts.HostsSystemPath)
+                : ManageHosts.EnableAds(ManageHosts.HostsSystemPath);
+        }
+
+        private void tgDisableAds_Click(object sender, EventArgs e)
+        {
+            if (!Administrator.EnsureAdmin())
+            {
+                tgDisableAds.Checked = !tgDisableAds.Checked;
+            }
         }
     }
 }
