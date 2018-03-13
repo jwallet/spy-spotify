@@ -376,6 +376,24 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version {0} a été publiée! Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?.
+        /// </summary>
+        internal static string msgNewVersionContent {
+            get {
+                return ResourceManager.GetString("msgNewVersionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nouvelle version disponible.
+        /// </summary>
+        internal static string msgNewVersionTitle {
+            get {
+                return ResourceManager.GetString("msgNewVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Espionnage Spotify en cours.
         /// </summary>
         internal static string msgTitleCantQuit {

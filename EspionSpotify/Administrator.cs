@@ -12,7 +12,12 @@ namespace EspionSpotify
         public static bool EnsureAdmin()
         {
             if (!IsNotAdmin()) return true;
-            if (MetroFramework.MetroMessageBox.Show(FrmEspionSpotify.Instance, FrmEspionSpotify.Rm.GetString($"msgEnsureAdminContent"), FrmEspionSpotify.Rm.GetString($"msgEnsureAdminTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return false;
+            if (MetroFramework.MetroMessageBox.Show(
+                FrmEspionSpotify.Instance,
+                FrmEspionSpotify.Rm.GetString($"msgEnsureAdminContent"),
+                FrmEspionSpotify.Rm.GetString($"msgEnsureAdminTitle"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) != DialogResult.Yes) return false;
 
             var exe = Process.GetCurrentProcess().MainModule.FileName;
             var info = new ProcessStartInfo(exe)

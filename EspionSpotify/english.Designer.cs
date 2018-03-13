@@ -376,6 +376,24 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version {0} is out! Do you want to open GitHub to view the newest Spytify release?.
+        /// </summary>
+        internal static string msgNewVersionContent {
+            get {
+                return ResourceManager.GetString("msgNewVersionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version available.
+        /// </summary>
+        internal static string msgNewVersionTitle {
+            get {
+                return ResourceManager.GetString("msgNewVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spytify is spying.
         /// </summary>
         internal static string msgTitleCantQuit {

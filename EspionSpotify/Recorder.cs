@@ -166,7 +166,7 @@ namespace EspionSpotify
             mp3.Tag.Album = albumTitle;
             mp3.Tag.Genres = new[] { style };
 
-            mp3.Save();
+            if (File.Exists(_currentFile)) mp3.Save();
 
             // try to get and download all available covers and save it
             if (apiReturn != null)
@@ -202,7 +202,7 @@ namespace EspionSpotify
                 }
 
                 mp3.Tag.Pictures = new IPicture[4] { extraLargePicture, largePicture, mediumPicture, smallPicture };
-                mp3.Save();
+                if (File.Exists(_currentFile)) mp3.Save();
             }
 
             mp3.Dispose();

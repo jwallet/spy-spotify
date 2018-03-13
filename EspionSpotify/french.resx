@@ -257,6 +257,14 @@
     <value>Droits d'administrateur requis</value>
     <comment>message</comment>
   </data>
+  <data name="msgNewVersionContent" xml:space="preserve">
+    <value>Version {0} a été publiée! Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgNewVersionTitle" xml:space="preserve">
+    <value>Nouvelle version disponible</value>
+    <comment>message</comment>
+  </data>
   <data name="msgTitleCantQuit" xml:space="preserve">
     <value>Espionnage Spotify en cours</value>
     <comment>message</comment>

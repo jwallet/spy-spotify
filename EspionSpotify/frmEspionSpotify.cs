@@ -31,9 +31,8 @@ namespace EspionSpotify
             SuspendLayout();
             Instance = this;
             InitializeComponent();
-
+            
             Rm = new ResourceManager(typeof(english));
-
             BackImage = Resources.spytify_logo;
 
             if (Settings.Default.Directory == "")
@@ -81,6 +80,7 @@ namespace EspionSpotify
             lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
 
             ResumeLayout();
+            GitHubApi.NewestVersion();
         }
 
         private void SetLanguageDropDown()
