@@ -80,7 +80,7 @@ namespace EspionSpotify
             lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
 
             ResumeLayout();
-            GitHubApi.NewestVersion();
+            GitHub.NewestVersion();
         }
 
         private void SetLanguageDropDown()

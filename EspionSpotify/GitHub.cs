@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace EspionSpotify
 {
-    internal static class GitHubApi
+    internal static class GitHub
     {
         public static void NewestVersion()
         {

@@ -162,7 +162,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ManageHosts.cs" />
-    <Compile Include="Update.cs" />
+    <Compile Include="GitHub.cs" />
     <Compile Include="ValidAccess.cs" />
     <Compile Include="VolumeWin.cs" />
     <Compile Include="Watcher.cs" />
