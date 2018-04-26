@@ -37,7 +37,7 @@ A standard use it's to start a recording session at night and let it work overni
 ## Parameters
 - Choose an output path
 - Choose audio format : mp3 or wav
-- Choose audio quality : low to high
+- Choose audio quality : low to high (128kbps, 160kbps, 256kbps, 320kbps)
 - Choose a minimal length to remove songs that are too short in time or songs that you skiped.
 - You can save all artist songs inside their own folder, but it will remove the artist of the file name. `../Artist/Title.mp3`
 - You can remove from the file name any space and replace it by underscore `Artist_-_Title.mp3`
