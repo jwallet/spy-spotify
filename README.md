@@ -50,7 +50,7 @@ Adding the recording order number to files `017_Artiste_-_Titre.mp3` is useful i
 
 ## Dependencies
 - .NET Framwork 4.5
-- [Spotify API NET](https://johnnycrazy.github.io/SpotifyAPI-NET/) by @johnnycrazy 
+- [Spotify API NET](https://johnnycrazy.github.io/SpotifyAPI-NET/) by [JohnnyCrazy](https://github.com/JohnnyCrazy)
 - Newtonsoft.Json 11
 - NAudio.Lame
 - last.fm API
