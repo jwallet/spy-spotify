@@ -6,7 +6,7 @@ Runs on Windows only ([.NET 4.5](https://www.microsoft.com/en-ca/download/detail
 No need of a Spotify Premium account, __any free account will do__, however a premium account will give you some advantages: no ads and more audio qualities available.
 
 ## How it works ?
-Spytify uses the local Spotify API[\*](#dependencies) and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file or playing the song on Spotify. Be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, even Spotify might not be the solution for you.
+Spytify uses the local Spotify API[\*](#dependencies) and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file or playing the song on Spotify. Be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify might not be the solution for you.
 
 ## Use
 A standard use it's to start a recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
