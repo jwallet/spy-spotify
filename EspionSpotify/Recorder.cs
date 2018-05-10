@@ -29,7 +29,7 @@ namespace EspionSpotify
         public Stream Writer;
         private const int FirstSongNameCount = 1;
 
-        private const string RegexCompare = "[^0-9a-zA-Z_'()$#&=+.@!%-]";
+        private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
         public bool SongGotDeleted { get; }
 
@@ -127,7 +127,7 @@ namespace EspionSpotify
             Stream writer;
             string insertArtistDir = null;
             var artistDir = Normalize.RemoveDiacritics(_song.Artist);
-            artistDir = Regex.Replace(artistDir, RegexCompare, _charSeparator);
+            artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
 
             if (_strucDossiers)
             {
@@ -173,35 +173,35 @@ namespace EspionSpotify
         private string GetFileName(string songName, int count, string path = null)
         {
             var ending = _format.ToString().ToLower();
-            songName += count > FirstSongNameCount ? $"{_charSeparator}{count}" : "";
+            songName += count > FirstSongNameCount ? $"{_charSeparator}{count}" : string.Empty;
             return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
         }
 
         private string BuildFileName(string path, bool includePath = true)
         {
             string songName;
-            var track = _compteur != -1 && _bNumFile ? _compteur.ToString("000") + _charSeparator : null;
+            var track = _compteur != -1 && _bNumFile ? $"{_compteur :000} " : null;
 
             if (_strucDossiers)
             {
                 songName = Normalize.RemoveDiacritics(_song.Title);
-                songName = Regex.Replace(songName, RegexCompare, _charSeparator);
+                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
             }
             else
             {
                 songName = Normalize.RemoveDiacritics(_song.ToString());
-                songName = Regex.Replace(songName, RegexCompare, _charSeparator);
+                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
             }
 
+            var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _charSeparator);
+            var filename = GetFileName(songNameTrackNumber, FirstSongNameCount, includePath ? path : null);
             var count = FirstSongNameCount;
-            var songNameTrackNumber = $"{track}{songName}";
-            var filename = GetFileName(songNameTrackNumber, count, includePath ? path : null);
-            
 
             while (File.Exists(GetFileName(songNameTrackNumber, count, path)))
             {
+                if (includePath) count++;
                 filename = GetFileName(songNameTrackNumber, count, includePath ? path : null);
-                count++;
+                if (!includePath) count++;
             }
 
             return filename;
