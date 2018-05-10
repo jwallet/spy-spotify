@@ -117,161 +117,164 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cbOptBitRate128" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptBitRate160" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptBitRate256" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptBitRate320" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptLangEn" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOptLangFr" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\folder.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="lblAddFolders" xml:space="preserve">
     <value />
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
     <value />
   </data>
-  <data name="lblBitRate" xml:space="preserve">
-    <value />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="volmute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\volmute.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="lblCustomize" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblFormat" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblLanguage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMinLength" xml:space="preserve">
+  <data name="logSpotifyIsClosed" xml:space="preserve">
     <value />
   </data>
   <data name="lblNumFiles" xml:space="preserve">
     <value />
   </data>
-  <data name="lblNumTracks" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPath" xml:space="preserve">
+  <data name="logStoping" xml:space="preserve">
     <value />
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
     <value />
   </data>
-  <data name="logDeleting" xml:space="preserve">
+  <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
     <value />
   </data>
-  <data name="logDeletingTooShort" xml:space="preserve">
-    <value />
+  <data name="play" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="logRecording" xml:space="preserve">
-    <value />
-  </data>
-  <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value />
-  </data>
-  <data name="logStarting" xml:space="preserve">
-    <value />
-  </data>
-  <data name="logStoping" xml:space="preserve">
-    <value />
-  </data>
-  <data name="logWaiting" xml:space="preserve">
+  <data name="msgTitleCantQuit" xml:space="preserve">
     <value />
   </data>
   <data name="logWriterIsNull" xml:space="preserve">
     <value />
   </data>
-  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minus.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lblFormat" xml:space="preserve">
+    <value />
   </data>
-  <data name="msgBodyCantQuit" xml:space="preserve">
+  <data name="cbOptLangFr" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblNumTracks" xml:space="preserve">
+    <value />
+  </data>
+  <data name="logStarting" xml:space="preserve">
+    <value />
+  </data>
+  <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\plus.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lblPath" xml:space="preserve">
     <value />
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
     <value />
   </data>
-  <data name="msgTitleCantQuit" xml:space="preserve">
+  <data name="logWaiting" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOptBitRate256" xml:space="preserve">
+    <value />
+  </data>
+  <data name="msgBodyCantQuit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
+    <value />
+  </data>
+  <data name="logRecording" xml:space="preserve">
+    <value />
+  </data>
+  <data name="on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\on.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tabSettings" xml:space="preserve">
+    <value />
+  </data>
+  <data name="logDeleting" xml:space="preserve">
     <value />
   </data>
   <data name="msgTitlePathNotFound" xml:space="preserve">
     <value />
   </data>
-  <data name="off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\off.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\on.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pause.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\play.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\plus.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="spytify" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\spytify.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cbOptLangEn" xml:space="preserve">
+    <value />
   </data>
   <data name="spytify_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\spytify-logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tabRecord" xml:space="preserve">
+  <data name="tipStopSying" xml:space="preserve">
     <value />
   </data>
-  <data name="tabSettings" xml:space="preserve">
+  <data name="logDeletingTooShort" xml:space="preserve">
     <value />
   </data>
-  <data name="tipClear" xml:space="preserve">
+  <data name="logSpotifyNotRunning" xml:space="preserve">
     <value />
   </data>
   <data name="tipDirectory" xml:space="preserve">
     <value />
   </data>
-  <data name="tipPath" xml:space="preserve">
-    <value />
+  <data name="volup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\volup.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tipStartSpying" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tipStopSying" xml:space="preserve">
+  <data name="lblCustomize" xml:space="preserve">
     <value />
   </data>
   <data name="voldown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\voldown.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="volmute" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\volmute.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lblMinLength" xml:space="preserve">
+    <value />
   </data>
-  <data name="volup" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\volup.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="spytify" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\spytify.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cbOptBitRate160" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabRecord" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tipStartSpying" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLanguage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOptBitRate320" xml:space="preserve">
+    <value />
+  </data>
+  <data name="off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\off.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minus.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tipClear" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblBitRate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tipPath" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOptBitRate128" xml:space="preserve">
+    <value />
+  </data>
+  <data name="record" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\record.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -162,7 +162,6 @@ namespace EspionSpotify
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(750, 376);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
@@ -291,13 +290,14 @@ namespace EspionSpotify
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel3.ColumnCount = 5;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.tableLayoutPanel3.Controls.Add(this.lblPlayingTitle, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.iconSpotify, 1, 0);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
+            this.tableLayoutPanel3.Controls.Add(this.lblPlayingTitle, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.iconSpotify, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -313,7 +313,7 @@ namespace EspionSpotify
             this.lblPlayingTitle.BackColor = System.Drawing.Color.Black;
             this.lblPlayingTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPlayingTitle.ForeColor = System.Drawing.Color.SpringGreen;
-            this.lblPlayingTitle.Location = new System.Drawing.Point(344, 0);
+            this.lblPlayingTitle.Location = new System.Drawing.Point(354, 0);
             this.lblPlayingTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblPlayingTitle.Name = "lblPlayingTitle";
             this.lblPlayingTitle.Size = new System.Drawing.Size(49, 35);
@@ -328,10 +328,11 @@ namespace EspionSpotify
             this.iconSpotify.BackColor = System.Drawing.Color.Black;
             this.iconSpotify.BackgroundImage = global::EspionSpotify.Properties.Resources.pause;
             this.iconSpotify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.iconSpotify.Location = new System.Drawing.Point(298, 6);
-            this.iconSpotify.Margin = new System.Windows.Forms.Padding(6);
+            this.iconSpotify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iconSpotify.Location = new System.Drawing.Point(319, 6);
+            this.iconSpotify.Margin = new System.Windows.Forms.Padding(0, 6, 6, 6);
             this.iconSpotify.Name = "iconSpotify";
-            this.iconSpotify.Size = new System.Drawing.Size(40, 23);
+            this.iconSpotify.Size = new System.Drawing.Size(29, 23);
             this.iconSpotify.TabIndex = 35;
             // 
             // tabSettings

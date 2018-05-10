@@ -23,6 +23,8 @@ namespace EspionSpotify
         private bool _bCdTrack;
         private bool _bNumFile;
         private int _num;
+
+        public static Random Rnd;
         public static ResourceManager Rm;
         public static FrmEspionSpotify Instance;
 
@@ -32,6 +34,7 @@ namespace EspionSpotify
             Instance = this;
             InitializeComponent();
             
+            Rnd = new Random();
             Rm = new ResourceManager(typeof(english));
             BackImage = Resources.spytify_logo;
 
@@ -161,15 +164,23 @@ namespace EspionSpotify
             }
         }
 
-        public void UpdateIconSpotify(bool pause = false)
+        public void UpdateIconSpotify(bool isSpotifyPlaying, bool isRecording = false)
         {
             if (iconSpotify.InvokeRequired)
             {
-                BeginInvoke(new Action(() => UpdateIconSpotify(pause)));
+                BeginInvoke(new Action(() => UpdateIconSpotify(isSpotifyPlaying, isRecording)));
+            }
+            else if (isRecording)
+            {
+                iconSpotify.BackgroundImage = Resources.record;
+            }
+            else if (isSpotifyPlaying)
+            {
+                iconSpotify.BackgroundImage = Resources.play;
             }
             else
             {
-                iconSpotify.BackgroundImage = pause ? Resources.pause : Resources.play;
+                iconSpotify.BackgroundImage = Resources.pause;
             }
         }
 

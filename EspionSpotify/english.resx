@@ -201,44 +201,60 @@
     <value>Choose the starting position of the recording order number</value>
     <comment>interface</comment>
   </data>
+  <data name="logAd" xml:space="preserve">
+    <value>Ad</value>
+    <comment>console</comment>
+  </data>
+  <data name="logAdPlaying" xml:space="preserve">
+    <value>// An ad is playing.</value>
+    <comment>console</comment>
+  </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>//Removing: {0}</value>
+    <value>// Removing: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logDeletingTooShort" xml:space="preserve">
-    <value>//Removing: {0} [&lt; {1}s]</value>
+    <value>// Removing: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">
-    <value>//Error while recording: The output directory was not found.</value>
+    <value>// Error while recording: The output directory was not found.</value>
     <comment>interface</comment>
+  </data>
+  <data name="logOther" xml:space="preserve">
+    <value>Unknown</value>
+    <comment>console</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
     <value>Recording: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value>//Spotify is closed</value>
+    <value>// Spotify is closed</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyNotFound" xml:space="preserve">
+    <value>// Spotify didn't connect or was not found.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value>//Spotify app is not running</value>
+    <value>// Spotify app is not running</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
-    <value>//Spying</value>
+    <value>// Spying</value>
     <comment>console</comment>
   </data>
   <data name="logStoping" xml:space="preserve">
-    <value>//End</value>
+    <value>// End</value>
     <comment>console</comment>
   </data>
   <data name="logWaiting" xml:space="preserve">
-    <value>//Waiting for next title...</value>
+    <value>// Waiting for next title...</value>
     <comment>console</comment>
   </data>
   <data name="logWriterIsNull" xml:space="preserve">
-    <value>//Error while recording: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' (Control panel &gt; Sound &gt; Properties &gt; Advanced).</value>
+    <value>// Error while recording: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' (Control panel &gt; Sound &gt; Properties &gt; Advanced).</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">

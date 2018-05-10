@@ -1502,6 +1502,21 @@
             <param name="isMuted">Receives the muting state.</param>
             <returns>An HRESULT code indicating whether the operation succeeded of failed.</returns>
         </member>
+        <member name="T:NAudio.CoreAudioApi.Interfaces.Blob">
+            <summary>
+            Representation of binary large object container.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.Blob.Length">
+            <summary>
+            Length of binary object.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.Blob.Data">
+            <summary>
+            Pointer to buffer storing data.
+            </summary>
+        </member>
         <member name="T:NAudio.CoreAudioApi.Interfaces.ClsCtx">
             <summary>
             is defined in WTypes.h
@@ -1577,11 +1592,131 @@
             MMDevice STGM enumeration
             </summary>
         </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.Read">
+            <summary>
+            Read-only access mode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.Write">
+            <summary>
+            Write-only access mode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.ReadWrite">
+            <summary>
+            Read-write access mode.
+            </summary>
+        </member>
         <member name="T:NAudio.CoreAudioApi.Interfaces.PropVariant">
             <summary>
             from Propidl.h.
             http://msdn.microsoft.com/en-us/library/aa380072(VS.85).aspx
             contains a union so we have to do an explicit layout
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.vt">
+            <summary>
+            Value type tag.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved1">
+            <summary>
+            Reserved1.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved2">
+            <summary>
+            Reserved2.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved3">
+            <summary>
+            Reserved3.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.cVal">
+            <summary>
+            cVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.bVal">
+            <summary>
+            bVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.iVal">
+            <summary>
+            iVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uiVal">
+            <summary>
+            uiVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.lVal">
+            <summary>
+            lVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.ulVal">
+            <summary>
+            ulVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.intVal">
+            <summary>
+            intVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uintVal">
+            <summary>
+            uintVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.hVal">
+            <summary>
+            hVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uhVal">
+            <summary>
+            uhVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.fltVal">
+            <summary>
+            fltVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.dblVal">
+            <summary>
+            dblVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.boolVal">
+            <summary>
+            boolVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.scode">
+            <summary>
+            scode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.filetime">
+            <summary>
+            Date time.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.blobVal">
+            <summary>
+            Binary large object.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.pointerValue">
+            <summary>
+            Pointer value.
             </summary>
         </member>
         <member name="M:NAudio.CoreAudioApi.Interfaces.PropVariant.FromLong(System.Int64)">
@@ -1715,6 +1850,21 @@
         <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_IconPath">
             <summary>
             PKEY _Device_IconPath
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_DeviceDesc">
+            <summary>
+            Device description property.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_ControllerDeviceId">
+            <summary>
+            Id of controller device for endpoint device property.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_InterfaceKey">
+            <summary>
+            Device interface key property.
             </summary>
         </member>
         <member name="T:NAudio.CoreAudioApi.SessionCollection">
@@ -2091,6 +2241,13 @@
             MM Device
             </summary>
         </member>
+        <member name="M:NAudio.CoreAudioApi.MMDevice.GetPropertyInformation(NAudio.CoreAudioApi.Interfaces.StorageAccessMode)">
+            <summary>
+            Initializes the device's property store.
+            </summary>
+            <param name="stgmAccess">The storage-access mode to open store for.</param>
+            <remarks>Administrative client is required for Write and ReadWrite modes.</remarks>
+        </member>
         <member name="P:NAudio.CoreAudioApi.MMDevice.AudioClient">
             <summary>
             Audio Client
@@ -2269,6 +2426,18 @@
             </summary>
             <param name="index">Index</param>
             <returns>Property value</returns>
+        </member>
+        <member name="M:NAudio.CoreAudioApi.PropertyStore.SetValue(NAudio.CoreAudioApi.PropertyKey,NAudio.CoreAudioApi.Interfaces.PropVariant)">
+            <summary>
+            Sets property value at specified key.
+            </summary>
+            <param name="key">Key of property to set.</param>
+            <param name="value">Value to write.</param>
+        </member>
+        <member name="M:NAudio.CoreAudioApi.PropertyStore.Commit">
+            <summary>
+            Saves a property change.
+            </summary>
         </member>
         <member name="M:NAudio.CoreAudioApi.PropertyStore.#ctor(NAudio.CoreAudioApi.Interfaces.IPropertyStore)">
             <summary>
@@ -10247,6 +10416,11 @@
             The contents of this text event
             </summary>
         </member>
+        <member name="P:NAudio.Midi.TextEvent.Data">
+            <summary>
+            The raw contents of this text event
+            </summary>
+        </member>
         <member name="M:NAudio.Midi.TextEvent.ToString">
             <summary>
             Describes this MIDI text event
@@ -16139,6 +16313,101 @@
             <param name="channel">channel index (zero based)</param>
             <returns>channel name</returns>
         </member>
+        <member name="T:NAudio.Wave.BextChunkInfo">
+            <summary>
+            https://tech.ebu.ch/docs/tech/tech3285.pdf
+            </summary>
+        </member>
+        <member name="M:NAudio.Wave.BextChunkInfo.#ctor">
+            <summary>
+            Constructs a new BextChunkInfo
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.Description">
+            <summary>
+            Description (max 256 chars)
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.Originator">
+            <summary>
+            Originator (max 32 chars)
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.OriginatorReference">
+            <summary>
+            Originator Reference (max 32 chars)
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.OriginationDateTime">
+            <summary>
+            Originator Date Time
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.OriginationDate">
+            <summary>
+            Origination Date as string
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.OriginationTime">
+            <summary>
+            Origination as time
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.TimeReference">
+            <summary>
+            Time reference (first sample count since midnight)
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.Version">
+            <summary>
+            version 2 has loudness stuff which we don't know so using version 1
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.UniqueMaterialIdentifier">
+            <summary>
+            64 bytes http://en.wikipedia.org/wiki/UMID
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.Reserved">
+            <summary>
+            for version 2 = 180 bytes (10 before are loudness values), using version 1 = 190 bytes
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.BextChunkInfo.CodingHistory">
+            <summary>
+            Coding history arbitrary length string at end of structure
+            http://www.ebu.ch/CMSimages/fr/tec_text_r98-1999_tcm7-4709.pdf
+            A=PCM,F=48000,W=16,M=stereo,T=original,CR/LF
+            </summary>
+        </member>
+        <member name="T:NAudio.Wave.BwfWriter">
+            <summary>
+            Broadcast WAVE File Writer
+            </summary>
+        </member>
+        <member name="M:NAudio.Wave.BwfWriter.#ctor(System.String,NAudio.Wave.WaveFormat,NAudio.Wave.BextChunkInfo)">
+            <summary>
+            Createa a new BwfWriter
+            </summary>
+            <param name="filename">Rarget filename</param>
+            <param name="format">WaveFormat</param>
+            <param name="bextChunkInfo">Chunk information</param>
+        </member>
+        <member name="M:NAudio.Wave.BwfWriter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write audio data to this BWF
+            </summary>
+        </member>
+        <member name="M:NAudio.Wave.BwfWriter.Flush">
+            <summary>
+            Flush writer, and fix up header sizes
+            </summary>
+        </member>
+        <member name="M:NAudio.Wave.BwfWriter.Dispose">
+            <summary>
+            Disposes this writer
+            </summary>
+        </member>
         <member name="T:NAudio.Wave.CueWaveFileWriter">
             <summary>
             A wave file writer that adds cue support
@@ -16261,7 +16530,8 @@
         </member>
         <member name="P:NAudio.Wave.StoppedEventArgs.Exception">
             <summary>
-            An exception. Will be null if the playback or record operation stopped
+            An exception. Will be null if the playback or record operation stopped due to 
+            the user requesting stop or reached the end of the input audio
             </summary>
         </member>
         <member name="T:NAudio.Wave.IWaveBuffer">
@@ -16364,7 +16634,9 @@
         </member>
         <member name="P:NAudio.Wave.IWavePlayer.Volume">
             <summary>
-            The volume 1.0 is full scale
+            The volume 
+            1.0f is full scale
+            Note that not all implementations necessarily support volume changes
             </summary>
         </member>
         <member name="E:NAudio.Wave.IWavePlayer.PlaybackStopped">
@@ -16380,7 +16652,7 @@
         </member>
         <member name="M:NAudio.Wave.IWavePosition.GetPosition">
             <summary>
-            Position (in terms of bytes played - does not necessarily)
+            Position (in terms of bytes played - does not necessarily translate directly to the position within the source audio file)
             </summary>
             <returns>Position in bytes</returns>
         </member>
@@ -16530,6 +16802,22 @@
             <summary>
             Stop playback
             </summary>
+        </member>
+        <member name="M:NAudio.Wave.DirectSoundOut.CleanUpSecondaryBuffer">
+            <summary>
+            Clean up the SecondaryBuffer
+            </summary>
+            <remarks>
+            <para>
+            In DirectSound, when playback is started,
+            the rest of the sound that was played last time is played back as noise.
+            This happens even if the secondary buffer is completely silenced,
+            so it seems that the buffer in the primary buffer or higher is not cleared.
+            </para>
+            <para>
+            To solve this problem fill the secondary buffer with silence data when stop playback.
+            </para>
+            </remarks>
         </member>
         <member name="M:NAudio.Wave.DirectSoundOut.Feed(System.Int32)">
             <summary>
@@ -17009,6 +17297,11 @@
         <member name="P:NAudio.Wave.WaveFileWriter.Length">
             <summary>
             Number of bytes of audio in the data chunk
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.WaveFileWriter.TotalTime">
+            <summary>
+            Total time (calculated from Length and average bytes per second)
             </summary>
         </member>
         <member name="P:NAudio.Wave.WaveFileWriter.WaveFormat">
@@ -17512,13 +17805,20 @@
             feeding different input sources to different soundcard outputs etc
             </summary>
         </member>
+        <member name="M:NAudio.Wave.MultiplexingWaveProvider.#ctor(System.Collections.Generic.IEnumerable{NAudio.Wave.IWaveProvider})">
+            <summary>
+            Creates a multiplexing wave provider, allowing re-patching of input channels to different
+            output channels. Number of outputs is equal to total number of channels in inputs
+            </summary>
+            <param name="inputs">Input wave providers. Must all be of the same format, but can have any number of channels</param>
+        </member>
         <member name="M:NAudio.Wave.MultiplexingWaveProvider.#ctor(System.Collections.Generic.IEnumerable{NAudio.Wave.IWaveProvider},System.Int32)">
             <summary>
             Creates a multiplexing wave provider, allowing re-patching of input channels to different
             output channels
             </summary>
             <param name="inputs">Input wave providers. Must all be of the same format, but can have any number of channels</param>
-            <param name="numberOfOutputChannels">Desired number of output channels.</param>
+            <param name="numberOfOutputChannels">Desired number of output channels. (-1 means use total number of input channels)</param>
         </member>
         <member name="F:NAudio.Wave.MultiplexingWaveProvider.inputBuffer">
             <summary>

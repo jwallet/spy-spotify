@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>NAudio.Win8</name>
+        <name>NAudio.Universal</name>
     </assembly>
     <members>
         <member name="T:NAudio.Codecs.ALawDecoder">
@@ -1194,6 +1194,21 @@
             Meter
             </summary>
         </member>
+        <member name="T:NAudio.CoreAudioApi.Interfaces.Blob">
+            <summary>
+            Representation of binary large object container.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.Blob.Length">
+            <summary>
+            Length of binary object.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.Blob.Data">
+            <summary>
+            Pointer to buffer storing data.
+            </summary>
+        </member>
         <member name="T:NAudio.CoreAudioApi.Interfaces.ClsCtx">
             <summary>
             is defined in WTypes.h
@@ -1747,11 +1762,131 @@
             MMDevice STGM enumeration
             </summary>
         </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.Read">
+            <summary>
+            Read-only access mode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.Write">
+            <summary>
+            Write-only access mode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.StorageAccessMode.ReadWrite">
+            <summary>
+            Read-write access mode.
+            </summary>
+        </member>
         <member name="T:NAudio.CoreAudioApi.Interfaces.PropVariant">
             <summary>
             from Propidl.h.
             http://msdn.microsoft.com/en-us/library/aa380072(VS.85).aspx
             contains a union so we have to do an explicit layout
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.vt">
+            <summary>
+            Value type tag.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved1">
+            <summary>
+            Reserved1.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved2">
+            <summary>
+            Reserved2.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.wReserved3">
+            <summary>
+            Reserved3.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.cVal">
+            <summary>
+            cVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.bVal">
+            <summary>
+            bVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.iVal">
+            <summary>
+            iVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uiVal">
+            <summary>
+            uiVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.lVal">
+            <summary>
+            lVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.ulVal">
+            <summary>
+            ulVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.intVal">
+            <summary>
+            intVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uintVal">
+            <summary>
+            uintVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.hVal">
+            <summary>
+            hVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.uhVal">
+            <summary>
+            uhVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.fltVal">
+            <summary>
+            fltVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.dblVal">
+            <summary>
+            dblVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.boolVal">
+            <summary>
+            boolVal.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.scode">
+            <summary>
+            scode.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.filetime">
+            <summary>
+            Date time.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.blobVal">
+            <summary>
+            Binary large object.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.Interfaces.PropVariant.pointerValue">
+            <summary>
+            Pointer value.
             </summary>
         </member>
         <member name="M:NAudio.CoreAudioApi.Interfaces.PropVariant.FromLong(System.Int64)">
@@ -1793,6 +1928,13 @@
             <summary>
             MM Device
             </summary>
+        </member>
+        <member name="M:NAudio.CoreAudioApi.MMDevice.GetPropertyInformation(NAudio.CoreAudioApi.Interfaces.StorageAccessMode)">
+            <summary>
+            Initializes the device's property store.
+            </summary>
+            <param name="stgmAccess">The storage-access mode to open store for.</param>
+            <remarks>Administrative client is required for Write and ReadWrite modes.</remarks>
         </member>
         <member name="P:NAudio.CoreAudioApi.MMDevice.AudioClient">
             <summary>
@@ -2047,6 +2189,21 @@
             PKEY _Device_IconPath
             </summary>
         </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_DeviceDesc">
+            <summary>
+            Device description property.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_ControllerDeviceId">
+            <summary>
+            Id of controller device for endpoint device property.
+            </summary>
+        </member>
+        <member name="F:NAudio.CoreAudioApi.PropertyKeys.PKEY_Device_InterfaceKey">
+            <summary>
+            Device interface key property.
+            </summary>
+        </member>
         <member name="T:NAudio.CoreAudioApi.PropertyStore">
             <summary>
             Property Store class, only supports reading properties at the moment.
@@ -2091,6 +2248,18 @@
             </summary>
             <param name="index">Index</param>
             <returns>Property value</returns>
+        </member>
+        <member name="M:NAudio.CoreAudioApi.PropertyStore.SetValue(NAudio.CoreAudioApi.PropertyKey,NAudio.CoreAudioApi.Interfaces.PropVariant)">
+            <summary>
+            Sets property value at specified key.
+            </summary>
+            <param name="key">Key of property to set.</param>
+            <param name="value">Value to write.</param>
+        </member>
+        <member name="M:NAudio.CoreAudioApi.PropertyStore.Commit">
+            <summary>
+            Saves a property change.
+            </summary>
         </member>
         <member name="M:NAudio.CoreAudioApi.PropertyStore.#ctor(NAudio.CoreAudioApi.Interfaces.IPropertyStore)">
             <summary>
@@ -5037,7 +5206,8 @@
         </member>
         <member name="P:NAudio.Wave.StoppedEventArgs.Exception">
             <summary>
-            An exception. Will be null if the playback or record operation stopped
+            An exception. Will be null if the playback or record operation stopped due to 
+            the user requesting stop or reached the end of the input audio
             </summary>
         </member>
         <member name="T:NAudio.Wave.WaveBuffer">
@@ -5279,13 +5449,20 @@
             feeding different input sources to different soundcard outputs etc
             </summary>
         </member>
+        <member name="M:NAudio.Wave.MultiplexingWaveProvider.#ctor(System.Collections.Generic.IEnumerable{NAudio.Wave.IWaveProvider})">
+            <summary>
+            Creates a multiplexing wave provider, allowing re-patching of input channels to different
+            output channels. Number of outputs is equal to total number of channels in inputs
+            </summary>
+            <param name="inputs">Input wave providers. Must all be of the same format, but can have any number of channels</param>
+        </member>
         <member name="M:NAudio.Wave.MultiplexingWaveProvider.#ctor(System.Collections.Generic.IEnumerable{NAudio.Wave.IWaveProvider},System.Int32)">
             <summary>
             Creates a multiplexing wave provider, allowing re-patching of input channels to different
             output channels
             </summary>
             <param name="inputs">Input wave providers. Must all be of the same format, but can have any number of channels</param>
-            <param name="numberOfOutputChannels">Desired number of output channels.</param>
+            <param name="numberOfOutputChannels">Desired number of output channels. (-1 means use total number of input channels)</param>
         </member>
         <member name="F:NAudio.Wave.MultiplexingWaveProvider.inputBuffer">
             <summary>
@@ -6106,6 +6283,11 @@
         <member name="E:NAudio.Wave.WasapiCaptureRT.RecordingStopped">
             <summary>
             Indicates that all recorded data has now been received.
+            </summary>
+        </member>
+        <member name="P:NAudio.Wave.WasapiCaptureRT.LatencyMilliseconds">
+            <summary>
+            The effective latency in milliseconds
             </summary>
         </member>
         <member name="M:NAudio.Wave.WasapiCaptureRT.#ctor">
@@ -13470,26 +13652,6 @@
             leaving the underlying stream undisposed
             </summary>
         </member>
-        <member name="T:NAudio.Utils.MarshalHelpers">
-            <summary>
-            Support for Marshal Methods in both UWP and .NET 3.5
-            </summary>
-        </member>
-        <member name="M:NAudio.Utils.MarshalHelpers.SizeOf``1">
-            <summary>
-            SizeOf a structure
-            </summary>
-        </member>
-        <member name="M:NAudio.Utils.MarshalHelpers.OffsetOf``1(System.String)">
-            <summary>
-            Offset of a field in a structure
-            </summary>
-        </member>
-        <member name="M:NAudio.Utils.MarshalHelpers.PtrToStructure``1(System.IntPtr)">
-            <summary>
-            Pointer to Structure
-            </summary>
-        </member>
         <member name="M:NAudio.Utils.MergeSort.Sort``1(System.Collections.Generic.IList{``0},System.Int32,System.Int32,System.Collections.Generic.IComparer{``0})">
             <summary>
             In-place and stable implementation of MergeSort
@@ -13508,6 +13670,26 @@
         <member name="T:NAudio.Utils.NativeMethods">
             <summary>
             General purpose native methods for internal NAudio use
+            </summary>
+        </member>
+        <member name="T:NAudio.Utils.MarshalHelpers">
+            <summary>
+            Support for Marshal Methods in both UWP and .NET 3.5
+            </summary>
+        </member>
+        <member name="M:NAudio.Utils.MarshalHelpers.SizeOf``1">
+            <summary>
+            SizeOf a structure
+            </summary>
+        </member>
+        <member name="M:NAudio.Utils.MarshalHelpers.OffsetOf``1(System.String)">
+            <summary>
+            Offset of a field in a structure
+            </summary>
+        </member>
+        <member name="M:NAudio.Utils.MarshalHelpers.PtrToStructure``1(System.IntPtr)">
+            <summary>
+            Pointer to Structure
             </summary>
         </member>
         <member name="T:NAudio.Win8.Wave.WaveOutputs.WasapiOutRT">

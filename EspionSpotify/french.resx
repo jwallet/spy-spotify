@@ -201,44 +201,60 @@
     <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
     <comment>interface</comment>
   </data>
+  <data name="logAd" xml:space="preserve">
+    <value>Annonce</value>
+    <comment>console</comment>
+  </data>
+  <data name="logAdPlaying" xml:space="preserve">
+    <value>// Une publicité est en train de jouer.</value>
+    <comment>console</comment>
+  </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>//Effacement de: {0}</value>
+    <value>// Effacement de: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logDeletingTooShort" xml:space="preserve">
-    <value>//Effacement de: {0} [&lt; {1}s]</value>
+    <value>// Effacement de: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">
-    <value>//Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
+    <value>// Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
     <comment>interface</comment>
+  </data>
+  <data name="logOther" xml:space="preserve">
+    <value>Inconnu</value>
+    <comment>console</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value>//Spotify est fermé</value>
+    <value>// Spotify est fermé.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyNotFound" xml:space="preserve">
+    <value>// Spotify ne s'est pas connecté ou n'a pas été trouvé.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value>//Veuillez démarrer l\'application Spotify</value>
+    <value>// Veuillez démarrer l\'application Spotify.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
-    <value>//Début de l'espionnage</value>
+    <value>// Début de l'espionnage.</value>
     <comment>console</comment>
   </data>
   <data name="logStoping" xml:space="preserve">
-    <value>//Fin de l'espionnage</value>
+    <value>// Fin de l'espionnage.</value>
     <comment>console</comment>
   </data>
   <data name="logWaiting" xml:space="preserve">
-    <value>//En attente du prochain titre...</value>
+    <value>// En attente du prochain titre...</value>
     <comment>console</comment>
   </data>
   <data name="logWriterIsNull" xml:space="preserve">
-    <value>//Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
+    <value>// Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">

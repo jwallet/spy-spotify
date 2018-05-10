@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using NAudio.CoreAudioApi;
-using static System.String;
 
 namespace EspionSpotify
 {
@@ -10,9 +11,12 @@ namespace EspionSpotify
         public SessionCollection SessionsDefaultAudioEndPointDevice { get; set; }
         public MMDeviceCollection AudioEndPointDevices { get; set; }
 
+        private int _spotifyVolumeSessionId;
+        private const int SleepTrackChanged = 10;
         public VolumeWin()
         {
             var aMmDevices = new MMDeviceEnumerator();
+            _spotifyVolumeSessionId = -1;
             DefaultAudioEndPointDevice = aMmDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             SessionsDefaultAudioEndPointDevice = DefaultAudioEndPointDevice.AudioSessionManager.Sessions;
             DefaultAudioDeviceVolume = (int)(DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
@@ -27,28 +31,50 @@ namespace EspionSpotify
                 DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (fNewVolume / 100);
         }
 
-        public void SetToHigh(bool bUnmute, string title)
+        private bool IsSpotifyStillPlayingLastSong()
+        {
+            if (_spotifyVolumeSessionId == -1 || SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId] == null) return false;
+
+            return (int)Math.Round(SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId].AudioMeterInformation.MasterPeakValue * 100) > 0;
+        }
+
+        public void SleepWhileTheSongEnds()
+        {
+            var times = 1000;
+            while (IsSpotifyStillPlayingLastSong() && times > 0)
+            {
+                Thread.Sleep(SleepTrackChanged);
+                times -= SleepTrackChanged;
+            }
+        }
+
+        public bool SetSpotifyToMute(bool mute)
+        {
+            if (_spotifyVolumeSessionId == -1 || SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId] == null) return false;
+
+            return SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId].SimpleAudioVolume.Mute = mute;
+        }
+
+        public void SetToHigh(bool mute = false)
         {
             var processes = Process.GetProcesses();
-            const string spying = "Spotify";
+            const string spotify = "spotify";
+            var spytify = Process.GetCurrentProcess().ProcessName;
 
             foreach (var process in processes)
             {
                 for (var i = 0; i < SessionsDefaultAudioEndPointDevice.Count; i++)
                 {
-                    if (process.ProcessName.Equals(spying) 
-                        && !IsNullOrEmpty(process.MainWindowTitle) 
-                        && !process.ProcessName.Equals(Process.GetCurrentProcess().ProcessName)
-                        && process.Id.Equals((int)SessionsDefaultAudioEndPointDevice[i].GetProcessID))
+                    if (process.ProcessName.Equals(spytify) || !process.Id.Equals((int)SessionsDefaultAudioEndPointDevice[i].GetProcessID)) continue;
+
+                    if (process.ProcessName.ToLower().Equals(spotify))
                     {
+                        _spotifyVolumeSessionId = i;
                         if (SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume < 1) SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume = 1;
                     }
-                    else if (!(process.ProcessName.Equals(spying)
-                               && !IsNullOrEmpty(process.MainWindowTitle)
-                               || process.ProcessName.Equals(Process.GetCurrentProcess().ProcessName))
-                               && process.Id.Equals((int)SessionsDefaultAudioEndPointDevice[i].GetProcessID))
+                    else
                     {
-                        SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Mute = bUnmute == false;
+                        SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Mute = mute;
                     }
                 }
             }

@@ -7,4 +7,5 @@
   &lt;Assembly Path="C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\packages\NAudio.Lame.1.0.4\lib\net20\NAudio.Lame.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Windows\Microsoft.NET\Framework\v4.0.30319\mscorlib.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\packages\taglib.2.1.0.0\lib\taglib-sharp.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\w1z1k\Documents\GitHub\Espion-Spotify\packages\SpotifyAPI-NET.2.18.1\lib\SpotifyAPI.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using NAudio.Lame;
+using SpotifyAPI.Local;
 
 namespace EspionSpotify
 {
@@ -13,35 +11,32 @@ namespace EspionSpotify
         public int CountSecs;
 
         private Recorder _recorder;
-        private Song _lastSong;
         private Song _currentSong;
+        private bool _isPlaying;
+        private Song _lastKnownSong;
 
         private readonly FrmEspionSpotify _form;
         private readonly LAMEPreset _bitrate;
         private readonly Recorder.Format _format;
-        private readonly Process _process2Spy;
         private readonly VolumeWin _sound;
 
         private readonly bool _bCdTrack;
+        private readonly bool _bNumFile;
         private readonly bool _strucDossiers;
         private readonly int _minTime;
         private readonly string _path;
         private readonly string _charSeparator;
-        private readonly string[] _titleSeperators;
 
-        private bool _bWait;
-        private bool _bSpotifyPlayIcon;
-        private string _lastTitle;
-        private string _title;
-
-        private const bool Unmute = false;
+        private const bool Mute = true;
 
         public int NumTrack { get; private set; }
 
         private bool NumTrackActivated => NumTrack != -1;
-        private bool CommercialOrNothing => _lastSong != null && _currentSong == null && _title != null;
-        private bool NewSongIsPlaying => _currentSong != null && !_currentSong.Equals(_lastSong);
-        private bool SpotifyClosedOrCrashed => _currentSong == null && _title == null;
+        private bool AdPlaying => _currentSong.IsAd;
+        private string SongTitle => _currentSong.ToString();
+        private bool NormalSongPlaying => _currentSong.IsNormal;
+        private bool RecorderUpAndRunning => _recorder != null && _recorder.Running;
+        private bool SongIsStillPlaying => _lastKnownSong.Equals(_currentSong);
 
         public Watcher(FrmEspionSpotify espionSpotifyForm, string path, LAMEPreset bitrate,
             Recorder.Format format, VolumeWin sound, int minTime, bool strucDossiers, 
@@ -49,7 +44,6 @@ namespace EspionSpotify
         {
             if (path == null) path = "";
 
-            _titleSeperators = new [] {" - "};
             _form = espionSpotifyForm;
             _path = path;
             _bitrate = bitrate;
@@ -60,138 +54,168 @@ namespace EspionSpotify
             _strucDossiers = strucDossiers;
             _charSeparator = charSeparator;
             _bCdTrack = bCdTrack;
-            _process2Spy = FindProcess();
-            _title = GetTitle(_process2Spy);
+            _bNumFile = bNumFile;
+
+            _currentSong = new Song();
+            _lastKnownSong = new Song();
+
+            var thread = new Thread(Spotify.Connect);
+            thread.Start();
+            thread.Join();
+
+            Spotify.Instance.ListenForEvents = true;
+            Spotify.Instance.OnPlayStateChange += OnPlayStateChanged;
+            Spotify.Instance.OnTrackChange += OnTrackChanged;
+            Spotify.Instance.OnTrackTimeChange += OnTrackTimeChanged;
+        }
+
+        private void OnPlayStateChanged(object sender, PlayStateEventArgs e)
+        {
+            var playing = e.Playing;
+            var song = Spotify.Instance.GetStatus().Track;
+
+            if (playing == _isPlaying) return;
+            _isPlaying = playing;
+
+            if (_isPlaying && song != null)
+            {
+                _currentSong = new Song(song);
+                _sound.SetSpotifyToMute(AdPlaying);
+                _form.UpdatePlayingTitle(SongTitle);
+            }
+            else
+            {
+                _currentSong = new Song();
+                _form.UpdatePlayingTitle("Spotify");
+            }
+
+            _form.UpdateIconSpotify(_isPlaying);
+        }
+
+        private void OnTrackChanged(object sender, TrackChangeEventArgs e)
+        {
+            if (RecorderUpAndRunning) _sound.SleepWhileTheSongEnds();
+
+            var track = e.NewTrack;
+            if (track == null) return;
+
+            var song = new Song(track);
+            if (_currentSong.Equals(song))
+            {
+                _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
+                return;
+            }
+
+            _currentSong = song;
+
+            _form.UpdatePlayingTitle(SongTitle);
+
+            if (AdPlaying)
+            {
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logAdPlaying"));
+            }
+
+            _sound.SetSpotifyToMute(AdPlaying);
+        }
+
+        private void OnTrackTimeChanged(object sender, TrackTimeChangeEventArgs e)
+        {
+            if (_currentSong != null)
+            {
+                _currentSong.CurrentLength = e.TrackTime;
+            }
         }
 
         public void Run()
         {
             if (Running) return;
 
-            Ready = false;
-            Running = true;
-
-            _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStarting"));
-
-            SpotifyStatusBeforeSpying();
-
-            while (Running)
+            if (SpotifyLocalAPI.IsSpotifyRunning() && Spotify.IsConnected())
             {
-                if (_bWait)
+                InitializeRecordingSession();
+
+                while (Running)
                 {
-                    WaitUntilSpotifyStartPlaying();
-                    _sound.SetToHigh(Unmute, _title);
+                    if (!SpotifyLocalAPI.IsSpotifyRunning())
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
+                        Running = false;
+                    }
+                    else if (!SongIsStillPlaying)
+                    {
+                        DoIKeepLastSong(RecorderUpAndRunning);
+                        RecordSpotify();
+                    }
+                   
+                    _lastKnownSong = _currentSong;
+                    Thread.Sleep(60);
                 }
-                else
-                {
-                    RecordSpotify();
-                }
-            }
 
-            if (_recorder != null) DoIKeepLastSong(true);
-
-            _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
-            _form.UpdateStartButton();
-            _form.UpdatePlayingTitle("Spotify");
-            Ready = true;
-
-            _sound.SetToHigh(!Unmute, _title);
-        }
-
-        private void SpotifyStatusBeforeSpying()
-        {
-            if (_title == null)
-            {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotRunning"));
-                Running = false;
+                DoIKeepLastSong(RecorderUpAndRunning);
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
             }
             else
             {
-                if (_title != "Spotify")
-                {
-                    _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logWaiting"));
-                    _bWait = true;
-                }
-                else
-                {
-                    _sound.SetToHigh(Unmute, _title);
-                }
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotFound"));
             }
-        }
 
-        private void WaitUntilSpotifyStartPlaying()
-        {
-            while (_bWait && Running)
-            {
-                _lastTitle = _title;
-                _title = GetTitle(_process2Spy);
-
-                if (_title != _lastTitle) _bWait = false;
-
-                Thread.Sleep(20);
-            }
+            EndRecordingSession();
         }
 
         private void RecordSpotify()
         {
-            _title = GetTitle(_process2Spy);
-            _currentSong = GetSong(_title);
+            if (RecorderUpAndRunning || !_isPlaying || !NormalSongPlaying) return;
 
-            if (NewSongIsPlaying)
-            {
-                _lastSong = _currentSong;
+            _recorder = new Recorder(_form, _path, _bitrate, _format, _currentSong, _minTime, _strucDossiers,
+                _charSeparator, _bCdTrack, _bNumFile, NumTrack);
 
-                if (!_bSpotifyPlayIcon)
-                {
-                    _bSpotifyPlayIcon = true;
-                    _form.UpdateIconSpotify();
-                }
+            var recorderThread = new Thread(_recorder.Run);
+            recorderThread.Start();
 
-                if (_recorder != null) DoIKeepLastSong(true);
-
-                _recorder = new Recorder(_form, _path, _bitrate, _format, _currentSong, _minTime,
-                    _strucDossiers, _charSeparator, _bCdTrack, NumTrack);
-
-                var recorderThread = new Thread(_recorder.Run);
-                recorderThread.Start();
-
-                UpdateNumUp();
-
-                CountSecs = 0;
-            }
-
-            if (SpotifyClosedOrCrashed)
-            {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
-
-                _process2Spy.Dispose();
-
-                Running = false;
-                return;
-            }
-
-            if (CommercialOrNothing)
-            {
-                _lastSong = null;
-                DoIKeepLastSong(false, true);
-
-                if (_bSpotifyPlayIcon)
-                {
-                    _bSpotifyPlayIcon = false;
-                    _form.UpdateIconSpotify(true);
-                }
-            }
-
-            Thread.Sleep(100);
+            _form.UpdateIconSpotify(_isPlaying, true);
+            UpdateNumUp();
+            CountSecs = 0;
         }
 
-        private void DoIKeepLastSong(bool updateUi = false, bool thenReset = false, bool deleteItAnyway = false)
+        private void InitializeRecordingSession()
         {
-            _recorder.Count = deleteItAnyway ? -1 : CountSecs;
-            _recorder.Running = false;
+            Ready = false;
+            Running = true;
+
+            _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStarting"));
+            _sound.SetToHigh(Mute);
+
+            var status = Spotify.Instance.GetStatus();
+            _isPlaying = status.Playing;
+            _form.UpdateIconSpotify(_isPlaying);
+
+            var song = status.Track;
+            if (song == null) return;
+            _currentSong = new Song(song) { CurrentLength = status.PlayingPosition };
+
+            _form.UpdatePlayingTitle(SongTitle);
+            _sound.SetSpotifyToMute(AdPlaying);
+        }
+
+        private void EndRecordingSession()
+        {
+            _form.UpdateStartButton();
+            _form.UpdatePlayingTitle("Spotify");
+            Ready = true;
+            _form.UpdateIconSpotify(false);
+            _sound.SetToHigh();
+        }
+
+        private void DoIKeepLastSong(bool updateUi = false)
+        {
+            if (_recorder != null)
+            {
+                _recorder.Running = false;
+                _recorder.Count = CountSecs;
+                _form.UpdateIconSpotify(_isPlaying);
+            }
 
             if (updateUi) UpdateNumDown();
-            if (thenReset) CountSecs = 0;
         }
 
         private void UpdateNumDown()
@@ -208,36 +232,6 @@ namespace EspionSpotify
 
             NumTrack++;
             _form.UpdateNum(NumTrack);
-        }
-
-        private string GetTitle(Process process2Spy)
-        {
-            var process = GetProcess(process2Spy);
-
-            if (process == null) return null;
-            
-            var title = process.MainWindowTitle;
-            _form.UpdatePlayingTitle(title);
-
-            return title;
-        }
-
-        private Song GetSong(string title)
-        {
-            var tags = title?.Split(_titleSeperators, 2, StringSplitOptions.None);
-            return tags?.Length != 2 ? null : new Song(tags[0], tags[1]);
-        }
-
-        private static Process GetProcess(Process process2Spy)
-        {
-            var processlist = Process.GetProcesses();
-            return process2Spy == null ? null : processlist.FirstOrDefault(process => process.Id == process2Spy.Id);
-        }
-
-        private static Process FindProcess()
-        {
-            var processlist = Process.GetProcesses();
-            return processlist.FirstOrDefault(process => process.ProcessName.Equals("Spotify") && !string.IsNullOrEmpty(process.MainWindowTitle));
         }
     }
 }

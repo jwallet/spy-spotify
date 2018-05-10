@@ -250,7 +250,25 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Removing: {0}.
+        ///   Looks up a localized string similar to Ad.
+        /// </summary>
+        internal static string logAd {
+            get {
+                return ResourceManager.GetString("logAd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // An ad is playing..
+        /// </summary>
+        internal static string logAdPlaying {
+            get {
+                return ResourceManager.GetString("logAdPlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Removing: {0}.
         /// </summary>
         internal static string logDeleting {
             get {
@@ -259,7 +277,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Removing: {0} [&lt; {1}s].
+        ///   Looks up a localized string similar to // Removing: {0} [&lt; {1}s].
         /// </summary>
         internal static string logDeletingTooShort {
             get {
@@ -268,11 +286,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Error while recording: The output directory was not found..
+        ///   Looks up a localized string similar to // Error while recording: The output directory was not found..
         /// </summary>
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string logOther {
+            get {
+                return ResourceManager.GetString("logOther", resourceCulture);
             }
         }
         
@@ -286,7 +313,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Spotify is closed.
+        ///   Looks up a localized string similar to // Spotify is closed.
         /// </summary>
         internal static string logSpotifyIsClosed {
             get {
@@ -295,7 +322,16 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Spotify app is not running.
+        ///   Looks up a localized string similar to // Spotify didn&apos;t connect or was not found..
+        /// </summary>
+        internal static string logSpotifyNotFound {
+            get {
+                return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Spotify app is not running.
         /// </summary>
         internal static string logSpotifyNotRunning {
             get {
@@ -304,7 +340,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Spying.
+        ///   Looks up a localized string similar to // Spying.
         /// </summary>
         internal static string logStarting {
             get {
@@ -313,7 +349,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //End.
+        ///   Looks up a localized string similar to // End.
         /// </summary>
         internal static string logStoping {
             get {
@@ -322,7 +358,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Waiting for next title....
+        ///   Looks up a localized string similar to // Waiting for next title....
         /// </summary>
         internal static string logWaiting {
             get {
@@ -331,7 +367,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; (Control panel &gt; Sound &gt; Properties &gt; Advanced)..
+        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; (Control panel &gt; Sound &gt; Properties &gt; Advanced)..
         /// </summary>
         internal static string logWriterIsNull {
             get {
