@@ -28,6 +28,7 @@ namespace EspionSpotify
         private readonly string _charSeparator;
 
         private const bool Mute = true;
+        private const int NextSongEventMaxEstimatedDelay = 5;
 
         public int NumTrack { get; private set; }
 
@@ -37,6 +38,7 @@ namespace EspionSpotify
         private bool NormalSongPlaying => _currentSong.IsNormal;
         private bool RecorderUpAndRunning => _recorder != null && _recorder.Running;
         private bool SongIsStillPlaying => _lastKnownSong.Equals(_currentSong);
+        private bool IsOldSong => _currentSong.CurrentLength > _currentSong.Length - NextSongEventMaxEstimatedDelay;
 
         public Watcher(FrmEspionSpotify espionSpotifyForm, string path, LAMEPreset bitrate,
             Recorder.Format format, VolumeWin sound, int minTime, bool strucDossiers, 
@@ -80,6 +82,7 @@ namespace EspionSpotify
             if (_isPlaying && song != null)
             {
                 _currentSong = new Song(song);
+                _lastKnownSong = new Song();
                 _sound.SetSpotifyToMute(AdPlaying);
                 _form.UpdatePlayingTitle(SongTitle);
             }
@@ -94,19 +97,20 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            if (RecorderUpAndRunning) _sound.SleepWhileTheSongEnds();
+            if (RecorderUpAndRunning && IsOldSong) _sound.SleepWhileTheSongEnds();
 
-            var track = e.NewTrack;
-            if (track == null) return;
+            var newTrack = e.NewTrack;
+            if (newTrack == null ) return;
 
-            var song = new Song(track);
-            if (_currentSong.Equals(song))
+            var newSong = new Song(newTrack);
+            if (_currentSong.Equals(newSong))
             {
                 _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
                 return;
             }
 
-            _currentSong = song;
+            _currentSong = newSong;
+            _lastKnownSong = new Song();
 
             _form.UpdatePlayingTitle(SongTitle);
 
