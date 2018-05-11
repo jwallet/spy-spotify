@@ -9,7 +9,7 @@ namespace EspionSpotify
     internal static class Spotify
     {
         public static SpotifyLocalAPI Instance = new SpotifyLocalAPI();
-        private static readonly TimeSpan RunSpotifyInterval = TimeSpan.FromSeconds(5);
+        private static readonly TimeSpan RunSpotifyInterval = TimeSpan.FromSeconds(3);
 
         private static readonly string[] SpotifyPossiblePaths =
         {
@@ -24,15 +24,15 @@ namespace EspionSpotify
                 "Microsoft\\WindowsApps\\Spotify.exe")
         };
 
-        public static async void Connect()
+        public static void Connect()
         {
             if (!SpotifyLocalAPI.IsSpotifyInstalled()) return;
 
-            for (var tries = 3; tries > 0; tries--)
+            for (var tries = 5; tries > 0; tries--)
             {
                 if (RunSpotify()) break;
                 
-                await Task.Delay(RunSpotifyInterval);
+                System.Threading.Thread.Sleep(RunSpotifyInterval);
             }
 
             try
@@ -54,7 +54,9 @@ namespace EspionSpotify
                 {
                     foreach (var path in SpotifyPossiblePaths)
                     {
-                        if (File.Exists(path)) Process.Start(path);
+                        if (!File.Exists(path)) continue;
+                        Process.Start(path);
+                        break;
                     }
                 }
                 catch (Exception ex)

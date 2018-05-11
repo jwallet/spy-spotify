@@ -229,16 +229,20 @@
     <value>Recording: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="logSpotifyConnecting" xml:space="preserve">
+    <value>// Spotify isn't running, trying to launch it.</value>
+    <comment>console</comment>
+  </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
     <value>// Spotify is closed</value>
     <comment>console</comment>
   </data>
-  <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify didn't connect or was not found.</value>
+  <data name="logSpotifyNotConnected" xml:space="preserve">
+    <value>// Spotify didn't connect to the local API, please try again.</value>
     <comment>console</comment>
   </data>
-  <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value>// Spotify app is not running</value>
+  <data name="logSpotifyNotFound" xml:space="preserve">
+    <value>// Spotify was not found or isn't installed.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">

@@ -1,4 +1,5 @@
-﻿using SpotifyAPI.Local.Enums;
+﻿using System;
+using SpotifyAPI.Local.Enums;
 using TagLib;
 using Track = SpotifyAPI.Local.Models.Track;
 
@@ -47,18 +48,20 @@ namespace EspionSpotify
             {
                 ArtLarge = track?.GetAlbumArtAsByteArray(AlbumArtSize.Size160);
             }
-            catch
+            catch(Exception ex)
             {
                 ArtLarge = null;
+                Console.WriteLine(ex.Message);
             }
 
             try
             {
                 ArtExtraLarge = track?.GetAlbumArtAsByteArray(AlbumArtSize.Size320);
             }
-            catch
+            catch (Exception ex)
             {
                 ArtExtraLarge = null;
+                Console.WriteLine(ex.Message);
             }
         }
 

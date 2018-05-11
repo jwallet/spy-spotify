@@ -41,11 +41,12 @@ namespace EspionSpotify
 
             try
             {
-                api.Load($"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={apiKey}&artist={artist}&track={title}");
+                api.Load(
+                    $"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={apiKey}&artist={artist}&track={title}");
             }
-            catch (WebException e)
+            catch (Exception ex)
             {
-                Console.Write(e.Message);
+                Console.WriteLine(ex.Message);
             }
 
             var apiReturn = api.DocumentElement;

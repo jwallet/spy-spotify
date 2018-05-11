@@ -229,16 +229,20 @@
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="logSpotifyConnecting" xml:space="preserve">
+    <value>// Spotify n'est pas démarré, tentative de lancement amorcée.</value>
+    <comment>console</comment>
+  </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
     <value>// Spotify est fermé.</value>
     <comment>console</comment>
   </data>
-  <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify ne s'est pas connecté ou n'a pas été trouvé.</value>
+  <data name="logSpotifyNotConnected" xml:space="preserve">
+    <value>// Spotify ne s'est pas connecté à l'API local, veuillez ré-essayer.</value>
     <comment>console</comment>
   </data>
-  <data name="logSpotifyNotRunning" xml:space="preserve">
-    <value>// Veuillez démarrer l\'application Spotify.</value>
+  <data name="logSpotifyNotFound" xml:space="preserve">
+    <value>// Spotify n'a pas été trouvé ou n'est pas installé.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">

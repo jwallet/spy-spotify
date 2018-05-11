@@ -313,6 +313,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Spotify n&apos;est pas démarré, tentative de lancement amorcée..
+        /// </summary>
+        internal static string logSpotifyConnecting {
+            get {
+                return ResourceManager.GetString("logSpotifyConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Spotify est fermé..
         /// </summary>
         internal static string logSpotifyIsClosed {
@@ -322,20 +331,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify ne s&apos;est pas connecté ou n&apos;a pas été trouvé..
+        ///   Looks up a localized string similar to // Spotify ne s&apos;est pas connecté à l&apos;API local, veuillez ré-essayer..
         /// </summary>
-        internal static string logSpotifyNotFound {
+        internal static string logSpotifyNotConnected {
             get {
-                return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
+                return ResourceManager.GetString("logSpotifyNotConnected", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Veuillez démarrer l\&apos;application Spotify..
+        ///   Looks up a localized string similar to // Spotify n&apos;a pas été trouvé ou n&apos;est pas installé..
         /// </summary>
-        internal static string logSpotifyNotRunning {
+        internal static string logSpotifyNotFound {
             get {
-                return ResourceManager.GetString("logSpotifyNotRunning", resourceCulture);
+                return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
             }
         }
         

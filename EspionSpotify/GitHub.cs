@@ -42,9 +42,9 @@ namespace EspionSpotify
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // ignored
+                Console.WriteLine(ex.Message);
             }
         }
     }

@@ -57,18 +57,6 @@ namespace EspionSpotify
             _charSeparator = charSeparator;
             _bCdTrack = bCdTrack;
             _bNumFile = bNumFile;
-
-            _currentSong = new Song();
-            _lastKnownSong = new Song();
-
-            var thread = new Thread(Spotify.Connect);
-            thread.Start();
-            thread.Join();
-
-            Spotify.Instance.ListenForEvents = true;
-            Spotify.Instance.OnPlayStateChange += OnPlayStateChanged;
-            Spotify.Instance.OnTrackChange += OnTrackChanged;
-            Spotify.Instance.OnTrackTimeChange += OnTrackTimeChanged;
         }
 
         private void OnPlayStateChanged(object sender, PlayStateEventArgs e)
@@ -130,9 +118,29 @@ namespace EspionSpotify
             }
         }
 
+        private void SetSpotifyApi()
+        {
+            _currentSong = new Song();
+            _lastKnownSong = new Song();
+
+            if (SpotifyLocalAPI.IsSpotifyInstalled() && !SpotifyLocalAPI.IsSpotifyRunning())
+            {
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
+            }
+
+            Spotify.Connect();
+
+            Spotify.Instance.ListenForEvents = true;
+            Spotify.Instance.OnPlayStateChange += OnPlayStateChanged;
+            Spotify.Instance.OnTrackChange += OnTrackChanged;
+            Spotify.Instance.OnTrackTimeChange += OnTrackTimeChanged;
+        }
+
         public void Run()
         {
             if (Running) return;
+
+            SetSpotifyApi();
 
             if (SpotifyLocalAPI.IsSpotifyRunning() && Spotify.IsConnected())
             {
@@ -157,6 +165,10 @@ namespace EspionSpotify
 
                 DoIKeepLastSong(RecorderUpAndRunning);
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
+            }
+            else if (SpotifyLocalAPI.IsSpotifyInstalled())
+            {
+                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotConnected"));
             }
             else
             {
