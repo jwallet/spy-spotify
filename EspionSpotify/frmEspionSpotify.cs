@@ -159,6 +159,7 @@ namespace EspionSpotify
             }
             else
             {
+                tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
                 lnkSpy.Image = Resources.on;
                 lnkSpy.Focus();
             }
@@ -247,8 +248,6 @@ namespace EspionSpotify
         public void StopRecording()
         {
             Watcher.Running = false;
-
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
             tabSettings.Enabled = true;
             timer1.Stop();
         }
@@ -290,6 +289,7 @@ namespace EspionSpotify
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (_watcher == null) return;
             _watcher.CountSecs++;
 
             if (!Watcher.Running) StopRecording();

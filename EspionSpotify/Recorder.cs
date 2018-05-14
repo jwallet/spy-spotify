@@ -10,7 +10,7 @@ namespace EspionSpotify
 {
     internal class Recorder
     {
-        public enum Format { Mp3, Wav };
+        public enum Format { Mp3, Wav }
         public int Count = 0;
         public bool Running;
         private readonly string _path;
@@ -113,11 +113,7 @@ namespace EspionSpotify
                 return;
             }
 
-            _form.WriteIntoConsole(Count != -1
-                ? string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? "{0}",
-                    BuildFileName(_path, false), _minTime)
-                : string.Format(FrmEspionSpotify.Rm.GetString($"logDeleting") ?? "{0}",
-                    BuildFileName(_path, false)));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", BuildFileName(_path, false), _minTime));
 
             File.Delete(_currentFile);
         }

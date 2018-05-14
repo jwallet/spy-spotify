@@ -30,6 +30,7 @@ namespace EspionSpotify
             IsOther = false;
             IsNormal = false;
         }
+
         public Song(Track track)
         {
             Album = track?.AlbumResource?.Name;
@@ -78,19 +79,18 @@ namespace EspionSpotify
             return IsOther ? $"{spotify} - {FrmEspionSpotify.Rm.GetString($"logOther")}" : spotify;
         }
 
-
         public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != typeof(Song)) return false;
 
             var otherSong = (Song) obj;
-            return otherSong.Artist != null && otherSong.Artist.Equals(Artist)
-                && otherSong.Title != null && otherSong.Title.Equals(Title)
-                && otherSong.Length != null && otherSong.Length.Equals(Length)
-                && otherSong.Album != null && otherSong.Album.Equals(Album)
-                && otherSong.Type != null && otherSong.Type.Equals(Type)
-                && otherSong.IsAd.Equals(IsAd)
-                && otherSong.IsOther.Equals(IsOther);
+            return otherSong.Artist == Artist
+                && otherSong.Title == Title
+                && otherSong.Length == Length
+                && otherSong.Album == Album
+                && otherSong.Type == Type
+                && otherSong.IsAd == IsAd
+                && otherSong.IsOther == IsOther;
         }
 
         public override int GetHashCode()

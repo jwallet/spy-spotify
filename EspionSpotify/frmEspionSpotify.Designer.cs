@@ -34,7 +34,6 @@ namespace EspionSpotify
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEspionSpotify));
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tcMenu = new MetroFramework.Controls.MetroTabControl();
             this.tabRecord = new MetroFramework.Controls.MetroTabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -89,6 +88,7 @@ namespace EspionSpotify
             this.lblDisableAds = new MetroFramework.Controls.MetroLabel();
             this.lnkSpy = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -109,11 +109,6 @@ namespace EspionSpotify
             // 
             this.folderBrowserDialog.Description = "Veuillez sélectionner l\'emplacement où vous souhaitez sauvegarder les fichiers au" +
     "dio.";
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // tcMenu
             // 
@@ -929,6 +924,11 @@ namespace EspionSpotify
             this.tip.StyleManager = null;
             this.tip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FrmEspionSpotify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,7 +976,6 @@ namespace EspionSpotify
         #endregion
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.Timer timer1;
         private MetroTabControl tcMenu;
         private MetroTabPage tabRecord;
         private System.Windows.Forms.TabPage tabSettings;
@@ -1031,6 +1030,7 @@ namespace EspionSpotify
         private MetroLabel lblAds;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroLabel lblDisableAds;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

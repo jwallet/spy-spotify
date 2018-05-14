@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using NAudio.Lame;
 using SpotifyAPI.Local;
 
@@ -77,6 +78,7 @@ namespace EspionSpotify
             else
             {
                 _currentSong = new Song();
+                _lastKnownSong = new Song();
                 _form.UpdatePlayingTitle("Spotify");
             }
 
@@ -140,6 +142,9 @@ namespace EspionSpotify
         {
             if (Running) return;
 
+            Ready = false;
+            Running = true;
+
             SetSpotifyApi();
 
             if (SpotifyLocalAPI.IsSpotifyRunning() && Spotify.IsConnected())
@@ -158,7 +163,6 @@ namespace EspionSpotify
                         DoIKeepLastSong(RecorderUpAndRunning);
                         RecordSpotify();
                     }
-                   
                     _lastKnownSong = _currentSong;
                     Thread.Sleep(60);
                 }
@@ -195,9 +199,6 @@ namespace EspionSpotify
 
         private void InitializeRecordingSession()
         {
-            Ready = false;
-            Running = true;
-
             _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStarting"));
             _sound.SetToHigh(Mute);
 
@@ -220,6 +221,7 @@ namespace EspionSpotify
             Ready = true;
             _form.UpdateIconSpotify(false);
             _sound.SetToHigh();
+            _form.StopRecording();
         }
 
         private void DoIKeepLastSong(bool updateUi = false)
