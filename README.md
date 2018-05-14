@@ -6,7 +6,8 @@ Runs on Windows only ([.NET 4.5](https://www.microsoft.com/en-ca/download/detail
 No need of a Spotify Premium account, __any free account will do__, however a premium account will give you some advantages: no ads and more audio qualities available.
 
 ## How it works ?
-Spytify uses the local Spotify API[\*](#dependencies) and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because Spitify provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify might not be the solution for you.
+Spytify uses the local Spotify API¹ and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because Spitify provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify might not be the solution for you.     
+> ¹ Spytify uses the Spotify API NET listed in the dependencies list.      
 
 ## Use
 A standard use it's to start a recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
@@ -37,13 +38,16 @@ A standard use it's to start a recording session at night and let it work overni
 ## Parameters
 - Choose an output path
 - Choose audio format : mp3 or wav
-- Choose audio quality : low to high (128kbps, 160kbps, 256kbps, 320kbps)
+- Choose audio quality : low to high (128kbps, 160kbps¹, 256kbps, 320kbps²)
 - Choose a minimal length to remove songs that are too short in time or songs that you skiped.
 - You can save all artist songs inside their own folder, but it will remove the artist of the file name. `../Artist/Title.mp3`
 - You can remove from the file name any space and replace it by underscore `Artist_-_Title.mp3`
 - You can add a recording order number to... :
   - infront of files name. `001 Artist - Title.mp3`
   - inside files and replace the track number.
+
+> ¹ Spotify Free streams at 160kbps, so you shouldn't go above that quality.     
+> ² Spotify Premium streams at 320kpbs (if activated in your settings), so you shouldn't go above that quality.
 
 ## About the recording order number
 Adding the recording order number to files `017_Artiste_-_Titre.mp3` is useful if you want to burn songs to cds and that your mp3 player (like those in cars) orders songs by files name. You will get the a cd with songs ordered in the same order than the album. If it's a playlist, order it first on Spotify and start Spytify.
