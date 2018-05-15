@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using EspionSpotify.Properties;
 using NAudio.Lame;
 using NAudio.Wave;
 using File = System.IO.File;
@@ -106,7 +107,9 @@ namespace EspionSpotify
                     Song = _song,
                     BCdTrack = _bCdTrack,
                     Compteur = _compteur,
-                    CurrentFile = _currentFile
+                    CurrentFile = _currentFile,
+                    ClientId = Settings.Default.SpotifyClientId,
+                    ClientSecret = Settings.Default.SpotifySecret
                 };
                 mp3TagsInfo.SetTagLibDataToMp3();
 

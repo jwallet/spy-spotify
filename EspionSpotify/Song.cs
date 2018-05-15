@@ -21,6 +21,8 @@ namespace EspionSpotify
         public readonly byte[] ArtLarge;
         public readonly byte[] ArtExtraLarge;
 
+        public readonly string TrackId;
+
         public Song()
         {
             Album = null;
@@ -33,6 +35,8 @@ namespace EspionSpotify
 
         public Song(Track track)
         {
+            TrackId = track?.TrackResource?.Uri?.Replace("spotify:track:", string.Empty);
+
             Album = track?.AlbumResource?.Name;
             Artist = track?.ArtistResource?.Name;
             Title = track?.TrackResource?.Name;
