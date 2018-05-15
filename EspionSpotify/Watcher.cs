@@ -68,17 +68,19 @@ namespace EspionSpotify
             if (playing == _isPlaying) return;
             _isPlaying = playing;
 
-            if (_isPlaying && song != null)
+            if (song != null)
             {
                 _currentSong = new Song(song);
                 _lastKnownSong = new Song();
+            }
+
+            if (_isPlaying)
+            {
                 _sound.SetSpotifyToMute(AdPlaying);
                 _form.UpdatePlayingTitle(SongTitle);
             }
             else
             {
-                _currentSong = new Song();
-                _lastKnownSong = new Song();
                 _form.UpdatePlayingTitle("Spotify");
             }
 
@@ -220,6 +222,7 @@ namespace EspionSpotify
             _form.UpdatePlayingTitle("Spotify");
             Ready = true;
             _form.UpdateIconSpotify(false);
+            _sound.SetSpotifyToMute(false);
             _sound.SetToHigh();
             _form.StopRecording();
         }
