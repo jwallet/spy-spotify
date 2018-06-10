@@ -6,7 +6,7 @@ Runs on Windows only ([.NET 4.5](https://www.microsoft.com/en-ca/download/detail
 No need of a Spotify Premium account, __any free account will do__, however a premium account will give you some advantages: no ads and more audio qualities available.
 
 ## How it works ?
-Spytify uses the local Spotify API¹ and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kpbs so not for audiophiles, stop trying to rip their songs.     
+Spytify uses the local Spotify API¹ and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kbps so not for audiophiles, stop trying to rip their songs.     
 > ¹ Spytify uses the Spotify API NET listed in the dependencies list.      
 
 ## Use
