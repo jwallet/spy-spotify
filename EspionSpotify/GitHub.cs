@@ -33,7 +33,7 @@ namespace EspionSpotify
                     if (version <= Assembly.GetExecutingAssembly().GetName().Version) return;
                     if (MetroFramework.MetroMessageBox.Show(
                         FrmEspionSpotify.Instance,
-                        string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionContent") ?? "DOWLOAD {0}", version),
+                        string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionContent") ?? "DOWNLOAD {0}", version),
                         FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"),
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question) == DialogResult.Yes)
