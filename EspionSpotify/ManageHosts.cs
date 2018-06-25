@@ -14,6 +14,7 @@ namespace EspionSpotify
 
         public static bool EnableAds(string hosts) => UpdateHosts(hosts, true);
         public static bool DisableAds(string hosts) => UpdateHosts(hosts);
+        public static bool AreAdsDisabled(string hosts) => IsDisabledAdsTitleInHost(hosts);
 
         private static string ReadToFile(string file)
         {
@@ -40,7 +41,7 @@ namespace EspionSpotify
 
         private static bool UpdateHosts(string file, bool reset = false)
         {
-            if (!ValidAccess.ToFile(BasePath, file, reset)) return false;
+            if (!ValidAccess.ToFile(BasePath, file)) return false;
 
             var isReadOnly = ValidAccess.IsReadOnly(BasePath, file);
             if (isReadOnly)
@@ -61,6 +62,13 @@ namespace EspionSpotify
             }
 
             return true;
+        }
+
+        private static bool IsDisabledAdsTitleInHost(string file)
+        {
+            var allEntries = ReadToFile(file);
+            var fileContent = allEntries.Replace("\r", string.Empty).Split('\n');
+            return fileContent.Any(line => line.Contains(HostsTitle));
         }
 
         private static string FilterEntries(string content)

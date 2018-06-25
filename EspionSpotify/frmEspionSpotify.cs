@@ -65,7 +65,7 @@ namespace EspionSpotify
             tgNumFiles.Checked = Settings.Default.AddNumsInfrontFile;
             tgAddFolders.Checked = Settings.Default.AddFolders;
             txtPath.Text = Settings.Default.Directory;
-            tgDisableAds.Checked = Settings.Default.DisableAds;
+            tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
             SetLanguageDropDown();

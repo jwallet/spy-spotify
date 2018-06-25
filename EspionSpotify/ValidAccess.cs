@@ -19,17 +19,14 @@ namespace EspionSpotify
             File.SetAttributes($"{basePath}{file}", attributes);
         }
 
-        public static bool ToFile(string basePath, string file, bool writeAccess = false)
+        public static bool ToFile(string basePath, string file)
         {
             try
             {
                 var filePath = $"{basePath}{file}";
 
-                if (writeAccess)
-                {
-                    using (File.Open($"{filePath}.bak", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)) { }
-                }
-                using (File.Open(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)) {}
+                using (File.Open($"{filePath}.bak", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)) { }
+                using (File.Open(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)) { }
 
                 return true;
             }
