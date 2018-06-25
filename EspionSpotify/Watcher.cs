@@ -224,6 +224,7 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(false);
             _sound.SetSpotifyToMute(false);
             _sound.SetToHigh();
+            Spotify.Instance.Dispose();
             _form.StopRecording();
         }
 
