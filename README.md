@@ -10,7 +10,7 @@ Spytify uses the local Spotify API¹ and records the sound that is coming out of
 > ¹ Spytify uses the Spotify API NET listed in the dependencies list.      
 
 ## Use
-A standard use it's to start a recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
+A standard use it's to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
 
 <span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/37263373-39d18762-257e-11e8-9735-758d6517d4c8.png"/>
 <img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/37263401-62d56ed0-257e-11e8-8eaf-102043c0196f.png"/></span>
