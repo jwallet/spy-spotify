@@ -80,6 +80,7 @@ namespace EspionSpotify
             {
                 Thread.Sleep(30);
             }
+
             WaveIn.StopRecording();
         }
 

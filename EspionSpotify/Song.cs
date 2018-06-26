@@ -41,7 +41,7 @@ namespace EspionSpotify
             Length = track?.Length;
             IsAd = track?.IsAd() ?? false;
             IsOther = track?.IsOtherTrackType() ?? false;
-            IsNormal = Artist != null && Title != null;
+            IsNormal = Artist != null && Title != null && !IsAd;
 
             if (IsAd || IsOther) return;
 

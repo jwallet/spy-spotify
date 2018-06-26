@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using SpotifyAPI.Local;
 
 namespace EspionSpotify
@@ -73,7 +72,7 @@ namespace EspionSpotify
         {
             try
             {
-                return Instance.GetStatus() != null;
+                return Instance.GetStatus()?.Online == true;
             }
             catch (Exception ex)
             {

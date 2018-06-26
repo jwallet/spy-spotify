@@ -28,7 +28,9 @@ namespace EspionSpotify
             float fNewVolume;
 
             if (float.TryParse(volume.ToString(), out fNewVolume))
-                DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (fNewVolume / 100);
+            {
+                DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = fNewVolume / 100;
+            }
         }
 
         private bool IsSpotifyStillPlayingLastSong()
@@ -55,7 +57,7 @@ namespace EspionSpotify
             return SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId].SimpleAudioVolume.Mute = mute;
         }
 
-        public void SetToHigh(bool mute = false)
+        public void SetAppsVolume(bool mute = false)
         {
             var processes = Process.GetProcesses();
             const string spotify = "spotify";
@@ -70,7 +72,10 @@ namespace EspionSpotify
                     if (process.ProcessName.ToLower().Equals(spotify))
                     {
                         _spotifyVolumeSessionId = i;
-                        if (SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume < 1) SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume = 1;
+                        if (SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume < 1)
+                        {
+                            SessionsDefaultAudioEndPointDevice[i].SimpleAudioVolume.Volume = 1;
+                        }
                     }
                     else
                     {

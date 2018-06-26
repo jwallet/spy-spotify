@@ -199,11 +199,11 @@ namespace EspionSpotify
       
         public void WriteIntoConsole(string text)
         {
-            if(rtbLog.InvokeRequired)
+            if (rtbLog.InvokeRequired)
             {
                 BeginInvoke(new Action(() => WriteIntoConsole(text)));
             }
-            else
+            else if (text != null)
             {
                 var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
                 var alert = text[0] == '/';
@@ -211,8 +211,9 @@ namespace EspionSpotify
                 rtbLog.AppendText(timeStr);
                 if (!alert)
                 {
-                    var attrb = text.Substring(0, text.IndexOf(':'));
-                    var msg = text.Substring(text.IndexOf(':'), text.Length - text.IndexOf(':'));
+                    var indexOfColon = text.IndexOf(':');
+                    var attrb = text.Substring(0, indexOfColon);
+                    var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
                     rtbLog.AppendText(attrb);
                     rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
                     rtbLog.SelectionColor = Color.White;
@@ -247,9 +248,16 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            Watcher.Running = false;
-            tabSettings.Enabled = true;
-            timer1.Stop();
+            if (tabSettings.InvokeRequired)
+            {
+                BeginInvoke(new Action(StopRecording));
+            }
+            else
+            {
+                Watcher.Running = false;
+                timer1.Stop();
+                tabSettings.Enabled = true;
+            }
         }
 
         private bool DirExists()
@@ -267,7 +275,7 @@ namespace EspionSpotify
 
         private void lnkSpy_Click(object sender, EventArgs e)
         {
-            if(!Watcher.Running)
+            if (!Watcher.Running)
             {
                 if (!DirExists()) return;
 
