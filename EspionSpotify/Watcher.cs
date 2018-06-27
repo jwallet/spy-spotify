@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using NAudio.Lame;
 using SpotifyAPI.Local;
 
@@ -59,52 +60,24 @@ namespace EspionSpotify
 
         private void OnPlayStateChanged(object sender, PlayStateEventArgs e)
         {
-            var playing = e.Playing;
-            var song = Spotify.Instance.GetStatus().Track;
+            if (e.Playing == _isPlaying) return;
+            _isPlaying = e.Playing;
 
-            if (playing == _isPlaying) return;
-            _isPlaying = playing;
+            if (IsNewTrack(Spotify.Instance.GetStatus().Track) && e.Playing) return;
             _form.UpdateIconSpotify(_isPlaying);
 
-            if (song != null)
-            {
-                _currentSong = new Song(song);
-            }
-
-            if (_isPlaying)
-            {
-                _sound.SetSpotifyToMute(AdPlaying);
-                _form.UpdatePlayingTitle(SongTitle);
-
-                RecordSpotify();
-            }
-            else
-            {
-                _form.UpdatePlayingTitle("Spotify");
-            }
+            RecordSpotify();
         }
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
             if (RecorderUpAndRunning && IsOldSong)
             {
-                _sound.SleepWhileTheSongEnds();
+                _sound.SleepWhileTheSongEnds(_form);
             }
 
-            var newTrack = e.NewTrack;
-            if (newTrack == null ) return;
-
-            var newSong = new Song(newTrack);
-            if (_currentSong.Equals(newSong))
-            {
-                _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
-                return;
-            }
-
-            _currentSong = newSong;
-            _form.UpdatePlayingTitle(SongTitle);
-            _sound.SetSpotifyToMute(AdPlaying);
-
+            if (!IsNewTrack(e.NewTrack)) return;
+            
             if (AdPlaying)
             {
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logAdPlaying"));
@@ -119,6 +92,24 @@ namespace EspionSpotify
             {
                 _currentSong.CurrentLength = e.TrackTime;
             }
+        }
+
+        private bool IsNewTrack(SpotifyAPI.Local.Models.Track track)
+        {
+            if (track == null) return false;
+
+            var newSong = new Song(track);
+            if (_currentSong.Equals(newSong))
+            {
+                _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
+                return false;
+            }
+
+            _currentSong = newSong;
+            _form.UpdatePlayingTitle(SongTitle);
+            _sound.SetSpotifyToMute(AdPlaying);
+
+            return true;
         }
 
         private void SetSpotifyApi()
@@ -182,7 +173,7 @@ namespace EspionSpotify
         {
             DoIKeepLastSong();
 
-            if (RecorderUpAndRunning || !NormalSongPlaying) return;
+            if (!_isPlaying || RecorderUpAndRunning || !NormalSongPlaying) return;
 
             _recorder = new Recorder(
                 _form, _path, _bitrate, _format, _currentSong, _minTime,

@@ -55,6 +55,7 @@ namespace EspionSpotify
         public void Run()
         {
             Running = true;
+            Thread.Sleep(50);
             WaveIn = new WasapiLoopbackCapture();
 
             WaveIn.DataAvailable += waveIn_DataAvailable;
@@ -78,7 +79,7 @@ namespace EspionSpotify
 
             while (Running)
             {
-                Thread.Sleep(30);
+                Thread.Sleep(50);
             }
 
             WaveIn.StopRecording();

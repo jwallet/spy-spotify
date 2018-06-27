@@ -7,6 +7,8 @@ namespace EspionSpotify
     {
         public static string RemoveDiacritics(string text)
         {
+            if (text == null) return string.Empty;
+
             var normalizedString = text.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();
 

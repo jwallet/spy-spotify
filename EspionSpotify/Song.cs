@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using SpotifyAPI.Local.Enums;
 using TagLib;
 using Track = SpotifyAPI.Local.Models.Track;
@@ -18,8 +19,8 @@ namespace EspionSpotify
         public readonly bool IsOther;
         public readonly bool IsNormal;
 
-        public readonly byte[] ArtLarge;
-        public readonly byte[] ArtExtraLarge;
+        public byte[] ArtLarge;
+        public byte[] ArtExtraLarge;
 
         public Song()
         {
@@ -39,17 +40,22 @@ namespace EspionSpotify
 
             Type = track?.TrackType;
             Length = track?.Length;
-            IsAd = track?.IsAd() ?? false;
+            IsAd = (track?.IsAd() ?? false) && !(track?.TrackResource?.Uri != null && Type == "normal");
             IsOther = track?.IsOtherTrackType() ?? false;
-            IsNormal = Artist != null && Title != null && !IsAd;
+            IsNormal = Title != null && Artist != null;
 
             if (IsAd || IsOther) return;
 
+            Task.Run(() => GetPictures(track));
+        }
+
+        private async void GetPictures(Track track)
+        {
             try
             {
-                ArtLarge = track?.GetAlbumArtAsByteArray(AlbumArtSize.Size160);
+                ArtLarge = await track?.GetAlbumArtAsByteArrayAsync(AlbumArtSize.Size160);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ArtLarge = null;
                 Console.WriteLine(ex.Message);
@@ -57,7 +63,7 @@ namespace EspionSpotify
 
             try
             {
-                ArtExtraLarge = track?.GetAlbumArtAsByteArray(AlbumArtSize.Size320);
+                ArtExtraLarge = await track?.GetAlbumArtAsByteArrayAsync(AlbumArtSize.Size320);
             }
             catch (Exception ex)
             {

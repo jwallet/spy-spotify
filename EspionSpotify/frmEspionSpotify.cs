@@ -144,11 +144,10 @@ namespace EspionSpotify
                 var x = BeginInvoke(new Action(() => UpdateNum(num)));
                 x.AsyncWaitHandle.WaitOne();
                 EndInvoke(x);
+                return;
             }
-            else
-            {
-                lblNum.Text = num.ToString("000");
-            }
+
+            lblNum.Text = num.ToString("000");
         }
 
         public void UpdateStartButton()
@@ -156,13 +155,12 @@ namespace EspionSpotify
             if (lnkSpy.InvokeRequired)
             {
                 BeginInvoke(new Action(UpdateStartButton));
+                return;
             }
-            else
-            {
-                tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
-                lnkSpy.Image = Resources.on;
-                lnkSpy.Focus();
-            }
+
+            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
+            lnkSpy.Image = Resources.on;
+            lnkSpy.Focus();
         }
 
         public void UpdateIconSpotify(bool isSpotifyPlaying, bool isRecording = false)
@@ -170,8 +168,10 @@ namespace EspionSpotify
             if (iconSpotify.InvokeRequired)
             {
                 BeginInvoke(new Action(() => UpdateIconSpotify(isSpotifyPlaying, isRecording)));
+                return;
             }
-            else if (isRecording)
+
+            if (isRecording)
             {
                 iconSpotify.BackgroundImage = Resources.record;
             }
@@ -190,11 +190,10 @@ namespace EspionSpotify
             if (lblPlayingTitle.InvokeRequired)
             {
                 BeginInvoke(new Action(() => UpdatePlayingTitle(text)));
+                return;
             }
-            else
-            {
-                lblPlayingTitle.Text = text;
-            }
+
+            lblPlayingTitle.Text = text;
         }
       
         public void WriteIntoConsole(string text)
@@ -202,8 +201,10 @@ namespace EspionSpotify
             if (rtbLog.InvokeRequired)
             {
                 BeginInvoke(new Action(() => WriteIntoConsole(text)));
+                return;
             }
-            else if (text != null)
+
+            if (text != null)
             {
                 var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
                 var alert = text[0] == '/';
@@ -251,13 +252,12 @@ namespace EspionSpotify
             if (tabSettings.InvokeRequired)
             {
                 BeginInvoke(new Action(StopRecording));
+                return;
             }
-            else
-            {
-                Watcher.Running = false;
-                timer1.Stop();
-                tabSettings.Enabled = true;
-            }
+            
+            Watcher.Running = false;
+            timer1.Stop();
+            tabSettings.Enabled = true;
         }
 
         private bool DirExists()
