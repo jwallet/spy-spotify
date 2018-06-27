@@ -73,7 +73,7 @@ namespace EspionSpotify
         {
             if (RecorderUpAndRunning && IsOldSong)
             {
-                _sound.SleepWhileTheSongEnds(_form);
+                _sound.SleepWhileTheSongEnds();
             }
 
             if (!IsNewTrack(e.NewTrack)) return;

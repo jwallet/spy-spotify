@@ -3,14 +3,14 @@
 ### Spytify: Records Spotify while it plays without ads
 Runs on Windows only ([.NET 4.5](https://www.microsoft.com/en-ca/download/details.aspx?id=17851) and Spotify Desktop app needed).
 
-No need of a Spotify Premium account, __any free account will do__, however a premium account will give you some advantages: no ads and more audio qualities available.
+No need of a Spotify Premium account, __any free account will do__, however having a premium account will enable more audio qualities.
 
 ## How it works ?
 Spytify uses the local Spotify API¹ and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kbps, not an audiophile app, so stop trying to rip their songs.     
 > ¹ Spytify uses the Spotify API NET listed in the dependencies list.      
 
 ## Use
-A standard use it's to start a recording session at night and let it work overnight to avoid waiting for it to end, because Spytify does not download but records. You will get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
+A standard use it's to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
 
 <span><img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/37263373-39d18762-257e-11e8-9735-758d6517d4c8.png"/>
 <img width="420" height="auto" src="https://user-images.githubusercontent.com/23088305/37263401-62d56ed0-257e-11e8-8eaf-102043c0196f.png"/></span>
@@ -47,7 +47,7 @@ A standard use it's to start a recording session at night and let it work overni
   - inside files and replace the track number.
 
 > ¹ Spotify Free streams at 160kbps, so you shouldn't go above that quality.     
-> ² Spotify Premium streams at 320kpbs (if activated in your settings), so you shouldn't go above that quality.
+> ² Spotify Premium streams at 320kpbs (if enabled in your settings), so you shouldn't go above that quality.
 
 ## About the recording order number
 Adding the recording order number to files `017_Artiste_-_Titre.mp3` is useful if you want to burn songs to cds and that your mp3 player (like those in cars) orders songs by files name. You will get the a cd with songs ordered in the same order than the album. If it's a playlist, order it first on Spotify and start Spytify.

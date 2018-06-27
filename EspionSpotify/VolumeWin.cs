@@ -33,17 +33,17 @@ namespace EspionSpotify
             }
         }
 
-        private bool IsSpotifyStillPlayingLastSong(FrmEspionSpotify f)
+        private bool IsSpotifyStillPlayingLastSong()
         {
             if (_spotifyVolumeSessionId == -1 || SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId] == null) return false;
             var soundValue = (double)Math.Round(SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId].AudioMeterInformation.MasterPeakValue * 100.0, 1);
             return soundValue > 0;
         }
 
-        public void SleepWhileTheSongEnds(FrmEspionSpotify f)
+        public void SleepWhileTheSongEnds()
         {
             var times = 1000;
-            while (IsSpotifyStillPlayingLastSong(f) && times > 0)
+            while (IsSpotifyStillPlayingLastSong() && times > 0)
             {
                 Thread.Sleep(SleepTrackChanged);
                 times -= SleepTrackChanged;
