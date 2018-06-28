@@ -631,6 +631,12 @@ a {
         margin-top: 1rem;
         margin-left: 0; } }
 
+.btn.out {
+  background-color: rgba(50, 200, 57, 0.5);
+  color: #fff; }
+  .btn.out:hover {
+    background-color: #32c839; }
+
 .nav {
   border-top: 1rem solid #29B754;
   padding: 1rem;
@@ -641,6 +647,7 @@ a {
   height: 8rem; }
 
 .medias {
+  text-align: center;
   padding-top: 2rem; }
 
 .page-header {
