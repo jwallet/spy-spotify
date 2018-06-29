@@ -4,7 +4,7 @@
 
 | Parameter               | Description and values                 | Default value  |
 |:------------------------|:---------------------------------------|:---------------|
-| Output path             |                                        | `My Music`     |
+| Output path             | Folder where saved songs will be stored | `Music`     |
 | Audio quality           | From Low to High `128kbps` `160kbps (Spotify Free)`¹ `256kbps` `320kbps (Spotify Premium)`² | `160kbps`¹ |
 | Minimal length          | Remove songs shorter that the time set  | `30 seconds`  |
 | Audio format            | `WAV` and `MP3` (adds media info and album cover) | `MP3`    |
