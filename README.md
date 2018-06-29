@@ -50,16 +50,6 @@ A standard use it's to start a recording session at night using your favorite pl
 | Recording number starting position | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
 | Language | Currently supporting `English` and `French` | `English` |
 
-- Choose an output path
-- Choose audio format : mp3 or wav
-- Choose audio quality : low to high (128kbps, 160kbps¹, 256kbps, 320kbps²)
-- Choose a minimal length to remove songs that are too short in time or songs that you skiped.
-- You can save all artist songs inside their own folder, but it will remove the artist of the file name. `../Artist/Title.mp3`
-- You can remove from the file name any space and replace it by underscore `Artist_-_Title.mp3`
-- You can add a recording order number to... :
-  - infront of files name. `001 Artist - Title.mp3`
-  - inside files and replace the track number.
-
 > ¹ Spotify Free streams at 160kbps, so you shouldn't go above that quality.     
 > ² Spotify Premium streams at 320kpbs (if enabled in your settings), so you shouldn't go above that quality.
 
