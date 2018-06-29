@@ -6,7 +6,7 @@
 |:------------------------|:---------------------------------------|:---------------|
 | Output path             | Folder where saved songs will be stored | `Music`     |
 | Audio quality           | From Low to High `128kbps` `160kbps (Spotify Free)`¹ `256kbps` `320kbps (Spotify Premium)`² | `160kbps`¹ |
-| Minimal length          | Remove songs shorter that the time set  | `30 seconds`  |
+| Minimal length          | Remove songs shorter that the time set  | `30s`  |
 | Audio format            | `WAV` and `MP3` (adds media info and album cover) | `MP3`    |
 | Disable Ads             | `On`: Disable a whole list of ads, `Off`: Mutes all audios ads | `Off`   |
 | Group artists by folder | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
