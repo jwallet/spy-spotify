@@ -92,7 +92,6 @@ namespace EspionSpotify
             var otherSong = (Song) obj;
             return otherSong.Artist == Artist
                 && otherSong.Title == Title
-                && otherSong.Length == Length
                 && otherSong.Album == Album
                 && otherSong.Type == Type
                 && otherSong.IsAd == IsAd

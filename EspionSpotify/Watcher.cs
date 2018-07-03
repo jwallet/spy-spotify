@@ -63,7 +63,7 @@ namespace EspionSpotify
             if (e.Playing == _isPlaying) return;
             _isPlaying = e.Playing;
 
-            if (IsNewTrack(Spotify.Instance.GetStatus().Track) && e.Playing) return;
+            if (IsNewTrack(Spotify.Instance.GetStatus()?.Track) && e.Playing) return;
             _form.UpdateIconSpotify(_isPlaying);
 
             RecordSpotify();
@@ -71,7 +71,7 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            if (RecorderUpAndRunning && IsOldSong)
+            if ((RecorderUpAndRunning && IsOldSong) || e.OldTrack?.IsAd() == true)
             {
                 _sound.SleepWhileTheSongEnds();
             }

@@ -37,7 +37,7 @@ namespace EspionSpotify
         {
             if (_spotifyVolumeSessionId == -1 || SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId] == null) return false;
             var soundValue = (double)Math.Round(SessionsDefaultAudioEndPointDevice[_spotifyVolumeSessionId].AudioMeterInformation.MasterPeakValue * 100.0, 1);
-            return soundValue > 0;
+            return soundValue > 1;
         }
 
         public void SleepWhileTheSongEnds()
