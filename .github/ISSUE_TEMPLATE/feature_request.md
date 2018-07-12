@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea to improve Spytify. Feel free to use this template
+about: Suggest an idea to improve Spytify
 
 ---
 
