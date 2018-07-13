@@ -4,8 +4,8 @@ about: Suggest an enhancement or an new feature to improve Spytify
 
 ---
 
-**What feature or enhancement would you like to see added ?**
-> A clear and concise description of what you want to happen that will improve Spytify.
-
 **What problem will this new feature resolves ?**
-> A clear and concise description of what problem you encountered before asking for a change.
+> A clear and concise description of what problem you encountered that this idea can resolve.
+
+**What feature or enhancement would you like to see added ?**
+> Explain how this idea can improve Spytify.
