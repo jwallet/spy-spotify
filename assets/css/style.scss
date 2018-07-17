@@ -76,6 +76,9 @@ a {
     border-color: rgba(50, 200, 57, 1);
     text-decoration: none;
   }
+  &:focus {
+    background-color: white !important;
+  }
 
   + .btn {
     margin-left: 1rem;
@@ -106,9 +109,6 @@ a {
 .btn.out {
   background-color: rgba(50, 200, 57, 0.5);
   color: #fff;
-  &:hover {
-    background-color: rgba(50, 200, 57, 1);
-  }
 }
 
 .nav {
@@ -394,5 +394,13 @@ a {
 }
 
 .site-footer-credits {
+  display: block;
   color: $blockquote-text-color;
+}
+
+.site-footer-github {
+  float:right;
+  width: 10rem;
+  height: auto;
+  display: block;
 }

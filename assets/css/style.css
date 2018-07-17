@@ -612,6 +612,8 @@ a {
     color: #32c839;
     border-color: #32c839;
     text-decoration: none; }
+  .btn:focus {
+    background-color: white !important; }
   .btn + .btn {
     margin-left: 1rem; }
   @media screen and (min-width: 64em) {
@@ -634,8 +636,6 @@ a {
 .btn.out {
   background-color: rgba(50, 200, 57, 0.5);
   color: #fff; }
-  .btn.out:hover {
-    background-color: #32c839; }
 
 .nav {
   border-top: 1rem solid #29B754;
@@ -847,4 +847,11 @@ a {
   font-weight: bold; }
 
 .site-footer-credits {
+  display: block;
   color: #819198; }
+
+.site-footer-github {
+  float: right;
+  width: 10rem;
+  height: auto;
+  display: block; }
