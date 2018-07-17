@@ -851,7 +851,6 @@ a {
   color: #819198; }
 
 .site-footer-github {
-  float: right;
-  width: 10rem;
-  height: auto;
+  width: 20rem;
+  height: 3rem;
   display: block; }
