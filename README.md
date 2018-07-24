@@ -60,7 +60,6 @@ Adding the recording order number to files `017_Artist_-_Title.mp3` is useful if
 
 ## Dependencies
 - .NET Framwork 4.5
-- [Spotify API NET](https://johnnycrazy.github.io/SpotifyAPI-NET/) by [JohnnyCrazy](https://github.com/JohnnyCrazy)
 - Newtonsoft.Json
 - NAudio.Lame
 - last.fm API
