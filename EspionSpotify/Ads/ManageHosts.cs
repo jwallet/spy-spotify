@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using EspionSpotify.Properties;
 
-namespace EspionSpotify.Hosts
+namespace EspionSpotify.Ads
 {
-    internal static class ManageHosts
+    internal class ManageHosts
     {
         public static readonly string HostsSystemPath = @"\System32\drivers\etc\hosts";
         private static readonly string BasePath = Environment.GetEnvironmentVariable("WINDIR");

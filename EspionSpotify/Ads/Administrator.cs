@@ -2,9 +2,9 @@
 using System.Security.Principal;
 using System.Windows.Forms;
 
-namespace EspionSpotify.Hosts
+namespace EspionSpotify.Ads
 {
-    internal static class Administrator
+    internal class Administrator
     {
         public static bool EnsureAdmin()
         {

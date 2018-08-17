@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace EspionSpotify.Hosts
+namespace EspionSpotify.Ads
 {
-    internal static class ValidAccess
+    internal class ValidAccess
     {
         public static bool IsReadOnly(string basePath, string file) => (File.GetAttributes($"{basePath}{file}") & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
 

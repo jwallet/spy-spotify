@@ -156,7 +156,7 @@
     <Compile Include="Enums\MediaFormat.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Hosts\Administrator.cs" />
+    <Compile Include="Ads\Administrator.cs" />
     <Compile Include="english.Designer.cs">
       <DependentUpon>english.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -201,14 +201,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Hosts\ManageHosts.cs" />
+    <Compile Include="Ads\ManageHosts.cs" />
     <Compile Include="GitHub.cs" />
     <Compile Include="Spotify\SpotifyHandler.cs" />
     <Compile Include="AudioSessions\SpotifyAudioSession.cs" />
     <Compile Include="Spotify\SpotifyConnect.cs" />
     <Compile Include="Spotify\SpotifyProcess.cs" />
     <Compile Include="Models\UserSettings.cs" />
-    <Compile Include="Hosts\ValidAccess.cs" />
+    <Compile Include="Ads\ValidAccess.cs" />
     <Compile Include="AudioSessions\MainAudioSession.cs" />
     <Compile Include="IWatcher.cs" />
     <Compile Include="Watcher.cs" />
