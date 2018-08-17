@@ -8,22 +8,22 @@
     <Setting Name="Bitrate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="Format" Type="System.Int32" Scope="User">
+    <Setting Name="MediaFormat" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="MinLength" Type="System.Int32" Scope="User">
+    <Setting Name="MinimumRecordedLengthSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
-    <Setting Name="AddFolders" Type="System.Boolean" Scope="User">
+    <Setting Name="GroupByFoldersEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AddSeparators" Type="System.Boolean" Scope="User">
+    <Setting Name="TrackTitleSeparatorEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AddNumsInfrontFile" Type="System.Boolean" Scope="User">
+    <Setting Name="OrderNumberInfrontOfFileEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AddNumsAsTrack" Type="System.Boolean" Scope="User">
+    <Setting Name="OrderNumberInMediaTagEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Language" Type="System.Int32" Scope="User">
@@ -32,10 +32,19 @@
     <Setting Name="TabNo" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="AdHosts" Type="System.String" Scope="User">
-      <Value Profile="(Default)">s0.2mdn.net;content.bitsontherun.com;bounceexchange.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;adclick.g.doublecklick.net;doubleclick.net;googleads.g.doubleclick.net;pagead46.l.doubleclick.net;pubads.g.doubleclick.net;securepubads.g.doubleclick.net;gtssl2-ocsp.geotrust.com;googleadservices.com;partner.googleadservices.com;www.googleadservices.com;www.googletagservices.com;pagead2.googlesyndication.com;tpc.googlesyndication.com;video-ad-stats.googlesyndication.com;redirector.gvt1.com;core.insightexpressai.com;v.jwpcdn.com;media-match.com;js.moatads.com;omaze.com;www.omaze.com;ads.pubmatic.com;gads.pubmatic.com;b.scorecardresearch.com;bs.serving-sys.com;ds.serving-sys.com;adeventtracker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.com</Value>
-    </Setting>
     <Setting Name="DisableAds" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AdHosts" Type="System.String" Scope="User">
+      <Value Profile="(Default)">adclick.g.doublecklick.net;adeventtracker.spotify.com;ads.pubmatic.com;ads-fa.spotify.com;analytics.spotify.com;audio-sp-dca.spotify.com;audio2.spotify.com;b.scorecardresearch.com;bounceexchange.com;bs.serving-sys.com;content.bitsontherun.com;core.insightexpressai.com;crashdump.spotify.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;desktop.spotify.com;doubleclick.net;ds.serving-sys.com;gads.pubmatic.com;googleads.g.doubleclick.net;googleadservices.com;gtssl2-ocsp.geotrust.com;heads4-ak.spotify.com.edgesuite.net;js.moatads.com;log.spotify.com;media-match.com;omaze.com;pagead2.googlesyndication.com;pagead46.l.doubleclick.net;partner.googleadservices.com;pubads.g.doubleclick.net;redirector.gvt1.com;s0.2mdn.net;securepubads.g.doubleclick.net;tpc.googlesyndication.com;v.jwpcdn.com;video-ad-stats.googlesyndication.com;weblb-wg.gslb.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;www.googleadservices.com;www.googletagservices.com;www.omaze.com</Value>
+    </Setting>
+    <Setting Name="EndingSongDelayEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MuteAdsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RecordUnknownTrackTypeEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

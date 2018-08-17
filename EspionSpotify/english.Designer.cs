@@ -19,7 +19,7 @@ namespace EspionSpotify {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class english {
@@ -160,7 +160,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio quality (Bitrate):.
+        ///   Looks up a localized string similar to Audio quality:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -169,20 +169,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customize:.
-        /// </summary>
-        internal static string lblCustomize {
-            get {
-                return ResourceManager.GetString("lblCustomize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable Spotify audio ads.
+        ///   Looks up a localized string similar to Disable as much Spotify audio ads as possible (not working as good as before).
         /// </summary>
         internal static string lblDisableAds {
             get {
                 return ResourceManager.GetString("lblDisableAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay next recording if sound is detected.
+        /// </summary>
+        internal static string lblEndingSongDelay {
+            get {
+                return ResourceManager.GetString("lblEndingSongDelay", resourceCulture);
             }
         }
         
@@ -214,6 +214,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mute Ads.
+        /// </summary>
+        internal static string lblMuteAds {
+            get {
+                return ResourceManager.GetString("lblMuteAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add the recording order number infront of all files name.
         /// </summary>
         internal static string lblNumFiles {
@@ -241,11 +250,38 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recorder:.
+        /// </summary>
+        internal static string lblRecorder {
+            get {
+                return ResourceManager.GetString("lblRecorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose the starting position of the recording order number.
         /// </summary>
         internal static string lblRecordingNum {
             get {
                 return ResourceManager.GetString("lblRecordingNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record unkown type tracks detected as an ad.
+        /// </summary>
+        internal static string lblRecordUnknownTrackType {
+            get {
+                return ResourceManager.GetString("lblRecordUnknownTrackType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spy:.
+        /// </summary>
+        internal static string lblSpy {
+            get {
+                return ResourceManager.GetString("lblSpy", resourceCulture);
             }
         }
         
@@ -453,6 +489,15 @@ namespace EspionSpotify {
         internal static string msgTitlePathNotFound {
             get {
                 return ResourceManager.GetString("msgTitlePathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Settings.
+        /// </summary>
+        internal static string tabAdvanced {
+            get {
+                return ResourceManager.GetString("tabAdvanced", resourceCulture);
             }
         }
         

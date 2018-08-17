@@ -12,7 +12,7 @@ namespace EspionSpotify.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -50,72 +50,72 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Format {
+        public int MediaFormat {
             get {
-                return ((int)(this["Format"]));
+                return ((int)(this["MediaFormat"]));
             }
             set {
-                this["Format"] = value;
+                this["MediaFormat"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public int MinLength {
+        public int MinimumRecordedLengthSeconds {
             get {
-                return ((int)(this["MinLength"]));
+                return ((int)(this["MinimumRecordedLengthSeconds"]));
             }
             set {
-                this["MinLength"] = value;
+                this["MinimumRecordedLengthSeconds"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AddFolders {
+        public bool GroupByFoldersEnabled {
             get {
-                return ((bool)(this["AddFolders"]));
+                return ((bool)(this["GroupByFoldersEnabled"]));
             }
             set {
-                this["AddFolders"] = value;
+                this["GroupByFoldersEnabled"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AddSeparators {
+        public bool TrackTitleSeparatorEnabled {
             get {
-                return ((bool)(this["AddSeparators"]));
+                return ((bool)(this["TrackTitleSeparatorEnabled"]));
             }
             set {
-                this["AddSeparators"] = value;
+                this["TrackTitleSeparatorEnabled"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AddNumsInfrontFile {
+        public bool OrderNumberInfrontOfFileEnabled {
             get {
-                return ((bool)(this["AddNumsInfrontFile"]));
+                return ((bool)(this["OrderNumberInfrontOfFileEnabled"]));
             }
             set {
-                this["AddNumsInfrontFile"] = value;
+                this["OrderNumberInfrontOfFileEnabled"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AddNumsAsTrack {
+        public bool OrderNumberInMediaTagEnabled {
             get {
-                return ((bool)(this["AddNumsAsTrack"]));
+                return ((bool)(this["OrderNumberInMediaTagEnabled"]));
             }
             set {
-                this["AddNumsAsTrack"] = value;
+                this["OrderNumberInMediaTagEnabled"] = value;
             }
         }
         
@@ -145,7 +145,19 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"s0.2mdn.net;content.bitsontherun.com;bounceexchange.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;adclick.g.doublecklick.net;doubleclick.net;googleads.g.doubleclick.net;pagead46.l.doubleclick.net;pubads.g.doubleclick.net;securepubads.g.doubleclick.net;gtssl2-ocsp.geotrust.com;googleadservices.com;partner.googleadservices.com;www.googleadservices.com;www.googletagservices.com;pagead2.googlesyndication.com;tpc.googlesyndication.com;video-ad-stats.googlesyndication.com;redirector.gvt1.com;core.insightexpressai.com;v.jwpcdn.com;media-match.com;js.moatads.com;omaze.com;www.omaze.com;ads.pubmatic.com;gads.pubmatic.com;b.scorecardresearch.com;bs.serving-sys.com;ds.serving-sys.com;adeventtracker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;ads-fa.spotify.com;analytics.spotify.com;audio2.spotify.com;crashdump.spotify.com;desktop.spotify.com;log.spotify.com;spclient.wg.spotify.com;weblb-wg.gslb.spotify.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableAds {
+            get {
+                return ((bool)(this["DisableAds"]));
+            }
+            set {
+                this["DisableAds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"adclick.g.doublecklick.net;adeventtracker.spotify.com;ads.pubmatic.com;ads-fa.spotify.com;analytics.spotify.com;audio-sp-dca.spotify.com;audio2.spotify.com;b.scorecardresearch.com;bounceexchange.com;bs.serving-sys.com;content.bitsontherun.com;core.insightexpressai.com;crashdump.spotify.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;desktop.spotify.com;doubleclick.net;ds.serving-sys.com;gads.pubmatic.com;googleads.g.doubleclick.net;googleadservices.com;gtssl2-ocsp.geotrust.com;heads4-ak.spotify.com.edgesuite.net;js.moatads.com;log.spotify.com;media-match.com;omaze.com;pagead2.googlesyndication.com;pagead46.l.doubleclick.net;partner.googleadservices.com;pubads.g.doubleclick.net;redirector.gvt1.com;s0.2mdn.net;securepubads.g.doubleclick.net;tpc.googlesyndication.com;v.jwpcdn.com;video-ad-stats.googlesyndication.com;weblb-wg.gslb.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;www.googleadservices.com;www.googletagservices.com;www.omaze.com")]
         public string AdHosts {
             get {
                 return ((string)(this["AdHosts"]));
@@ -157,13 +169,37 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DisableAds {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EndingSongDelayEnabled {
             get {
-                return ((bool)(this["DisableAds"]));
+                return ((bool)(this["EndingSongDelayEnabled"]));
             }
             set {
-                this["DisableAds"] = value;
+                this["EndingSongDelayEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MuteAdsEnabled {
+            get {
+                return ((bool)(this["MuteAdsEnabled"]));
+            }
+            set {
+                this["MuteAdsEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RecordUnknownTrackTypeEnabled {
+            get {
+                return ((bool)(this["RecordUnknownTrackTypeEnabled"]));
+            }
+            set {
+                this["RecordUnknownTrackTypeEnabled"] = value;
             }
         }
     }

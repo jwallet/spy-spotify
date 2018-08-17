@@ -162,15 +162,15 @@
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Qualité audio (Bitrate):</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblCustomize" xml:space="preserve">
-    <value>Personnaliser:</value>
+    <value>Qualité audio:</value>
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Désactiver les publicités audio de Spotify</value>
+    <value>Désactiver le plus de publicités audio de Spotify (ne fonctionne pas autant qu'avant)</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblEndingSongDelay" xml:space="preserve">
+    <value>Retarder le prochain enregistrement si du son est détecté</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -185,6 +185,10 @@
     <value>Durée minimale:</value>
     <comment>interface</comment>
   </data>
+  <data name="lblMuteAds" xml:space="preserve">
+    <value>Couper le son des publicités</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblNumFiles" xml:space="preserve">
     <value>Inscrire au début du nom des fichiers enregistrés l'ordre d'enregistrement</value>
     <comment>interface</comment>
@@ -197,8 +201,20 @@
     <value>Dossier de sauvegarde:</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRecorder" xml:space="preserve">
+    <value>Enregistreur:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblRecordingNum" xml:space="preserve">
     <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordUnknownTrackType" xml:space="preserve">
+    <value>Enregistrer les pistes de type inconnu détectées en tant que publicité</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpy" xml:space="preserve">
+    <value>Espion:</value>
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
@@ -292,6 +308,10 @@
   <data name="msgTitlePathNotFound" xml:space="preserve">
     <value>Répertoire invalide</value>
     <comment>message</comment>
+  </data>
+  <data name="tabAdvanced" xml:space="preserve">
+    <value>Paramètres avancés</value>
+    <comment>interface</comment>
   </data>
   <data name="tabRecord" xml:space="preserve">
     <value>Espion</value>
