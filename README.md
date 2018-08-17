@@ -8,8 +8,7 @@ Spytify runs on Windows only.
 You don't need a Spotify Premium account to use Spytify, __any free account will do__, however having a premium account will enable more audio qualities.
 
 ## How it works ?
-Spytify uses the local Spotify API¹ and records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kbps, not an audiophile app, so no need to rip their songs.
-> ¹ Spytify uses the Spotify API NET listed in the dependencies list.  
+Spytify records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kbps, not an audiophile app, so no need to rip their songs.
 
 ### Standard Use
 A standard use it's to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
@@ -44,23 +43,32 @@ A standard use it's to start a recording session at night using your favorite pl
 | Audio quality           | From Low to High `128kbps` `160kbps (Spotify Free)`¹ `256kbps` `320kbps (Spotify Premium)`² | `160kbps`¹ |
 | Minimal length          | Remove songs shorter that the time set  | `30s`  |
 | Audio format            | `WAV` and `MP3` (adds media info and album cover) | `MP3`    |
-| Disable Ads             | `On`: Disable a whole list of ads, `Off`: Mutes all audios ads | `Off`   |
-| Group artists by folder | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
-| Files names with underscores | Remove from the file name any space and replace it by underscore `Artist_-_Title.mp3` | `Off` | 
-| Add number infront of files | Add a recording order number infront of files name `001 Artist - Title.mp3` | `Off` |
-| Replace track numbers by number | Replace the album track number in the media info by the recording order number | `Off` |
-| Recording number starting position | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
 | Language               | Currently supporting `English` and `French` | `English` |
+| Disable Ads             | Add a whole list of ads domain into your hosts file to disable them, you can add more to it yourself to make this feature stronger | `Off`   |
+| Mute Ads               | Mute audio ads when detected | `On` |
 
 > ¹ Spotify Free streams at 160kbps, so you shouldn't go above that quality.     
 > ² Spotify Premium streams at 320kpbs (if enabled in your settings), so you shouldn't go above that quality.
+
+## Advanced Parameters
+| Recorder Parameter      | Description and values                 | Default value  |
+|:------------------------|:---------------------------------------|:---------------|
+| Recording number starting position | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
+| Replace track numbers by number | Replace the album track number in the media info by the recording order number | `Off` |
+| Add number infront of files | Add a recording order number infront of files name `001 Artist - Title.mp3` | `Off` |
+| Group artists by folder | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
+| Files names with underscores | Remove from the file name any space and replace it by underscore `Artist_-_Title.mp3` | `Off` | 
+
+| Spy Parameter      | Description and values                 | Default value  |
+|:------------------------|:---------------------------------------|:---------------|
+| Delay next recording    | Delay the recording of the next song if sound is detected or the 1 second timeout is reached | `On` |
+| Record unkown type of tracks | Records anything that plays and unmute ads, podcasts are detected as an ad  | `Off` |
 
 ### About the recording order number
 Adding the recording order number to files `017_Artist_-_Title.mp3` is useful if you want to burn songs to cds and that your mp3 player (like those in cars) orders songs by files name. You will get the a cd with songs ordered in the same order than the album. If it's a playlist, order it first on Spotify and start Spytify.
 
 ## Dependencies
 - .NET Framwork 4.5
-- [Spotify API NET](https://johnnycrazy.github.io/SpotifyAPI-NET/) by [JohnnyCrazy](https://github.com/JohnnyCrazy)
 - Newtonsoft.Json
 - NAudio.Lame
 - last.fm API
