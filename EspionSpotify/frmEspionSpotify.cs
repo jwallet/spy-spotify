@@ -3,69 +3,62 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Resources;
+using EspionSpotify.Hosts;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EspionSpotify.Properties;
 using MetroFramework;
 using MetroFramework.Forms;
 using NAudio.Lame;
+using EspionSpotify.Models;
+using EspionSpotify.Enums;
+using EspionSpotify.AudioSessions;
 
 namespace EspionSpotify
 {
     public sealed partial class FrmEspionSpotify : MetroForm
     {
-        private readonly VolumeWin _sound;
+        private readonly IMainAudioSession _audioSession;
         private Watcher _watcher;
-        private int _minTime;
-        private bool _strucDossiers;
-        private Recorder.Format _formatValue;
-        private string _charSeparator;
-        private bool _bCdTrack;
-        private bool _bNumFile;
-        private int _num;
+        private UserSettings _userSettings;
 
-        public static Random Rnd;
         public static ResourceManager Rm;
         public static FrmEspionSpotify Instance;
 
         public FrmEspionSpotify()
         {
             SuspendLayout();
+
             Instance = this;
             InitializeComponent();
-            
-            Rnd = new Random();
+
+            _userSettings = new UserSettings();
             Rm = new ResourceManager(typeof(english));
             BackImage = Resources.spytify_logo;
 
-            if (Settings.Default.Directory == "")
+            if (Settings.Default.Directory.Equals(string.Empty))
             {
                 Settings.Default.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 Settings.Default.Save();
             }
-
-            _charSeparator = Settings.Default.AddSeparators ? "_" : " ";
-            _minTime = Settings.Default.MinLength;
-            _formatValue = (Recorder.Format) Settings.Default.Format;
-            _strucDossiers = Settings.Default.AddFolders;
-            _bCdTrack = Settings.Default.AddNumsAsTrack;
-            _bNumFile = Settings.Default.AddNumsInfrontFile;
-            _num = 1;
 
             var indexLanguage = Settings.Default.Language;
             var indexBitRate = Settings.Default.Bitrate;
 
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
-            rbMp3.Checked = Settings.Default.Format == 0;
-            rbWav.Checked = Settings.Default.Format == 1;
-            tbMinTime.Value = Settings.Default.MinLength / 5;
-            tgAddSeparators.Checked = Settings.Default.AddSeparators;
-            tgNumTracks.Checked = Settings.Default.AddNumsAsTrack;
-            tgNumFiles.Checked = Settings.Default.AddNumsInfrontFile;
-            tgAddFolders.Checked = Settings.Default.AddFolders;
+            rbMp3.Checked = Settings.Default.MediaFormat == 0;
+            rbWav.Checked = Settings.Default.MediaFormat == 1;
+            tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
+            tgEndingSongDelay.Checked = Settings.Default.EndingSongDelayEnabled;
+            tgAddSeparators.Checked = Settings.Default.TrackTitleSeparatorEnabled;
+            tgNumTracks.Checked = Settings.Default.OrderNumberInMediaTagEnabled;
+            tgNumFiles.Checked = Settings.Default.OrderNumberInfrontOfFileEnabled;
+            tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
             txtPath.Text = Settings.Default.Directory;
             tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
+            tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
             SetLanguageDropDown();
@@ -76,11 +69,22 @@ namespace EspionSpotify
             cbBitRate.SelectedIndex = indexBitRate;
             cbLanguage.SelectedIndex = indexLanguage;
 
-            _sound = new VolumeWin();
+            _audioSession = new MainAudioSession();
 
-            tbVolumeWin.Value = _sound.DefaultAudioDeviceVolume;
-            lblSoundCard.Text = _sound.DefaultAudioEndPointDevice.FriendlyName;
-            lblVolume.Text = _sound.DefaultAudioDeviceVolume + @"%";
+            tbVolumeWin.Value = _audioSession.DefaultAudioDeviceVolume;
+            lblSoundCard.Text = _audioSession.DefaultAudioEndPointDevice.FriendlyName;
+            lblVolume.Text = _audioSession.DefaultAudioDeviceVolume + @"%";
+
+            _userSettings.OutputPath = Settings.Default.Directory;
+            _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
+            _userSettings.MediaFormat = (MediaFormat)Settings.Default.MediaFormat;
+            _userSettings.MinimumRecordedLengthSeconds = Settings.Default.MinimumRecordedLengthSeconds;
+            _userSettings.GroupByFoldersEnabled = Settings.Default.GroupByFoldersEnabled;
+            _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
+            _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
+            _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
+            _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
+            _userSettings.InternalOrderNumber = 1;
 
             ResumeLayout();
             GitHub.NewestVersion();
@@ -105,19 +109,25 @@ namespace EspionSpotify
 
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");
+            tabAdvanced.Text = Rm.GetString($"tabAdvanced");
+
             lblPath.Text = Rm.GetString($"lblPath");
             lblBitRate.Text = Rm.GetString($"lblBitRate");
             lblFormat.Text = Rm.GetString($"lblFormat");
             lblMinLength.Text = Rm.GetString($"lblMinLength");
-            lblCustomize.Text = Rm.GetString($"lblCustomize");
             lblLanguage.Text = Rm.GetString($"lblLanguage");
             lblAddFolders.Text = Rm.GetString($"lblAddFolders");
             lblAddSeparators.Text = Rm.GetString($"lblAddSeparators");
             lblNumFiles.Text = Rm.GetString($"lblNumFiles");
             lblNumTracks.Text = Rm.GetString($"lblNumTracks");
+            lblEndingSongDelay.Text = Rm.GetString($"lblEndingSongDelay");
             lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
             lblAds.Text = Rm.GetString($"lblAds");
             lblDisableAds.Text = Rm.GetString($"lblDisableAds");
+            lblMuteAds.Text = Rm.GetString($"lblMuteAds");
+            lblSpy.Text = Rm.GetString($"lblSpy");
+            lblRecorder.Text = Rm.GetString($"lblRecorder");
+            lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -234,22 +244,20 @@ namespace EspionSpotify
 
         private void StartRecording()
         {
-            var bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
+            _watcher = new Watcher(this, _userSettings);
 
-            _watcher = new Watcher(this, txtPath.Text, bitrate, _formatValue, _sound, _minTime, 
-                _strucDossiers, _charSeparator, _bCdTrack, _bNumFile, _num);
-
-            var watcherThread = new Thread(_watcher.Run);
+            var watcherThread = new Thread(async () => await _watcher.Run());
             watcherThread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
-            tabSettings.Enabled = false;
+            tlSettings.Enabled = false;
+            tlAdvanced.Enabled = false;
             timer1.Start();
         }
 
         public void StopRecording()
         {
-            if (tabSettings.InvokeRequired)
+            if (tlSettings.InvokeRequired || tlAdvanced.InvokeRequired)
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
@@ -257,12 +265,13 @@ namespace EspionSpotify
             
             Watcher.Running = false;
             timer1.Stop();
-            tabSettings.Enabled = true;
+            tlSettings.Enabled = true;
+            tlAdvanced.Enabled = true;
         }
 
         private bool DirExists()
         {
-            if (Directory.Exists(txtPath.Text)) return true;
+            if (Directory.Exists(_userSettings.OutputPath)) return true;
 
             MetroMessageBox.Show(this,
                 Rm.GetString($"msgBodyPathNotFound"),
@@ -273,7 +282,7 @@ namespace EspionSpotify
             return false;
         }
 
-        private void lnkSpy_Click(object sender, EventArgs e)
+        private void LnkSpy_Click(object sender, EventArgs e)
         {
             if (!Watcher.Running)
             {
@@ -290,51 +299,100 @@ namespace EspionSpotify
             }
         }
 
-        private void lnkClear_Click(object sender, EventArgs e)
+        private void LnkClear_Click(object sender, EventArgs e)
         {
             rtbLog.Text = "";
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             if (_watcher == null) return;
-            _watcher.CountSecs++;
+            _watcher.CountSeconds++;
 
             if (!Watcher.Running) StopRecording();
         }
 
-        private void rbFormat_CheckedChanged(object sender, EventArgs e)
+        private void RbFormat_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
-            _formatValue = rb != null && rb.Tag.ToString() == "mp3" ? Recorder.Format.Mp3 : Recorder.Format.Wav;
-            Settings.Default.Format = (rbMp3.Checked ? 0 : 1);
+            _userSettings.MediaFormat = rb != null && rb.Tag.ToString() == "mp3" ? MediaFormat.Mp3 : MediaFormat.Wav;
+            Settings.Default.MediaFormat = (rbMp3.Checked ? 0 : 1);
             Settings.Default.Save();
         }
 
-        private void tgAddFolders_CheckedChanged(object sender, EventArgs e)
+        private void TgRecordUnkownTrackType_CheckedChanged(object sender, EventArgs e)
         {
-            _strucDossiers = tgAddFolders.Checked;
-            Settings.Default.AddFolders = tgAddFolders.Checked;
+            _userSettings.RecordUnknownTrackTypeEnabled = tgRecordUnkownTrackType.Checked;
+            Settings.Default.RecordUnknownTrackTypeEnabled = tgRecordUnkownTrackType.Checked;
+            Settings.Default.Save();
+
+            if (tgRecordUnkownTrackType.Checked)
+            {
+                tgMuteAds.Checked = false;
+            }
+        }
+
+        private void TgDisableAds_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
+
+            Settings.Default.DisableAds = tgDisableAds.Checked;
             Settings.Default.Save();
         }
 
-        private void tgAddSeparators_CheckedChanged(object sender, EventArgs e)
+        private void TgDisableAds_Click(object sender, EventArgs e)
         {
-            _charSeparator = tgAddSeparators.Checked ? "_" : " ";
-            Settings.Default.AddSeparators = tgAddSeparators.Checked;
+            if (!Administrator.EnsureAdmin())
+            {
+                tgDisableAds.Checked = !tgDisableAds.Checked;
+            }
+        }
+
+        private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
+        {
+            _userSettings.MuteAdsEnabled = tgMuteAds.Checked;
+            Settings.Default.MuteAdsEnabled = tgMuteAds.Checked;
             Settings.Default.Save();
         }
 
-        private void tgNumFiles_CheckedChanged(object sender, EventArgs e)
+        private void TgEndingSongDelay_CheckedChanged(object sender, EventArgs e)
         {
-            _bNumFile = tgNumFiles.Checked;
-            Settings.Default.AddNumsInfrontFile = tgNumFiles.Checked;
+            _userSettings.EndingTrackDelayEnabled = tgEndingSongDelay.Checked;
+            Settings.Default.EndingSongDelayEnabled = tgEndingSongDelay.Checked;
             Settings.Default.Save();
         }
 
-        private void frmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
+        private void TgAddFolders_CheckedChanged(object sender, EventArgs e)
         {
-            if (Watcher.Ready) return;
+            _userSettings.GroupByFoldersEnabled = tgAddFolders.Checked;
+            Settings.Default.GroupByFoldersEnabled = tgAddFolders.Checked;
+            Settings.Default.Save();
+        }
+
+        private void TgAddSeparators_CheckedChanged(object sender, EventArgs e)
+        {
+            _userSettings.TrackTitleSeparator = tgAddSeparators.Checked ? "_" : " ";
+            Settings.Default.TrackTitleSeparatorEnabled = tgAddSeparators.Checked;
+            Settings.Default.Save();
+        }
+
+        private void TgNumFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            _userSettings.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
+            Settings.Default.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
+            Settings.Default.Save();
+        }
+
+        private void TgNumTracks_CheckedChanged(object sender, EventArgs e)
+        {
+            _userSettings.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
+            Settings.Default.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
+            Settings.Default.Save();
+        }
+
+        private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Watcher.Ready || !Watcher.Running) return;
             e.Cancel = true;
             if (MetroMessageBox.Show(this,
                     Rm.GetString($"msgBodyCantQuit"),
@@ -346,20 +404,7 @@ namespace EspionSpotify
             Close();
         }
 
-        private void tgNumTracks_CheckedChanged(object sender, EventArgs e)
-        {
-            _bCdTrack = tgNumTracks.Checked;
-            Settings.Default.AddNumsAsTrack = tgNumTracks.Checked;
-            Settings.Default.Save();
-        }
-
-        private void lblNum_TextChanged(object sender, EventArgs e)
-        {
-            var val = Convert.ToInt16(lblNum.Text);
-            _num = val;
-        }
-
-        private void lnkPath_Click(object sender, EventArgs e)
+        private void LnkPath_Click(object sender, EventArgs e)
         {
             folderBrowserDialog.SelectedPath = txtPath.Text.Equals(string.Empty)
                 ? Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
@@ -371,57 +416,69 @@ namespace EspionSpotify
             }
         }
 
-        private void lnkNumMinus_Click(object sender, EventArgs e)
+        private void TxtPath_TextChanged(object sender, EventArgs e)
         {
-            if (_num - 1 < 0)
-            {
-                _num = 999;
-            }
-            else
-            {
-                _num--;
-            }
-
-            lblNum.Text = _num.ToString("000");
-        }
-
-        private void lnkNumPlus_Click(object sender, EventArgs e)
-        {
-            if (_num + 1 > 999)
-            {
-                _num = 0;
-            }
-            else
-            {
-                _num++;
-            }
-
-            lblNum.Text = _num.ToString("000");
-        }
-
-        private void lnkDirectory_Click(object sender, EventArgs e)
-        {
-            if (DirExists()) System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
-        }
-
-        private void tbMinTime_ValueChanged(object sender, EventArgs e)
-        {
-            _minTime = tbMinTime.Value * 5;
-            var min = (_minTime / 60);
-            var sec = (_minTime % 60);
-            lblMinTime.Text = min + @":" + sec.ToString("00");
-            Settings.Default.MinLength = tbMinTime.Value * 5;
+            Settings.Default.Directory = txtPath.Text;
             Settings.Default.Save();
         }
 
-        private void tbVolumeWin_ValueChanged(object sender, EventArgs e)
+        private void CbBitRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_sound.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute)
+            _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
+            Settings.Default.Bitrate = cbBitRate.SelectedIndex;
+            Settings.Default.Save();
+        }
+
+        private void LnkNumMinus_Click(object sender, EventArgs e)
+        {
+            if (!_userSettings.InternalOrderNumber.HasValue) return;
+
+            if (_userSettings.InternalOrderNumber - 1 >= 0)
             {
-                _sound.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute = false;
+                _userSettings.InternalOrderNumber--;
             }
 
-            _sound.SetDefaultAudioDeviceVolume(tbVolumeWin.Value);
+            lblNum.Text = (_userSettings.InternalOrderNumber ?? 0).ToString("000");
+        }
+
+        private void LnkNumPlus_Click(object sender, EventArgs e)
+        {
+            if (!_userSettings.InternalOrderNumber.HasValue) return;
+
+            if (_userSettings.InternalOrderNumber + 1 < 1000)
+            {
+                _userSettings.InternalOrderNumber++;
+            }
+
+            lblNum.Text = (_userSettings.InternalOrderNumber ?? 0).ToString("000");
+        }
+
+        private void LnkDirectory_Click(object sender, EventArgs e)
+        {
+            if (DirExists())
+            {
+                System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
+            }
+        }
+
+        private void TbMinTime_ValueChanged(object sender, EventArgs e)
+        {
+            _userSettings.MinimumRecordedLengthSeconds = tbMinTime.Value * 5;
+            var min = (_userSettings.MinimumRecordedLengthSeconds / 60);
+            var sec = (_userSettings.MinimumRecordedLengthSeconds % 60);
+            lblMinTime.Text = min + @":" + sec.ToString("00");
+            Settings.Default.MinimumRecordedLengthSeconds = tbMinTime.Value * 5;
+            Settings.Default.Save();
+        }
+
+        private void TbVolumeWin_ValueChanged(object sender, EventArgs e)
+        {
+            if (_audioSession.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute)
+            {
+                _audioSession.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute = false;
+            }
+
+            _audioSession.SetDefaultAudioDeviceVolume(tbVolumeWin.Value);
             lblVolume.Text = (tbVolumeWin.Value) + @"%";
 
             if (tbVolumeWin.Value == 0)
@@ -438,13 +495,13 @@ namespace EspionSpotify
             }
         }
 
-        private void focus_Hover(object sender, EventArgs e)
+        private void Focus_Hover(object sender, EventArgs e)
         {
             var ctrl = (Control) sender;
             ctrl.Focus();
         }
 
-        private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.Language = cbLanguage.SelectedIndex;
             Settings.Default.Save();
@@ -453,29 +510,9 @@ namespace EspionSpotify
             SetLanguage(language);
         }
 
-        private void txtPath_TextChanged(object sender, EventArgs e)
-        {
-            Settings.Default.Directory = folderBrowserDialog.SelectedPath;
-            Settings.Default.Save();
-        }
-
-        private void cbBitRate_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Settings.Default.Bitrate = cbBitRate.SelectedIndex;
-            Settings.Default.Save();
-        }
-
-        private void tcMenu_SelectedIndexChanged(object sender, EventArgs e)
+        private void TcMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.TabNo = tcMenu.SelectedIndex;
-            Settings.Default.Save();
-        }
-
-        private void tgDisableAds_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
-
-            Settings.Default.DisableAds = tgDisableAds.Checked;
             Settings.Default.Save();
         }
 
@@ -484,14 +521,6 @@ namespace EspionSpotify
             return isToggled
                 ? ManageHosts.DisableAds(ManageHosts.HostsSystemPath)
                 : ManageHosts.EnableAds(ManageHosts.HostsSystemPath);
-        }
-
-        private void tgDisableAds_Click(object sender, EventArgs e)
-        {
-            if (!Administrator.EnsureAdmin())
-            {
-                tgDisableAds.Checked = !tgDisableAds.Checked;
-            }
         }
     }
 }

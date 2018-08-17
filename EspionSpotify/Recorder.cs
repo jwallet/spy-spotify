@@ -2,70 +2,55 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using NAudio.Lame;
 using NAudio.Wave;
 using File = System.IO.File;
 
 namespace EspionSpotify
 {
-    internal class Recorder
+    internal class Recorder: IRecorder
     {
-        public enum Format { Mp3, Wav }
-        public int Count = 0;
-        public bool Running;
-        private readonly string _path;
-        private readonly LAMEPreset _bitrate;
-        private readonly int _minTime;
-        private readonly string _charSeparator;
-        private readonly bool _strucDossiers;
-        private readonly int _compteur;
-        private readonly bool _bCdTrack;
-        private readonly bool _bNumFile;
+        public int CountSeconds { get; set; }
+        public bool Running { get; set; }
+        public bool SongGotDeleted { get; }
+
+        private readonly UserSettings _userSettings;
         private readonly FrmEspionSpotify _form;
-        private readonly Format _format;
-        private readonly Song _song;
+        private readonly Track _track;
         private string _currentFile;
-        public WasapiLoopbackCapture WaveIn;
-        public Stream Writer;
+        private WasapiLoopbackCapture _waveIn;
+        private Stream _writer;
         private const int FirstSongNameCount = 1;
 
         private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
-        public bool SongGotDeleted { get; }
-
         public Recorder() { }
 
-        public Recorder(FrmEspionSpotify espionSpotifyForm, string path, LAMEPreset bitrate, Format format, 
-            Song song, int minTime, bool strucDossiers, string charSeparator, bool bCdTrack, bool bNumFile, int compteur)
+        public Recorder(FrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
         {
             SongGotDeleted = false;
             _form = espionSpotifyForm;
-            _path = path;
-            _bitrate = bitrate;
-            _format = format;
-            _song = song;
-            _minTime = minTime;
-            _strucDossiers = strucDossiers;
-            _charSeparator = charSeparator;
-            _compteur = compteur;
-            _bCdTrack = bCdTrack;
-            _bNumFile = bNumFile;
+            _userSettings = userSettings;
+            _track = track;
         }
 
         public void Run()
         {
             Running = true;
             Thread.Sleep(50);
-            WaveIn = new WasapiLoopbackCapture();
+            _waveIn = new WasapiLoopbackCapture();
 
-            WaveIn.DataAvailable += waveIn_DataAvailable;
-            WaveIn.RecordingStopped += waveIn_RecordingStopped;
+            _waveIn.DataAvailable += WaveIn_DataAvailable;
+            _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
-            Writer = GetFileWriter(WaveIn);
+            _writer = GetFileWriter(_waveIn);
 
-            if (Writer == null)
+            if (_writer == null)
             {
-                if (!Directory.Exists(_path))
+                if (!Directory.Exists(_userSettings.OutputPath))
                 {
                     _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logInvalidOutput"));
                     return;
@@ -74,74 +59,75 @@ namespace EspionSpotify
                 return;
             }
 
-            WaveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", BuildFileName(_path, false)));
+            _waveIn.StartRecording();
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", BuildFileName(_userSettings.OutputPath, false)));
 
             while (Running)
             {
                 Thread.Sleep(50);
             }
 
-            WaveIn.StopRecording();
+            _waveIn.StopRecording();
         }
 
-        private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            Writer.Write(e.Buffer, 0, e.BytesRecorded);
+            _writer.Write(e.Buffer, 0, e.BytesRecorded);
         }
 
-        private void waveIn_RecordingStopped(object sender, StoppedEventArgs e)
+        private void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (Writer != null)
+            if (_writer != null)
             {
-                Writer.Flush();
-                Writer.Dispose();
-                WaveIn.Dispose();
+                _writer.Flush();
+                _writer.Dispose();
+                _waveIn.Dispose();
             }
 
-            if (Count >= _minTime)
+            if (CountSeconds >= _userSettings.MinimumRecordedLengthSeconds)
             {
-                if (_format != Format.Mp3) return;
+                if (!_userSettings.MediaFormat.Equals(MediaFormat.Mp3)) return;
 
-                var mp3TagsInfo = new Mp3TagsInfo
+                var mp3TagsInfo = new MediaTags.MP3Tags()
                 {
-                    Song = _song,
-                    BCdTrack = _bCdTrack,
-                    Compteur = _compteur,
+                    Track = _track,
+                    OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
+                    Count = _userSettings.OrderNumber,
                     CurrentFile = _currentFile
                 };
-                mp3TagsInfo.SetTagLibDataToMp3();
+
+                Task.Run(mp3TagsInfo.SaveMediaTags);
 
                 return;
             }
 
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", BuildFileName(_path, false), _minTime));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", BuildFileName(_userSettings.OutputPath, false), _userSettings.MinimumRecordedLengthSeconds));
 
             File.Delete(_currentFile);
         }
 
-        public Stream GetFileWriter(WasapiLoopbackCapture waveIn)
+        private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
         {
             Stream writer;
             string insertArtistDir = null;
-            var artistDir = Normalize.RemoveDiacritics(_song.Artist);
+            var artistDir = Normalize.RemoveDiacritics(_track.Artist);
             artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
 
-            if (_strucDossiers)
+            if (_userSettings.GroupByFoldersEnabled)
             {
-                insertArtistDir = "//" + artistDir;
-                Directory.CreateDirectory(_path + "//" + artistDir);
+                insertArtistDir = $"//{artistDir}";
+                Directory.CreateDirectory($"{_userSettings.OutputPath}//{artistDir}");
             }
 
-            if (_format == Format.Mp3)
+            if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
             {
                 try
                 {
-                    _currentFile = BuildFileName(_path + insertArtistDir);
+                    _currentFile = BuildFileName(_userSettings.OutputPath + insertArtistDir);
                     writer = new LameMP3FileWriter(
                         _currentFile,
                         waveIn.WaveFormat,
-                        _bitrate);
+                        _userSettings.Bitrate);
 
                     return writer;
                 }
@@ -154,7 +140,7 @@ namespace EspionSpotify
 
             try
             {
-                _currentFile = BuildFileName(_path + insertArtistDir);
+                _currentFile = BuildFileName($"{_userSettings.OutputPath}{insertArtistDir}");
                 writer = new WaveFileWriter(
                     _currentFile,
                     waveIn.WaveFormat
@@ -170,28 +156,28 @@ namespace EspionSpotify
 
         private string GetFileName(string songName, int count, string path = null)
         {
-            var ending = _format.ToString().ToLower();
-            songName += count > FirstSongNameCount ? $"{_charSeparator}{count}" : string.Empty;
+            var ending = _userSettings.MediaFormat.ToString().ToLower();
+            songName += count > FirstSongNameCount ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
             return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
         }
 
         private string BuildFileName(string path, bool includePath = true)
         {
             string songName;
-            var track = _compteur != -1 && _bNumFile ? $"{_compteur :000} " : null;
+            var track = _userSettings.OrderNumber != -1 && _userSettings.OrderNumberInfrontOfFileEnabled ? $"{_userSettings.OrderNumber:000} " : null;
 
-            if (_strucDossiers)
+            if (_userSettings.GroupByFoldersEnabled)
             {
-                songName = Normalize.RemoveDiacritics(_song.Title);
+                songName = Normalize.RemoveDiacritics(_track.Title);
                 songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
             }
             else
             {
-                songName = Normalize.RemoveDiacritics(_song.ToString());
+                songName = Normalize.RemoveDiacritics(_track.ToString());
                 songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
             }
 
-            var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _charSeparator);
+            var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _userSettings.TrackTitleSeparator);
             var filename = GetFileName(songNameTrackNumber, FirstSongNameCount, includePath ? path : null);
             var count = FirstSongNameCount;
 

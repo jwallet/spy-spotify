@@ -11,9 +11,7 @@ namespace EspionSpotify
     {
         public static void NewestVersion()
         {
-            Uri uri;
-            
-            if (!Uri.TryCreate("http://github.com/jwallet/spy-spotify/releases/latest", UriKind.Absolute, out uri)) return;
+            if (!Uri.TryCreate("http://github.com/jwallet/spy-spotify/releases/latest", UriKind.Absolute, out var uri)) return;
 
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
             var request = WebRequest.Create(uri);

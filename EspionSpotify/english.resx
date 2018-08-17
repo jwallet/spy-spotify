@@ -162,15 +162,15 @@
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Audio quality (Bitrate):</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblCustomize" xml:space="preserve">
-    <value>Customize:</value>
+    <value>Audio quality:</value>
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Disable Spotify audio ads</value>
+    <value>Disable as much Spotify audio ads as possible (not working as good as before)</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblEndingSongDelay" xml:space="preserve">
+    <value>Delay next recording if sound is detected</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
@@ -185,6 +185,10 @@
     <value>Minimal length:</value>
     <comment>interface</comment>
   </data>
+  <data name="lblMuteAds" xml:space="preserve">
+    <value>Mute Ads</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblNumFiles" xml:space="preserve">
     <value>Add the recording order number infront of all files name</value>
     <comment>interface</comment>
@@ -197,8 +201,20 @@
     <value>Output path:</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRecorder" xml:space="preserve">
+    <value>Recorder:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblRecordingNum" xml:space="preserve">
     <value>Choose the starting position of the recording order number</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordUnknownTrackType" xml:space="preserve">
+    <value>Record unkown type tracks detected as an ad</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpy" xml:space="preserve">
+    <value>Spy:</value>
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
@@ -292,6 +308,10 @@
   <data name="msgTitlePathNotFound" xml:space="preserve">
     <value>Output path invalid</value>
     <comment>message</comment>
+  </data>
+  <data name="tabAdvanced" xml:space="preserve">
+    <value>Advanced Settings</value>
+    <comment>interface</comment>
   </data>
   <data name="tabRecord" xml:space="preserve">
     <value>Spy</value>
