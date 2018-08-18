@@ -1,4 +1,5 @@
 ![logo-en](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)
+[![Build Status](https://travis-ci.org/jwallet/spy-spotify.svg?branch=master)](https://travis-ci.org/jwallet/spy-spotify)
 
 ### Spytify: Records Spotify while it plays without ads
 Spytify runs on Windows only.
