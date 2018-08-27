@@ -42,6 +42,7 @@ namespace EspionSpotify
             this.lnkClear = new MetroFramework.Controls.MetroLink();
             this.lblSoundCard = new MetroFramework.Controls.MetroLabel();
             this.lblVolume = new MetroFramework.Controls.MetroLabel();
+            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
             this.iconVolume = new MetroFramework.Controls.MetroPanel();
             this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -56,7 +57,10 @@ namespace EspionSpotify
             this.lnkPath = new MetroFramework.Controls.MetroLink();
             this.txtPath = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
+            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
             this.lblMinTime = new MetroFramework.Controls.MetroLabel();
             this.lblFormat = new MetroFramework.Controls.MetroLabel();
             this.lblMinLength = new MetroFramework.Controls.MetroLabel();
@@ -95,10 +99,6 @@ namespace EspionSpotify
             this.lnkSpy = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
-            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
-            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
-            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -254,6 +254,19 @@ namespace EspionSpotify
             this.lblVolume.TabIndex = 9;
             this.lblVolume.Text = "000%";
             this.lblVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tbVolumeWin
+            // 
+            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
+            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
+            this.tbVolumeWin.Name = "tbVolumeWin";
+            this.tbVolumeWin.Size = new System.Drawing.Size(138, 23);
+            this.tbVolumeWin.TabIndex = 11;
+            this.tbVolumeWin.Value = 0;
+            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
+            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // iconVolume
             // 
@@ -491,6 +504,33 @@ namespace EspionSpotify
             this.tableLayoutPanel12.Size = new System.Drawing.Size(614, 29);
             this.tableLayoutPanel12.TabIndex = 37;
             // 
+            // cbBitRate
+            // 
+            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbBitRate.FormattingEnabled = true;
+            this.cbBitRate.ItemHeight = 23;
+            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
+            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
+            this.cbBitRate.Name = "cbBitRate";
+            this.cbBitRate.Size = new System.Drawing.Size(614, 29);
+            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbBitRate.TabIndex = 37;
+            this.cbBitRate.UseSelectable = true;
+            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
+            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
+            // cbLanguage
+            // 
+            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.ItemHeight = 23;
+            this.cbLanguage.Location = new System.Drawing.Point(133, 163);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(614, 29);
+            this.cbLanguage.TabIndex = 44;
+            this.cbLanguage.UseSelectable = true;
+            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
+            // 
             // tableLayoutPanel9
             // 
             this.tableLayoutPanel9.ColumnCount = 2;
@@ -509,6 +549,21 @@ namespace EspionSpotify
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(614, 29);
             this.tableLayoutPanel9.TabIndex = 11;
+            // 
+            // tbMinTime
+            // 
+            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
+            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMinTime.Location = new System.Drawing.Point(42, 3);
+            this.tbMinTime.Maximum = 24;
+            this.tbMinTime.Name = "tbMinTime";
+            this.tbMinTime.Size = new System.Drawing.Size(569, 23);
+            this.tbMinTime.TabIndex = 17;
+            this.tbMinTime.Text = "metroTrackBar1";
+            this.tbMinTime.Value = 6;
+            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
+            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // lblMinTime
             // 
@@ -1043,61 +1098,6 @@ namespace EspionSpotify
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
-            // tbVolumeWin
-            // 
-            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
-            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
-            this.tbVolumeWin.Name = "tbVolumeWin";
-            this.tbVolumeWin.Size = new System.Drawing.Size(138, 23);
-            this.tbVolumeWin.TabIndex = 11;
-            this.tbVolumeWin.Value = 0;
-            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
-            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbBitRate
-            // 
-            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbBitRate.FormattingEnabled = true;
-            this.cbBitRate.ItemHeight = 23;
-            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
-            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
-            this.cbBitRate.Name = "cbBitRate";
-            this.cbBitRate.Size = new System.Drawing.Size(614, 29);
-            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbBitRate.TabIndex = 37;
-            this.cbBitRate.UseSelectable = true;
-            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
-            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbLanguage
-            // 
-            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbLanguage.FormattingEnabled = true;
-            this.cbLanguage.ItemHeight = 23;
-            this.cbLanguage.Location = new System.Drawing.Point(133, 163);
-            this.cbLanguage.Name = "cbLanguage";
-            this.cbLanguage.Size = new System.Drawing.Size(614, 29);
-            this.cbLanguage.TabIndex = 44;
-            this.cbLanguage.UseSelectable = true;
-            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
-            // 
-            // tbMinTime
-            // 
-            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
-            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinTime.Location = new System.Drawing.Point(42, 3);
-            this.tbMinTime.Maximum = 24;
-            this.tbMinTime.Name = "tbMinTime";
-            this.tbMinTime.Size = new System.Drawing.Size(569, 23);
-            this.tbMinTime.TabIndex = 17;
-            this.tbMinTime.Text = "metroTrackBar1";
-            this.tbMinTime.Value = 6;
-            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
-            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // FrmEspionSpotify
             // 

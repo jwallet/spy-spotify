@@ -417,6 +417,7 @@ namespace EspionSpotify
 
         private void TxtPath_TextChanged(object sender, EventArgs e)
         {
+            _userSettings.OutputPath = txtPath.Text;
             Settings.Default.Directory = txtPath.Text;
             Settings.Default.Save();
         }
