@@ -699,7 +699,7 @@ a {
   @media screen and (min-width: 64em) {
     .main-content {
       max-width: 64rem;
-      padding: 2rem 6rem;
+      padding: 2rem 5rem;
       margin: 0 auto;
       font-size: 1.1rem; } }
   @media screen and (min-width: 42em) and (max-width: 64em) {
