@@ -1,5 +1,5 @@
-<span><img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy2.JPG"/>
-<img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy3.JPG"/></span>
+<span><img width="400" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy2.JPG"/>
+<img width="400" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy3.JPG"/></span>
 
 ## Parameters
 
