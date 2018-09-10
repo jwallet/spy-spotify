@@ -18,17 +18,17 @@
 
 ## Advanced Parameters
 
-| Recorder Parameter      | Description and values                 | Default value  |
-|:------------------------|:---------------------------------------|:---------------|
-| Recording number starting position | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
-| Replace track numbers by number | Replace the album track number in the media info by the recording order number | `Off` |
-| Add number infront of files | Add a recording order number infront of files name `001 Artist - Title.mp3` | `Off` |
-| Group artists by folder | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
-| Files names with underscores | Remove from the file name any space and replace it by underscore `Artist_-_Title.mp3` | `Off` | 
+| Recorder Parameter                   | Description and values                 | Default value  |
+|:-------------------------------------|:---------------------------------------|:---------------|
+| Recording number starting position   | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
+| Replace track numbers by number      | Replace the album track number in the media info by the recording order number | `Off` |
+| Add number infront of files          | Add a recording order number infront of files name `001 Artist - Title.mp3` | `Off` |
+| Group artists by folder              | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
+| Files names with underscores         | Remove from the file name any space and replace it by underscore `Artist_-_Title.mp3` | `Off` | 
 
-| Spy Parameter      | Description and values                 | Default value  |
-|:------------------------|:---------------------------------------|:---------------|
-| Delay next recording    | Delay the recording of the next song if sound is detected or the 1 second timeout is reached | `On` |
+| Spy Parameter                | Description and values                 | Default value  |
+|:-----------------------------|:---------------------------------------|:---------------|
+| Delay next recording         | Delay the recording of the next song if sound is detected or the 1 second timeout is reached | `On` |
 | Record unkown type of tracks | Records anything that plays and unmute ads, podcasts are detected as an ad  | `Off` |
 
 ### About the recording order number
