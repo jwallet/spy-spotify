@@ -17,6 +17,7 @@
 > ² Spotify Premium streams at 320kpbs (if enabled in your settings), so you shouldn't go above that quality.
 
 ## Advanced Parameters
+
 | Recorder Parameter      | Description and values                 | Default value  |
 |:------------------------|:---------------------------------------|:---------------|
 | Recording number starting position | Changing the position will take effect if one of the options above is enabled, change this number when resuming an old recording session | `001` |
