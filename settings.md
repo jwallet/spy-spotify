@@ -26,6 +26,7 @@
 | Group artists by folder              | Save all artist songs inside their own folder, but it will remove the artist of the file name `../Artist/Title.mp3` | `Off` |
 | Files names with underscores         | Remove from the file name any space and replace it by underscore `Artist_-_Title.mp3` | `Off` | 
 
+
 | Spy Parameter                | Description and values                 | Default value  |
 |:-----------------------------|:---------------------------------------|:---------------|
 | Delay next recording         | Delay the recording of the next song if sound is detected or the 1 second timeout is reached | `On` |
