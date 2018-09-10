@@ -1,4 +1,5 @@
-![image](https://user-images.githubusercontent.com/23088305/37263401-62d56ed0-257e-11e8-8eaf-102043c0196f.png)
+<span><img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy2.JPG"/>
+<img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spy3.JPG"/></span>
 
 ## Parameters
 
