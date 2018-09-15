@@ -202,5 +202,17 @@ namespace EspionSpotify.Properties {
                 this["RecordUnknownTrackTypeEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AnalyticsCID {
+            get {
+                return ((string)(this["AnalyticsCID"]));
+            }
+            set {
+                this["AnalyticsCID"] = value;
+            }
+        }
     }
 }

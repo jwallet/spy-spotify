@@ -44,12 +44,15 @@ namespace EspionSpotify.AudioSessions
                 var spotifySoundValue = 0.0;
                 Thread.Sleep(_sleepValue);
 
-                foreach (var audioSession in _spotifyAudioSessionControls)
+                lock (_spotifyAudioSessionControls)
                 {
-                    var soundValue = Math.Round(audioSession.AudioMeterInformation.MasterPeakValue * 100.0, 1);
-                    if (soundValue == 0.0) continue;
+                    foreach (var audioSession in _spotifyAudioSessionControls)
+                    {
+                        var soundValue = Math.Round(audioSession.AudioMeterInformation.MasterPeakValue * 100.0, 1);
+                        if (soundValue == 0.0) continue;
 
-                    spotifySoundValue = soundValue;
+                        spotifySoundValue = soundValue;
+                    }
                 }
 
                 samples.Add(spotifySoundValue);
@@ -60,9 +63,12 @@ namespace EspionSpotify.AudioSessions
 
         public void SetSpotifyToMute(bool mute)
         {
-            foreach (var audioSession in _spotifyAudioSessionControls)
+            lock (_spotifyAudioSessionControls)
             {
-                audioSession.SimpleAudioVolume.Mute = mute;
+                foreach (var audioSession in _spotifyAudioSessionControls)
+                {
+                    audioSession.SimpleAudioVolume.Mute = mute;
+                }
             }
         }
 
