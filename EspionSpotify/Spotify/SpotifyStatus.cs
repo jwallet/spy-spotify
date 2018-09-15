@@ -48,7 +48,7 @@ namespace EspionSpotify.Spotify
             Track = new Track
             {
                 Ad = isAd && isPlaying,
-                Playing = isPlaying || !spotifyWindowInfo.IsTitledSpotify(),
+                Playing = isPlaying || !spotifyWindowInfo.IsTitledSpotify,
                 Artist = GetTitleTag(tags, 1),
                 Title = GetTitleTag(tags, 2),
                 TitleExtended = GetTitleTag(tags, 3),

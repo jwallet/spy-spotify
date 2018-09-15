@@ -341,4 +341,48 @@
     <value>Arrêter l'espionnage</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
+    <value>Utilisez Audacity (un éditeur gratuit pour fichiers audio) pour couper les parties audio que vous voulez retirer. Spytify ne peut garantir qu'une annonce ou la prochaine piste audio sera détectée correctement puisqu'il se base sur peu d'informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAdsPlayAndStop" xml:space="preserve">
+    <value>Spotify a détecté que vous avez essayé de désactiver les annonces en utilisant la fonctionnalité "Désactiver les publicités" de Spytify. Désactiver ce paramètre et redémarrer les deux applications.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
+    <value>Spytify désative la plupart des applications quand la session d'enregistrement débute. Soyez certain de désactiver les notifications sonore de Windows 10 provenant des applications dans "Paramètres de notification et d'action" et tout autre application dans le "Mélangeur de volume". Seulement Spotify et Spytify ne doivent pas être à muet.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpotifyTrackCut" xml:space="preserve">
+    <value>Spotify recherche les fichiers de musique localement avant de jouer une piste audio, si il en trouve une avec les méta données que la piste audio courante, il jouera la piste audio local à la place. Des pistes audio coupées signifient que vous avez, une fois, commencer une session d'enregistrement et l'avez terminé trop tôt. Il faut juste supprimer les pistes audio incomplètes dans votre répertoire de musique pour résoudre le problème.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblTrackDetectedAsAd" xml:space="preserve">
+    <value>Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Spytify ne peut garantir qu'une piste audio sera détectée correctement puisqu'il se base sur peu d'informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tabFAQ" xml:space="preserve">
+    <value>F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
+    <value>Annonces et pistes audio chevauchent au début/fin d'une piste audio enregistrée.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlAdsPlayAndStop" xml:space="preserve">
+    <value>Spotify joue une annonce puis il pause/joue à chaque seconde.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlBackgroundNoiceRecordedOnTrack" xml:space="preserve">
+    <value>Du son/bruit d'arrière fond a été enregistré dans le fichier de la piste audio.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlSpotifyTrackCut" xml:space="preserve">
+    <value>Spotify joue seulement un bout d'une piste audio, ça coupe après quelques secondes.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlTrackDetectedAsAd" xml:space="preserve">
+    <value>Pistes audio sont détectées en tant que publicité</value>
+    <comment>interface</comment>
+  </data>
 </root>

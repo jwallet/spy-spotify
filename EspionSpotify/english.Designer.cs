@@ -133,6 +133,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Audacity (a free editor for audio files) to cut the audio part that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
+        /// </summary>
+        internal static string lblAdAndTrackOverlapOnRecordedTrack {
+            get {
+                return ResourceManager.GetString("lblAdAndTrackOverlapOnRecordedTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group every artist songs inside their own folder.
         /// </summary>
         internal static string lblAddFolders {
@@ -156,6 +165,24 @@ namespace EspionSpotify {
         internal static string lblAds {
             get {
                 return ResourceManager.GetString("lblAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify detected that you tried to disable ads using Spytify feature &quot;Disable Ads&quot;. Disable this setting and restart both apps..
+        /// </summary>
+        internal static string lblAdsPlayAndStop {
+            get {
+                return ResourceManager.GetString("lblAdsPlayAndStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notifcation sound coming from apps in &quot;Notifications and actions settings&quot; and all other apps in the &quot;Volume Mixer&quot;. Only Spotify and Spytify should not be muted..
+        /// </summary>
+        internal static string lblBackgroundNoiceRecordedOnTrack {
+            get {
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack", resourceCulture);
             }
         }
         
@@ -277,11 +304,29 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spotify looks for local music files before playing a track. If it finds one with the same meta data that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue..
+        /// </summary>
+        internal static string lblSpotifyTrackCut {
+            get {
+                return ResourceManager.GetString("lblSpotifyTrackCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spy:.
         /// </summary>
         internal static string lblSpy {
             get {
                 return ResourceManager.GetString("lblSpy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify don&apos;t return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
+        /// </summary>
+        internal static string lblTrackDetectedAsAd {
+            get {
+                return ResourceManager.GetString("lblTrackDetectedAsAd", resourceCulture);
             }
         }
         
@@ -502,6 +547,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to F.A.Q..
+        /// </summary>
+        internal static string tabFAQ {
+            get {
+                return ResourceManager.GetString("tabFAQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spy.
         /// </summary>
         internal static string tabRecord {
@@ -561,6 +615,51 @@ namespace EspionSpotify {
         internal static string tipStopSying {
             get {
                 return ResourceManager.GetString("tipStopSying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ads and tracks overlap at the beginning/end of recorded tracks..
+        /// </summary>
+        internal static string tlAdAndTrackOverlapOnRecordedTrack {
+            get {
+                return ResourceManager.GetString("tlAdAndTrackOverlapOnRecordedTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify plays an ad then it pause/play every second..
+        /// </summary>
+        internal static string tlAdsPlayAndStop {
+            get {
+                return ResourceManager.GetString("tlAdsPlayAndStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background noice/sound was recorded on the saved track file..
+        /// </summary>
+        internal static string tlBackgroundNoiceRecordedOnTrack {
+            get {
+                return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify only plays a bit of a track, it cuts after some seconds..
+        /// </summary>
+        internal static string tlSpotifyTrackCut {
+            get {
+                return ResourceManager.GetString("tlSpotifyTrackCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracks are detected as an ad..
+        /// </summary>
+        internal static string tlTrackDetectedAsAd {
+            get {
+                return ResourceManager.GetString("tlTrackDetectedAsAd", resourceCulture);
             }
         }
     }
