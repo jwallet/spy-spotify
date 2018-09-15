@@ -11,6 +11,6 @@ namespace EspionSpotify.Models
         public string WindowTitle { get; set; }
         public bool IsPlaying { get; set; }
 
-        public bool IsTitledSpotify() => WindowTitle?.ToLowerInvariant().Equals("spotify") ?? false;
+        public bool IsTitledSpotify { get => WindowTitle?.ToLowerInvariant().Equals("spotify") ?? false; }
     }
 }

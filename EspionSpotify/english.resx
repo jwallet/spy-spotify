@@ -341,4 +341,48 @@
     <value>Stop spying</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
+    <value>Use Audacity (a free editor for audio files) to cut the audio part that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAdsPlayAndStop" xml:space="preserve">
+    <value>Spotify detected that you tried to disable ads using Spytify feature "Disable Ads". Disable this setting and restart both apps.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
+    <value>Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notifcation sound coming from apps in "Notifications and actions settings" and all other apps in the "Volume Mixer". Only Spotify and Spytify should not be muted.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpotifyTrackCut" xml:space="preserve">
+    <value>Spotify looks for local music files before playing a track. If it finds one with the same meta data that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblTrackDetectedAsAd" xml:space="preserve">
+    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify don't return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tabFAQ" xml:space="preserve">
+    <value>F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
+    <value>Ads and tracks overlap at the beginning/end of recorded tracks.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlAdsPlayAndStop" xml:space="preserve">
+    <value>Spotify plays an ad then it pause/play every second.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlBackgroundNoiceRecordedOnTrack" xml:space="preserve">
+    <value>Background noice/sound was recorded on the saved track file.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlSpotifyTrackCut" xml:space="preserve">
+    <value>Spotify only plays a bit of a track, it cuts after some seconds.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlTrackDetectedAsAd" xml:space="preserve">
+    <value>Tracks are detected as an ad.</value>
+    <comment>interface</comment>
+  </data>
 </root>
