@@ -157,18 +157,6 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"adclick.g.doublecklick.net;adeventtracker.spotify.com;ads.pubmatic.com;ads-fa.spotify.com;analytics.spotify.com;audio-sp-dca.spotify.com;audio2.spotify.com;b.scorecardresearch.com;bounceexchange.com;bs.serving-sys.com;content.bitsontherun.com;core.insightexpressai.com;crashdump.spotify.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;desktop.spotify.com;doubleclick.net;ds.serving-sys.com;gads.pubmatic.com;googleads.g.doubleclick.net;googleadservices.com;gtssl2-ocsp.geotrust.com;heads4-ak.spotify.com.edgesuite.net;js.moatads.com;log.spotify.com;media-match.com;omaze.com;pagead2.googlesyndication.com;pagead46.l.doubleclick.net;partner.googleadservices.com;pubads.g.doubleclick.net;redirector.gvt1.com;s0.2mdn.net;securepubads.g.doubleclick.net;tpc.googlesyndication.com;v.jwpcdn.com;video-ad-stats.googlesyndication.com;weblb-wg.gslb.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;www.googleadservices.com;www.googletagservices.com;www.omaze.com")]
-        public string AdHosts {
-            get {
-                return ((string)(this["AdHosts"]));
-            }
-            set {
-                this["AdHosts"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EndingSongDelayEnabled {
             get {
@@ -212,6 +200,56 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["AnalyticsCID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("adeventtracker.spotify.com;ads.pubmatic.com;ads-fa.spotify.com;analytics.spotify." +
+            "com;audio-sp-dca.spotify.com;audio2.spotify.com;b.scorecardresearch.com;bounceex" +
+            "change.com;bs.serving-sys.com;content.bitsontherun.com;core.insightexpressai.com" +
+            ";crashdump.spotify.com;d2gi7ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.ne" +
+            "t;desktop.spotify.com;doubleclick.net;ds.serving-sys.com;gads.pubmatic.com;googl" +
+            "eads.g.doubleclick.net;googleadservices.com;gtssl2-ocsp.geotrust.com;heads4-ak.s" +
+            "potify.com.edgesuite.net;js.moatads.com;log.spotify.com;media-match.com;omaze.co" +
+            "m;pagead2.googlesyndication.com;pagead46.l.doubleclick.net;partner.googleadservi" +
+            "ces.com;pubads.g.doubleclick.net;redirector.gvt1.com;s0.2mdn.net;securepubads.g." +
+            "doubleclick.net;tpc.googlesyndication.com;v.jwpcdn.com;video-ad-stats.googlesynd" +
+            "ication.com;weblb-wg.gslb.spotify.com;weblb-wg.gslb.spotify.comcker.spotify.com;" +
+            "www.googleadservices.com;www.googletagservices.com;www.omaze.com;adclick.g.doubl" +
+            "ecklick.net;adeventtracker.spotify.com;adnxs.com;ads.yahoo.com;ads-fa.spotify.co" +
+            "m;agkn.com;analytics.spotify.com;audio2.spotify.com;audio-ec.spotify.com;audio-f" +
+            "a.spotify.com;audio-sp.spotify.com;audio-sp-ash.spotify.com;audio-sp-tyo.spotify" +
+            ".com;b.scorecardresearch.com;bounceexchange.com;bs.serving-sys.com;cloudfront.ne" +
+            "t;content.bitsontherun.com;core.insightexpressai.com;crashdump.spotify.com;d2gi7" +
+            "ultltnc2u.cloudfront.net;d3rt1990lpmkn.cloudfront.net;desktop.spotify.com;double" +
+            "click.net;ds.serving-sys.com;fastclick.net;googleads.g.doubleclick.net;googleads" +
+            "ervices.com;googlesyndication.com;googletagservices.com;gtssl2-ocsp.geotrust.com" +
+            ";gvt1.com;heads-fab.spotify.com;js.moatads.com;log.spotify.com;media-match.com;o" +
+            "maze.com;open.spotify.com;pagead2.googlesyndication.com;pagead46.l.doubleclick.n" +
+            "et;partner.googleadservices.com;pubads.g.doubleclick.net;pubmatic.com;ravenjs.co" +
+            "m;redirector.gvt1.com;rlcdn.com;s0.2mdn.net;securepubads.g.doubleclick.net;spcli" +
+            "ent.wg.spotify.com;tpc.googlesyndication.com;v.jwpcdn.com;video-ad-stats.googles" +
+            "yndication.com;weblb-wg.gslb.spotify.com;www.googleadservices.com;www.googletags" +
+            "ervices.com;www.omaze.com")]
+        public string AdHosts {
+            get {
+                return ((string)(this["AdHosts"]));
+            }
+            set {
+                this["AdHosts"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DuplicateAlreadyRecordedTrack {
+            get {
+                return ((bool)(this["DuplicateAlreadyRecordedTrack"]));
+            }
+            set {
+                this["DuplicateAlreadyRecordedTrack"] = value;
             }
         }
     }

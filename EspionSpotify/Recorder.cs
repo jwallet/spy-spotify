@@ -50,12 +50,6 @@ namespace EspionSpotify
 
             if (_writer == null)
             {
-                if (!Directory.Exists(_userSettings.OutputPath))
-                {
-                    _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logInvalidOutput"));
-                    return;
-                }
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logWriterIsNull"));
                 return;
             }
 
@@ -131,8 +125,24 @@ namespace EspionSpotify
 
                     return writer;
                 }
-                    catch (Exception ex)
+                catch (Exception ex)
                 {
+                    var message = $"{FrmEspionSpotify.Rm.GetString($"logUnknownException")}: ${ex.Message}";
+
+                    if (!Directory.Exists(_userSettings.OutputPath))
+                    {
+                        message = FrmEspionSpotify.Rm.GetString($"logInvalidOutput");
+                    }
+                    else if (ex.Message.StartsWith("Unsupported Sample Rate"))
+                    {
+                        message = FrmEspionSpotify.Rm.GetString($"logWriterIsNull");
+                    }
+                    else if (ex.Message.StartsWith("Access to the path"))
+                    {
+                        message = FrmEspionSpotify.Rm.GetString($"logNoAccessOutput");
+                    }
+
+                    _form.WriteIntoConsole(message);
                     Console.WriteLine(ex.Message);
                     return null;
                 }
@@ -181,7 +191,7 @@ namespace EspionSpotify
             var filename = GetFileName(songNameTrackNumber, FirstSongNameCount, includePath ? path : null);
             var count = FirstSongNameCount;
 
-            while (File.Exists(GetFileName(songNameTrackNumber, count, path)))
+            while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetFileName(songNameTrackNumber, count, path)))
             {
                 if (includePath) count++;
                 filename = GetFileName(songNameTrackNumber, count, includePath ? path : null);

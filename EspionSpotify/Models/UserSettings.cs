@@ -19,6 +19,7 @@ namespace EspionSpotify.Models
         public bool RecordUnknownTrackTypeEnabled { get; set; }
         public ISpotifyAudioSession SpotifyAudioSession { get; set; }
         public int? InternalOrderNumber { get; set; }
+        public bool DuplicateAlreadyRecordedTrack { get; set; }
 
         public int? OrderNumber {
             get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? InternalOrderNumber : null;

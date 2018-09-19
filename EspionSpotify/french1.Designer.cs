@@ -169,7 +169,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify a détecté que vous avez essayé de désactiver les annonces en utilisant la fonctionnalité &quot;Désactiver les publicités&quot; de Spytify. Désactiver ce paramètre et redémarrer les deux applications..
+        ///   Looks up a localized string similar to La fonctionnalité de Spytify &quot;Désactiver les publicités&quot; peut affecté la façon dont une annonce inconnue joue quand elle ne peut être bloquée. Essayez de ré-activer ce paramètre une fois de plus pour obtenir les derniers domaines de publicités bloqués ou désactivez ce paramètre et redémarrez les deux applications..
         /// </summary>
         internal static string lblAdsPlayAndStop {
             get {
@@ -196,11 +196,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactiver le plus de publicités audio de Spotify (ne fonctionne pas autant qu&apos;avant).
+        ///   Looks up a localized string similar to Désactiver le plus de publicités audio de Spotify.
         /// </summary>
         internal static string lblDisableAds {
             get {
                 return ResourceManager.GetString("lblDisableAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplique le nom du fichier de la piste audio courante pour empêcher de ré-écrire sur les fichiers de même nom..
+        /// </summary>
+        internal static string lblDuplicateAlreadyRecordedTrack {
+            get {
+                return ResourceManager.GetString("lblDuplicateAlreadyRecordedTrack", resourceCulture);
             }
         }
         
@@ -304,6 +313,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes et rechercher pour le domaine &quot;spclient.wg.spotify.com&quot; et ajouter un &quot;#&quot; au début de la ligne pour la rendre inactive..
+        /// </summary>
+        internal static string lblSpotifyLostFeatures {
+            get {
+                return ResourceManager.GetString("lblSpotifyLostFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spotify recherche les fichiers de musique localement avant de jouer une piste audio, si il en trouve une avec les méta données que la piste audio courante, il jouera la piste audio local à la place. Des pistes audio coupées signifient que vous avez, une fois, commencer une session d&apos;enregistrement et l&apos;avez terminé trop tôt. Il faut juste supprimer les pistes audio incomplètes dans votre répertoire de musique pour résoudre le problème..
         /// </summary>
         internal static string lblSpotifyTrackCut {
@@ -372,6 +390,15 @@ namespace EspionSpotify {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu&apos;administrateur ou changez le pour un autre..
+        /// </summary>
+        internal static string logNoAccessOutput {
+            get {
+                return ResourceManager.GetString("logNoAccessOutput", resourceCulture);
             }
         }
         
@@ -448,6 +475,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue.
+        /// </summary>
+        internal static string logUnknownException {
+            get {
+                return ResourceManager.GetString("logUnknownException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // En attente du prochain titre....
         /// </summary>
         internal static string logWaiting {
@@ -471,6 +507,15 @@ namespace EspionSpotify {
         internal static string msgBodyCantQuit {
             get {
                 return ResourceManager.GetString("msgBodyCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d&apos;amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify..
+        /// </summary>
+        internal static string msgBodyDisableAds {
+            get {
+                return ResourceManager.GetString("msgBodyDisableAds", resourceCulture);
             }
         }
         
@@ -525,6 +570,15 @@ namespace EspionSpotify {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Désactiver les annonces.
+        /// </summary>
+        internal static string msgTitleDisableAds {
+            get {
+                return ResourceManager.GetString("msgTitleDisableAds", resourceCulture);
             }
         }
         
@@ -628,7 +682,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify joue une annonce puis il pause/joue à chaque seconde..
+        ///   Looks up a localized string similar to Spotify joue encore des annonces après les avoir désactivées et il se met sur pause/joue à chaque seconde..
         /// </summary>
         internal static string tlAdsPlayAndStop {
             get {
@@ -642,6 +696,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d&apos;amis, radio, mixes journaliers et podcasts..
+        /// </summary>
+        internal static string tlSpotifyLostFeatures {
+            get {
+                return ResourceManager.GetString("tlSpotifyLostFeatures", resourceCulture);
             }
         }
         
