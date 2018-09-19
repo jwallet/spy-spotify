@@ -169,7 +169,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify detected that you tried to disable ads using Spytify feature &quot;Disable Ads&quot;. Disable this setting and restart both apps..
+        ///   Looks up a localized string similar to Spytify feature &quot;Disable Ads&quot; might affect the way an unknown ad plays when it can&apos;t be blocked. Try to re-enable this setting once more to get the last blocked ad domains or disable the setting and restart both apps..
         /// </summary>
         internal static string lblAdsPlayAndStop {
             get {
@@ -196,11 +196,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable as much Spotify audio ads as possible (not working as good as before).
+        ///   Looks up a localized string similar to Disable as much Spotify audio ads as possible.
         /// </summary>
         internal static string lblDisableAds {
             get {
                 return ResourceManager.GetString("lblDisableAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate the current track file name to avoid overwritting files with the same name..
+        /// </summary>
+        internal static string lblDuplicateAlreadyRecordedTrack {
+            get {
+                return ResourceManager.GetString("lblDuplicateAlreadyRecordedTrack", resourceCulture);
             }
         }
         
@@ -304,6 +313,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as much ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad and search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
+        /// </summary>
+        internal static string lblSpotifyLostFeatures {
+            get {
+                return ResourceManager.GetString("lblSpotifyLostFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spotify looks for local music files before playing a track. If it finds one with the same meta data that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue..
         /// </summary>
         internal static string lblSpotifyTrackCut {
@@ -322,7 +340,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify don&apos;t return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
+        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn&apos;t return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
         /// </summary>
         internal static string lblTrackDetectedAsAd {
             get {
@@ -372,6 +390,15 @@ namespace EspionSpotify {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one..
+        /// </summary>
+        internal static string logNoAccessOutput {
+            get {
+                return ResourceManager.GetString("logNoAccessOutput", resourceCulture);
             }
         }
         
@@ -448,6 +475,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Error while recording: Unknown exception.
+        /// </summary>
+        internal static string logUnknownException {
+            get {
+                return ResourceManager.GetString("logUnknownException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Waiting for next title....
         /// </summary>
         internal static string logWaiting {
@@ -471,6 +507,15 @@ namespace EspionSpotify {
         internal static string msgBodyCantQuit {
             get {
                 return ResourceManager.GetString("msgBodyCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By disabling ads, you also disable Spotify radios, your daily mixes, podcasts and your friend list. Otherwise, Spotify could still be able to play some ads. Disable this feature before leaving Spytify if you want to recover all these Spotify features..
+        /// </summary>
+        internal static string msgBodyDisableAds {
+            get {
+                return ResourceManager.GetString("msgBodyDisableAds", resourceCulture);
             }
         }
         
@@ -525,6 +570,15 @@ namespace EspionSpotify {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Ads.
+        /// </summary>
+        internal static string msgTitleDisableAds {
+            get {
+                return ResourceManager.GetString("msgTitleDisableAds", resourceCulture);
             }
         }
         
@@ -628,7 +682,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify plays an ad then it pause/play every second..
+        ///   Looks up a localized string similar to Spotify still plays ads even after turning them off and it goes on pause/play every second..
         /// </summary>
         internal static string tlAdsPlayAndStop {
             get {
@@ -642,6 +696,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify lost some features after turning ads off: Friend list, radio, daily mixes and podcasts..
+        /// </summary>
+        internal static string tlSpotifyLostFeatures {
+            get {
+                return ResourceManager.GetString("tlSpotifyLostFeatures", resourceCulture);
             }
         }
         

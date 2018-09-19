@@ -15,6 +15,7 @@ using EspionSpotify.Enums;
 using EspionSpotify.AudioSessions;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Security.AccessControl;
 
 namespace EspionSpotify
 {
@@ -69,6 +70,7 @@ namespace EspionSpotify
             txtPath.Text = Settings.Default.Directory;
             tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
+            tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
             SetLanguageDropDown();
@@ -94,6 +96,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
+            _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
             _userSettings.InternalOrderNumber = 1;
 
             ResumeLayout();
@@ -139,6 +142,7 @@ namespace EspionSpotify
             lblSpy.Text = Rm.GetString($"lblSpy");
             lblRecorder.Text = Rm.GetString($"lblRecorder");
             lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
+            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
 
             tlSpotifyTrackCut.Text = Rm.GetString($"tlSpotifyTrackCut");
             lblSpotifyTrackCut.Text = Rm.GetString($"lblSpotifyTrackCut");
@@ -150,6 +154,8 @@ namespace EspionSpotify
             lblBackgroundNoiceRecordedOnTrack.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack");
             tlTrackDetectedAsAd.Text = Rm.GetString($"tlTrackDetectedAsAd");
             lblTrackDetectedAsAd.Text = Rm.GetString($"lblTrackDetectedAsAd");
+            tlSpotifyLostFeatures.Text = Rm.GetString($"tlSpotifyLostFeatures");
+            lblSpotifyLostFeatures.Text = Rm.GetString($"lblSpotifyLostFeatures");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -373,11 +379,20 @@ namespace EspionSpotify
 
         private void TgDisableAds_Click(object sender, EventArgs e)
         {
-            if (!Administrator.EnsureAdmin())
-            {
-                tgDisableAds.Checked = !tgDisableAds.Checked;
-            }
             Task.Run(async () => await _analytics.LogAction($"disable-ads?enabled={tgDisableAds.Checked}"));
+
+            if (Administrator.EnsureAdmin())
+            {
+                // recover friend list, radios, podcasts, daily mixes : spclient.wg.spotify.com
+                if (tgDisableAds.Checked && MetroMessageBox.Show(this,
+                    Rm.GetString($"msgBodyDisableAds"),
+                    Rm.GetString($"msgTitleDisableAds"),
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question) == DialogResult.OK) return;
+                return;
+            }
+
+            tgDisableAds.Checked = !tgDisableAds.Checked;
         }
 
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
@@ -426,6 +441,14 @@ namespace EspionSpotify
             Settings.Default.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"order-number-in-media-tags?enabled={tgNumTracks.Checked}"));
+        }
+
+        private void TgDuplicateAlreadyRecordedTrack_CheckedChanged(object sender, EventArgs e)
+        {
+            _userSettings.DuplicateAlreadyRecordedTrack = tgDuplicateAlreadyRecordedTrack.Checked;
+            Settings.Default.DuplicateAlreadyRecordedTrack = tgDuplicateAlreadyRecordedTrack.Checked;
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"duplicate-already-recorded-track?enabled={tgDuplicateAlreadyRecordedTrack.Checked}"));
         }
 
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
@@ -636,6 +659,17 @@ namespace EspionSpotify
         {
             ShowHideLabel(lblSpotifyTrackCut);
             Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-track-cut"));
+        }
+
+        private void TlSpotifyLostFeatures_Leave(object sender, EventArgs e)
+        {
+            lblSpotifyLostFeatures.Hide();
+        }
+
+        private void TlSpotifyLostFeatures_Click(object sender, EventArgs e)
+        {
+            ShowHideLabel(lblSpotifyLostFeatures);
+            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
         }
     }
 }

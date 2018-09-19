@@ -166,7 +166,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Désactiver le plus de publicités audio de Spotify (ne fonctionne pas autant qu'avant)</value>
+    <value>Désactiver le plus de publicités audio de Spotify</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAdsPlayAndStop" xml:space="preserve">
-    <value>Spotify a détecté que vous avez essayé de désactiver les annonces en utilisant la fonctionnalité "Désactiver les publicités" de Spytify. Désactiver ce paramètre et redémarrer les deux applications.</value>
+    <value>La fonctionnalité de Spytify "Désactiver les publicités" peut affecté la façon dont une annonce inconnue joue quand elle ne peut être bloquée. Essayez de ré-activer ce paramètre une fois de plus pour obtenir les derniers domaines de publicités bloqués ou désactivez ce paramètre et redémarrez les deux applications.</value>
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
@@ -370,7 +370,7 @@
     <comment>interface</comment>
   </data>
   <data name="tlAdsPlayAndStop" xml:space="preserve">
-    <value>Spotify joue une annonce puis il pause/joue à chaque seconde.</value>
+    <value>Spotify joue encore des annonces après les avoir désactivées et il se met sur pause/joue à chaque seconde.</value>
     <comment>interface</comment>
   </data>
   <data name="tlBackgroundNoiceRecordedOnTrack" xml:space="preserve">
@@ -383,6 +383,33 @@
   </data>
   <data name="tlTrackDetectedAsAd" xml:space="preserve">
     <value>Pistes audio sont détectées en tant que publicité</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logUnknownException" xml:space="preserve">
+    <value>// Erreur lors de l'enregistrement: Exception inconnue</value>
+    <comment>message</comment>
+  </data>
+  <data name="logNoAccessOutput" xml:space="preserve">
+    <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
+  </data>
+  <data name="msgBodyDisableAds" xml:space="preserve">
+    <value>En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d'amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="msgTitleDisableAds" xml:space="preserve">
+    <value>Désactiver les annonces</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
+    <value>Duplique le nom du fichier de la piste audio courante pour empêcher de ré-écrire sur les fichiers de même nom.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpotifyLostFeatures" xml:space="preserve">
+    <value>Quand vous activez "Désactiver les publicités" dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c'est pour s'assurer que le plus d'annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici "C:\Windows\System32\drivers\etc\host" pour modifier le fichier avec bloc-notes et rechercher pour le domaine "spclient.wg.spotify.com" et ajouter un "#" au début de la ligne pour la rendre inactive.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlSpotifyLostFeatures" xml:space="preserve">
+    <value>Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d'amis, radio, mixes journaliers et podcasts.</value>
     <comment>interface</comment>
   </data>
 </root>
