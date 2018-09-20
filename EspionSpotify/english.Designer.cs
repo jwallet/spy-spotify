@@ -133,7 +133,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Audacity (a free editor for audio files) to cut the audio part that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
+        ///   Looks up a localized string similar to Use Audacity (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
         /// </summary>
         internal static string lblAdAndTrackOverlapOnRecordedTrack {
             get {
@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notifcation sound coming from apps in &quot;Notifications and actions settings&quot; and all other apps in the &quot;Volume Mixer&quot;. Only Spotify and Spytify should not be muted..
+        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notification sound coming from apps in &quot;Notifications and actions settings&quot; and all other apps in the &quot;Volume Mixer&quot;. Only Spotify and Spytify should not be muted..
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate the current track file name to avoid overwritting files with the same name..
+        ///   Looks up a localized string similar to Duplicate the current track file name to avoid overwriting files with the same name..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -313,7 +313,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as much ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad and search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
+        ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as many ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad, search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
             get {
@@ -322,7 +322,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify looks for local music files before playing a track. If it finds one with the same meta data that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue..
+        ///   Looks up a localized string similar to Spotify looks for local music files before playing a track. If it finds one with the same metadata that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue..
         /// </summary>
         internal static string lblSpotifyTrackCut {
             get {
@@ -448,7 +448,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify was not found or isn&apos;t installed..
+        ///   Looks up a localized string similar to // Spotify wasn&apos;t found or isn&apos;t installed..
         /// </summary>
         internal static string logSpotifyNotFound {
             get {
@@ -493,7 +493,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; (Control panel &gt; Sound &gt; Properties &gt; Advanced)..
+        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
         /// </summary>
         internal static string logWriterIsNull {
             get {
@@ -682,7 +682,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify still plays ads even after turning them off and it goes on pause/play every second..
+        ///   Looks up a localized string similar to Spotify still plays ads, even after turning them off and it goes to pause/play every second..
         /// </summary>
         internal static string tlAdsPlayAndStop {
             get {
@@ -691,7 +691,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Background noice/sound was recorded on the saved track file..
+        ///   Looks up a localized string similar to Background noise/sound was recorded on the saved track file..
         /// </summary>
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
@@ -709,7 +709,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify only plays a bit of a track, it cuts after some seconds..
+        ///   Looks up a localized string similar to Spotify only plays a bit of a track, it stops playing it after some seconds..
         /// </summary>
         internal static string tlSpotifyTrackCut {
             get {

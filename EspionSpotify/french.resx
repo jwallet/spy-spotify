@@ -401,11 +401,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Duplique le nom du fichier de la piste audio courante pour empêcher de ré-écrire sur les fichiers de même nom.</value>
+    <value>Dupliquer le nom du fichier de la piste audio pour ne pas ré-écrire sur les fichiers de même nom.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyLostFeatures" xml:space="preserve">
-    <value>Quand vous activez "Désactiver les publicités" dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c'est pour s'assurer que le plus d'annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici "C:\Windows\System32\drivers\etc\host" pour modifier le fichier avec bloc-notes et rechercher pour le domaine "spclient.wg.spotify.com" et ajouter un "#" au début de la ligne pour la rendre inactive.</value>
+    <value>Quand vous activez "Désactiver les publicités" dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c'est pour s'assurer que le plus d'annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici "C:\Windows\System32\drivers\etc\host" pour modifier le fichier avec bloc-notes, recherchez le domaine "spclient.wg.spotify.com" et ajoutez un "#" au début de la ligne pour le rendre inactif.</value>
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyLostFeatures" xml:space="preserve">

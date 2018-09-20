@@ -205,7 +205,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplique le nom du fichier de la piste audio courante pour empêcher de ré-écrire sur les fichiers de même nom..
+        ///   Looks up a localized string similar to Dupliquer le nom du fichier de la piste audio pour ne pas ré-écrire sur les fichiers de même nom..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -313,7 +313,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes et rechercher pour le domaine &quot;spclient.wg.spotify.com&quot; et ajouter un &quot;#&quot; au début de la ligne pour la rendre inactive..
+        ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes, recherchez le domaine &quot;spclient.wg.spotify.com&quot; et ajoutez un &quot;#&quot; au début de la ligne pour le rendre inactif..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
             get {

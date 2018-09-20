@@ -154,7 +154,7 @@ namespace EspionSpotify
             this.tcMenu.Location = new System.Drawing.Point(20, 60);
             this.tcMenu.Name = "tcMenu";
             this.tcMenu.SelectedIndex = 2;
-            this.tcMenu.Size = new System.Drawing.Size(760, 360);
+            this.tcMenu.Size = new System.Drawing.Size(760, 380);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
             this.tcMenu.UseSelectable = true;
@@ -759,7 +759,7 @@ namespace EspionSpotify
             this.tabAdvanced.Location = new System.Drawing.Point(4, 38);
             this.tabAdvanced.Name = "tabAdvanced";
             this.tabAdvanced.Padding = new System.Windows.Forms.Padding(1);
-            this.tabAdvanced.Size = new System.Drawing.Size(752, 318);
+            this.tabAdvanced.Size = new System.Drawing.Size(752, 338);
             this.tabAdvanced.TabIndex = 2;
             this.tabAdvanced.Text = "TAB_ADVANCED";
             this.tabAdvanced.VerticalScrollbarBarColor = true;
@@ -785,7 +785,7 @@ namespace EspionSpotify
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlAdvanced.Size = new System.Drawing.Size(750, 316);
+            this.tlAdvanced.Size = new System.Drawing.Size(750, 336);
             this.tlAdvanced.TabIndex = 2;
             // 
             // lblSpy
@@ -1438,7 +1438,7 @@ namespace EspionSpotify
             this.BackImage = global::EspionSpotify.Properties.Resources.spytify_logo;
             this.BackImagePadding = new System.Windows.Forms.Padding(24, 12, 0, 0);
             this.BackMaxSize = 250;
-            this.ClientSize = new System.Drawing.Size(800, 440);
+            this.ClientSize = new System.Drawing.Size(800, 460);
             this.Controls.Add(this.lnkSpy);
             this.Controls.Add(this.tcMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -258,7 +258,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify was not found or isn't installed.</value>
+    <value>// Spotify wasn't found or isn't installed.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
@@ -274,7 +274,7 @@
     <comment>console</comment>
   </data>
   <data name="logWriterIsNull" xml:space="preserve">
-    <value>// Error while recording: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' (Control panel &gt; Sound &gt; Properties &gt; Advanced).</value>
+    <value>// Error while recording: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -342,7 +342,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
-    <value>Use Audacity (a free editor for audio files) to cut the audio part that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
+    <value>Use Audacity (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
     <comment>interface</comment>
   </data>
   <data name="lblAdsPlayAndStop" xml:space="preserve">
@@ -350,11 +350,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notifcation sound coming from apps in "Notifications and actions settings" and all other apps in the "Volume Mixer". Only Spotify and Spytify should not be muted.</value>
+    <value>Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notification sound coming from apps in "Notifications and actions settings" and all other apps in the "Volume Mixer". Only Spotify and Spytify should not be muted.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyTrackCut" xml:space="preserve">
-    <value>Spotify looks for local music files before playing a track. If it finds one with the same meta data that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue.</value>
+    <value>Spotify looks for local music files before playing a track. If it finds one with the same metadata that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue.</value>
     <comment>interface</comment>
   </data>
   <data name="lblTrackDetectedAsAd" xml:space="preserve">
@@ -370,15 +370,15 @@
     <comment>interface</comment>
   </data>
   <data name="tlAdsPlayAndStop" xml:space="preserve">
-    <value>Spotify still plays ads even after turning them off and it goes on pause/play every second.</value>
+    <value>Spotify still plays ads, even after turning them off and it goes to pause/play every second.</value>
     <comment>interface</comment>
   </data>
   <data name="tlBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Background noice/sound was recorded on the saved track file.</value>
+    <value>Background noise/sound was recorded on the saved track file.</value>
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyTrackCut" xml:space="preserve">
-    <value>Spotify only plays a bit of a track, it cuts after some seconds.</value>
+    <value>Spotify only plays a bit of a track, it stops playing it after some seconds.</value>
     <comment>interface</comment>
   </data>
   <data name="tlTrackDetectedAsAd" xml:space="preserve">
@@ -402,11 +402,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Duplicate the current track file name to avoid overwritting files with the same name.</value>
+    <value>Duplicate the current track file name to avoid overwriting files with the same name.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyLostFeatures" xml:space="preserve">
-    <value>When you enable "Disable Ads" in Spytify settings, you accept that these features won't be available no more, it's to make sure as much ads as possible get disabled. However, you can go to "C:\Windows\System32\drivers\etc\host" to edit the file with notepad and search for the domain "spclient.wg.spotify.com" and add a "#" at the beginning of the line to make it inactive.</value>
+    <value>When you enable "Disable Ads" in Spytify settings, you accept that these features won't be available no more, it's to make sure as many ads as possible get disabled. However, you can go to "C:\Windows\System32\drivers\etc\host" to edit the file with notepad, search for the domain "spclient.wg.spotify.com" and add a "#" at the beginning of the line to make it inactive.</value>
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyLostFeatures" xml:space="preserve">
