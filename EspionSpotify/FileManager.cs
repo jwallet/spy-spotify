@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace EspionSpotify
 {
-    internal class FileManager
+    public class FileManager
     {
         private readonly UserSettings _userSettings;
         private readonly Track _track;
@@ -13,23 +13,23 @@ namespace EspionSpotify
         private const int FirstSongNameCount = 1;
         private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
-        internal FileManager(UserSettings userSettings, Track track)
+        public FileManager(UserSettings userSettings, Track track)
         {
             _userSettings = userSettings;
             _track = track;
         }
 
-        internal string GetFileName(string songName, int count, string path = null)
+        public string GetFileName(string songName, int count, string path = null)
         {
             var ending = _userSettings.MediaFormat.ToString().ToLower();
             songName += count > FirstSongNameCount ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
             return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
         }
 
-        internal string BuildFileName(string path, bool includePath = true)
+        public string BuildFileName(string path, bool includePath = true)
         {
             string songName;
-            var track = _userSettings.OrderNumber != -1 && _userSettings.OrderNumberInfrontOfFileEnabled ? $"{_userSettings.OrderNumber:000} " : null;
+            var track = _userSettings.OrderNumber?.ToString("000 ") ?? null;
 
             if (_userSettings.GroupByFoldersEnabled)
             {
@@ -56,7 +56,7 @@ namespace EspionSpotify
             return filename;
         }
 
-        internal string CreateDirectory()
+        public string CreateDirectory()
         {
             string insertArtistDir = null;
             var artistDir = Normalize.RemoveDiacritics(_track.Artist);
@@ -71,9 +71,12 @@ namespace EspionSpotify
             return insertArtistDir;
         }
 
-        internal void DeleteFile(string currentFile)
+        public void DeleteFile(string currentFile)
         {
-            File.Delete(currentFile);
+            if (File.Exists(currentFile))
+            {
+                File.Delete(currentFile);
+            }
 
             if (_userSettings.GroupByFoldersEnabled)
             {

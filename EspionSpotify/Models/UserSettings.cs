@@ -4,7 +4,7 @@ using NAudio.Lame;
 
 namespace EspionSpotify.Models
 {
-    class UserSettings
+    public class UserSettings
     {
         public string OutputPath { get; set; }
         public LAMEPreset Bitrate { get; set; }
