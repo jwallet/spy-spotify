@@ -15,7 +15,6 @@ using EspionSpotify.Enums;
 using EspionSpotify.AudioSessions;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Security.AccessControl;
 
 namespace EspionSpotify
 {
@@ -387,7 +386,7 @@ namespace EspionSpotify
                 if (tgDisableAds.Checked && MetroMessageBox.Show(this,
                     Rm.GetString($"msgBodyDisableAds"),
                     Rm.GetString($"msgTitleDisableAds"),
-                    MessageBoxButtons.OKCancel,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Question) == DialogResult.OK) return;
                 return;
             }

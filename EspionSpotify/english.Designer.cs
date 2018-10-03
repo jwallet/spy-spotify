@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to disable Windows 10 notification sound coming from apps in &quot;Notifications and actions settings&quot; and all other apps in the &quot;Volume Mixer&quot;. Only Spotify and Spytify should not be muted..
+        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted..
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack {
             get {
@@ -484,20 +484,29 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Waiting for next title....
+        ///   Looks up a localized string similar to // Error while recording: Recording multi-channel files is not supported, reduce the number of channels to 2 (stereo) or 1 (mono)..
         /// </summary>
-        internal static string logWaiting {
+        internal static string logUnsupportedNumberChannels {
             get {
-                return ResourceManager.GetString("logWaiting", resourceCulture);
+                return ResourceManager.GetString("logUnsupportedNumberChannels", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
         /// </summary>
-        internal static string logWriterIsNull {
+        internal static string logUnsupportedRate {
             get {
-                return ResourceManager.GetString("logWriterIsNull", resourceCulture);
+                return ResourceManager.GetString("logUnsupportedRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Waiting for next title....
+        /// </summary>
+        internal static string logWaiting {
+            get {
+                return ResourceManager.GetString("logWaiting", resourceCulture);
             }
         }
         

@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify désative la plupart des applications quand la session d&apos;enregistrement débute. Soyez certain de désactiver les notifications sonore de Windows 10 provenant des applications dans &quot;Paramètres de notification et d&apos;action&quot; et tout autre application dans le &quot;Mélangeur de volume&quot;. Seulement Spotify et Spytify ne doivent pas être à muet..
+        ///   Looks up a localized string similar to Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications roulants dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet..
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack {
             get {
@@ -484,20 +484,29 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // En attente du prochain titre....
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;enregistrement multi-canaux de fichiers n&apos;est pas supporté, veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono)..
         /// </summary>
-        internal static string logWaiting {
+        internal static string logUnsupportedNumberChannels {
             get {
-                return ResourceManager.GetString("logWaiting", resourceCulture);
+                return ResourceManager.GetString("logUnsupportedNumberChannels", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Format audio de votre ordinateur non supporté. Le format doit être &apos;2 canaux, 24 bit, 48000 Hz (Studio Quality)&apos; (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés)..
         /// </summary>
-        internal static string logWriterIsNull {
+        internal static string logUnsupportedRate {
             get {
-                return ResourceManager.GetString("logWriterIsNull", resourceCulture);
+                return ResourceManager.GetString("logUnsupportedRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // En attente du prochain titre....
+        /// </summary>
+        internal static string logWaiting {
+            get {
+                return ResourceManager.GetString("logWaiting", resourceCulture);
             }
         }
         

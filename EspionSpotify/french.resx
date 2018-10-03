@@ -273,7 +273,7 @@
     <value>// En attente du prochain titre...</value>
     <comment>console</comment>
   </data>
-  <data name="logWriterIsNull" xml:space="preserve">
+  <data name="logUnsupportedRate" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
     <comment>console</comment>
   </data>
@@ -350,7 +350,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Spytify désative la plupart des applications quand la session d'enregistrement débute. Soyez certain de désactiver les notifications sonore de Windows 10 provenant des applications dans "Paramètres de notification et d'action" et tout autre application dans le "Mélangeur de volume". Seulement Spotify et Spytify ne doivent pas être à muet.</value>
+    <value>Spytify désactive la plupart des applications quand la session d'enregistrement débute. Veuillez couper le son par le "Mélangeur de volume" des applications roulants dans un processus d'arrière-plan dans la barre d'état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d'enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyTrackCut" xml:space="preserve">
@@ -411,5 +411,8 @@
   <data name="tlSpotifyLostFeatures" xml:space="preserve">
     <value>Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d'amis, radio, mixes journaliers et podcasts.</value>
     <comment>interface</comment>
+  </data>
+  <data name="logUnsupportedNumberChannels" xml:space="preserve">
+    <value>// Erreur lors de l'enregistrement: L'enregistrement multi-canaux de fichiers n'est pas supporté, veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono).</value>
   </data>
 </root>

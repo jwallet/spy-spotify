@@ -1,13 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.Enums;
 using EspionSpotify.Models;
 using NAudio.Lame;
 using NAudio.Wave;
-using File = System.IO.File;
 
 namespace EspionSpotify
 {
@@ -15,7 +13,6 @@ namespace EspionSpotify
     {
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
-        public bool SongGotDeleted { get; }
 
         private readonly UserSettings _userSettings;
         private readonly FrmEspionSpotify _form;
@@ -23,18 +20,16 @@ namespace EspionSpotify
         private string _currentFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _writer;
-        private const int FirstSongNameCount = 1;
-
-        private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
+        private FileManager _fileManager;
 
         public Recorder() { }
 
         public Recorder(FrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
         {
-            SongGotDeleted = false;
             _form = espionSpotifyForm;
             _userSettings = userSettings;
             _track = track;
+            _fileManager = new FileManager(_userSettings, _track);
         }
 
         public void Run()
@@ -54,7 +49,7 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", BuildFileName(_userSettings.OutputPath, false)));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", _fileManager.BuildFileName(_userSettings.OutputPath, false)));
 
             while (Running)
             {
@@ -95,29 +90,21 @@ namespace EspionSpotify
                 return;
             }
 
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", BuildFileName(_userSettings.OutputPath, false), _userSettings.MinimumRecordedLengthSeconds));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", _fileManager.BuildFileName(_userSettings.OutputPath, false), _userSettings.MinimumRecordedLengthSeconds));
 
-            File.Delete(_currentFile);
+            _fileManager.DeleteFile(_currentFile);
         }
 
         private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
         {
             Stream writer;
-            string insertArtistDir = null;
-            var artistDir = Normalize.RemoveDiacritics(_track.Artist);
-            artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
-
-            if (_userSettings.GroupByFoldersEnabled)
-            {
-                insertArtistDir = $"//{artistDir}";
-                Directory.CreateDirectory($"{_userSettings.OutputPath}//{artistDir}");
-            }
+            string insertArtistDir = _fileManager.CreateDirectory();
 
             if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
             {
                 try
                 {
-                    _currentFile = BuildFileName(_userSettings.OutputPath + insertArtistDir);
+                    _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath + insertArtistDir);
                     writer = new LameMP3FileWriter(
                         _currentFile,
                         waveIn.WaveFormat,
@@ -135,11 +122,15 @@ namespace EspionSpotify
                     }
                     else if (ex.Message.StartsWith("Unsupported Sample Rate"))
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logWriterIsNull");
+                        message = FrmEspionSpotify.Rm.GetString($"logUnsupportedRate");
                     }
                     else if (ex.Message.StartsWith("Access to the path"))
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logNoAccessOutput");
+                        message = FrmEspionSpotify.Rm.GetString("logNoAccessOutput");
+                    }
+                    else if (ex.Message.StartsWith("Unsupported number of channels"))
+                    {
+                        message = FrmEspionSpotify.Rm.GetString($"logUnsupportedNumberChannels");
                     }
 
                     _form.WriteIntoConsole(message);
@@ -150,7 +141,7 @@ namespace EspionSpotify
 
             try
             {
-                _currentFile = BuildFileName($"{_userSettings.OutputPath}{insertArtistDir}");
+                _currentFile = _fileManager.BuildFileName($"{_userSettings.OutputPath}{insertArtistDir}");
                 writer = new WaveFileWriter(
                     _currentFile,
                     waveIn.WaveFormat
@@ -162,43 +153,6 @@ namespace EspionSpotify
                 Console.WriteLine(ex.Message);
                 return null;
             }
-        }
-
-        private string GetFileName(string songName, int count, string path = null)
-        {
-            var ending = _userSettings.MediaFormat.ToString().ToLower();
-            songName += count > FirstSongNameCount ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
-            return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
-        }
-
-        private string BuildFileName(string path, bool includePath = true)
-        {
-            string songName;
-            var track = _userSettings.OrderNumber != -1 && _userSettings.OrderNumberInfrontOfFileEnabled ? $"{_userSettings.OrderNumber:000} " : null;
-
-            if (_userSettings.GroupByFoldersEnabled)
-            {
-                songName = Normalize.RemoveDiacritics(_track.Title);
-                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
-            }
-            else
-            {
-                songName = Normalize.RemoveDiacritics(_track.ToString());
-                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
-            }
-
-            var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _userSettings.TrackTitleSeparator);
-            var filename = GetFileName(songNameTrackNumber, FirstSongNameCount, includePath ? path : null);
-            var count = FirstSongNameCount;
-
-            while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetFileName(songNameTrackNumber, count, path)))
-            {
-                if (includePath) count++;
-                filename = GetFileName(songNameTrackNumber, count, includePath ? path : null);
-                if (!includePath) count++;
-            }
-
-            return filename;
         }
     }
 }

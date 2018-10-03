@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EspionSpotify.Properties;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
@@ -9,6 +10,8 @@ namespace EspionSpotify
 {
     internal static class GitHub
     {
+        private static Regex _regex = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
+
         public static void NewestVersion()
         {
             if (!Uri.TryCreate("http://github.com/jwallet/spy-spotify/releases/latest", UriKind.Absolute, out var uri)) return;
@@ -22,21 +25,29 @@ namespace EspionSpotify
                 using (var response = (HttpWebResponse) request.GetResponse())
                 {
                     var split = response.ResponseUri.AbsolutePath.Split('/');
-                    var regex = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
                     var tag = split[split.Length - 1];
+                    if (!_regex.IsMatch(tag)) return;
 
-                    if (!regex.IsMatch(tag)) return;
-                    var version = new Version(tag);
+                    var githubTagVersion = new Version(tag);
+                    var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-                    if (version <= Assembly.GetExecutingAssembly().GetName().Version) return;
-                    if (MetroFramework.MetroMessageBox.Show(
+                    if (githubTagVersion <= assemblyVersion) return;
+                    if (LastVersionPrompted() == assemblyVersion) return;
+
+                    var dialogResult = MetroFramework.MetroMessageBox.Show(
                         FrmEspionSpotify.Instance,
-                        string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionContent") ?? "DOWNLOAD {0}", version),
+                        string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionContent") ?? "DOWNLOAD {0}", githubTagVersion),
                         FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"),
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question) == DialogResult.Yes)
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
                         Process.Start(new ProcessStartInfo(uri.AbsoluteUri));
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        Settings.Default.LastVersionPrompted = assemblyVersion.ToString();
+                        Settings.Default.Save();
                     }
                 }
             }
@@ -44,6 +55,14 @@ namespace EspionSpotify
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public static Version LastVersionPrompted()
+        {
+            var lastVersionPromptedSaved = Settings.Default.LastVersionPrompted;
+            if (!_regex.IsMatch(lastVersionPromptedSaved)) return null;
+
+            return new Version(lastVersionPromptedSaved);
         }
     }
 }

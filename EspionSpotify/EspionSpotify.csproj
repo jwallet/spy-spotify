@@ -173,6 +173,7 @@
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="french1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
