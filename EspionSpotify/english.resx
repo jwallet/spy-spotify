@@ -294,11 +294,11 @@
     <comment>message</comment>
   </data>
   <data name="msgNewVersionContent" xml:space="preserve">
-    <value>Version {0} is out! Do you want to open GitHub to view the newest Spytify release?</value>
+    <value>Do you want to open GitHub to view the newest Spytify release?</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionTitle" xml:space="preserve">
-    <value>New version available</value>
+    <value>Version {0} is out!</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">

@@ -556,7 +556,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} a été publiée! Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?.
+        ///   Looks up a localized string similar to Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?.
         /// </summary>
         internal static string msgNewVersionContent {
             get {
@@ -565,7 +565,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nouvelle version disponible.
+        ///   Looks up a localized string similar to Version {0} a été publiée!.
         /// </summary>
         internal static string msgNewVersionTitle {
             get {
