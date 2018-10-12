@@ -350,7 +350,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Spytify disables most apps when the recording session starts. Make sure to mute in the "Volume Mixer" all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted.</value>
+    <value>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the "Volume Mixer" all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted. Second case, you might experiment some cracking/popping sounds when playing a recorded file over the whole listening. These sounds are related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can't have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the High Quality 320kbps chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyTrackCut" xml:space="preserve">

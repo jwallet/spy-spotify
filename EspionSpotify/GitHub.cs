@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Models.GitHub;
 using EspionSpotify.Properties;
 using Newtonsoft.Json;
 using System;
@@ -15,13 +15,15 @@ namespace EspionSpotify
 {
     internal static class GitHub
     {
-        private static Regex _regex = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
+        private static Regex _regexVersion = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
+        private static Regex _regexTag = new Regex(@"[^0-9.]");
+        private const string _repoReleaseLink = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
 
         public static async void NewestVersion()
         {
-            if (!Uri.TryCreate("https://api.github.com/repos/jwallet/spy-spotify/releases/latest", UriKind.Absolute, out var uri)) return;
+            if (!Uri.TryCreate(_repoReleaseLink, UriKind.Absolute, out var uri)) return;
 
-            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Http.Get;
             request.UserAgent = "Spytify";
@@ -40,17 +42,18 @@ namespace EspionSpotify
                     }
 
                     var body = Encoding.UTF8.GetString(content.ToArray());
-                    var release = JsonConvert.DeserializeObject<GitHubRelease>(body);
+                    var release = JsonConvert.DeserializeObject<Release>(body);
+                    var versionTag = ParseTagToVersionString(release.tag_name);
 
-                    if (!_regex.IsMatch(release.tag_name)) return;
+                    if (!_regexVersion.IsMatch(versionTag)) return;
 
-                    var githubTagVersion = new Version(release.tag_name);
+                    var githubTagVersion = new Version(versionTag);
                     var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
                     if (githubTagVersion <= assemblyVersion) return;
                     if (LastVersionPrompted() == assemblyVersion) return;
 
-                    var dialogTitle = $"{string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"), githubTagVersion)}";
+                    var dialogTitle = string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"), githubTagVersion);
                     var dialogMessage = FrmEspionSpotify.Rm.GetString($"msgNewVersionContent");
 
                     if (!string.IsNullOrEmpty(release.body))
@@ -84,12 +87,17 @@ namespace EspionSpotify
             }
         }
 
-        public static Version LastVersionPrompted()
+        private static Version LastVersionPrompted()
         {
             var lastVersionPromptedSaved = Settings.Default.LastVersionPrompted;
-            if (!_regex.IsMatch(lastVersionPromptedSaved)) return null;
+            if (!_regexVersion.IsMatch(lastVersionPromptedSaved)) return null;
 
             return new Version(lastVersionPromptedSaved);
+        }
+
+        private static string ParseTagToVersionString(string tag)
+        {
+            return string.IsNullOrEmpty(tag) ? string.Empty : _regexTag.Replace(tag, string.Empty);
         }
     }
 }

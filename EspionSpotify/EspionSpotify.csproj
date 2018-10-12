@@ -185,7 +185,9 @@
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\IMP3Tags.cs" />
     <Compile Include="MediaTags\MP3Tags.cs" />
-    <Compile Include="Models\GitHubRelease.cs" />
+    <Compile Include="Models\GitHub\Asset.cs" />
+    <Compile Include="Models\GitHub\Release.cs" />
+    <Compile Include="Models\GitHub\User.cs" />
     <Compile Include="Models\LastFMTrack.cs" />
     <Compile Include="IRecorder.cs" />
     <Compile Include="Spotify\ISpotifyHandler.cs" />

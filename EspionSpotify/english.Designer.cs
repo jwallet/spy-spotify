@@ -178,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted..
+        ///   Looks up a localized string similar to First case, Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted. Second case, you might experiment some cracking/popping sounds when playing a recorded file over the whole listening. These sounds are related to the quality (bitrate) being different from Spotify to Sp [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack {
             get {

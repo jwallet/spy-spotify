@@ -350,7 +350,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Spytify désactive la plupart des applications quand la session d'enregistrement débute. Veuillez couper le son par le "Mélangeur de volume" des applications roulants dans un processus d'arrière-plan dans la barre d'état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d'enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet.</value>
+    <value>Premier cas, Spytify désactive la plupart des applications quand la session d'enregistrement débute. Veuillez couper le son par le "Mélangeur de volume" des applications exécutées dans un processus d'arrière-plan dans la barre d'état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d'enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet. Deuxième cas, il se peut qu'à l'écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des périodes régulières tout au long de l'écoute. Ces sons sont principalement liéés au fait que vous avez paramétré une qualité (bitrate) différente de Spotify à Spytify. Vous devez vous assurer d'avoir mis la qualité correspondant à votre version de Spotify. Spotify Free ne peut avoir une qualité de Spotify Premium. Si vous avez Premium, vous devez cocher dans vos paramètres l'option "Haute Qualité 320kbps" pour bénéficier de l'enregistrement à 320kbps avec Spytify.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyTrackCut" xml:space="preserve">
