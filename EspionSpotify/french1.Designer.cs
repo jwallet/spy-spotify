@@ -664,6 +664,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nouvelle version disponible.
+        /// </summary>
+        internal static string tipRelease {
+            get {
+                return ResourceManager.GetString("tipRelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Débuter l&apos;espionnage.
         /// </summary>
         internal static string tipStartSpying {

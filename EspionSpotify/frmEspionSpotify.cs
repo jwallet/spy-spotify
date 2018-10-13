@@ -15,6 +15,8 @@ using EspionSpotify.Enums;
 using EspionSpotify.AudioSessions;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using EspionSpotify.Extensions;
 
 namespace EspionSpotify
 {
@@ -98,8 +100,12 @@ namespace EspionSpotify
             _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
             _userSettings.InternalOrderNumber = 1;
 
+            var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
+            lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;
+
             ResumeLayout();
-            GitHub.NewestVersion();
+
+            GitHub.GetVersion();
         }
 
         private void SetLanguageDropDown()
@@ -160,6 +166,7 @@ namespace EspionSpotify
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
             tip.SetToolTip(lnkDirectory, Rm.GetString($"tipDirectory"));
             tip.SetToolTip(lnkPath, Rm.GetString($"tipPath"));
+            tip.SetToolTip(lnkRelease, Rm.GetString($"tipRelease"));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
@@ -669,6 +676,11 @@ namespace EspionSpotify
         {
             ShowHideLabel(lblSpotifyLostFeatures);
             Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
+        }
+
+        private void lnkRelease_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/NHLGames/NHLGames/wiki");
         }
     }
 }

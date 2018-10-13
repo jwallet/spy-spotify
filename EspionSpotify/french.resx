@@ -415,4 +415,8 @@
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: L'enregistrement multi-canaux de fichiers n'est pas supporté, veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono).</value>
   </data>
+  <data name="tipRelease" xml:space="preserve">
+    <value>Nouvelle version disponible</value>
+    <comment>interface</comment>
+  </data>
 </root>
