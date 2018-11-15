@@ -75,4 +75,4 @@ Adding the recording order number to files `017_Artist_-_Title.mp3` is useful if
 - taglib
 
 ## Download
-### [Download](https://github.com/jwallet/Espion-Spotify/releases)
+### [Download](https://github.com/jwallet/spy-spotify/releases)
