@@ -484,7 +484,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;enregistrement multi-canaux de fichiers n&apos;est pas supporté, veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono)..
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;enregistrement multi-canaux de fichiers n&apos;est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {

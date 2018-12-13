@@ -112,7 +112,7 @@ namespace EspionSpotify
 
                     return writer;
                 }
-                catch (Exception ex)
+                catch (ArgumentException ex)
                 {
                     var message = $"{FrmEspionSpotify.Rm.GetString($"logUnknownException")}: ${ex.Message}";
 
@@ -130,10 +130,17 @@ namespace EspionSpotify
                     }
                     else if (ex.Message.StartsWith("Unsupported number of channels"))
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logUnsupportedNumberChannels");
+                        var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
+                        var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
+                        numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
+                        message = String.Format(FrmEspionSpotify.Rm.GetString($"logUnsupportedNumberChannels"), numberOfChannels);
                     }
 
                     _form.WriteIntoConsole(message);
+                    return null;
+                }
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
                     return null;
                 }

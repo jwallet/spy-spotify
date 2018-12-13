@@ -414,7 +414,7 @@
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Error while recording: Recording multi-channel files is not supported, reduce the number of channels to 2 (stereo) or 1 (mono).</value>
+    <value>// Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono).</value>
   </data>
   <data name="tipRelease" xml:space="preserve">
     <value>New version available</value>
