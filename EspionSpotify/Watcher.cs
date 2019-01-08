@@ -89,7 +89,9 @@ namespace EspionSpotify
 
         private async Task RunSpotifyConnect()
         {
-            if (SpotifyConnect.IsSpotifyInstalled() && !SpotifyConnect.IsSpotifyRunning())
+            if (!SpotifyConnect.IsSpotifyInstalled()) return;
+
+            if (!SpotifyConnect.IsSpotifyRunning())
             {
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
             }
@@ -188,13 +190,16 @@ namespace EspionSpotify
 
             Ready = true;
 
-            MutesSpotifyAds(false);
-            _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+            if (_userSettings.SpotifyAudioSession != null)
+            {
+                MutesSpotifyAds(false);
+                _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
 
-            Spotify.ListenForEvents = false;
-            Spotify.OnPlayStateChange -= OnPlayStateChanged;
-            Spotify.OnTrackChange -= OnTrackChanged;
-            Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                Spotify.ListenForEvents = false;
+                Spotify.OnPlayStateChange -= OnPlayStateChanged;
+                Spotify.OnTrackChange -= OnTrackChanged;
+                Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+            }
 
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(_spotify);
