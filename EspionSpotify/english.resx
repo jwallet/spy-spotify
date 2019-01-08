@@ -420,4 +420,12 @@
     <value>New version available</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAudioDevice" xml:space="preserve">
+    <value>Audio Device:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbDefault" xml:space="preserve">
+    <value>Default</value>
+    <comment>interface</comment>
+  </data>
 </root>

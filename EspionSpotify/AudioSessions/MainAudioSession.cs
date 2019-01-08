@@ -4,27 +4,35 @@ namespace EspionSpotify.AudioSessions
 {
     public class MainAudioSession : IMainAudioSession
     {
-        public MMDevice DefaultAudioEndPointDevice { get; set; }
-        public int DefaultAudioDeviceVolume { get; set; }
+        public int? AudioEndPointDeviceIndex { get; set; }
+        public MMDevice AudioEndPointDevice { get; set; }
+        public MMDevice DefaultEndPointDevice { get; set; }
+        public MMDeviceCollection AudioEndPointDevices { get; set; }
+        public int AudioDeviceVolume { get; set; }
 
-        public MainAudioSession()
+        public MainAudioSession() { }
+
+        public MainAudioSession(int? audioEndPointDeviceIndex)
         {
-            var aMmDevices = new MMDeviceEnumerator();
-            UpdateDefaultAudioEndPointDevice(aMmDevices);
+            AudioEndPointDeviceIndex = audioEndPointDeviceIndex;
 
-            DefaultAudioDeviceVolume = (int)(DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+            var aMmDevices = new MMDeviceEnumerator();
+            UpdateAudioEndPointDevices(aMmDevices);
         }
 
-        public void UpdateDefaultAudioEndPointDevice(MMDeviceEnumerator aMmDevices)
+        public void UpdateAudioEndPointDevices(MMDeviceEnumerator aMmDevices)
         {
-            DefaultAudioEndPointDevice = aMmDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            DefaultEndPointDevice = aMmDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            AudioEndPointDevices = aMmDevices.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+            AudioEndPointDevice = AudioEndPointDeviceIndex.HasValue ? AudioEndPointDevices[AudioEndPointDeviceIndex.Value] : DefaultEndPointDevice;
+            AudioDeviceVolume = (int)(AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
         }
 
         public void SetDefaultAudioDeviceVolume(int volume)
         {
             if (float.TryParse(volume.ToString(), out var fNewVolume))
             {
-                DefaultAudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = fNewVolume / 100;
+                AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = fNewVolume / 100;
             }
         }
     }

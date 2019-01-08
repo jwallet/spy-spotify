@@ -419,4 +419,12 @@
     <value>Nouvelle version disponible</value>
     <comment>interface</comment>
   </data>
+  <data name="lblAudioDevice" xml:space="preserve">
+    <value>Périphérique audio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbDefault" xml:space="preserve">
+    <value>Défaut</value>
+    <comment>interface</comment>
+  </data>
 </root>

@@ -61,6 +61,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        internal static string cbDefault {
+            get {
+                return ResourceManager.GetString("cbDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 128kbps.
         /// </summary>
         internal static string cbOptBitRate128 {
@@ -174,6 +183,15 @@ namespace EspionSpotify {
         internal static string lblAdsPlayAndStop {
             get {
                 return ResourceManager.GetString("lblAdsPlayAndStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio Device:.
+        /// </summary>
+        internal static string lblAudioDevice {
+            get {
+                return ResourceManager.GetString("lblAudioDevice", resourceCulture);
             }
         }
         

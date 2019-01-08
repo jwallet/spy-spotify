@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="Enums\AlbumCoverSize.cs" />
     <Compile Include="Enums\MediaFormat.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Ads\Administrator.cs" />

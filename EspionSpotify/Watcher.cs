@@ -98,7 +98,7 @@ namespace EspionSpotify
 
             SpotifyConnect.Run();
 
-            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession();
+            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
             await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart();
 
             Spotify = new SpotifyHandler(_userSettings.SpotifyAudioSession)

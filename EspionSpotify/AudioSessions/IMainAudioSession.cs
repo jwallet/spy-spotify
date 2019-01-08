@@ -4,9 +4,12 @@ namespace EspionSpotify.AudioSessions
 {
     public interface IMainAudioSession
     {
-        MMDevice DefaultAudioEndPointDevice { get; set; }
-        int DefaultAudioDeviceVolume { get; set; }
-        void UpdateDefaultAudioEndPointDevice(MMDeviceEnumerator aMmDevices);
+        int? AudioEndPointDeviceIndex { get; set; }
+        MMDevice DefaultEndPointDevice { get; set; }
+        MMDevice AudioEndPointDevice { get; set; }
+        MMDeviceCollection AudioEndPointDevices { get; set; }
+        int AudioDeviceVolume { get; set; }
+        void UpdateAudioEndPointDevices(MMDeviceEnumerator aMmDevices);
         void SetDefaultAudioDeviceVolume(int volume);
     }
 }

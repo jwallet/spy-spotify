@@ -9,7 +9,7 @@ using EspionSpotify.Extensions;
 
 namespace EspionSpotify.AudioSessions
 {
-    public class SpotifyAudioSession: MainAudioSession, ISpotifyAudioSession
+    public class SpotifyAudioSession : MainAudioSession, ISpotifyAudioSession
     {
         private const int _sleepValue = 50;
         private const int _numberOfSamples = 3;
@@ -18,10 +18,15 @@ namespace EspionSpotify.AudioSessions
         private readonly ICollection<int> _spotifyProcessesIds;
         private ICollection<AudioSessionControl> _spotifyAudioSessionControls;
 
-        private SessionCollection GetSessionsDefaultAudioEndPointDevice => DefaultAudioEndPointDevice.AudioSessionManager.Sessions;
+        private SessionCollection GetSessionsDefaultAudioEndPointDevice => AudioEndPointDevice.AudioSessionManager.Sessions;
 
-        public SpotifyAudioSession()
+        public SpotifyAudioSession(int? audioEndPointDeviceIndex)
         {
+            AudioEndPointDeviceIndex = audioEndPointDeviceIndex;
+
+            var aMmDevices = new MMDeviceEnumerator();
+            UpdateAudioEndPointDevices(aMmDevices);
+
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).ToList();
             _spytifyProcess = Process.GetCurrentProcess();
             _spotifyAudioSessionControls = new List<AudioSessionControl>();
@@ -89,7 +94,7 @@ namespace EspionSpotify.AudioSessions
                     spotifyAudioSessionStarted = true;
                 }
 
-                UpdateDefaultAudioEndPointDevice(new MMDeviceEnumerator());
+                UpdateAudioEndPointDevices(new MMDeviceEnumerator());
                 await Task.Delay(100);
             }
         }
