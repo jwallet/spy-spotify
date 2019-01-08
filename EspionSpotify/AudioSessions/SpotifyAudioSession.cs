@@ -76,7 +76,7 @@ namespace EspionSpotify.AudioSessions
         {
             var spotifyAudioSessionStarted = false;
 
-            while (!spotifyAudioSessionStarted)
+            while (!spotifyAudioSessionStarted && SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).Any())
             {
                 var sessionDefaultAudioEndPointDevice = GetSessionsDefaultAudioEndPointDevice;
 
@@ -97,7 +97,7 @@ namespace EspionSpotify.AudioSessions
         public void SetSpotifyVolumeToHighAndOthersToMute(bool mute)
         {
             var sessionDefaultAudioEndPointDevice = GetSessionsDefaultAudioEndPointDevice;
-
+            
             for (var i = 0; i < sessionDefaultAudioEndPointDevice.Count; i++)
             {
                 var currentAudioSessionControl = sessionDefaultAudioEndPointDevice[i];

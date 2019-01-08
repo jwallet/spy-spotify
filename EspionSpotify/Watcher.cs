@@ -108,8 +108,6 @@ namespace EspionSpotify
             Spotify.OnPlayStateChange += OnPlayStateChanged;
             Spotify.OnTrackChange += OnTrackChanged;
             Spotify.OnTrackTimeChange += OnTrackTimeChanged;
-
-            _currentTrack = Spotify.GetTrack();
         }
 
         public async Task Run()
@@ -122,6 +120,7 @@ namespace EspionSpotify
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
+                _currentTrack = Spotify.GetTrack();
                 InitializeRecordingSession();
 
                 while (Running)
