@@ -428,4 +428,12 @@
     <value>Default</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRecordingTimer" xml:space="preserve">
+    <value>Timer for the recording session</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logRecordingTimerDone" xml:space="preserve">
+    <value>// Recording session timer is done.</value>
+    <comment>console</comment>
+  </data>
 </root>

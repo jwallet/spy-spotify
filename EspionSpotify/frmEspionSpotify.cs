@@ -175,6 +175,7 @@ namespace EspionSpotify
             lblRecorder.Text = Rm.GetString($"lblRecorder");
             lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
             lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
+            lblRecordingTimer.Text = Rm.GetString($"lblRecordingTimer");
 
             tlSpotifyTrackCut.Text = Rm.GetString($"tlSpotifyTrackCut");
             lblSpotifyTrackCut.Text = Rm.GetString($"lblSpotifyTrackCut");
@@ -376,7 +377,10 @@ namespace EspionSpotify
             if (_watcher == null) return;
             _watcher.CountSeconds++;
 
-            if (!Watcher.Running) StopRecording();
+            if (!Watcher.Running)
+            {
+                StopRecording();
+            }
         }
 
         private void RbFormat_CheckedChanged(object sender, EventArgs e)
@@ -715,9 +719,14 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
         }
 
-        private void lnkRelease_Click(object sender, EventArgs e)
+        private void LnkRelease_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/NHLGames/NHLGames/wiki");
+        }
+
+        private void TxtRecordingTimer_Leave(object sender, EventArgs e)
+        {
+            _userSettings.RecordingTimer = txtRecordingTimer.Text;
         }
     }
 }

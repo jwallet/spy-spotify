@@ -322,6 +322,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minuteur pour la session d&apos;enregistrement.
+        /// </summary>
+        internal static string lblRecordingTimer {
+            get {
+                return ResourceManager.GetString("lblRecordingTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enregistrer les pistes de type inconnu détectées en tant que publicité.
         /// </summary>
         internal static string lblRecordUnknownTrackType {
@@ -435,6 +444,15 @@ namespace EspionSpotify {
         internal static string logRecording {
             get {
                 return ResourceManager.GetString("logRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement est terminé..
+        /// </summary>
+        internal static string logRecordingTimerDone {
+            get {
+                return ResourceManager.GetString("logRecordingTimerDone", resourceCulture);
             }
         }
         

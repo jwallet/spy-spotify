@@ -427,4 +427,12 @@
     <value>Défaut</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRecordingTimer" xml:space="preserve">
+    <value>Minuteur pour la session d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logRecordingTimerDone" xml:space="preserve">
+    <value>// Minuteur de session d'enregistrement est terminé.</value>
+    <comment>console</comment>
+  </data>
 </root>

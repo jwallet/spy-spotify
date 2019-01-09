@@ -1,9 +1,9 @@
 ﻿using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
 {
@@ -18,6 +18,7 @@ namespace EspionSpotify
 
         private Recorder _recorder;
         private Track _currentTrack;
+        private Timer _recordingTimer;
         private bool _isPlaying;
 
         private readonly FrmEspionSpotify _form;
@@ -115,11 +116,11 @@ namespace EspionSpotify
             if (Running) return;
 
             Ready = false;
-            Running = true;
             await RunSpotifyConnect();
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
+                Running = true;
                 _currentTrack = Spotify.GetTrack();
                 InitializeRecordingSession();
 
@@ -128,6 +129,11 @@ namespace EspionSpotify
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
                         _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
+                        Running = false;
+                    }
+                    if (_userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
                         Running = false;
                     }
                     Thread.Sleep(200);
@@ -178,15 +184,31 @@ namespace EspionSpotify
 
             _form.UpdatePlayingTitle(SongTitle);
             MutesSpotifyAds(AdPlaying);
+
+            if (_userSettings.HasRecordingTimerEnabled)
+            {
+                EnableRecordingTimer();
+            }
+        }
+
+        private void EnableRecordingTimer()
+        {
+            _recordingTimer = new Timer(_userSettings.RecordingTimerMilliseconds)
+            {
+                AutoReset = false,
+                Enabled = false
+            };
+
+            while (_recorder == null && SpotifyConnect.IsSpotifyRunning())
+            {
+                Thread.Sleep(300);
+            }
+
+            _recordingTimer.Enabled = true;
         }
 
         private void EndRecordingSession()
         {
-            if (Running)
-            {
-                Running = false;
-            }
-
             Ready = true;
 
             if (_userSettings.SpotifyAudioSession != null)
