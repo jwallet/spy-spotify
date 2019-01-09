@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("Spytify")]
-[assembly: AssemblyDescription("github.com/jwallet")]
+[assembly: AssemblyDescription("Records Spotify while it plays without ads")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("jwallet")]
+[assembly: AssemblyCompany("Spytify")]
 [assembly: AssemblyProduct("Spytify")]
-[assembly: AssemblyCopyright("jwallet")]
+[assembly: AssemblyCopyright("github.com/jwallet")]
 [assembly: AssemblyTrademark("Spytify")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.3.1")]
-[assembly: AssemblyFileVersion("1.1.3.1")]
+[assembly: AssemblyVersion("1.1.3.2")]
+[assembly: AssemblyFileVersion("1.1.3.2")]

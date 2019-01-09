@@ -73,6 +73,18 @@ namespace EspionSpotify.Models
             return song;
         }
 
+        public string ToTitleString()
+        {
+            var song = Title ?? "";
+
+            if (TitleExtended != null)
+            {
+                song += $" - {TitleExtended}";
+            }
+
+            return song;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != typeof(Track)) return false;
