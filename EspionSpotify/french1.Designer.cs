@@ -367,7 +367,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se base sur peu d&apos;informations disponible dans le processus de Spotify qui ne sont pas toujours précises..
+        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se bas [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblTrackDetectedAsAd {
             get {
@@ -489,6 +489,15 @@ namespace EspionSpotify {
         internal static string logSpotifyNotFound {
             get {
                 return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Spytify ne peut enregistré si Spotify et Spytify n&apos;utilisent pas le même périphérique audio..
+        /// </summary>
+        internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
+            get {
+                return ResourceManager.GetString("logSpotifyPlayingOutsideOfSelectedAudioEndPoint", resourceCulture);
             }
         }
         

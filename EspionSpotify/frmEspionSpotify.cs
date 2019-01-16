@@ -126,7 +126,7 @@ namespace EspionSpotify
             }
 
             var defaultEndPointDeviceIndex = audioEndPointDevices.FirstOrDefault(x => x.Value == _audioSession.DefaultEndPointDevice.FriendlyName).Key;
-            var selectedIndex = _audioSession.AudioEndPointDeviceIndex ?? defaultEndPointDeviceIndex;
+            var selectedIndex = _audioSession.IsAudioEndPointDeviceIndexAvailable() ? _audioSession.AudioEndPointDeviceIndex ?? 0 : defaultEndPointDeviceIndex;
 
             cbAudioDevices.DataSource = new BindingSource(audioEndPointDevices, null);
             cbAudioDevices.DisplayMember = "Value";
@@ -311,7 +311,7 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherThread = new Thread(async () => await _watcher.Run());
+            var watcherThread = new Thread(async () =>  await _watcher.Run());
             watcherThread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
@@ -377,7 +377,7 @@ namespace EspionSpotify
             if (_watcher == null) return;
             _watcher.CountSeconds++;
 
-            if (!Watcher.Running)
+            if (!Watcher.Running && !Watcher.Ready)
             {
                 StopRecording();
             }

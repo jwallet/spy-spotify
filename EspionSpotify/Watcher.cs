@@ -2,6 +2,7 @@
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 
@@ -95,13 +96,20 @@ namespace EspionSpotify
             if (!SpotifyConnect.IsSpotifyRunning())
             {
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
+                await SpotifyConnect.Run();
             }
 
-            SpotifyConnect.Run();
+            Running = true;
+        }
 
+        private bool SetSpotifyAudioSessionAndWaitToStart()
+        {
             _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
-            await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart();
+            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref Running);
+        }
 
+        private void BindSpotifyEventHandlers()
+        {
             Spotify = new SpotifyHandler(_userSettings.SpotifyAudioSession)
             {
                 ListenForEvents = true
@@ -115,12 +123,13 @@ namespace EspionSpotify
         {
             if (Running) return;
 
-            Ready = false;
             await RunSpotifyConnect();
+            var isSpotifyPlayingOutsideOfSelectedAudioEndPoint = !SetSpotifyAudioSessionAndWaitToStart();
+            BindSpotifyEventHandlers();
+            Ready = false;
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
-                Running = true;
                 _currentTrack = Spotify.GetTrack();
                 InitializeRecordingSession();
 
@@ -134,6 +143,11 @@ namespace EspionSpotify
                     if (_userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
                     {
                         _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
+                        Running = false;
+                    }
+                    if (isSpotifyPlayingOutsideOfSelectedAudioEndPoint)
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyPlayingOutsideOfSelectedAudioEndPoint"));
                         Running = false;
                     }
                     Thread.Sleep(200);
@@ -177,6 +191,8 @@ namespace EspionSpotify
             _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(Mute);
 
             var track = Spotify.GetTrack();
+            if (track == null) return;
+
             _isPlaying = track.Playing;
             _form.UpdateIconSpotify(_isPlaying);
 

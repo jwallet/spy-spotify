@@ -49,18 +49,16 @@ namespace EspionSpotify
                 return null;
             }
 
-            Process process = null;
+            string mainWindowTitle = null;
 
             try
             {
-                process = Process.GetProcessById(_spotifyProcessId.Value);
+                var process = Process.GetProcessById(_spotifyProcessId.Value);
+                mainWindowTitle = process.MainWindowTitle;
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            catch (Exception) { }
 
-            return process?.MainWindowTitle;
+            return mainWindowTitle;
         }
 
         public static ICollection<Process> GetSpotifyProcesses()

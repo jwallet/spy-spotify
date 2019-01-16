@@ -88,10 +88,10 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData("C:\\path\\Artist", false, "Title.mp3")]
-        [InlineData("C:\\path", false, "Title.mp3")]
-        [InlineData("C:\\path\\Artist", true, "C:\\path\\Artist\\Title.mp3")]
-        [InlineData("C:\\path", true, "C:\\path\\Title.mp3")]
+        [InlineData("C:\\path\\Artist", false, "Title - Live.mp3")]
+        [InlineData("C:\\path", false, "Title - Live.mp3")]
+        [InlineData("C:\\path\\Artist", true, "C:\\path\\Artist\\Title - Live.mp3")]
+        [InlineData("C:\\path", true, "C:\\path\\Title - Live.mp3")]
         private void BuildFileName_ReturnsFileNameGroupByFolders(string path, bool includePath, string expectedResult)
         {
             _userSettings.GroupByFoldersEnabled = true;

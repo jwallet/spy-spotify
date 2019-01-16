@@ -367,7 +367,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn&apos;t return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
+        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn&apos;t return to Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not alway [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblTrackDetectedAsAd {
             get {
@@ -489,6 +489,15 @@ namespace EspionSpotify {
         internal static string logSpotifyNotFound {
             get {
                 return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Spytify cannot record if Spotify and Spytify don&apos;t use the same audio endpoint..
+        /// </summary>
+        internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
+            get {
+                return ResourceManager.GetString("logSpotifyPlayingOutsideOfSelectedAudioEndPoint", resourceCulture);
             }
         }
         

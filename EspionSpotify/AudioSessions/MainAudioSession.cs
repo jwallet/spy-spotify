@@ -24,8 +24,15 @@ namespace EspionSpotify.AudioSessions
         {
             DefaultEndPointDevice = aMmDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             AudioEndPointDevices = aMmDevices.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-            AudioEndPointDevice = AudioEndPointDeviceIndex.HasValue ? AudioEndPointDevices[AudioEndPointDeviceIndex.Value] : DefaultEndPointDevice;
+
+            AudioEndPointDevice = IsAudioEndPointDeviceIndexAvailable() ? AudioEndPointDevices[AudioEndPointDeviceIndex.Value] : DefaultEndPointDevice;
+
             AudioDeviceVolume = (int)(AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+        }
+
+        public bool IsAudioEndPointDeviceIndexAvailable()
+        {
+            return AudioEndPointDeviceIndex.HasValue ? AudioEndPointDevices.Count - 1 >= AudioEndPointDeviceIndex.Value : false;
         }
 
         public void SetDefaultAudioDeviceVolume(int volume)

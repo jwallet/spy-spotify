@@ -160,7 +160,7 @@ namespace EspionSpotify
             this.tcMenu.ItemSize = new System.Drawing.Size(100, 34);
             this.tcMenu.Location = new System.Drawing.Point(20, 60);
             this.tcMenu.Name = "tcMenu";
-            this.tcMenu.SelectedIndex = 2;
+            this.tcMenu.SelectedIndex = 1;
             this.tcMenu.Size = new System.Drawing.Size(760, 380);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;

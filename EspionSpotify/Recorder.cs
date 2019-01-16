@@ -36,7 +36,7 @@ namespace EspionSpotify
         {
             Running = true;
             Thread.Sleep(50);
-            _waveIn = new WasapiLoopbackCapture();
+            _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);
 
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;

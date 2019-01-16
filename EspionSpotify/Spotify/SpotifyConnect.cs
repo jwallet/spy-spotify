@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
@@ -22,7 +23,7 @@ namespace EspionSpotify
                 "Microsoft\\WindowsApps\\Spotify.exe")
         };
 
-        public static void Run()
+        public async static Task Run()
         {
             if (!IsSpotifyInstalled())
             {
@@ -33,7 +34,7 @@ namespace EspionSpotify
             {
                 if (RunSpotify()) break;
 
-                System.Threading.Thread.Sleep(RunSpotifyInterval);
+                await Task.Delay(RunSpotifyInterval);
             }
         }
 
