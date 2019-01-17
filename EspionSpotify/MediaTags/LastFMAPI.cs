@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -27,8 +28,6 @@ namespace EspionSpotify.MediaTags
 
         public LastFMTrack GetTagInfo(Track track)
         {
-            if (!track.IsNormal()) return null;
-
             TrackInfo = new LastFMTrack();
 
             var api = new XmlDocument();

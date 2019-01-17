@@ -358,7 +358,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblTrackDetectedAsAd" xml:space="preserve">
-    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn't return Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
+    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn't return to Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
     <comment>interface</comment>
   </data>
   <data name="tabFAQ" xml:space="preserve">
@@ -419,5 +419,25 @@
   <data name="tipRelease" xml:space="preserve">
     <value>New version available</value>
     <comment>interface</comment>
+  </data>
+  <data name="lblAudioDevice" xml:space="preserve">
+    <value>Audio Device:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbDefault" xml:space="preserve">
+    <value>Default</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingTimer" xml:space="preserve">
+    <value>Timer for the recording session</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logRecordingTimerDone" xml:space="preserve">
+    <value>// Recording session timer is done.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
+    <value>// Spytify cannot record if Spotify and Spytify don't use the same audio endpoint.</value>
+    <comment>console</comment>
   </data>
 </root>

@@ -358,7 +358,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblTrackDetectedAsAd" xml:space="preserve">
-    <value>Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Spytify ne peut garantir qu'une piste audio sera détectée correctement puisqu'il se base sur peu d'informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</value>
+    <value>Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu'une piste audio sera détectée correctement puisqu'il se base sur peu d'informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</value>
     <comment>interface</comment>
   </data>
   <data name="tabFAQ" xml:space="preserve">
@@ -418,5 +418,25 @@
   <data name="tipRelease" xml:space="preserve">
     <value>Nouvelle version disponible</value>
     <comment>interface</comment>
+  </data>
+  <data name="lblAudioDevice" xml:space="preserve">
+    <value>Périphérique audio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="cbDefault" xml:space="preserve">
+    <value>Défaut</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingTimer" xml:space="preserve">
+    <value>Minuteur pour la session d'enregistrement</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logRecordingTimerDone" xml:space="preserve">
+    <value>// Minuteur de session d'enregistrement est terminé.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
+    <value>// Spytify ne peut enregistré si Spotify et Spytify n'utilisent pas le même périphérique audio.</value>
+    <comment>console</comment>
   </data>
 </root>

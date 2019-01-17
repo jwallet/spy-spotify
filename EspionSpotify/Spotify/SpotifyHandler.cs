@@ -53,7 +53,7 @@ namespace EspionSpotify.Spotify
         {
             if (SpotifyLatestStatus == null)
             {
-                return SpotifyProcess.GetSpotifyStatus().Track;
+                return SpotifyProcess.GetSpotifyStatus()?.Track;
             }
 
             return SpotifyLatestStatus.GetTrack();

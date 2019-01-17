@@ -1,9 +1,10 @@
 ﻿using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
-using System;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
+using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
 {
@@ -18,6 +19,7 @@ namespace EspionSpotify
 
         private Recorder _recorder;
         private Track _currentTrack;
+        private Timer _recordingTimer;
         private bool _isPlaying;
 
         private readonly FrmEspionSpotify _form;
@@ -89,16 +91,25 @@ namespace EspionSpotify
 
         private async Task RunSpotifyConnect()
         {
-            if (SpotifyConnect.IsSpotifyInstalled() && !SpotifyConnect.IsSpotifyRunning())
+            if (!SpotifyConnect.IsSpotifyInstalled()) return;
+
+            if (!SpotifyConnect.IsSpotifyRunning())
             {
                 _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
+                await SpotifyConnect.Run();
             }
 
-            SpotifyConnect.Run();
+            Running = true;
+        }
 
-            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession();
-            await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart();
+        private bool SetSpotifyAudioSessionAndWaitToStart()
+        {
+            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
+            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref Running);
+        }
 
+        private void BindSpotifyEventHandlers()
+        {
             Spotify = new SpotifyHandler(_userSettings.SpotifyAudioSession)
             {
                 ListenForEvents = true
@@ -106,20 +117,20 @@ namespace EspionSpotify
             Spotify.OnPlayStateChange += OnPlayStateChanged;
             Spotify.OnTrackChange += OnTrackChanged;
             Spotify.OnTrackTimeChange += OnTrackTimeChanged;
-
-            _currentTrack = Spotify.GetTrack();
         }
 
         public async Task Run()
         {
             if (Running) return;
 
-            Ready = false;
-            Running = true;
             await RunSpotifyConnect();
+            var isSpotifyPlayingOutsideOfSelectedAudioEndPoint = !SetSpotifyAudioSessionAndWaitToStart();
+            BindSpotifyEventHandlers();
+            Ready = false;
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
+                _currentTrack = Spotify.GetTrack();
                 InitializeRecordingSession();
 
                 while (Running)
@@ -127,6 +138,16 @@ namespace EspionSpotify
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
                         _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
+                        Running = false;
+                    }
+                    if (_userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
+                        Running = false;
+                    }
+                    if (isSpotifyPlayingOutsideOfSelectedAudioEndPoint)
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyPlayingOutsideOfSelectedAudioEndPoint"));
                         Running = false;
                     }
                     Thread.Sleep(200);
@@ -170,6 +191,8 @@ namespace EspionSpotify
             _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(Mute);
 
             var track = Spotify.GetTrack();
+            if (track == null) return;
+
             _isPlaying = track.Playing;
             _form.UpdateIconSpotify(_isPlaying);
 
@@ -177,24 +200,43 @@ namespace EspionSpotify
 
             _form.UpdatePlayingTitle(SongTitle);
             MutesSpotifyAds(AdPlaying);
+
+            if (_userSettings.HasRecordingTimerEnabled)
+            {
+                EnableRecordingTimer();
+            }
+        }
+
+        private void EnableRecordingTimer()
+        {
+            _recordingTimer = new Timer(_userSettings.RecordingTimerMilliseconds)
+            {
+                AutoReset = false,
+                Enabled = false
+            };
+
+            while (_recorder == null && SpotifyConnect.IsSpotifyRunning())
+            {
+                Thread.Sleep(300);
+            }
+
+            _recordingTimer.Enabled = true;
         }
 
         private void EndRecordingSession()
         {
-            if (Running)
-            {
-                Running = false;
-            }
-
             Ready = true;
 
-            MutesSpotifyAds(false);
-            _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+            if (_userSettings.SpotifyAudioSession != null)
+            {
+                MutesSpotifyAds(false);
+                _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
 
-            Spotify.ListenForEvents = false;
-            Spotify.OnPlayStateChange -= OnPlayStateChanged;
-            Spotify.OnTrackChange -= OnTrackChanged;
-            Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                Spotify.ListenForEvents = false;
+                Spotify.OnPlayStateChange -= OnPlayStateChanged;
+                Spotify.OnTrackChange -= OnTrackChanged;
+                Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+            }
 
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(_spotify);

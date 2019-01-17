@@ -54,5 +54,28 @@ namespace EspionSpotify.Tests
             Assert.NotEmpty(track.ArtLarge);
             Assert.NotEmpty(track.ArtExtraLarge);
         }
+
+        [Fact]
+        private void TrackWithInitialTrack_ReturnsUpdatedTrack()
+        {
+            var initialTrack = new Track
+            {
+                Title = "Song Title",
+                Artist = "Artist Name",
+                Ad = false,
+                Playing = true,
+                TitleExtended = "Live"
+            };
+
+            var track = new Track(initialTrack)
+            {
+                Album = "Album",
+                AlbumPosition = 1
+            };
+
+            Assert.Equal(initialTrack.ToString(), track.ToString());
+            Assert.NotEqual(initialTrack.Album, track.Album);
+            Assert.NotEqual(track, new Track());
+        }
     }
 }

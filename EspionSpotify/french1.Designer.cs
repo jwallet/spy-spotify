@@ -61,6 +61,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Défaut.
+        /// </summary>
+        internal static string cbDefault {
+            get {
+                return ResourceManager.GetString("cbDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 128kbps.
         /// </summary>
         internal static string cbOptBitRate128 {
@@ -174,6 +183,15 @@ namespace EspionSpotify {
         internal static string lblAdsPlayAndStop {
             get {
                 return ResourceManager.GetString("lblAdsPlayAndStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Périphérique audio:.
+        /// </summary>
+        internal static string lblAudioDevice {
+            get {
+                return ResourceManager.GetString("lblAudioDevice", resourceCulture);
             }
         }
         
@@ -304,6 +322,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minuteur pour la session d&apos;enregistrement.
+        /// </summary>
+        internal static string lblRecordingTimer {
+            get {
+                return ResourceManager.GetString("lblRecordingTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enregistrer les pistes de type inconnu détectées en tant que publicité.
         /// </summary>
         internal static string lblRecordUnknownTrackType {
@@ -340,7 +367,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se base sur peu d&apos;informations disponible dans le processus de Spotify qui ne sont pas toujours précises..
+        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se bas [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblTrackDetectedAsAd {
             get {
@@ -421,6 +448,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement est terminé..
+        /// </summary>
+        internal static string logRecordingTimerDone {
+            get {
+                return ResourceManager.GetString("logRecordingTimerDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Spotify n&apos;est pas démarré, tentative de lancement amorcée..
         /// </summary>
         internal static string logSpotifyConnecting {
@@ -453,6 +489,15 @@ namespace EspionSpotify {
         internal static string logSpotifyNotFound {
             get {
                 return ResourceManager.GetString("logSpotifyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Spytify ne peut enregistré si Spotify et Spytify n&apos;utilisent pas le même périphérique audio..
+        /// </summary>
+        internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
+            get {
+                return ResourceManager.GetString("logSpotifyPlayingOutsideOfSelectedAudioEndPoint", resourceCulture);
             }
         }
         

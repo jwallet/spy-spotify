@@ -34,6 +34,35 @@ namespace EspionSpotify.Models
 
         public bool IsNormal() => Artist != null && Title != null && !Ad && Playing;
 
+        public Track() { }
+
+        public Track(Track track)
+        {
+            Artist = track.Artist;
+            Title = track.Title;
+            Ad = track.Ad;
+            Playing = track.Playing;
+
+            TitleExtended = track.TitleExtended;
+
+            Album = track.Album;
+            Genres = track.Genres;
+            AlbumPosition = track.AlbumPosition;
+
+            CurrentPosition = track.CurrentPosition;
+            Length = track.Length;
+
+            ArtExtraLargeUrl = track.ArtExtraLargeUrl;
+            ArtLargeUrl = track.ArtLargeUrl;
+            ArtMediumUrl = track.ArtMediumUrl;
+            ArtSmallUrl = track.ArtSmallUrl;
+
+            ArtExtraLarge = track.ArtExtraLarge;
+            ArtLarge = track.ArtLarge;
+            ArtMedium = track.ArtMedium;
+            ArtSmall = track.ArtSmall;
+        }
+
         public async Task GetArtExtraLargeAsync()
         {
             ArtExtraLarge = await MP3Tags.GetAlbumCover(ArtExtraLargeUrl);
@@ -68,6 +97,18 @@ namespace EspionSpotify.Models
             if (Ad)
             {
                 song = $"{_spotify} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
+            }
+
+            return song;
+        }
+
+        public string ToTitleString()
+        {
+            var song = Title ?? "";
+
+            if (TitleExtended != null)
+            {
+                song += $" - {TitleExtended}";
             }
 
             return song;

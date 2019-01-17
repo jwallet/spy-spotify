@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using NAudio.CoreAudioApi;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EspionSpotify.AudioSessions
 {
-    public interface ISpotifyAudioSession
+    public interface ISpotifyAudioSession: IMainAudioSession
     {
+        ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
         void SleepWhileTheSongEnds();
         bool IsSpotifyCurrentlyPlaying();
         void SetSpotifyToMute(bool mute);
-        Task WaitSpotifyAudioSessionToStart();
+        bool WaitSpotifyAudioSessionToStart(ref bool running);
         void SetSpotifyVolumeToHighAndOthersToMute(bool mute = false);
     }
 }

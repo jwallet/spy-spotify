@@ -33,7 +33,7 @@ namespace EspionSpotify
 
             if (_userSettings.GroupByFoldersEnabled)
             {
-                songName = Normalize.RemoveDiacritics(_track.Title);
+                songName = Normalize.RemoveDiacritics(_track.ToTitleString());
                 songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
             }
             else

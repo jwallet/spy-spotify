@@ -17,12 +17,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using EspionSpotify.Extensions;
+using System.Linq;
 
 namespace EspionSpotify
 {
     public sealed partial class FrmEspionSpotify : MetroForm
     {
-        private readonly IMainAudioSession _audioSession;
+        private IMainAudioSession _audioSession;
         private Watcher _watcher;
         private UserSettings _userSettings;
         private Analytics _analytics;
@@ -57,6 +58,7 @@ namespace EspionSpotify
 
             var indexLanguage = Settings.Default.Language;
             var indexBitRate = Settings.Default.Bitrate;
+            var indexAudioEndPointDevice = Settings.Default.AudioEndPointDeviceIndex.ToNullableInt();
 
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
@@ -82,12 +84,6 @@ namespace EspionSpotify
             cbBitRate.SelectedIndex = indexBitRate;
             cbLanguage.SelectedIndex = indexLanguage;
 
-            _audioSession = new MainAudioSession();
-
-            tbVolumeWin.Value = _audioSession.DefaultAudioDeviceVolume;
-            lblSoundCard.Text = _audioSession.DefaultAudioEndPointDevice.FriendlyName;
-            lblVolume.Text = _audioSession.DefaultAudioDeviceVolume + @"%";
-
             _userSettings.OutputPath = Settings.Default.Directory;
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
             _userSettings.MediaFormat = (MediaFormat)Settings.Default.MediaFormat;
@@ -99,6 +95,11 @@ namespace EspionSpotify
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
             _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
             _userSettings.InternalOrderNumber = 1;
+            _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice; // TODO: settings default stay last saved
+
+            _audioSession = new MainAudioSession(indexAudioEndPointDevice);
+            SetAudioEndPointDevicesDropDown();
+            UpdateAudioEndPointFields();
 
             var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;
@@ -106,6 +107,31 @@ namespace EspionSpotify
             ResumeLayout();
 
             GitHub.GetVersion();
+        }
+
+        private void UpdateAudioEndPointFields()
+        {
+            tbVolumeWin.Value = _audioSession.AudioDeviceVolume;
+            lblSoundCard.Text = _audioSession.AudioEndPointDevice.FriendlyName;
+            lblVolume.Text = _audioSession.AudioDeviceVolume + @"%";
+        }
+
+        private void SetAudioEndPointDevicesDropDown()
+        {
+            var audioEndPointDevices = new Dictionary<int, string> { };
+
+            for (var i = 0; i < _audioSession.AudioEndPointDevices.Count; i++)
+            {
+                audioEndPointDevices.Add(i, _audioSession.AudioEndPointDevices[i].FriendlyName);
+            }
+
+            var defaultEndPointDeviceIndex = audioEndPointDevices.FirstOrDefault(x => x.Value == _audioSession.DefaultEndPointDevice.FriendlyName).Key;
+            var selectedIndex = _audioSession.IsAudioEndPointDeviceIndexAvailable() ? _audioSession.AudioEndPointDeviceIndex ?? 0 : defaultEndPointDeviceIndex;
+
+            cbAudioDevices.DataSource = new BindingSource(audioEndPointDevices, null);
+            cbAudioDevices.DisplayMember = "Value";
+            cbAudioDevices.ValueMember = "Key";
+            cbAudioDevices.SelectedIndex = selectedIndex;
         }
 
         private void SetLanguageDropDown()
@@ -131,6 +157,7 @@ namespace EspionSpotify
             tabFAQ.Text = Rm.GetString($"tabFAQ");
 
             lblPath.Text = Rm.GetString($"lblPath");
+            lblAudioDevice.Text = Rm.GetString($"lblAudioDevice");
             lblBitRate.Text = Rm.GetString($"lblBitRate");
             lblFormat.Text = Rm.GetString($"lblFormat");
             lblMinLength.Text = Rm.GetString($"lblMinLength");
@@ -148,6 +175,7 @@ namespace EspionSpotify
             lblRecorder.Text = Rm.GetString($"lblRecorder");
             lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
             lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
+            lblRecordingTimer.Text = Rm.GetString($"lblRecordingTimer");
 
             tlSpotifyTrackCut.Text = Rm.GetString($"tlSpotifyTrackCut");
             lblSpotifyTrackCut.Text = Rm.GetString($"lblSpotifyTrackCut");
@@ -283,7 +311,7 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherThread = new Thread(async () => await _watcher.Run());
+            var watcherThread = new Thread(async () =>  await _watcher.Run());
             watcherThread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
@@ -349,7 +377,10 @@ namespace EspionSpotify
             if (_watcher == null) return;
             _watcher.CountSeconds++;
 
-            if (!Watcher.Running) StopRecording();
+            if (!Watcher.Running && !Watcher.Ready)
+            {
+                StopRecording();
+            }
         }
 
         private void RbFormat_CheckedChanged(object sender, EventArgs e)
@@ -500,6 +531,16 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"bitrate?selected={cbBitRate.SelectedValue}"));
         }
 
+        private void cbAudioDevices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _userSettings.AudioEndPointDeviceIndex = ((KeyValuePair<int, string>)cbAudioDevices.SelectedItem).Key;
+            _audioSession = new MainAudioSession(cbAudioDevices.SelectedIndex);
+            UpdateAudioEndPointFields();
+            Settings.Default.AudioEndPointDeviceIndex = cbAudioDevices.SelectedIndex.ToString();
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"audioEndPointDevice?selected={cbAudioDevices.SelectedValue}"));
+        }
+
         private void LnkNumMinus_Click(object sender, EventArgs e)
         {
             if (!_userSettings.InternalOrderNumber.HasValue) return;
@@ -546,9 +587,9 @@ namespace EspionSpotify
 
         private void TbVolumeWin_ValueChanged(object sender, EventArgs e)
         {
-            if (_audioSession.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute)
+            if (_audioSession.AudioEndPointDevice.AudioEndpointVolume.Mute)
             {
-                _audioSession.DefaultAudioEndPointDevice.AudioEndpointVolume.Mute = false;
+                _audioSession.AudioEndPointDevice.AudioEndpointVolume.Mute = false;
             }
 
             _audioSession.SetDefaultAudioDeviceVolume(tbVolumeWin.Value);
@@ -678,9 +719,14 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
         }
 
-        private void lnkRelease_Click(object sender, EventArgs e)
+        private void LnkRelease_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/NHLGames/NHLGames/wiki");
+            Process.Start("https://github.com/jwallet/spy-spotify/releases/latest");
+        }
+
+        private void TxtRecordingTimer_Leave(object sender, EventArgs e)
+        {
+            _userSettings.RecordingTimer = txtRecordingTimer.Text;
         }
     }
 }

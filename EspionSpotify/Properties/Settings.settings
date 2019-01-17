@@ -56,5 +56,8 @@
     <Setting Name="LastVersionPrompted" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="AudioEndPointDeviceIndex" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
