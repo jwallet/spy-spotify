@@ -1,12 +1,18 @@
-<span><img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_settings.png"/>
-<img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_advanced_settings.png"/></span>
+<p align="center">
+    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_settings.png">
+        <img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_settings.png"/>
+    </a>
+    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_advanced_settings.png">
+        <img width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_advanced_settings.png"/>
+    </a>
+</p>
 
 ## Parameters
 
 | Parameter               | Description and values                 | Default value  |
 |:------------------------|:---------------------------------------|:---------------|
 | Output path             | Folder where recorded songs will be stored | `Music`     |
-| Audio device            | Audio device that Spytify will listen on, must be the same one than Spotify uses, Spotify default audio endpoint can be change in Windows > Sound Settings > App volume and device preferences, so it will record songs on a different audio device than your current Windows session | `Default`   |
+| Audio device            | Audio device that Spytify will listen on, must be the same one than Spotify uses, Spotify default audio endpoint can be change in `Windows -> Sound Settings -> App volume and device preferences`, so it will record songs on a different audio device than your current Windows session | `Default`   |
 | Audio quality           | From Low to High `128kbps` `160kbps (Spotify Free)`¹ `256kbps` `320kbps (Spotify Premium)`² | `160kbps`¹ |
 | Minimal length          | Remove songs shorter that the time set  | `30s`  |
 | Audio format            | `WAV` and `MP3` (adds media info and album cover) | `MP3`    |
