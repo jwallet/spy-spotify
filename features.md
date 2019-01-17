@@ -15,4 +15,4 @@
    - Album cover art
    - Genre
 
-![image](https://user-images.githubusercontent.com/23088305/37262916-232d806c-257c-11e8-8d2f-8d5c16ab5e2f.png)
+![image](https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/saved_songs_list.png)
