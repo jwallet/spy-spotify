@@ -1,4 +1,4 @@
-![logo-en](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)
+<a href="https://jwallet.github.io/spy-spotify/"><img src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
 
 Spytify is a Spotify recorder for Windows which records audio from your sound card, ensuring no loss in quality of songs recorded from Spotify, without recording or playing its ads. It automatically splits songs into separate tracks and records straight to MP3 with media infos and album cover, meaning you can start enjoying your music offline.
 
