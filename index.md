@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{{ site.description | default: site.github.project_tagline }}
+Spytify is a Spotify recorder for Windows which records audio from your sound card, ensuring no loss in quality of songs recorded from Spotify, without recording or playing its ads. It automatically splits songs into separate tracks and records straight to MP3 with media infos and album cover, meaning you can start enjoying your music offline.
 
 <p align="center"><img src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_record.png" /></p>
 
