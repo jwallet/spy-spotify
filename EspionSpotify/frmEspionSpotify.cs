@@ -27,6 +27,7 @@ namespace EspionSpotify
         private Watcher _watcher;
         private UserSettings _userSettings;
         private Analytics _analytics;
+        private bool _toggleStopRecordingDelayed;
 
         public static ResourceManager Rm;
         public static FrmEspionSpotify Instance;
@@ -329,6 +330,7 @@ namespace EspionSpotify
             }
             
             Watcher.Running = false;
+            _toggleStopRecordingDelayed = false;
             timer1.Stop();
             tlSettings.Enabled = true;
             tlAdvanced.Enabled = true;
@@ -355,15 +357,27 @@ namespace EspionSpotify
 
                 tcMenu.SelectedIndex = 0;
                 StartRecording();
-                lnkSpy.Image = Resources.off;
+                UpdateLnkSpyIconWith(Resources.off);
                 Task.Run(async () => await _analytics.LogAction("recording-session?status=started"));
+            }
+            else if (_watcher.RecorderUpAndRunning && !_toggleStopRecordingDelayed)
+            {
+                _toggleStopRecordingDelayed = true;
+                Watcher.ToggleStopRecordingDelayed = _toggleStopRecordingDelayed;
             }
             else
             {
                 StopRecording();
-                lnkSpy.Image = Resources.on;
+                UpdateLnkSpyIconWith(Resources.on);
                 Task.Run(async () => await _analytics.LogAction("recording-session?status=ended"));
             }
+        }
+
+        private void UpdateLnkSpyIconWith(Bitmap bmp)
+        {
+            lnkSpy.Image.Dispose();
+            lnkSpy.Image = bmp;
+            lnkSpy.Refresh();
         }
 
         private void LnkClear_Click(object sender, EventArgs e)

@@ -448,7 +448,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement est terminé..
+        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement terminé..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -516,6 +516,15 @@ namespace EspionSpotify {
         internal static string logStoping {
             get {
                 return ResourceManager.GetString("logStoping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // En attente de la fin de l&apos;enregistrement de la piste audio courante.
+        /// </summary>
+        internal static string logStopRecordingWhenSongEnds {
+            get {
+                return ResourceManager.GetString("logStopRecordingWhenSongEnds", resourceCulture);
             }
         }
         

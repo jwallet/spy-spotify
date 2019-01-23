@@ -433,11 +433,15 @@
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Recording session timer is done.</value>
+    <value>// Recording session timer done.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
     <value>// Spytify cannot record if Spotify and Spytify don't use the same audio endpoint.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
+    <value>// Waiting for the recording of the current audio track to end</value>
     <comment>console</comment>
   </data>
 </root>

@@ -391,6 +391,7 @@
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
+    <comment>console</comment>
   </data>
   <data name="msgBodyDisableAds" xml:space="preserve">
     <value>En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d'amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify.</value>
@@ -414,6 +415,7 @@
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: L'enregistrement multi-canaux de fichiers n'est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono).</value>
+    <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
     <value>Nouvelle version disponible</value>
@@ -432,11 +434,15 @@
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Minuteur de session d'enregistrement est terminé.</value>
+    <value>// Minuteur de session d'enregistrement terminé.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
     <value>// Spytify ne peut enregistré si Spotify et Spytify n'utilisent pas le même périphérique audio.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
+    <value>// En attente de la fin de l'enregistrement de la piste audio courante</value>
     <comment>console</comment>
   </data>
 </root>
