@@ -502,7 +502,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify ne peut enregistré si Spotify et Spytify n&apos;utilisent pas le même périphérique audio..
+        ///   Looks up a localized string similar to // Spytify ne peut enregistré s&apos;il n&apos;utilise pas le même périphérique audio que Spotify. Voir la F.A.Q pour savoir comment déplacer Spotify vers un autre périphérique..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {

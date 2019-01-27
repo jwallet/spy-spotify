@@ -437,7 +437,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify cannot record if Spotify and Spytify don't use the same audio endpoint.</value>
+    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
@@ -445,7 +445,7 @@
     <comment>console</comment>
   </data>
   <data name="lblSpotifyAudioEndpoint" xml:space="preserve">
-    <value>By using the Spytify setting ''Audio Endpoint'', you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type ''Sound mixer options'', you should land on the setting page called ''App volume and device preferences'', make sure Spotify is playing and set the app to the desired endpoint with the ''Output'' select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ''Windows 10 Settings'' &gt; ''System'' &gt; ''Sound'', scroll down to the ''Advanced sound options'' &gt; ''App volume and device preferences'' setting.</value>
+    <value>By using the Spytify setting ''Audio Device'', you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type ''Sound mixer options'', you should land on the setting page called ''App volume and device preferences'', make sure Spotify is playing and set the app to the desired endpoint with the ''Output'' select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ''Windows 10 Settings'' &gt; ''System'' &gt; ''Sound'', scroll down to the ''Advanced sound options'' &gt; ''App volume and device preferences'' setting.</value>
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyAudioEndpoint" xml:space="preserve">

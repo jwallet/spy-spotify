@@ -340,7 +340,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By using the Spytify setting &apos;&apos;Audio Endpoint&apos;&apos;, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type &apos;&apos;Sound mixer options&apos;&apos;, you should land on the setting page called &apos;&apos;App volume and device preferences&apos;&apos;, make sure Spotify is playing and set the app to the desired endpoint with the &apos;&apos;Output&apos;&apos; select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can&apos;t find t [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to By using the Spytify setting &apos;&apos;Audio Device&apos;&apos;, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type &apos;&apos;Sound mixer options&apos;&apos;, you should land on the setting page called &apos;&apos;App volume and device preferences&apos;&apos;, make sure Spotify is playing and set the app to the desired endpoint with the &apos;&apos;Output&apos;&apos; select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can&apos;t find the [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblSpotifyAudioEndpoint {
             get {
@@ -502,7 +502,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify cannot record if Spotify and Spytify don&apos;t use the same audio endpoint..
+        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
