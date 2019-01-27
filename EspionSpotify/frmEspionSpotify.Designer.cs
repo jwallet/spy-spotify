@@ -120,7 +120,9 @@ namespace EspionSpotify
             this.tlAdAndTrackOverlapOnRecordedTrack = new EspionSpotify.Controls.MetroTile();
             this.tlBackgroundNoiceRecordedOnTrack = new EspionSpotify.Controls.MetroTile();
             this.tlTrackDetectedAsAd = new EspionSpotify.Controls.MetroTile();
+            this.tlSpotifyAudioEndpoint = new EspionSpotify.Controls.MetroTile();
             this.tlSpotifyLostFeatures = new EspionSpotify.Controls.MetroTile();
+            this.lblSpotifyAudioEndpoint = new System.Windows.Forms.Label();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -1141,9 +1143,6 @@ namespace EspionSpotify
             // 
             // tlFAQ
             // 
-            this.tlFAQ.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tlFAQ.AutoScroll = true;
             this.tlFAQ.BackColor = System.Drawing.Color.White;
             this.tlFAQ.ColumnCount = 1;
@@ -1160,10 +1159,15 @@ namespace EspionSpotify
             this.tlFAQ.Controls.Add(this.lblSpotifyTrackCut, 0, 1);
             this.tlFAQ.Controls.Add(this.tlSpotifyLostFeatures, 0, 10);
             this.tlFAQ.Controls.Add(this.lblSpotifyLostFeatures, 0, 11);
+            this.tlFAQ.Controls.Add(this.tlSpotifyAudioEndpoint, 0, 12);
+            this.tlFAQ.Controls.Add(this.lblSpotifyAudioEndpoint, 0, 13);
+            this.tlFAQ.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlFAQ.Location = new System.Drawing.Point(1, 1);
             this.tlFAQ.Name = "tlFAQ";
             this.tlFAQ.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.tlFAQ.RowCount = 13;
+            this.tlFAQ.RowCount = 15;
+            this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -1177,7 +1181,7 @@ namespace EspionSpotify
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlFAQ.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tlFAQ.Size = new System.Drawing.Size(730, 295);
+            this.tlFAQ.Size = new System.Drawing.Size(730, 296);
             this.tlFAQ.TabIndex = 1;
             // 
             // lblTrackDetectedAsAd
@@ -1494,6 +1498,28 @@ namespace EspionSpotify
             this.tlTrackDetectedAsAd.Click += new System.EventHandler(this.TlTrackDetectedAsAd_Click);
             this.tlTrackDetectedAsAd.Leave += new System.EventHandler(this.TlTrackDetectedAsAd_Leave);
             // 
+            // tlSpotifyAudioEndpoint
+            // 
+            this.tlSpotifyAudioEndpoint.ActiveControl = null;
+            this.tlSpotifyAudioEndpoint.BackColor = System.Drawing.Color.White;
+            this.tlSpotifyAudioEndpoint.CausesValidation = false;
+            this.tlSpotifyAudioEndpoint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlSpotifyAudioEndpoint.Location = new System.Drawing.Point(10, 470);
+            this.tlSpotifyAudioEndpoint.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlSpotifyAudioEndpoint.Name = "tlSpotifyAudioEndpoint";
+            this.tlSpotifyAudioEndpoint.PaintTileCount = false;
+            this.tlSpotifyAudioEndpoint.Size = new System.Drawing.Size(693, 38);
+            this.tlSpotifyAudioEndpoint.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlSpotifyAudioEndpoint.TabIndex = 4;
+            this.tlSpotifyAudioEndpoint.Text = "SPOTIFY_AUDIO_ENDPOINT";
+            this.tlSpotifyAudioEndpoint.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlSpotifyAudioEndpoint.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlSpotifyAudioEndpoint.UseCustomBackColor = true;
+            this.tlSpotifyAudioEndpoint.UseCustomForeColor = true;
+            this.tlSpotifyAudioEndpoint.UseSelectable = true;
+            this.tlSpotifyAudioEndpoint.Click += new System.EventHandler(this.TlSpotifyAudioEndpoint_Click);
+            this.tlSpotifyAudioEndpoint.Leave += new System.EventHandler(this.tlSpotifyAudioEndpoint_Leave);
+            // 
             // tlSpotifyLostFeatures
             // 
             this.tlSpotifyLostFeatures.ActiveControl = null;
@@ -1515,6 +1541,22 @@ namespace EspionSpotify
             this.tlSpotifyLostFeatures.UseSelectable = true;
             this.tlSpotifyLostFeatures.Click += new System.EventHandler(this.TlSpotifyLostFeatures_Click);
             this.tlSpotifyLostFeatures.Leave += new System.EventHandler(this.TlSpotifyLostFeatures_Leave);
+            // 
+            // lblSpotifyAudioEndpoint
+            // 
+            this.lblSpotifyAudioEndpoint.AutoSize = true;
+            this.lblSpotifyAudioEndpoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(215)))), ((int)(((byte)(96)))));
+            this.lblSpotifyAudioEndpoint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSpotifyAudioEndpoint.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSpotifyAudioEndpoint.ForeColor = System.Drawing.Color.White;
+            this.lblSpotifyAudioEndpoint.Location = new System.Drawing.Point(10, 508);
+            this.lblSpotifyAudioEndpoint.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSpotifyAudioEndpoint.Name = "lblSpotifyAudioEndpoint";
+            this.lblSpotifyAudioEndpoint.Padding = new System.Windows.Forms.Padding(5, 5, 5, 20);
+            this.lblSpotifyAudioEndpoint.Size = new System.Drawing.Size(693, 38);
+            this.lblSpotifyAudioEndpoint.TabIndex = 5;
+            this.lblSpotifyAudioEndpoint.Text = "SPOTIFY_AUDIO_ENDPOINT";
+            this.lblSpotifyAudioEndpoint.Visible = false;
             // 
             // FrmEspionSpotify
             // 
@@ -1636,8 +1678,6 @@ namespace EspionSpotify
         private System.Windows.Forms.Label lblAdAndTrackOverlapOnRecordedTrack;
         private System.Windows.Forms.Label lblAdsPlayAndStop;
         private System.Windows.Forms.Label lblSpotifyTrackCut;
-        private Controls.MetroTile tlSpotifyLostFeatures;
-        private System.Windows.Forms.Label lblSpotifyLostFeatures;
         private MetroLink lnkRelease;
         private MetroLabel lblAudioDevice;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -1660,6 +1700,10 @@ namespace EspionSpotify
         private MetroToggle tgDuplicateAlreadyRecordedTrack;
         private MetroLabel lblRecordingTimer;
         private System.Windows.Forms.MaskedTextBox txtRecordingTimer;
+        private System.Windows.Forms.Label lblSpotifyLostFeatures;
+        private Controls.MetroTile tlSpotifyAudioEndpoint;
+        private Controls.MetroTile tlSpotifyLostFeatures;
+        private System.Windows.Forms.Label lblSpotifyAudioEndpoint;
     }
 }
 

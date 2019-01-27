@@ -190,6 +190,8 @@ namespace EspionSpotify
             lblTrackDetectedAsAd.Text = Rm.GetString($"lblTrackDetectedAsAd");
             tlSpotifyLostFeatures.Text = Rm.GetString($"tlSpotifyLostFeatures");
             lblSpotifyLostFeatures.Text = Rm.GetString($"lblSpotifyLostFeatures");
+            tlSpotifyAudioEndpoint.Text = Rm.GetString($"tlSpotifyAudioEndpoint");
+            lblSpotifyAudioEndpoint.Text = Rm.GetString($"lblSpotifyAudioEndpoint");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -741,6 +743,17 @@ namespace EspionSpotify
         private void TxtRecordingTimer_Leave(object sender, EventArgs e)
         {
             _userSettings.RecordingTimer = txtRecordingTimer.Text;
+        }
+
+        private void TlSpotifyAudioEndpoint_Click(object sender, EventArgs e)
+        {
+            ShowHideLabel(lblSpotifyAudioEndpoint);
+            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-audio-endpoint"));
+        }
+
+        private void tlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
+        {
+            lblSpotifyAudioEndpoint.Hide();
         }
     }
 }

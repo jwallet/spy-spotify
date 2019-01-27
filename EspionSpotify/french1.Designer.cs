@@ -340,6 +340,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to En utilisant le paramètre de Spotify &apos;&apos;Périphérique audio&apos;&apos;, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez &apos;&apos;Paramètres de mélangeur audio&apos;&apos;, vous devriez arriver sur la page de paramètres appelée &apos;&apos;Volume d&apos;application et préférences de volume&apos;&apos;, soyez certain que Spotify est en train de jouer et paramétrez l&apos;application vers le bon périphérique avec la liste déroul [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("lblSpotifyAudioEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes, recherchez le domaine &quot;spclient.wg.spotify.com&quot; et ajoutez un &quot;#&quot; au début de la ligne pour le rendre inactif..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
@@ -768,6 +777,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio.
+        /// </summary>
+        internal static string tlSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("tlSpotifyAudioEndpoint", resourceCulture);
             }
         }
         

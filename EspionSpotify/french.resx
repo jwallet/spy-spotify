@@ -445,4 +445,12 @@
     <value>// En attente de la fin de l'enregistrement de la piste audio courante</value>
     <comment>console</comment>
   </data>
+  <data name="lblSpotifyAudioEndpoint" xml:space="preserve">
+    <value>En utilisant le paramètre de Spotify ''Périphérique audio'', vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez ''Paramètres de mélangeur audio'', vous devriez arriver sur la page de paramètres appelée ''Volume d'application et préférences de volume'', soyez certain que Spotify est en train de jouer et paramétrez l'application vers le bon périphérique avec la liste déroulante ''Sortie''. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n'importe quel son indésiré. Si vous ne pouvez trouver l'option Windows, visitez la section ''Paramètres Windows 10'' &gt; ''Système'' &gt; ''Son'', descendez le menu jusqu'à la section ''Paramètres de son avancés" &gt; ''Préférences de volume d'application et de périphériques''.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlSpotifyAudioEndpoint" xml:space="preserve">
+    <value>Isoler l'audio de Spotify vers un différent périphérique audio</value>
+    <comment>interface</comment>
+  </data>
 </root>

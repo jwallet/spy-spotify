@@ -340,6 +340,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By using the Spytify setting &apos;&apos;Audio Endpoint&apos;&apos;, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type &apos;&apos;Sound mixer options&apos;&apos;, you should land on the setting page called &apos;&apos;App volume and device preferences&apos;&apos;, make sure Spotify is playing and set the app to the desired endpoint with the &apos;&apos;Output&apos;&apos; select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can&apos;t find t [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("lblSpotifyAudioEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as many ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad, search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
@@ -768,6 +777,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Isolates Spotify audio to a different audio endpoint device.
+        /// </summary>
+        internal static string tlSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("tlSpotifyAudioEndpoint", resourceCulture);
             }
         }
         
