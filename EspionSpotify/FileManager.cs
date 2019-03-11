@@ -10,7 +10,7 @@ namespace EspionSpotify
         private readonly UserSettings _userSettings;
         private readonly Track _track;
 
-        private const int FirstSongNameCount = 1;
+        private const int FIRST_SONG_NAME_COUNT = 1;
         private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
         public FileManager(UserSettings userSettings, Track track)
@@ -22,7 +22,7 @@ namespace EspionSpotify
         public string GetFileName(string songName, int count, string path = null)
         {
             var ending = _userSettings.MediaFormat.ToString().ToLower();
-            songName += count > FirstSongNameCount ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
+            songName += count > FIRST_SONG_NAME_COUNT ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
             return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
         }
 
@@ -43,8 +43,8 @@ namespace EspionSpotify
             }
 
             var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _userSettings.TrackTitleSeparator);
-            var filename = GetFileName(songNameTrackNumber, FirstSongNameCount, includePath ? path : null);
-            var count = FirstSongNameCount;
+            var filename = GetFileName(songNameTrackNumber, FIRST_SONG_NAME_COUNT, includePath ? path : null);
+            var count = FIRST_SONG_NAME_COUNT;
 
             while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetFileName(songNameTrackNumber, count, path)))
             {

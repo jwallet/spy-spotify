@@ -11,11 +11,11 @@ namespace EspionSpotify.Spotify
     {
         public Track Track { get; set; }
 
-        private string[] WindowTitleSeparator { get; }
+        private string[] _windowTitleSeparator { get; }
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            WindowTitleSeparator = new[] {" - "};
+            _windowTitleSeparator = new[] {" - "};
             SetSongInfo(ref spotifyWindowInfo);
         }
 
@@ -61,7 +61,7 @@ namespace EspionSpotify.Spotify
 
         private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = spotifyWindowInfo.WindowTitle.Split(WindowTitleSeparator, 3, StringSplitOptions.None);
+            var tags = spotifyWindowInfo.WindowTitle.Split(_windowTitleSeparator, 3, StringSplitOptions.None);
 
             var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
             var isAd = tags.Length < 2;

@@ -7,7 +7,7 @@ namespace EspionSpotify
 {
     public class SpotifyConnect
     {
-        private const string _spotify = "spotify";
+        private const string SPOTIFY = "spotify";
         private static readonly TimeSpan RunSpotifyInterval = TimeSpan.FromSeconds(3);
 
         private static readonly string[] SpotifyPossiblePaths =
@@ -73,7 +73,7 @@ namespace EspionSpotify
 
         public static bool IsSpotifyRunning()
         {
-            return Process.GetProcessesByName(_spotify).Length >= 1;
+            return Process.GetProcessesByName(SPOTIFY).Length >= 1;
         }
     }
 }

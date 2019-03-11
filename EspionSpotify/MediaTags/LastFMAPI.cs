@@ -12,13 +12,13 @@ namespace EspionSpotify.MediaTags
 {
     public class LastFMAPI: ILastFMAPI
     {
-        private const string _apiDomain = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
+        private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly string[] _apiKey;
         private readonly Random _random;
 
         public LastFMTrack TrackInfo { get; set; }
         
-        private string ApiUrl(string apiKey, string artist, string title) => $"{_apiDomain }&api_key={apiKey}&artist={artist}&track={title}";
+        private string ApiUrl(string apiKey, string artist, string title) => $"{API_DOMAIN }&api_key={apiKey}&artist={artist}&track={title}";
 
         public LastFMAPI()
         {

@@ -8,7 +8,7 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyHandler: ISpotifyHandler, IDisposable
     {
-        private const int _timerInterval = 50;
+        private const int TIMER_INTERVAL = 50;
 
         public Timer EventTimer { get; private set; }
         public Timer SongTimer { get; private set; }
@@ -34,13 +34,13 @@ namespace EspionSpotify.Spotify
         public SpotifyHandler(ISpotifyAudioSession spotifyAudioSession)
         {
             SpotifyProcess = new SpotifyProcess(spotifyAudioSession);
-            AttachTimer(_timerInterval);
+            AttachTimer(TIMER_INTERVAL);
         }
         
         public SpotifyHandler(ISpotifyProcess spotifyProcess)
         {
             SpotifyProcess = spotifyProcess;
-            AttachTimer(_timerInterval);
+            AttachTimer(TIMER_INTERVAL);
         }
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;

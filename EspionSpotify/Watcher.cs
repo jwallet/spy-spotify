@@ -10,9 +10,9 @@ namespace EspionSpotify
 {
     internal class Watcher: IWatcher
     {
-        private const string _spotify = "Spotify";
-        private const bool Mute = true;
-        private const int NextSongEventMaxEstimatedDelay = 5;
+        private const string SPOTIFY = "Spotify";
+        private const bool MUTE = true;
+        private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
         public static bool Running;
         public static bool Ready = true;
@@ -36,7 +36,7 @@ namespace EspionSpotify
         private bool AdPlaying => _currentTrack.Ad;
         private string SongTitle => _currentTrack.ToString();
         private bool IsTypeAllowed => _currentTrack.IsNormal() || (_userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing);
-        private bool IsOldSong => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NextSongEventMaxEstimatedDelay;
+        private bool IsOldSong => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
 
         public Watcher(FrmEspionSpotify form, UserSettings userSettings)
         {
@@ -204,7 +204,7 @@ namespace EspionSpotify
         {
             _form.WriteIntoConsole(FrmEspionSpotify.Rm?.GetString($"logStarting") ?? "Starting");
 
-            _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(Mute);
+            _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = Spotify.GetTrack();
             if (track == null) return;
@@ -255,7 +255,7 @@ namespace EspionSpotify
             }
 
             _form.UpdateStartButton();
-            _form.UpdatePlayingTitle(_spotify);
+            _form.UpdatePlayingTitle(SPOTIFY);
             _form.UpdateIconSpotify(false);
             _form.StopRecording();
         }

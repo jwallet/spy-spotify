@@ -6,7 +6,7 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private const string _spotify = "Spotify";
+        private const string SPOTIFY = "Spotify";
 
         public string Artist { get; set; }
         public string Title { get; set; }
@@ -82,7 +82,7 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            var song = _spotify;
+            var song = SPOTIFY;
 
             if (Artist != null && Title != null)
             {
@@ -96,7 +96,7 @@ namespace EspionSpotify.Models
 
             if (Ad)
             {
-                song = $"{_spotify} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
+                song = $"{SPOTIFY} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
             }
 
             return song;
