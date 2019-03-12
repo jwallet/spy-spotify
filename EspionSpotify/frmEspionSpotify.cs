@@ -194,7 +194,8 @@ namespace EspionSpotify
             tlAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"tlAdAndTrackOverlapOnRecordedTrack");
             lblAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"lblAdAndTrackOverlapOnRecordedTrack");
             tlBackgroundNoiceRecordedOnTrack.Text = Rm.GetString($"tlBackgroundNoiceRecordedOnTrack");
-            lblBackgroundNoiceRecordedOnTrack.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack");
+            lblBackgroundNoiceRecordedOnTrackFirst.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_first");
+            lblBackgroundNoiceRecordedOnTrackSecond.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_second");
             tlTrackDetectedAsAd.Text = Rm.GetString($"tlTrackDetectedAsAd");
             lblTrackDetectedAsAd.Text = Rm.GetString($"lblTrackDetectedAsAd");
             tlSpotifyLostFeatures.Text = Rm.GetString($"tlSpotifyLostFeatures");
@@ -691,12 +692,14 @@ namespace EspionSpotify
 
         private void TlBackgroundNoiceRecordedOnTrack_Leave(object sender, EventArgs e)
         {
-            lblBackgroundNoiceRecordedOnTrack.Hide();
+            lblBackgroundNoiceRecordedOnTrackFirst.Hide();
+            lblBackgroundNoiceRecordedOnTrackSecond.Hide();
         }
 
         private void TlBackgroundNoiceRecordedOnTrack_Click(object sender, EventArgs e)
         {
-            ShowHideLabel(lblBackgroundNoiceRecordedOnTrack);
+            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackFirst);
+            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackSecond);
             Task.Run(async () => await _analytics.LogAction($"faq?selected=background-noice-recorded-on-track"));
         }
 

@@ -196,11 +196,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet. Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet..
         /// </summary>
-        internal static string lblBackgroundNoiceRecordedOnTrack {
+        internal static string lblBackgroundNoiceRecordedOnTrack_first {
             get {
-                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack", resourceCulture);
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des moments précis. Ces sons peuvent être liéés au fait que votre ordinateur n&apos;a pas le processeur de configuré à haute performance. Vous pouvez l&apos;activer dans vos paramètres de plan d&apos;alimentation ou en changeant la puissance minimale du processeur a 100 (voir sur internet pour un coment-faire). Ces sons peut être également liéés au fait que vous avez paramétré une qualité (bitrate) différente d [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblBackgroundNoiceRecordedOnTrack_second {
+            get {
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_second", resourceCulture);
             }
         }
         
