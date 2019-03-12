@@ -41,7 +41,7 @@ namespace EspionSpotify.Tests
             var track = new Track();
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
-            spotifyStatusMock.Setup(x => x.Track).Returns(track);
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
@@ -102,7 +102,7 @@ namespace EspionSpotify.Tests
             };
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
-            spotifyStatusMock.Setup(x => x.Track).Returns(currentTrack);
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(currentTrack);
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(currentTrack);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
@@ -162,7 +162,7 @@ namespace EspionSpotify.Tests
             };
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
-            spotifyStatusMock.Setup(x => x.Track).Returns(track);
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();

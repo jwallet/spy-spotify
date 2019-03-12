@@ -22,6 +22,11 @@ namespace EspionSpotify.Models
         public int? CurrentPosition { get; set; }
         public int? Length { get; set; }
 
+        public string[] Performers { get; internal set; }
+        public uint Disc { get; internal set; }
+        public string[] AlbumArtists { get; internal set; }
+        public uint Year { get; internal set; }
+
         public string ArtExtraLargeUrl { get; set; }
         public string ArtLargeUrl { get; set; }
         public string ArtMediumUrl { get; set; }
@@ -51,6 +56,11 @@ namespace EspionSpotify.Models
 
             CurrentPosition = track.CurrentPosition;
             Length = track.Length;
+
+            Performers = track.Performers;
+            Disc = track.Disc;
+            AlbumArtists = track.AlbumArtists;
+            Year = track.Year;
 
             ArtExtraLargeUrl = track.ArtExtraLargeUrl;
             ArtLargeUrl = track.ArtLargeUrl;

@@ -2,7 +2,6 @@
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System.Threading;
-using System.Linq;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 

@@ -5,7 +5,7 @@ namespace EspionSpotify.Spotify
 {
     public interface ISpotifyStatus
     {
-        Track Track { get; set; }
+        Track CurrentTrack { get; set; }
 
         Track GetTrack();
     }

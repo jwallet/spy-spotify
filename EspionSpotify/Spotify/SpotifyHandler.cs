@@ -53,7 +53,7 @@ namespace EspionSpotify.Spotify
         {
             if (SpotifyLatestStatus == null)
             {
-                return SpotifyProcess.GetSpotifyStatus()?.Track;
+                return SpotifyProcess.GetSpotifyStatus()?.CurrentTrack;
             }
 
             return SpotifyLatestStatus.GetTrack();
@@ -62,13 +62,13 @@ namespace EspionSpotify.Spotify
         private void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
             SpotifyLatestStatus = SpotifyProcess.GetSpotifyStatus();
-            if (SpotifyLatestStatus?.Track == null)
+            if (SpotifyLatestStatus?.CurrentTrack == null)
             {
                 EventTimer.Start();
                 return;
             }
 
-            var newestTrack = SpotifyLatestStatus.Track;
+            var newestTrack = SpotifyLatestStatus.CurrentTrack;
             if (Track != null)
             {
                 if (newestTrack.Playing != Track.Playing)

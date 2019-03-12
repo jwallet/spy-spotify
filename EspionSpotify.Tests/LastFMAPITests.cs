@@ -7,7 +7,7 @@ namespace EspionSpotify.Tests
     public class LastFMAPITests
     {
         [Fact]
-        private void GetTagInfo_ReturnsLastFMTrack()
+        private async void GetTagInfo_ReturnsLastFMTrack()
         {
             var spotifyTrack = new Track()
             {
@@ -20,10 +20,9 @@ namespace EspionSpotify.Tests
 
             var api = new LastFMAPI();
 
-            var lastFMTrack = api.GetTagInfo(spotifyTrack);
+            var lastFMTrack = api.UpdateTrack(spotifyTrack);
 
-            Assert.NotNull(lastFMTrack);
-            Assert.Equal(lastFMTrack, api.TrackInfo);
+            Assert.True(await lastFMTrack);
         }
     }
 }

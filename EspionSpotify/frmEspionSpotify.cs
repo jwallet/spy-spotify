@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
+using EspionSpotify.MediaTags;
 
 namespace EspionSpotify
 {
@@ -54,8 +55,16 @@ namespace EspionSpotify
                 Settings.Default.AnalyticsCID = Analytics.GenerateCID();
                 Settings.Default.Save();
             }
+
             _analytics = new Analytics(Settings.Default.AnalyticsCID, Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Task.Run(async () => await _analytics.LogAction("launch"));
+
+            var clientId = Settings.Default.SpotifyAPIClientId;
+            var secretId = Settings.Default.SpotifyAPISecretId;
+            if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(secretId))
+            {
+                ExternalAPI.Instance = new MediaTags.SpotifyAPI(clientId, secretId);
+            }
 
             var indexLanguage = Settings.Default.Language;
             var indexBitRate = Settings.Default.Bitrate;
