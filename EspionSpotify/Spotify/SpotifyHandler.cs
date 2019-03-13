@@ -8,7 +8,7 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyHandler: ISpotifyHandler, IDisposable
     {
-        private const int _timerInterval = 50;
+        private const int TIMER_INTERVAL = 50;
 
         public Timer EventTimer { get; private set; }
         public Timer SongTimer { get; private set; }
@@ -34,13 +34,13 @@ namespace EspionSpotify.Spotify
         public SpotifyHandler(ISpotifyAudioSession spotifyAudioSession)
         {
             SpotifyProcess = new SpotifyProcess(spotifyAudioSession);
-            AttachTimer(_timerInterval);
+            AttachTimer(TIMER_INTERVAL);
         }
         
         public SpotifyHandler(ISpotifyProcess spotifyProcess)
         {
             SpotifyProcess = spotifyProcess;
-            AttachTimer(_timerInterval);
+            AttachTimer(TIMER_INTERVAL);
         }
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
@@ -53,7 +53,7 @@ namespace EspionSpotify.Spotify
         {
             if (SpotifyLatestStatus == null)
             {
-                return SpotifyProcess.GetSpotifyStatus()?.Track;
+                return SpotifyProcess.GetSpotifyStatus()?.CurrentTrack;
             }
 
             return SpotifyLatestStatus.GetTrack();
@@ -62,13 +62,13 @@ namespace EspionSpotify.Spotify
         private void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
             SpotifyLatestStatus = SpotifyProcess.GetSpotifyStatus();
-            if (SpotifyLatestStatus?.Track == null)
+            if (SpotifyLatestStatus?.CurrentTrack == null)
             {
                 EventTimer.Start();
                 return;
             }
 
-            var newestTrack = SpotifyLatestStatus.Track;
+            var newestTrack = SpotifyLatestStatus.CurrentTrack;
             if (Track != null)
             {
                 if (newestTrack.Playing != Track.Playing)

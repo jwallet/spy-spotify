@@ -8,8 +8,8 @@ namespace EspionSpotify
 {
     public class Analytics
     {
-        private const string url = "https://www.google-analytics.com/collect";
-        private const string tid = "UA-125662919-1";
+        private const string ANALYTICS_URL = "https://www.google-analytics.com/collect";
+        private const string ANALYTICS_TID = "UA-125662919-1";
 
         private readonly HttpClient client = new HttpClient();
         private readonly string cid;
@@ -40,7 +40,7 @@ namespace EspionSpotify
             var data = new Dictionary<string, string>
             {
                 { "v", "1" },
-                { "tid", tid }, // App id
+                { "tid", ANALYTICS_TID }, // App id
                 { "t", "pageview" }, // Analytics type
                 { "cid", cid }, // Client id
                 { "cm", cm }, // Campaign medium, App version
@@ -56,7 +56,7 @@ namespace EspionSpotify
             };
 
             var content = new FormUrlEncodedContent(data);
-            var resp = await client.PostAsync(url, content);
+            var resp = await client.PostAsync(ANALYTICS_URL, content);
 
             LastAction = action;
             LastRequest = DateTime.Now;

@@ -16,16 +16,17 @@ namespace EspionSpotify
 {
     internal static class GitHub
     {
-        private const string _repoReleaseLink = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
+        private const string REPO_RELEASE_LINK = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
+        private const string SPYTIFY = "Spytify";
 
         public static async void GetVersion()
         {
-            if (!Uri.TryCreate(_repoReleaseLink, UriKind.Absolute, out var uri)) return;
+            if (!Uri.TryCreate(REPO_RELEASE_LINK, UriKind.Absolute, out var uri)) return;
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Http.Get;
-            request.UserAgent = "Spytify";
+            request.UserAgent = SPYTIFY;
 
             var content = new MemoryStream();
 

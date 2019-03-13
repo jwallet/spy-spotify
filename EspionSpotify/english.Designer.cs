@@ -196,11 +196,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First case, Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted. Second case, you might experiment some cracking/popping sounds when playing a recorded file over the whole listening. These sounds are related to the quality (bitrate) being different from Spotify to Sp [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to First case, Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted..
         /// </summary>
-        internal static string lblBackgroundNoiceRecordedOnTrack {
+        internal static string lblBackgroundNoiceRecordedOnTrack_first {
             get {
-                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack", resourceCulture);
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblBackgroundNoiceRecordedOnTrack_second {
+            get {
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_second", resourceCulture);
             }
         }
         
@@ -340,6 +349,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By using the Spytify setting &apos;&apos;Audio Device&apos;&apos;, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type &apos;&apos;Sound mixer options&apos;&apos;, you should land on the setting page called &apos;&apos;App volume and device preferences&apos;&apos;, make sure Spotify is playing and set the app to the desired endpoint with the &apos;&apos;Output&apos;&apos; select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can&apos;t find the [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("lblSpotifyAudioEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as many ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad, search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
@@ -448,7 +466,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Recording session timer is done..
+        ///   Looks up a localized string similar to // Recording session timer done..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -493,7 +511,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify cannot record if Spotify and Spytify don&apos;t use the same audio endpoint..
+        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -516,6 +534,15 @@ namespace EspionSpotify {
         internal static string logStoping {
             get {
                 return ResourceManager.GetString("logStoping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Waiting for the recording of the current audio track to end.
+        /// </summary>
+        internal static string logStopRecordingWhenSongEnds {
+            get {
+                return ResourceManager.GetString("logStopRecordingWhenSongEnds", resourceCulture);
             }
         }
         
@@ -759,6 +786,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Isolates Spotify audio to a different audio endpoint device.
+        /// </summary>
+        internal static string tlSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("tlSpotifyAudioEndpoint", resourceCulture);
             }
         }
         

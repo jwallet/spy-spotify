@@ -349,8 +349,8 @@
     <value>Spytify feature "Disable Ads" might affect the way an unknown ad plays when it can't be blocked. Try to re-enable this setting once more to get the last blocked ad domains or disable the setting and restart both apps.</value>
     <comment>interface</comment>
   </data>
-  <data name="lblBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the "Volume Mixer" all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted. Second case, you might experiment some cracking/popping sounds when playing a recorded file over the whole listening. These sounds are related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can't have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the High Quality 320kbps chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</value>
+  <data name="lblBackgroundNoiceRecordedOnTrack_first" xml:space="preserve">
+    <value>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the "Volume Mixer" all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyTrackCut" xml:space="preserve">
@@ -433,11 +433,27 @@
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Recording session timer is done.</value>
+    <value>// Recording session timer done.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify cannot record if Spotify and Spytify don't use the same audio endpoint.</value>
+    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device.</value>
     <comment>console</comment>
+  </data>
+  <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
+    <value>// Waiting for the recording of the current audio track to end</value>
+    <comment>console</comment>
+  </data>
+  <data name="lblSpotifyAudioEndpoint" xml:space="preserve">
+    <value>By using the Spytify setting ''Audio Device'', you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type ''Sound mixer options'', you should land on the setting page called ''App volume and device preferences'', make sure Spotify is playing and set the app to the desired endpoint with the ''Output'' select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ''Windows 10 Settings'' &gt; ''System'' &gt; ''Sound'', scroll down to the ''Advanced sound options'' &gt; ''App volume and device preferences'' setting.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tlSpotifyAudioEndpoint" xml:space="preserve">
+    <value>Isolates Spotify audio to a different audio endpoint device</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblBackgroundNoiceRecordedOnTrack_second" xml:space="preserve">
+    <value>Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can't have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the High Quality 320kbps chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</value>
+    <comment>interface</comment>
   </data>
 </root>

@@ -196,11 +196,20 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet. Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet..
         /// </summary>
-        internal static string lblBackgroundNoiceRecordedOnTrack {
+        internal static string lblBackgroundNoiceRecordedOnTrack_first {
             get {
-                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack", resourceCulture);
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des moments précis. Ces sons peuvent être liéés au fait que votre ordinateur n&apos;a pas le processeur de configuré à haute performance. Vous pouvez l&apos;activer dans vos paramètres de plan d&apos;alimentation ou en changeant la puissance minimale du processeur a 100 (voir sur internet pour un coment-faire). Ces sons peut être également liéés au fait que vous avez paramétré une qualité (bitrate) différente d [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblBackgroundNoiceRecordedOnTrack_second {
+            get {
+                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_second", resourceCulture);
             }
         }
         
@@ -340,6 +349,15 @@ namespace EspionSpotify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to En utilisant le paramètre de Spotify &apos;&apos;Périphérique audio&apos;&apos;, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez &apos;&apos;Paramètres de mélangeur audio&apos;&apos;, vous devriez arriver sur la page de paramètres appelée &apos;&apos;Volume d&apos;application et préférences de volume&apos;&apos;, soyez certain que Spotify est en train de jouer et paramétrez l&apos;application vers le bon périphérique avec la liste déroul [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lblSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("lblSpotifyAudioEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes, recherchez le domaine &quot;spclient.wg.spotify.com&quot; et ajoutez un &quot;#&quot; au début de la ligne pour le rendre inactif..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
@@ -448,7 +466,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement est terminé..
+        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement terminé..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -493,7 +511,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify ne peut enregistré si Spotify et Spytify n&apos;utilisent pas le même périphérique audio..
+        ///   Looks up a localized string similar to // Spytify ne peut enregistré s&apos;il n&apos;utilise pas le même périphérique audio que Spotify. Voir la F.A.Q pour savoir comment déplacer Spotify vers un autre périphérique..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -516,6 +534,15 @@ namespace EspionSpotify {
         internal static string logStoping {
             get {
                 return ResourceManager.GetString("logStoping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // En attente de la fin de l&apos;enregistrement de la piste audio courante.
+        /// </summary>
+        internal static string logStopRecordingWhenSongEnds {
+            get {
+                return ResourceManager.GetString("logStopRecordingWhenSongEnds", resourceCulture);
             }
         }
         
@@ -759,6 +786,15 @@ namespace EspionSpotify {
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
                 return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio.
+        /// </summary>
+        internal static string tlSpotifyAudioEndpoint {
+            get {
+                return ResourceManager.GetString("tlSpotifyAudioEndpoint", resourceCulture);
             }
         }
         

@@ -23,6 +23,8 @@ namespace EspionSpotify.Models
         public bool DuplicateAlreadyRecordedTrack { get; set; }
         public int? AudioEndPointDeviceIndex { get; set; }
         public string RecordingTimer { get; set; }
+        public string SpotifyAPIClientId { get; set; }
+        public string SpotifyAPISecretId { get; set; }
 
         public bool HasRecordingTimerEnabled
         {
@@ -37,6 +39,11 @@ namespace EspionSpotify.Models
         public int? OrderNumber
         {
             get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? InternalOrderNumber : null;
+        }
+
+        public bool IsSpotifyAPISet
+        {
+            get => !string.IsNullOrWhiteSpace(SpotifyAPIClientId) && !string.IsNullOrWhiteSpace(SpotifyAPISecretId);
         }
     }
 }

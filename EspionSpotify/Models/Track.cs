@@ -6,7 +6,7 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private const string _spotify = "Spotify";
+        private const string SPOTIFY = "Spotify";
 
         public string Artist { get; set; }
         public string Title { get; set; }
@@ -21,6 +21,11 @@ namespace EspionSpotify.Models
 
         public int? CurrentPosition { get; set; }
         public int? Length { get; set; }
+
+        public string[] Performers { get; internal set; }
+        public uint Disc { get; internal set; }
+        public string[] AlbumArtists { get; internal set; }
+        public uint Year { get; internal set; }
 
         public string ArtExtraLargeUrl { get; set; }
         public string ArtLargeUrl { get; set; }
@@ -52,6 +57,11 @@ namespace EspionSpotify.Models
             CurrentPosition = track.CurrentPosition;
             Length = track.Length;
 
+            Performers = track.Performers;
+            Disc = track.Disc;
+            AlbumArtists = track.AlbumArtists;
+            Year = track.Year;
+
             ArtExtraLargeUrl = track.ArtExtraLargeUrl;
             ArtLargeUrl = track.ArtLargeUrl;
             ArtMediumUrl = track.ArtMediumUrl;
@@ -82,7 +92,7 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            var song = _spotify;
+            var song = SPOTIFY;
 
             if (Artist != null && Title != null)
             {
@@ -96,7 +106,7 @@ namespace EspionSpotify.Models
 
             if (Ad)
             {
-                song = $"{_spotify} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
+                song = $"{SPOTIFY} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
             }
 
             return song;

@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileManagerTests.cs" />
-    <Compile Include="LastFMAPITests.cs" />
     <Compile Include="SpotifyHandlerTests.cs" />
     <Compile Include="SpotifyStatusTests.cs" />
     <Compile Include="TrackTests.cs" />

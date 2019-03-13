@@ -10,8 +10,8 @@ namespace EspionSpotify.AudioSessions
 {
     public class SpotifyAudioSession : MainAudioSession, ISpotifyAudioSession
     {
-        private const int _sleepValue = 50;
-        private const int _numberOfSamples = 3;
+        private const int SLEEP_VALUE = 50;
+        private const int NUMBER_OF_SAMPLES = 3;
 
         private Process _spytifyProcess;
         private readonly ICollection<int> _spotifyProcessesIds;
@@ -34,9 +34,9 @@ namespace EspionSpotify.AudioSessions
 
         public void SleepWhileTheSongEnds()
         {
-            for (var times = 1000; IsSpotifyCurrentlyPlaying() && times > 0; times -= _sleepValue * _numberOfSamples)
+            for (var times = 1000; IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
             {
-                Thread.Sleep(_sleepValue);
+                Thread.Sleep(SLEEP_VALUE);
             }
         }
 
@@ -44,10 +44,10 @@ namespace EspionSpotify.AudioSessions
         {
             var samples = new List<double>();
 
-            for (var sample = 0; sample < _numberOfSamples; sample++)
+            for (var sample = 0; sample < NUMBER_OF_SAMPLES; sample++)
             {
                 var spotifySoundValue = 0.0;
-                Thread.Sleep(_sleepValue);
+                Thread.Sleep(SLEEP_VALUE);
 
                 lock (SpotifyAudioSessionControls)
                 {

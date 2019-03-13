@@ -276,5 +276,29 @@ namespace EspionSpotify.Properties {
                 this["AudioEndPointDeviceIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SpotifyAPISecretId {
+            get {
+                return ((string)(this["SpotifyAPISecretId"]));
+            }
+            set {
+                this["SpotifyAPISecretId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SpotifyAPIClientId {
+            get {
+                return ((string)(this["SpotifyAPIClientId"]));
+            }
+            set {
+                this["SpotifyAPIClientId"] = value;
+            }
+        }
     }
 }

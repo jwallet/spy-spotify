@@ -26,8 +26,8 @@ namespace EspionSpotify.Tests
 
             var status = new SpotifyStatus(spotifyWindowInfo);
 
-            Assert.Equal(expectedTrack, status.Track);
-            Assert.Equal("Spotify", status.Track.ToString());
+            Assert.Equal(expectedTrack, status.CurrentTrack);
+            Assert.Equal("Spotify", status.CurrentTrack.ToString());
         }
 
         [Theory]
@@ -51,8 +51,8 @@ namespace EspionSpotify.Tests
 
             var status = new SpotifyStatus(spotifyWindowInfo);
 
-            Assert.Equal(expectedTrack, status.Track);
-            Assert.Equal(windowTitle, status.Track.ToString());
+            Assert.Equal(expectedTrack, status.CurrentTrack);
+            Assert.Equal(windowTitle, status.CurrentTrack.ToString());
         }
 
         [Theory]
@@ -77,8 +77,8 @@ namespace EspionSpotify.Tests
 
             var status = new SpotifyStatus(spotifyWindowInfo);
 
-            Assert.Equal(expectedTrack, status.Track);
-            Assert.Equal("Spotify - Ad", status.Track.ToString());
+            Assert.Equal(expectedTrack, status.CurrentTrack);
+            Assert.Equal("Spotify - Ad", status.CurrentTrack.ToString());
         }
     }
 }
