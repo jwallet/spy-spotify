@@ -47,6 +47,7 @@ namespace EspionSpotify.MediaTags
             if (playback.HasError() || playback.Item == null)
             {
                 // fallback in case getting the playback did not work
+                // user migh be connected with a different account that the one that granted rights
                 return await _lastFmApi.UpdateTrack(track);
             }
 

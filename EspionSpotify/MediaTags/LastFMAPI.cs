@@ -1,8 +1,6 @@
 ﻿using EspionSpotify.Models;
 using System;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -55,7 +53,7 @@ namespace EspionSpotify.MediaTags
 
             if (trackExtra != null && trackExtra.Album != null)
             {
-                track = MapLastFMTrackToTrack(track, trackExtra);
+                MapLastFMTrackToTrack(track, trackExtra);
             }
             else
             {
@@ -63,26 +61,23 @@ namespace EspionSpotify.MediaTags
                 retryWithTrack.Title = Regex.Replace(retryWithTrack.Title, @" \(.*?\)| \- .*", "");
                 if (await UpdateTrack(retryWithTrack))
                 {
-                    track = MapLastFMTrackToTrack(retryWithTrack, trackExtra);
+                    MapLastFMTrackToTrack(retryWithTrack, trackExtra);
                 }
             }
 
             return true;
         }
 
-        private Track MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
+        private void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
         {
-            return new Track(track)
-            {
-                Album = trackExtra.Album?.AlbumTitle,
-                AlbumPosition = trackExtra.Album?.TrackPosition,
-                Genres = trackExtra.Toptags?.Tag?.Select(x => x.Name).ToArray(),
-                Length = trackExtra.Duration / 1000,
-                ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl,
-                ArtLargeUrl = trackExtra.Album?.LargeCoverUrl,
-                ArtMediumUrl = trackExtra.Album?.MediumCoverUrl,
-                ArtSmallUrl = trackExtra.Album?.SmallCoverUrl
-            };
+            track.Album = trackExtra.Album?.AlbumTitle;
+            track.AlbumPosition = trackExtra.Album?.TrackPosition;
+            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x.Name).ToArray();
+            track.Length = trackExtra.Duration / 1000;
+            track.ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl;
+            track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
+            track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
+            track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
         }
     }
 }
