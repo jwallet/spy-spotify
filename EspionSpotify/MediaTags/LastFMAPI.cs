@@ -59,7 +59,7 @@ namespace EspionSpotify.MediaTags
             {
                 var retryWithTrack = track;
                 retryWithTrack.Title = Regex.Replace(retryWithTrack.Title, @" \(.*?\)| \- .*", "");
-                if (await UpdateTrack(retryWithTrack))
+                if (retryWithTrack.Title != track.Title && await UpdateTrack(retryWithTrack))
                 {
                     MapLastFMTrackToTrack(retryWithTrack, trackExtra);
                 }
