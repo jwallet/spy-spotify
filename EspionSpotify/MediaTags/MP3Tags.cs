@@ -21,22 +21,19 @@ namespace EspionSpotify.MediaTags
             {
                 mp3.Tag.Track = (uint)Count.Value;
             }
-
-            mp3.Tag.Title = Track.Title;
-            mp3.Tag.AlbumArtists = new[] { Track.Artist };
-            mp3.Tag.Performers = new[] { Track.Artist };
-
-            if (Track.AlbumPosition != null)
+            else if (Track.AlbumPosition != null)
             {
                 mp3.Tag.Track = (uint)Track.AlbumPosition;
             }
 
+            mp3.Tag.Title = Track.Title;
+            mp3.Tag.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
+            mp3.Tag.Performers = Track.Performers ?? new[] { Track.Artist };
+            
             mp3.Tag.Album = Track.Album;
             mp3.Tag.Genres = Track.Genres;
 
-            mp3.Tag.Performers = Track.Performers;
             mp3.Tag.Disc = Track.Disc;
-            mp3.Tag.AlbumArtists = Track.AlbumArtists;
             mp3.Tag.Year = Track.Year;
 
             if (File.Exists(CurrentFile))
