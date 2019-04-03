@@ -63,7 +63,7 @@ namespace EspionSpotify.AudioSessions
                 samples.Add(spotifySoundValue);
             }
 
-            return samples.DefaultIfEmpty().Average() > 0.0;
+            return samples.DefaultIfEmpty().Average() > 1.0;
         }
 
         public void SetSpotifyToMute(bool mute)
