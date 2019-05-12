@@ -19,7 +19,7 @@ namespace EspionSpotify.Models
         public bool MuteAdsEnabled { get; set; }
         public bool RecordUnknownTrackTypeEnabled { get; set; }
         public ISpotifyAudioSession SpotifyAudioSession { get; set; }
-        public int? InternalOrderNumber { get; set; }
+        public int InternalOrderNumber { get; set; } = 1;
         public bool DuplicateAlreadyRecordedTrack { get; set; }
         public int? AudioEndPointDeviceIndex { get; set; }
         public string RecordingTimer { get; set; }
@@ -38,7 +38,7 @@ namespace EspionSpotify.Models
 
         public int? OrderNumber
         {
-            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? InternalOrderNumber : null;
+            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
         }
 
         public bool IsSpotifyAPISet

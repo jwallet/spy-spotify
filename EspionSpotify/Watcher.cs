@@ -41,6 +41,7 @@ namespace EspionSpotify
         {
             _form = form;
             _userSettings = userSettings;
+            _userSettings.InternalOrderNumber--;
         }
 
         private void OnPlayStateChanged(object sender, PlayStateEventArgs e)

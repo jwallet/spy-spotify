@@ -104,8 +104,9 @@ namespace EspionSpotify
             _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
             _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
-            _userSettings.InternalOrderNumber = 1;
             _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice; // TODO: settings default stay last saved
+
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
 
             _audioSession = new MainAudioSession(indexAudioEndPointDevice);
             SetAudioEndPointDevicesDropDown();
@@ -224,7 +225,7 @@ namespace EspionSpotify
 
         public void UpdateNum(int num)
         {
-            if (lblNum.InvokeRequired)
+            if (txtRecordingNum.InvokeRequired)
             {
                 var x = BeginInvoke(new Action(() => UpdateNum(num)));
                 x.AsyncWaitHandle.WaitOne();
@@ -232,7 +233,7 @@ namespace EspionSpotify
                 return;
             }
 
-            lblNum.Text = num.ToString("000");
+            txtRecordingNum.Text = num.ToString("000");
         }
 
         public void UpdateStartButton()
@@ -569,26 +570,22 @@ namespace EspionSpotify
 
         private void LnkNumMinus_Click(object sender, EventArgs e)
         {
-            if (!_userSettings.InternalOrderNumber.HasValue) return;
-
             if (_userSettings.InternalOrderNumber - 1 >= 0)
             {
                 _userSettings.InternalOrderNumber--;
             }
 
-            lblNum.Text = (_userSettings.InternalOrderNumber ?? 0).ToString("000");
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
         }
 
         private void LnkNumPlus_Click(object sender, EventArgs e)
         {
-            if (!_userSettings.InternalOrderNumber.HasValue) return;
-
             if (_userSettings.InternalOrderNumber + 1 < 1000)
             {
                 _userSettings.InternalOrderNumber++;
             }
 
-            lblNum.Text = (_userSettings.InternalOrderNumber ?? 0).ToString("000");
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
         }
 
         private void LnkDirectory_Click(object sender, EventArgs e)
@@ -766,6 +763,11 @@ namespace EspionSpotify
         private void tlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
         {
             lblSpotifyAudioEndpoint.Hide();
+        }
+
+        private void txtRecordingNum_Leave(object sender, EventArgs e)
+        {
+            _userSettings.InternalOrderNumber = int.Parse(txtRecordingNum.Text);
         }
     }
 }
