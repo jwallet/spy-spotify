@@ -1,12 +1,19 @@
 ---
 layout: default
 ---
-Spytify is a Spotify recorder for Windows which records audio from your sound card, ensuring no loss in quality of songs recorded from Spotify, without recording or playing its ads. It automatically splits songs into separate tracks and records straight to MP3 with media infos and album cover, meaning you can start enjoying your music offline.
+Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.
 
 <p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_record.png" /></p>
 
 ## How it works ?
-Spytify records the sound that is coming out of it on your computer sound card. Even if it transcodes the song to an mp3 file, you won't be able to tell the difference between listening to the mp3 file and playing the song on Spotify, because this app, Spytify, provides the same quality that Spotify streaming quality (Spotify Free delivers 160kbps). But, be aware of the quality loss when comparing to a cd ripped file, if you expect flac quality you are not looking at the right tool, and Spotify at its best only delivers 320kbps, not an audiophile app, so no need to rip their songs.
+Spytify records what your computer's sound card outputs. Spytify records the same quality that Spotify outputs, so the recorded version will be indistinguishable from Spotify's version. Spytify records at .mp3 quality, and not at higher qualities like .FLAC, since Spotify can only deliver 320 kbps audio quality.
 
 ### Standard Use
 A standard use it's to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads. Don't forget that the output path can be your android music folder.
+
+### Requirements
+Spytify runs on Windows only.
+- Microsoft Framework ([.NET 4.6](https://www.microsoft.com/en-US/download/details.aspx?id=48130) or higher).
+- Spotify Desktop application.
+
+A __free Spotify account__ will work, but restricts audio quality to 120 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.

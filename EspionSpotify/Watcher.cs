@@ -54,7 +54,7 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            // do not add current track is an ad validation, audio is already muted
+            // do not add "is current track an ad" validation, audio is already muted
             if (RecorderUpAndRunning && IsOldSong)
             {
                 _userSettings.SpotifyAudioSession.SleepWhileTheSongEnds();
