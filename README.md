@@ -15,11 +15,12 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 
 ## App features
 
-<p align="center"><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/features_icons.png" /></p>
-
-| No Ads  | Mutes Other Apps | Spotify Audio Quality  | Record songs at the same volume |
-|:------------------|:------------------------------|:---------------------------|:---------------------------------|
-| Doesn't record ads and has an option to disable audio ads &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Mutes any other applications while spying &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Gets and records with the same great audio quality than Spotify &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Max out the volume from Spotify and records all song at the same volume level |
+|| Feature | Description |
+| - | :-: | :- |
+| <p align="center"><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_no_ad.png" /></p> | __No Ads__ | Doesn't record ads and has an option to disable audio ads completely |
+| <p align="center"><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_mute_apps.png" /></p> | __Mutes Other Apps__ | Mutes any other applications while spying |
+| <p align="center"><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_audio_quality.png" /></p> | __Great Audio Quality__ | Gets and records with the same great audio quality than Spotify |
+| <p align="center"><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_max_out.png" /></p> | __Normalize volume__ | Max out the volume of your Spotify audio session to records all song at the same volume level delivered by Spotify |
 
 ## File management features
 - Split into separate tracks and add file names, which can be defined in settings like this: `Artist - Title.mp3`
