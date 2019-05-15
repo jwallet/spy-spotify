@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpotifyAPI.Web.Auth</name>
+    </assembly>
+    <members>
+        <member name="T:SpotifyAPI.Web.Auth.TokenSwapAuth">
+            <summary>
+            <para>
+            A version of <see cref="T:SpotifyAPI.Web.Auth.AuthorizationCodeAuth"/> that does not store your client secret, client ID or redirect URI, enforcing a secure authorization flow. Requires an exchange server that will return the authorization code to its callback server via GET request.
+            </para>
+            <para>
+            It's recommended that you use <see cref="T:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory"/> if you would like to use the TokenSwap method.
+            </para>
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapAuth.HtmlResponse">
+            <summary>
+            The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapAuth.TimeAccessExpiry">
+            <summary>
+            If true, will time how long it takes for access to expire. On expiry, the <see cref="E:SpotifyAPI.Web.Auth.TokenSwapAuth.OnAccessTokenExpired"/> event fires.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapAuth.#ctor(System.String,System.String,SpotifyAPI.Web.Enums.Scope,System.String,System.String)">
+            <param name="exchangeServerUri">The URI to an exchange server that will perform the key exchange.</param>
+            <param name="serverUri">The URI to host the server at that your exchange server should return the authorization code to by GET request. (e.g. http://localhost:4002)</param>
+            <param name="scope"></param>
+            <param name="state">Stating none will randomly generate a state parameter.</param>
+            <param name="htmlResponse">The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.</param>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapAuth.MaxGetTokenRetries">
+            <summary>
+            The maximum amount of times to retry getting a token.
+            <para/>
+            A token get is attempted every time you <see cref="M:SpotifyAPI.Web.Auth.TokenSwapAuth.RefreshAuthAsync(System.String)"/> and <see cref="M:SpotifyAPI.Web.Auth.TokenSwapAuth.ExchangeCodeAsync(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapAuth.GetToken(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Creates a HTTP request to obtain a token object.<para/>
+            Parameter grantType can only be "refresh_token" or "authorization_code". authorizationCode and refreshToken are not mandatory, but at least one must be provided for your desired grant_type request otherwise an invalid response will be given and an exception is likely to be thrown.
+            <para>
+            Will re-attempt on error, on null or on no access token <see cref="P:SpotifyAPI.Web.Auth.TokenSwapAuth.MaxGetTokenRetries"/> times before finally returning null.
+            </para>
+            </summary>
+            <param name="grantType">Can only be "refresh_token" or "authorization_code".</param>
+            <param name="authorizationCode">This needs to be defined if "grantType" is "authorization_code".</param>
+            <param name="refreshToken">This needs to be defined if "grantType" is "refresh_token".</param>
+            <param name="currentRetries">Does not need to be defined. Used internally for retry attempt recursion.</param>
+            <returns>Attempts to return a full <see cref="T:SpotifyAPI.Web.Models.Token"/>, but after retry attempts, may return a <see cref="T:SpotifyAPI.Web.Models.Token"/> with no <see cref="P:SpotifyAPI.Web.Models.Token.AccessToken"/>, or null.</returns>
+        </member>
+        <member name="E:SpotifyAPI.Web.Auth.TokenSwapAuth.OnAccessTokenExpired">
+            <summary>
+            When Spotify authorization has expired. Will only trigger if <see cref="P:SpotifyAPI.Web.Auth.TokenSwapAuth.TimeAccessExpiry"/> is true.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapAuth.SetAccessExpireTimer(SpotifyAPI.Web.Models.Token)">
+            <summary>
+            If <see cref="P:SpotifyAPI.Web.Auth.TokenSwapAuth.TimeAccessExpiry"/> is true, sets a timer for how long access will take to expire.
+            </summary>
+            <param name="token"></param>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapAuth.ExchangeCodeAsync(System.String)">
+            <summary>
+            Uses the authorization code to silently (doesn't open a browser) obtain both an access token and refresh token, where the refresh token would be required for you to use <see cref="M:SpotifyAPI.Web.Auth.TokenSwapAuth.RefreshAuthAsync(System.String)"/>.
+            </summary>
+            <param name="authorizationCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapAuth.RefreshAuthAsync(System.String)">
+            <summary>
+            Uses the refresh token to silently (doesn't open a browser) obtain a fresh access token, no refresh token is given however (as it does not change).
+            </summary>
+            <param name="refreshToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory">
+            <summary>
+            Returns a <see cref="T:SpotifyAPI.Web.SpotifyWebAPI"/> using the TokenSwapAuth process.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.AutoRefresh">
+            <summary>
+            Access provided by Spotify expires after 1 hour. If true, <see cref="T:SpotifyAPI.Web.Auth.TokenSwapAuth"/> will time the access tokens, and access will attempt to be silently (without opening a browser) refreshed automatically. This will not make <see cref="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnAccessTokenExpired"/> fire, see <see cref="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.TimeAccessExpiry"/> for that.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.TimeAccessExpiry">
+            <summary>
+            If true when calling <see cref="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.GetWebApiAsync"/>, will time how long it takes for access to Spotify to expire. The event <see cref="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnAccessTokenExpired"/> fires when the timer elapses.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.Timeout">
+            <summary>
+            The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.ExchangeServerUri">
+            <summary>
+            The URI (or URL) of the exchange server which exchanges the auth code for access and refresh tokens.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.HostServerUri">
+            <summary>
+            The URI (or URL) of where a callback server to receive the auth code will be hosted. e.g. http://localhost:4002
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OpenBrowser">
+            <summary>
+            Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.HtmlResponse">
+            <summary>
+            The HTML to respond with when the callback server has been reached. By default, it is set to close the window on arrival.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.ShowDialog">
+            <summary>
+            Whether or not to show a dialog saying "Is this you?" during the initial key exchange. It should be noted that this would allow a user the opportunity to change accounts.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.MaxGetTokenRetries">
+            <summary>
+            The maximum amount of times to retry getting a token.
+            <para/>
+            A token get is attempted every time you <see cref="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.GetWebApiAsync"/> and <see cref="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.RefreshAuthAsync"/>. Increasing this may improve how often these actions succeed - although it won't solve any underlying problems causing a get token failure.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.#ctor(System.String,SpotifyAPI.Web.Enums.Scope,System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Returns a SpotifyWebAPI using the TokenSwapAuth process.
+            </summary>
+            <param name="exchangeServerUri">The URI (or URL) of the exchange server which exchanges the auth code for access and refresh tokens.</param>
+            <param name="scope"></param>
+            <param name="hostServerUri">The URI (or URL) of where a callback server to receive the auth code will be hosted. e.g. http://localhost:4002</param>
+            <param name="timeout">The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.</param>
+            <param name="autoRefresh">Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.</param>
+            <param name="openBrowser">Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.</param>
+        </member>
+        <member name="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnExchangeReady">
+            <summary>
+            When the URI to get an authorization code is ready to be used to be visited. Not required if <see cref="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OpenBrowser"/> is true as the exchange URI will automatically be visited for you.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.RefreshAuthAsync">
+            <summary>
+            Refreshes the access for a SpotifyWebAPI returned by this factory.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnAccessTokenExpired">
+            <summary>
+            When the authorization from Spotify expires. This will only occur if <see cref="P:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.AutoRefresh"/> is true.
+            </summary>
+        </member>
+        <member name="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnAuthSuccess">
+            <summary>
+            When an authorization attempt succeeds and gains authorization.
+            </summary>
+        </member>
+        <member name="E:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.OnAuthFailure">
+            <summary>
+            When an authorization attempt fails to gain authorization.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.CancelGetWebApiRequest">
+            <summary>
+            Manually triggers the timeout for any ongoing get web API request.
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Auth.TokenSwapWebAPIFactory.GetWebApiAsync">
+            <summary>
+            Gets an authorized and ready to use SpotifyWebAPI by following the SecureAuthorizationCodeAuth process with its current settings.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

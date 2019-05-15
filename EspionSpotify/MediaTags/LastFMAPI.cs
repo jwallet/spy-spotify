@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using PCLWebUtility;
 
 namespace EspionSpotify.MediaTags
 {
@@ -25,8 +26,8 @@ namespace EspionSpotify.MediaTags
         public async Task<bool> UpdateTrack(Track track)
         {
             var api = new XmlDocument();
-            var artist = PCLWebUtility.WebUtility.UrlEncode(track.Artist);
-            var title = PCLWebUtility.WebUtility.UrlEncode(track.Title);
+            var artist = WebUtility.UrlEncode(track.Artist);
+            var title = WebUtility.UrlEncode(track.Title);
             var apiKey = _apiKey[_random.Next(3)];
 
             try
