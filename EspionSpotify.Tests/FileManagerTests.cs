@@ -112,38 +112,38 @@ namespace EspionSpotify.Tests
             Assert.Equal("C:\\path\\Artist - Title - Live.wav", fileName);
         }
 
-        //[Fact]
-        //private void CreateDirectory_ReturnsNoArtistFolderPath()
-        //{
-        //    var artistFolder = _fileManager.CreateDirectory();
+        [Fact(Skip = "Windows Only")]
+        private void CreateDirectory_ReturnsNoArtistFolderPath()
+        {
+            var artistFolder = _fileManager.CreateDirectory();
 
-        //    Assert.Null(artistFolder);
-        //}
+            Assert.Null(artistFolder);
+        }
 
-        //[Fact]
-        //private void CreateDirectory_ReturnsArtistFolderPath()
-        //{
-        //    _userSettings.GroupByFoldersEnabled = true;
+        [Fact(Skip = "Windows Only")]
+        private void CreateDirectory_ReturnsArtistFolderPath()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
 
-        //    var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
+            var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
 
-        //    var artistFolder = _fileManager.CreateDirectory();
+            var artistFolder = _fileManager.CreateDirectory();
 
-        //    Assert.Equal($"//{artistDir}", artistFolder);
-        //}
+            Assert.Equal($"//{artistDir}", artistFolder);
+        }
 
-        //[Fact]
-        //private void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
-        //{
-        //    var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
-        //    _userSettings.GroupByFoldersEnabled = true;
+        [Fact(Skip = "Windows Only")]
+        private void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
+        {
+            var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
+            _userSettings.GroupByFoldersEnabled = true;
 
-        //    var currentFile = $"{_userSettings.OutputPath}//{artistDir}//{_track.ToString()}";
+            var currentFile = $"{_userSettings.OutputPath}//{artistDir}//{_track.ToString()}";
 
-        //    _fileManager.DeleteFile(currentFile);
+            _fileManager.DeleteFile(currentFile);
 
-        //    Assert.False(Directory.Exists($"{_userSettings.OutputPath}//{artistDir}"));
-        //    Assert.False(File.Exists(currentFile));
-        //}
+            Assert.False(Directory.Exists($"{_userSettings.OutputPath}//{artistDir}"));
+            Assert.False(File.Exists(currentFile));
+        }
     }
 }
