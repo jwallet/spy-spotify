@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EspionSpotify {
+namespace Translations {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EspionSpotify {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class french {
+    internal class en {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal french() {
+        internal en() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EspionSpotify {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EspionSpotify.french", typeof(french).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EspionSpotify.Translations.en", typeof(en).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Défaut.
+        ///   Looks up a localized string similar to Default.
         /// </summary>
         internal static string cbDefault {
             get {
@@ -115,7 +115,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Haute qualité (Spotify Premium).
+        ///   Looks up a localized string similar to {0} High quality (Spotify Premium).
         /// </summary>
         internal static string cbOptBitRateSpotifyPremium {
             get {
@@ -124,25 +124,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        internal static string cbOptLangEn {
-            get {
-                return ResourceManager.GetString("cbOptLangEn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Français.
-        /// </summary>
-        internal static string cbOptLangFr {
-            get {
-                return ResourceManager.GetString("cbOptLangFr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Utilisez Audacity (un éditeur gratuit pour fichiers audio) pour couper les parties audio que vous voulez retirer. Spytify ne peut garantir qu&apos;une annonce ou la prochaine piste audio sera détectée correctement puisqu&apos;il se base sur peu d&apos;informations disponible dans le processus de Spotify qui ne sont pas toujours précises..
+        ///   Looks up a localized string similar to Use Audacity (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not always accurate..
         /// </summary>
         internal static string lblAdAndTrackOverlapOnRecordedTrack {
             get {
@@ -151,7 +133,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regrouper les chansons d&apos;un même artiste dans un dossier au nom de l&apos;artiste.
+        ///   Looks up a localized string similar to Group every artist songs inside their own folder.
         /// </summary>
         internal static string lblAddFolders {
             get {
@@ -160,7 +142,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remplacer les espaces par des underscores &quot;_&quot; dans le nom des fichiers sauvegardés.
+        ///   Looks up a localized string similar to Replace files name spaces by underscores &quot;_&quot;.
         /// </summary>
         internal static string lblAddSeparators {
             get {
@@ -169,7 +151,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Publicités:.
+        ///   Looks up a localized string similar to Ads:.
         /// </summary>
         internal static string lblAds {
             get {
@@ -178,7 +160,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La fonctionnalité de Spytify &quot;Désactiver les publicités&quot; peut affecté la façon dont une annonce inconnue joue quand elle ne peut être bloquée. Essayez de ré-activer ce paramètre une fois de plus pour obtenir les derniers domaines de publicités bloqués ou désactivez ce paramètre et redémarrez les deux applications..
+        ///   Looks up a localized string similar to Spytify feature &quot;Disable Ads&quot; might affect the way an unknown ad plays when it can&apos;t be blocked. Try to re-enable this setting once more to get the last blocked ad domains or disable the setting and restart both apps..
         /// </summary>
         internal static string lblAdsPlayAndStop {
             get {
@@ -187,7 +169,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Périphérique audio:.
+        ///   Looks up a localized string similar to Audio Device:.
         /// </summary>
         internal static string lblAudioDevice {
             get {
@@ -196,7 +178,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet..
+        ///   Looks up a localized string similar to First case, Spytify disables most apps when the recording session starts. Make sure to mute in the &quot;Volume Mixer&quot; all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted..
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack_first {
             get {
@@ -205,7 +187,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des moments précis. Ces sons peuvent être liéés au fait que votre ordinateur n&apos;a pas le processeur de configuré à haute performance. Vous pouvez l&apos;activer dans vos paramètres de plan d&apos;alimentation ou en changeant la puissance minimale du processeur a 100 (voir sur internet pour un coment-faire). Ces sons peut être également liéés au fait que vous avez paramétré une qualité (bitrate) différente d [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblBackgroundNoiceRecordedOnTrack_second {
             get {
@@ -214,7 +196,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Qualité audio:.
+        ///   Looks up a localized string similar to Audio quality:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -223,7 +205,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactiver le plus de publicités audio de Spotify.
+        ///   Looks up a localized string similar to Disable as much Spotify audio ads as possible.
         /// </summary>
         internal static string lblDisableAds {
             get {
@@ -232,7 +214,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dupliquer le nom du fichier de la piste audio pour ne pas ré-écrire sur les fichiers de même nom..
+        ///   Looks up a localized string similar to Duplicate the current track file name to avoid overwriting files with the same name..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -241,7 +223,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Retarder le prochain enregistrement si du son est détecté.
+        ///   Looks up a localized string similar to Delay next recording if sound is detected.
         /// </summary>
         internal static string lblEndingSongDelay {
             get {
@@ -250,7 +232,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Format audio:.
+        ///   Looks up a localized string similar to Audio format:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -259,7 +241,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Langage:.
+        ///   Looks up a localized string similar to Language:.
         /// </summary>
         internal static string lblLanguage {
             get {
@@ -268,7 +250,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Durée minimale:.
+        ///   Looks up a localized string similar to Minimal length:.
         /// </summary>
         internal static string lblMinLength {
             get {
@@ -277,7 +259,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Couper le son des publicités.
+        ///   Looks up a localized string similar to Mute Ads.
         /// </summary>
         internal static string lblMuteAds {
             get {
@@ -286,7 +268,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inscrire au début du nom des fichiers enregistrés l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Add the recording order number infront of all files name.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -295,7 +277,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remplacer le numéro de position cd (album track) par l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Replace track numbers by the recording order number.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -304,7 +286,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dossier de sauvegarde:.
+        ///   Looks up a localized string similar to Output path:.
         /// </summary>
         internal static string lblPath {
             get {
@@ -313,7 +295,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistreur:.
+        ///   Looks up a localized string similar to Recorder:.
         /// </summary>
         internal static string lblRecorder {
             get {
@@ -322,7 +304,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modifier la position de départ du compteur de l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Choose the starting position of the recording order number.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -331,7 +313,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minuteur pour la session d&apos;enregistrement.
+        ///   Looks up a localized string similar to Timer for the recording session.
         /// </summary>
         internal static string lblRecordingTimer {
             get {
@@ -340,7 +322,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistrer les pistes de type inconnu détectées en tant que publicité.
+        ///   Looks up a localized string similar to Record unknown type tracks detected as an ad.
         /// </summary>
         internal static string lblRecordUnknownTrackType {
             get {
@@ -349,7 +331,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En utilisant le paramètre de Spotify &apos;&apos;Périphérique audio&apos;&apos;, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez &apos;&apos;Paramètres de mélangeur audio&apos;&apos;, vous devriez arriver sur la page de paramètres appelée &apos;&apos;Volume d&apos;application et préférences de volume&apos;&apos;, soyez certain que Spotify est en train de jouer et paramétrez l&apos;application vers le bon périphérique avec la liste déroul [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to By using the Spytify setting &apos;&apos;Audio Device&apos;&apos;, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type &apos;&apos;Sound mixer options&apos;&apos;, you should land on the setting page called &apos;&apos;App volume and device preferences&apos;&apos;, make sure Spotify is playing and set the app to the desired endpoint with the &apos;&apos;Output&apos;&apos; select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can&apos;t find the [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblSpotifyAudioEndpoint {
             get {
@@ -358,7 +340,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes, recherchez le domaine &quot;spclient.wg.spotify.com&quot; et ajoutez un &quot;#&quot; au début de la ligne pour le rendre inactif..
+        ///   Looks up a localized string similar to When you enable &quot;Disable Ads&quot; in Spytify settings, you accept that these features won&apos;t be available no more, it&apos;s to make sure as many ads as possible get disabled. However, you can go to &quot;C:\Windows\System32\drivers\etc\host&quot; to edit the file with notepad, search for the domain &quot;spclient.wg.spotify.com&quot; and add a &quot;#&quot; at the beginning of the line to make it inactive..
         /// </summary>
         internal static string lblSpotifyLostFeatures {
             get {
@@ -367,7 +349,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify recherche les fichiers de musique localement avant de jouer une piste audio, si il en trouve une avec les méta données que la piste audio courante, il jouera la piste audio local à la place. Des pistes audio coupées signifient que vous avez, une fois, commencer une session d&apos;enregistrement et l&apos;avez terminé trop tôt. Il faut juste supprimer les pistes audio incomplètes dans votre répertoire de musique pour résoudre le problème..
+        ///   Looks up a localized string similar to Spotify looks for local music files before playing a track. If it finds one with the same metadata that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue..
         /// </summary>
         internal static string lblSpotifyTrackCut {
             get {
@@ -376,7 +358,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Espion:.
+        ///   Looks up a localized string similar to Spy:.
         /// </summary>
         internal static string lblSpy {
             get {
@@ -385,7 +367,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se bas [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn&apos;t return to Spytify the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it&apos;s based on a bit of information available in the Spotify process that is not alway [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lblTrackDetectedAsAd {
             get {
@@ -394,7 +376,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annonce.
+        ///   Looks up a localized string similar to Ad.
         /// </summary>
         internal static string logAd {
             get {
@@ -403,7 +385,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Une publicité est en train de jouer..
+        ///   Looks up a localized string similar to // An ad is playing..
         /// </summary>
         internal static string logAdPlaying {
             get {
@@ -412,7 +394,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Effacement de: {0}.
+        ///   Looks up a localized string similar to // Removing: {0}.
         /// </summary>
         internal static string logDeleting {
             get {
@@ -421,7 +403,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Effacement de: {0} [&lt; {1}s].
+        ///   Looks up a localized string similar to // Removing: {0} [&lt; {1}s].
         /// </summary>
         internal static string logDeletingTooShort {
             get {
@@ -430,7 +412,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Le répertoire de sauvegarde est introuvable..
+        ///   Looks up a localized string similar to // Error while recording: The output directory was not found..
         /// </summary>
         internal static string logInvalidOutput {
             get {
@@ -439,7 +421,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu&apos;administrateur ou changez le pour un autre..
+        ///   Looks up a localized string similar to // Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -448,7 +430,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inconnu.
+        ///   Looks up a localized string similar to Unknown.
         /// </summary>
         internal static string logOther {
             get {
@@ -457,7 +439,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistrement de: {0}.
+        ///   Looks up a localized string similar to Recording: {0}.
         /// </summary>
         internal static string logRecording {
             get {
@@ -466,7 +448,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Minuteur de session d&apos;enregistrement terminé..
+        ///   Looks up a localized string similar to // Recording session timer done..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -475,7 +457,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify n&apos;est pas démarré, tentative de lancement amorcée..
+        ///   Looks up a localized string similar to // Spotify isn&apos;t running, trying to launch it..
         /// </summary>
         internal static string logSpotifyConnecting {
             get {
@@ -484,7 +466,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify est fermé..
+        ///   Looks up a localized string similar to // Spotify is closed.
         /// </summary>
         internal static string logSpotifyIsClosed {
             get {
@@ -493,7 +475,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify ne s&apos;est pas connecté à l&apos;API local, veuillez ré-essayer..
+        ///   Looks up a localized string similar to // Spotify didn&apos;t connect to the local API, please try again..
         /// </summary>
         internal static string logSpotifyNotConnected {
             get {
@@ -502,7 +484,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify n&apos;a pas été trouvé ou n&apos;est pas installé..
+        ///   Looks up a localized string similar to // Spotify wasn&apos;t found or isn&apos;t installed..
         /// </summary>
         internal static string logSpotifyNotFound {
             get {
@@ -511,7 +493,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify ne peut enregistré s&apos;il n&apos;utilise pas le même périphérique audio que Spotify. Voir la F.A.Q pour savoir comment déplacer Spotify vers un autre périphérique..
+        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -520,7 +502,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Début de l&apos;espionnage..
+        ///   Looks up a localized string similar to // Spying.
         /// </summary>
         internal static string logStarting {
             get {
@@ -529,7 +511,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fin de l&apos;espionnage..
+        ///   Looks up a localized string similar to // End.
         /// </summary>
         internal static string logStoping {
             get {
@@ -538,7 +520,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // En attente de la fin de l&apos;enregistrement de la piste audio courante.
+        ///   Looks up a localized string similar to // Waiting for the recording of the current audio track to end.
         /// </summary>
         internal static string logStopRecordingWhenSongEnds {
             get {
@@ -547,7 +529,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue.
+        ///   Looks up a localized string similar to // Error while recording: Unknown exception.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -556,7 +538,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;enregistrement multi-canaux de fichiers n&apos;est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono)..
+        ///   Looks up a localized string similar to // Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -565,7 +547,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Format audio de votre ordinateur non supporté. Le format doit être &apos;2 canaux, 24 bit, 48000 Hz (Studio Quality)&apos; (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés)..
+        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
         /// </summary>
         internal static string logUnsupportedRate {
             get {
@@ -574,7 +556,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // En attente du prochain titre....
+        ///   Looks up a localized string similar to // Waiting for next title....
         /// </summary>
         internal static string logWaiting {
             get {
@@ -583,7 +565,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voulez-vous quand même quitter?.
+        ///   Looks up a localized string similar to Do you still want to leave?.
         /// </summary>
         internal static string msgBodyCantQuit {
             get {
@@ -592,7 +574,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d&apos;amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify..
+        ///   Looks up a localized string similar to By disabling ads, you also disable Spotify radios, your daily mixes, podcasts and your friend list. Otherwise, Spotify could still be able to play some ads. Disable this feature before leaving Spytify if you want to recover all these Spotify features..
         /// </summary>
         internal static string msgBodyDisableAds {
             get {
@@ -601,7 +583,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Le répertoire de sauvegarde sélectionné n&apos;existe pas, sélectionner un autre..
+        ///   Looks up a localized string similar to This output path does not exist, select another one..
         /// </summary>
         internal static string msgBodyPathNotFound {
             get {
@@ -610,7 +592,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify doit redémarrer pour obtenir les droits d&apos;administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?.
+        ///   Looks up a localized string similar to Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?.
         /// </summary>
         internal static string msgEnsureAdminContent {
             get {
@@ -619,7 +601,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Droits d&apos;administrateur requis.
+        ///   Looks up a localized string similar to Administrator rights required.
         /// </summary>
         internal static string msgEnsureAdminTitle {
             get {
@@ -628,7 +610,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?.
+        ///   Looks up a localized string similar to Do you want to open GitHub to view the newest Spytify release?.
         /// </summary>
         internal static string msgNewVersionContent {
             get {
@@ -637,7 +619,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} a été publiée!.
+        ///   Looks up a localized string similar to Version {0} is out!.
         /// </summary>
         internal static string msgNewVersionTitle {
             get {
@@ -646,7 +628,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Espionnage Spotify en cours.
+        ///   Looks up a localized string similar to Spytify is spying.
         /// </summary>
         internal static string msgTitleCantQuit {
             get {
@@ -655,7 +637,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactiver les annonces.
+        ///   Looks up a localized string similar to Disable Ads.
         /// </summary>
         internal static string msgTitleDisableAds {
             get {
@@ -664,7 +646,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Répertoire invalide.
+        ///   Looks up a localized string similar to Output path invalid.
         /// </summary>
         internal static string msgTitlePathNotFound {
             get {
@@ -673,7 +655,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paramètres avancés.
+        ///   Looks up a localized string similar to Advanced Settings.
         /// </summary>
         internal static string tabAdvanced {
             get {
@@ -691,7 +673,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Espion.
+        ///   Looks up a localized string similar to Spy.
         /// </summary>
         internal static string tabRecord {
             get {
@@ -700,7 +682,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paramètres.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string tabSettings {
             get {
@@ -709,7 +691,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effacer l&apos;historique.
+        ///   Looks up a localized string similar to Clear history.
         /// </summary>
         internal static string tipClear {
             get {
@@ -718,7 +700,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ouvrir le répertoire de sauvegarde.
+        ///   Looks up a localized string similar to Open output directory.
         /// </summary>
         internal static string tipDirectory {
             get {
@@ -727,7 +709,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parcourir.
+        ///   Looks up a localized string similar to Browse.
         /// </summary>
         internal static string tipPath {
             get {
@@ -736,7 +718,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nouvelle version disponible.
+        ///   Looks up a localized string similar to New version available.
         /// </summary>
         internal static string tipRelease {
             get {
@@ -745,7 +727,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Débuter l&apos;espionnage.
+        ///   Looks up a localized string similar to Start spying.
         /// </summary>
         internal static string tipStartSpying {
             get {
@@ -754,7 +736,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arrêter l&apos;espionnage.
+        ///   Looks up a localized string similar to Stop spying.
         /// </summary>
         internal static string tipStopSying {
             get {
@@ -763,7 +745,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annonces et pistes audio chevauchent au début/fin d&apos;une piste audio enregistrée..
+        ///   Looks up a localized string similar to Ads and tracks overlap at the beginning/end of recorded tracks..
         /// </summary>
         internal static string tlAdAndTrackOverlapOnRecordedTrack {
             get {
@@ -772,7 +754,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify joue encore des annonces après les avoir désactivées et il se met sur pause/joue à chaque seconde..
+        ///   Looks up a localized string similar to Spotify still plays ads, even after turning them off and it goes to pause/play every second..
         /// </summary>
         internal static string tlAdsPlayAndStop {
             get {
@@ -781,7 +763,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du son/bruit d&apos;arrière fond a été enregistré dans le fichier de la piste audio..
+        ///   Looks up a localized string similar to Background noise/sound was recorded on the saved track file..
         /// </summary>
         internal static string tlBackgroundNoiceRecordedOnTrack {
             get {
@@ -790,7 +772,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio.
+        ///   Looks up a localized string similar to Isolates Spotify audio to a different audio endpoint device.
         /// </summary>
         internal static string tlSpotifyAudioEndpoint {
             get {
@@ -799,7 +781,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d&apos;amis, radio, mixes journaliers et podcasts..
+        ///   Looks up a localized string similar to Spotify lost some features after turning ads off: Friend list, radio, daily mixes and podcasts..
         /// </summary>
         internal static string tlSpotifyLostFeatures {
             get {
@@ -808,7 +790,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify joue seulement un bout d&apos;une piste audio, ça coupe après quelques secondes..
+        ///   Looks up a localized string similar to Spotify only plays a bit of a track, it stops playing it after some seconds..
         /// </summary>
         internal static string tlSpotifyTrackCut {
             get {
@@ -817,7 +799,7 @@ namespace EspionSpotify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pistes audio sont détectées en tant que publicité.
+        ///   Looks up a localized string similar to Tracks are detected as an ad..
         /// </summary>
         internal static string tlTrackDetectedAsAd {
             get {

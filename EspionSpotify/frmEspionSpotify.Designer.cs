@@ -1472,7 +1472,7 @@ namespace EspionSpotify
             this.txtRecordingNum.TabIndex = 46;
             this.txtRecordingNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtRecordingNum.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt;
-            this.txtRecordingNum.Leave += new System.EventHandler(this.txtRecordingNum_Leave);
+            this.txtRecordingNum.Leave += new System.EventHandler(this.TxtRecordingNum_Leave);
             // 
             // tbVolumeWin
             // 
@@ -1555,7 +1555,7 @@ namespace EspionSpotify
             this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.cbAudioDevices.UseCustomBackColor = true;
             this.cbAudioDevices.UseSelectable = true;
-            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.cbAudioDevices_SelectedIndexChanged);
+            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
             // 
             // tlSpotifyTrackCut
             // 
@@ -1707,7 +1707,7 @@ namespace EspionSpotify
             this.tlSpotifyAudioEndpoint.UseCustomBackColor = true;
             this.tlSpotifyAudioEndpoint.UseSelectable = true;
             this.tlSpotifyAudioEndpoint.Click += new System.EventHandler(this.TlSpotifyAudioEndpoint_Click);
-            this.tlSpotifyAudioEndpoint.Leave += new System.EventHandler(this.tlSpotifyAudioEndpoint_Leave);
+            this.tlSpotifyAudioEndpoint.Leave += new System.EventHandler(this.TlSpotifyAudioEndpoint_Leave);
             // 
             // FrmEspionSpotify
             // 

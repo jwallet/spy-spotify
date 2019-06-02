@@ -141,14 +141,6 @@
     <value>{0} High quality (Spotify Premium)</value>
     <comment>interface</comment>
   </data>
-  <data name="cbOptLangEn" xml:space="preserve">
-    <value>English</value>
-    <comment>interface</comment>
-  </data>
-  <data name="cbOptLangFr" xml:space="preserve">
-    <value>Français</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblAddFolders" xml:space="preserve">
     <value>Group every artist songs inside their own folder</value>
     <comment>interface</comment>
@@ -210,7 +202,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Record unkown type tracks detected as an ad</value>
+    <value>Record unknown type tracks detected as an ad</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
@@ -358,7 +350,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblTrackDetectedAsAd" xml:space="preserve">
-    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn't return to Spyitfy the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
+    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn't return to Spytify the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
     <comment>interface</comment>
   </data>
   <data name="tabFAQ" xml:space="preserve">

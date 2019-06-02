@@ -141,14 +141,6 @@
     <value>{0} Haute qualité (Spotify Premium)</value>
     <comment>interface</comment>
   </data>
-  <data name="cbOptLangEn" xml:space="preserve">
-    <value>English</value>
-    <comment>interface</comment>
-  </data>
-  <data name="cbOptLangFr" xml:space="preserve">
-    <value>Français</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblAddFolders" xml:space="preserve">
     <value>Regrouper les chansons d'un même artiste dans un dossier au nom de l'artiste</value>
     <comment>interface</comment>

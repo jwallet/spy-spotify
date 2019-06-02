@@ -19,6 +19,7 @@ using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
 using EspionSpotify.MediaTags;
+using Translations;
 
 namespace EspionSpotify
 {
@@ -41,7 +42,7 @@ namespace EspionSpotify
             InitializeComponent();
 
             _userSettings = new UserSettings();
-            Rm = new ResourceManager(typeof(english));
+            Rm = new ResourceManager(typeof(en));
             BackImage = Resources.spytify_logo;
 
             if (Settings.Default.Directory.Equals(string.Empty))
@@ -149,8 +150,8 @@ namespace EspionSpotify
         {
             var langs = new Dictionary<LanguageType, string>
             {
-                {LanguageType.En, Rm.GetString($"cbOptLangEn")},
-                {LanguageType.Fr, Rm.GetString($"cbOptLangFr")}
+                { LanguageType.En, "English" },
+                { LanguageType.Fr, "Français" }
             };
 
             cbLanguage.DataSource = new BindingSource(langs, null);
@@ -160,7 +161,7 @@ namespace EspionSpotify
 
         private void SetLanguage(LanguageType languageType)
         {
-            Rm = languageType == LanguageType.Fr ? new ResourceManager(typeof(french)) : new ResourceManager(typeof(english));
+            Rm = languageType == LanguageType.Fr ? new ResourceManager(typeof(fr)) : new ResourceManager(typeof(en));
 
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");
@@ -558,7 +559,7 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"bitrate?selected={cbBitRate.SelectedValue}"));
         }
 
-        private void cbAudioDevices_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbAudioDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
             _userSettings.AudioEndPointDeviceIndex = ((KeyValuePair<int, string>)cbAudioDevices.SelectedItem).Key;
             _audioSession = new MainAudioSession(cbAudioDevices.SelectedIndex);
@@ -760,12 +761,12 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-audio-endpoint"));
         }
 
-        private void tlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
+        private void TlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
         {
             lblSpotifyAudioEndpoint.Hide();
         }
 
-        private void txtRecordingNum_Leave(object sender, EventArgs e)
+        private void TxtRecordingNum_Leave(object sender, EventArgs e)
         {
             _userSettings.InternalOrderNumber = int.Parse(txtRecordingNum.Text);
         }

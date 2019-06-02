@@ -172,19 +172,14 @@
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Ads\Administrator.cs" />
-    <Compile Include="english.Designer.cs">
-      <DependentUpon>english.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
     <Compile Include="FileManager.cs" />
-    <Compile Include="french1.Designer.cs">
+    <Compile Include="Translations\en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>french.resx</DependentUpon>
+      <DependentUpon>en.resx</DependentUpon>
     </Compile>
     <Compile Include="AudioSessions\IMainAudioSession.cs" />
     <Compile Include="AudioSessions\ISpotifyAudioSession.cs" />
@@ -232,16 +227,23 @@
     <Compile Include="Ads\ValidAccess.cs" />
     <Compile Include="AudioSessions\MainAudioSession.cs" />
     <Compile Include="IWatcher.cs" />
+    <Compile Include="Translations\fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fr.resx</DependentUpon>
+    </Compile>
     <Compile Include="Watcher.cs" />
-    <EmbeddedResource Include="english.resx">
+    <EmbeddedResource Include="Translations\en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>english.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CustomToolNamespace>Translations</CustomToolNamespace>
+      <LastGenOutput>en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="french.resx">
+    <EmbeddedResource Include="Translations\fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>french1.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Translations</CustomToolNamespace>
+      <LastGenOutput>fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

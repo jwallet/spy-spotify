@@ -61,6 +61,7 @@ namespace EspionSpotify
 
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
+            // TODO: add buffer handler from argument
             _writer.Write(e.Buffer, 0, e.BytesRecorded);
         }
 

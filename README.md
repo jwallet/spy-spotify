@@ -1,8 +1,17 @@
-<a title="https://jwallet.github.io/spy-spotify/" href="https://jwallet.github.io/spy-spotify/"><img alt="Spotify Logo" src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
+<a title="https://jwallet.github.io/spy-spotify/" href="https://jwallet.github.io/spy-spotify/">
+   <img alt="Spotify Logo" src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
 
 [![Build Status](https://travis-ci.org/jwallet/spy-spotify.svg?branch=master)](https://travis-ci.org/jwallet/spy-spotify)
-<a href="https://github.com/jwallet/spy-spotify/releases/latest"><img src="https://img.shields.io/github/downloads/jwallet/spy-spotify/total.svg?color=yellow&label=downloads" />
-<img src="https://img.shields.io/github/tag/jwallet/spy-spotify.svg?label=version" /></a>
+<a href="https://github.com/jwallet/spy-spotify/releases/latest">
+   <img src="https://img.shields.io/github/tag/jwallet/spy-spotify.svg?label=version" />
+   <img src="https://img.shields.io/github/downloads/jwallet/spy-spotify/total.svg?color=yellow&label=downloads" />
+</a>
+<a href="https://www.reddit.com/r/spytify">
+   ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=r%2Fspytify)
+</a>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=K2HAZZAS62T94&item_name=Spytify&currency_code=CAD&source=url">
+   <img src="https://img.shields.io/badge/donate-me-blue.svg?style=flat&logo=paypal&logoColor=000000" />
+</a>
 
 Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.
 
@@ -32,8 +41,8 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 - Saves all recordings under the same path:
    - `../My Music/`
 - Automatically adds following metadata to .mp3 file, if found:
-   - \# track
-   - Track Title
+   - \# trac
+   - Track Titl
    - Artist
    - Album Title
    - Album Art Cover
@@ -49,6 +58,9 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 - last.fm API
 - Spotify API (see your `Spytify.exe.config` file)
 - taglib
+
+## Translate
+You can help translate Spytify on Zanata.org, see [Translate](translate.md) for more details.
 
 ## Download
 ### [Download](https://github.com/jwallet/spy-spotify/releases)
