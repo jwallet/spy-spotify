@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Translations {
+namespace EspionSpotify.Translations {
     using System;
     
     

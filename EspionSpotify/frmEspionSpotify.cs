@@ -19,7 +19,6 @@ using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
 using EspionSpotify.MediaTags;
-using Translations;
 
 namespace EspionSpotify
 {
@@ -42,7 +41,6 @@ namespace EspionSpotify
             InitializeComponent();
 
             _userSettings = new UserSettings();
-            Rm = new ResourceManager(typeof(en));
             BackImage = Resources.spytify_logo;
 
             if (Settings.Default.Directory.Equals(string.Empty))
@@ -148,20 +146,15 @@ namespace EspionSpotify
 
         private void SetLanguageDropDown()
         {
-            var langs = new Dictionary<LanguageType, string>
-            {
-                { LanguageType.En, "English" },
-                { LanguageType.Fr, "Français" }
-            };
-
-            cbLanguage.DataSource = new BindingSource(langs, null);
+            cbLanguage.DataSource = new BindingSource(Translations.Languages.dropdownListValues, null);
             cbLanguage.DisplayMember = "Value";
             cbLanguage.ValueMember = "Key";
         }
 
         private void SetLanguage(LanguageType languageType)
         {
-            Rm = languageType == LanguageType.Fr ? new ResourceManager(typeof(fr)) : new ResourceManager(typeof(en));
+            var rmLanguage = Translations.Languages.availableResourcesManager.Where(x => x.Key.Equals(languageType)).Select(x => x.Value).FirstOrDefault();
+            Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");

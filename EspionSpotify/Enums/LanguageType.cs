@@ -2,7 +2,7 @@
 {
     public enum LanguageType
     {
-         En = 0,
-         Fr
+         en = 0,
+         fr
     }
 }

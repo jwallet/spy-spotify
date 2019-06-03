@@ -232,17 +232,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="Translations\Languages.cs" />
     <Compile Include="Watcher.cs" />
     <EmbeddedResource Include="Translations\en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <CustomToolNamespace>Translations</CustomToolNamespace>
       <LastGenOutput>en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translations\fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <CustomToolNamespace>Translations</CustomToolNamespace>
       <LastGenOutput>fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
