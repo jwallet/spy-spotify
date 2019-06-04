@@ -1,14 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using EspionSpotify.Models;
-using NAudio.Lame;
-using NAudio.Wave;
-using File = System.IO.File;
-
-namespace EspionSpotify
+﻿namespace EspionSpotify
 {
     public interface IRecorder
     {

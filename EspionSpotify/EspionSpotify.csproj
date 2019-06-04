@@ -176,6 +176,7 @@
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="IFrmEspionSpotify.cs" />
     <Compile Include="Translations\en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

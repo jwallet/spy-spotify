@@ -7,7 +7,7 @@ using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
 {
-    internal class Watcher: IWatcher
+    public class Watcher : IWatcher
     {
         private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
@@ -17,28 +17,34 @@ namespace EspionSpotify
         public static bool Ready = true;
         public static bool ToggleStopRecordingDelayed;
 
-        private Recorder _recorder;
-        private Track _currentTrack;
+        private IRecorder _recorder;
         private Timer _recordingTimer;
         private bool _isPlaying;
+        private Track _currentTrack;
         private bool _stopRecordingWhenSongEnds;
 
-        private readonly FrmEspionSpotify _form;
+        private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
 
         public int CountSeconds { get; set; }
         public ISpotifyHandler Spotify { get; set; }
-        public bool RecorderUpAndRunning => _recorder != null && _recorder.Running;
 
-
-        private bool NumTrackActivated => _userSettings.OrderNumber.HasValue;
-        private bool AdPlaying => _currentTrack.Ad;
-        private string SongTitle => _currentTrack.ToString();
-        private bool IsTypeAllowed => _currentTrack.IsNormal() || (_userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing);
-        private bool IsOldSong => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
-
-        public Watcher(FrmEspionSpotify form, UserSettings userSettings)
+        public bool RecorderUpAndRunning { get => _recorder != null && _recorder.Running; }
+        public bool NumTrackActivated { get => _userSettings.OrderNumber.HasValue; }
+        public bool AdPlaying { get => _currentTrack.Ad; }
+        public string SongTitle { get => _currentTrack.ToString(); }
+        public bool IsTypeAllowed
         {
+            get => _currentTrack.IsNormal() || (_userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing);
+        }
+        public bool IsOldSong
+        { 
+            get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
+        }
+
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings)
+        {
+            _currentTrack = new Track();
             _form = form;
             _userSettings = userSettings;
             _userSettings.InternalOrderNumber--;
@@ -52,7 +58,7 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(_isPlaying);
         }
 
-        private void OnTrackChanged(object sender, TrackChangeEventArgs e)
+        public void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
             // do not add "is current track an ad" validation, audio is already muted
             if (RecorderUpAndRunning && IsOldSong)
@@ -67,13 +73,10 @@ namespace EspionSpotify
 
         private void OnTrackTimeChanged(object sender, TrackTimeChangeEventArgs e)
         {
-            if (_currentTrack != null)
-            {
-                _currentTrack.CurrentPosition = e.TrackTime;
-            }
+            _currentTrack.CurrentPosition = e.TrackTime;
         }
 
-        private bool IsNewTrack(Track track)
+        public bool IsNewTrack(Track track)
         {
             if (track == null) return false;
 

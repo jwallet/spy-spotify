@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -22,7 +22,7 @@ using EspionSpotify.MediaTags;
 
 namespace EspionSpotify
 {
-    public sealed partial class FrmEspionSpotify : MetroForm
+    public sealed partial class FrmEspionSpotify : MetroForm, IFrmEspionSpotify
     {
         private IMainAudioSession _audioSession;
         private Watcher _watcher;

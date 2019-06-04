@@ -15,7 +15,7 @@ namespace EspionSpotify
         public bool Running { get; set; }
 
         private readonly UserSettings _userSettings;
-        private readonly FrmEspionSpotify _form;
+        private readonly IFrmEspionSpotify _form;
         private readonly Track _track;
         private string _currentFile;
         private WasapiLoopbackCapture _waveIn;
@@ -24,7 +24,7 @@ namespace EspionSpotify
 
         public Recorder() { }
 
-        public Recorder(FrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
+        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
         {
             _form = espionSpotifyForm;
             _userSettings = userSettings;

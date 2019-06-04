@@ -2,7 +2,6 @@
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System.Threading.Tasks;
-using System.Timers;
 using Xunit;
 
 namespace EspionSpotify.Tests
