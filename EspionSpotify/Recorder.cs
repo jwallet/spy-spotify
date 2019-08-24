@@ -103,20 +103,14 @@ namespace EspionSpotify
 
         private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
         {
-            Stream writer;
             string insertArtistDir = _fileManager.CreateDirectory();
 
             if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
             {
+                _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath + insertArtistDir);
                 try
                 {
-                    _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath + insertArtistDir);
-                    writer = new LameMP3FileWriter(
-                        _currentFile,
-                        waveIn.WaveFormat,
-                        _userSettings.Bitrate);
-
-                    return writer;
+                    return new LameMP3FileWriter(_currentFile, waveIn.WaveFormat, _userSettings.Bitrate);
                 }
                 catch (ArgumentException ex)
                 {
@@ -155,11 +149,7 @@ namespace EspionSpotify
             try
             {
                 _currentFile = _fileManager.BuildFileName($"{_userSettings.OutputPath}{insertArtistDir}");
-                writer = new WaveFileWriter(
-                    _currentFile,
-                    waveIn.WaveFormat
-                );
-                return writer;
+                return new WaveFileWriter(_currentFile, waveIn.WaveFormat);
             }
             catch (Exception ex)
             {
