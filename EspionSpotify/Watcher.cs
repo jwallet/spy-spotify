@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Events;
 using EspionSpotify.Models;
+using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +49,9 @@ namespace EspionSpotify
             _form = form;
             _userSettings = userSettings;
             _userSettings.InternalOrderNumber--;
+
+            Settings.Default.Logs = string.Empty;
+            Settings.Default.Save();
         }
 
         private void OnPlayStateChanged(object sender, PlayStateEventArgs e)

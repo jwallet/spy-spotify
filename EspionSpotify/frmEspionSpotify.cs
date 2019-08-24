@@ -33,6 +33,8 @@ namespace EspionSpotify
         public static ResourceManager Rm;
         public static FrmEspionSpotify Instance;
 
+        private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
+
         public FrmEspionSpotify()
         {
             SuspendLayout();
@@ -92,6 +94,9 @@ namespace EspionSpotify
 
             cbBitRate.SelectedIndex = indexBitRate;
             cbLanguage.SelectedIndex = indexLanguage;
+
+            var _logs = Settings.Default.Logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            WritePreviousLogsIntoConsole(_logs);
 
             _userSettings.OutputPath = Settings.Default.Directory;
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
@@ -289,7 +294,7 @@ namespace EspionSpotify
 
             if (text != null)
             {
-                var timeStr = $@"[{DateTime.Now:HH:mm:ss}] ";
+                var timeStr = LogDate;
                 var alert = text[0] == '/';
                 
                 rtbLog.AppendText(timeStr);
@@ -304,22 +309,41 @@ namespace EspionSpotify
                     rtbLog.AppendText(msg + Environment.NewLine);
                     rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
                     rtbLog.SelectionColor = Color.SpringGreen;
+
+                    Settings.Default.Logs += $";{LogDate}{attrb}{msg}";
                 }
                 else
                 {
                     rtbLog.AppendText(text + Environment.NewLine);
                 }
 
+                Settings.Default.Save();
+
                 rtbLog.SelectionStart = rtbLog.TextLength;
                 rtbLog.ScrollToCaret();
             }
+        }
+
+        private void WritePreviousLogsIntoConsole(string[] logs)
+        {
+            if (logs.Length == 0) return;
+
+            foreach(var log in logs)
+            {
+                rtbLog.AppendText(log + Environment.NewLine);
+            }
+
+            rtbLog.AppendText(LogDate + Rm.GetString($"logPreviousLogs") + Environment.NewLine + Environment.NewLine);
+
+            rtbLog.SelectionStart = rtbLog.TextLength;
+            rtbLog.ScrollToCaret();
         }
 
         private void StartRecording()
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherThread = new Thread(async () =>  await _watcher.Run());
+            var watcherThread = new Thread(async () => await _watcher.Run());
             watcherThread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));

@@ -448,4 +448,12 @@
     <value>Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can't have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the High Quality 320kbps chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</value>
     <comment>interface</comment>
   </data>
+  <data name="logPreviousLogs" xml:space="preserve">
+    <value>// Previous recording sesssion logs</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecorded" xml:space="preserve">
+    <value>Recorded {0} in : {1}</value>
+    <comment>console</comment>
+  </data>
 </root>

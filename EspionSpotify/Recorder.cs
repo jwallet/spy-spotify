@@ -11,12 +11,13 @@ namespace EspionSpotify
 {
     internal class Recorder: IRecorder
     {
+        private const long TICKS_PER_SECOND = 10000000;
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
 
         private readonly UserSettings _userSettings;
-        private readonly IFrmEspionSpotify _form;
         private readonly Track _track;
+        private readonly IFrmEspionSpotify _form;
         private string _currentFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _writer;
@@ -27,8 +28,8 @@ namespace EspionSpotify
         public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
         {
             _form = espionSpotifyForm;
-            _userSettings = userSettings;
             _track = track;
+            _userSettings = userSettings;
             _fileManager = new FileManager(_userSettings, _track);
         }
 
@@ -49,7 +50,7 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? "{0}", _fileManager.BuildFileName(_userSettings.OutputPath, false)));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? $"{0}", _fileManager.BuildFileName(_userSettings.OutputPath, false)));
 
             while (Running)
             {
@@ -73,6 +74,10 @@ namespace EspionSpotify
                 _writer.Dispose();
                 _waveIn.Dispose();
             }
+
+            var timeSpan = new TimeSpan(TICKS_PER_SECOND * CountSeconds);
+            var length = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecorded") ?? $"{0}{1}", _track.ToString(), length));
 
             if (CountSeconds >= _userSettings.MinimumRecordedLengthSeconds)
             {

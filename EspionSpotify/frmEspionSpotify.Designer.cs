@@ -42,6 +42,7 @@ namespace EspionSpotify
             this.lnkClear = new MetroFramework.Controls.MetroLink();
             this.lblSoundCard = new MetroFramework.Controls.MetroLabel();
             this.lblVolume = new MetroFramework.Controls.MetroLabel();
+            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
             this.iconVolume = new MetroFramework.Controls.MetroPanel();
             this.tlpConsoleFrame = new System.Windows.Forms.TableLayoutPanel();
             this.tlpConsole = new System.Windows.Forms.TableLayoutPanel();
@@ -58,7 +59,10 @@ namespace EspionSpotify
             this.lnkPath = new MetroFramework.Controls.MetroLink();
             this.txtPath = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
+            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
             this.lblMinTime = new MetroFramework.Controls.MetroLabel();
             this.lblFormat = new MetroFramework.Controls.MetroLabel();
             this.lblMinLength = new MetroFramework.Controls.MetroLabel();
@@ -73,6 +77,7 @@ namespace EspionSpotify
             this.tgMuteAds = new MetroFramework.Controls.MetroToggle();
             this.lblAudioDevice = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbAudioDevices = new EspionSpotify.Controls.MetroComboBox();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.tlAdvanced = new System.Windows.Forms.TableLayoutPanel();
             this.lblSpy = new MetroFramework.Controls.MetroLabel();
@@ -88,6 +93,7 @@ namespace EspionSpotify
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.lnkNumPlus = new MetroFramework.Controls.MetroLink();
             this.lnkNumMinus = new MetroFramework.Controls.MetroLink();
+            this.txtRecordingNum = new System.Windows.Forms.MaskedTextBox();
             this.tgNumFiles = new MetroFramework.Controls.MetroToggle();
             this.lblAddSeparators = new MetroFramework.Controls.MetroLabel();
             this.tgNumTracks = new MetroFramework.Controls.MetroToggle();
@@ -101,31 +107,25 @@ namespace EspionSpotify
             this.txtRecordingTimer = new System.Windows.Forms.MaskedTextBox();
             this.tabFAQ = new System.Windows.Forms.TabPage();
             this.tlFAQ = new System.Windows.Forms.TableLayoutPanel();
+            this.tlSpotifyTrackCut = new EspionSpotify.Controls.MetroTile();
+            this.tlAdsPlayAndStop = new EspionSpotify.Controls.MetroTile();
+            this.tlAdAndTrackOverlapOnRecordedTrack = new EspionSpotify.Controls.MetroTile();
             this.lblBackgroundNoiceRecordedOnTrackFirst = new System.Windows.Forms.Label();
+            this.tlBackgroundNoiceRecordedOnTrack = new EspionSpotify.Controls.MetroTile();
+            this.tlTrackDetectedAsAd = new EspionSpotify.Controls.MetroTile();
             this.lblTrackDetectedAsAd = new System.Windows.Forms.Label();
             this.lblAdAndTrackOverlapOnRecordedTrack = new System.Windows.Forms.Label();
             this.lblAdsPlayAndStop = new System.Windows.Forms.Label();
             this.lblSpotifyTrackCut = new System.Windows.Forms.Label();
+            this.tlSpotifyLostFeatures = new EspionSpotify.Controls.MetroTile();
             this.lblSpotifyLostFeatures = new System.Windows.Forms.Label();
+            this.tlSpotifyAudioEndpoint = new EspionSpotify.Controls.MetroTile();
             this.lblSpotifyAudioEndpoint = new System.Windows.Forms.Label();
             this.lblBackgroundNoiceRecordedOnTrackSecond = new System.Windows.Forms.Label();
             this.lnkSpy = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lnkRelease = new MetroFramework.Controls.MetroLink();
-            this.txtRecordingNum = new System.Windows.Forms.MaskedTextBox();
-            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
-            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
-            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
-            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
-            this.cbAudioDevices = new EspionSpotify.Controls.MetroComboBox();
-            this.tlSpotifyTrackCut = new EspionSpotify.Controls.MetroTile();
-            this.tlAdsPlayAndStop = new EspionSpotify.Controls.MetroTile();
-            this.tlAdAndTrackOverlapOnRecordedTrack = new EspionSpotify.Controls.MetroTile();
-            this.tlBackgroundNoiceRecordedOnTrack = new EspionSpotify.Controls.MetroTile();
-            this.tlTrackDetectedAsAd = new EspionSpotify.Controls.MetroTile();
-            this.tlSpotifyLostFeatures = new EspionSpotify.Controls.MetroTile();
-            this.tlSpotifyAudioEndpoint = new EspionSpotify.Controls.MetroTile();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -289,6 +289,20 @@ namespace EspionSpotify
             this.lblVolume.Text = "000%";
             this.lblVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblVolume.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tbVolumeWin
+            // 
+            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
+            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
+            this.tbVolumeWin.Name = "tbVolumeWin";
+            this.tbVolumeWin.Size = new System.Drawing.Size(132, 23);
+            this.tbVolumeWin.TabIndex = 11;
+            this.tbVolumeWin.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbVolumeWin.Value = 0;
+            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
+            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // iconVolume
             // 
@@ -578,6 +592,42 @@ namespace EspionSpotify
             this.tableLayoutPanel12.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel12.TabIndex = 37;
             // 
+            // cbBitRate
+            // 
+            this.cbBitRate.BackColor = System.Drawing.Color.Black;
+            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbBitRate.ForeColor = System.Drawing.Color.White;
+            this.cbBitRate.FormattingEnabled = true;
+            this.cbBitRate.ItemHeight = 23;
+            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
+            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
+            this.cbBitRate.Name = "cbBitRate";
+            this.cbBitRate.Size = new System.Drawing.Size(573, 29);
+            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbBitRate.TabIndex = 37;
+            this.cbBitRate.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbBitRate.UseCustomBackColor = true;
+            this.cbBitRate.UseSelectable = true;
+            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
+            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
+            // cbLanguage
+            // 
+            this.cbLanguage.BackColor = System.Drawing.Color.Black;
+            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbLanguage.ForeColor = System.Drawing.Color.White;
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.ItemHeight = 23;
+            this.cbLanguage.Location = new System.Drawing.Point(144, 193);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(573, 29);
+            this.cbLanguage.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbLanguage.TabIndex = 44;
+            this.cbLanguage.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbLanguage.UseCustomBackColor = true;
+            this.cbLanguage.UseSelectable = true;
+            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
+            // 
             // tableLayoutPanel9
             // 
             this.tableLayoutPanel9.ColumnCount = 2;
@@ -596,6 +646,21 @@ namespace EspionSpotify
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel9.TabIndex = 11;
+            // 
+            // tbMinTime
+            // 
+            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
+            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMinTime.Location = new System.Drawing.Point(42, 3);
+            this.tbMinTime.Maximum = 24;
+            this.tbMinTime.Name = "tbMinTime";
+            this.tbMinTime.Size = new System.Drawing.Size(528, 23);
+            this.tbMinTime.TabIndex = 17;
+            this.tbMinTime.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbMinTime.Value = 6;
+            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
+            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // lblMinTime
             // 
@@ -807,6 +872,24 @@ namespace EspionSpotify
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel5.TabIndex = 49;
+            // 
+            // cbAudioDevices
+            // 
+            this.cbAudioDevices.BackColor = System.Drawing.Color.Black;
+            this.cbAudioDevices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbAudioDevices.ForeColor = System.Drawing.Color.White;
+            this.cbAudioDevices.FormattingEnabled = true;
+            this.cbAudioDevices.ItemHeight = 23;
+            this.cbAudioDevices.Location = new System.Drawing.Point(0, 0);
+            this.cbAudioDevices.Margin = new System.Windows.Forms.Padding(0);
+            this.cbAudioDevices.Name = "cbAudioDevices";
+            this.cbAudioDevices.Size = new System.Drawing.Size(573, 29);
+            this.cbAudioDevices.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbAudioDevices.TabIndex = 37;
+            this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbAudioDevices.UseCustomBackColor = true;
+            this.cbAudioDevices.UseSelectable = true;
+            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
             // 
             // tabAdvanced
             // 
@@ -1058,6 +1141,24 @@ namespace EspionSpotify
             this.lnkNumMinus.Click += new System.EventHandler(this.LnkNumMinus_Click);
             this.lnkNumMinus.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
+            // txtRecordingNum
+            // 
+            this.txtRecordingNum.BackColor = System.Drawing.Color.Black;
+            this.txtRecordingNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRecordingNum.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtRecordingNum.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtRecordingNum.ForeColor = System.Drawing.Color.Silver;
+            this.txtRecordingNum.Location = new System.Drawing.Point(23, 3);
+            this.txtRecordingNum.Mask = "000";
+            this.txtRecordingNum.Name = "txtRecordingNum";
+            this.txtRecordingNum.PromptChar = '0';
+            this.txtRecordingNum.Size = new System.Drawing.Size(54, 25);
+            this.txtRecordingNum.SkipLiterals = false;
+            this.txtRecordingNum.TabIndex = 46;
+            this.txtRecordingNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRecordingNum.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt;
+            this.txtRecordingNum.Leave += new System.EventHandler(this.TxtRecordingNum_Leave);
+            // 
             // tgNumFiles
             // 
             this.tgNumFiles.AutoSize = true;
@@ -1276,6 +1377,71 @@ namespace EspionSpotify
             this.tlFAQ.Size = new System.Drawing.Size(730, 296);
             this.tlFAQ.TabIndex = 1;
             // 
+            // tlSpotifyTrackCut
+            // 
+            this.tlSpotifyTrackCut.ActiveControl = null;
+            this.tlSpotifyTrackCut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlSpotifyTrackCut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlSpotifyTrackCut.ForeColor = System.Drawing.Color.Silver;
+            this.tlSpotifyTrackCut.Location = new System.Drawing.Point(10, 2);
+            this.tlSpotifyTrackCut.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlSpotifyTrackCut.Name = "tlSpotifyTrackCut";
+            this.tlSpotifyTrackCut.PaintTileCount = false;
+            this.tlSpotifyTrackCut.Size = new System.Drawing.Size(693, 38);
+            this.tlSpotifyTrackCut.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlSpotifyTrackCut.TabIndex = 0;
+            this.tlSpotifyTrackCut.Text = "TRACKS_ARE_CUT_ON_SPOTIFY";
+            this.tlSpotifyTrackCut.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tlSpotifyTrackCut.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlSpotifyTrackCut.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlSpotifyTrackCut.UseCustomBackColor = true;
+            this.tlSpotifyTrackCut.UseSelectable = true;
+            this.tlSpotifyTrackCut.Click += new System.EventHandler(this.TlSpotifyTrackCut_Click);
+            this.tlSpotifyTrackCut.Leave += new System.EventHandler(this.TlSpotifyTrackCut_Leave);
+            // 
+            // tlAdsPlayAndStop
+            // 
+            this.tlAdsPlayAndStop.ActiveControl = null;
+            this.tlAdsPlayAndStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlAdsPlayAndStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlAdsPlayAndStop.ForeColor = System.Drawing.Color.Silver;
+            this.tlAdsPlayAndStop.Location = new System.Drawing.Point(10, 82);
+            this.tlAdsPlayAndStop.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlAdsPlayAndStop.Name = "tlAdsPlayAndStop";
+            this.tlAdsPlayAndStop.PaintTileCount = false;
+            this.tlAdsPlayAndStop.Size = new System.Drawing.Size(693, 38);
+            this.tlAdsPlayAndStop.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlAdsPlayAndStop.TabIndex = 1;
+            this.tlAdsPlayAndStop.Text = "ADS_PLAY_AND_STOP";
+            this.tlAdsPlayAndStop.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlAdsPlayAndStop.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlAdsPlayAndStop.UseCustomBackColor = true;
+            this.tlAdsPlayAndStop.UseSelectable = true;
+            this.tlAdsPlayAndStop.Click += new System.EventHandler(this.TlAdsPlayAndStop_Click);
+            this.tlAdsPlayAndStop.Leave += new System.EventHandler(this.TlAdsPlayAndStop_Leave);
+            // 
+            // tlAdAndTrackOverlapOnRecordedTrack
+            // 
+            this.tlAdAndTrackOverlapOnRecordedTrack.ActiveControl = null;
+            this.tlAdAndTrackOverlapOnRecordedTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlAdAndTrackOverlapOnRecordedTrack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlAdAndTrackOverlapOnRecordedTrack.ForeColor = System.Drawing.Color.Silver;
+            this.tlAdAndTrackOverlapOnRecordedTrack.Location = new System.Drawing.Point(10, 162);
+            this.tlAdAndTrackOverlapOnRecordedTrack.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlAdAndTrackOverlapOnRecordedTrack.Name = "tlAdAndTrackOverlapOnRecordedTrack";
+            this.tlAdAndTrackOverlapOnRecordedTrack.PaintTileCount = false;
+            this.tlAdAndTrackOverlapOnRecordedTrack.Size = new System.Drawing.Size(693, 38);
+            this.tlAdAndTrackOverlapOnRecordedTrack.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlAdAndTrackOverlapOnRecordedTrack.TabIndex = 2;
+            this.tlAdAndTrackOverlapOnRecordedTrack.Tag = "test test test";
+            this.tlAdAndTrackOverlapOnRecordedTrack.Text = "AD_AND_TRACK_OVERLAP_ON_RECORDED_TRACK";
+            this.tlAdAndTrackOverlapOnRecordedTrack.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlAdAndTrackOverlapOnRecordedTrack.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlAdAndTrackOverlapOnRecordedTrack.UseCustomBackColor = true;
+            this.tlAdAndTrackOverlapOnRecordedTrack.UseSelectable = true;
+            this.tlAdAndTrackOverlapOnRecordedTrack.Click += new System.EventHandler(this.TlAdAndTrackOverlapOnRecordedTrack_Click);
+            this.tlAdAndTrackOverlapOnRecordedTrack.Leave += new System.EventHandler(this.TlAdAndTrackOverlapOnRecordedTrack_Leave);
+            // 
             // lblBackgroundNoiceRecordedOnTrackFirst
             // 
             this.lblBackgroundNoiceRecordedOnTrackFirst.AutoSize = true;
@@ -1292,6 +1458,49 @@ namespace EspionSpotify
             this.lblBackgroundNoiceRecordedOnTrackFirst.TabIndex = 5;
             this.lblBackgroundNoiceRecordedOnTrackFirst.Text = "BACKGROUND_NOICE_RECORDED_ON_TRACK_FIRST";
             this.lblBackgroundNoiceRecordedOnTrackFirst.Visible = false;
+            // 
+            // tlBackgroundNoiceRecordedOnTrack
+            // 
+            this.tlBackgroundNoiceRecordedOnTrack.ActiveControl = null;
+            this.tlBackgroundNoiceRecordedOnTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlBackgroundNoiceRecordedOnTrack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlBackgroundNoiceRecordedOnTrack.ForeColor = System.Drawing.Color.Silver;
+            this.tlBackgroundNoiceRecordedOnTrack.Location = new System.Drawing.Point(10, 242);
+            this.tlBackgroundNoiceRecordedOnTrack.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlBackgroundNoiceRecordedOnTrack.Name = "tlBackgroundNoiceRecordedOnTrack";
+            this.tlBackgroundNoiceRecordedOnTrack.PaintTileCount = false;
+            this.tlBackgroundNoiceRecordedOnTrack.Size = new System.Drawing.Size(693, 38);
+            this.tlBackgroundNoiceRecordedOnTrack.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlBackgroundNoiceRecordedOnTrack.TabIndex = 3;
+            this.tlBackgroundNoiceRecordedOnTrack.Text = "BACKGROUND_NOICE_RECORDED_ON_TRACK";
+            this.tlBackgroundNoiceRecordedOnTrack.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlBackgroundNoiceRecordedOnTrack.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlBackgroundNoiceRecordedOnTrack.UseCustomBackColor = true;
+            this.tlBackgroundNoiceRecordedOnTrack.UseSelectable = true;
+            this.tlBackgroundNoiceRecordedOnTrack.Click += new System.EventHandler(this.TlBackgroundNoiceRecordedOnTrack_Click);
+            this.tlBackgroundNoiceRecordedOnTrack.Leave += new System.EventHandler(this.TlBackgroundNoiceRecordedOnTrack_Leave);
+            // 
+            // tlTrackDetectedAsAd
+            // 
+            this.tlTrackDetectedAsAd.ActiveControl = null;
+            this.tlTrackDetectedAsAd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlTrackDetectedAsAd.CausesValidation = false;
+            this.tlTrackDetectedAsAd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlTrackDetectedAsAd.ForeColor = System.Drawing.Color.Silver;
+            this.tlTrackDetectedAsAd.Location = new System.Drawing.Point(10, 362);
+            this.tlTrackDetectedAsAd.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlTrackDetectedAsAd.Name = "tlTrackDetectedAsAd";
+            this.tlTrackDetectedAsAd.PaintTileCount = false;
+            this.tlTrackDetectedAsAd.Size = new System.Drawing.Size(693, 38);
+            this.tlTrackDetectedAsAd.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlTrackDetectedAsAd.TabIndex = 4;
+            this.tlTrackDetectedAsAd.Text = "TRACK_DETECTED_AS_AN_AD";
+            this.tlTrackDetectedAsAd.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlTrackDetectedAsAd.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlTrackDetectedAsAd.UseCustomBackColor = true;
+            this.tlTrackDetectedAsAd.UseSelectable = true;
+            this.tlTrackDetectedAsAd.Click += new System.EventHandler(this.TlTrackDetectedAsAd_Click);
+            this.tlTrackDetectedAsAd.Leave += new System.EventHandler(this.TlTrackDetectedAsAd_Leave);
             // 
             // lblTrackDetectedAsAd
             // 
@@ -1361,6 +1570,28 @@ namespace EspionSpotify
             this.lblSpotifyTrackCut.Text = "TRACKS_ARE_CUT_ON_SPOTIFY";
             this.lblSpotifyTrackCut.Visible = false;
             // 
+            // tlSpotifyLostFeatures
+            // 
+            this.tlSpotifyLostFeatures.ActiveControl = null;
+            this.tlSpotifyLostFeatures.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlSpotifyLostFeatures.CausesValidation = false;
+            this.tlSpotifyLostFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlSpotifyLostFeatures.ForeColor = System.Drawing.Color.Silver;
+            this.tlSpotifyLostFeatures.Location = new System.Drawing.Point(10, 442);
+            this.tlSpotifyLostFeatures.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlSpotifyLostFeatures.Name = "tlSpotifyLostFeatures";
+            this.tlSpotifyLostFeatures.PaintTileCount = false;
+            this.tlSpotifyLostFeatures.Size = new System.Drawing.Size(693, 38);
+            this.tlSpotifyLostFeatures.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlSpotifyLostFeatures.TabIndex = 4;
+            this.tlSpotifyLostFeatures.Text = "SPOTIFY_LOST_FEATURES";
+            this.tlSpotifyLostFeatures.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlSpotifyLostFeatures.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlSpotifyLostFeatures.UseCustomBackColor = true;
+            this.tlSpotifyLostFeatures.UseSelectable = true;
+            this.tlSpotifyLostFeatures.Click += new System.EventHandler(this.TlSpotifyLostFeatures_Click);
+            this.tlSpotifyLostFeatures.Leave += new System.EventHandler(this.TlSpotifyLostFeatures_Leave);
+            // 
             // lblSpotifyLostFeatures
             // 
             this.lblSpotifyLostFeatures.AutoSize = true;
@@ -1377,6 +1608,28 @@ namespace EspionSpotify
             this.lblSpotifyLostFeatures.TabIndex = 5;
             this.lblSpotifyLostFeatures.Text = "SPOTIFY_LOST_FEATURES";
             this.lblSpotifyLostFeatures.Visible = false;
+            // 
+            // tlSpotifyAudioEndpoint
+            // 
+            this.tlSpotifyAudioEndpoint.ActiveControl = null;
+            this.tlSpotifyAudioEndpoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.tlSpotifyAudioEndpoint.CausesValidation = false;
+            this.tlSpotifyAudioEndpoint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlSpotifyAudioEndpoint.ForeColor = System.Drawing.Color.Silver;
+            this.tlSpotifyAudioEndpoint.Location = new System.Drawing.Point(10, 522);
+            this.tlSpotifyAudioEndpoint.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlSpotifyAudioEndpoint.Name = "tlSpotifyAudioEndpoint";
+            this.tlSpotifyAudioEndpoint.PaintTileCount = false;
+            this.tlSpotifyAudioEndpoint.Size = new System.Drawing.Size(693, 38);
+            this.tlSpotifyAudioEndpoint.Style = MetroFramework.MetroColorStyle.Green;
+            this.tlSpotifyAudioEndpoint.TabIndex = 4;
+            this.tlSpotifyAudioEndpoint.Text = "SPOTIFY_AUDIO_ENDPOINT";
+            this.tlSpotifyAudioEndpoint.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.tlSpotifyAudioEndpoint.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.tlSpotifyAudioEndpoint.UseCustomBackColor = true;
+            this.tlSpotifyAudioEndpoint.UseSelectable = true;
+            this.tlSpotifyAudioEndpoint.Click += new System.EventHandler(this.TlSpotifyAudioEndpoint_Click);
+            this.tlSpotifyAudioEndpoint.Leave += new System.EventHandler(this.TlSpotifyAudioEndpoint_Leave);
             // 
             // lblSpotifyAudioEndpoint
             // 
@@ -1455,259 +1708,6 @@ namespace EspionSpotify
             this.lnkRelease.UseSelectable = true;
             this.lnkRelease.Visible = false;
             this.lnkRelease.Click += new System.EventHandler(this.LnkRelease_Click);
-            // 
-            // txtRecordingNum
-            // 
-            this.txtRecordingNum.BackColor = System.Drawing.Color.Black;
-            this.txtRecordingNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRecordingNum.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtRecordingNum.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtRecordingNum.ForeColor = System.Drawing.Color.Silver;
-            this.txtRecordingNum.Location = new System.Drawing.Point(23, 3);
-            this.txtRecordingNum.Mask = "000";
-            this.txtRecordingNum.Name = "txtRecordingNum";
-            this.txtRecordingNum.PromptChar = '0';
-            this.txtRecordingNum.Size = new System.Drawing.Size(54, 25);
-            this.txtRecordingNum.SkipLiterals = false;
-            this.txtRecordingNum.TabIndex = 46;
-            this.txtRecordingNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtRecordingNum.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt;
-            this.txtRecordingNum.Leave += new System.EventHandler(this.TxtRecordingNum_Leave);
-            // 
-            // tbVolumeWin
-            // 
-            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
-            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
-            this.tbVolumeWin.Name = "tbVolumeWin";
-            this.tbVolumeWin.Size = new System.Drawing.Size(132, 23);
-            this.tbVolumeWin.TabIndex = 11;
-            this.tbVolumeWin.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tbVolumeWin.Value = 0;
-            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
-            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbBitRate
-            // 
-            this.cbBitRate.BackColor = System.Drawing.Color.Black;
-            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbBitRate.ForeColor = System.Drawing.Color.White;
-            this.cbBitRate.FormattingEnabled = true;
-            this.cbBitRate.ItemHeight = 23;
-            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
-            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
-            this.cbBitRate.Name = "cbBitRate";
-            this.cbBitRate.Size = new System.Drawing.Size(573, 29);
-            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbBitRate.TabIndex = 37;
-            this.cbBitRate.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbBitRate.UseCustomBackColor = true;
-            this.cbBitRate.UseSelectable = true;
-            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
-            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbLanguage
-            // 
-            this.cbLanguage.BackColor = System.Drawing.Color.Black;
-            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbLanguage.ForeColor = System.Drawing.Color.White;
-            this.cbLanguage.FormattingEnabled = true;
-            this.cbLanguage.ItemHeight = 23;
-            this.cbLanguage.Location = new System.Drawing.Point(144, 193);
-            this.cbLanguage.Name = "cbLanguage";
-            this.cbLanguage.Size = new System.Drawing.Size(573, 29);
-            this.cbLanguage.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbLanguage.TabIndex = 44;
-            this.cbLanguage.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbLanguage.UseCustomBackColor = true;
-            this.cbLanguage.UseSelectable = true;
-            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
-            // 
-            // tbMinTime
-            // 
-            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
-            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinTime.Location = new System.Drawing.Point(42, 3);
-            this.tbMinTime.Maximum = 24;
-            this.tbMinTime.Name = "tbMinTime";
-            this.tbMinTime.Size = new System.Drawing.Size(528, 23);
-            this.tbMinTime.TabIndex = 17;
-            this.tbMinTime.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tbMinTime.Value = 6;
-            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
-            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbAudioDevices
-            // 
-            this.cbAudioDevices.BackColor = System.Drawing.Color.Black;
-            this.cbAudioDevices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbAudioDevices.ForeColor = System.Drawing.Color.White;
-            this.cbAudioDevices.FormattingEnabled = true;
-            this.cbAudioDevices.ItemHeight = 23;
-            this.cbAudioDevices.Location = new System.Drawing.Point(0, 0);
-            this.cbAudioDevices.Margin = new System.Windows.Forms.Padding(0);
-            this.cbAudioDevices.Name = "cbAudioDevices";
-            this.cbAudioDevices.Size = new System.Drawing.Size(573, 29);
-            this.cbAudioDevices.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbAudioDevices.TabIndex = 37;
-            this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbAudioDevices.UseCustomBackColor = true;
-            this.cbAudioDevices.UseSelectable = true;
-            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
-            // 
-            // tlSpotifyTrackCut
-            // 
-            this.tlSpotifyTrackCut.ActiveControl = null;
-            this.tlSpotifyTrackCut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlSpotifyTrackCut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlSpotifyTrackCut.ForeColor = System.Drawing.Color.Silver;
-            this.tlSpotifyTrackCut.Location = new System.Drawing.Point(10, 2);
-            this.tlSpotifyTrackCut.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlSpotifyTrackCut.Name = "tlSpotifyTrackCut";
-            this.tlSpotifyTrackCut.PaintTileCount = false;
-            this.tlSpotifyTrackCut.Size = new System.Drawing.Size(693, 38);
-            this.tlSpotifyTrackCut.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlSpotifyTrackCut.TabIndex = 0;
-            this.tlSpotifyTrackCut.Text = "TRACKS_ARE_CUT_ON_SPOTIFY";
-            this.tlSpotifyTrackCut.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tlSpotifyTrackCut.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlSpotifyTrackCut.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlSpotifyTrackCut.UseCustomBackColor = true;
-            this.tlSpotifyTrackCut.UseSelectable = true;
-            this.tlSpotifyTrackCut.Click += new System.EventHandler(this.TlSpotifyTrackCut_Click);
-            this.tlSpotifyTrackCut.Leave += new System.EventHandler(this.TlSpotifyTrackCut_Leave);
-            // 
-            // tlAdsPlayAndStop
-            // 
-            this.tlAdsPlayAndStop.ActiveControl = null;
-            this.tlAdsPlayAndStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlAdsPlayAndStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlAdsPlayAndStop.ForeColor = System.Drawing.Color.Silver;
-            this.tlAdsPlayAndStop.Location = new System.Drawing.Point(10, 82);
-            this.tlAdsPlayAndStop.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlAdsPlayAndStop.Name = "tlAdsPlayAndStop";
-            this.tlAdsPlayAndStop.PaintTileCount = false;
-            this.tlAdsPlayAndStop.Size = new System.Drawing.Size(693, 38);
-            this.tlAdsPlayAndStop.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlAdsPlayAndStop.TabIndex = 1;
-            this.tlAdsPlayAndStop.Text = "ADS_PLAY_AND_STOP";
-            this.tlAdsPlayAndStop.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlAdsPlayAndStop.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlAdsPlayAndStop.UseCustomBackColor = true;
-            this.tlAdsPlayAndStop.UseSelectable = true;
-            this.tlAdsPlayAndStop.Click += new System.EventHandler(this.TlAdsPlayAndStop_Click);
-            this.tlAdsPlayAndStop.Leave += new System.EventHandler(this.TlAdsPlayAndStop_Leave);
-            // 
-            // tlAdAndTrackOverlapOnRecordedTrack
-            // 
-            this.tlAdAndTrackOverlapOnRecordedTrack.ActiveControl = null;
-            this.tlAdAndTrackOverlapOnRecordedTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlAdAndTrackOverlapOnRecordedTrack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlAdAndTrackOverlapOnRecordedTrack.ForeColor = System.Drawing.Color.Silver;
-            this.tlAdAndTrackOverlapOnRecordedTrack.Location = new System.Drawing.Point(10, 162);
-            this.tlAdAndTrackOverlapOnRecordedTrack.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlAdAndTrackOverlapOnRecordedTrack.Name = "tlAdAndTrackOverlapOnRecordedTrack";
-            this.tlAdAndTrackOverlapOnRecordedTrack.PaintTileCount = false;
-            this.tlAdAndTrackOverlapOnRecordedTrack.Size = new System.Drawing.Size(693, 38);
-            this.tlAdAndTrackOverlapOnRecordedTrack.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlAdAndTrackOverlapOnRecordedTrack.TabIndex = 2;
-            this.tlAdAndTrackOverlapOnRecordedTrack.Tag = "test test test";
-            this.tlAdAndTrackOverlapOnRecordedTrack.Text = "AD_AND_TRACK_OVERLAP_ON_RECORDED_TRACK";
-            this.tlAdAndTrackOverlapOnRecordedTrack.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlAdAndTrackOverlapOnRecordedTrack.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlAdAndTrackOverlapOnRecordedTrack.UseCustomBackColor = true;
-            this.tlAdAndTrackOverlapOnRecordedTrack.UseSelectable = true;
-            this.tlAdAndTrackOverlapOnRecordedTrack.Click += new System.EventHandler(this.TlAdAndTrackOverlapOnRecordedTrack_Click);
-            this.tlAdAndTrackOverlapOnRecordedTrack.Leave += new System.EventHandler(this.TlAdAndTrackOverlapOnRecordedTrack_Leave);
-            // 
-            // tlBackgroundNoiceRecordedOnTrack
-            // 
-            this.tlBackgroundNoiceRecordedOnTrack.ActiveControl = null;
-            this.tlBackgroundNoiceRecordedOnTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlBackgroundNoiceRecordedOnTrack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlBackgroundNoiceRecordedOnTrack.ForeColor = System.Drawing.Color.Silver;
-            this.tlBackgroundNoiceRecordedOnTrack.Location = new System.Drawing.Point(10, 242);
-            this.tlBackgroundNoiceRecordedOnTrack.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlBackgroundNoiceRecordedOnTrack.Name = "tlBackgroundNoiceRecordedOnTrack";
-            this.tlBackgroundNoiceRecordedOnTrack.PaintTileCount = false;
-            this.tlBackgroundNoiceRecordedOnTrack.Size = new System.Drawing.Size(693, 38);
-            this.tlBackgroundNoiceRecordedOnTrack.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlBackgroundNoiceRecordedOnTrack.TabIndex = 3;
-            this.tlBackgroundNoiceRecordedOnTrack.Text = "BACKGROUND_NOICE_RECORDED_ON_TRACK";
-            this.tlBackgroundNoiceRecordedOnTrack.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlBackgroundNoiceRecordedOnTrack.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlBackgroundNoiceRecordedOnTrack.UseCustomBackColor = true;
-            this.tlBackgroundNoiceRecordedOnTrack.UseSelectable = true;
-            this.tlBackgroundNoiceRecordedOnTrack.Click += new System.EventHandler(this.TlBackgroundNoiceRecordedOnTrack_Click);
-            this.tlBackgroundNoiceRecordedOnTrack.Leave += new System.EventHandler(this.TlBackgroundNoiceRecordedOnTrack_Leave);
-            // 
-            // tlTrackDetectedAsAd
-            // 
-            this.tlTrackDetectedAsAd.ActiveControl = null;
-            this.tlTrackDetectedAsAd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlTrackDetectedAsAd.CausesValidation = false;
-            this.tlTrackDetectedAsAd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlTrackDetectedAsAd.ForeColor = System.Drawing.Color.Silver;
-            this.tlTrackDetectedAsAd.Location = new System.Drawing.Point(10, 362);
-            this.tlTrackDetectedAsAd.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlTrackDetectedAsAd.Name = "tlTrackDetectedAsAd";
-            this.tlTrackDetectedAsAd.PaintTileCount = false;
-            this.tlTrackDetectedAsAd.Size = new System.Drawing.Size(693, 38);
-            this.tlTrackDetectedAsAd.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlTrackDetectedAsAd.TabIndex = 4;
-            this.tlTrackDetectedAsAd.Text = "TRACK_DETECTED_AS_AN_AD";
-            this.tlTrackDetectedAsAd.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlTrackDetectedAsAd.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlTrackDetectedAsAd.UseCustomBackColor = true;
-            this.tlTrackDetectedAsAd.UseSelectable = true;
-            this.tlTrackDetectedAsAd.Click += new System.EventHandler(this.TlTrackDetectedAsAd_Click);
-            this.tlTrackDetectedAsAd.Leave += new System.EventHandler(this.TlTrackDetectedAsAd_Leave);
-            // 
-            // tlSpotifyLostFeatures
-            // 
-            this.tlSpotifyLostFeatures.ActiveControl = null;
-            this.tlSpotifyLostFeatures.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlSpotifyLostFeatures.CausesValidation = false;
-            this.tlSpotifyLostFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlSpotifyLostFeatures.ForeColor = System.Drawing.Color.Silver;
-            this.tlSpotifyLostFeatures.Location = new System.Drawing.Point(10, 442);
-            this.tlSpotifyLostFeatures.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlSpotifyLostFeatures.Name = "tlSpotifyLostFeatures";
-            this.tlSpotifyLostFeatures.PaintTileCount = false;
-            this.tlSpotifyLostFeatures.Size = new System.Drawing.Size(693, 38);
-            this.tlSpotifyLostFeatures.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlSpotifyLostFeatures.TabIndex = 4;
-            this.tlSpotifyLostFeatures.Text = "SPOTIFY_LOST_FEATURES";
-            this.tlSpotifyLostFeatures.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlSpotifyLostFeatures.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlSpotifyLostFeatures.UseCustomBackColor = true;
-            this.tlSpotifyLostFeatures.UseSelectable = true;
-            this.tlSpotifyLostFeatures.Click += new System.EventHandler(this.TlSpotifyLostFeatures_Click);
-            this.tlSpotifyLostFeatures.Leave += new System.EventHandler(this.TlSpotifyLostFeatures_Leave);
-            // 
-            // tlSpotifyAudioEndpoint
-            // 
-            this.tlSpotifyAudioEndpoint.ActiveControl = null;
-            this.tlSpotifyAudioEndpoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tlSpotifyAudioEndpoint.CausesValidation = false;
-            this.tlSpotifyAudioEndpoint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlSpotifyAudioEndpoint.ForeColor = System.Drawing.Color.Silver;
-            this.tlSpotifyAudioEndpoint.Location = new System.Drawing.Point(10, 522);
-            this.tlSpotifyAudioEndpoint.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlSpotifyAudioEndpoint.Name = "tlSpotifyAudioEndpoint";
-            this.tlSpotifyAudioEndpoint.PaintTileCount = false;
-            this.tlSpotifyAudioEndpoint.Size = new System.Drawing.Size(693, 38);
-            this.tlSpotifyAudioEndpoint.Style = MetroFramework.MetroColorStyle.Green;
-            this.tlSpotifyAudioEndpoint.TabIndex = 4;
-            this.tlSpotifyAudioEndpoint.Text = "SPOTIFY_AUDIO_ENDPOINT";
-            this.tlSpotifyAudioEndpoint.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
-            this.tlSpotifyAudioEndpoint.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.tlSpotifyAudioEndpoint.UseCustomBackColor = true;
-            this.tlSpotifyAudioEndpoint.UseSelectable = true;
-            this.tlSpotifyAudioEndpoint.Click += new System.EventHandler(this.TlSpotifyAudioEndpoint_Click);
-            this.tlSpotifyAudioEndpoint.Leave += new System.EventHandler(this.TlSpotifyAudioEndpoint_Leave);
             // 
             // FrmEspionSpotify
             // 
