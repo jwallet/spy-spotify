@@ -592,7 +592,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By disabling ads, you also disable Spotify radios, your daily mixes, podcasts and your friend list. Otherwise, Spotify could still be able to play some ads. Disable this feature before leaving Spytify if you want to recover all these Spotify features..
+        ///   Looks up a localized string similar to By disabling ads, you will block ads coming from partners (third parties domains). Spotify will still be able to play their own ads, because they come from the same domain that their music content, radio, friends list and daily mix..
         /// </summary>
         internal static string msgBodyDisableAds {
             get {

@@ -467,15 +467,11 @@ namespace EspionSpotify
 
             if (Administrator.EnsureAdmin())
             {
-                // Recover friend list, radios, podcasts, daily mixes : spclient.wg.spotify.com (removed in 1.1.4)
-                
-                // TODO: If a new way comes back to block more ads, we may have to
-                //       valid that it still doesn't block these Spotify features.
-                // if (tgDisableAds.Checked && MetroMessageBox.Show(this,
-                //    Rm.GetString($"msgBodyDisableAds"),
-                //    Rm.GetString($"msgTitleDisableAds"),
-                //    MessageBoxButtons.OK,
-                //    MessageBoxIcon.Question) == DialogResult.OK) return;
+                if (tgDisableAds.Checked && MetroMessageBox.Show(this,
+                    Rm.GetString($"msgBodyDisableAds"),
+                    Rm.GetString($"msgTitleDisableAds"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Question) == DialogResult.OK) return;
                 return;
             }
 

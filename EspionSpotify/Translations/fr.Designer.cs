@@ -592,7 +592,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d&apos;amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify..
+        ///   Looks up a localized string similar to En désactivant les annonces, vous bloquerez les annonces provenant de partenaires (domaines tiers). Spotify pourra quand même jouer leurs propre annonces, puisqu&apos;elles viennent du même domaine que leur contenu musical, radio, liste d&apos;amis et &quot;daily mix&quot;..
         /// </summary>
         internal static string msgBodyDisableAds {
             get {

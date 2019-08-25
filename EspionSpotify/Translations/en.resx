@@ -386,7 +386,7 @@
     <comment>message</comment>
   </data>
   <data name="msgBodyDisableAds" xml:space="preserve">
-    <value>By disabling ads, you also disable Spotify radios, your daily mixes, podcasts and your friend list. Otherwise, Spotify could still be able to play some ads. Disable this feature before leaving Spytify if you want to recover all these Spotify features.</value>
+    <value>By disabling ads, you will block ads coming from partners (third parties domains). Spotify will still be able to play their own ads, because they come from the same domain that their music content, radio, friends list and daily mix.</value>
     <comment>interface</comment>
   </data>
   <data name="msgTitleDisableAds" xml:space="preserve">

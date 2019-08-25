@@ -386,8 +386,8 @@
     <comment>console</comment>
   </data>
   <data name="msgBodyDisableAds" xml:space="preserve">
-    <value>En désactivant les annonces, vous désactivez aussi les radios Spotify, vos mixes journaliers, les podcasts et votre liste d'amis. Autrement, Spotify serait encore capable de jouer des annonces. Désactiver cette fonctionnalité avant de quitter Spytify si vous voulez rétablir toutes ces fonctionnalités de Spotify.</value>
-    <comment>interface</comment>
+    <value>En désactivant les annonces, vous bloquerez les annonces provenant de partenaires (domaines tiers). Spotify pourra quand même jouer leurs propre annonces, puisqu'elles viennent du même domaine que leur contenu musical, radio, liste d'amis et "daily mix".</value>
+    <comment>message</comment>
   </data>
   <data name="msgTitleDisableAds" xml:space="preserve">
     <value>Désactiver les annonces</value>
