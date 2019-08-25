@@ -85,6 +85,7 @@ namespace EspionSpotify
             tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
+            tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
             SetLanguageDropDown();
@@ -95,26 +96,27 @@ namespace EspionSpotify
             cbBitRate.SelectedIndex = indexBitRate;
             cbLanguage.SelectedIndex = indexLanguage;
 
-            var _logs = Settings.Default.Logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-            WritePreviousLogsIntoConsole(_logs);
-
-            _userSettings.OutputPath = Settings.Default.Directory;
+            _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice; // TODO: settings default stay last saved
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
+            _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
+            _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
+            _userSettings.GroupByFoldersEnabled = Settings.Default.GroupByFoldersEnabled;
             _userSettings.MediaFormat = (MediaFormat)Settings.Default.MediaFormat;
             _userSettings.MinimumRecordedLengthSeconds = Settings.Default.MinimumRecordedLengthSeconds;
-            _userSettings.GroupByFoldersEnabled = Settings.Default.GroupByFoldersEnabled;
-            _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
-            _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
-            _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
-            _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
-            _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice; // TODO: settings default stay last saved
+            _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
+            _userSettings.OutputPath = Settings.Default.Directory;
+            _userSettings.RecordUnknownTrackTypeEnabled = Settings.Default.RecordUnknownTrackTypeEnabled;
+            _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
 
             _audioSession = new MainAudioSession(indexAudioEndPointDevice);
             SetAudioEndPointDevicesDropDown();
             UpdateAudioEndPointFields();
+
+            var _logs = Settings.Default.Logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            WritePreviousLogsIntoConsole(_logs);
 
             var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;

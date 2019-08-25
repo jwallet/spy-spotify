@@ -10,8 +10,6 @@ namespace EspionSpotify
 {
     public class SpotifyProcess: ISpotifyProcess
     {
-        private const string SPOTIFY = "Spotify";
-
         private readonly int? _spotifyProcessId;
         private readonly ISpotifyAudioSession _spotifyAudioSession;
 
@@ -65,7 +63,7 @@ namespace EspionSpotify
 
             foreach (var process in Process.GetProcesses())
             {
-                if (process.ProcessName.ToLowerInvariant().Equals(SPOTIFY.ToLowerInvariant()))
+                if (SpotifyStatus.WindowTitleIsSpotify(process.ProcessName))
                 {
                     spotifyProcesses.Add(process);
                 }

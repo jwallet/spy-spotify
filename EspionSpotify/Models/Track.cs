@@ -106,7 +106,7 @@ namespace EspionSpotify.Models
 
             if (Ad)
             {
-                song = $"{SPOTIFY} - {FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}";
+                song = Artist;
             }
 
             return song;

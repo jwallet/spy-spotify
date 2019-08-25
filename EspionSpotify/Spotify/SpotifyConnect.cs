@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EspionSpotify.Spotify;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -7,7 +8,6 @@ namespace EspionSpotify
 {
     public class SpotifyConnect
     {
-        private const string SPOTIFY = "spotify";
         private static readonly TimeSpan RunSpotifyInterval = TimeSpan.FromSeconds(3);
 
         private static readonly string[] SpotifyPossiblePaths =
@@ -73,7 +73,7 @@ namespace EspionSpotify
 
         public static bool IsSpotifyRunning()
         {
-            return Process.GetProcessesByName(SPOTIFY).Length >= 1;
+            return Process.GetProcessesByName(SpotifyStatus.SPOTIFY).Length >= 1;
         }
     }
 }

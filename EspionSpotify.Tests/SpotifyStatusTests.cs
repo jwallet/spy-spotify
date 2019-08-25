@@ -78,7 +78,7 @@ namespace EspionSpotify.Tests
             var status = new SpotifyStatus(spotifyWindowInfo);
 
             Assert.Equal(expectedTrack, status.CurrentTrack);
-            Assert.Equal("Spotify - Ad", status.CurrentTrack.ToString());
+            Assert.Equal(expectedTrack.ToString(), status.CurrentTrack.ToString());
         }
     }
 }

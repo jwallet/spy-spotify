@@ -1,14 +1,22 @@
 ﻿using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
+using System.Linq;
 
 namespace EspionSpotify.Spotify
 {
     public class SpotifyStatus: ISpotifyStatus
     {
+        public const string SPOTIFY = "spotify";
+
         public Track CurrentTrack { get; set; }
 
         private string[] _windowTitleSeparator { get; }
+
+        public static bool WindowTitleIsSpotify(string title)
+        {
+            return title?.ToLowerInvariant().Equals(SPOTIFY) ?? false;
+        }
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {

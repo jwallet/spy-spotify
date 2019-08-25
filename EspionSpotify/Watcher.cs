@@ -34,9 +34,10 @@ namespace EspionSpotify
         public bool NumTrackActivated { get => _userSettings.OrderNumber.HasValue; }
         public bool AdPlaying { get => _currentTrack.Ad; }
         public string SongTitle { get => _currentTrack.ToString(); }
+        public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
         public bool IsTypeAllowed
         {
-            get => _currentTrack.IsNormal() || (_userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing);
+            get => _currentTrack.IsNormal() || IsRecordUnknownActive;
         }
         public bool IsOldSong
         { 
@@ -90,10 +91,11 @@ namespace EspionSpotify
                 return false;
             }
 
-            _isPlaying = track.Playing;
             _currentTrack = track;
+            _isPlaying = _currentTrack.Playing;
 
-            _form.UpdatePlayingTitle(SongTitle);
+            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
+            _form.UpdatePlayingTitle($"{adTitle}{SongTitle}");
 
             MutesSpotifyAds(AdPlaying);
 
