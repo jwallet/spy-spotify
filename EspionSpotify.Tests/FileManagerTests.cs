@@ -53,9 +53,9 @@ namespace EspionSpotify.Tests
         [InlineData("Artist_-_Title", 4, "C:\\path", "C:\\path\\Artist_-_Title 4.mp3")]
         [InlineData("001 Title", 1, "C:\\path\\Artist", "C:\\path\\Artist\\001 Title.mp3")]
         [InlineData("Artist - Title", 1, "C:\\path", "C:\\path\\Artist - Title.mp3")]
-        private void GetFileName_ReturnsTrackNameWithMediaFormat(string songName, int count, string path, string expectedResult)
+        private void GetPathName_ReturnsTrackNameWithMediaFormat(string songName, int count, string path, string expectedResult)
         {
-            var fileName = _fileManager.GetFileName(songName, count, path);
+            var fileName = _fileManager.GetPathName(songName, count, path);
 
             Assert.Equal(expectedResult, fileName);
         }
@@ -89,13 +89,13 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData("C:\\path\\Artist", false, "Title - Live.mp3")]
-        [InlineData("C:\\path", false, "Title - Live.mp3")]
-        [InlineData("C:\\path\\Artist", true, "C:\\path\\Artist\\Title - Live.mp3")]
-        [InlineData("C:\\path", true, "C:\\path\\Title - Live.mp3")]
-        private void BuildFileName_ReturnsFileNameGroupByFolders(string path, bool includePath, string expectedResult)
+        [InlineData("C:\\path", false, true, "Title - Live.mp3")]
+        [InlineData("C:\\path", false, false, "Artist - Title - Live.mp3")]
+        [InlineData("C:\\path", true, true, "C:\\path\\Artist\\Title - Live.mp3")]
+        [InlineData("C:\\path", true, false, "C:\\path\\Artist - Title - Live.mp3")]
+        private void BuildFileName_ReturnsFileNameGroupByFolders(string path, bool includePath, bool isGroupByFolders, string expectedResult)
         {
-            _userSettings.GroupByFoldersEnabled = true;
+            _userSettings.GroupByFoldersEnabled = isGroupByFolders;
 
             var fileName = _fileManager.BuildFileName(path, includePath);
 
@@ -112,27 +112,35 @@ namespace EspionSpotify.Tests
             Assert.Equal("C:\\path\\Artist - Title - Live.wav", fileName);
         }
 
-        [Fact(Skip = "Windows Only")]
-        private void CreateDirectory_ReturnsNoArtistFolderPath()
+
+        [Fact(Skip = "Windows")]
+        private void GetFolderPath_ReturnsNoArtistFolderPath()
         {
-            var artistFolder = _fileManager.CreateDirectory();
+            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
             Assert.Null(artistFolder);
         }
 
-        [Fact(Skip = "Windows Only")]
-        private void CreateDirectory_ReturnsArtistFolderPath()
+        [Fact(Skip = "Windows")]
+        private void GetFolderPath_ReturnsArtistFolderPath()
         {
             _userSettings.GroupByFoldersEnabled = true;
 
             var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
 
-            var artistFolder = _fileManager.CreateDirectory();
+            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
-            Assert.Equal($"//{artistDir}", artistFolder);
+            Assert.Equal($"\\{artistDir}", artistFolder);
         }
 
-        [Fact(Skip = "Windows Only")]
+        [Fact(Skip = "Windows")]
+        private void IsPathFileNameExists_ReturnsExists()
+        {
+            var result = FileManager.IsPathFileNameExists(_track, _userSettings);
+            Assert.False(result);
+        }
+
+        [Fact(Skip = "Windows")]
         private void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
         {
             var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);

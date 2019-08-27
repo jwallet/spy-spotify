@@ -394,7 +394,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Duplicate the current track file name to avoid overwriting files with the same name.</value>
+    <value>Duplicate already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyLostFeatures" xml:space="preserve">
@@ -454,6 +454,10 @@
   </data>
   <data name="logRecorded" xml:space="preserve">
     <value>Recorded {0} in : {1}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logTrackExists" xml:space="preserve">
+    <value>// Skipping: {0} (recording already exists)</value>
     <comment>console</comment>
   </data>
 </root>

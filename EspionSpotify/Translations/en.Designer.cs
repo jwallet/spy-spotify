@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate the current track file name to avoid overwriting files with the same name..
+        ///   Looks up a localized string similar to Duplicate already recorded tracks instead of skipping them..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -543,6 +543,15 @@ namespace EspionSpotify.Translations {
         internal static string logStopRecordingWhenSongEnds {
             get {
                 return ResourceManager.GetString("logStopRecordingWhenSongEnds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Skipping: {0} (recording already exists).
+        /// </summary>
+        internal static string logTrackExists {
+            get {
+                return ResourceManager.GetString("logTrackExists", resourceCulture);
             }
         }
         

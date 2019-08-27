@@ -11,7 +11,7 @@ namespace EspionSpotify
         private readonly Track _track;
 
         private const int FIRST_SONG_NAME_COUNT = 1;
-        private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
+        private static readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
         public FileManager(UserSettings userSettings, Track track)
         {
@@ -19,56 +19,29 @@ namespace EspionSpotify
             _track = track;
         }
 
-        public string GetFileName(string songName, int count, string path = null)
+        public string GetPathName(string fileName, int count, string path = null)
         {
-            var ending = _userSettings.MediaFormat.ToString().ToLower();
-            songName += count > FIRST_SONG_NAME_COUNT ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
-            return path != null ? $"{path}\\{songName}.{ending}" : $"{songName}.{ending}";
+            var fileExtension = GetMediaFormatExtension(_userSettings);
+            fileName += count > FIRST_SONG_NAME_COUNT ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
+            var mediaFile = $"{fileName}.{fileExtension}";
+            return path != null ? $"{path}\\{mediaFile}" : mediaFile;
         }
 
         public string BuildFileName(string path, bool includePath = true)
         {
-            string songName;
-            var track = _userSettings.OrderNumber?.ToString("000 ") ?? null;
-
-            if (_userSettings.GroupByFoldersEnabled)
-            {
-                songName = Normalize.RemoveDiacritics(_track.ToTitleString());
-                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
-            }
-            else
-            {
-                songName = Normalize.RemoveDiacritics(_track.ToString());
-                songName = Regex.Replace(songName, _windowsExlcudedChars, string.Empty);
-            }
-
-            var songNameTrackNumber = Regex.Replace($"{track}{songName}", "\\s", _userSettings.TrackTitleSeparator);
-            var filename = GetFileName(songNameTrackNumber, FIRST_SONG_NAME_COUNT, includePath ? path : null);
+            var pathWithFolder = path + GetFolderPath(_track, _userSettings);
+            var fileName = GetFileName(_track, _userSettings);
             var count = FIRST_SONG_NAME_COUNT;
 
-            while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetFileName(songNameTrackNumber, count, path)))
+            var pathName = GetPathName(fileName, count, includePath ? pathWithFolder : null);
+
+            while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetPathName(fileName, count, pathWithFolder)))
             {
-                if (includePath) count++;
-                filename = GetFileName(songNameTrackNumber, count, includePath ? path : null);
-                if (!includePath) count++;
+                count++;
+                pathName = GetPathName(fileName, count, includePath ? pathWithFolder : null);
             }
 
-            return filename;
-        }
-
-        public string CreateDirectory()
-        {
-            string insertArtistDir = null;
-            var artistDir = Normalize.RemoveDiacritics(_track.Artist);
-            artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
-
-            if (_userSettings.GroupByFoldersEnabled)
-            {
-                insertArtistDir = $"//{artistDir}";
-                Directory.CreateDirectory($"{_userSettings.OutputPath}//{artistDir}");
-            }
-
-            return insertArtistDir;
+            return pathName;
         }
 
         public void DeleteFile(string currentFile)
@@ -82,9 +55,54 @@ namespace EspionSpotify
             {
                 DeleteFileFolder(currentFile);
             }
-        } 
+        }
+        private static string GetMediaFormatExtension(UserSettings userSettings)
+        {
+            return userSettings.MediaFormat.ToString().ToLower();
+        }
 
-        private void DeleteFileFolder(string currentFile)
+        public static bool IsPathFileNameExists(Track track, UserSettings userSettings)
+        {
+            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings);
+            var fileName = GetFileName(track, userSettings);
+            return File.Exists($"{pathWithFolder}\\{fileName}.{GetMediaFormatExtension(userSettings)}");
+        }
+
+        public static string GetFolderPath(Track track, UserSettings userSettings)
+        {
+            string insertArtistDir = null;
+            var artistDir = Normalize.RemoveDiacritics(track.Artist);
+            artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
+
+            if (userSettings.GroupByFoldersEnabled)
+            {
+                insertArtistDir = $"\\{artistDir}";
+                Directory.CreateDirectory($"{userSettings.OutputPath}\\{artistDir}");
+            }
+
+            return insertArtistDir;
+        }
+
+        private static string GetFileName(Track track, UserSettings userSettings)
+        {
+            string fileName;
+
+            if (userSettings.GroupByFoldersEnabled)
+            {
+                fileName = Normalize.RemoveDiacritics(track.ToTitleString());
+                fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
+            }
+            else
+            {
+                fileName = Normalize.RemoveDiacritics(track.ToString());
+                fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
+            }
+
+            var trackNumber = userSettings.OrderNumber?.ToString("000 ") ?? null;
+            return Regex.Replace($"{trackNumber}{fileName}", "\\s", userSettings.TrackTitleSeparator); ;
+        }
+
+        private static void DeleteFileFolder(string currentFile)
         {
             var folderPath = Path.GetDirectoryName(currentFile);
             if (!Directory.EnumerateFiles(folderPath).Any())

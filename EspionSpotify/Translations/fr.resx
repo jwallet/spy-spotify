@@ -394,7 +394,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliquer le nom du fichier de la piste audio pour ne pas ré-écrire sur les fichiers de même nom.</value>
+    <value>Dupliquer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpotifyLostFeatures" xml:space="preserve">
@@ -456,5 +456,8 @@
   <data name="logRecorded" xml:space="preserve">
     <value>Enregistré {0} en : {1}</value>
     <comment>console</comment>
+  </data>
+  <data name="logTrackExists" xml:space="preserve">
+    <value>// Passe: {0} (l'enregistrement existe déjà)</value>
   </data>
 </root>
