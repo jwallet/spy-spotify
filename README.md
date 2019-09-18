@@ -69,4 +69,4 @@ You can help translate Spytify on Zanata.org, see [Translate](translate.md) for 
 If you like Spytify, you can help me out for a couple of :beers:!   
 Also, you can make me work on a feature if you Make a wish - [see details](https://beerpay.io/faqs)
 
-<img src="https://github.com/jwallet/spy-spotify/blob/master/assets/images/beerpaybuck.svg" /> [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
+<img src="https://github.com/jwallet/spy-spotify/blob/master/assets/images/beerpaybadge.svg" /> [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
