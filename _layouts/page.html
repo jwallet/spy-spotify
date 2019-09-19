@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="{% t site.description %}"/>
+    <meta name="keywords" content="{% t site.keywords %}"/>
+    <link rel="shortcut icon" href="{{ site.logo }}" />
+    <link rel="apple-touch-icon" href="{{ site.logo }}" />
+    <link rel="stylesheet" href="{{ 'assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <title>{{site.title}} {% t GLOBAL.DESCRIPTION %} {% t {{ page.title }} %}</title>
+  </head>
+  <body>
+    <div class="language-row">
+      <section class="language-box">
+        <label>{% t GLOBAL.LANGUAGE %}:</label>
+        <select id="lang" name="lang">
+          <option selected value="{{ site.lang }}">{{ site.languageNames[site.lang] }}</a>
+          {% for lang in site.languageNames %}
+          {% if lang[0] == site.lang %} {% continue %} {% endif %}
+          <option value="{{ lang[0] }}">{{ lang[1] }}</option>
+          {% endfor %}
+        </select>
+      </section>
+    </div>
+
+    <header class="page-header" role="banner">
+      <a href="{{ site.github.repository_url }}" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="{{ site.logo }}" role="logo" /></a>
+      <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{% t GLOBAL.DESCRIPTION %}</h2>      
+    </header>
+    
+    <nav class="nav" role="navigation">
+        <a href="./overview.html" aria-label="Overview" class="btn">{% t TABS.OVERVIEW %}</a>
+        <a href="./features.html" aria-label="Features" class="btn">{% t TABS.FEATURES %}</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">{% t TABS.SETTINGS %}</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">{% t TABS.FAQ %}</a>
+
+        {% if site.show_downloads %}
+          <a href="{{ site.download }}" aria-label="Download" class="btn out">{% t TABS.DOWNLOAD %}</a>
+        {% endif %}
+    </nav>
+
+    <main id="content" class="main-content" role="main">
+ 
+      {{ content }}
+
+      <footer class="site-footer">
+        <a href="https://www.github.com/jwallet/spy-spotify" aria-label="Go to Spytify GitHub page"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" /></a>
+        <a href="https://www.reddit.com/r/spytify" aria-label="Go to Spytify Sub Reddit"><img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social"></a>
+
+        {% if site.github.is_project_page %}
+          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> {% t GLOBAL.MAINTAINED_BY %} <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
+        {% endif %}
+        <span class="site-footer-credits">{% t GLOBAL.GENERATED_BY %} <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+
+    {% if site.google_analytics %}
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '{{ site.google_analytics }}', 'auto');
+        ga('send', 'pageview');
+      </script>
+    {% endif %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", setLanguage);
+      document.getElementById('lang').addEventListener('change', onLangChange);
+      
+      function changeLanguage(language) {
+        var lang = language || '{{ site.lang }}';
+        var pathname = window.location.pathname;
+        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
+        
+        if (lang === 'en') window.location.pathname = pathnameCleared;
+        else if (!pathname.startsWith(`/${lang}/`)) window.location.pathname = `${lang}${pathnameCleared}`;
+      }
+
+      function onLangChange(e) {
+        const selectedLanguage = e.target.value
+        window.localStorage.setItem('lang', selectedLanguage);
+        changeLanguage(selectedLanguage)
+      }
+
+      function setLanguage() {
+        if ('{{ site.lang }}' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', '{{ site.lang }}');
+        }
+      }
+
+  </script>
+  </body>
+</html>

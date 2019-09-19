@@ -799,7 +799,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio.
+        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio..
         /// </summary>
         internal static string tlSpotifyAudioEndpoint {
             get {
@@ -826,7 +826,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pistes audio sont détectées en tant que publicité.
+        ///   Looks up a localized string similar to Pistes audio sont détectées en tant que publicité..
         /// </summary>
         internal static string tlTrackDetectedAsAd {
             get {

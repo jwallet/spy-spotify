@@ -62,6 +62,10 @@ x64/
 .DS_Store*
 Icon?
 
+# Jekyll ignore
+_site/*
+.jekyll-cache/*
+
 # Visual C++ cache files
 ipch/
 *.aps
