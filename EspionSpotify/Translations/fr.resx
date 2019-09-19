@@ -374,7 +374,7 @@
     <comment>interface</comment>
   </data>
   <data name="tlTrackDetectedAsAd" xml:space="preserve">
-    <value>Pistes audio sont détectées en tant que publicité</value>
+    <value>Pistes audio sont détectées en tant que publicité.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyAudioEndpoint" xml:space="preserve">
-    <value>Isoler l'audio de Spotify vers un différent périphérique audio</value>
+    <value>Isoler l'audio de Spotify vers un différent périphérique audio.</value>
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack_second" xml:space="preserve">

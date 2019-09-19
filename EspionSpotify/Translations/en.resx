@@ -441,7 +441,7 @@
     <comment>interface</comment>
   </data>
   <data name="tlSpotifyAudioEndpoint" xml:space="preserve">
-    <value>Isolates Spotify audio to a different audio endpoint device</value>
+    <value>Isolates Spotify audio to a different audio endpoint device.</value>
     <comment>interface</comment>
   </data>
   <data name="lblBackgroundNoiceRecordedOnTrack_second" xml:space="preserve">

@@ -799,7 +799,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Isolates Spotify audio to a different audio endpoint device.
+        ///   Looks up a localized string similar to Isolates Spotify audio to a different audio endpoint device..
         /// </summary>
         internal static string tlSpotifyAudioEndpoint {
             get {
