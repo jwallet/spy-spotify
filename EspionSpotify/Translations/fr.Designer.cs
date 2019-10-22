@@ -394,20 +394,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Effacement de: {0}.
+        ///   Looks up a localized string similar to Effacement de: {0} [&lt; {1}s].
         /// </summary>
         internal static string logDeleting {
             get {
                 return ResourceManager.GetString("logDeleting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // Effacement de: {0} [&lt; {1}s].
-        /// </summary>
-        internal static string logDeletingTooShort {
-            get {
-                return ResourceManager.GetString("logDeletingTooShort", resourceCulture);
             }
         }
         

@@ -1,7 +1,6 @@
 ﻿using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
-using System.Linq;
 
 namespace EspionSpotify.Spotify
 {

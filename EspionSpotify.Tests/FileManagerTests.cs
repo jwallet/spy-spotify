@@ -61,43 +61,37 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData("C:\\path\\Artist", false, "Artist - Title - Live.mp3")]
-        [InlineData("C:\\path", false, "Artist - Title - Live.mp3")]
-        [InlineData("C:\\path\\Artist", true, "C:\\path\\Artist\\Artist - Title - Live.mp3")]
-        [InlineData("C:\\path", true, "C:\\path\\Artist - Title - Live.mp3")]
-        private void BuildFileName_ReturnsFileName(string path, bool includePath, string expectedResult)
+        [InlineData("C:\\path\\Artist", "C:\\path\\Artist\\Artist - Title - Live.mp3")]
+        [InlineData("C:\\path", "C:\\path\\Artist - Title - Live.mp3")]
+        private void BuildFileName_ReturnsFileName(string path, string expectedResult)
         {
-            var fileName = _fileManager.BuildFileName(path, includePath);
+            var fileName = _fileManager.BuildFileName(path);
 
             Assert.Equal(expectedResult, fileName);
         }
 
         [Theory]
-        [InlineData("C:\\path\\Artist", false, "100_Artist_-_Title_-_Live.mp3")]
-        [InlineData("C:\\path", false, "100_Artist_-_Title_-_Live.mp3")]
-        [InlineData("C:\\path\\Artist", true, "C:\\path\\Artist\\100_Artist_-_Title_-_Live.mp3")]
-        [InlineData("C:\\path", true, "C:\\path\\100_Artist_-_Title_-_Live.mp3")]
-        private void BuildFileName_ReturnsFileNameOrderNumbered(string path, bool includePath, string expectedResult)
+        [InlineData("C:\\path\\Artist", "C:\\path\\Artist\\100_Artist_-_Title_-_Live.mp3")]
+        [InlineData("C:\\path", "C:\\path\\100_Artist_-_Title_-_Live.mp3")]
+        private void BuildFileName_ReturnsFileNameOrderNumbered(string path, string expectedResult)
         {
             _userSettings.OrderNumberInfrontOfFileEnabled = true;
             _userSettings.TrackTitleSeparator = "_";
             _userSettings.InternalOrderNumber = 100;
 
-            var fileName = _fileManager.BuildFileName(path, includePath);
+            var fileName = _fileManager.BuildFileName(path);
 
             Assert.Equal(expectedResult, fileName);
         }
 
         [Theory]
-        [InlineData("C:\\path", false, true, "Title - Live.mp3")]
-        [InlineData("C:\\path", false, false, "Artist - Title - Live.mp3")]
-        [InlineData("C:\\path", true, true, "C:\\path\\Artist\\Title - Live.mp3")]
-        [InlineData("C:\\path", true, false, "C:\\path\\Artist - Title - Live.mp3")]
-        private void BuildFileName_ReturnsFileNameGroupByFolders(string path, bool includePath, bool isGroupByFolders, string expectedResult)
+        [InlineData("C:\\path", true, "C:\\path\\Artist\\Title - Live.mp3")]
+        [InlineData("C:\\path", false, "C:\\path\\Artist - Title - Live.mp3")]
+        private void BuildFileName_ReturnsFileNameGroupByFolders(string path, bool isGroupByFolders, string expectedResult)
         {
             _userSettings.GroupByFoldersEnabled = isGroupByFolders;
 
-            var fileName = _fileManager.BuildFileName(path, includePath);
+            var fileName = _fileManager.BuildFileName(path);
 
             Assert.Equal(expectedResult, fileName);
         }
@@ -107,7 +101,7 @@ namespace EspionSpotify.Tests
         {
             _userSettings.MediaFormat = Enums.MediaFormat.Wav;
 
-            var fileName = _fileManager.BuildFileName("C:\\path", true);
+            var fileName = _fileManager.BuildFileName("C:\\path");
 
             Assert.Equal("C:\\path\\Artist - Title - Live.wav", fileName);
         }

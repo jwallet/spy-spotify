@@ -19,6 +19,7 @@ using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
 using EspionSpotify.MediaTags;
+using System.Text.RegularExpressions;
 
 namespace EspionSpotify
 {
@@ -303,6 +304,7 @@ namespace EspionSpotify
                 if (!alert)
                 {
                     var indexOfColon = text.IndexOf(':');
+                    var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
                     var attrb = text.Substring(0, indexOfColon);
                     var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
                     rtbLog.AppendText(attrb);
@@ -310,7 +312,7 @@ namespace EspionSpotify
                     rtbLog.SelectionColor = Color.White;
                     rtbLog.AppendText(msg + Environment.NewLine);
                     rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                    rtbLog.SelectionColor = Color.SpringGreen;
+                    rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
 
                     Settings.Default.Logs += $";{LogDate}{attrb}{msg}";
                 }

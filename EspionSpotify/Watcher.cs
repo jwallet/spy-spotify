@@ -158,14 +158,10 @@ namespace EspionSpotify
 
                 while (Running)
                 {
+                    // Order is important
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
                         _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
-                        Running = false;
-                    }
-                    else if (_userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
-                    {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
                         Running = false;
                     }
                     else if (isSpotifyPlayingOutsideOfSelectedAudioEndPoint)
@@ -178,6 +174,11 @@ namespace EspionSpotify
                         ToggleStopRecordingDelayed = false;
                         _stopRecordingWhenSongEnds = true;
                         _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStopRecordingWhenSongEnds"));
+                    }
+                    else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
+                    {
+                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
+                        ToggleStopRecordingDelayed = true;
                     }
                     Thread.Sleep(200);
                 }
