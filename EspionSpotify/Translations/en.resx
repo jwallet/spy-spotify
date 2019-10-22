@@ -218,11 +218,7 @@
     <comment>console</comment>
   </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>// Removing: {0}</value>
-    <comment>console</comment>
-  </data>
-  <data name="logDeletingTooShort" xml:space="preserve">
-    <value>// Removing: {0} [&lt; {1}s]</value>
+    <value>Removing: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">

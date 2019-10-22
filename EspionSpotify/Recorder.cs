@@ -19,6 +19,7 @@ namespace EspionSpotify
         private readonly Track _track;
         private readonly IFrmEspionSpotify _form;
         private string _currentFile;
+        private string _currentFilePending;
         private WasapiLoopbackCapture _waveIn;
         private Stream _writer;
         private FileManager _fileManager;
@@ -50,7 +51,7 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? $"{0}", _fileManager.BuildFileName(_userSettings.OutputPath, false)));
+            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? $"{0}", _fileManager.GetFileName(_currentFile)));
 
             while (Running)
             {
@@ -75,40 +76,42 @@ namespace EspionSpotify
                 _waveIn.Dispose();
             }
 
+            if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
+            {
+                _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeleting") ?? $"{0}{1}", _fileManager.GetFileName(_currentFile), _userSettings.MinimumRecordedLengthSeconds));
+                _fileManager.DeleteFile(_currentFilePending);
+                return;
+            }
+
             var timeSpan = new TimeSpan(TICKS_PER_SECOND * CountSeconds);
             var length = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
             _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecorded") ?? $"{0}{1}", _track.ToString(), length));
 
-            if (CountSeconds >= _userSettings.MinimumRecordedLengthSeconds)
+            _fileManager.Rename(_currentFilePending, _currentFile);
+
+            if (!_userSettings.MediaFormat.Equals(MediaFormat.Mp3)) return;
+
+            var mp3TagsInfo = new MediaTags.MP3Tags()
             {
-                if (!_userSettings.MediaFormat.Equals(MediaFormat.Mp3)) return;
+                Track = _track,
+                OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
+                Count = _userSettings.OrderNumber,
+                CurrentFile = _currentFile
+            };
 
-                var mp3TagsInfo = new MediaTags.MP3Tags()
-                {
-                    Track = _track,
-                    OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                    Count = _userSettings.OrderNumber,
-                    CurrentFile = _currentFile
-                };
-
-                Task.Run(mp3TagsInfo.SaveMediaTags);
-
-                return;
-            }
-
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeletingTooShort") ?? $"{0}{1}", _fileManager.BuildFileName(_userSettings.OutputPath, false), _userSettings.MinimumRecordedLengthSeconds));
-
-            _fileManager.DeleteFile(_currentFile);
+            Task.Run(mp3TagsInfo.SaveMediaTags);
         }
 
         private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
         {
+            _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
+            _currentFilePending = _fileManager.BuildSpytifyFileName(_currentFile);
+
             if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
             {
-                _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
                 try
                 {
-                    return new LameMP3FileWriter(_currentFile, waveIn.WaveFormat, _userSettings.Bitrate);
+                    return new LameMP3FileWriter(_currentFilePending, waveIn.WaveFormat, _userSettings.Bitrate);
                 }
                 catch (ArgumentException ex)
                 {
@@ -146,8 +149,7 @@ namespace EspionSpotify
 
             try
             {
-                _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
-                return new WaveFileWriter(_currentFile, waveIn.WaveFormat);
+                return new WaveFileWriter(_currentFilePending, waveIn.WaveFormat);
             }
             catch (Exception ex)
             {
