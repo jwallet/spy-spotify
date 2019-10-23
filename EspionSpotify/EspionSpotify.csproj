@@ -177,6 +177,8 @@
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="IFrmEspionSpotify.cs" />
+    <Compile Include="MediaTags\ILastFMAPI.cs" />
+    <Compile Include="MediaTags\ISpotifyAPI.cs" />
     <Compile Include="Translations\en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

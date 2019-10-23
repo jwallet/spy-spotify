@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.MediaTags
 {
-    public class SpotifyAPI : IExternalAPI
+    public class SpotifyAPI : ISpotifyAPI, IExternalAPI
     {
         public string _clientId;
         public string _secretId;
@@ -18,6 +18,8 @@ namespace EspionSpotify.MediaTags
         private DateTimeOffset _nextTokenRenewal;
         private AuthorizationCodeAuth _authorizationCodeAuth;
         private readonly LastFMAPI _lastFmApi = new LastFMAPI();
+
+        public SpotifyAPI() { }
 
         public SpotifyAPI(string clientId, string secretId, string redirectUrl = "http://localhost:4002")
         {
@@ -49,37 +51,46 @@ namespace EspionSpotify.MediaTags
                 return await _lastFmApi.UpdateTrack(track);
             }
 
-            track.Title = playback.Item.Name;
-            track.AlbumPosition = playback.Item.TrackNumber;
-            track.Performers = playback.Item.Artists?.Select(a => a.Name).ToArray();
-            track.Disc = (uint)playback.Item.DiscNumber;
+            MapSpotifyTrackToTrack(track, playback.Item);
 
-            if (playback?.Item?.Album?.Id == null) return false;
+            if (playback.Item.Album?.Id == null) return false;
 
             var album = api.GetAlbum(playback.Item.Album.Id);
 
             if (album.HasError()) return false;
 
-            track.AlbumArtists = album.Artists.Select(a => a.Name).ToArray();
-            track.Album = album.Name;
-            track.Genres = album.Genres.ToArray();
-            if (uint.TryParse(album.ReleaseDate?.Substring(0, 4), out var year))
+            MapSpotifyAlbumToTrack(track, album);
+
+            return true;
+        }
+
+        public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
+        {
+            track.Title = spotifyTrack.Name;
+            track.AlbumPosition = spotifyTrack.TrackNumber;
+            track.Performers = spotifyTrack.Artists?.Select(a => a.Name).ToArray();
+            track.Disc = (uint)spotifyTrack.DiscNumber;
+        }
+
+        public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)
+        {
+            track.AlbumArtists = spotifyAlbum.Artists.Select(a => a.Name).ToArray();
+            track.Album = spotifyAlbum.Name;
+            track.Genres = spotifyAlbum.Genres.ToArray();
+            if (uint.TryParse(spotifyAlbum.ReleaseDate?.Substring(0, 4), out var year))
             {
                 track.Year = year;
             }
 
-            if (album.Images.Count > 0)
+            if (spotifyAlbum.Images.Count > 0)
             {
-                var sorted = album.Images.OrderByDescending(i => i.Width).ToList();
+                var sorted = spotifyAlbum.Images.OrderByDescending(i => i.Width).ToList();
 
                 if (sorted.Count > 0) track.ArtExtraLargeUrl = sorted[0].Url;
                 if (sorted.Count > 1) track.ArtLargeUrl = sorted[1].Url;
                 if (sorted.Count > 2) track.ArtMediumUrl = sorted[2].Url;
                 if (sorted.Count > 3) track.ArtSmallUrl = sorted[3].Url;
-                if (sorted.Count > 4) track.ArtExtraLargeUrl = sorted[4].Url;
             }
-
-            return true;
         }
 
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
