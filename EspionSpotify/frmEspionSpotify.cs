@@ -294,13 +294,13 @@ namespace EspionSpotify
             if (text == null) return log;
              
             var timeStr = LogDate;
-            var alert = text[0] == '/';
+            var indexOfColon = text.IndexOf(':');
+            var alert = text[0] == '/' || indexOfColon == -1;
 
             rtbLog.AppendText(timeStr);
 
             if (!alert)
             {
-                var indexOfColon = text.IndexOf(':');
                 var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
                 var attrb = text.Substring(0, indexOfColon);
                 var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
@@ -311,7 +311,7 @@ namespace EspionSpotify
                 rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
                 rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
 
-                log = $";{LogDate}{attrb}{msg}";
+                log = $";{timeStr}{attrb}{msg}";
             }
             else
             {
