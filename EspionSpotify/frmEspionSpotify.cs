@@ -46,13 +46,13 @@ namespace EspionSpotify
             _userSettings = new UserSettings();
             BackImage = Resources.spytify_logo;
 
-            if (Settings.Default.Directory.Equals(string.Empty))
+            if (string.IsNullOrEmpty(Settings.Default.Directory))
             {
                 Settings.Default.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 Settings.Default.Save();
             }
 
-            if (Settings.Default.AnalyticsCID.Equals(string.Empty))
+            if (string.IsNullOrEmpty(Settings.Default.AnalyticsCID))
             {
                 Settings.Default.AnalyticsCID = Analytics.GenerateCID();
                 Settings.Default.Save();
@@ -287,6 +287,43 @@ namespace EspionSpotify
             lblPlayingTitle.Text = text;
         }
 
+        private string WriteRtbLine(RichTextBox rtbLog, string text)
+        {
+            var log = "";
+
+            if (text == null) return log;
+             
+            var timeStr = LogDate;
+            var alert = text[0] == '/';
+
+            rtbLog.AppendText(timeStr);
+
+            if (!alert)
+            {
+                var indexOfColon = text.IndexOf(':');
+                var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
+                var attrb = text.Substring(0, indexOfColon);
+                var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
+                rtbLog.AppendText(attrb);
+                rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
+                rtbLog.SelectionColor = Color.White;
+                rtbLog.AppendText(msg + Environment.NewLine);
+                rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
+                rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
+
+                log = $";{LogDate}{attrb}{msg}";
+            }
+            else
+            {
+                rtbLog.AppendText(text + Environment.NewLine);
+            }
+
+            rtbLog.SelectionStart = rtbLog.TextLength;
+            rtbLog.ScrollToCaret();
+
+            return log;
+        }
+
         public void WriteIntoConsole(string text)
         {
             if (rtbLog.InvokeRequired)
@@ -295,36 +332,12 @@ namespace EspionSpotify
                 return;
             }
 
-            if (text != null)
+            var log = WriteRtbLine(rtbLog, text);
+
+            if (!string.IsNullOrEmpty(log))
             {
-                var timeStr = LogDate;
-                var alert = text[0] == '/';
-                
-                rtbLog.AppendText(timeStr);
-                if (!alert)
-                {
-                    var indexOfColon = text.IndexOf(':');
-                    var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
-                    var attrb = text.Substring(0, indexOfColon);
-                    var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
-                    rtbLog.AppendText(attrb);
-                    rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
-                    rtbLog.SelectionColor = Color.White;
-                    rtbLog.AppendText(msg + Environment.NewLine);
-                    rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                    rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
-
-                    Settings.Default.Logs += $";{LogDate}{attrb}{msg}";
-                }
-                else
-                {
-                    rtbLog.AppendText(text + Environment.NewLine);
-                }
-
+                Settings.Default.Logs += $";{log}";
                 Settings.Default.Save();
-
-                rtbLog.SelectionStart = rtbLog.TextLength;
-                rtbLog.ScrollToCaret();
             }
         }
 
@@ -553,7 +566,7 @@ namespace EspionSpotify
 
         private void LnkPath_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog.SelectedPath = txtPath.Text.Equals(string.Empty)
+            folderBrowserDialog.SelectedPath = string.IsNullOrEmpty(txtPath.Text)
                 ? Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
                 : Path.GetDirectoryName(txtPath.Text);
 
