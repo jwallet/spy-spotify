@@ -10,7 +10,7 @@ namespace EspionSpotify.AudioSessions
         MMDeviceCollection AudioEndPointDevices { get; set; }
         bool IsAudioEndPointDeviceIndexAvailable();
         int AudioDeviceVolume { get; set; }
-        void UpdateAudioEndPointDevices(MMDeviceEnumerator aMmDevices);
+        void UpdateAudioEndPointDevices();
         void SetDefaultAudioDeviceVolume(int volume);
     }
 }

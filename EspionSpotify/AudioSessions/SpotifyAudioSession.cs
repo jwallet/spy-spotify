@@ -13,7 +13,7 @@ namespace EspionSpotify.AudioSessions
         private const int SLEEP_VALUE = 50;
         private const int NUMBER_OF_SAMPLES = 3;
 
-        private Process _spytifyProcess;
+        private readonly Process _spytifyProcess;
         private readonly ICollection<int> _spotifyProcessesIds;
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; }
 
@@ -24,8 +24,8 @@ namespace EspionSpotify.AudioSessions
         {
             AudioEndPointDeviceIndex = audioEndPointDeviceIndex;
 
-            var aMmDevices = new MMDeviceEnumerator();
-            UpdateAudioEndPointDevices(aMmDevices);
+            AudioMMDevices = new MMDeviceEnumerator();
+            UpdateAudioEndPointDevices();
 
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).ToList();
             _spytifyProcess = Process.GetCurrentProcess();
@@ -145,7 +145,8 @@ namespace EspionSpotify.AudioSessions
                     }
                 }
 
-                UpdateAudioEndPointDevices(new MMDeviceEnumerator());
+                AudioMMDevices = new MMDeviceEnumerator();
+                UpdateAudioEndPointDevices();
                 Thread.Sleep(300);
             }
 

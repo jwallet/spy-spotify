@@ -1,9 +1,16 @@
-﻿using NAudio.CoreAudioApi;
+﻿using Microsoft.Win32.SafeHandles;
+using NAudio.CoreAudioApi;
+using System;
+using System.Runtime.InteropServices;
 
 namespace EspionSpotify.AudioSessions
 {
-    public class MainAudioSession : IMainAudioSession
+    public class MainAudioSession : IMainAudioSession, IDisposable
     {
+        private bool _disposed = false;
+        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
+        public MMDeviceEnumerator AudioMMDevices { get; set; }
         public int? AudioEndPointDeviceIndex { get; set; }
         public MMDevice AudioEndPointDevice { get; set; }
         public MMDevice DefaultEndPointDevice { get; set; }
@@ -16,14 +23,14 @@ namespace EspionSpotify.AudioSessions
         {
             AudioEndPointDeviceIndex = audioEndPointDeviceIndex;
 
-            var aMmDevices = new MMDeviceEnumerator();
-            UpdateAudioEndPointDevices(aMmDevices);
+            AudioMMDevices = new MMDeviceEnumerator();
+            UpdateAudioEndPointDevices();
         }
 
-        public void UpdateAudioEndPointDevices(MMDeviceEnumerator aMmDevices)
+        public void UpdateAudioEndPointDevices()
         {
-            DefaultEndPointDevice = aMmDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            AudioEndPointDevices = aMmDevices.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+            DefaultEndPointDevice = AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            AudioEndPointDevices = AudioMMDevices.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
 
             AudioEndPointDevice = IsAudioEndPointDeviceIndexAvailable() ? AudioEndPointDevices[AudioEndPointDeviceIndex.Value] : DefaultEndPointDevice;
 
@@ -41,6 +48,26 @@ namespace EspionSpotify.AudioSessions
             {
                 AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar = fNewVolume / 100;
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            AudioMMDevices.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                _disposeHandle.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }
