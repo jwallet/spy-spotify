@@ -374,7 +374,7 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Error while recording: Unknown exception</value>
+    <value>// Error while recording: Unknown exception: {0}</value>
     <comment>message</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">

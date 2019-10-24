@@ -31,8 +31,8 @@ namespace EspionSpotify
         private Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
 
-        public static ResourceManager Rm;
-        public static FrmEspionSpotify Instance;
+        public static ResourceManager Rm { get; private set; }
+        public static FrmEspionSpotify Instance { get; private set; }
 
         private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
 
@@ -324,15 +324,16 @@ namespace EspionSpotify
             return log;
         }
 
-        public void WriteIntoConsole(string text)
+        public void WriteIntoConsole(string resource, params object[] args)
         {
             if (rtbLog.InvokeRequired)
             {
-                BeginInvoke(new Action(() => WriteIntoConsole(text)));
+                BeginInvoke(new Action(() => WriteIntoConsole(resource, args)));
                 return;
             }
 
-            var log = WriteRtbLine(rtbLog, text);
+            var formatted = string.Format(Rm.GetString(resource), args);
+            var log = WriteRtbLine(rtbLog, formatted);
 
             if (!string.IsNullOrEmpty(log))
             {

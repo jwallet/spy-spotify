@@ -11,9 +11,8 @@ namespace EspionSpotify.MediaTags
 {
     public class SpotifyAPI : ISpotifyAPI, IExternalAPI
     {
-        public string _clientId;
-        public string _secretId;
-
+        private string _clientId;
+        private string _secretId;
         private Token _token;
         private DateTimeOffset _nextTokenRenewal;
         private AuthorizationCodeAuth _authorizationCodeAuth;

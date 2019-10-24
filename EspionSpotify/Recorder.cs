@@ -51,7 +51,7 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? $"{0}", _fileManager.GetFileName(_currentFile)));
+            _form.WriteIntoConsole("logRecording", _fileManager.GetFileName(_currentFile));
 
             while (Running)
             {
@@ -78,14 +78,14 @@ namespace EspionSpotify
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeleting") ?? $"{0}{1}", _fileManager.GetFileName(_currentFile), _userSettings.MinimumRecordedLengthSeconds));
+                _form.WriteIntoConsole("logDeleting", _fileManager.GetFileName(_currentFile), _userSettings.MinimumRecordedLengthSeconds);
                 _fileManager.DeleteFile(_currentFilePending);
                 return;
             }
 
             var timeSpan = new TimeSpan(TICKS_PER_SECOND * CountSeconds);
             var length = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecorded") ?? $"{0}{1}", _track.ToString(), length));
+            _form.WriteIntoConsole("logRecorded", _track.ToString(), length);
 
             _fileManager.Rename(_currentFilePending, _currentFile);
 
@@ -115,29 +115,31 @@ namespace EspionSpotify
                 }
                 catch (ArgumentException ex)
                 {
-                    var message = $"{FrmEspionSpotify.Rm.GetString($"logUnknownException")}: ${ex.Message}";
+                    var resource = "logUnknownException";
+                    var args = ex.Message;
 
                     if (!Directory.Exists(_userSettings.OutputPath))
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logInvalidOutput");
+                        resource = "logInvalidOutput";
                     }
                     else if (ex.Message.StartsWith("Unsupported Sample Rate"))
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logUnsupportedRate");
+                        resource = "logUnsupportedRate";
                     }
                     else if (ex.Message.StartsWith("Access to the path"))
                     {
-                        message = FrmEspionSpotify.Rm.GetString("logNoAccessOutput");
+                        resource = "logNoAccessOutput";
                     }
                     else if (ex.Message.StartsWith("Unsupported number of channels"))
                     {
                         var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
                         var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
                         numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
-                        message = String.Format(FrmEspionSpotify.Rm.GetString($"logUnsupportedNumberChannels"), numberOfChannels);
+                        resource = "logUnsupportedNumberChannels";
+                        args = numberOfChannels;
                     }
 
-                    _form.WriteIntoConsole(message);
+                    _form.WriteIntoConsole(resource, args);
                     return null;
                 }
                 catch (Exception ex)

@@ -7,6 +7,6 @@
         void UpdateStartButton();
         void StopRecording();
         void UpdateNum(int num);
-        void WriteIntoConsole(string text);
+        void WriteIntoConsole(string resource, params object[] args);
     }
 }

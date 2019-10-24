@@ -14,9 +14,11 @@ namespace EspionSpotify
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
-        public static bool Running;
-        public static bool Ready = true;
-        public static bool ToggleStopRecordingDelayed;
+        private static bool _running;
+
+        public static bool Running { get => _running; internal set { _running = value; } }
+        public static bool Ready { get; private set; } = true;
+        public static bool ToggleStopRecordingDelayed { get; internal set; }
 
         private IRecorder _recorder;
         private Timer _recordingTimer;
@@ -78,7 +80,7 @@ namespace EspionSpotify
 
             if (IsTrackExists)
             {
-                _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logTrackExists") ?? $"{0}", _currentTrack.ToString()));
+                _form.WriteIntoConsole("logTrackExists", _currentTrack.ToString());
             }
 
             if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsTrackExists) return;
@@ -118,7 +120,7 @@ namespace EspionSpotify
 
             if (!SpotifyConnect.IsSpotifyRunning())
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
+                _form.WriteIntoConsole("logSpotifyConnecting");
                 await SpotifyConnect.Run();
             }
 
@@ -128,7 +130,7 @@ namespace EspionSpotify
         private bool SetSpotifyAudioSessionAndWaitToStart()
         {
             _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
-            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref Running);
+            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref _running);
         }
 
         private void BindSpotifyEventHandlers()
@@ -146,8 +148,10 @@ namespace EspionSpotify
         {
             if (Running) return;
 
+            _form.WriteIntoConsole($"logStarting");
+
             await RunSpotifyConnect();
-            var isSpotifyPlayingOutsideOfSelectedAudioEndPoint = !SetSpotifyAudioSessionAndWaitToStart();
+            var isAudioSessionNotFound = !SetSpotifyAudioSessionAndWaitToStart();
             BindSpotifyEventHandlers();
             Ready = false;
 
@@ -161,41 +165,42 @@ namespace EspionSpotify
                     // Order is important
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
+                        _form.WriteIntoConsole("logSpotifyIsClosed");
                         Running = false;
                     }
-                    else if (isSpotifyPlayingOutsideOfSelectedAudioEndPoint)
+                    else if (isAudioSessionNotFound)
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyPlayingOutsideOfSelectedAudioEndPoint"));
+                        _form.WriteIntoConsole("logSpotifyPlayingOutsideOfSelectedAudioEndPoint");
                         Running = false;
                     }
                     else if (ToggleStopRecordingDelayed)
                     {
                         ToggleStopRecordingDelayed = false;
                         _stopRecordingWhenSongEnds = true;
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStopRecordingWhenSongEnds"));
+                        _form.WriteIntoConsole("logStopRecordingWhenSongEnds");
                     }
                     else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
+                        _form.WriteIntoConsole("logRecordingTimerDone");
                         ToggleStopRecordingDelayed = true;
                     }
                     Thread.Sleep(200);
                 }
 
                 DoIKeepLastSong();
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
             }
             else if (SpotifyConnect.IsSpotifyInstalled())
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotConnected"));
+                _form.WriteIntoConsole(isAudioSessionNotFound ? "logSpotifyIsClosed" : "logSpotifyNotConnected");
             }
             else
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotFound"));
+                _form.WriteIntoConsole("logSpotifyNotFound");
             }
 
             EndRecordingSession();
+
+            _form.WriteIntoConsole("logStoping");
         }
 
         private void RecordSpotify()
@@ -219,8 +224,6 @@ namespace EspionSpotify
 
         private void InitializeRecordingSession()
         {
-            _form.WriteIntoConsole(FrmEspionSpotify.Rm?.GetString($"logStarting") ?? "Starting");
-
             _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = Spotify.GetTrack();

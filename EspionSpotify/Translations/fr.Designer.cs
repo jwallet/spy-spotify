@@ -547,7 +547,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue.
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
