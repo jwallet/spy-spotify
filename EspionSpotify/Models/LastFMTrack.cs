@@ -35,7 +35,7 @@ namespace EspionSpotify.Models
         [XmlText]
         public string Url { get; set; }
 
-        public AlbumCoverSize? CoverSize => Size.ConvertToAlbumCoverSize();
+        public AlbumCoverSize? CoverSize => Size.ToAlbumCoverSize();
     }
 
     [XmlRoot(ElementName = "album")]
