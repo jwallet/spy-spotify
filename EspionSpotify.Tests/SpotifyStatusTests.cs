@@ -6,6 +6,21 @@ namespace EspionSpotify.Tests
 {
     public class SpotifyStatusTests
     {
+        [Theory]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        [InlineData("Artist Name - Song Title", false)]
+        [InlineData("Spotify Ad", false)]
+        [InlineData("Spotify", true)]
+        [InlineData("SPOTIFY", true)]
+        [InlineData("spotify", true)]
+        private void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
+        {
+            var actual = SpotifyStatus.WindowTitleIsSpotify(value);
+
+            Assert.Equal(expected, actual);
+        }
+
         [Fact]
         private void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
         {
