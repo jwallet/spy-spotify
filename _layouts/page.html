@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="{{ site.logo }}" />
     <link rel="apple-touch-icon" href="{{ site.logo }}" />
     <link rel="stylesheet" href="{{ 'assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <title>{{site.title}} {% t GLOBAL.DESCRIPTION %} {% t {{ page.title }} %}</title>
+    <title>{{ site.title }} - {% t GLOBAL.SHORT_DESCRIPTION %} - {% t {{ page.title }} %}</title>
   </head>
   <body>
     <div class="language-row">
@@ -27,8 +27,8 @@
     </div>
 
     <header class="page-header" role="banner">
-      <a href="{{ site.github.repository_url }}" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="{{ site.logo }}" role="logo" /></a>
-      <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+      <a href="{{ site.repository_url }}" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="{{ site.logo }}" role="logo" /></a>
+      <h1 class="project-name">{{ site.title }}</h1>
       <h2 class="project-tagline">{% t GLOBAL.DESCRIPTION %}</h2>      
     </header>
     
@@ -39,7 +39,7 @@
         <a href="./faq.html" aria-label="FAQ" class="btn">{% t TABS.FAQ %}</a>
 
         {% if site.show_downloads %}
-          <a href="{{ site.download }}" aria-label="Download" class="btn out">{% t TABS.DOWNLOAD %}</a>
+          <a href="{{ site.repository_download }}" aria-label="Download" class="btn out">{% t TABS.DOWNLOAD %}</a>
         {% endif %}
     </nav>
 
@@ -48,13 +48,21 @@
       {{ content }}
 
       <footer class="site-footer">
-        <a href="https://www.github.com/jwallet/spy-spotify" aria-label="Go to Spytify GitHub page"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" /></a>
-        <a href="https://www.reddit.com/r/spytify" aria-label="Go to Spytify Sub Reddit"><img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social"></a>
+        <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">
+          <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+        </a>
+        <a href="{{ site.reddit_url }}" aria-label="Go to Spytify Sub Reddit">
+          <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+        </a>
 
-        {% if site.github.is_project_page %}
-          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> {% t GLOBAL.MAINTAINED_BY %} <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
-        {% endif %}
-        <span class="site-footer-credits">{% t GLOBAL.GENERATED_BY %} <a href="https://pages.github.com">GitHub Pages</a>.</span>
+        <span class="site-footer-owner">
+          <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">{{ site.github.repository_name | default: site.project_name }}</a>
+           {% t GLOBAL.MAINTAINED_BY %} 
+          <a href="{{ site.github.owner_rul | default: site.owner_url }}">{{ site.github.owner_name | default: site.owner_name }}</a>.
+        </span>
+        <span class="site-footer-credits">
+          😃 {% t GLOBAL.DONATE %} <a href="https://beerpay.io/jwallet/spy-spotify">{% t GLOBAL.BEERPAY %}</a> 🍺.
+        </span>
       </footer>
     </main>
 
@@ -73,14 +81,24 @@
     <script>
       document.addEventListener("DOMContentLoaded", setLanguage);
       document.getElementById('lang').addEventListener('change', onLangChange);
+      document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+        const attribute = x.getAttribute("href");
+        if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+          x.className = `${x.className} active`;
+        }
+      });
       
       function changeLanguage(language) {
         var lang = language || '{{ site.lang }}';
-        var pathname = window.location.pathname;
+        const { pathname: originPathname, origin } = window.location;
+        var pathname = originPathname.replace('/spy-spotify', '');
         var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
         
-        if (lang === 'en') window.location.pathname = pathnameCleared;
-        else if (!pathname.startsWith(`/${lang}/`)) window.location.pathname = `${lang}${pathnameCleared}`;
+        if (lang === 'en') {
+          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
+        } else if (!pathname.startsWith(`/${lang}/`)) {
+          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
+        }
       }
 
       function onLangChange(e) {

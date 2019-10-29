@@ -1,9 +1,0 @@
-language: csharp
-mono: latest
-solution: EspionSpotify.sln
-install:
-  - nuget restore EspionSpotify.sln
-  - nuget install xunit.runner.console -Version 2.4.1 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release EspionSpotify.sln
-  - mono ./testrunner/xunit.runner.console.2.4.1/tools/net452/xunit.console.exe ./EspionSpotify.Tests/bin/Release/EspionSpotify.Tests.dll

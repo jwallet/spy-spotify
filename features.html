@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
+    <title>Spytify - Records Spotify to mp3 - Features</title>
+  </head>
+  <body>
+    <div class="language-row">
+      <section class="language-box">
+        <label>Language:</label>
+        <select id="lang" name="lang">
+          <option selected value="en">English</a>
+          
+          
+          <option value="fr">Français</option>
+          
+           
+        </select>
+      </section>
+    </div>
+
+    <header class="page-header" role="banner">
+      <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
+      <h1 class="project-name">Spytify</h1>
+      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
+    </header>
+    
+    <nav class="nav" role="navigation">
+        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
+        <a href="./features.html" aria-label="Features" class="btn">Features</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
+
+        
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Download</a>
+        
+    </nav>
+
+    <main id="content" class="main-content" role="main">
+ 
+      <h2 id="app-features">App features</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th style="text-align: center">Feature</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_no_ad.png" /></td>
+      <td style="text-align: center"><strong>No Ads</strong></td>
+      <td style="text-align: left">Doesn’t record ads and has an option to disable audio ads</td>
+    </tr>
+    <tr>
+      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_mute_apps.png" /></td>
+      <td style="text-align: center"><strong>Mutes Other Apps</strong></td>
+      <td style="text-align: left">Mutes any other applications while spying Spotify</td>
+    </tr>
+    <tr>
+      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_audio_quality.png" /></td>
+      <td style="text-align: center"><strong>Great Audio Quality</strong></td>
+      <td style="text-align: left">Gets and records with the same great audio quality than Spotify</td>
+    </tr>
+    <tr>
+      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_max_out.png" /></td>
+      <td style="text-align: center"><strong>Normalize volume</strong></td>
+      <td style="text-align: left">Max out the volume of your Spotify audio session to record all song at the same volume level delivered by Spotify</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="file-features">File features</h2>
+<ul>
+  <li>Splits the recorded sound into individual tracks using the artist and track names as the title, like so:
+    <ul>
+      <li><code class="highlighter-rouge">Artist - Track.mp3</code></li>
+    </ul>
+  </li>
+  <li>Saves all recordings under the same path:
+    <ul>
+      <li><code class="highlighter-rouge">../My Music/</code></li>
+    </ul>
+  </li>
+  <li>Automatically adds metadata to .mp3 file:
+    <ul>
+      <li># track</li>
+      <li>Track Title</li>
+      <li>Artist</li>
+      <li>Album Title</li>
+      <li>Album Art Cover</li>
+      <li>Genre</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/saved_songs_list.png" /></p>
+
+
+      <footer class="site-footer">
+        <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
+          <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+        </a>
+        <a href="https://www.reddit.com/r/spytify/" aria-label="Go to Spytify Sub Reddit">
+          <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+        </a>
+
+        <span class="site-footer-owner">
+          <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
+           is maintained by 
+          <a href="https://www.github.com/jwallet/">jwallet</a>.
+        </span>
+        <span class="site-footer-credits">
+          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+        </span>
+      </footer>
+    </main>
+
+    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", setLanguage);
+      document.getElementById('lang').addEventListener('change', onLangChange);
+      document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+        const attribute = x.getAttribute("href");
+        if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+          x.className = `${x.className} active`;
+        }
+      });
+      
+      function changeLanguage(language) {
+        var lang = language || 'en';
+        const { pathname: originPathname, origin } = window.location;
+        var pathname = originPathname.replace('/spy-spotify', '');
+        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
+        
+        if (lang === 'en') {
+          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
+        } else if (!pathname.startsWith(`/${lang}/`)) {
+          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
+        }
+      }
+
+      function onLangChange(e) {
+        const selectedLanguage = e.target.value
+        window.localStorage.setItem('lang', selectedLanguage);
+        changeLanguage(selectedLanguage)
+      }
+
+      function setLanguage() {
+        if ('en' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', 'en');
+        }
+      }
+
+  </script>
+  </body>
+</html>

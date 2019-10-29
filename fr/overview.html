@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="stylesheet" href="/spy-spotify/fr/assets/css/style.css?v=">
+    <title>Spytify - Enregistre Spotify en mp3 - Aperçu</title>
+  </head>
+  <body>
+    <div class="language-row">
+      <section class="language-box">
+        <label>Langage:</label>
+        <select id="lang" name="lang">
+          <option selected value="fr">Français</a>
+          
+           
+          
+          <option value="en">English</option>
+          
+        </select>
+      </section>
+    </div>
+
+    <header class="page-header" role="banner">
+      <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
+      <h1 class="project-name">Spytify</h1>
+      <h2 class="project-tagline">Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés</h2>      
+    </header>
+    
+    <nav class="nav" role="navigation">
+        <a href="./overview.html" aria-label="Overview" class="btn">Aperçu</a>
+        <a href="./features.html" aria-label="Features" class="btn">Fonctionnalités</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Paramètres</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
+
+        
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Télécharger</a>
+        
+    </nav>
+
+    <main id="content" class="main-content" role="main">
+ 
+      <p>Spytify est un enregistreur Spotify pour Windows qui enregistre l’audio de Spotify sans enregistrer ou jouer les annonces, assurant aucune perte à la qualité sonore. Il coupe automatiquement les chansons en pistes séparées et enregistre en MP3 avec les métadonnées du média, ce qui veut dire que vous pouvez commencer à apprécier facilement votre musique hors-ligne.</p>
+
+<p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_record.png" /></p>
+
+<h2 id="comment-ça-fonctionne">Comment ça fonctionne?</h2>
+<p>Spytify enregistre ce que votre carte de son de votre ordinateur produit. Spytify enregistre à la qualité que Spotify produit, alors la copie enregistrée sera indistinctible de celle de Spotify. Spytify enregistre à la qualité .mp3, et non à de plus hautes qualités comme .flac, puisque Spotify peut seulement envoyer une qualité audio de 320 kbps.</p>
+
+<h3 id="usage-standard">Usage standard</h3>
+<p>Un usage standard est de commencer une session d’enregistrement la nuit en utilisant votre liste de lecture préférée et de la laisser jouer durant la nuit, ainsi vous pouvez éviter d’attendre que l’enregistrement termine, parce que Spytify ne télécharge mais enregistre. Vous aurez alors vos chansons automatiquement coupées en fichiers séparés sans annonces.</p>
+
+<h3 id="exigences">Exigences</h3>
+<p>Spytify fonctionne sur Windows seulement.</p>
+<ul>
+  <li>Microsoft Framework (<a href="https://www.microsoft.com/en-US/download/details.aspx?id=48130">.NET 4.6</a> ou plus haut).</li>
+  <li>Spotify application de bureau.</li>
+</ul>
+
+<p>Un <strong>compte grauit Spotify</strong> suffira, mais Spotify restreint la qualité audio à 120 kbps. Avoir un compte avec une souscription à Spotify Premium permettera d’activer l’enregistrement jusqu’à une qualité audio de 320 kbps.</p>
+
+
+      <footer class="site-footer">
+        <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
+          <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+        </a>
+        <a href="https://www.reddit.com/r/spytify/" aria-label="Go to Spytify Sub Reddit">
+          <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+        </a>
+
+        <span class="site-footer-owner">
+          <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
+           est maintenu par 
+          <a href="https://www.github.com/jwallet/">jwallet</a>.
+        </span>
+        <span class="site-footer-credits">
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://beerpay.io/jwallet/spy-spotify">me payer une bière sur beerpay.io</a> 🍺.
+        </span>
+      </footer>
+    </main>
+
+    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", setLanguage);
+      document.getElementById('lang').addEventListener('change', onLangChange);
+      document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+        const attribute = x.getAttribute("href");
+        if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+          x.className = `${x.className} active`;
+        }
+      });
+      
+      function changeLanguage(language) {
+        var lang = language || 'fr';
+        const { pathname: originPathname, origin } = window.location;
+        var pathname = originPathname.replace('/spy-spotify', '');
+        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
+        
+        if (lang === 'en') {
+          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
+        } else if (!pathname.startsWith(`/${lang}/`)) {
+          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
+        }
+      }
+
+      function onLangChange(e) {
+        const selectedLanguage = e.target.value
+        window.localStorage.setItem('lang', selectedLanguage);
+        changeLanguage(selectedLanguage)
+      }
+
+      function setLanguage() {
+        if ('fr' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', 'fr');
+        }
+      }
+
+  </script>
+  </body>
+</html>

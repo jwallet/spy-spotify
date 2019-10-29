@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
+    <title>Spytify - Records Spotify to mp3 - F.A.Q</title>
+  </head>
+  <body>
+    <div class="language-row">
+      <section class="language-box">
+        <label>Language:</label>
+        <select id="lang" name="lang">
+          <option selected value="en">English</a>
+          
+          
+          <option value="fr">Français</option>
+          
+           
+        </select>
+      </section>
+    </div>
+
+    <header class="page-header" role="banner">
+      <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
+      <h1 class="project-name">Spytify</h1>
+      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
+    </header>
+    
+    <nav class="nav" role="navigation">
+        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
+        <a href="./features.html" aria-label="Features" class="btn">Features</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
+
+        
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Download</a>
+        
+    </nav>
+
+    <main id="content" class="main-content" role="main">
+ 
+      
+<section>
+    <h3>Spotify still plays ads, even after turning them off and it goes to pause/play every second.</h3>
+    <p><p>Spytify feature <strong>Disable Ads</strong> might affect the way an unknown ad plays when it cant be blocked. Try to re-enable this setting once more to get the last blocked ad domains or disable the setting and restart both apps.</p>
+</p>
+</section>
+
+<section>
+    <h3>Ads and tracks overlap at the beginning/end of recorded tracks.</h3>
+    <p><p>Use Audacity (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it’s based on a bit of information available in the Spotify process that is not always accurate.</p>
+</p>
+</section>
+
+<section>
+    <h3>Background noise/sound was recorded on the saved track file.</h3>
+    <p><p>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the <em>Volume Mixer</em> all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted.
+<br />
+Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can’t have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the <strong>High Quality 320kbp</strong> chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</p>
+</p>
+</section>
+
+<section>
+    <h3>Isolates Spotify audio to a different audio endpoint device.</h3>
+    <p><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type <strong>Sound mixer options</strong>, you should land on the setting page called <em>App volume and device preferences</em>, make sure Spotify is playing and set the app to the desired endpoint with the <strong>Output</strong> select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can’t find the Windows 10 setting, try the section <strong><em>Windows 10 Settings 🡂 System 🡂 Sound</em></strong>, scroll down to the <strong><em>Advanced sound options 🡂 App volume and device preferences</em></strong> setting.</p>
+</p>
+</section>
+
+<section>
+    <h3>Spotify lost some features after turning ads off: Friend list, radio, daily mixes and podcasts.</h3>
+    <p><p>When you enable <strong>Disable Ads</strong> in Spytify settings, you accept that these features won’t be available no more, it’s to make sure as many ads as possible get disabled. However, you can go to <strong><em>C:\Windows\System32\drivers\etc\host</em></strong> to edit the file with notepad, search for the domain <code class="highlighter-rouge">spclient.wg.spotify.com</code> and add a <code class="highlighter-rouge">#</code> at the beginning of the line to make it inactive.</p>
+</p>
+</section>
+
+<section>
+    <h3>Spotify only plays a bit of a track, it stops playing it after some seconds.</h3>
+    <p><p>Spotify looks for local music files before playing a track. If it finds one with the same metadata that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue.</p>
+</p>
+</section>
+
+<section>
+    <h3>Tracks are detected as an ad.</h3>
+    <p><p>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn’t return to Spytify the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it’s based on a bit of information available in the Spotify process that is not always accurate.</p>
+</p>
+</section>
+
+
+      <footer class="site-footer">
+        <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
+          <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+        </a>
+        <a href="https://www.reddit.com/r/spytify/" aria-label="Go to Spytify Sub Reddit">
+          <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+        </a>
+
+        <span class="site-footer-owner">
+          <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
+           is maintained by 
+          <a href="https://www.github.com/jwallet/">jwallet</a>.
+        </span>
+        <span class="site-footer-credits">
+          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+        </span>
+      </footer>
+    </main>
+
+    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", setLanguage);
+      document.getElementById('lang').addEventListener('change', onLangChange);
+      document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+        const attribute = x.getAttribute("href");
+        if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+          x.className = `${x.className} active`;
+        }
+      });
+      
+      function changeLanguage(language) {
+        var lang = language || 'en';
+        const { pathname: originPathname, origin } = window.location;
+        var pathname = originPathname.replace('/spy-spotify', '');
+        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
+        
+        if (lang === 'en') {
+          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
+        } else if (!pathname.startsWith(`/${lang}/`)) {
+          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
+        }
+      }
+
+      function onLangChange(e) {
+        const selectedLanguage = e.target.value
+        window.localStorage.setItem('lang', selectedLanguage);
+        changeLanguage(selectedLanguage)
+      }
+
+      function setLanguage() {
+        if ('en' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', 'en');
+        }
+      }
+
+  </script>
+  </body>
+</html>

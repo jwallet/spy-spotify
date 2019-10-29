@@ -88,7 +88,8 @@ a {
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &.active {
     background-color: $nav-menu-color;
     color: $nav-active-text-color;
     text-decoration: none;

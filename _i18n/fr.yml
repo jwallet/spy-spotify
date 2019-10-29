@@ -1,7 +1,9 @@
 GLOBAL:
   LANGUAGE: Langage
+  SHORT_DESCRIPTION: "Enregistre Spotify en mp3"
   DESCRIPTION: "Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés"
-  GENERATED_BY: Cette page a été générée par
+  DONATE: "Tu aimes Spytify? Si tu veux tu peux"
+  BEERPAY: "me payer une bière sur beerpay.io"
   MAINTAINED_BY: est maintenu par
 TABS:
   OVERVIEW: Aperçu

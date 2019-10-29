@@ -1,13 +1,18 @@
-# docker run --rm --label=jekyll --volume=D:\dev\spy-spotify\:/srv/jekyll  -it -p 4000:4000 jekyll/jekyll jekyll serve --trace --force_polling
 title: Spytify
-description: Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files
+project_name: spy-spotify
+owner_name: jwallet
+description: "Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"
 show_downloads: true
-url: https://jwallet.github.io/spy-spotify/
-download: https://www.github.com/jwallet/spy-spotify/releases/latest
-logo: https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png
+reddit_url: "https://www.reddit.com/r/spytify/"
+repository_url: "https://www.github.com/jwallet/spy-spotify/"
+repository_download: "https://www.github.com/jwallet/spy-spotify/releases/latest/"
+owner_url: "https://www.github.com/jwallet/"
+url: "https://jwallet.github.io/spy-spotify/"
+logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
 languages: ['en', 'fr']
 defaultLang: en
-exclude_from_localizations: ['assets', '_sass', 'EspionSpotify', 'EspionSpotify.Tests', 'packages', 'psd', 'EspionSpotify.sln']
+exclude_from_localizations: ['assets', '_sass', 'fr', 'LICENSE', 'README.md']
+exclude: [faq/', 'LICENSE', 'README.md']
 languageNames:
   fr: Français
   en: English
@@ -16,3 +21,7 @@ collections:
     output: true
 sass:
   sass_dir: _sass
+
+baseurl: /spy-spotify
+port: 4000
+livereload: true
