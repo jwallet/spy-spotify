@@ -1,3 +1,6 @@
 _site/
 .jekyll-cache/
 .vs/
+EspionSpotify/
+EspionSpotify.Tests/
+packages/

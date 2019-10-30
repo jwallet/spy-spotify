@@ -78,8 +78,9 @@ a {
     }
     a span {
       font-size: 75%;
-      padding-left: 0.4rem;
+      padding-left: 0.25rem;
       color: $lang-frame;
+      margin-right: -0.1rem;
     }
   }
   &-box {
