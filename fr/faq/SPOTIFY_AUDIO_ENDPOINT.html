@@ -73,15 +73,15 @@
     
 
     <script>
-      document.addEventListener("DOMContentLoaded", setLanguage);
-      document.getElementById('selected_lang').addEventListener('click', onLangToggle);
-      // document.getElementsByName('langs').forEach(x => x.addEventListener('click', onLangChange));
-      document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
-        const attribute = x.getAttribute("href");
-        if (attribute && window.location.pathname.includes(attribute.substring(2))) {
-          x.className = `${x.className} active`;
-        }
-      });
+      document.addEventListener("DOMContentLoaded", onPageLoaded);
+      function setActiveNav() {
+        document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+          const attribute = x.getAttribute("href");
+          if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+            x.className = `${x.className} active`;
+          }
+        });
+      }
 
       function onLangToggle() {
         var langs = document.getElementById('langs_dropdown');
@@ -108,6 +108,11 @@
         window.localStorage.setItem('lang', selectedLanguage);
         changeLanguage(selectedLanguage)
         onLangToggle()
+      }
+
+      function onPageLoaded() {
+        setLanguage();
+        setActiveNav();
       }
 
       function setLanguage() {
