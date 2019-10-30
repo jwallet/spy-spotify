@@ -2,6 +2,13 @@
 $large-breakpoint: 64em !default;
 $medium-breakpoint: 42em !default;
 
+// Languages
+$lang-selected-color: rgb(40, 180, 80) !default;
+$lang-frame:rgb(25, 255, 95) !default;
+$lang-label: white !default;
+$lang-select-row: white !default;
+$lang-select-row-secondary: #252525 !default;
+
 // Headers
 $header-heading-color: #29B754 !default;
 $header-heading-color-secondary: rgb(25, 255, 95) !default;

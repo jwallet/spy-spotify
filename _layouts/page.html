@@ -13,18 +13,20 @@
     <title>{{ site.title }} - {% t GLOBAL.SHORT_DESCRIPTION %} - {% t {{ page.title }} %}</title>
   </head>
   <body>
-    <div class="language-row">
-      <section class="language-box">
+    <menu class="language">
+      <div class="language-row">
         <label>{% t GLOBAL.LANGUAGE %}:</label>
-        <select id="lang" name="lang">
-          <option selected value="{{ site.lang }}">{{ site.languageNames[site.lang] }}</a>
+        <a class="selected" role="button" onclick="onLangToggle()">{{ site.languageNames[site.lang] }}<span id="caret">▼</a>
+      </div>
+      <section class="language-box">
+        <ul id="langs_dropdown" role="option" opened="false">
           {% for lang in site.languageNames %}
           {% if lang[0] == site.lang %} {% continue %} {% endif %}
-          <option value="{{ lang[0] }}">{{ lang[1] }}</option>
+          <a role="button" name="langs" value="{{ lang[0] }}" onclick="onLangChange(this)"><li>{{ lang[1] }}</li></a>
           {% endfor %}
-        </select>
+        </ul>
       </section>
-    </div>
+    </menu>
 
     <header class="page-header" role="banner">
       <a href="{{ site.repository_url }}" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="{{ site.logo }}" role="logo" /></a>
@@ -80,13 +82,21 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", setLanguage);
-      document.getElementById('lang').addEventListener('change', onLangChange);
+      document.getElementById('selected_lang').addEventListener('click', onLangToggle);
+      // document.getElementsByName('langs').forEach(x => x.addEventListener('click', onLangChange));
       document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
         const attribute = x.getAttribute("href");
         if (attribute && window.location.pathname.includes(attribute.substring(2))) {
           x.className = `${x.className} active`;
         }
       });
+
+      function onLangToggle() {
+        var langs = document.getElementById('langs_dropdown');
+        var toggleStatus = JSON.parse(langs.getAttribute("opened"));
+        document.getElementById('caret').innerText = toggleStatus ? '▼' : '▲';
+        langs.setAttribute("opened", String(!toggleStatus));
+      }
       
       function changeLanguage(language) {
         var lang = language || '{{ site.lang }}';
@@ -102,9 +112,10 @@
       }
 
       function onLangChange(e) {
-        const selectedLanguage = e.target.value
+        const selectedLanguage = e.getAttribute('value');
         window.localStorage.setItem('lang', selectedLanguage);
         changeLanguage(selectedLanguage)
+        onLangToggle()
       }
 
       function setLanguage() {

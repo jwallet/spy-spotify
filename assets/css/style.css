@@ -92,11 +92,25 @@ a { color: #1e963c; text-decoration: none; }
 
 a:hover { text-decoration: underline; }
 
-.language-row { position: absolute; display: flex; width: 100%; align-items: center; flex-direction: row-reverse; }
+.language { position: absolute; }
 
-.language-box { margin: 0 1rem; }
+.language a { cursor: pointer; text-decoration: none; }
 
-.language-box label { color: white; }
+.language-row { position: relative; display: flex; column-gap: 1rem; }
+
+.language-row label { color: white; }
+
+.language-row a.selected { color: #28b450; }
+
+.language-row a span { font-size: 75%; padding-left: 0.4rem; color: #19ff5f; }
+
+.language-box { position: relative; text-align: right; }
+
+.language-box ul { list-style: none; display: flex; flex-direction: column; margin: 0; padding: 0; background-color: #252525; }
+
+.language-box ul[opened=false] { display: none; }
+
+.language-box ul li { color: white; padding: 0.2rem 0; padding-right: 1rem; border: 1px solid #19ff5f; border-top: 0; }
 
 .btn { display: inline-block; font-weight: 600; color: #28b450; border-color: #28b450; border-style: solid; border-width: 2px; border-radius: 0.5rem; transition: color 0.5s, background-color 0.5s, border-color 0.5s; }
 
