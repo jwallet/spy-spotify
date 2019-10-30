@@ -1,9 +1,9 @@
 <p align="center">
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_settings.png">
-        <img width="420" alt="Spotify Core Settings" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_settings.png"/>
+    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png">
+        <img width="420" alt="Spotify Core Settings" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png"/>
     </a>
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_advanced_settings.png">
-        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_advanced_settings.png"/>
+    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png">
+        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png"/>
     </a>
 </p>
 
