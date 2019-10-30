@@ -13,19 +13,21 @@
     <title>Spytify - Enregistre Spotify en mp3 - Paramètres</title>
   </head>
   <body>
-    <div class="language-row">
-      <section class="language-box">
+    <menu class="language">
+      <div class="language-row">
         <label>Langage:</label>
-        <select id="lang" name="lang">
-          <option selected value="fr">Français</a>
+        <a class="selected" role="button" onclick="onLangToggle()">Français<span id="caret">▼</a>
+      </div>
+      <section class="language-box">
+        <ul id="langs_dropdown" role="option" opened="false">
           
            
           
-          <option value="en">English</option>
+          <a role="button" name="langs" value="en" onclick="onLangChange(this)"><li>English</li></a>
           
-        </select>
+        </ul>
       </section>
-    </div>
+    </menu>
 
     <header class="page-header" role="banner">
       <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
@@ -207,13 +209,21 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", setLanguage);
-      document.getElementById('lang').addEventListener('change', onLangChange);
+      document.getElementById('selected_lang').addEventListener('click', onLangToggle);
+      // document.getElementsByName('langs').forEach(x => x.addEventListener('click', onLangChange));
       document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
         const attribute = x.getAttribute("href");
         if (attribute && window.location.pathname.includes(attribute.substring(2))) {
           x.className = `${x.className} active`;
         }
       });
+
+      function onLangToggle() {
+        var langs = document.getElementById('langs_dropdown');
+        var toggleStatus = JSON.parse(langs.getAttribute("opened"));
+        document.getElementById('caret').innerText = toggleStatus ? '▼' : '▲';
+        langs.setAttribute("opened", String(!toggleStatus));
+      }
       
       function changeLanguage(language) {
         var lang = language || 'fr';
@@ -229,9 +239,10 @@
       }
 
       function onLangChange(e) {
-        const selectedLanguage = e.target.value
+        const selectedLanguage = e.getAttribute('value');
         window.localStorage.setItem('lang', selectedLanguage);
         changeLanguage(selectedLanguage)
+        onLangToggle()
       }
 
       function setLanguage() {
