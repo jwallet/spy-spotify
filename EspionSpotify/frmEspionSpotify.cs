@@ -161,7 +161,7 @@ namespace EspionSpotify
 
         private void SetLanguage(LanguageType languageType)
         {
-            var rmLanguage = Translations.Languages.availableResourcesManager.Where(x => x.Key.Equals(languageType)).Select(x => x.Value).FirstOrDefault();
+            var rmLanguage = Translations.Languages.getResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
             tabRecord.Text = Rm.GetString($"tabRecord");

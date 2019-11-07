@@ -99,6 +99,7 @@
     <Compile Include="SpotifyStatusTests.cs" />
     <Compile Include="TrackTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TranslationTests.cs" />
     <Compile Include="WatcherTests.cs" />
   </ItemGroup>
   <ItemGroup>

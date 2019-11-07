@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Enums;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EspionSpotify.Extensions
@@ -11,14 +12,18 @@ namespace EspionSpotify.Extensions
 
         public static AlbumCoverSize? ToAlbumCoverSize(this string value)
         {
-            var types = typeof(AlbumCoverSize);
+            return value.ToEnum<AlbumCoverSize>(ignoreCase: true);
+        }
 
-            if (string.IsNullOrEmpty(value) || !Enum.IsDefined(types, value.ToLowerInvariant()))
+        public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
+        {
+            var types = typeof(T);
+            if (string.IsNullOrEmpty(value) || !Enum.GetNames(types).Any(x => x.ToLowerInvariant() == value.ToLowerInvariant()))
             {
                 return null;
             }
 
-            return (AlbumCoverSize) Enum.Parse(types, value, ignoreCase: true);
+            return (T)Enum.Parse(types, value, ignoreCase);
         }
 
         public static string ToVersionAsString(this string tag)
