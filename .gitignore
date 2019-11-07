@@ -34,6 +34,9 @@ x64/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+_site/
+.jekyll-cache/
+
 *_i.c
 *_p.c
 *.ilk

@@ -167,7 +167,6 @@ namespace EspionSpotify
             tabRecord.Text = Rm.GetString($"tabRecord");
             tabSettings.Text = Rm.GetString($"tabSettings");
             tabAdvanced.Text = Rm.GetString($"tabAdvanced");
-            tabFAQ.Text = Rm.GetString($"tabFAQ");
 
             lblPath.Text = Rm.GetString($"lblPath");
             lblAudioDevice.Text = Rm.GetString($"lblAudioDevice");
@@ -189,22 +188,6 @@ namespace EspionSpotify
             lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
             lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
             lblRecordingTimer.Text = Rm.GetString($"lblRecordingTimer");
-
-            tlSpotifyTrackCut.Text = Rm.GetString($"tlSpotifyTrackCut");
-            lblSpotifyTrackCut.Text = Rm.GetString($"lblSpotifyTrackCut");
-            tlAdsPlayAndStop.Text = Rm.GetString($"tlAdsPlayAndStop");
-            lblAdsPlayAndStop.Text = Rm.GetString($"lblAdsPlayAndStop");
-            tlAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"tlAdAndTrackOverlapOnRecordedTrack");
-            lblAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"lblAdAndTrackOverlapOnRecordedTrack");
-            tlBackgroundNoiceRecordedOnTrack.Text = Rm.GetString($"tlBackgroundNoiceRecordedOnTrack");
-            lblBackgroundNoiceRecordedOnTrackFirst.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_first");
-            lblBackgroundNoiceRecordedOnTrackSecond.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_second");
-            tlTrackDetectedAsAd.Text = Rm.GetString($"tlTrackDetectedAsAd");
-            lblTrackDetectedAsAd.Text = Rm.GetString($"lblTrackDetectedAsAd");
-            tlSpotifyLostFeatures.Text = Rm.GetString($"tlSpotifyLostFeatures");
-            lblSpotifyLostFeatures.Text = Rm.GetString($"lblSpotifyLostFeatures");
-            tlSpotifyAudioEndpoint.Text = Rm.GetString($"tlSpotifyAudioEndpoint");
-            lblSpotifyAudioEndpoint.Text = Rm.GetString($"lblSpotifyAudioEndpoint");
 
             tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
             tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
@@ -711,74 +694,6 @@ namespace EspionSpotify
             }
         }
 
-        private void TlTrackDetectedAsAd_Leave(object sender, EventArgs e)
-        {
-            lblTrackDetectedAsAd.Hide();
-        }
-
-        private void TlTrackDetectedAsAd_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblTrackDetectedAsAd);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=track-detected-as-ad"));
-        }
-
-        private void TlBackgroundNoiceRecordedOnTrack_Leave(object sender, EventArgs e)
-        {
-            lblBackgroundNoiceRecordedOnTrackFirst.Hide();
-            lblBackgroundNoiceRecordedOnTrackSecond.Hide();
-        }
-
-        private void TlBackgroundNoiceRecordedOnTrack_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackFirst);
-            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackSecond);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=background-noice-recorded-on-track"));
-        }
-
-        private void TlAdAndTrackOverlapOnRecordedTrack_Leave(object sender, EventArgs e)
-        {
-            lblAdAndTrackOverlapOnRecordedTrack.Hide();
-        }
-
-        private void TlAdAndTrackOverlapOnRecordedTrack_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblAdAndTrackOverlapOnRecordedTrack);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=ad-and-track-overlap"));
-        }
-
-        private void TlAdsPlayAndStop_Leave(object sender, EventArgs e)
-        {
-            lblAdsPlayAndStop.Hide();
-        }
-
-        private void TlAdsPlayAndStop_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblAdsPlayAndStop);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=ads-play-and-stop"));
-        }
-
-        private void TlSpotifyTrackCut_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyTrackCut.Hide();
-        }
-
-        private void TlSpotifyTrackCut_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyTrackCut);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-track-cut"));
-        }
-
-        private void TlSpotifyLostFeatures_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyLostFeatures.Hide();
-        }
-
-        private void TlSpotifyLostFeatures_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyLostFeatures);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
-        }
-
         private void LnkRelease_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/jwallet/spy-spotify/releases/latest");
@@ -787,17 +702,6 @@ namespace EspionSpotify
         private void TxtRecordingTimer_Leave(object sender, EventArgs e)
         {
             _userSettings.RecordingTimer = txtRecordingTimer.Text;
-        }
-
-        private void TlSpotifyAudioEndpoint_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyAudioEndpoint);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-audio-endpoint"));
-        }
-
-        private void TlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyAudioEndpoint.Hide();
         }
 
         private void TxtRecordingNum_Leave(object sender, EventArgs e)

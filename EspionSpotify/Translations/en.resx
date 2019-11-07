@@ -213,10 +213,6 @@
     <value>Ad</value>
     <comment>console</comment>
   </data>
-  <data name="logAdPlaying" xml:space="preserve">
-    <value>// An ad is playing.</value>
-    <comment>console</comment>
-  </data>
   <data name="logDeleting" xml:space="preserve">
     <value>Removing: {0} [&lt; {1}s]</value>
     <comment>console</comment>
@@ -224,10 +220,6 @@
   <data name="logInvalidOutput" xml:space="preserve">
     <value>// Error while recording: The output directory was not found.</value>
     <comment>interface</comment>
-  </data>
-  <data name="logOther" xml:space="preserve">
-    <value>Unknown</value>
-    <comment>console</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
     <value>Recording: {0}</value>
@@ -255,10 +247,6 @@
   </data>
   <data name="logStoping" xml:space="preserve">
     <value>// End</value>
-    <comment>console</comment>
-  </data>
-  <data name="logWaiting" xml:space="preserve">
-    <value>// Waiting for next title...</value>
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
@@ -329,50 +317,6 @@
     <value>Stop spying</value>
     <comment>interface</comment>
   </data>
-  <data name="lblAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
-    <value>Use Audacity (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type. Spytify cannot guarantee that an ad or a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblAdsPlayAndStop" xml:space="preserve">
-    <value>Spytify feature "Disable Ads" might affect the way an unknown ad plays when it can't be blocked. Try to re-enable this setting once more to get the last blocked ad domains or disable the setting and restart both apps.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblBackgroundNoiceRecordedOnTrack_first" xml:space="preserve">
-    <value>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the "Volume Mixer" all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblSpotifyTrackCut" xml:space="preserve">
-    <value>Spotify looks for local music files before playing a track. If it finds one with the same metadata that the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblTrackDetectedAsAd" xml:space="preserve">
-    <value>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn't return to Spytify the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it. Spytify cannot guarantee that a track will be detected correctly since it's based on a bit of information available in the Spotify process that is not always accurate.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tabFAQ" xml:space="preserve">
-    <value>F.A.Q.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlAdAndTrackOverlapOnRecordedTrack" xml:space="preserve">
-    <value>Ads and tracks overlap at the beginning/end of recorded tracks.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlAdsPlayAndStop" xml:space="preserve">
-    <value>Spotify still plays ads, even after turning them off and it goes to pause/play every second.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlBackgroundNoiceRecordedOnTrack" xml:space="preserve">
-    <value>Background noise/sound was recorded on the saved track file.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlSpotifyTrackCut" xml:space="preserve">
-    <value>Spotify only plays a bit of a track, it stops playing it after some seconds.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlTrackDetectedAsAd" xml:space="preserve">
-    <value>Tracks are detected as an ad.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logUnknownException" xml:space="preserve">
     <value>// Error while recording: Unknown exception: {0}</value>
     <comment>message</comment>
@@ -393,14 +337,6 @@
     <value>Duplicate already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
   </data>
-  <data name="lblSpotifyLostFeatures" xml:space="preserve">
-    <value>When you enable "Disable Ads" in Spytify settings, you accept that these features won't be available no more, it's to make sure as many ads as possible get disabled. However, you can go to "C:\Windows\System32\drivers\etc\host" to edit the file with notepad, search for the domain "spclient.wg.spotify.com" and add a "#" at the beginning of the line to make it inactive.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlSpotifyLostFeatures" xml:space="preserve">
-    <value>Spotify lost some features after turning ads off: Friend list, radio, daily mixes and podcasts.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
     <value>// Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono).</value>
   </data>
@@ -410,10 +346,6 @@
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
     <value>Audio Device:</value>
-    <comment>interface</comment>
-  </data>
-  <data name="cbDefault" xml:space="preserve">
-    <value>Default</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingTimer" xml:space="preserve">
@@ -431,18 +363,6 @@
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
     <value>// Waiting for the recording of the current audio track to end</value>
     <comment>console</comment>
-  </data>
-  <data name="lblSpotifyAudioEndpoint" xml:space="preserve">
-    <value>By using the Spytify setting ''Audio Device'', you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type ''Sound mixer options'', you should land on the setting page called ''App volume and device preferences'', make sure Spotify is playing and set the app to the desired endpoint with the ''Output'' select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ''Windows 10 Settings'' &gt; ''System'' &gt; ''Sound'', scroll down to the ''Advanced sound options'' &gt; ''App volume and device preferences'' setting.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="tlSpotifyAudioEndpoint" xml:space="preserve">
-    <value>Isolates Spotify audio to a different audio endpoint device</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblBackgroundNoiceRecordedOnTrack_second" xml:space="preserve">
-    <value>Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can't have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the High Quality 320kbps chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</value>
-    <comment>interface</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
     <value>// Previous recording sesssion logs</value>

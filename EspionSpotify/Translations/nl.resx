@@ -138,242 +138,242 @@
     <comment>interface</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
-    <value>{0} Haute qualité (Spotify Premium)</value>
+    <value>{0} Hoge Kwaliteit (Spotify Premium)</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Regrouper les chansons d'un même artiste dans un dossier au nom de l'artiste</value>
+    <value>Groepeer nummers van dezelfde artiest in dezelfde map</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
-    <value>Remplacer les espaces par des underscores "_" dans le nom des fichiers sauvegardés</value>
+    <value>Vervang spaties in bestandsnamen door underscores "_"</value>
     <comment>interface</comment>
   </data>
   <data name="lblAds" xml:space="preserve">
-    <value>Publicités:</value>
+    <value>Reclame:</value>
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Qualité audio:</value>
+    <value>Audiokwaliteit:</value>
     <comment>interface</comment>
   </data>
   <data name="lblDisableAds" xml:space="preserve">
-    <value>Désactiver le plus de publicités audio de Spotify</value>
+    <value>Vermijd zoveel mogelijk Spotify advertenties</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
-    <value>Retarder le prochain enregistrement si du son est détecté</value>
+    <value>Stel de volgende opname uit wanneer er geluid is gedetecteerd</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
-    <value>Format audio:</value>
+    <value>Audio formaat:</value>
     <comment>interface</comment>
   </data>
   <data name="lblLanguage" xml:space="preserve">
-    <value>Langage:</value>
+    <value>Taal:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMinLength" xml:space="preserve">
-    <value>Durée minimale:</value>
+    <value>Minimale lengte:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMuteAds" xml:space="preserve">
-    <value>Couper le son des publicités</value>
+    <value>Demp advertenties</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
-    <value>Inscrire au début du nom des fichiers enregistrés l'ordre d'enregistrement</value>
+    <value>Voeg het opname volgordenummer toe aan alle bestandsnamen</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Remplacer le numéro de position cd (album track) par l'ordre d'enregistrement</value>
+    <value>Vervang tracknummers door opname volgordenummers</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
-    <value>Dossier de sauvegarde:</value>
+    <value>Output path:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
-    <value>Enregistreur:</value>
+    <value>Recorder:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
-    <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
+    <value>Kies de startpositie van het opname volgordenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Enregistrer les pistes de type inconnu détectées en tant que publicité</value>
+    <value>Neem onbekende types van nummers op die zijn gedetecteerd als advertentie</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
-    <value>Espion:</value>
+    <value>Opname:</value>
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
-    <value>Annonce</value>
+    <value>Advertentie</value>
     <comment>console</comment>
   </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>Effacement de: {0} [&lt; {1}s]</value>
+    <value>Verwijderen: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
+    <value>// Fout tijdens opname: De output locatie kan niet worden gevonden.</value>
     <comment>interface</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
-    <value>Enregistrement de: {0}</value>
+    <value>Opnemen: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyConnecting" xml:space="preserve">
-    <value>// Spotify n'est pas démarré, tentative de lancement amorcée.</value>
+    <value>// Spotify staat uit, poging tot aanzetten...</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value>// Spotify est fermé.</value>
+    <value>// Spotify staat uit</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotConnected" xml:space="preserve">
-    <value>// Spotify ne s'est pas connecté à l'API local, veuillez ré-essayer.</value>
+    <value>// Spotify kon niet verbinden met het lokale API, probeer het a.u.b. opnieuw</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify n'a pas été trouvé ou n'est pas installé.</value>
+    <value>// Spotify kon niet worden gevonden, en is mogelijk niet geïnstalleerd.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
-    <value>// Début de l'espionnage.</value>
+    <value>// Opnemen...</value>
     <comment>console</comment>
   </data>
   <data name="logStoping" xml:space="preserve">
-    <value>// Fin de l'espionnage.</value>
+    <value>// Einde</value>
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
+    <value>// Fout tijdens opname: Uw computer audio formaat wordt niet ondersteund. Formaat moet "2 channels, 24-bit, 48000 Hz (Studiokwaliteit)" zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
-    <value>Voulez-vous quand même quitter?</value>
+    <value>Weet u zeker dat u het programma wilt verlaten?</value>
     <comment>message</comment>
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
-    <value>Le répertoire de sauvegarde sélectionné n'existe pas, sélectionner un autre.</value>
+    <value>Het opgegeven bestandspad bestaat niet, selecteer a.u.b. een andere.</value>
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminContent" xml:space="preserve">
-    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?</value>
+    <value>Spytify moet opnieuw opstarten en toegang krijgen tot admin rechten om Spotify advertentie te blokkeren. Wilt u doorgaan en het opnieuw proberen?</value>
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminTitle" xml:space="preserve">
-    <value>Droits d'administrateur requis</value>
+    <value>Admin rechten vereist.</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionContent" xml:space="preserve">
-    <value>Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?</value>
+    <value>Wilt u GitHub openen om de nieuwste versie van Spytify te bekijken?</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionTitle" xml:space="preserve">
-    <value>Version {0} a été publiée!</value>
+    <value>Versie {0} is uit!</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">
-    <value>Espionnage Spotify en cours</value>
+    <value>Spytify is aan het opnemen</value>
     <comment>message</comment>
   </data>
   <data name="msgTitlePathNotFound" xml:space="preserve">
-    <value>Répertoire invalide</value>
+    <value>Bestandspad ongeldig</value>
     <comment>message</comment>
   </data>
   <data name="tabAdvanced" xml:space="preserve">
-    <value>Paramètres avancés</value>
+    <value>Geavanceerde Instellingen</value>
     <comment>interface</comment>
   </data>
   <data name="tabRecord" xml:space="preserve">
-    <value>Espion</value>
+    <value>Opname</value>
     <comment>interface</comment>
   </data>
   <data name="tabSettings" xml:space="preserve">
-    <value>Paramètres</value>
+    <value>Instellingen</value>
     <comment>interface</comment>
   </data>
   <data name="tipClear" xml:space="preserve">
-    <value>Effacer l'historique</value>
+    <value>Verwijder geschiedenis</value>
     <comment>interface</comment>
   </data>
   <data name="tipDirectory" xml:space="preserve">
-    <value>Ouvrir le répertoire de sauvegarde</value>
+    <value>Open output bestandslocatie</value>
     <comment>interface</comment>
   </data>
   <data name="tipPath" xml:space="preserve">
-    <value>Parcourir</value>
+    <value>Zoeken</value>
     <comment>interface</comment>
   </data>
   <data name="tipStartSpying" xml:space="preserve">
-    <value>Débuter l'espionnage</value>
+    <value>Begin opname</value>
     <comment>interface</comment>
   </data>
   <data name="tipStopSying" xml:space="preserve">
-    <value>Arrêter l'espionnage</value>
+    <value>Stop opname</value>
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Exception inconnue: {0}</value>
+    <value>// Error while recording: Unknown exception</value>
     <comment>message</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
-    <comment>console</comment>
-  </data>
-  <data name="msgBodyDisableAds" xml:space="preserve">
-    <value>En désactivant les annonces, vous bloquerez les annonces provenant de partenaires (domaines tiers). Spotify pourra quand même jouer leurs propre annonces, puisqu'elles viennent du même domaine que leur contenu musical, radio, liste d'amis et "daily mix".</value>
+    <value>// Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
     <comment>message</comment>
   </data>
+  <data name="msgBodyDisableAds" xml:space="preserve">
+    <value>By disabling ads, you will block ads coming from partners (third parties domains). Spotify will still be able to play their own ads, because they come from the same domain that their music content, radio, friends list and daily mix.</value>
+    <comment>interface</comment>
+  </data>
   <data name="msgTitleDisableAds" xml:space="preserve">
-    <value>Désactiver les annonces</value>
+    <value>Disable Ads</value>
     <comment>interface</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliquer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
+    <value>Duplicate already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: L'enregistrement multi-canaux de fichiers n'est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono).</value>
-    <comment>console</comment>
+    <value>// Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono).</value>
   </data>
   <data name="tipRelease" xml:space="preserve">
-    <value>Nouvelle version disponible</value>
+    <value>New version available</value>
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
-    <value>Périphérique audio:</value>
+    <value>Audio Device:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingTimer" xml:space="preserve">
-    <value>Minuteur pour la session d'enregistrement</value>
+    <value>Timer voor de opnamesessie</value>
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Minuteur de session d'enregistrement terminé.</value>
+    <value>// Timer voor de opnamesessie is voorbij.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify ne peut enregistré s'il n'utilise pas le même périphérique audio que Spotify. Voir la F.A.Q pour savoir comment déplacer Spotify vers un autre périphérique.</value>
+    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
-    <value>// En attente de la fin de l'enregistrement de la piste audio courante</value>
+    <value>// Wachten op het einde van de opname van het huidige nummer</value>
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
-    <value>// Le registre de la session d'enregistrement précédente</value>
+    <value>// Previous recording sesssion logs</value>
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
-    <value>Enregistré {0} en : {1}</value>
+    <value>Recorded {0} in : {1}</value>
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Passe: {0} (l'enregistrement existe déjà)</value>
+    <value>// Skipping: {0} (recording already exists)</value>
+    <comment>console</comment>
   </data>
 </root>
