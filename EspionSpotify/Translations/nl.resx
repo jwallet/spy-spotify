@@ -190,11 +190,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
-    <value>Output path:</value>
+    <value>Bestandspad:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
-    <value>Recorder:</value>
+    <value>Opnemer:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
@@ -345,7 +345,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
-    <value>Audio Device:</value>
+    <value>Audioapparaat:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingTimer" xml:space="preserve">
@@ -369,7 +369,7 @@
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
-    <value>Recorded {0} in : {1}</value>
+    <value>Opgenomen {0} in : {1}</value>
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">

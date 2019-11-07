@@ -142,7 +142,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio Device:.
+        ///   Looks up a localized string similar to Audioapparaat:.
         /// </summary>
         internal static string lblAudioDevice {
             get {
@@ -241,7 +241,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path:.
+        ///   Looks up a localized string similar to Bestandspad:.
         /// </summary>
         internal static string lblPath {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorder:.
+        ///   Looks up a localized string similar to Opnemer:.
         /// </summary>
         internal static string lblRecorder {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorded {0} in : {1}.
+        ///   Looks up a localized string similar to Opgenomen {0} in : {1}.
         /// </summary>
         internal static string logRecorded {
             get {
