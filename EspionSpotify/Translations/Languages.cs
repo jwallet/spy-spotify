@@ -10,8 +10,8 @@ namespace EspionSpotify.Translations
         public static readonly Dictionary<LanguageType, Type> availableResourcesManager = new Dictionary<LanguageType, Type>
         {
             { LanguageType.en, typeof(en) },
-            { LanguageType.fr, typeof(fr) },
-            { LanguageType.nl, typeof(nl) }
+            { LanguageType.fr, typeof(fr) }
+            //{ LanguageType.nl, typeof(nl) }
         };
 
         public static Type getResourcesManagerLanguageType(LanguageType languageType)
@@ -22,8 +22,8 @@ namespace EspionSpotify.Translations
         internal static readonly Dictionary<LanguageType, string> dropdownListValues = new Dictionary<LanguageType, string>
         {
             { LanguageType.en, "English" },
-            { LanguageType.fr, "Français" },
-            { LanguageType.nl, "Nederlands" }
+            { LanguageType.fr, "Français" }
+            //{ LanguageType.nl, "Nederlands" }
         };
     }
 }
