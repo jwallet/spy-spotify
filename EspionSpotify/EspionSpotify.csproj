@@ -171,6 +171,7 @@
     <Compile Include="Enums\TranslationKeys.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
+    <Compile Include="Extensions\ResourceManagerExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Ads\Administrator.cs" />
     <Compile Include="Events\PlayStateEventArgs.cs" />

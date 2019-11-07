@@ -3,6 +3,7 @@ using EspionSpotify.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,6 +22,22 @@ namespace EspionSpotify.Tests
         {
             var actual = value.ToNullableInt();
             Assert.Equal(expected, actual);
+        }
+    }
+
+    public class ResourceManagerTests
+    {
+        private readonly ResourceManager _rm;
+
+        public ResourceManagerTests()
+        {
+            _rm = new ResourceManager(Translations.Languages.getResourcesManagerLanguageType(LanguageType.en));
+        }
+
+        [Fact]
+        private void GetString_ReturnsExpectedTranslatedSpyString()
+        {
+            Assert.Equal("Spy", _rm.GetString(TranslationKeys.tabRecord));
         }
     }
 

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
+using System.Diagnostics;
 using System.Security.Principal;
 using System.Windows.Forms;
 
@@ -11,8 +13,8 @@ namespace EspionSpotify.Ads
             if (!IsNotAdmin()) return true;
             if (MetroFramework.MetroMessageBox.Show(
                 FrmEspionSpotify.Instance,
-                FrmEspionSpotify.Rm.GetString($"msgEnsureAdminContent"),
-                FrmEspionSpotify.Rm.GetString($"msgEnsureAdminTitle"),
+                FrmEspionSpotify.Rm.GetString(TranslationKeys.msgEnsureAdminContent),
+                FrmEspionSpotify.Rm.GetString(TranslationKeys.msgEnsureAdminTitle),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) != DialogResult.Yes) return false;
 

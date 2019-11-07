@@ -164,43 +164,43 @@ namespace EspionSpotify
             var rmLanguage = Translations.Languages.getResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
-            tabRecord.Text = Rm.GetString($"tabRecord");
-            tabSettings.Text = Rm.GetString($"tabSettings");
-            tabAdvanced.Text = Rm.GetString($"tabAdvanced");
+            tabRecord.Text = Rm.GetString(TranslationKeys.tabRecord);
+            tabSettings.Text = Rm.GetString(TranslationKeys.tabSettings);
+            tabAdvanced.Text = Rm.GetString(TranslationKeys.tabAdvanced);
 
-            lblPath.Text = Rm.GetString($"lblPath");
-            lblAudioDevice.Text = Rm.GetString($"lblAudioDevice");
-            lblBitRate.Text = Rm.GetString($"lblBitRate");
-            lblFormat.Text = Rm.GetString($"lblFormat");
-            lblMinLength.Text = Rm.GetString($"lblMinLength");
-            lblLanguage.Text = Rm.GetString($"lblLanguage");
-            lblAddFolders.Text = Rm.GetString($"lblAddFolders");
-            lblAddSeparators.Text = Rm.GetString($"lblAddSeparators");
-            lblNumFiles.Text = Rm.GetString($"lblNumFiles");
-            lblNumTracks.Text = Rm.GetString($"lblNumTracks");
-            lblEndingSongDelay.Text = Rm.GetString($"lblEndingSongDelay");
-            lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
-            lblAds.Text = Rm.GetString($"lblAds");
-            lblDisableAds.Text = Rm.GetString($"lblDisableAds");
-            lblMuteAds.Text = Rm.GetString($"lblMuteAds");
-            lblSpy.Text = Rm.GetString($"lblSpy");
-            lblRecorder.Text = Rm.GetString($"lblRecorder");
-            lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
-            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
-            lblRecordingTimer.Text = Rm.GetString($"lblRecordingTimer");
+            lblPath.Text = Rm.GetString(TranslationKeys.lblPath);
+            lblAudioDevice.Text = Rm.GetString(TranslationKeys.lblAudioDevice);
+            lblBitRate.Text = Rm.GetString(TranslationKeys.lblBitRate);
+            lblFormat.Text = Rm.GetString(TranslationKeys.lblFormat);
+            lblMinLength.Text = Rm.GetString(TranslationKeys.lblMinLength);
+            lblLanguage.Text = Rm.GetString(TranslationKeys.lblLanguage);
+            lblAddFolders.Text = Rm.GetString(TranslationKeys.lblAddFolders);
+            lblAddSeparators.Text = Rm.GetString(TranslationKeys.lblAddSeparators);
+            lblNumFiles.Text = Rm.GetString(TranslationKeys.lblNumFiles);
+            lblNumTracks.Text = Rm.GetString(TranslationKeys.lblNumTracks);
+            lblEndingSongDelay.Text = Rm.GetString(TranslationKeys.lblEndingSongDelay);
+            lblRecordingNum.Text = Rm.GetString(TranslationKeys.lblRecordingNum);
+            lblAds.Text = Rm.GetString(TranslationKeys.lblAds);
+            lblDisableAds.Text = Rm.GetString(TranslationKeys.lblDisableAds);
+            lblMuteAds.Text = Rm.GetString(TranslationKeys.lblMuteAds);
+            lblSpy.Text = Rm.GetString(TranslationKeys.lblSpy);
+            lblRecorder.Text = Rm.GetString(TranslationKeys.lblRecorder);
+            lblRecordUnknownTrackType.Text = Rm.GetString(TranslationKeys.lblRecordUnknownTrackType);
+            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString(TranslationKeys.lblDuplicateAlreadyRecordedTrack);
+            lblRecordingTimer.Text = Rm.GetString(TranslationKeys.lblRecordingTimer);
 
-            tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
-            tip.SetToolTip(lnkDirectory, Rm.GetString($"tipDirectory"));
-            tip.SetToolTip(lnkPath, Rm.GetString($"tipPath"));
-            tip.SetToolTip(lnkRelease, Rm.GetString($"tipRelease"));
+            tip.SetToolTip(lnkClear, Rm.GetString(TranslationKeys.tipClear));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
+            tip.SetToolTip(lnkDirectory, Rm.GetString(TranslationKeys.tipDirectory));
+            tip.SetToolTip(lnkPath, Rm.GetString(TranslationKeys.tipPath));
+            tip.SetToolTip(lnkRelease, Rm.GetString(TranslationKeys.tipRelease));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, Rm.GetString($"cbOptBitRate128")},
-                {LAMEPreset.ABR_160, string.Format(Rm.GetString($"cbOptBitRateSpotifyFree") ?? "{0}", Rm.GetString($"cbOptBitRate160"))},
-                {LAMEPreset.ABR_256, Rm.GetString($"cbOptBitRate256")},
-                {LAMEPreset.ABR_320, string.Format(Rm.GetString($"cbOptBitRateSpotifyPremium") ?? "{0}", Rm.GetString($"cbOptBitRate320"))}
+                {LAMEPreset.ABR_128, Rm.GetString(TranslationKeys.cbOptBitRate128)},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate160))},
+                {LAMEPreset.ABR_256, Rm.GetString(TranslationKeys.cbOptBitRate256)},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate320))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
@@ -229,7 +229,7 @@ namespace EspionSpotify
                 return;
             }
 
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
             lnkSpy.Image = Resources.on;
             lnkSpy.Focus();
         }
@@ -334,7 +334,7 @@ namespace EspionSpotify
                 rtbLog.AppendText(log + Environment.NewLine);
             }
 
-            rtbLog.AppendText(LogDate + Rm.GetString($"logPreviousLogs") + Environment.NewLine + Environment.NewLine);
+            rtbLog.AppendText(LogDate + Rm.GetString(TranslationKeys.logPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
@@ -347,7 +347,7 @@ namespace EspionSpotify
             var watcherThread = new Thread(async () => await _watcher.Run());
             watcherThread.Start();
 
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStopSying));
             tlSettings.Enabled = false;
             tlAdvanced.Enabled = false;
             timer1.Start();
@@ -373,8 +373,8 @@ namespace EspionSpotify
             if (Directory.Exists(_userSettings.OutputPath)) return true;
 
             MetroMessageBox.Show(this,
-                Rm.GetString($"msgBodyPathNotFound"),
-                Rm.GetString($"msgTitlePathNotFound"),
+                Rm.GetString(TranslationKeys.msgBodyPathNotFound),
+                Rm.GetString(TranslationKeys.msgTitlePathNotFound),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -467,8 +467,8 @@ namespace EspionSpotify
             if (Administrator.EnsureAdmin())
             {
                 if (tgDisableAds.Checked && MetroMessageBox.Show(this,
-                    Rm.GetString($"msgBodyDisableAds"),
-                    Rm.GetString($"msgTitleDisableAds"),
+                    Rm.GetString(TranslationKeys.msgBodyDisableAds),
+                    Rm.GetString(TranslationKeys.msgTitleDisableAds),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Question) == DialogResult.OK) return;
                 return;
@@ -538,8 +538,8 @@ namespace EspionSpotify
             if (Watcher.Ready || !Watcher.Running) return;
             e.Cancel = true;
             if (MetroMessageBox.Show(this,
-                    Rm.GetString($"msgBodyCantQuit"),
-                    Rm.GetString($"msgTitleCantQuit"),
+                    Rm.GetString(TranslationKeys.msgBodyCantQuit),
+                    Rm.GetString(TranslationKeys.msgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             Watcher.Running = false;

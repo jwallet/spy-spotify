@@ -9,8 +9,8 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify
 {
@@ -52,8 +52,8 @@ namespace EspionSpotify
                     if (githubTagVersion <= assemblyVersion) return;
                     if (Settings.Default.LastVersionPrompted.ToVersion() == githubTagVersion) return;
 
-                    var dialogTitle = string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"), githubTagVersion);
-                    var dialogMessage = FrmEspionSpotify.Rm.GetString($"msgNewVersionContent");
+                    var dialogTitle = string.Format(FrmEspionSpotify.Rm.GetString(TranslationKeys.msgNewVersionTitle), githubTagVersion);
+                    var dialogMessage = FrmEspionSpotify.Rm.GetString(TranslationKeys.msgNewVersionContent);
 
                     if (!string.IsNullOrEmpty(release.body))
                     {
