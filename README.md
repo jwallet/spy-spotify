@@ -56,7 +56,7 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 - Newtonsoft.Json
 - NAudio.Lame
 - last.fm API
-- Spotify API (see your `Spytify.exe.config` file)
+- Spotify API (see your `Spytify.exe.config` [L.78@88](https://github.com/jwallet/spy-spotify/blob/327e8d0fc1bb7281b302f6bcba973d5b3c0a2fd9/EspionSpotify/App.config) file)
 - taglib
 
 ## Translate
