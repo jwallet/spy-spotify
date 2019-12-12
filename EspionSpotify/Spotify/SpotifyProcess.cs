@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
@@ -19,7 +20,7 @@ namespace EspionSpotify
             _spotifyProcessId = GetSpotifyProcesses().FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
         }
 
-        public ISpotifyStatus GetSpotifyStatus()
+        public async Task<ISpotifyStatus> GetSpotifyStatus()
         {
             var isSpotifyPlaying = _spotifyAudioSession.IsSpotifyCurrentlyPlaying();
             var processTitle = GetSpotifyTitle();
@@ -32,7 +33,7 @@ namespace EspionSpotify
             var spotifyWindowInfo = new SpotifyWindowInfo
             {
                 WindowTitle = processTitle,
-                IsPlaying = isSpotifyPlaying
+                IsPlaying = await isSpotifyPlaying
             };
 
             return new SpotifyStatus(spotifyWindowInfo);

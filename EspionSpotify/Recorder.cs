@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,10 +34,10 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track);
         }
 
-        public void Run()
+        public async void Run()
         {
             Running = true;
-            Thread.Sleep(50);
+            await Task.Delay(50);
             _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);
 
             _waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -47,6 +47,7 @@ namespace EspionSpotify
 
             if (_writer == null)
             {
+                Running = false;
                 return;
             }
 
@@ -55,7 +56,7 @@ namespace EspionSpotify
 
             while (Running)
             {
-                Thread.Sleep(50);
+                await Task.Delay(100);
             }
 
             _waveIn.StopRecording();

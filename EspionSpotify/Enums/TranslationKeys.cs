@@ -31,6 +31,7 @@
         logAd,
         logDeleting,
         logInvalidOutput,
+        logMissingDlls,
         logNoAccessOutput,
         logPreviousLogs,
         logRecorded,

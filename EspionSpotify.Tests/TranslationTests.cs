@@ -33,7 +33,7 @@ namespace EspionSpotify.Tests
         {
             Assert.NotNull(_en);
             Assert.NotNull(_fr);
-            Assert.NotNull(_nl);
+            //Assert.NotNull(_nl);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(count, _keysCount);
         }
 
-        [Fact]
+        [Fact(Skip = "NL unsupported yet")]
         private void Dutch_ShouldGetTranslations()
         {
             RM = new ResourceManager(_nl);

@@ -344,8 +344,8 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherThread = new Thread(async () => await _watcher.Run());
-            watcherThread.Start();
+            var watcherTask = new Task(async () => await _watcher.Run());
+            watcherTask.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStopSying));
             tlSettings.Enabled = false;

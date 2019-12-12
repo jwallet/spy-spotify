@@ -20,7 +20,7 @@ namespace EspionSpotify.Spotify
         event EventHandler<PlayStateEventArgs> OnPlayStateChange;
         event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        Track GetTrack();
+        Task<Track> GetTrack();
 
         void Dispose();
     }

@@ -32,22 +32,22 @@ namespace EspionSpotify.AudioSessions
             SpotifyAudioSessionControls = new List<AudioSessionControl>();
         }
 
-        public void SleepWhileTheSongEnds()
+        public async void SleepWhileTheSongEnds()
         {
-            for (var times = 1000; IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
+            for (var times = 1000; await IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
             {
-                Thread.Sleep(SLEEP_VALUE);
+                await Task.Delay(SLEEP_VALUE);
             }
         }
 
-        public bool IsSpotifyCurrentlyPlaying()
+        public async Task<bool> IsSpotifyCurrentlyPlaying()
         {
             var samples = new List<double>();
 
             for (var sample = 0; sample < NUMBER_OF_SAMPLES; sample++)
             {
                 var spotifySoundValue = 0.0;
-                Thread.Sleep(SLEEP_VALUE);
+                await Task.Delay(SLEEP_VALUE);
 
                 lock (SpotifyAudioSessionControls)
                 {
@@ -77,9 +77,9 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
-        public bool WaitSpotifyAudioSessionToStart(ref bool running)
+        public async Task<bool> WaitSpotifyAudioSessionToStart(bool running)
         {
-            if (IsSpotifyPlayingOutsideDefaultAudioEndPoint(ref running))
+            if (await IsSpotifyPlayingOutsideDefaultAudioEndPoint(running))
             {
                 return false;
             }
@@ -125,7 +125,7 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
-        private bool IsSpotifyPlayingOutsideDefaultAudioEndPoint(ref bool running)
+        private async Task<bool> IsSpotifyPlayingOutsideDefaultAudioEndPoint(bool running)
         {
             int? spotifyAudioSessionProcessId = null;
 
@@ -147,7 +147,7 @@ namespace EspionSpotify.AudioSessions
 
                 AudioMMDevices = new MMDeviceEnumerator();
                 UpdateAudioEndPointDevices();
-                Thread.Sleep(300);
+                await Task.Delay(300);
             }
 
             var sessionAudioSelectedEndPointDevice = GetSessionsAudioEndPointDevice;

@@ -44,7 +44,7 @@ namespace EspionSpotify.Tests
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
@@ -105,7 +105,7 @@ namespace EspionSpotify.Tests
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(currentTrack);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
@@ -165,7 +165,7 @@ namespace EspionSpotify.Tests
             spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {

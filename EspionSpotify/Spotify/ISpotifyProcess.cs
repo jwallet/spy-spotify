@@ -5,6 +5,6 @@ namespace EspionSpotify.Spotify
 {
     public interface ISpotifyProcess
     {
-        ISpotifyStatus GetSpotifyStatus();
+        Task<ISpotifyStatus> GetSpotifyStatus();
     }
 }

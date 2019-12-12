@@ -2,6 +2,7 @@
 using EspionSpotify.Events;
 using EspionSpotify.Models;
 using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace EspionSpotify.Spotify
@@ -49,19 +50,19 @@ namespace EspionSpotify.Spotify
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public Track GetTrack()
+        public async Task<Track> GetTrack()
         {
             if (SpotifyLatestStatus == null)
             {
-                return SpotifyProcess.GetSpotifyStatus()?.CurrentTrack;
+                return (await SpotifyProcess.GetSpotifyStatus())?.CurrentTrack;
             }
 
             return SpotifyLatestStatus.GetTrack();
         }
 
-        private void ElapsedEventTick(object sender, ElapsedEventArgs e)
+        private async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
-            SpotifyLatestStatus = SpotifyProcess.GetSpotifyStatus();
+            SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
             {
                 EventTimer.Start();

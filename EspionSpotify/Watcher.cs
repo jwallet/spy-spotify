@@ -127,10 +127,10 @@ namespace EspionSpotify
             Running = true;
         }
 
-        private bool SetSpotifyAudioSessionAndWaitToStart()
+        private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
-            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref _running);
+            return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(_running);
         }
 
         private void BindSpotifyEventHandlers()
@@ -151,13 +151,13 @@ namespace EspionSpotify
             _form.WriteIntoConsole($"logStarting");
 
             await RunSpotifyConnect();
-            var isAudioSessionNotFound = !SetSpotifyAudioSessionAndWaitToStart();
+            var isAudioSessionNotFound = !(await SetSpotifyAudioSessionAndWaitToStart());
             BindSpotifyEventHandlers();
             Ready = false;
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
-                _currentTrack = Spotify.GetTrack();
+                _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
 
                 while (Running)
@@ -184,7 +184,7 @@ namespace EspionSpotify
                         _form.WriteIntoConsole("logRecordingTimerDone");
                         ToggleStopRecordingDelayed = true;
                     }
-                    Thread.Sleep(200);
+                    await Task.Delay(200);
                 }
 
                 DoIKeepLastSong();
@@ -214,19 +214,19 @@ namespace EspionSpotify
 
             _recorder = new Recorder(_form, _userSettings, _currentTrack);
 
-            var recorderThread = new Thread(_recorder.Run);
-            recorderThread.Start();
+            var recorderTask = new Task(_recorder.Run);
+            recorderTask.Start();
 
             _form.UpdateIconSpotify(_isPlaying, true);
             UpdateNumUp();
             CountSeconds = 0;
         }
 
-        private void InitializeRecordingSession()
+        private async void InitializeRecordingSession()
         {
             _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
-            var track = Spotify.GetTrack();
+            var track = await Spotify.GetTrack();
             if (track == null) return;
 
             _isPlaying = track.Playing;
@@ -243,7 +243,7 @@ namespace EspionSpotify
             }
         }
 
-        private void EnableRecordingTimer()
+        private async void EnableRecordingTimer()
         {
             _recordingTimer = new Timer(_userSettings.RecordingTimerMilliseconds)
             {
@@ -253,7 +253,7 @@ namespace EspionSpotify
 
             while (_recorder == null && SpotifyConnect.IsSpotifyRunning())
             {
-                Thread.Sleep(300);
+                await Task.Delay(300);
             }
 
             _recordingTimer.Enabled = true;
