@@ -319,7 +319,7 @@
   </data>
   <data name="logUnknownException" xml:space="preserve">
     <value>// Error while recording: Unknown exception</value>
-    <comment>message</comment>
+    <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
     <value>// Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
@@ -339,6 +339,7 @@
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
     <value>// Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono).</value>
+    <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
     <value>New version available</value>
@@ -374,6 +375,10 @@
   </data>
   <data name="logTrackExists" xml:space="preserve">
     <value>// Skipping: {0} (recording already exists)</value>
+    <comment>console</comment>
+  </data>
+  <data name="logMissingDlls" xml:space="preserve">
+    <value>// Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
 </root>

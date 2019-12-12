@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -144,6 +144,14 @@ namespace EspionSpotify
                 }
                 catch (Exception ex)
                 {
+                    if (ex.Message.Contains("Unable to load DLL"))
+                    {
+                        _form.WriteIntoConsole("logMissingDlls");
+                    }
+                    else
+                    {
+                        _form.WriteIntoConsole("logUnknownException", ex.Message);
+                    }
                     Console.WriteLine(ex.Message);
                     return null;
                 }

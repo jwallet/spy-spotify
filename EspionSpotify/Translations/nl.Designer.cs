@@ -322,6 +322,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll.
+        /// </summary>
+        internal static string logMissingDlls {
+            get {
+                return ResourceManager.GetString("logMissingDlls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one..
         /// </summary>
         internal static string logNoAccessOutput {

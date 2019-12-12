@@ -319,7 +319,7 @@
   </data>
   <data name="logUnknownException" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: Exception inconnue: {0}</value>
-    <comment>message</comment>
+    <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
@@ -375,5 +375,10 @@
   </data>
   <data name="logTrackExists" xml:space="preserve">
     <value>// Passe: {0} (l'enregistrement existe déjà)</value>
+    <comment>console</comment>
+  </data>
+  <data name="logMissingDlls" xml:space="preserve">
+    <value>// Erreur lors de l'enregistrement: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll</value>
+    <comment>console</comment>
   </data>
 </root>
