@@ -7,6 +7,6 @@ namespace EspionSpotify.Spotify
     {
         Track CurrentTrack { get; set; }
 
-        Track GetTrack();
+        Task<Track> GetTrack();
     }
 }

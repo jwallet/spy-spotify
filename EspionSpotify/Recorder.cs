@@ -73,8 +73,8 @@ namespace EspionSpotify
             if (_writer != null)
             {
                 _writer.Flush();
-                _writer.Dispose();
                 _waveIn.Dispose();
+                _writer.Dispose();
             }
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
@@ -100,7 +100,7 @@ namespace EspionSpotify
                 CurrentFile = _currentFile
             };
 
-            Task.Run(mp3TagsInfo.SaveMediaTags);
+            Task.Run(async () => await mp3TagsInfo.SaveMediaTags());
         }
 
         private Stream GetFileWriter(WasapiLoopbackCapture waveIn)

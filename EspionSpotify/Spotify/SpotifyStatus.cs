@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace EspionSpotify.Spotify
 {
@@ -23,11 +24,11 @@ namespace EspionSpotify.Spotify
             SetSongInfo(ref spotifyWindowInfo);
         }
 
-        public Track GetTrack()
+        public async Task<Track> GetTrack()
         {
             if (!CurrentTrack.IsNormal()) return CurrentTrack;
 
-            ExternalAPI.Instance.UpdateTrack(CurrentTrack);
+            await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
             return CurrentTrack;
         }
 

@@ -41,7 +41,7 @@ namespace EspionSpotify.MediaTags
 
             if (api == null) return false;
 
-            var playback = api.GetPlayback();
+            var playback = await api.GetPlaybackAsync();
 
             if (playback.HasError() || playback.Item == null)
             {
@@ -54,7 +54,7 @@ namespace EspionSpotify.MediaTags
 
             if (playback.Item.Album?.Id == null) return false;
 
-            var album = api.GetAlbum(playback.Item.Album.Id);
+            var album = await api.GetAlbumAsync(playback.Item.Album.Id);
 
             if (album.HasError()) return false;
 
