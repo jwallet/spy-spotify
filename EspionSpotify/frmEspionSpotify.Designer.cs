@@ -104,6 +104,7 @@ namespace EspionSpotify
             this.tip = new MetroFramework.Components.MetroToolTip();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lnkRelease = new MetroFramework.Controls.MetroLink();
+            this.lblRecordedTime = new MetroFramework.Controls.MetroLabel();
             this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
             this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
             this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
@@ -329,6 +330,7 @@ namespace EspionSpotify
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
             this.tableLayoutPanel3.Controls.Add(this.lblPlayingTitle, 3, 0);
             this.tableLayoutPanel3.Controls.Add(this.iconSpotify, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblRecordedTime, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -1259,6 +1261,21 @@ namespace EspionSpotify
             this.lnkRelease.Visible = false;
             this.lnkRelease.Click += new System.EventHandler(this.LnkRelease_Click);
             // 
+            // lblRecordedTime
+            // 
+            this.lblRecordedTime.AutoSize = true;
+            this.lblRecordedTime.BackColor = System.Drawing.Color.Black;
+            this.lblRecordedTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblRecordedTime.ForeColor = System.Drawing.Color.SpringGreen;
+            this.lblRecordedTime.Location = new System.Drawing.Point(309, 0);
+            this.lblRecordedTime.Margin = new System.Windows.Forms.Padding(0);
+            this.lblRecordedTime.Name = "lblRecordedTime";
+            this.lblRecordedTime.Size = new System.Drawing.Size(1, 35);
+            this.lblRecordedTime.TabIndex = 36;
+            this.lblRecordedTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRecordedTime.UseCustomBackColor = true;
+            this.lblRecordedTime.UseCustomForeColor = true;
+            // 
             // tbVolumeWin
             // 
             this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
@@ -1473,6 +1490,7 @@ namespace EspionSpotify
         private System.Windows.Forms.TableLayoutPanel tlpConsoleFrame;
         private System.Windows.Forms.TableLayoutPanel tlpConsole;
         private System.Windows.Forms.MaskedTextBox txtRecordingNum;
+        private MetroLabel lblRecordedTime;
     }
 }
 

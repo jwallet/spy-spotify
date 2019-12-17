@@ -91,6 +91,7 @@ namespace EspionSpotify
         private void OnTrackTimeChanged(object sender, TrackTimeChangeEventArgs e)
         {
             _currentTrack.CurrentPosition = e.TrackTime;
+            _form.UpdateRecordedTime(RecorderUpAndRunning ? (int?)e.TrackTime : null);
         }
 
         public bool IsNewTrack(Track track)
@@ -277,6 +278,7 @@ namespace EspionSpotify
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(SPOTIFY);
             _form.UpdateIconSpotify(false);
+            _form.UpdateRecordedTime(null);
             _form.StopRecording();
         }
 

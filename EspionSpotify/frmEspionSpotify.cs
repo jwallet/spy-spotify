@@ -270,6 +270,17 @@ namespace EspionSpotify
             lblPlayingTitle.Text = text;
         }
 
+        public void UpdateRecordedTime(int? time)
+        {
+            if (lblRecordedTime.InvokeRequired)
+            {
+                BeginInvoke(new Action(() => UpdateRecordedTime(time)));
+                return;
+            }
+
+            lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "";
+        }
+
         private string WriteRtbLine(RichTextBox rtbLog, string text)
         {
             var log = "";
