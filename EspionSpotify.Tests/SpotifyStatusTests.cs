@@ -14,6 +14,7 @@ namespace EspionSpotify.Tests
         [InlineData("Spotify", true)]
         [InlineData("SPOTIFY", true)]
         [InlineData("spotify", true)]
+        [InlineData("Spotify Free", true)]
         private void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
         {
             var actual = SpotifyStatus.WindowTitleIsSpotify(value);
