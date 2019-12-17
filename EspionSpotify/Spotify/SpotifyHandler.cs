@@ -83,26 +83,26 @@ namespace EspionSpotify.Spotify
                         SongTimer.Stop();
                     }
 
-                    OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
+                    await Task.Run(() => OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
                     {
                         Playing = newestTrack.Playing
-                    });
+                    }));
                 }
                 if (!newestTrack.Equals(Track))
                 {
                     SongTimer.Start();
-                    OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
+                    await Task.Run(async () => OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
                         OldTrack = Track,
                         NewTrack = await SpotifyLatestStatus.GetTrack()
-                    });
+                    }));
                 }
-                if (Track.CurrentPosition != null)
+                if (Track.CurrentPosition != null || newestTrack != null)
                 {
-                    OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs()
+                    await Task.Run(() => OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs()
                     {
-                        TrackTime = Track.CurrentPosition ?? 0
-                    });
+                        TrackTime = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : 0
+                    }));
                 }
             }
             if (newestTrack != null)
