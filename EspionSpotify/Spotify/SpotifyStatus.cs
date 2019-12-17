@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EspionSpotify.Spotify
@@ -8,6 +9,9 @@ namespace EspionSpotify.Spotify
     public class SpotifyStatus: ISpotifyStatus
     {
         public const string SPOTIFY = "spotify";
+        public const string SPOTIFYFREE = "spotify free";
+
+        public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
 
         public Track CurrentTrack { get; set; }
 
@@ -15,7 +19,7 @@ namespace EspionSpotify.Spotify
 
         public static bool WindowTitleIsSpotify(string title)
         {
-            return title?.ToLowerInvariant().Equals(SPOTIFY) ?? false;
+            return SpotifyTitles.Contains(title?.ToLowerInvariant());
         }
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
