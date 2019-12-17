@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +11,6 @@ namespace EspionSpotify
 {
     internal class Recorder: IRecorder
     {
-        private const long TICKS_PER_SECOND = 10000000;
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
 
@@ -43,7 +42,10 @@ namespace EspionSpotify
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
-            _writer = GetFileWriter(_waveIn);
+            _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
+            _currentFilePending = _fileManager.BuildSpytifyFileName(_currentFile);
+
+            _writer = GetFileWriter(_currentFilePending, _waveIn, _userSettings);
 
             if (_writer == null)
             {
@@ -56,7 +58,7 @@ namespace EspionSpotify
 
             while (Running)
             {
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
@@ -84,8 +86,7 @@ namespace EspionSpotify
                 return;
             }
 
-            var timeSpan = new TimeSpan(TICKS_PER_SECOND * CountSeconds);
-            var length = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
+            var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole("logRecorded", _track.ToString(), length);
 
             _fileManager.Rename(_currentFilePending, _currentFile);
@@ -103,23 +104,20 @@ namespace EspionSpotify
             Task.Run(async () => await mp3TagsInfo.SaveMediaTags());
         }
 
-        private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
+        private Stream GetFileWriter(string file, WasapiLoopbackCapture waveIn, UserSettings settings)
         {
-            _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
-            _currentFilePending = _fileManager.BuildSpytifyFileName(_currentFile);
-
-            if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
+            if (settings.MediaFormat.Equals(MediaFormat.Mp3))
             {
                 try
                 {
-                    return new LameMP3FileWriter(_currentFilePending, waveIn.WaveFormat, _userSettings.Bitrate);
+                    return new LameMP3FileWriter(file, waveIn.WaveFormat, settings.Bitrate);
                 }
                 catch (ArgumentException ex)
                 {
                     var resource = "logUnknownException";
                     var args = ex.Message;
 
-                    if (!Directory.Exists(_userSettings.OutputPath))
+                    if (!Directory.Exists(settings.OutputPath))
                     {
                         resource = "logInvalidOutput";
                     }
@@ -160,7 +158,7 @@ namespace EspionSpotify
 
             try
             {
-                return new WaveFileWriter(_currentFilePending, waveIn.WaveFormat);
+                return new WaveFileWriter(file, waveIn.WaveFormat);
             }
             catch (Exception ex)
             {
