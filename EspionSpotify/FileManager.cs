@@ -2,6 +2,7 @@
 using EspionSpotify.Spotify;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,65 +12,44 @@ namespace EspionSpotify
     {
         private readonly UserSettings _userSettings;
         private readonly Track _track;
+        private readonly IFileSystem _fileSystem;
 
-        private const int FIRST_SONG_NAME_COUNT = 1;
-        private const string SPYTIFY = "spytify";
         private static readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
-        public FileManager(UserSettings userSettings, Track track)
+        public FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
             _userSettings = userSettings;
             _track = track;
+            _fileSystem = fileSystem;
         }
 
-        public string GetPathName(string fileName, int count, string path = null)
+        public OutputFile GetOutputFile(string path)
         {
-            var fileExtension = GetMediaFormatExtension(_userSettings);
-            fileName += count > FIRST_SONG_NAME_COUNT ? $"{_userSettings.TrackTitleSeparator}{count}" : string.Empty;
-            var mediaFile = $"{fileName}.{fileExtension}";
-            return path != null ? $"{path}\\{mediaFile}" : mediaFile;
-        }
+            var pathName = path + GetFolderPath(_track, _userSettings, _fileSystem);
+            var fileName = GenerateFileName(_track, _userSettings);
+            var extension = GetMediaFormatExtension(_userSettings);
 
-        public string BuildFileName(string path)
-        {
-            var pathWithFolder = path + GetFolderPath(_track, _userSettings);
-            var fileName = GetFileName(_track, _userSettings);
-            var count = FIRST_SONG_NAME_COUNT;
-
-            var pathName = GetPathName(fileName, count, pathWithFolder);
-
-            while (_userSettings.DuplicateAlreadyRecordedTrack && File.Exists(GetPathName(fileName, count, pathWithFolder)))
+            var outputFile = new OutputFile
             {
-                count++;
-                pathName = GetPathName(fileName, count, pathWithFolder);
+                Path = pathName,
+                File = fileName,
+                Separator = _userSettings.TrackTitleSeparator,
+                Extension = extension
+            };
+
+            while (_userSettings.DuplicateAlreadyRecordedTrack && _fileSystem.File.Exists(outputFile.ToString()))
+            {
+                outputFile.Increment();
             }
 
-            return pathName;
-        }
-
-        public string BuildSpytifyFileName(string fileName)
-        {
-            return $"{fileName}.{SPYTIFY}";
-        }
-        
-        public string GetFileName(string file)
-        {
-            return Path.GetFileName(file);
-        }
-
-        public void Rename(string source, string destination)
-        {
-            if (File.Exists(source))
-            {
-                File.Move(source, destination);
-            }
-        }
+            return outputFile;
+        } 
 
         public void DeleteFile(string currentFile)
         {
-            if (File.Exists(currentFile))
+            if (_fileSystem.File.Exists(currentFile))
             {
-                File.Delete(currentFile);
+                _fileSystem.File.Delete(currentFile);
             }
 
             if (_userSettings.GroupByFoldersEnabled)
@@ -77,19 +57,23 @@ namespace EspionSpotify
                 DeleteFileFolder(currentFile);
             }
         }
-        private static string GetMediaFormatExtension(UserSettings userSettings)
+
+        public void Rename(string source, string destination)
         {
-            return userSettings.MediaFormat.ToString().ToLower();
+            if (_fileSystem.File.Exists(source))
+            {
+                _fileSystem.File.Move(source, destination);
+            }
         }
 
-        public static bool IsPathFileNameExists(Track track, UserSettings userSettings)
+        public static bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
         {
-            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings);
-            var fileName = GetFileName(track, userSettings);
-            return File.Exists($"{pathWithFolder}\\{fileName}.{GetMediaFormatExtension(userSettings)}");
+            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings, fileSystem);
+            var fileName = GenerateFileName(track, userSettings);
+            return fileSystem.File.Exists($@"{pathWithFolder}\{fileName}.{GetMediaFormatExtension(userSettings)}");
         }
 
-        public static string GetFolderPath(Track track, UserSettings userSettings)
+        public static string GetFolderPath(Track track, UserSettings userSettings, IFileSystem fileSystem)
         {
             string insertArtistDir = null;
             var artistDir = Normalize.RemoveDiacritics(track.Artist);
@@ -97,14 +81,19 @@ namespace EspionSpotify
 
             if (userSettings.GroupByFoldersEnabled)
             {
-                insertArtistDir = $"\\{artistDir}";
-                Directory.CreateDirectory($"{userSettings.OutputPath}\\{artistDir}");
+                insertArtistDir = $@"\{artistDir}";
+                fileSystem.Directory.CreateDirectory($@"{userSettings.OutputPath}\{artistDir}");
             }
 
             return insertArtistDir;
         }
 
-        private static string GetFileName(Track track, UserSettings userSettings)
+        private static string GetMediaFormatExtension(UserSettings userSettings)
+        {
+            return userSettings.MediaFormat.ToString().ToLower();
+        }
+
+        private static string GenerateFileName(Track track, UserSettings userSettings)
         {
             string fileName;
 
@@ -120,15 +109,15 @@ namespace EspionSpotify
             }
 
             var trackNumber = userSettings.OrderNumber?.ToString("000 ") ?? null;
-            return Regex.Replace($"{trackNumber}{fileName}", "\\s", userSettings.TrackTitleSeparator); ;
+            return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator); ;
         }
 
-        private static void DeleteFileFolder(string currentFile)
+        private void DeleteFileFolder(string currentFile)
         {
-            var folderPath = Path.GetDirectoryName(currentFile);
-            if (!Directory.EnumerateFiles(folderPath).Any())
+            var folderPath = _fileSystem.Path.GetDirectoryName(currentFile);
+            if (!_fileSystem.Directory.EnumerateFiles(folderPath).Any())
             {
-                Directory.Delete(folderPath);
+                _fileSystem.Directory.Delete(folderPath);
             }
         }
     }

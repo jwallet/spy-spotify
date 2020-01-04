@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Threading;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 using EspionSpotify.Enums;
 using EspionSpotify.Models;
@@ -21,16 +21,18 @@ namespace EspionSpotify
         private string _currentFilePending;
         private WasapiLoopbackCapture _waveIn;
         private Stream _writer;
-        private FileManager _fileManager;
+        private readonly FileManager _fileManager;
+        private readonly IFileSystem _fileSystem;
 
         public Recorder() { }
 
-        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
+        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
             _form = espionSpotifyForm;
+            _fileSystem = fileSystem;
             _track = track;
             _userSettings = userSettings;
-            _fileManager = new FileManager(_userSettings, _track);
+            _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
         public async void Run()

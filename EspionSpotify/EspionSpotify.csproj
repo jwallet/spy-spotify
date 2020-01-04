@@ -136,6 +136,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Abstractions.7.1.1\lib\net40\System.IO.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -181,6 +184,7 @@
     <Compile Include="IFrmEspionSpotify.cs" />
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\ISpotifyAPI.cs" />
+    <Compile Include="Models\OutputFile.cs" />
     <Compile Include="Translations\nl.Designer.cs">
       <DependentUpon>nl.resx</DependentUpon>
       <AutoGen>True</AutoGen>

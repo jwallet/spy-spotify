@@ -1,7 +1,8 @@
-using EspionSpotify.Events;
+﻿using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
+using System.IO.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
@@ -25,6 +26,7 @@ namespace EspionSpotify
         private bool _isPlaying;
         private Track _currentTrack;
         private bool _stopRecordingWhenSongEnds;
+        private readonly IFileSystem _fileSystem;
 
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
@@ -37,7 +39,7 @@ namespace EspionSpotify
         public bool AdPlaying { get => _currentTrack.Ad; }
         public string SongTitle { get => _currentTrack.ToString(); }
         public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
-        public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings);  }
+        public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
         public bool IsTypeAllowed
         {
             get => _currentTrack.IsNormal() || IsRecordUnknownActive;
@@ -47,10 +49,13 @@ namespace EspionSpotify
             get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
         }
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings)
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, fileSystem: new FileSystem()) {}
+
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, IFileSystem fileSystem)
         {
             _currentTrack = new Track();
             _form = form;
+            _fileSystem = fileSystem;
             _userSettings = userSettings;
             _userSettings.InternalOrderNumber--;
 
@@ -213,10 +218,9 @@ namespace EspionSpotify
                 return;
             }
 
-            _recorder = new Recorder(_form, _userSettings, _currentTrack);
+            _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
 
-            var recorderTask = new Task(_recorder.Run);
-            recorderTask.Start();
+            Task.Run(_recorder.Run);
 
             _form.UpdateIconSpotify(_isPlaying, true);
             UpdateNumUp();

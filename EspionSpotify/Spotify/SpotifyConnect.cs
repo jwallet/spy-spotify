@@ -15,12 +15,12 @@ namespace EspionSpotify
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData),
-                "spotify\\spotify.exe"),
+                @"spotify\spotify.exe"),
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.
                         LocalApplicationData),
-                "Microsoft\\WindowsApps\\Spotify.exe")
+                @"Microsoft\WindowsApps\Spotify.exe")
         };
 
         public async static Task Run()
