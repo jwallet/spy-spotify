@@ -15,7 +15,7 @@ namespace EspionSpotify.Tests
         [InlineData("SPOTIFY", true)]
         [InlineData("spotify", true)]
         [InlineData("Spotify Free", true)]
-        private void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
+        internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
         {
             var actual = SpotifyStatus.WindowTitleIsSpotify(value);
 
@@ -23,7 +23,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
+        internal void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
         {
             var expectedTrack = new Track
             {
@@ -44,7 +44,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData("Artist Name - Song Title", false)]
         [InlineData("Artist Name - Song Title - Live", true)]
-        private void SpotifyStatusTrackPlaying_ReturnsExpectingTrack(string windowTitle, bool isTitleExtended)
+        internal void SpotifyStatusTrackPlaying_ReturnsExpectingTrack(string windowTitle, bool isTitleExtended)
         {
             var expectedTrack = new Track
             {
@@ -70,7 +70,7 @@ namespace EspionSpotify.Tests
         [InlineData("Spotify")]
         [InlineData("Spotify Sponsor")]
         [InlineData("PODCAST #1337: DAILY NEWS")]
-        private void SpotifyStatusSpotifyPlayingAdOrUnknown_ReturnsExpectingTrack(string windowTitle)
+        internal void SpotifyStatusSpotifyPlayingAdOrUnknown_ReturnsExpectingTrack(string windowTitle)
         {
             var expectedTrack = new Track
             {

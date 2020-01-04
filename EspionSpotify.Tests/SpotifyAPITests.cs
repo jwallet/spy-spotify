@@ -18,7 +18,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapSpotifyTrackToTrack_ReturnsExpectedTrack()
+        internal void MapSpotifyTrackToTrack_ReturnsExpectedTrack()
         {
             var fulltrack = new FullTrack()
             {
@@ -41,7 +41,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapSpotifyAlbumToTrackMissingAll_ReturnsExpectedTrack()
+        internal void MapSpotifyAlbumToTrackMissingAll_ReturnsExpectedTrack()
         {
             var fullAlbum = new FullAlbum()
             {
@@ -64,7 +64,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapSpotifyAlbumToTrackMissingImages_ReturnsExpectedTrack()
+        internal void MapSpotifyAlbumToTrackMissingImages_ReturnsExpectedTrack()
         {
             var fullAlbum = new FullAlbum()
             {
@@ -92,7 +92,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapSpotifyAlbumToTrackMissingImageSizes_ReturnsExpectedTrack()
+        internal void MapSpotifyAlbumToTrackMissingImageSizes_ReturnsExpectedTrack()
         {
             var fullAlbum = new FullAlbum()
             {
@@ -134,7 +134,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapFullSpotifyAlbumToTrack_ReturnsExpectedTrack()
+        internal void MapFullSpotifyAlbumToTrack_ReturnsExpectedTrack()
         {
             var fullAlbum = new FullAlbum()
             {

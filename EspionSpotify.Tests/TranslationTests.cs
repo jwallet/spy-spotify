@@ -29,7 +29,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void TranslationSetup_ShouldBeReady()
+        internal void TranslationSetup_ShouldBeReady()
         {
             Assert.NotNull(_en);
             Assert.NotNull(_fr);
@@ -37,7 +37,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void English_ShouldGetTranslations()
+        internal void English_ShouldGetTranslations()
         {
             RM = new ResourceManager(_en);
             var resourceSet = RM.GetResourceSet(CultureInfo.InvariantCulture, true, true);
@@ -55,7 +55,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void French_ShouldGetTranslations()
+        internal void French_ShouldGetTranslations()
         {
             RM = new ResourceManager(_fr);
             var resourceSet = RM.GetResourceSet(CultureInfo.InvariantCulture, true, true);
@@ -73,7 +73,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact(Skip = "NL unsupported yet")]
-        private void Dutch_ShouldGetTranslations()
+        internal void Dutch_ShouldGetTranslations()
         {
             RM = new ResourceManager(_nl);
             var resourceSet = RM.GetResourceSet(CultureInfo.InvariantCulture, true, true);
@@ -91,7 +91,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void Unsupported_ShouldNotGetTranslations()
+        internal void Unsupported_ShouldNotGetTranslations()
         {
             RM = new ResourceManager(typeof(Translations.Languages));
             Assert.Throws<MissingManifestResourceException>(() => RM.GetResourceSet(CultureInfo.InvariantCulture, true, true));

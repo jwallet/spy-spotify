@@ -18,7 +18,7 @@ namespace EspionSpotify.Tests
         [InlineData("a", null)]
         [InlineData("0", 0)]
         [InlineData("1", 1)]
-        private void StringToNullableInt_ReturnsExpectedInt(string value, int? expected)
+        internal void StringToNullableInt_ReturnsExpectedInt(string value, int? expected)
         {
             var actual = value.ToNullableInt();
             Assert.Equal(expected, actual);
@@ -35,7 +35,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void GetString_ReturnsExpectedTranslatedSpyString()
+        internal void GetString_ReturnsExpectedTranslatedSpyString()
         {
             Assert.Equal("Spy", _rm.GetString(TranslationKeys.tabRecord));
         }
@@ -53,7 +53,7 @@ namespace EspionSpotify.Tests
         [InlineData("medium", AlbumCoverSize.medium)]
         [InlineData("large", AlbumCoverSize.large)]
         [InlineData("extralarge", AlbumCoverSize.extralarge)]
-        private void StringToAlbumCoverSize_ReturnsExpectedCover(string value, AlbumCoverSize? expected)
+        internal void StringToAlbumCoverSize_ReturnsExpectedCover(string value, AlbumCoverSize? expected)
         {
             var actual = value.ToAlbumCoverSize();
             Assert.Equal(expected, actual);
@@ -70,7 +70,7 @@ namespace EspionSpotify.Tests
         [InlineData("1.0.10", "1.0.10")]
         [InlineData("1.2.3.4", "1.2.3.4")]
         [InlineData("v1.2.3.4", "1.2.3.4")]
-        private void StringToVersionAsString(string value, string expected)
+        internal void StringToVersionAsString(string value, string expected)
         {
             var actual = value.ToVersionAsString();
             Assert.Equal(expected, actual);
@@ -84,7 +84,7 @@ namespace EspionSpotify.Tests
         [InlineData("v1")]
         [InlineData("1")]
         [InlineData("version1")]
-        private void StringToVersion_ReturnsNull(string value)
+        internal void StringToVersion_ReturnsNull(string value)
         {
             var actual = value.ToVersion();
             Assert.Null(actual);
@@ -97,7 +97,7 @@ namespace EspionSpotify.Tests
         [InlineData("1.0.10", 1, 0, 10)]
         [InlineData("1.2.3.4", 1, 2, 3, 4)]
         [InlineData("v1.2.3.4", 1, 2, 3, 4)]
-        private void StringToVersion_ReturnsVersion(string value, int major, int minor, int? build = null, int? revision = null)
+        internal void StringToVersion_ReturnsVersion(string value, int major, int minor, int? build = null, int? revision = null)
         {
             var actual = value.ToVersion();
             if (build == null) Assert.Equal(new Version(major, minor), actual);
@@ -109,7 +109,7 @@ namespace EspionSpotify.Tests
     public class LinqExtensionsTest
     {
         [Fact]
-        private void EmptyArrayDecimalMedian_ReturnsMedianDecimal()
+        internal void EmptyArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new double[] {};
 
@@ -117,7 +117,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void PeerArrayDecimalMedian_ReturnsMedianDecimal()
+        internal void PeerArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new double[] { 2.8, 1.4, 1.1, 0.8, -0.4, 1.1, 2.4, 7.77 };
             var expected = 1.25;
@@ -128,7 +128,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void OddArrayDecimalMedian_ReturnsMedianDecimal()
+        internal void OddArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new double[] { 5.5, 0.9, 1.1, 0.8, -0.4, 1.11, 0.004, 2.4, 7.77 };
             var expected = 1.1;
@@ -139,7 +139,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void ArrayIntMedian_ReturnsMedianDecimal()
+        internal void ArrayIntMedian_ReturnsMedianDecimal()
         {
             var value = new int[] { 5, 3, 6, 0, -1, 1, 0, 2, 7 };
             var expected = 2;
@@ -150,7 +150,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void LinqArrayDoubleMedian_ReturnsMedianDecimal()
+        internal void LinqArrayDoubleMedian_ReturnsMedianDecimal()
         {
             var value = new LinqArrayDouble[] {
                 new LinqArrayDouble { value = 5.5 },
@@ -164,7 +164,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(expected, actual);
         }
 
-        private class LinqArrayDouble
+        internal class LinqArrayDouble
         {
             internal double value { get; set; }
         }

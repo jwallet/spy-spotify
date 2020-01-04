@@ -15,7 +15,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void RecorderUpAndRunning_ReturnsStatus()
+        internal void RecorderUpAndRunning_ReturnsStatus()
         {
             var watcher = new Watcher(_formMock, _userSettings);
 
@@ -23,7 +23,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void NumTrackActivated_ReturnsIfOrderNumberIsSet()
+        internal void NumTrackActivated_ReturnsIfOrderNumberIsSet()
         {
             var userSettings = new UserSettings();
             var watcherFalsy = new Watcher(_formMock, userSettings);
@@ -42,7 +42,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void AdPlaying_ReturnsCurrentTrackAdStatus()
+        internal void AdPlaying_ReturnsCurrentTrackAdStatus()
         {
             var watcher = new Watcher(_formMock, _userSettings);
 
@@ -50,7 +50,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void SongTitle_ReturnsCurrentTrack()
+        internal void SongTitle_ReturnsCurrentTrack()
         {
             var watcher = new Watcher(_formMock, _userSettings);
 
@@ -58,7 +58,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void IsTypeAllowed_ReturnsIfCurrentTrackTypeCanBeRecorded()
+        internal void IsTypeAllowed_ReturnsIfCurrentTrackTypeCanBeRecorded()
         {
             var watcher = new Watcher(_formMock, _userSettings);
             var track = new Track();
@@ -68,7 +68,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void IsOldSong_ReturnsIfCurrentTrackIsOld()
+        internal void IsOldSong_ReturnsIfCurrentTrackIsOld()
         {
             var watcher = new Watcher(_formMock, _userSettings);
             var track = new Track();
@@ -78,7 +78,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void IsNewTrack_ReturnsExpectedResults()
+        internal void IsNewTrack_ReturnsExpectedResults()
         {
             var watcher = new Watcher(_formMock, _userSettings);
 

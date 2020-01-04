@@ -9,7 +9,7 @@ namespace EspionSpotify.Tests
     public class SpotifyHandlerTests
     {
         [Fact]
-        private void SpotifyHandler_ReturnsSpotifyProcess()
+        internal void SpotifyHandler_ReturnsSpotifyProcess()
         {
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
 
@@ -23,7 +23,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void Dispose_ReturnsTimerOff()
+        internal void Dispose_ReturnsTimerOff()
         {
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
 
@@ -35,7 +35,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void TickEventSpotifyIdling_ReturnsNoEvent()
+        internal async void TickEventSpotifyIdling_ReturnsNoEvent()
         {
             var track = new Track();
 
@@ -88,7 +88,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void NewTrack_ReturnsAllEvents()
+        internal async void NewTrack_ReturnsAllEvents()
         {
             var previousTrack = new Track();
             var currentTrack = new Track
@@ -149,7 +149,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void TickEventSameTrackPlaying_ReturnsTrackTimeEvent()
+        internal async void TickEventSameTrackPlaying_ReturnsTrackTimeEvent()
         {
             var track = new Track
             {

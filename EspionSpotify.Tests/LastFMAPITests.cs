@@ -20,7 +20,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MapLastFMAPITrackToTrack_ReturnsExpectedTrack()
+        internal void MapLastFMAPITrackToTrack_ReturnsExpectedTrack()
         {
             var track = new Track();
 
