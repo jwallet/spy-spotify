@@ -114,9 +114,12 @@ namespace EspionSpotify
 
         private void DeleteFileFolder(string currentFile)
         {
+            Console.WriteLine(currentFile);
             var folderPath = _fileSystem.Path.GetDirectoryName(currentFile);
+            Console.WriteLine(folderPath);
             if (!_fileSystem.Directory.EnumerateFiles(folderPath).Any())
             {
+                Console.WriteLine(true);
                 _fileSystem.Directory.Delete(folderPath);
             }
         }

@@ -49,8 +49,8 @@ namespace EspionSpotify.Tests
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { @"C:\path\Empty Artist", new MockDirectoryData() },
-                { @"C:\path\Artist\Delete Me.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+                { @"C:\path\Artist", new MockDirectoryData() },
+                { @"C:\path\Artist\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem);
@@ -143,31 +143,44 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void DeleteFile_DeletesFile()
         {
-            _track.Title = "Delete Me";
+            _track.Title = "Delete_Me";
             _track.TitleExtended = "";
+            _userSettings.TrackTitleSeparator = "_";
 
-            var extension = _userSettings.MediaFormat.ToString().ToLower();
-            var currentFile = $@"{_userSettings.OutputPath}\{_track.ToString()}.{extension}";
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
 
-            _fileManager.DeleteFile(currentFile);
+            _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
-            Assert.False(_fileSystem.File.Exists(currentFile));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
 
-        [Fact]
+        [Fact(Skip = "GetDirectoryName Unsupported on Unix")]
         internal void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
         {
             _userSettings.GroupByFoldersEnabled = true;
-            _track.Artist = "Empty Artist";
+            _track.Title = "Delete_Me";
+            _track.TitleExtended = "";
+            _userSettings.TrackTitleSeparator = "_";
 
             var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
-            var extension = _userSettings.MediaFormat.ToString().ToLower();
-            var currentFile = $@"{_userSettings.OutputPath}\{artistDir}\{_track.ToTitleString()}.{extension}";
+            var outputFile = new OutputFile
+            {
+                Path = $@"{_userSettings.OutputPath}\{artistDir}",
+                File = _track.ToTitleString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
 
-            _fileManager.DeleteFile(currentFile);
+            _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
             Assert.False(_fileSystem.Directory.Exists($@"{_userSettings.OutputPath}\{artistDir}"));
-            Assert.False(_fileSystem.File.Exists(currentFile));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
     }
 }
