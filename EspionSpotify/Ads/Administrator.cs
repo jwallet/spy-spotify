@@ -8,13 +8,13 @@ namespace EspionSpotify.Ads
 {
     internal class Administrator
     {
-        public static bool EnsureAdmin()
+        public static bool EnsureAdmin(IFrmEspionSpotify _form)
         {
             if (!IsNotAdmin()) return true;
             if (MetroFramework.MetroMessageBox.Show(
                 FrmEspionSpotify.Instance,
-                FrmEspionSpotify.Rm.GetString(TranslationKeys.msgEnsureAdminContent),
-                FrmEspionSpotify.Rm.GetString(TranslationKeys.msgEnsureAdminTitle),
+                _form.Rm.GetString(TranslationKeys.msgEnsureAdminContent),
+                _form.Rm.GetString(TranslationKeys.msgEnsureAdminTitle),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) != DialogResult.Yes) return false;
 

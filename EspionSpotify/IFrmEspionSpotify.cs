@@ -1,7 +1,10 @@
-﻿namespace EspionSpotify
+﻿using System.Resources;
+
+namespace EspionSpotify
 {
     public interface IFrmEspionSpotify 
     {
+        ResourceManager Rm { get; }
         void UpdateIconSpotify(bool isSpotifyPlaying, bool isRecording = false);
         void UpdatePlayingTitle(string text);
         void UpdateRecordedTime(int? time);

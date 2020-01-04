@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Events;
+using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
@@ -107,7 +107,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
+            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{SongTitle}");
 
             MutesSpotifyAds(AdPlaying);

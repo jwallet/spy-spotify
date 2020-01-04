@@ -27,11 +27,11 @@ namespace EspionSpotify
     {
         private IMainAudioSession _audioSession;
         private Watcher _watcher;
-        private UserSettings _userSettings;
-        private Analytics _analytics;
+        private readonly UserSettings _userSettings;
+        private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
 
-        public static ResourceManager Rm { get; private set; }
+        public ResourceManager Rm { get; private set; }
         public static FrmEspionSpotify Instance { get; private set; }
 
         private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
@@ -124,7 +124,7 @@ namespace EspionSpotify
 
             ResumeLayout();
 
-            GitHub.GetVersion();
+            GitHub.GetVersion(this);
         }
 
         private void UpdateAudioEndPointFields()
@@ -475,7 +475,7 @@ namespace EspionSpotify
         {
             Task.Run(async () => await _analytics.LogAction($"disable-ads?enabled={tgDisableAds.Checked}"));
 
-            if (Administrator.EnsureAdmin())
+            if (Administrator.EnsureAdmin(this))
             {
                 if (tgDisableAds.Checked && MetroMessageBox.Show(this,
                     Rm.GetString(TranslationKeys.msgBodyDisableAds),
