@@ -17,13 +17,10 @@ namespace EspionSpotify.MediaTags
         {
             var mp3 = TagLib.File.Create(CurrentFile);
 
-            if (OrderNumberInMediaTagEnabled && Count.HasValue)
+            var trackNumber = GetTrackNumber();
+            if (trackNumber.HasValue)
             {
-                mp3.Tag.Track = (uint)Count.Value;
-            }
-            else if (Track.AlbumPosition != null)
-            {
-                mp3.Tag.Track = (uint)Track.AlbumPosition;
+                mp3.Tag.Track = (uint)trackNumber.Value;
             }
 
             mp3.Tag.Title = Track.Title;
@@ -62,6 +59,16 @@ namespace EspionSpotify.MediaTags
             }
 
             mp3.Dispose();
+        }
+
+        private int? GetTrackNumber()
+        {
+            if (OrderNumberInMediaTagEnabled && Count.HasValue)
+            {
+                return Count.Value;
+            }
+
+            return Track.AlbumPosition;
         }
 
         private TagLib.Picture GetAlbumCoverToPicture(byte[] data)
