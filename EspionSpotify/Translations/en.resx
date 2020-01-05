@@ -157,10 +157,6 @@
     <value>Audio quality:</value>
     <comment>interface</comment>
   </data>
-  <data name="lblDisableAds" xml:space="preserve">
-    <value>Disable as much Spotify audio ads as possible</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
     <value>Delay next recording if sound is detected</value>
     <comment>interface</comment>

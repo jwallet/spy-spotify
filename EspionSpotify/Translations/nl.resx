@@ -157,10 +157,6 @@
     <value>Audiokwaliteit:</value>
     <comment>interface</comment>
   </data>
-  <data name="lblDisableAds" xml:space="preserve">
-    <value>Vermijd zoveel mogelijk Spotify advertenties</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
     <value>Stel de volgende opname uit wanneer er geluid is gedetecteerd</value>
     <comment>interface</comment>

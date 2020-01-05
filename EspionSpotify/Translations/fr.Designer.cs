@@ -160,15 +160,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactiver le plus de publicités audio de Spotify.
-        /// </summary>
-        internal static string lblDisableAds {
-            get {
-                return ResourceManager.GetString("lblDisableAds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Dupliquer les pistes audio déjà enregistrées au lieu de passer au prochain..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {

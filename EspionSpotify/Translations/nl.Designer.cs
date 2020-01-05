@@ -160,15 +160,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vermijd zoveel mogelijk Spotify advertenties.
-        /// </summary>
-        internal static string lblDisableAds {
-            get {
-                return ResourceManager.GetString("lblDisableAds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Duplicate already recorded tracks instead of skipping them..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {

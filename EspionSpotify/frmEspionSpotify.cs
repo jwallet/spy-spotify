@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Resources;
-using EspionSpotify.Ads;
 using System.Threading;
 using System.Windows.Forms;
 using EspionSpotify.Properties;
@@ -83,7 +82,6 @@ namespace EspionSpotify
             tgNumFiles.Checked = Settings.Default.OrderNumberInfrontOfFileEnabled;
             tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
             txtPath.Text = Settings.Default.Directory;
-            tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
@@ -181,7 +179,6 @@ namespace EspionSpotify
             lblEndingSongDelay.Text = Rm.GetString(TranslationKeys.lblEndingSongDelay);
             lblRecordingNum.Text = Rm.GetString(TranslationKeys.lblRecordingNum);
             lblAds.Text = Rm.GetString(TranslationKeys.lblAds);
-            lblDisableAds.Text = Rm.GetString(TranslationKeys.lblDisableAds);
             lblMuteAds.Text = Rm.GetString(TranslationKeys.lblMuteAds);
             lblSpy.Text = Rm.GetString(TranslationKeys.lblSpy);
             lblRecorder.Text = Rm.GetString(TranslationKeys.lblRecorder);
@@ -463,31 +460,6 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"record-unknown-type?enabled={tgRecordUnkownTrackType.Checked}"));
         }
 
-        private void TgDisableAds_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
-
-            Settings.Default.DisableAds = tgDisableAds.Checked;
-            Settings.Default.Save();
-        }
-
-        private void TgDisableAds_Click(object sender, EventArgs e)
-        {
-            Task.Run(async () => await _analytics.LogAction($"disable-ads?enabled={tgDisableAds.Checked}"));
-
-            if (Administrator.EnsureAdmin(this))
-            {
-                if (tgDisableAds.Checked && MetroMessageBox.Show(this,
-                    Rm.GetString(TranslationKeys.msgBodyDisableAds),
-                    Rm.GetString(TranslationKeys.msgTitleDisableAds),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Question) == DialogResult.OK) return;
-                return;
-            }
-
-            tgDisableAds.Checked = !tgDisableAds.Checked;
-        }
-
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
         {
             _userSettings.MuteAdsEnabled = tgMuteAds.Checked;
@@ -684,13 +656,6 @@ namespace EspionSpotify
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab}"));
-        }
-
-        private static bool ManageSpotifyAds(bool isToggled)
-        {
-            return isToggled
-                ? ManageHosts.DisableAds(ManageHosts.HostsSystemPath)
-                : ManageHosts.EnableAds(ManageHosts.HostsSystemPath);
         }
 
         private void ShowHideLabel(Label label)

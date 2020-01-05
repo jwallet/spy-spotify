@@ -176,7 +176,6 @@
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Ads\Administrator.cs" />
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
@@ -231,14 +230,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ads\ManageHosts.cs" />
     <Compile Include="GitHub.cs" />
     <Compile Include="Spotify\SpotifyHandler.cs" />
     <Compile Include="AudioSessions\SpotifyAudioSession.cs" />
     <Compile Include="Spotify\SpotifyConnect.cs" />
     <Compile Include="Spotify\SpotifyProcess.cs" />
     <Compile Include="Models\UserSettings.cs" />
-    <Compile Include="Ads\ValidAccess.cs" />
     <Compile Include="AudioSessions\MainAudioSession.cs" />
     <Compile Include="IWatcher.cs" />
     <Compile Include="Translations\fr.Designer.cs">

@@ -13,7 +13,6 @@
         lblAds,
         lblAudioDevice,
         lblBitRate,
-        lblDisableAds,
         lblDuplicateAlreadyRecordedTrack,
         lblEndingSongDelay,
         lblFormat,

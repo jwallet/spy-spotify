@@ -47,7 +47,7 @@ namespace EspionSpotify
                     foreach (var path in SpotifyPossiblePaths)
                     {
                         if (!File.Exists(path)) continue;
-                        Process.Start(path);
+                         Process.Start(path);
                         break;
                     }
                 }
