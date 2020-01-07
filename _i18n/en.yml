@@ -3,7 +3,7 @@ GLOBAL:
   SHORT_DESCRIPTION: "Records Spotify to mp3"
   DESCRIPTION: "Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"
   DONATE: "Like Spytify? If you want you can"
-  BEERPAY: "buy me a beer on beerpay.io"
+  PAYPAL: "buy me a beer using paypal"
   MAINTAINED_BY: is maintained by
 TABS:
   OVERVIEW: Overview
@@ -33,4 +33,10 @@ FAQ:
     CONTENT: "When you enable **Disable Ads** in Spytify settings, you accept that these features won't be available no more, it's to make sure as many ads as possible get disabled. However, you can go to ***C:\\Windows\\System32\\drivers\\etc\\host*** to edit the file with notepad, search for the domain `spclient.wg.spotify.com` and add a `#` at the beginning of the line to make it inactive."
   SPOTIFY_AUDIO_ENDPOINT:
     TITLE: "Isolates Spotify audio to a different audio endpoint device."
-    CONTENT: "By using the Spytify setting **Audio Device**, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type **Sound mixer options**, you should land on the setting page called *App volume and device preferences*, make sure Spotify is playing and set the app to the desired endpoint with the **Output** select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ***Windows 10 Settings 🡂 System 🡂 Sound***, scroll down to the ***Advanced sound options 🡂 App volume and device preferences*** setting."
+    CONTENT: "By using the Spytify setting **Audio Device**, you can move Spytify to a different audio endpoint (install [virtual audio cable](https://www.vb-audio.com/Cable/) if you need another one) and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type **Sound mixer options**, you should land on the setting page called *App volume and device preferences*, make sure Spotify is playing and set the app to the desired endpoint with the **Output** select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can't find the Windows 10 setting, try the section ***Windows 10 Settings 🡂 System 🡂 Sound***, scroll down to the ***Advanced sound options 🡂 App volume and device preferences*** setting."
+  RECORDING_ORDER_NUMBER:
+    TITLE: "Parameter that adds a recording order number to the track."
+    CONTENT: "Adding the recording order number to files `017_Artist_-_Title.mp3` is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it's a playlist, order it first on Spotify before recording it."
+  GET_MP3_METADATA_FROM_SPOTIFY_API:
+    TITLE: "Get MP3 metadata from Spotify API instead of Last.fm"
+    CONTENT: "This option is in development but can be set in the **spytify.exe.config** file. Open an text editor and follow the steps wrote as a comment at bottom of the file to enable the gathering of MP3 media info from Spotify."

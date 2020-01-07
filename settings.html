@@ -49,15 +49,15 @@
     <main id="content" class="main-content" role="main">
  
       <p align="center">
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png">
-        <img width="420" alt="Spotify Core Settings" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png" />
+    <a href="./assets/images/ui_settings.png">
+        <img alt="Spotify Core Settings" width="420" height="auto" src="./assets/images/ui_settings.png" />
     </a>
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png">
-        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png" />
+    <a href="./assets/images/ui_advanced_settings.png">
+        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="./assets/images/ui_advanced_settings.png" />
     </a>
 </p>
 
-<h2 id="parameters">Parameters</h2>
+<h2 id="parameters"><a href="#parameters">Parameters</a></h2>
 
 <table>
   <thead>
@@ -75,7 +75,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Audio device</td>
-      <td style="text-align: left">Audio device that Spytify will listen on. Must be the same one than Spotify uses, for Spytify to be able to record. Spotify/Spytify default audio endpoint can be change in <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>.</td>
+      <td style="text-align: left">Audio device that Spytify will listen on. Must be the same one than Spotify uses, for Spytify to be able to record. Spotify/Spytify default audio endpoint can be change in <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>. More details in <a href="./faq.html#spotify-audio-endpoint">F.A.Q.</a></td>
       <td style="text-align: left"><code class="highlighter-rouge">Default</code></td>
     </tr>
     <tr>
@@ -99,12 +99,7 @@
       <td style="text-align: left"><code class="highlighter-rouge">English</code></td>
     </tr>
     <tr>
-      <td style="text-align: left">Disable Ads</td>
-      <td style="text-align: left">Add a whole list of ads domain into your hosts file to disable them, you can add more to it yourself to make this feature stronger</td>
-      <td style="text-align: left"><code class="highlighter-rouge">Off</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Mute Ads</td>
+      <td style="text-align: left">Ads</td>
       <td style="text-align: left">Mute audio ads when detected</td>
       <td style="text-align: left"><code class="highlighter-rouge">On</code></td>
     </tr>
@@ -116,7 +111,7 @@
 ² Spotify Premium account will stream at a max rate of 320kpbs (if max quality is enabled in Spotify settings), so you shouldn’t go above that quality.</p>
 </blockquote>
 
-<h2 id="advanced-parameters">Advanced Parameters</h2>
+<h2 id="advanced-parameters"><a href="#advanced-parameters">Advanced Parameters</a></h2>
 
 <table>
   <thead>
@@ -134,7 +129,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Recording order number starting position</td>
-      <td style="text-align: left">Changing the position will take effect if one of the recording number options below is enabled. Change this number when resuming an old recording session</td>
+      <td style="text-align: left">Changing the position will take effect if one of the recording number options below is enabled. Change this number when resuming an old recording session. More details in <a href="./faq.html#recording-order-number">F.A.Q.</a></td>
       <td style="text-align: left"><code class="highlighter-rouge">001</code></td>
     </tr>
     <tr>
@@ -182,9 +177,6 @@
   </tbody>
 </table>
 
-<h3 id="about-the-recording-order-number">About the recording order number</h3>
-<p>Adding the recording order number to files <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
-
 
       <footer class="site-footer">
         <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
@@ -200,7 +192,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="https://paypal.me/spytify">buy me a beer using paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -245,9 +237,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

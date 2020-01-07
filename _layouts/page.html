@@ -63,7 +63,7 @@
           <a href="{{ site.github.owner_rul | default: site.owner_url }}">{{ site.github.owner_name | default: site.owner_name }}</a>.
         </span>
         <span class="site-footer-credits">
-          😃 {% t GLOBAL.DONATE %} <a href="https://beerpay.io/jwallet/spy-spotify">{% t GLOBAL.BEERPAY %}</a> 🍺.
+          😃 {% t GLOBAL.DONATE %} <a href="https://paypal.me/spytify">{% t GLOBAL.PAYPAL %}</a> 🍺.
         </span>
       </footer>
     </main>
@@ -118,9 +118,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

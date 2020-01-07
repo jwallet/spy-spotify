@@ -4,8 +4,8 @@ title: TABS.FAQ
 ---
 
 {% for question in site.faq %}
-<section>
-    <h3>{% t {{ question.title  }} %}</h3>
+<section id="{{ question.hash }}">
+    <h3><a href="#{{question.hash}}">{% t {{ question.title  }} %}</a></h3>
     <p>{{ question.content }}</p>
 </section>
 {% endfor %}

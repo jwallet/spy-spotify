@@ -102,7 +102,7 @@ a:hover { text-decoration: underline; }
 
 .language-row a.selected { color: #28b450; }
 
-.language-row a span { font-size: 75%; padding-left: 0.4rem; color: #19ff5f; }
+.language-row a span { font-size: 75%; padding-left: 0.25rem; color: #19ff5f; margin-right: -0.1rem; }
 
 .language-box { position: relative; text-align: right; }
 

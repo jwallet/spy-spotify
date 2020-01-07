@@ -1,5 +1,6 @@
 ---
 layout: page
+hash: background-noice-recorded-on-track
 title: FAQ.BACKGROUND_NOICE_RECORDED_ON_TRACK.TITLE
 namespace: faq
 ---

@@ -3,7 +3,7 @@ GLOBAL:
   SHORT_DESCRIPTION: "Enregistre Spotify en mp3"
   DESCRIPTION: "Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés"
   DONATE: "Tu aimes Spytify? Si tu veux tu peux"
-  BEERPAY: "me payer une bière sur beerpay.io"
+  PAYPAL: "me payer une bière sur paypal"
   MAINTAINED_BY: est maintenu par
 TABS:
   OVERVIEW: Aperçu
@@ -33,4 +33,10 @@ FAQ:
     CONTENT: "Quand vous activez **Désactiver les publicités** dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c'est pour s'assurer que le plus d'annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici ***C:\\Windows\\System32\\drivers\\etc\\host*** pour modifier le fichier avec bloc-notes, recherchez le domaine `spclient.wg.spotify.com` et ajoutez un `#` au début de la ligne pour le rendre inactif."
   SPOTIFY_AUDIO_ENDPOINT:
     TITLE: "Isoler l'audio de Spotify vers un différent périphérique audio."
-    CONTENT: "En utilisant le paramètre de Spotify **Périphérique audio**, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez **Paramètres de mélangeur audio**, vous devriez arriver sur la page de paramètres appelée *Volume d'application et préférences de volume*, soyez certain que Spotify est en train de jouer et paramétrez l'application vers le bon périphérique avec la liste déroulante **Sortie**. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n'importe quel son indésiré. Si vous ne pouvez trouver l'option Windows, visitez la section ***Paramètres Windows 10 🡂 Système 🡂 Son***, descendez le menu jusqu'à la section ***Paramètres de son avancés 🡂 Préférences de volume d'application et de périphériques***."
+    CONTENT: "En utilisant le paramètre de Spotify **Périphérique audio**, vous pouvez déplacer Spytify vers un différent périphérique audio (installez [virtual audio cable](https://www.vb-audio.com/Cable/) si vous avez besoin d'un autre) et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez **Paramètres de mélangeur audio**, vous devriez arriver sur la page de paramètres appelée *Volume d'application et préférences de volume*, soyez certain que Spotify est en train de jouer et paramétrez l'application vers le bon périphérique avec la liste déroulante **Sortie**. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n'importe quel son indésiré. Si vous ne pouvez trouver l'option Windows, visitez la section ***Paramètres Windows 10 🡂 Système 🡂 Son***, descendez le menu jusqu'à la section ***Paramètres de son avancés 🡂 Préférences de volume d'application et de périphériques***."
+  RECORDING_ORDER_NUMBER:
+    TITLE: "Le paramètre pour ajouter un numéro d'ordre d'enregistrement."
+    CONTENT: "Ajouter le numéro de l'ordre d'enregistrement aux fichiers `017_Artist_-_Title.mp3` est utile si vous voulez mettre vos chansons sur CDs (disque compact)  et que votre lecteur MP3, comme ceux dans les voitures, ordonnent les chansons par nom de fichier. Vous obtiendrez un CD avec les chansons ordonnés dans le même ordre que l'album ou celui présenté par Spotify. Si c'est une liste de lecture, ordonnez là sur Spotify avant l'enregistrement."
+  GET_MP3_METADATA_FROM_SPOTIFY_API:
+    TITLE: "Obtenir les métadonnées MP3 de l'API Spotify au lieu de Last.fm"
+    CONTENT: "Cette option est en développement mais paramétrable dans le fichier **spytify.exe.config**. Ouvrir avec un éditeur de texte et suivre les indications des lignes en commentaires au bas du fichier pour activer la saisie des infos du média MP3 à partir de Spotify."

@@ -48,7 +48,7 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type <strong>Sound mixer options</strong>, you should land on the setting page called <em>App volume and device preferences</em>, make sure Spotify is playing and set the app to the desired endpoint with the <strong>Output</strong> select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can’t find the Windows 10 setting, try the section <strong><em>Windows 10 Settings 🡂 System 🡂 Sound</em></strong>, scroll down to the <strong><em>Advanced sound options 🡂 App volume and device preferences</em></strong> setting.</p>
+      <p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint (install <a href="https://www.vb-audio.com/Cable/">virtual audio cable</a> if you need another one) and use the Windows 10 setting to move Spotify to the same audio endpoint. Press Windows and type <strong>Sound mixer options</strong>, you should land on the setting page called <em>App volume and device preferences</em>, make sure Spotify is playing and set the app to the desired endpoint with the <strong>Output</strong> select list. Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound. If you can’t find the Windows 10 setting, try the section <strong><em>Windows 10 Settings 🡂 System 🡂 Sound</em></strong>, scroll down to the <strong><em>Advanced sound options 🡂 App volume and device preferences</em></strong> setting.</p>
 
 
       <footer class="site-footer">
@@ -65,7 +65,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="https://paypal.me/spytify">buy me a beer using paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -110,9 +110,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

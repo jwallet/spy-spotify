@@ -50,15 +50,22 @@
  
       <p>Spytify est un enregistreur Spotify pour Windows qui enregistre l’audio de Spotify sans enregistrer ou jouer les annonces, assurant aucune perte à la qualité sonore. Il coupe automatiquement les chansons en pistes séparées et enregistre en MP3 avec les métadonnées du média, ce qui veut dire que vous pouvez commencer à apprécier facilement votre musique hors-ligne.</p>
 
-<p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_record.png" /></p>
+<p align="center"><img alt="Spotify Recorder logs" src="./assets/images/ui_record.png" /></p>
 
-<h2 id="comment-ça-fonctionne">Comment ça fonctionne?</h2>
+<h2 id="comment-ça-fonctionne"><a href="#how-it-works">Comment ça fonctionne?</a></h2>
 <p>Spytify enregistre ce que votre carte de son de votre ordinateur produit. Spytify enregistre à la qualité que Spotify produit, alors la copie enregistrée sera indistinctible de celle de Spotify. Spytify enregistre à la qualité .mp3, et non à de plus hautes qualités comme .flac, puisque Spotify peut seulement envoyer une qualité audio de 320 kbps.</p>
 
-<h3 id="usage-standard">Usage standard</h3>
+<figure>
+    <figcaption>Écoutez un échantillon mp3 à 120kbp/s:</figcaption>
+    <audio controls="" src="./assets/audio/sample.mp3">
+            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+    </audio>
+</figure>
+
+<h3 id="usage-standard"><a href="#standard-use">Usage standard</a></h3>
 <p>Un usage standard est de commencer une session d’enregistrement la nuit en utilisant votre liste de lecture préférée et de la laisser jouer durant la nuit, ainsi vous pouvez éviter d’attendre que l’enregistrement termine, parce que Spytify ne télécharge mais enregistre. Vous aurez alors vos chansons automatiquement coupées en fichiers séparés sans annonces.</p>
 
-<h3 id="exigences">Exigences</h3>
+<h3 id="exigences"><a href="#requirements">Exigences</a></h3>
 <p>Spytify fonctionne sur Windows seulement.</p>
 <ul>
   <li>Microsoft Framework (<a href="https://www.microsoft.com/en-US/download/details.aspx?id=48130">.NET 4.6</a> ou plus haut).</li>
@@ -82,7 +89,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://beerpay.io/jwallet/spy-spotify">me payer une bière sur beerpay.io</a> 🍺.
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://paypal.me/spytify">me payer une bière sur paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -127,9 +134,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

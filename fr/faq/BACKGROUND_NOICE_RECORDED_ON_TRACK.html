@@ -67,7 +67,7 @@ Deuxième cas, il se peut qu’à l’écoute des fichiers audio vous entendiez 
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://beerpay.io/jwallet/spy-spotify">me payer une bière sur beerpay.io</a> 🍺.
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://paypal.me/spytify">me payer une bière sur paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -112,9 +112,20 @@ Deuxième cas, il se peut qu’à l’écoute des fichiers audio vous entendiez 
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

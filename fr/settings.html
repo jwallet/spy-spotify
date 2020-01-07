@@ -49,15 +49,15 @@
     <main id="content" class="main-content" role="main">
  
       <p align="center">
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png">
-        <img width="420" alt="Spotify Core Settings" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_settings.png" />
+    <a href="./assets/images/ui_settings.png">
+        <img width="420" alt="Spotify Core Settings" height="auto" src="./assets/images/ui_settings.png" />
     </a>
-    <a href="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png">
-        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_advanced_settings.png" />
+    <a href="./assets/images/ui_advanced_settings.png">
+        <img alt="Spotify Recorder and Watcher Settings" width="420" height="auto" src="./assets/images/ui_advanced_settings.png" />
     </a>
 </p>
 
-<h2 id="paramètres">Paramètres</h2>
+<h2 id="paramètres"><a href="#parameters">Paramètres</a></h2>
 
 <table>
   <thead>
@@ -75,7 +75,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Périphérique audio</td>
-      <td style="text-align: left">Périphérique audio que Spytify écoutera dessus. Doit être le même que Spotify utilise, pour que Spytify soit capable d’enregistrer. Spotify/Spytify périphériques audio par défaut peuvent être modifiés dans <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>.</td>
+      <td style="text-align: left">Périphérique audio que Spytify écoutera dessus. Doit être le même que Spotify utilise, pour que Spytify soit capable d’enregistrer. Spotify/Spytify périphériques audio par défaut peuvent être modifiés dans <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>. Plus détails dans la <a href="./faq.html#spotify-audio-endpoint">F.A.Q.</a></td>
       <td style="text-align: left"><code class="highlighter-rouge">Default</code></td>
     </tr>
     <tr>
@@ -99,13 +99,8 @@
       <td style="text-align: left"><code class="highlighter-rouge">Anglais</code></td>
     </tr>
     <tr>
-      <td style="text-align: left">Désactiver les publicités</td>
-      <td style="text-align: left">Ajoute une liste entière de domaines publicitaires dans votre fichier hosts pour les désactiver, vous pouvez en ajouter plus vous-mêmes pour rendre cette fonctionnalité mieux performante</td>
-      <td style="text-align: left"><code class="highlighter-rouge">Off</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Couper le son des publicités</td>
-      <td style="text-align: left">Mets en sourdine les publicités audio lorsque détectées</td>
+      <td style="text-align: left">Publicités</td>
+      <td style="text-align: left">Coupe le son des publicités audio lorsque détectées</td>
       <td style="text-align: left"><code class="highlighter-rouge">On</code></td>
     </tr>
   </tbody>
@@ -116,7 +111,7 @@
 ² Un compte Spotify Premium pourra <em>streamer</em> à un taux maximal de 320kpbs (si vous activez dans les paramètres de Spotify la qualité maximale), alors vous ne devriez pas aller plus haut que cette qualité.</p>
 </blockquote>
 
-<h2 id="paramètres-avancés">Paramètres avancés</h2>
+<h2 id="paramètres-avancés"><a href="#advanced-parameters">Paramètres avancés</a></h2>
 
 <table>
   <thead>
@@ -134,7 +129,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Position de départ du numéro d’enregistrement</td>
-      <td style="text-align: left">Changer la position prendra effet si l’une des options pour le numéro d’enregistrement ci-dessous sont activés. Changer ce numéro quand vous reprenez une ancienne session d’enregistrement.</td>
+      <td style="text-align: left">Changer la position prendra effet si l’une des options pour le numéro d’enregistrement ci-dessous sont activés. Changer ce numéro quand vous reprenez une ancienne session d’enregistrement. Plus détails dans la <a href="./faq.html#recording-order-number">F.A.Q.</a></td>
       <td style="text-align: left"><code class="highlighter-rouge">001</code></td>
     </tr>
     <tr>
@@ -182,9 +177,6 @@
   </tbody>
 </table>
 
-<h3 id="à-propos-du-numéro-de-lordre-denregistrement">À propos du numéro de l’ordre d’enregistrement</h3>
-<p>Ajouter le numéro de l’ordre d’enregistrement aux fichiers <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> est utile si vous voulez mettre vos chansons sur CDs (disque compact)  et que votre lecteur MP3, comme ceux dans les voitures, ordonnent les chansons par nom de fichier. Vous obtiendrez un CD avec les chansons ordonnés dans le même ordre que l’album ou celui présenté par Spotify. Si c’est une liste de lecture, ordonnez là sur Spotify avant l’enregistrement.</p>
-
 
       <footer class="site-footer">
         <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
@@ -200,7 +192,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://beerpay.io/jwallet/spy-spotify">me payer une bière sur beerpay.io</a> 🍺.
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://paypal.me/spytify">me payer une bière sur paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -245,9 +237,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

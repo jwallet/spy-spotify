@@ -49,46 +49,46 @@
     <main id="content" class="main-content" role="main">
  
       
-<section>
-    <h3>Spotify joue encore des annonces après les avoir désactivées et il se met sur pause/joue à chaque seconde.</h3>
-    <p><p>La fonctionnalité de Spytify <strong>Désactiver les publicités</strong> peut affecté la façon dont une annonce inconnue joue quand elle ne peut être bloquée. Essayez de ré-activer ce paramètre une fois de plus pour obtenir les derniers domaines de publicités bloqués ou désactivez ce paramètre et redémarrez les deux applications.</p>
-</p>
-</section>
-
-<section>
-    <h3>Annonces et pistes audio chevauchent au début/fin d'une piste audio enregistrée.</h3>
+<section id="ad-and-track-overlap-on-recorded-track">
+    <h3><a href="#ad-and-track-overlap-on-recorded-track">Annonces et pistes audio chevauchent au début/fin d'une piste audio enregistrée.</a></h3>
     <p><p>Utilisez Audacity (un éditeur gratuit pour fichiers audio) pour couper les parties audio que vous voulez retirer. Spytify ne peut garantir qu’une annonce ou la prochaine piste audio sera détectée correctement puisqu’il se base sur peu d’informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</p>
 </p>
 </section>
 
-<section>
-    <h3>Du son/bruit d'arrière fond a été enregistré dans le fichier de la piste audio.</h3>
+<section id="background-noice-recorded-on-track">
+    <h3><a href="#background-noice-recorded-on-track">Du son/bruit d'arrière fond a été enregistré dans le fichier de la piste audio.</a></h3>
     <p><p>Premier cas, Spytify désactive la plupart des applications quand la session d’enregistrement débute. Veuillez couper le son par le <em>Mélangeur de volume</em> des applications exécutées dans un processus d’arrière-plan dans la barre d’état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d’enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet.
 <br />
 Deuxième cas, il se peut qu’à l’écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des moments précis. Ces sons peuvent être liéés au fait que votre ordinateur n’a pas le processeur de configuré à haute performance. Vous pouvez l’activer dans vos paramètres de plan d’alimentation ou en changeant la puissance minimale du processeur a 100 (voir sur internet pour un coment-faire). Ces sons peut être également liéés au fait que vous avez paramétré une qualité (bitrate) différente de Spotify à Spytify. Vous devez vous assurer d’avoir mis la qualité correspondant à votre version de Spotify. Spotify Free ne peut avoir une qualité de Spotify Premium. Si vous avez Premium, vous devez cocher dans vos paramètres l’option <strong>Haute Qualité 320kbps</strong> pour bénéficier de l’enregistrement à 320kbps avec Spytify.can be related to your computer not being set to high cpu performance.</p>
 </p>
 </section>
 
-<section>
-    <h3>Isoler l'audio de Spotify vers un différent périphérique audio.</h3>
-    <p><p>En utilisant le paramètre de Spotify <strong>Périphérique audio</strong>, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez <strong>Paramètres de mélangeur audio</strong>, vous devriez arriver sur la page de paramètres appelée <em>Volume d’application et préférences de volume</em>, soyez certain que Spotify est en train de jouer et paramétrez l’application vers le bon périphérique avec la liste déroulante <strong>Sortie</strong>. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n’importe quel son indésiré. Si vous ne pouvez trouver l’option Windows, visitez la section <strong><em>Paramètres Windows 10 🡂 Système 🡂 Son</em></strong>, descendez le menu jusqu’à la section <strong><em>Paramètres de son avancés 🡂 Préférences de volume d’application et de périphériques</em></strong>.</p>
+<section id="get-mp3-metadata-from-spotify-api">
+    <h3><a href="#get-mp3-metadata-from-spotify-api">Obtenir les métadonnées MP3 de l'API Spotify au lieu de Last.fm</a></h3>
+    <p><p>Cette option est en développement mais paramétrable dans le fichier <strong>spytify.exe.config</strong>. Ouvrir avec un éditeur de texte et suivre les indications des lignes en commentaires au bas du fichier pour activer la saisie des infos du média MP3 à partir de Spotify.</p>
 </p>
 </section>
 
-<section>
-    <h3>Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d'amis, radio, mixes journaliers et podcasts.</h3>
-    <p><p>Quand vous activez <strong>Désactiver les publicités</strong> dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c’est pour s’assurer que le plus d’annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici <strong><em>C:\Windows\System32\drivers\etc\host</em></strong> pour modifier le fichier avec bloc-notes, recherchez le domaine <code class="highlighter-rouge">spclient.wg.spotify.com</code> et ajoutez un <code class="highlighter-rouge">#</code> au début de la ligne pour le rendre inactif.</p>
+<section id="recording-order-number">
+    <h3><a href="#recording-order-number">Le paramètre pour ajouter un numéro d'ordre d'enregistrement.</a></h3>
+    <p><p>Ajouter le numéro de l’ordre d’enregistrement aux fichiers <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> est utile si vous voulez mettre vos chansons sur CDs (disque compact)  et que votre lecteur MP3, comme ceux dans les voitures, ordonnent les chansons par nom de fichier. Vous obtiendrez un CD avec les chansons ordonnés dans le même ordre que l’album ou celui présenté par Spotify. Si c’est une liste de lecture, ordonnez là sur Spotify avant l’enregistrement.</p>
 </p>
 </section>
 
-<section>
-    <h3>Spotify joue seulement un bout d'une piste audio, ça coupe après quelques secondes.</h3>
+<section id="spotify-audio-endpoint">
+    <h3><a href="#spotify-audio-endpoint">Isoler l'audio de Spotify vers un différent périphérique audio.</a></h3>
+    <p><p>En utilisant le paramètre de Spotify <strong>Périphérique audio</strong>, vous pouvez déplacer Spytify vers un différent périphérique audio (installez <a href="https://www.vb-audio.com/Cable/">virtual audio cable</a> si vous avez besoin d’un autre) et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez <strong>Paramètres de mélangeur audio</strong>, vous devriez arriver sur la page de paramètres appelée <em>Volume d’application et préférences de volume</em>, soyez certain que Spotify est en train de jouer et paramétrez l’application vers le bon périphérique avec la liste déroulante <strong>Sortie</strong>. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n’importe quel son indésiré. Si vous ne pouvez trouver l’option Windows, visitez la section <strong><em>Paramètres Windows 10 🡂 Système 🡂 Son</em></strong>, descendez le menu jusqu’à la section <strong><em>Paramètres de son avancés 🡂 Préférences de volume d’application et de périphériques</em></strong>.</p>
+</p>
+</section>
+
+<section id="spotify-track-cut">
+    <h3><a href="#spotify-track-cut">Spotify joue seulement un bout d'une piste audio, ça coupe après quelques secondes.</a></h3>
     <p><p>Spotify recherche les fichiers de musique localement avant de jouer une piste audio, si il en trouve une avec les méta données que la piste audio courante, il jouera la piste audio local à la place. Des pistes audio coupées signifient que vous avez, une fois, commencer une session d’enregistrement et l’avez terminé trop tôt. Il faut juste supprimer les pistes audio incomplètes dans votre répertoire de musique pour résoudre le problème.</p>
 </p>
 </section>
 
-<section>
-    <h3>Pistes audio sont détectées en tant que publicité.</h3>
+<section id="track-detected-as-ad">
+    <h3><a href="#track-detected-as-ad">Pistes audio sont détectées en tant que publicité.</a></h3>
     <p><p>Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu’une piste audio sera détectée correctement puisqu’il se base sur peu d’informations disponible dans le processus de Spotify qui ne sont pas toujours précises.</p>
 </p>
 </section>
@@ -108,7 +108,7 @@ Deuxième cas, il se peut qu’à l’écoute des fichiers audio vous entendiez 
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://beerpay.io/jwallet/spy-spotify">me payer une bière sur beerpay.io</a> 🍺.
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://paypal.me/spytify">me payer une bière sur paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -153,9 +153,20 @@ Deuxième cas, il se peut qu’à l’écoute des fichiers audio vous entendiez 
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

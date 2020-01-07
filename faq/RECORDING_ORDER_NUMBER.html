@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,22 +9,22 @@
     <meta name="keywords" content=""/>
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
-    <link rel="stylesheet" href="/spy-spotify/fr/assets/css/style.css?v=">
-    <title>Spytify - Enregistre Spotify en mp3 - Isoler l'audio de Spotify vers un différent périphérique audio.</title>
+    <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
+    <title>Spytify - Records Spotify to mp3 - Parameter that adds a recording order number to the track.</title>
   </head>
   <body>
     <menu class="language">
       <div class="language-row">
-        <label>Langage:</label>
-        <a class="selected" role="button" onclick="onLangToggle()">Français<span id="caret">▼</a>
+        <label>Language:</label>
+        <a class="selected" role="button" onclick="onLangToggle()">English<span id="caret">▼</a>
       </div>
       <section class="language-box">
         <ul id="langs_dropdown" role="option" opened="false">
           
+          
+          <a role="button" name="langs" value="fr" onclick="onLangChange(this)"><li>Français</li></a>
+          
            
-          
-          <a role="button" name="langs" value="en" onclick="onLangChange(this)"><li>English</li></a>
-          
         </ul>
       </section>
     </menu>
@@ -32,23 +32,23 @@
     <header class="page-header" role="banner">
       <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
       <h1 class="project-name">Spytify</h1>
-      <h2 class="project-tagline">Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés</h2>      
+      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
     </header>
     
     <nav class="nav" role="navigation">
-        <a href="./overview.html" aria-label="Overview" class="btn">Aperçu</a>
-        <a href="./features.html" aria-label="Features" class="btn">Fonctionnalités</a>
-        <a href="./settings.html" aria-label="Settings" class="btn">Paramètres</a>
+        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
+        <a href="./features.html" aria-label="Features" class="btn">Features</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
         <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
 
         
-          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Télécharger</a>
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Download</a>
         
     </nav>
 
     <main id="content" class="main-content" role="main">
  
-      <p>En utilisant le paramètre de Spotify <strong>Périphérique audio</strong>, vous pouvez déplacer Spytify vers un différent périphérique audio (installez <a href="https://www.vb-audio.com/Cable/">virtual audio cable</a> si vous avez besoin d’un autre) et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez <strong>Paramètres de mélangeur audio</strong>, vous devriez arriver sur la page de paramètres appelée <em>Volume d’application et préférences de volume</em>, soyez certain que Spotify est en train de jouer et paramétrez l’application vers le bon périphérique avec la liste déroulante <strong>Sortie</strong>. Redémarrez Spotify. Spotify et Spytify devraient maintenant être isôlés de n’importe quel son indésiré. Si vous ne pouvez trouver l’option Windows, visitez la section <strong><em>Paramètres Windows 10 🡂 Système 🡂 Son</em></strong>, descendez le menu jusqu’à la section <strong><em>Paramètres de son avancés 🡂 Préférences de volume d’application et de périphériques</em></strong>.</p>
+      <p>Adding the recording order number to files <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
 
 
       <footer class="site-footer">
@@ -61,11 +61,11 @@
 
         <span class="site-footer-owner">
           <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
-           est maintenu par 
+           is maintained by 
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Tu aimes Spytify? Si tu veux tu peux <a href="https://paypal.me/spytify">me payer une bière sur paypal</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="https://paypal.me/spytify">buy me a beer using paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -91,7 +91,7 @@
       }
       
       function changeLanguage(language) {
-        var lang = language || 'fr';
+        var lang = language || 'en';
         const { pathname: originPathname, origin } = window.location;
         var pathname = originPathname.replace('/spy-spotify', '');
         var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
@@ -127,8 +127,8 @@
       }
 
       function setLanguage() {
-        if ('fr' !== window.localStorage.getItem('lang')) {
-          window.localStorage.setItem('lang', 'fr');
+        if ('en' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', 'en');
         }
       }
 

@@ -50,15 +50,22 @@
  
       <p>Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.</p>
 
-<p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_record.png" /></p>
+<p align="center"><img alt="Spotify Recorder logs" src="./assets/images/ui_record.png" /></p>
 
-<h2 id="how-it-works">How it works?</h2>
+<h2 id="how-it-works"><a href="#how-it-works">How it works?</a></h2>
 <p>Spytify records what your computer’s sound card outputs. Spytify records the same quality that Spotify outputs, so the recorded copy will be indistinguishable from Spotify’s one. Spytify records at .mp3 quality, and not at higher qualities like .flac, since Spotify can only deliver 320 kbps audio quality.</p>
 
-<h3 id="standard-use">Standard use</h3>
+<figure>
+    <figcaption>Listen to an mp3 sample at 120kbp/s:</figcaption>
+    <audio controls="" src="./assets/audio/sample.mp3">
+            Your browser does not support the <code>audio</code> element.
+    </audio>
+</figure>
+
+<h3 id="standard-use"><a href="#standard-use">Standard use</a></h3>
 <p>A standard use is to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads.</p>
 
-<h3 id="requirements">Requirements</h3>
+<h3 id="requirements"><a href="#requirements">Requirements</a></h3>
 <p>Spytify runs on Windows only.</p>
 <ul>
   <li>Microsoft Framework (<a href="https://www.microsoft.com/en-US/download/details.aspx?id=48130">.NET 4.6</a> or higher).</li>
@@ -82,7 +89,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="https://paypal.me/spytify">buy me a beer using paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -127,9 +134,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {

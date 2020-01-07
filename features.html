@@ -48,7 +48,7 @@
 
     <main id="content" class="main-content" role="main">
  
-      <h2 id="app-features">App features</h2>
+      <h2 id="app-features"><a href="#app-features">App features</a></h2>
 
 <table>
   <thead>
@@ -60,29 +60,29 @@
   </thead>
   <tbody>
     <tr>
-      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_no_ad.png" /></td>
+      <td><img alt="features" src="./assets/images/feature_no_ad.png" /></td>
       <td style="text-align: center"><strong>No Ads</strong></td>
-      <td style="text-align: left">Doesn’t record ads and has an option to disable audio ads</td>
+      <td style="text-align: left">Mute and doesn’t record audio ads</td>
     </tr>
     <tr>
-      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_mute_apps.png" /></td>
+      <td><img alt="features" src="./assets/images/feature_mute_apps.png" /></td>
       <td style="text-align: center"><strong>Mutes Other Apps</strong></td>
-      <td style="text-align: left">Mutes any other applications while spying Spotify</td>
+      <td style="text-align: left">Mutes any other applications while spying Spotify. Both apps can be <a href="./faq.html#spotify-audio-endpoint">isolated in a their own audio endpoint device</a> (sound card).</td>
     </tr>
     <tr>
-      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /></td>
+      <td><img alt="features" src="./assets/images/feature_audio_quality.png" /></td>
       <td style="text-align: center"><strong>Great Audio Quality</strong></td>
       <td style="text-align: left">Gets and records with the same great audio quality than Spotify</td>
     </tr>
     <tr>
-      <td><img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_max_out.png" /></td>
+      <td><img alt="features" src="./assets/images/feature_max_out.png" /></td>
       <td style="text-align: center"><strong>Normalize volume</strong></td>
       <td style="text-align: left">Max out the volume of your Spotify audio session to record all song at the same volume level delivered by Spotify</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="file-features">File features</h2>
+<h2 id="file-features"><a href="#file-features">File features</a></h2>
 <ul>
   <li>Splits the recorded sound into individual tracks using the artist and track names as the title, like so:
     <ul>
@@ -94,7 +94,7 @@
       <li><code class="highlighter-rouge">../My Music/</code></li>
     </ul>
   </li>
-  <li>Automatically adds metadata to .mp3 file:
+  <li>Automatically adds metadata from Last.fm (or <a href="./faq.html#get-mp3-metadata-from-spotify-api">Spotify API</a>) to .mp3 file:
     <ul>
       <li># track</li>
       <li>Track Title</li>
@@ -106,7 +106,7 @@
   </li>
 </ul>
 
-<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/saved_songs_list.png" /></p>
+<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="./assets/images/saved_songs_list.png" /></p>
 
 
       <footer class="site-footer">
@@ -123,7 +123,7 @@
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Like Spytify? If you want you can <a href="https://beerpay.io/jwallet/spy-spotify">buy me a beer on beerpay.io</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="https://paypal.me/spytify">buy me a beer using paypal</a> 🍺.
         </span>
       </footer>
     </main>
@@ -168,9 +168,20 @@
         onLangToggle()
       }
 
+      function isScrollIntoView() {
+        const { hash, pathname } = window.location;
+        console.log(window.location)
+        if (hash) {
+          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
+          var el = document.getElementById(hash.toUpperCase());
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
       function onPageLoaded() {
         setLanguage();
         setActiveNav();
+        isScrollIntoView();
       }
 
       function setLanguage() {
