@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace EspionSpotify
@@ -23,22 +24,22 @@ namespace EspionSpotify
                 @"Microsoft\WindowsApps\Spotify.exe")
         };
 
-        public async static Task Run()
+        public async static Task Run(IFileSystem fileSystem)
         {
-            if (!IsSpotifyInstalled())
+            if (!IsSpotifyInstalled(fileSystem))
             {
                 return;
             }
 
             for (var tries = 5; tries > 0; tries--)
             {
-                if (RunSpotify()) break;
+                if (RunSpotify(fileSystem)) break;
 
                 await Task.Delay(RunSpotifyInterval);
             }
         }
 
-        private static bool RunSpotify()
+        private static bool RunSpotify(IFileSystem fileSystem)
         {
             if (!IsSpotifyRunning())
             {
@@ -46,7 +47,7 @@ namespace EspionSpotify
                 {
                     foreach (var path in SpotifyPossiblePaths)
                     {
-                        if (!File.Exists(path)) continue;
+                        if (!fileSystem.File.Exists(path)) continue;
                          Process.Start(path);
                         break;
                     }
@@ -61,11 +62,11 @@ namespace EspionSpotify
             return IsSpotifyRunning();
         }
 
-        public static bool IsSpotifyInstalled()
+        public static bool IsSpotifyInstalled(IFileSystem fileSystem)
         {
             foreach (var path in SpotifyPossiblePaths)
             {
-                if (!File.Exists(path)) continue;
+                if (!fileSystem.File.Exists(path)) continue;
                 return true;
             }
             return false;

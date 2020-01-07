@@ -122,12 +122,12 @@ namespace EspionSpotify
 
         private async Task RunSpotifyConnect()
         {
-            if (!SpotifyConnect.IsSpotifyInstalled()) return;
+            if (!SpotifyConnect.IsSpotifyInstalled(_fileSystem)) return;
 
             if (!SpotifyConnect.IsSpotifyRunning())
             {
                 _form.WriteIntoConsole("logSpotifyConnecting");
-                await SpotifyConnect.Run();
+                await SpotifyConnect.Run(_fileSystem);
             }
 
             Running = true;
@@ -195,7 +195,7 @@ namespace EspionSpotify
 
                 DoIKeepLastSong();
             }
-            else if (SpotifyConnect.IsSpotifyInstalled())
+            else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
                 _form.WriteIntoConsole(isAudioSessionNotFound ? "logSpotifyIsClosed" : "logSpotifyNotConnected");
             }
