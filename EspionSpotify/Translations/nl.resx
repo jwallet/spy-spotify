@@ -138,183 +138,183 @@
     <comment>interface</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
-    <value>{0} High quality (Spotify Premium)</value>
+    <value>{0} Hoge Kwaliteit (Spotify Premium)</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Group every artist songs inside their own folder</value>
+    <value>Groepeer nummers van dezelfde artiest in dezelfde map</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
-    <value>Replace files name spaces by underscores "_"</value>
+    <value>Vervang spaties in bestandsnamen door underscores "_"</value>
     <comment>interface</comment>
   </data>
   <data name="lblAds" xml:space="preserve">
-    <value>Ads:</value>
+    <value>Reclame:</value>
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Audio quality:</value>
+    <value>Audiokwaliteit:</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
-    <value>Delay next recording if sound is detected</value>
+    <value>Stel de volgende opname uit wanneer er geluid is gedetecteerd</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
-    <value>Audio format:</value>
+    <value>Audio formaat:</value>
     <comment>interface</comment>
   </data>
   <data name="lblLanguage" xml:space="preserve">
-    <value>Language:</value>
+    <value>Taal:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMinLength" xml:space="preserve">
-    <value>Minimal length:</value>
+    <value>Minimale lengte:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMuteAds" xml:space="preserve">
-    <value>Mute Ads</value>
+    <value>Demp advertenties</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
-    <value>Add the recording order number infront of all files name</value>
+    <value>Voeg het opname volgordenummer toe aan alle bestandsnamen</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Replace track numbers by the recording order number</value>
+    <value>Vervang tracknummers door opname volgordenummers</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
-    <value>Output path:</value>
+    <value>Bestandspad:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
-    <value>Recorder:</value>
+    <value>Opnemer:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
-    <value>Choose the starting position of the recording order number</value>
+    <value>Kies de startpositie van het opname volgordenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Record unknown type tracks detected as an ad</value>
+    <value>Neem onbekende types van nummers op die zijn gedetecteerd als advertentie</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
-    <value>Spy:</value>
+    <value>Opname:</value>
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
-    <value>Ad</value>
+    <value>Advertentie</value>
     <comment>console</comment>
   </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>Removing: {0} [&lt; {1}s]</value>
+    <value>Verwijderen: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Error while recording: The output directory was not found.</value>
+    <value>// Fout tijdens opname: De output locatie kan niet worden gevonden.</value>
     <comment>interface</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
-    <value>Recording: {0}</value>
+    <value>Opnemen: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyConnecting" xml:space="preserve">
-    <value>// Spotify isn't running, trying to launch it.</value>
+    <value>// Spotify staat uit, poging tot aanzetten...</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value>// Spotify is closed</value>
+    <value>// Spotify staat uit</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotConnected" xml:space="preserve">
-    <value>// Spotify didn't connect to the local API, please try again.</value>
+    <value>// Spotify kon niet verbinden met het lokale API, probeer het a.u.b. opnieuw</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify wasn't found or isn't installed.</value>
+    <value>// Spotify kon niet worden gevonden, en is mogelijk niet geïnstalleerd.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
-    <value>// Spying</value>
+    <value>// Opnemen...</value>
     <comment>console</comment>
   </data>
   <data name="logStoping" xml:space="preserve">
-    <value>// End</value>
+    <value>// Einde</value>
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Error while recording: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced</value>
+    <value>// Fout tijdens opname: Uw computer audio formaat wordt niet ondersteund. Formaat moet "2 channels, 24-bit, 48000 Hz (Studiokwaliteit)" zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
-    <value>Do you still want to leave?</value>
+    <value>Weet u zeker dat u het programma wilt verlaten?</value>
     <comment>message</comment>
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
-    <value>This output path does not exist, select another one.</value>
+    <value>Het opgegeven bestandspad bestaat niet, selecteer a.u.b. een andere.</value>
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminContent" xml:space="preserve">
-    <value>Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?</value>
+    <value>Spytify moet opnieuw opstarten en toegang krijgen tot admin rechten om Spotify advertentie te blokkeren. Wilt u doorgaan en het opnieuw proberen?</value>
     <comment>message</comment>
   </data>
   <data name="msgEnsureAdminTitle" xml:space="preserve">
-    <value>Administrator rights required</value>
+    <value>Admin rechten vereist.</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionContent" xml:space="preserve">
-    <value>Do you want to open GitHub to view the newest Spytify release?</value>
+    <value>Wilt u GitHub openen om de nieuwste versie van Spytify te bekijken?</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionTitle" xml:space="preserve">
-    <value>Version {0} is out!</value>
+    <value>Versie {0} is uit!</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">
-    <value>Spytify is spying</value>
+    <value>Spytify is aan het opnemen</value>
     <comment>message</comment>
   </data>
   <data name="msgTitlePathNotFound" xml:space="preserve">
-    <value>Output path invalid</value>
+    <value>Bestandspad ongeldig</value>
     <comment>message</comment>
   </data>
   <data name="tabAdvanced" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>Geavanceerde Instellingen</value>
     <comment>interface</comment>
   </data>
   <data name="tabRecord" xml:space="preserve">
-    <value>Spy</value>
+    <value>Opname</value>
     <comment>interface</comment>
   </data>
   <data name="tabSettings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Instellingen</value>
     <comment>interface</comment>
   </data>
   <data name="tipClear" xml:space="preserve">
-    <value>Clear history</value>
+    <value>Verwijder geschiedenis</value>
     <comment>interface</comment>
   </data>
   <data name="tipDirectory" xml:space="preserve">
-    <value>Open output directory</value>
+    <value>Open output bestandslocatie</value>
     <comment>interface</comment>
   </data>
   <data name="tipPath" xml:space="preserve">
-    <value>Browse</value>
+    <value>Zoeken</value>
     <comment>interface</comment>
   </data>
   <data name="tipStartSpying" xml:space="preserve">
-    <value>Start spying</value>
+    <value>Begin opname</value>
     <comment>interface</comment>
   </data>
   <data name="tipStopSying" xml:space="preserve">
-    <value>Stop spying</value>
+    <value>Stop opname</value>
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Error while recording: Unknown exception: {0}</value>
+    <value>// Error while recording: Unknown exception</value>
     <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
@@ -342,15 +342,15 @@
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
-    <value>Audio Device:</value>
+    <value>Audioapparaat:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingTimer" xml:space="preserve">
-    <value>Timer for the recording session</value>
+    <value>Timer voor de opnamesessie</value>
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Recording session timer done.</value>
+    <value>// Timer voor de opnamesessie is voorbij.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
@@ -358,7 +358,7 @@
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
-    <value>// Waiting for the recording of the current audio track to end</value>
+    <value>// Wachten op het einde van de opname van het huidige nummer</value>
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
@@ -366,7 +366,7 @@
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
-    <value>Recorded {0} in : {1}</value>
+    <value>Opgenomen {0} in : {1}</value>
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">

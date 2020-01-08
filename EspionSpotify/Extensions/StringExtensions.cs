@@ -1,39 +1,43 @@
 ﻿using EspionSpotify.Enums;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EspionSpotify.Extensions
 {
     public static class StringExtensions
     {
-        private static Regex _regexVersion = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
-        private static Regex _regexTag = new Regex(@"[^0-9.]");
+        private static readonly Regex _regexVersion = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
+        private static readonly Regex _regexTag = new Regex(@"[^\d+\.]");
 
-        public static AlbumCoverSize? ConvertToAlbumCoverSize(this string value)
+        public static AlbumCoverSize? ToAlbumCoverSize(this string value)
         {
-            var types = typeof(AlbumCoverSize);
+            return value.ToEnum<AlbumCoverSize>(ignoreCase: true);
+        }
 
-            if (string.IsNullOrEmpty(value) || !Enum.IsDefined(types, value))
+        public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
+        {
+            var types = typeof(T);
+            if (string.IsNullOrEmpty(value) || !Enum.GetNames(types).Any(x => x.ToLowerInvariant() == value.ToLowerInvariant()))
             {
                 return null;
             }
 
-            return (AlbumCoverSize) Enum.Parse(types, value, ignoreCase: true);
+            return (T)Enum.Parse(types, value, ignoreCase);
         }
 
-        public static Version ToVersion(this string value)
-        {
-            var versionString = value.ToStringVersion();
-
-            if (string.IsNullOrEmpty(versionString) || !_regexVersion.IsMatch(versionString)) return null;
-
-            return new Version(value);
-        }
-
-        public static string ToStringVersion(this string tag)
+        public static string ToVersionAsString(this string tag)
         {
             return string.IsNullOrEmpty(tag) ? string.Empty : _regexTag.Replace(tag, string.Empty);
         }
 
+        public static Version ToVersion(this string value)
+        {
+            var versionString = value.ToVersionAsString();
+
+            if (string.IsNullOrEmpty(versionString) || !_regexVersion.IsMatch(versionString)) return null;
+
+            return new Version(versionString);
+        }
     }
 }

@@ -9,8 +9,8 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify
 {
@@ -19,7 +19,7 @@ namespace EspionSpotify
         private const string REPO_RELEASE_LINK = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
         private const string SPYTIFY = "Spytify";
 
-        public static async void GetVersion()
+        public static async void GetVersion(IFrmEspionSpotify _form)
         {
             if (!Uri.TryCreate(REPO_RELEASE_LINK, UriKind.Absolute, out var uri)) return;
 
@@ -52,8 +52,8 @@ namespace EspionSpotify
                     if (githubTagVersion <= assemblyVersion) return;
                     if (Settings.Default.LastVersionPrompted.ToVersion() == githubTagVersion) return;
 
-                    var dialogTitle = string.Format(FrmEspionSpotify.Rm.GetString($"msgNewVersionTitle"), githubTagVersion);
-                    var dialogMessage = FrmEspionSpotify.Rm.GetString($"msgNewVersionContent");
+                    var dialogTitle = string.Format(_form.Rm.GetString(TranslationKeys.msgNewVersionTitle), githubTagVersion);
+                    var dialogMessage = _form.Rm.GetString(TranslationKeys.msgNewVersionContent);
 
                     if (!string.IsNullOrEmpty(release.body))
                     {

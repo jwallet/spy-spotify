@@ -2,6 +2,7 @@
 using EspionSpotify.Events;
 using EspionSpotify.Models;
 using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace EspionSpotify.Spotify
@@ -49,19 +50,19 @@ namespace EspionSpotify.Spotify
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public Track GetTrack()
+        public async Task<Track> GetTrack()
         {
             if (SpotifyLatestStatus == null)
             {
-                return SpotifyProcess.GetSpotifyStatus()?.CurrentTrack;
+                return (await SpotifyProcess.GetSpotifyStatus())?.CurrentTrack;
             }
 
-            return SpotifyLatestStatus.GetTrack();
+            return await SpotifyLatestStatus.GetTrack();
         }
 
-        private void ElapsedEventTick(object sender, ElapsedEventArgs e)
+        private async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
-            SpotifyLatestStatus = SpotifyProcess.GetSpotifyStatus();
+            SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
             {
                 EventTimer.Start();
@@ -82,26 +83,26 @@ namespace EspionSpotify.Spotify
                         SongTimer.Stop();
                     }
 
-                    OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
+                    await Task.Run(() => OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
                     {
                         Playing = newestTrack.Playing
-                    });
+                    }));
                 }
                 if (!newestTrack.Equals(Track))
                 {
                     SongTimer.Start();
-                    OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
+                    await Task.Run(async () => OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
                         OldTrack = Track,
-                        NewTrack = SpotifyLatestStatus.GetTrack()
-                    });
+                        NewTrack = await SpotifyLatestStatus.GetTrack()
+                    }));
                 }
-                if (Track.CurrentPosition != null)
+                if (Track.CurrentPosition != null || newestTrack != null)
                 {
-                    OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs()
+                    await Task.Run(() => OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs()
                     {
-                        TrackTime = Track.CurrentPosition ?? 0
-                    });
+                        TrackTime = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : 0
+                    }));
                 }
             }
             if (newestTrack != null)

@@ -94,11 +94,11 @@ namespace EspionSpotify.Models
         {
             var song = SPOTIFY;
 
-            if (Artist != null && Title != null)
+            if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
                 song = $"{Artist} - {Title}";
 
-                if (TitleExtended != null)
+                if (!string.IsNullOrEmpty(TitleExtended))
                 {
                     song += $" - {TitleExtended}";
                 }
@@ -116,7 +116,7 @@ namespace EspionSpotify.Models
         {
             var song = Title ?? "";
 
-            if (TitleExtended != null)
+            if (!string.IsNullOrEmpty(TitleExtended))
             {
                 song += $" - {TitleExtended}";
             }

@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Models;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,16 +15,12 @@ namespace EspionSpotify.MediaTags
 
         public async Task SaveMediaTags()
         {
-            var api = new LastFMAPI();
             var mp3 = TagLib.File.Create(CurrentFile);
 
-            if (OrderNumberInMediaTagEnabled && Count.HasValue)
+            var trackNumber = GetTrackNumber();
+            if (trackNumber.HasValue)
             {
-                mp3.Tag.Track = (uint)Count.Value;
-            }
-            else if (Track.AlbumPosition != null)
-            {
-                mp3.Tag.Track = (uint)Track.AlbumPosition;
+                mp3.Tag.Track = (uint)trackNumber.Value;
             }
 
             mp3.Tag.Title = Track.Title;
@@ -56,9 +53,22 @@ namespace EspionSpotify.MediaTags
                 GetAlbumCoverToPicture(Track.ArtSmall)
             };
 
-            if (File.Exists(CurrentFile)) mp3.Save();
+            if (File.Exists(CurrentFile))
+            {
+                mp3.Save();
+            }
 
             mp3.Dispose();
+        }
+
+        private int? GetTrackNumber()
+        {
+            if (OrderNumberInMediaTagEnabled && Count.HasValue)
+            {
+                return Count.Value;
+            }
+
+            return Track.AlbumPosition;
         }
 
         private TagLib.Picture GetAlbumCoverToPicture(byte[] data)
@@ -76,13 +86,18 @@ namespace EspionSpotify.MediaTags
 
         public static async Task<byte[]> GetAlbumCover(string link)
         {
-            if (string.IsNullOrEmpty(link)) return null;
+            if (string.IsNullOrWhiteSpace(link)) return null;
 
             var request = WebRequest.Create(link);
-            using (var response = (await request.GetResponseAsync()).GetResponseStream())
+            using (var response = await request.GetResponseAsync())
             {
-                if (response == null) return null;
-                using (var reader = new BinaryReader(response))
+                var stream = response.GetResponseStream();
+                if (stream == null)
+                {
+                    response.Dispose();
+                    return null;
+                }
+                using (var reader = new BinaryReader(stream))
                 {
                     using (var memory = new MemoryStream())
                     {
@@ -92,6 +107,8 @@ namespace EspionSpotify.MediaTags
                             await memory.WriteAsync(buffer, 0, buffer.Length);
                             buffer = reader.ReadBytes(4096);
                         }
+                        response.Dispose();
+
                         return memory.ToArray();
                     }
                 }

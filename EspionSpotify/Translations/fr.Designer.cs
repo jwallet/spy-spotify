@@ -61,15 +61,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Défaut.
-        /// </summary>
-        internal static string cbDefault {
-            get {
-                return ResourceManager.GetString("cbDefault", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 128kbps.
         /// </summary>
         internal static string cbOptBitRate128 {
@@ -124,15 +115,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utilisez Audacity (un éditeur gratuit pour fichiers audio) pour couper les parties audio que vous voulez retirer. Spytify ne peut garantir qu&apos;une annonce ou la prochaine piste audio sera détectée correctement puisqu&apos;il se base sur peu d&apos;informations disponible dans le processus de Spotify qui ne sont pas toujours précises..
-        /// </summary>
-        internal static string lblAdAndTrackOverlapOnRecordedTrack {
-            get {
-                return ResourceManager.GetString("lblAdAndTrackOverlapOnRecordedTrack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Regrouper les chansons d&apos;un même artiste dans un dossier au nom de l&apos;artiste.
         /// </summary>
         internal static string lblAddFolders {
@@ -160,15 +142,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La fonctionnalité de Spytify &quot;Désactiver les publicités&quot; peut affecté la façon dont une annonce inconnue joue quand elle ne peut être bloquée. Essayez de ré-activer ce paramètre une fois de plus pour obtenir les derniers domaines de publicités bloqués ou désactivez ce paramètre et redémarrez les deux applications..
-        /// </summary>
-        internal static string lblAdsPlayAndStop {
-            get {
-                return ResourceManager.GetString("lblAdsPlayAndStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Périphérique audio:.
         /// </summary>
         internal static string lblAudioDevice {
@@ -178,38 +151,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Premier cas, Spytify désactive la plupart des applications quand la session d&apos;enregistrement débute. Veuillez couper le son par le &quot;Mélangeur de volume&quot; des applications exécutées dans un processus d&apos;arrière-plan dans la barre d&apos;état système pouvant émettre un son ainsi que tout autre application que vous utilisez durant la session d&apos;enregistrement. Seulement Spotify et Spytify ne doivent pas être à muet..
-        /// </summary>
-        internal static string lblBackgroundNoiceRecordedOnTrack_first {
-            get {
-                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_first", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deuxième cas, il se peut qu&apos;à l&apos;écoute des fichiers audio vous entendiez des sons (pops et craquements) jouant à des moments précis. Ces sons peuvent être liéés au fait que votre ordinateur n&apos;a pas le processeur de configuré à haute performance. Vous pouvez l&apos;activer dans vos paramètres de plan d&apos;alimentation ou en changeant la puissance minimale du processeur a 100 (voir sur internet pour un coment-faire). Ces sons peut être également liéés au fait que vous avez paramétré une qualité (bitrate) différente d [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string lblBackgroundNoiceRecordedOnTrack_second {
-            get {
-                return ResourceManager.GetString("lblBackgroundNoiceRecordedOnTrack_second", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Qualité audio:.
         /// </summary>
         internal static string lblBitRate {
             get {
                 return ResourceManager.GetString("lblBitRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Désactiver le plus de publicités audio de Spotify.
-        /// </summary>
-        internal static string lblDisableAds {
-            get {
-                return ResourceManager.GetString("lblDisableAds", resourceCulture);
             }
         }
         
@@ -331,33 +277,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En utilisant le paramètre de Spotify &apos;&apos;Périphérique audio&apos;&apos;, vous pouvez déplacer Spytify vers un différent périphérique audio et utiliser le paramètre de Windows 10 pour déplacer Spotify vers le même périphérique audio. Cliquez sur Windows et tapez &apos;&apos;Paramètres de mélangeur audio&apos;&apos;, vous devriez arriver sur la page de paramètres appelée &apos;&apos;Volume d&apos;application et préférences de volume&apos;&apos;, soyez certain que Spotify est en train de jouer et paramétrez l&apos;application vers le bon périphérique avec la liste déroul [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string lblSpotifyAudioEndpoint {
-            get {
-                return ResourceManager.GetString("lblSpotifyAudioEndpoint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quand vous activez &quot;Désactiver les publicités&quot; dans les paramètres Spotify, vous acceptez que ces fonctionnalités ne pourront être disponible, c&apos;est pour s&apos;assurer que le plus d&apos;annonces possible soient désactivées. Parcontre, vous pouvez vous rendre ici &quot;C:\Windows\System32\drivers\etc\host&quot; pour modifier le fichier avec bloc-notes, recherchez le domaine &quot;spclient.wg.spotify.com&quot; et ajoutez un &quot;#&quot; au début de la ligne pour le rendre inactif..
-        /// </summary>
-        internal static string lblSpotifyLostFeatures {
-            get {
-                return ResourceManager.GetString("lblSpotifyLostFeatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spotify recherche les fichiers de musique localement avant de jouer une piste audio, si il en trouve une avec les méta données que la piste audio courante, il jouera la piste audio local à la place. Des pistes audio coupées signifient que vous avez, une fois, commencer une session d&apos;enregistrement et l&apos;avez terminé trop tôt. Il faut juste supprimer les pistes audio incomplètes dans votre répertoire de musique pour résoudre le problème..
-        /// </summary>
-        internal static string lblSpotifyTrackCut {
-            get {
-                return ResourceManager.GetString("lblSpotifyTrackCut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Espion:.
         /// </summary>
         internal static string lblSpy {
@@ -367,29 +286,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podcast, livre audio et tout autre piste de type non commun sont détectés en tant que publicité. Également, Spotify ne retourne pas les bonnes informations à Spytify lorsque vous basculez entre radios, listes de lecture ou albums, résultant en une piste audio détectée en tant que publicté. Si ceci se produit, rejouer la piste courante, si ceci se produit trop souvent, sauvegarder vos pistes dans une playlist et jouer la. Spytify ne peut garantir qu&apos;une piste audio sera détectée correctement puisqu&apos;il se bas [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string lblTrackDetectedAsAd {
-            get {
-                return ResourceManager.GetString("lblTrackDetectedAsAd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Annonce.
         /// </summary>
         internal static string logAd {
             get {
                 return ResourceManager.GetString("logAd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // Une publicité est en train de jouer..
-        /// </summary>
-        internal static string logAdPlaying {
-            get {
-                return ResourceManager.GetString("logAdPlaying", resourceCulture);
             }
         }
         
@@ -412,20 +313,20 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll.
+        /// </summary>
+        internal static string logMissingDlls {
+            get {
+                return ResourceManager.GetString("logMissingDlls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu&apos;administrateur ou changez le pour un autre..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
                 return ResourceManager.GetString("logNoAccessOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inconnu.
-        /// </summary>
-        internal static string logOther {
-            get {
-                return ResourceManager.GetString("logOther", resourceCulture);
             }
         }
         
@@ -547,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue.
+        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -570,15 +471,6 @@ namespace EspionSpotify.Translations {
         internal static string logUnsupportedRate {
             get {
                 return ResourceManager.GetString("logUnsupportedRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // En attente du prochain titre....
-        /// </summary>
-        internal static string logWaiting {
-            get {
-                return ResourceManager.GetString("logWaiting", resourceCulture);
             }
         }
         
@@ -682,15 +574,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F.A.Q..
-        /// </summary>
-        internal static string tabFAQ {
-            get {
-                return ResourceManager.GetString("tabFAQ", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Espion.
         /// </summary>
         internal static string tabRecord {
@@ -759,69 +642,6 @@ namespace EspionSpotify.Translations {
         internal static string tipStopSying {
             get {
                 return ResourceManager.GetString("tipStopSying", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Annonces et pistes audio chevauchent au début/fin d&apos;une piste audio enregistrée..
-        /// </summary>
-        internal static string tlAdAndTrackOverlapOnRecordedTrack {
-            get {
-                return ResourceManager.GetString("tlAdAndTrackOverlapOnRecordedTrack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spotify joue encore des annonces après les avoir désactivées et il se met sur pause/joue à chaque seconde..
-        /// </summary>
-        internal static string tlAdsPlayAndStop {
-            get {
-                return ResourceManager.GetString("tlAdsPlayAndStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du son/bruit d&apos;arrière fond a été enregistré dans le fichier de la piste audio..
-        /// </summary>
-        internal static string tlBackgroundNoiceRecordedOnTrack {
-            get {
-                return ResourceManager.GetString("tlBackgroundNoiceRecordedOnTrack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Isoler l&apos;audio de Spotify vers un différent périphérique audio.
-        /// </summary>
-        internal static string tlSpotifyAudioEndpoint {
-            get {
-                return ResourceManager.GetString("tlSpotifyAudioEndpoint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spotify a perdu quelques fonctionnalités après avoir désactivé les publicités: Liste d&apos;amis, radio, mixes journaliers et podcasts..
-        /// </summary>
-        internal static string tlSpotifyLostFeatures {
-            get {
-                return ResourceManager.GetString("tlSpotifyLostFeatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spotify joue seulement un bout d&apos;une piste audio, ça coupe après quelques secondes..
-        /// </summary>
-        internal static string tlSpotifyTrackCut {
-            get {
-                return ResourceManager.GetString("tlSpotifyTrackCut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pistes audio sont détectées en tant que publicité.
-        /// </summary>
-        internal static string tlTrackDetectedAsAd {
-            get {
-                return ResourceManager.GetString("tlTrackDetectedAsAd", resourceCulture);
             }
         }
     }

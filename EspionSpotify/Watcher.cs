@@ -2,6 +2,7 @@
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
+using System.IO.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
@@ -14,15 +15,18 @@ namespace EspionSpotify
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
-        public static bool Running;
-        public static bool Ready = true;
-        public static bool ToggleStopRecordingDelayed;
+        private static bool _running;
+
+        public static bool Running { get => _running; internal set { _running = value; } }
+        public static bool Ready { get; private set; } = true;
+        public static bool ToggleStopRecordingDelayed { get; internal set; }
 
         private IRecorder _recorder;
         private Timer _recordingTimer;
         private bool _isPlaying;
         private Track _currentTrack;
         private bool _stopRecordingWhenSongEnds;
+        private readonly IFileSystem _fileSystem;
 
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
@@ -35,7 +39,7 @@ namespace EspionSpotify
         public bool AdPlaying { get => _currentTrack.Ad; }
         public string SongTitle { get => _currentTrack.ToString(); }
         public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
-        public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings);  }
+        public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
         public bool IsTypeAllowed
         {
             get => _currentTrack.IsNormal() || IsRecordUnknownActive;
@@ -45,10 +49,13 @@ namespace EspionSpotify
             get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
         }
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings)
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, fileSystem: new FileSystem()) {}
+
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, IFileSystem fileSystem)
         {
             _currentTrack = new Track();
             _form = form;
+            _fileSystem = fileSystem;
             _userSettings = userSettings;
             _userSettings.InternalOrderNumber--;
 
@@ -78,7 +85,7 @@ namespace EspionSpotify
 
             if (IsTrackExists)
             {
-                _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logTrackExists") ?? $"{0}", _currentTrack.ToString()));
+                _form.WriteIntoConsole("logTrackExists", _currentTrack.ToString());
             }
 
             if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsTrackExists) return;
@@ -89,6 +96,7 @@ namespace EspionSpotify
         private void OnTrackTimeChanged(object sender, TrackTimeChangeEventArgs e)
         {
             _currentTrack.CurrentPosition = e.TrackTime;
+            _form.UpdateRecordedTime(RecorderUpAndRunning ? (int?)e.TrackTime : null);
         }
 
         public bool IsNewTrack(Track track)
@@ -104,7 +112,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{FrmEspionSpotify.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
+            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{SongTitle}");
 
             MutesSpotifyAds(AdPlaying);
@@ -114,21 +122,21 @@ namespace EspionSpotify
 
         private async Task RunSpotifyConnect()
         {
-            if (!SpotifyConnect.IsSpotifyInstalled()) return;
+            if (!SpotifyConnect.IsSpotifyInstalled(_fileSystem)) return;
 
             if (!SpotifyConnect.IsSpotifyRunning())
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyConnecting"));
-                await SpotifyConnect.Run();
+                _form.WriteIntoConsole("logSpotifyConnecting");
+                await SpotifyConnect.Run(_fileSystem);
             }
 
             Running = true;
         }
 
-        private bool SetSpotifyAudioSessionAndWaitToStart()
+        private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
-            return _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(ref Running);
+            return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(_running);
         }
 
         private void BindSpotifyEventHandlers()
@@ -146,14 +154,16 @@ namespace EspionSpotify
         {
             if (Running) return;
 
+            _form.WriteIntoConsole($"logStarting");
+
             await RunSpotifyConnect();
-            var isSpotifyPlayingOutsideOfSelectedAudioEndPoint = !SetSpotifyAudioSessionAndWaitToStart();
+            var isAudioSessionNotFound = !(await SetSpotifyAudioSessionAndWaitToStart());
             BindSpotifyEventHandlers();
             Ready = false;
 
             if (SpotifyConnect.IsSpotifyRunning())
             {
-                _currentTrack = Spotify.GetTrack();
+                _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
 
                 while (Running)
@@ -161,41 +171,42 @@ namespace EspionSpotify
                     // Order is important
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyIsClosed"));
+                        _form.WriteIntoConsole("logSpotifyIsClosed");
                         Running = false;
                     }
-                    else if (isSpotifyPlayingOutsideOfSelectedAudioEndPoint)
+                    else if (isAudioSessionNotFound)
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyPlayingOutsideOfSelectedAudioEndPoint"));
+                        _form.WriteIntoConsole("logSpotifyPlayingOutsideOfSelectedAudioEndPoint");
                         Running = false;
                     }
                     else if (ToggleStopRecordingDelayed)
                     {
                         ToggleStopRecordingDelayed = false;
                         _stopRecordingWhenSongEnds = true;
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStopRecordingWhenSongEnds"));
+                        _form.WriteIntoConsole("logStopRecordingWhenSongEnds");
                     }
                     else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
                     {
-                        _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logRecordingTimerDone"));
+                        _form.WriteIntoConsole("logRecordingTimerDone");
                         ToggleStopRecordingDelayed = true;
                     }
-                    Thread.Sleep(200);
+                    await Task.Delay(200);
                 }
 
                 DoIKeepLastSong();
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logStoping"));
             }
-            else if (SpotifyConnect.IsSpotifyInstalled())
+            else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotConnected"));
+                _form.WriteIntoConsole(isAudioSessionNotFound ? "logSpotifyIsClosed" : "logSpotifyNotConnected");
             }
             else
             {
-                _form.WriteIntoConsole(FrmEspionSpotify.Rm.GetString($"logSpotifyNotFound"));
+                _form.WriteIntoConsole("logSpotifyNotFound");
             }
 
             EndRecordingSession();
+
+            _form.WriteIntoConsole("logStoping");
         }
 
         private void RecordSpotify()
@@ -207,23 +218,20 @@ namespace EspionSpotify
                 return;
             }
 
-            _recorder = new Recorder(_form, _userSettings, _currentTrack);
+            _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
 
-            var recorderThread = new Thread(_recorder.Run);
-            recorderThread.Start();
+            Task.Run(_recorder.Run);
 
             _form.UpdateIconSpotify(_isPlaying, true);
             UpdateNumUp();
             CountSeconds = 0;
         }
 
-        private void InitializeRecordingSession()
+        private async void InitializeRecordingSession()
         {
-            _form.WriteIntoConsole(FrmEspionSpotify.Rm?.GetString($"logStarting") ?? "Starting");
-
             _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
-            var track = Spotify.GetTrack();
+            var track = await Spotify.GetTrack();
             if (track == null) return;
 
             _isPlaying = track.Playing;
@@ -240,7 +248,7 @@ namespace EspionSpotify
             }
         }
 
-        private void EnableRecordingTimer()
+        private async void EnableRecordingTimer()
         {
             _recordingTimer = new Timer(_userSettings.RecordingTimerMilliseconds)
             {
@@ -250,7 +258,7 @@ namespace EspionSpotify
 
             while (_recorder == null && SpotifyConnect.IsSpotifyRunning())
             {
-                Thread.Sleep(300);
+                await Task.Delay(300);
             }
 
             _recordingTimer.Enabled = true;
@@ -274,6 +282,7 @@ namespace EspionSpotify
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(SPOTIFY);
             _form.UpdateIconSpotify(false);
+            _form.UpdateRecordedTime(null);
             _form.StopRecording();
         }
 

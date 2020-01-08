@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.IO;
-using System.Threading;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 using EspionSpotify.Enums;
 using EspionSpotify.Models;
@@ -9,153 +9,200 @@ using NAudio.Wave;
 
 namespace EspionSpotify
 {
-    internal class Recorder: IRecorder
+    internal class Recorder : IRecorder
     {
-        private const long TICKS_PER_SECOND = 10000000;
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
 
         private readonly UserSettings _userSettings;
         private readonly Track _track;
         private readonly IFrmEspionSpotify _form;
-        private string _currentFile;
-        private string _currentFilePending;
+        private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _writer;
-        private FileManager _fileManager;
+        private readonly FileManager _fileManager;
+        private readonly IFileSystem _fileSystem;
 
         public Recorder() { }
 
-        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track)
+        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
             _form = espionSpotifyForm;
+            _fileSystem = fileSystem;
             _track = track;
             _userSettings = userSettings;
-            _fileManager = new FileManager(_userSettings, _track);
+            _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
-        public void Run()
+        public async void Run()
         {
             Running = true;
-            Thread.Sleep(50);
+            await Task.Delay(50);
             _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);
 
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
-            _writer = GetFileWriter(_waveIn);
+            _currentOutputFile = _fileManager.GetOutputFile(_userSettings.OutputPath);
+
+            _writer = new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
 
             if (_writer == null)
             {
+                Running = false;
                 return;
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecording") ?? $"{0}", _fileManager.GetFileName(_currentFile)));
+            _form.WriteIntoConsole("logRecording", _currentOutputFile.File);
 
             while (Running)
             {
-                Thread.Sleep(50);
+                await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
         }
 
-        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             // TODO: add buffer handler from argument
-            _writer.Write(e.Buffer, 0, e.BytesRecorded);
+            if (_writer != null) await _writer.WriteAsync(e.Buffer, 0, e.BytesRecorded);
         }
 
-        private void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
+        private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
             if (_writer != null)
             {
-                _writer.Flush();
+                await _writer.FlushAsync();
                 _writer.Dispose();
                 _waveIn.Dispose();
             }
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logDeleting") ?? $"{0}{1}", _fileManager.GetFileName(_currentFile), _userSettings.MinimumRecordedLengthSeconds));
-                _fileManager.DeleteFile(_currentFilePending);
+                _form.WriteIntoConsole("logDeleting", _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
+                _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
                 return;
             }
 
-            var timeSpan = new TimeSpan(TICKS_PER_SECOND * CountSeconds);
-            var length = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
-            _form.WriteIntoConsole(string.Format(FrmEspionSpotify.Rm.GetString($"logRecorded") ?? $"{0}{1}", _track.ToString(), length));
+            var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
+            _form.WriteIntoConsole("logRecorded", _track.ToString(), length);
 
-            _fileManager.Rename(_currentFilePending, _currentFile);
-
-            if (!_userSettings.MediaFormat.Equals(MediaFormat.Mp3)) return;
-
-            var mp3TagsInfo = new MediaTags.MP3Tags()
-            {
-                Track = _track,
-                OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                Count = _userSettings.OrderNumber,
-                CurrentFile = _currentFile
-            };
-
-            Task.Run(mp3TagsInfo.SaveMediaTags);
+            await UpdateOutputFileBasedOnMediaFormat();    
         }
 
-        private Stream GetFileWriter(WasapiLoopbackCapture waveIn)
+        private Stream GetFileWriter(string file, WaveFormat waveFormat, UserSettings settings)
         {
-            _currentFile = _fileManager.BuildFileName(_userSettings.OutputPath);
-            _currentFilePending = _fileManager.BuildSpytifyFileName(_currentFile);
-
-            if (_userSettings.MediaFormat.Equals(MediaFormat.Mp3))
+            switch (settings.MediaFormat)
             {
-                try
-                {
-                    return new LameMP3FileWriter(_currentFilePending, waveIn.WaveFormat, _userSettings.Bitrate);
-                }
-                catch (ArgumentException ex)
-                {
-                    var message = $"{FrmEspionSpotify.Rm.GetString($"logUnknownException")}: ${ex.Message}";
-
-                    if (!Directory.Exists(_userSettings.OutputPath))
+                case MediaFormat.Mp3:
+                    try
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logInvalidOutput");
+                        return new LameMP3FileWriter(file, waveFormat, settings.Bitrate);
                     }
-                    else if (ex.Message.StartsWith("Unsupported Sample Rate"))
+                    catch (ArgumentException ex)
                     {
-                        message = FrmEspionSpotify.Rm.GetString($"logUnsupportedRate");
+                        LogLameMP3FileWriterArgumentException(ex, settings.OutputPath);
+                        return null;
                     }
-                    else if (ex.Message.StartsWith("Access to the path"))
+                    catch (Exception ex)
                     {
-                        message = FrmEspionSpotify.Rm.GetString("logNoAccessOutput");
+                        LogLameMP3FileWriterException(ex);
+                        return null;
                     }
-                    else if (ex.Message.StartsWith("Unsupported number of channels"))
+                case MediaFormat.Wav:
+                    try
                     {
-                        var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
-                        var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
-                        numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
-                        message = String.Format(FrmEspionSpotify.Rm.GetString($"logUnsupportedNumberChannels"), numberOfChannels);
+                        return new WaveFileWriter(file, waveFormat);
                     }
-
-                    _form.WriteIntoConsole(message);
+                    catch (Exception ex)
+                    {
+                        _form.WriteIntoConsole("logUnknownException", ex.Message);
+                        Console.WriteLine(ex.Message);
+                        return null;
+                    }
+                default:
                     return null;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return null;
-                }
+            }
+        }
+
+        private async Task UpdateOutputFileBasedOnMediaFormat()
+        {
+            switch (_userSettings.MediaFormat)
+            {
+                case MediaFormat.Wav:
+                    _fileManager.Rename(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
+                    return;
+                case MediaFormat.Mp3:
+                    using (var reader = new WaveFileReader(_currentOutputFile.ToPendingFileString()))
+                    {
+                        using (var writer = GetFileWriter(_currentOutputFile.ToTranscodingToMP3String(), _waveIn.WaveFormat, _userSettings))
+                        {
+                            await reader.CopyToAsync(writer);
+                            await writer.FlushAsync();
+                        }
+                    }
+
+                    _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
+                    _fileManager.Rename(_currentOutputFile.ToTranscodingToMP3String(), _currentOutputFile.ToString());
+
+                    var mp3TagsInfo = new MediaTags.MP3Tags()
+                    {
+                        Track = _track,
+                        OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
+                        Count = _userSettings.OrderNumber,
+                        CurrentFile = _currentOutputFile.ToString()
+                    };
+                    await mp3TagsInfo.SaveMediaTags();
+
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private void LogLameMP3FileWriterArgumentException(ArgumentException ex, string outputPath)
+        {
+            var resource = "logUnknownException";
+            var args = ex.Message;
+
+            if (!Directory.Exists(outputPath))
+            {
+                resource = "logInvalidOutput";
+            }
+            else if (ex.Message.StartsWith("Unsupported Sample Rate"))
+            {
+                resource = "logUnsupportedRate";
+            }
+            else if (ex.Message.StartsWith("Access to the path"))
+            {
+                resource = "logNoAccessOutput";
+            }
+            else if (ex.Message.StartsWith("Unsupported number of channels"))
+            {
+                var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
+                var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
+                numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
+                resource = "logUnsupportedNumberChannels";
+                args = numberOfChannels;
             }
 
-            try
+            _form.WriteIntoConsole(resource, args);
+        }
+
+        private void LogLameMP3FileWriterException(Exception ex)
+        {
+            if (ex.Message.Contains("Unable to load DLL"))
             {
-                return new WaveFileWriter(_currentFilePending, waveIn.WaveFormat);
+                _form.WriteIntoConsole("logMissingDlls");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                _form.WriteIntoConsole("logUnknownException", ex.Message);
             }
+
+            Console.WriteLine(ex.Message);
         }
     }
 }

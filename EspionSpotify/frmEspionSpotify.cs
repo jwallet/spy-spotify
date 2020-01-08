@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Resources;
-using EspionSpotify.Ads;
 using System.Threading;
 using System.Windows.Forms;
 using EspionSpotify.Properties;
@@ -27,12 +26,12 @@ namespace EspionSpotify
     {
         private IMainAudioSession _audioSession;
         private Watcher _watcher;
-        private UserSettings _userSettings;
-        private Analytics _analytics;
+        private readonly UserSettings _userSettings;
+        private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
 
-        public static ResourceManager Rm;
-        public static FrmEspionSpotify Instance;
+        public ResourceManager Rm { get; private set; }
+        public static FrmEspionSpotify Instance { get; private set; }
 
         private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
 
@@ -46,13 +45,13 @@ namespace EspionSpotify
             _userSettings = new UserSettings();
             BackImage = Resources.spytify_logo;
 
-            if (Settings.Default.Directory.Equals(string.Empty))
+            if (string.IsNullOrEmpty(Settings.Default.Directory))
             {
                 Settings.Default.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 Settings.Default.Save();
             }
 
-            if (Settings.Default.AnalyticsCID.Equals(string.Empty))
+            if (string.IsNullOrEmpty(Settings.Default.AnalyticsCID))
             {
                 Settings.Default.AnalyticsCID = Analytics.GenerateCID();
                 Settings.Default.Save();
@@ -83,7 +82,6 @@ namespace EspionSpotify
             tgNumFiles.Checked = Settings.Default.OrderNumberInfrontOfFileEnabled;
             tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
             txtPath.Text = Settings.Default.Directory;
-            tgDisableAds.Checked = ManageHosts.AreAdsDisabled(ManageHosts.HostsSystemPath);
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
@@ -124,7 +122,7 @@ namespace EspionSpotify
 
             ResumeLayout();
 
-            GitHub.GetVersion();
+            GitHub.GetVersion(this);
         }
 
         private void UpdateAudioEndPointFields()
@@ -161,63 +159,45 @@ namespace EspionSpotify
 
         private void SetLanguage(LanguageType languageType)
         {
-            var rmLanguage = Translations.Languages.availableResourcesManager.Where(x => x.Key.Equals(languageType)).Select(x => x.Value).FirstOrDefault();
+            var rmLanguage = Translations.Languages.getResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
-            tabRecord.Text = Rm.GetString($"tabRecord");
-            tabSettings.Text = Rm.GetString($"tabSettings");
-            tabAdvanced.Text = Rm.GetString($"tabAdvanced");
-            tabFAQ.Text = Rm.GetString($"tabFAQ");
+            tabRecord.Text = Rm.GetString(TranslationKeys.tabRecord);
+            tabSettings.Text = Rm.GetString(TranslationKeys.tabSettings);
+            tabAdvanced.Text = Rm.GetString(TranslationKeys.tabAdvanced);
 
-            lblPath.Text = Rm.GetString($"lblPath");
-            lblAudioDevice.Text = Rm.GetString($"lblAudioDevice");
-            lblBitRate.Text = Rm.GetString($"lblBitRate");
-            lblFormat.Text = Rm.GetString($"lblFormat");
-            lblMinLength.Text = Rm.GetString($"lblMinLength");
-            lblLanguage.Text = Rm.GetString($"lblLanguage");
-            lblAddFolders.Text = Rm.GetString($"lblAddFolders");
-            lblAddSeparators.Text = Rm.GetString($"lblAddSeparators");
-            lblNumFiles.Text = Rm.GetString($"lblNumFiles");
-            lblNumTracks.Text = Rm.GetString($"lblNumTracks");
-            lblEndingSongDelay.Text = Rm.GetString($"lblEndingSongDelay");
-            lblRecordingNum.Text = Rm.GetString($"lblRecordingNum");
-            lblAds.Text = Rm.GetString($"lblAds");
-            lblDisableAds.Text = Rm.GetString($"lblDisableAds");
-            lblMuteAds.Text = Rm.GetString($"lblMuteAds");
-            lblSpy.Text = Rm.GetString($"lblSpy");
-            lblRecorder.Text = Rm.GetString($"lblRecorder");
-            lblRecordUnknownTrackType.Text = Rm.GetString($"lblRecordUnknownTrackType");
-            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString($"lblDuplicateAlreadyRecordedTrack");
-            lblRecordingTimer.Text = Rm.GetString($"lblRecordingTimer");
+            lblPath.Text = Rm.GetString(TranslationKeys.lblPath);
+            lblAudioDevice.Text = Rm.GetString(TranslationKeys.lblAudioDevice);
+            lblBitRate.Text = Rm.GetString(TranslationKeys.lblBitRate);
+            lblFormat.Text = Rm.GetString(TranslationKeys.lblFormat);
+            lblMinLength.Text = Rm.GetString(TranslationKeys.lblMinLength);
+            lblLanguage.Text = Rm.GetString(TranslationKeys.lblLanguage);
+            lblAddFolders.Text = Rm.GetString(TranslationKeys.lblAddFolders);
+            lblAddSeparators.Text = Rm.GetString(TranslationKeys.lblAddSeparators);
+            lblNumFiles.Text = Rm.GetString(TranslationKeys.lblNumFiles);
+            lblNumTracks.Text = Rm.GetString(TranslationKeys.lblNumTracks);
+            lblEndingSongDelay.Text = Rm.GetString(TranslationKeys.lblEndingSongDelay);
+            lblRecordingNum.Text = Rm.GetString(TranslationKeys.lblRecordingNum);
+            lblAds.Text = Rm.GetString(TranslationKeys.lblAds);
+            lblMuteAds.Text = Rm.GetString(TranslationKeys.lblMuteAds);
+            lblSpy.Text = Rm.GetString(TranslationKeys.lblSpy);
+            lblRecorder.Text = Rm.GetString(TranslationKeys.lblRecorder);
+            lblRecordUnknownTrackType.Text = Rm.GetString(TranslationKeys.lblRecordUnknownTrackType);
+            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString(TranslationKeys.lblDuplicateAlreadyRecordedTrack);
+            lblRecordingTimer.Text = Rm.GetString(TranslationKeys.lblRecordingTimer);
 
-            tlSpotifyTrackCut.Text = Rm.GetString($"tlSpotifyTrackCut");
-            lblSpotifyTrackCut.Text = Rm.GetString($"lblSpotifyTrackCut");
-            tlAdsPlayAndStop.Text = Rm.GetString($"tlAdsPlayAndStop");
-            lblAdsPlayAndStop.Text = Rm.GetString($"lblAdsPlayAndStop");
-            tlAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"tlAdAndTrackOverlapOnRecordedTrack");
-            lblAdAndTrackOverlapOnRecordedTrack.Text = Rm.GetString($"lblAdAndTrackOverlapOnRecordedTrack");
-            tlBackgroundNoiceRecordedOnTrack.Text = Rm.GetString($"tlBackgroundNoiceRecordedOnTrack");
-            lblBackgroundNoiceRecordedOnTrackFirst.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_first");
-            lblBackgroundNoiceRecordedOnTrackSecond.Text = Rm.GetString($"lblBackgroundNoiceRecordedOnTrack_second");
-            tlTrackDetectedAsAd.Text = Rm.GetString($"tlTrackDetectedAsAd");
-            lblTrackDetectedAsAd.Text = Rm.GetString($"lblTrackDetectedAsAd");
-            tlSpotifyLostFeatures.Text = Rm.GetString($"tlSpotifyLostFeatures");
-            lblSpotifyLostFeatures.Text = Rm.GetString($"lblSpotifyLostFeatures");
-            tlSpotifyAudioEndpoint.Text = Rm.GetString($"tlSpotifyAudioEndpoint");
-            lblSpotifyAudioEndpoint.Text = Rm.GetString($"lblSpotifyAudioEndpoint");
-
-            tip.SetToolTip(lnkClear, Rm.GetString($"tipClear"));
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
-            tip.SetToolTip(lnkDirectory, Rm.GetString($"tipDirectory"));
-            tip.SetToolTip(lnkPath, Rm.GetString($"tipPath"));
-            tip.SetToolTip(lnkRelease, Rm.GetString($"tipRelease"));
+            tip.SetToolTip(lnkClear, Rm.GetString(TranslationKeys.tipClear));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
+            tip.SetToolTip(lnkDirectory, Rm.GetString(TranslationKeys.tipDirectory));
+            tip.SetToolTip(lnkPath, Rm.GetString(TranslationKeys.tipPath));
+            tip.SetToolTip(lnkRelease, Rm.GetString(TranslationKeys.tipRelease));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, Rm.GetString($"cbOptBitRate128")},
-                {LAMEPreset.ABR_160, string.Format(Rm.GetString($"cbOptBitRateSpotifyFree") ?? "{0}", Rm.GetString($"cbOptBitRate160"))},
-                {LAMEPreset.ABR_256, Rm.GetString($"cbOptBitRate256")},
-                {LAMEPreset.ABR_320, string.Format(Rm.GetString($"cbOptBitRateSpotifyPremium") ?? "{0}", Rm.GetString($"cbOptBitRate320"))}
+                {LAMEPreset.ABR_128, Rm.GetString(TranslationKeys.cbOptBitRate128)},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate160))},
+                {LAMEPreset.ABR_256, Rm.GetString(TranslationKeys.cbOptBitRate256)},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate320))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
@@ -246,7 +226,7 @@ namespace EspionSpotify
                 return;
             }
 
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStartSpying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
             lnkSpy.Image = Resources.on;
             lnkSpy.Focus();
         }
@@ -287,44 +267,69 @@ namespace EspionSpotify
             lblPlayingTitle.Text = text;
         }
 
-        public void WriteIntoConsole(string text)
+        public void UpdateRecordedTime(int? time)
         {
-            if (rtbLog.InvokeRequired)
+            if (lblRecordedTime.InvokeRequired)
             {
-                BeginInvoke(new Action(() => WriteIntoConsole(text)));
+                BeginInvoke(new Action(() => UpdateRecordedTime(time)));
                 return;
             }
 
-            if (text != null)
+            lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "";
+        }
+
+        private string WriteRtbLine(RichTextBox rtbLog, string text)
+        {
+            var log = "";
+
+            if (text == null) return log;
+             
+            var timeStr = LogDate;
+            var indexOfColon = text.IndexOf(':');
+            var alert = text[0] == '/' || indexOfColon == -1;
+
+            rtbLog.AppendText(timeStr);
+
+            if (!alert)
             {
-                var timeStr = LogDate;
-                var alert = text[0] == '/';
-                
-                rtbLog.AppendText(timeStr);
-                if (!alert)
-                {
-                    var indexOfColon = text.IndexOf(':');
-                    var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
-                    var attrb = text.Substring(0, indexOfColon);
-                    var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
-                    rtbLog.AppendText(attrb);
-                    rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
-                    rtbLog.SelectionColor = Color.White;
-                    rtbLog.AppendText(msg + Environment.NewLine);
-                    rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                    rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
+                var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
+                var attrb = text.Substring(0, indexOfColon);
+                var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
+                rtbLog.AppendText(attrb);
+                rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
+                rtbLog.SelectionColor = Color.White;
+                rtbLog.AppendText(msg + Environment.NewLine);
+                rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
+                rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
 
-                    Settings.Default.Logs += $";{LogDate}{attrb}{msg}";
-                }
-                else
-                {
-                    rtbLog.AppendText(text + Environment.NewLine);
-                }
+                log = $";{timeStr}{attrb}{msg}";
+            }
+            else
+            {
+                rtbLog.AppendText(text + Environment.NewLine);
+            }
 
+            rtbLog.SelectionStart = rtbLog.TextLength;
+            rtbLog.ScrollToCaret();
+
+            return log;
+        }
+
+        public void WriteIntoConsole(string resource, params object[] args)
+        {
+            if (rtbLog.InvokeRequired)
+            {
+                BeginInvoke(new Action(() => WriteIntoConsole(resource, args)));
+                return;
+            }
+
+            var formatted = string.Format(Rm.GetString(resource), args);
+            var log = WriteRtbLine(rtbLog, formatted);
+
+            if (!string.IsNullOrEmpty(log))
+            {
+                Settings.Default.Logs += $";{log}";
                 Settings.Default.Save();
-
-                rtbLog.SelectionStart = rtbLog.TextLength;
-                rtbLog.ScrollToCaret();
             }
         }
 
@@ -337,7 +342,7 @@ namespace EspionSpotify
                 rtbLog.AppendText(log + Environment.NewLine);
             }
 
-            rtbLog.AppendText(LogDate + Rm.GetString($"logPreviousLogs") + Environment.NewLine + Environment.NewLine);
+            rtbLog.AppendText(LogDate + Rm.GetString(TranslationKeys.logPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
@@ -347,10 +352,10 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherThread = new Thread(async () => await _watcher.Run());
-            watcherThread.Start();
+            var watcherTask = new Task(async () => await _watcher.Run());
+            watcherTask.Start();
 
-            tip.SetToolTip(lnkSpy, Rm.GetString($"tipStopSying"));
+            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStopSying));
             tlSettings.Enabled = false;
             tlAdvanced.Enabled = false;
             timer1.Start();
@@ -376,8 +381,8 @@ namespace EspionSpotify
             if (Directory.Exists(_userSettings.OutputPath)) return true;
 
             MetroMessageBox.Show(this,
-                Rm.GetString($"msgBodyPathNotFound"),
-                Rm.GetString($"msgTitlePathNotFound"),
+                Rm.GetString(TranslationKeys.msgBodyPathNotFound),
+                Rm.GetString(TranslationKeys.msgTitlePathNotFound),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -455,31 +460,6 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"record-unknown-type?enabled={tgRecordUnkownTrackType.Checked}"));
         }
 
-        private void TgDisableAds_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!ManageSpotifyAds(tgDisableAds.Checked)) return;
-
-            Settings.Default.DisableAds = tgDisableAds.Checked;
-            Settings.Default.Save();
-        }
-
-        private void TgDisableAds_Click(object sender, EventArgs e)
-        {
-            Task.Run(async () => await _analytics.LogAction($"disable-ads?enabled={tgDisableAds.Checked}"));
-
-            if (Administrator.EnsureAdmin())
-            {
-                if (tgDisableAds.Checked && MetroMessageBox.Show(this,
-                    Rm.GetString($"msgBodyDisableAds"),
-                    Rm.GetString($"msgTitleDisableAds"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Question) == DialogResult.OK) return;
-                return;
-            }
-
-            tgDisableAds.Checked = !tgDisableAds.Checked;
-        }
-
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
         {
             _userSettings.MuteAdsEnabled = tgMuteAds.Checked;
@@ -541,8 +521,8 @@ namespace EspionSpotify
             if (Watcher.Ready || !Watcher.Running) return;
             e.Cancel = true;
             if (MetroMessageBox.Show(this,
-                    Rm.GetString($"msgBodyCantQuit"),
-                    Rm.GetString($"msgTitleCantQuit"),
+                    Rm.GetString(TranslationKeys.msgBodyCantQuit),
+                    Rm.GetString(TranslationKeys.msgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             Watcher.Running = false;
@@ -553,7 +533,7 @@ namespace EspionSpotify
 
         private void LnkPath_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog.SelectedPath = txtPath.Text.Equals(string.Empty)
+            folderBrowserDialog.SelectedPath = string.IsNullOrEmpty(txtPath.Text)
                 ? Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
                 : Path.GetDirectoryName(txtPath.Text);
 
@@ -678,13 +658,6 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab}"));
         }
 
-        private static bool ManageSpotifyAds(bool isToggled)
-        {
-            return isToggled
-                ? ManageHosts.DisableAds(ManageHosts.HostsSystemPath)
-                : ManageHosts.EnableAds(ManageHosts.HostsSystemPath);
-        }
-
         private void ShowHideLabel(Label label)
         {
             if (label.Visible)
@@ -697,74 +670,6 @@ namespace EspionSpotify
             }
         }
 
-        private void TlTrackDetectedAsAd_Leave(object sender, EventArgs e)
-        {
-            lblTrackDetectedAsAd.Hide();
-        }
-
-        private void TlTrackDetectedAsAd_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblTrackDetectedAsAd);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=track-detected-as-ad"));
-        }
-
-        private void TlBackgroundNoiceRecordedOnTrack_Leave(object sender, EventArgs e)
-        {
-            lblBackgroundNoiceRecordedOnTrackFirst.Hide();
-            lblBackgroundNoiceRecordedOnTrackSecond.Hide();
-        }
-
-        private void TlBackgroundNoiceRecordedOnTrack_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackFirst);
-            ShowHideLabel(lblBackgroundNoiceRecordedOnTrackSecond);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=background-noice-recorded-on-track"));
-        }
-
-        private void TlAdAndTrackOverlapOnRecordedTrack_Leave(object sender, EventArgs e)
-        {
-            lblAdAndTrackOverlapOnRecordedTrack.Hide();
-        }
-
-        private void TlAdAndTrackOverlapOnRecordedTrack_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblAdAndTrackOverlapOnRecordedTrack);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=ad-and-track-overlap"));
-        }
-
-        private void TlAdsPlayAndStop_Leave(object sender, EventArgs e)
-        {
-            lblAdsPlayAndStop.Hide();
-        }
-
-        private void TlAdsPlayAndStop_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblAdsPlayAndStop);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=ads-play-and-stop"));
-        }
-
-        private void TlSpotifyTrackCut_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyTrackCut.Hide();
-        }
-
-        private void TlSpotifyTrackCut_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyTrackCut);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-track-cut"));
-        }
-
-        private void TlSpotifyLostFeatures_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyLostFeatures.Hide();
-        }
-
-        private void TlSpotifyLostFeatures_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyLostFeatures);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-lost-features"));
-        }
-
         private void LnkRelease_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/jwallet/spy-spotify/releases/latest");
@@ -773,17 +678,6 @@ namespace EspionSpotify
         private void TxtRecordingTimer_Leave(object sender, EventArgs e)
         {
             _userSettings.RecordingTimer = txtRecordingTimer.Text;
-        }
-
-        private void TlSpotifyAudioEndpoint_Click(object sender, EventArgs e)
-        {
-            ShowHideLabel(lblSpotifyAudioEndpoint);
-            Task.Run(async () => await _analytics.LogAction($"faq?selected=spotify-audio-endpoint"));
-        }
-
-        private void TlSpotifyAudioEndpoint_Leave(object sender, EventArgs e)
-        {
-            lblSpotifyAudioEndpoint.Hide();
         }
 
         private void TxtRecordingNum_Leave(object sender, EventArgs e)

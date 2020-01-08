@@ -9,7 +9,7 @@ namespace EspionSpotify.Tests
     public class SpotifyHandlerTests
     {
         [Fact]
-        private void SpotifyHandler_ReturnsSpotifyProcess()
+        internal void SpotifyHandler_ReturnsSpotifyProcess()
         {
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
 
@@ -23,7 +23,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void Dispose_ReturnsTimerOff()
+        internal void Dispose_ReturnsTimerOff()
         {
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
 
@@ -35,16 +35,16 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void TickEventSpotifyIdling_ReturnsNoEvent()
+        internal async void TickEventSpotifyIdling_ReturnsNoEvent()
         {
             var track = new Track();
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
+            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(track));
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
@@ -88,7 +88,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void NewTrack_ReturnsAllEvents()
+        internal async void NewTrack_ReturnsAllEvents()
         {
             var previousTrack = new Track();
             var currentTrack = new Track
@@ -102,10 +102,10 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(currentTrack);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(currentTrack);
+            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(currentTrack));
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
@@ -149,7 +149,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void TickEventSameTrackPlaying_ReturnsTrackTimeEvent()
+        internal async void TickEventSameTrackPlaying_ReturnsTrackTimeEvent()
         {
             var track = new Track
             {
@@ -162,10 +162,10 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
+            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(track));
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(spotifyStatusMock.Object);
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {

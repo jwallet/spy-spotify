@@ -8,9 +8,9 @@ namespace EspionSpotify.AudioSessions
     {
         ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
         void SleepWhileTheSongEnds();
-        bool IsSpotifyCurrentlyPlaying();
+        Task<bool> IsSpotifyCurrentlyPlaying();
         void SetSpotifyToMute(bool mute);
-        bool WaitSpotifyAudioSessionToStart(ref bool running);
+        Task<bool> WaitSpotifyAudioSessionToStart(bool running);
         void SetSpotifyVolumeToHighAndOthersToMute(bool mute = false);
     }
 }

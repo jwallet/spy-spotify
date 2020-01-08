@@ -6,7 +6,7 @@ namespace EspionSpotify.Tests
     public class TrackTests
     {
         [Fact]
-        private void DefaultTrack_ReturnsEmptyTrack()
+        internal void DefaultTrack_ReturnsEmptyTrack()
         {
             var track = new Track();
 
@@ -15,7 +15,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void MinimalTrack_ReturnsBasicInfo()
+        internal void MinimalTrack_ReturnsBasicInfo()
         {
             var track = new Track
             {
@@ -32,7 +32,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private async void TrackWithArtsLinks_ReturnsArtsData()
+        internal async void TrackWithArtsLinks_ReturnsArtsData()
         {
             var link = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spytify-espion-spotify-logo-small.png";
 
@@ -56,7 +56,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        private void TrackWithInitialTrack_ReturnsUpdatedTrack()
+        internal void TrackWithInitialTrack_ReturnsUpdatedTrack()
         {
             var initialTrack = new Track
             {

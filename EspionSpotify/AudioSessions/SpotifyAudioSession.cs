@@ -13,7 +13,7 @@ namespace EspionSpotify.AudioSessions
         private const int SLEEP_VALUE = 50;
         private const int NUMBER_OF_SAMPLES = 3;
 
-        private Process _spytifyProcess;
+        private readonly Process _spytifyProcess;
         private readonly ICollection<int> _spotifyProcessesIds;
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; }
 
@@ -24,30 +24,30 @@ namespace EspionSpotify.AudioSessions
         {
             AudioEndPointDeviceIndex = audioEndPointDeviceIndex;
 
-            var aMmDevices = new MMDeviceEnumerator();
-            UpdateAudioEndPointDevices(aMmDevices);
+            AudioMMDevices = new MMDeviceEnumerator();
+            UpdateAudioEndPointDevices();
 
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).ToList();
             _spytifyProcess = Process.GetCurrentProcess();
             SpotifyAudioSessionControls = new List<AudioSessionControl>();
         }
 
-        public void SleepWhileTheSongEnds()
+        public async void SleepWhileTheSongEnds()
         {
-            for (var times = 1000; IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
+            for (var times = 1000; await IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
             {
-                Thread.Sleep(SLEEP_VALUE);
+                await Task.Delay(SLEEP_VALUE);
             }
         }
 
-        public bool IsSpotifyCurrentlyPlaying()
+        public async Task<bool> IsSpotifyCurrentlyPlaying()
         {
             var samples = new List<double>();
 
             for (var sample = 0; sample < NUMBER_OF_SAMPLES; sample++)
             {
                 var spotifySoundValue = 0.0;
-                Thread.Sleep(SLEEP_VALUE);
+                await Task.Delay(SLEEP_VALUE);
 
                 lock (SpotifyAudioSessionControls)
                 {
@@ -77,9 +77,9 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
-        public bool WaitSpotifyAudioSessionToStart(ref bool running)
+        public async Task<bool> WaitSpotifyAudioSessionToStart(bool running)
         {
-            if (IsSpotifyPlayingOutsideDefaultAudioEndPoint(ref running))
+            if (await IsSpotifyPlayingOutsideDefaultAudioEndPoint(running))
             {
                 return false;
             }
@@ -125,7 +125,7 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
-        private bool IsSpotifyPlayingOutsideDefaultAudioEndPoint(ref bool running)
+        private async Task<bool> IsSpotifyPlayingOutsideDefaultAudioEndPoint(bool running)
         {
             int? spotifyAudioSessionProcessId = null;
 
@@ -145,8 +145,9 @@ namespace EspionSpotify.AudioSessions
                     }
                 }
 
-                UpdateAudioEndPointDevices(new MMDeviceEnumerator());
-                Thread.Sleep(300);
+                AudioMMDevices = new MMDeviceEnumerator();
+                UpdateAudioEndPointDevices();
+                await Task.Delay(300);
             }
 
             var sessionAudioSelectedEndPointDevice = GetSessionsAudioEndPointDevice;

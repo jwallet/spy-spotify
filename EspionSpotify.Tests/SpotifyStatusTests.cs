@@ -1,18 +1,29 @@
 ﻿using EspionSpotify.Models;
 using EspionSpotify.Spotify;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EspionSpotify.Tests
 {
     public class SpotifyStatusTests
     {
+        [Theory]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        [InlineData("Artist Name - Song Title", false)]
+        [InlineData("Spotify Ad", false)]
+        [InlineData("Spotify", true)]
+        [InlineData("SPOTIFY", true)]
+        [InlineData("spotify", true)]
+        [InlineData("Spotify Free", true)]
+        internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
+        {
+            var actual = SpotifyStatus.WindowTitleIsSpotify(value);
+
+            Assert.Equal(expected, actual);
+        }
+
         [Fact]
-        private void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
+        internal void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
         {
             var expectedTrack = new Track
             {
@@ -33,7 +44,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData("Artist Name - Song Title", false)]
         [InlineData("Artist Name - Song Title - Live", true)]
-        private void SpotifyStatusTrackPlaying_ReturnsExpectingTrack(string windowTitle, bool isTitleExtended)
+        internal void SpotifyStatusTrackPlaying_ReturnsExpectingTrack(string windowTitle, bool isTitleExtended)
         {
             var expectedTrack = new Track
             {
@@ -59,7 +70,7 @@ namespace EspionSpotify.Tests
         [InlineData("Spotify")]
         [InlineData("Spotify Sponsor")]
         [InlineData("PODCAST #1337: DAILY NEWS")]
-        private void SpotifyStatusSpotifyPlayingAdOrUnknown_ReturnsExpectingTrack(string windowTitle)
+        internal void SpotifyStatusSpotifyPlayingAdOrUnknown_ReturnsExpectingTrack(string windowTitle)
         {
             var expectedTrack = new Track
             {

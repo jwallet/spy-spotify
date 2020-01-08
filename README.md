@@ -9,9 +9,7 @@
 <a href="https://www.reddit.com/r/spytify">
    ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=r%2Fspytify)
 </a>
-<a title="Like Spytify? Get me a beer :)" href="https://beerpay.io/jwallet/spy-spotify">
-<img src="https://github.com/jwallet/spy-spotify/blob/gh-pages/assets/images/beerpaybuck.svg" />
-</a>
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/spytify?locale.x=en_US)
 
 Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.
 
@@ -65,8 +63,7 @@ You can help translate Spytify on Zanata.org, see [Translate](translate.md) for 
 ## Download
 ### [Download](https://github.com/jwallet/spy-spotify/releases)
 
-## Support on Beerpay
-If you like Spytify, you can help me out for a couple of :beers:!   
-Also, you can make me work on a feature if you Make a wish - [see details](https://beerpay.io/faqs)
+## Support on Paypal
+😃 If you like Spytify, you can help me out for a [couple of beers](https://paypal.me/spytify?locale.x=en_US) 🍺.
 
-<a title="Like Spytify? Get me a beer :)" href="https://beerpay.io/jwallet/spy-spotify"><img src="https://github.com/jwallet/spy-spotify/blob/gh-pages/assets/images/beerpaybadge.svg" /></a> [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/spytify?locale.x=en_US)

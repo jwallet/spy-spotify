@@ -9,7 +9,7 @@ using PCLWebUtility;
 
 namespace EspionSpotify.MediaTags
 {
-    public class LastFMAPI: IExternalAPI
+    public class LastFMAPI: ILastFMAPI, IExternalAPI
     {
         private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly string[] _apiKey;
@@ -69,7 +69,7 @@ namespace EspionSpotify.MediaTags
             return true;
         }
 
-        private void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
+        public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
         {
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
