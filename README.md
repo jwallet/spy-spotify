@@ -19,7 +19,7 @@ Spytify runs on Windows only. Requirements:
 
 A __free Spotify account will work__, but restricts audio quality to 120 kbps. Having a Premium Spotify subsciption will enable recording of up to 320 kbps audio.
 
-<p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/ui_record.png" /></p>
+<p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_record.png" /></p>
 
 ## How it works
 Spytify records what your computer's sound card outputs. Spytify records the same quality that Spotify outputs, so the recorded version will be indistinguishable from Spotify's version. Spytify records at .mp3 quality, and not at higher qualities like .FLAC, since Spotify can only deliver 320 kbps audio quality.
@@ -28,10 +28,10 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 
 || Feature | Description |
 | - | :-: | :- |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_no_ad.png" /> | __No Ads__ | Doesn't record ads and has an option to disable audio ads completely |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_mute_apps.png" /> | __Mutes Other Apps__ | Mutes any other applications while spying |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_audio_quality.png" /> | __Great Audio Quality__ | Gets and records with the same great audio quality than Spotify |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/feature_max_out.png" /> | __Normalize volume__ | Max out the volume of your Spotify audio session to records all song at the same volume level delivered by Spotify |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_no_ad.png" /> | __No Ads__ | Doesn't record ads and has an option to disable audio ads completely |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_mute_apps.png" /> | __Mutes Other Apps__ | Mutes any other applications while spying |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /> | __Great Audio Quality__ | Gets and records with the same great audio quality than Spotify |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_max_out.png" /> | __Normalize volume__ | Max out the volume of your Spotify audio session to records all song at the same volume level delivered by Spotify |
 
 ## File features
 - Splits your recording session into individual tracks formatted using the Artist and Song Title, like so:
@@ -46,7 +46,7 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
    - Album Art Cover
    - Genre
 
-<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/assets/images/saved_songs_list.png" /></p>
+<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/saved_songs_list.png" /></p>
 
 
 ## Dependencies
@@ -54,7 +54,7 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 - Newtonsoft.Json
 - NAudio.Lame
 - last.fm API
-- Spotify API (see your `Spytify.exe.config` file)
+- Spotify API (see your `Spytify.exe.config` [L.78@88](https://github.com/jwallet/spy-spotify/blob/327e8d0fc1bb7281b302f6bcba973d5b3c0a2fd9/EspionSpotify/App.config) file)
 - taglib
 
 ## Translate
