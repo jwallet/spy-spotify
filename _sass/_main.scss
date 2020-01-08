@@ -432,6 +432,23 @@ a {
   margin-top: 2rem;
   border-top: solid 1px $hr-border-color;
 
+  &-badges a:hover {
+    text-decoration: none;
+  }
+  &-owner {
+    display: block;
+    font-weight: bold;
+  }
+  &-credits {
+    display: block;
+    color: $blockquote-text-color;
+  }
+  &-github {
+    display: block;
+    width: 20rem;
+    height: 3rem;
+  }
+
   @include large {
     font-size: 1rem;
   }
@@ -443,20 +460,4 @@ a {
   @include small {
     font-size: 0.9rem;
   }
-}
-
-.site-footer-owner {
-  display: block;
-  font-weight: bold;
-}
-
-.site-footer-credits {
-  display: block;
-  color: $blockquote-text-color;
-}
-
-.site-footer-github {
-  width: 20rem;
-  height: 3rem;
-  display: block;
 }

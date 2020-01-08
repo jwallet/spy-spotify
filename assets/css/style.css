@@ -219,16 +219,18 @@ a:hover { text-decoration: underline; }
 
 .site-footer { padding-top: 2rem; margin-top: 2rem; border-top: solid 1px #BBB; }
 
-@media screen and (min-width: 64em) { .site-footer { font-size: 1rem; } }
-
-@media screen and (min-width: 42em) and (max-width: 64em) { .site-footer { font-size: 1rem; } }
-
-@media screen and (max-width: 42em) { .site-footer { font-size: 0.9rem; } }
+.site-footer-badges a:hover { text-decoration: none; }
 
 .site-footer-owner { display: block; font-weight: bold; }
 
 .site-footer-credits { display: block; color: #777; }
 
-.site-footer-github { width: 20rem; height: 3rem; display: block; }
+.site-footer-github { display: block; width: 20rem; height: 3rem; }
+
+@media screen and (min-width: 64em) { .site-footer { font-size: 1rem; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) { .site-footer { font-size: 1rem; } }
+
+@media screen and (max-width: 42em) { .site-footer { font-size: 0.9rem; } }
 
 /*# sourceMappingURL=style.css.map */

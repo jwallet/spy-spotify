@@ -10,7 +10,7 @@ Spytify records what your computer’s sound card outputs. Spytify records the s
     <audio
         controls
         src="./assets/audio/sample.mp3">
-            Your browser does not support the <code>audio</code> element.
+            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
     </audio>
 </figure>
 
