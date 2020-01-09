@@ -50,13 +50,14 @@
       {{ content }}
 
       <footer class="site-footer">
-        <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">
-          <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
-        </a>
-        <a href="{{ site.reddit_url }}" aria-label="Go to Spytify Sub Reddit">
-          <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
-        </a>
-
+        <span class="site-footer-badges">
+          <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">
+            <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+          </a>
+          <a href="{{ site.reddit_url }}" aria-label="Go to Spytify Sub Reddit">
+            <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+          </a>
+        </span>
         <span class="site-footer-owner">
           <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">{{ site.github.repository_name | default: site.project_name }}</a>
            {% t GLOBAL.MAINTAINED_BY %} 

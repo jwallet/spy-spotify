@@ -10,7 +10,7 @@ Spytify enregistre ce que votre carte de son de votre ordinateur produit. Spytif
     <audio
         controls
         src="./assets/audio/sample.mp3">
-            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+            <code>Votre navigateur ne supporte pas l'élément <kbd>audio</kbd></code>.
     </audio>
 </figure>
 
