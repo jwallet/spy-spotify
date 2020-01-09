@@ -24,15 +24,6 @@ A __free Spotify account will work__, but restricts audio quality to 120 kbps. H
 ## How it works
 Spytify records what your computer's sound card outputs. Spytify records the same quality that Spotify outputs, so the recorded version will be indistinguishable from Spotify's version. Spytify records at .mp3 quality, and not at higher qualities like .FLAC, since Spotify can only deliver 320 kbps audio quality.
 
-<figure>
-    <figcaption>Listen to an mp3 sample at 120kbp/s:</figcaption>
-    <audio
-        controls
-        src="./assets/audio/sample.mp3">
-            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-    </audio>
-</figure>
-
 ## App features
 
 || Feature | Description |
