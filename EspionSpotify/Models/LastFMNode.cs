@@ -121,7 +121,8 @@ namespace EspionSpotify.Models
     {
         [XmlAttribute(AttributeName = "status")]
         public string StatusMessage { get; set; }
-
+        [XmlElement(ElementName = "track")]
+        public LastFMTrack Track { get; set; }
         [XmlElement(ElementName = "error")]
         public Error Error { get; set; }
 

@@ -32,7 +32,8 @@ namespace EspionSpotify.MediaTags
 
             try
             {
-                api.Load(ApiUrl(apiKey, artist, title));
+                var url = ApiUrl(apiKey, artist, title);
+                api.Load(url);
             }
             catch (Exception ex)
             {
@@ -54,7 +55,7 @@ namespace EspionSpotify.MediaTags
 
             if (node.Status != Enums.LastFMNodeStatus.ok) return false;
 
-            var trackExtra = new LastFMTrack();
+            var trackExtra = node.Track;
 
             if (trackExtra != null && trackExtra.Album != null)
             {
