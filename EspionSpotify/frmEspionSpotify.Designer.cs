@@ -1341,6 +1341,7 @@ namespace EspionSpotify
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(780, 420);
             this.Name = "FrmEspionSpotify";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Style = MetroFramework.MetroColorStyle.Green;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
