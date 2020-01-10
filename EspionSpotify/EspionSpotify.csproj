@@ -169,6 +169,7 @@
     <Compile Include="Controls\MetroTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Enums\LastFMNodeStatus.cs" />
     <Compile Include="Enums\AlbumCoverSize.cs" />
     <Compile Include="Enums\MediaFormat.cs" />
     <Compile Include="Enums\TranslationKeys.cs" />
@@ -205,7 +206,7 @@
     <Compile Include="Models\GitHub\Asset.cs" />
     <Compile Include="Models\GitHub\Release.cs" />
     <Compile Include="Models\GitHub\User.cs" />
-    <Compile Include="Models\LastFMTrack.cs" />
+    <Compile Include="Models\LastFMNode.cs" />
     <Compile Include="IRecorder.cs" />
     <Compile Include="Spotify\ISpotifyHandler.cs" />
     <Compile Include="Spotify\ISpotifyStatus.cs" />

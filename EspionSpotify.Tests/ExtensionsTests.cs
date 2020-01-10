@@ -60,6 +60,20 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
+        [InlineData(null, null)]
+        [InlineData("", null)]
+        [InlineData("success",null)]
+        [InlineData("failed", LastFMNodeStatus.failed)]
+        [InlineData("FAILED", LastFMNodeStatus.failed)]
+        [InlineData("Ok", LastFMNodeStatus.ok)]
+        [InlineData("ok", LastFMNodeStatus.ok)]
+        internal void StringToLastFMNodeStatus_ReturnsExpectedStatus(string value, LastFMNodeStatus? expected)
+        {
+            var actual = value.ToLastFMNodeStatus();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
         [InlineData(null, "")]
         [InlineData(" ", "")]
         [InlineData("v1", "1")]
