@@ -80,7 +80,6 @@ namespace EspionSpotify.Models
         public List<Tag> Tag { get; set; }
     }
 
-    [Serializable()]
     [XmlRoot(ElementName = "track")]
     public class LastFMTrack
     {
@@ -105,5 +104,27 @@ namespace EspionSpotify.Models
         public Album Album { get; set; }
         [XmlElement(ElementName = "toptags")]
         public Toptags Toptags { get; set; }
+    }
+
+    [XmlRoot(ElementName = "error")]
+    public class Error
+    {
+        [XmlText]
+        public string Message { get; set; }
+        [XmlAttribute(AttributeName = "code")]
+        public string Code { get; set; }
+    }
+
+    [Serializable()]
+    [XmlRoot(ElementName = "lfm")]
+    public class LastFMNode
+    {
+        [XmlAttribute(AttributeName = "status")]
+        public string StatusMessage { get; set; }
+
+        [XmlElement(ElementName = "error")]
+        public Error Error { get; set; }
+
+        public LastFMNodeStatus? Status => StatusMessage.ToLastFMNodeStatus();
     }
 }

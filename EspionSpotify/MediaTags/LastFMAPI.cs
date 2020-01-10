@@ -47,10 +47,14 @@ namespace EspionSpotify.MediaTags
                 return false;   
             }
 
-            var serializer = new XmlSerializer(typeof(LastFMTrack));
-            var node = apiReturn.SelectSingleNode("/lfm/track");
+            var serializer = new XmlSerializer(typeof(LastFMNode));
+            var xmlNode = apiReturn.SelectSingleNode("/lfm");
 
-            var trackExtra = serializer.Deserialize(new XmlNodeReader(node)) as LastFMTrack;
+            var node = serializer.Deserialize(new XmlNodeReader(xmlNode)) as LastFMNode;
+
+            if (node.Status != Enums.LastFMNodeStatus.ok) return false;
+
+            var trackExtra = new LastFMTrack();
 
             if (trackExtra != null && trackExtra.Album != null)
             {

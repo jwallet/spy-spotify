@@ -15,6 +15,11 @@ namespace EspionSpotify.Extensions
             return value.ToEnum<AlbumCoverSize>(ignoreCase: true);
         }
 
+        public static LastFMNodeStatus? ToLastFMNodeStatus(this string value)
+        {
+            return value.ToEnum<LastFMNodeStatus>(ignoreCase: true);
+        }
+
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
         {
             var types = typeof(T);
