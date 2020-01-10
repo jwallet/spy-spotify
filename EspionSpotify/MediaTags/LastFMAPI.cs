@@ -15,7 +15,7 @@ namespace EspionSpotify.MediaTags
         private readonly string[] _apiKey;
         private readonly Random _random;
 
-        private string ApiUrl(string apiKey, string artist, string title) => $"{API_DOMAIN }&api_key={apiKey}&artist={artist}&track={title}";
+        private string ApiUrl(string apiKey, string artist, string title) => $"{API_DOMAIN}&api_key={apiKey}&artist={artist}&track={title}";
 
         public LastFMAPI()
         {
