@@ -48,15 +48,6 @@ Spytify records what your computer's sound card outputs. Spytify records the sam
 
 <p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/saved_songs_list.png" /></p>
 
-
-## Dependencies
-- .NET Framwork 4.6
-- Newtonsoft.Json
-- NAudio.Lame
-- last.fm API
-- Spotify API (see your `Spytify.exe.config` [L.78@88](https://github.com/jwallet/spy-spotify/blob/327e8d0fc1bb7281b302f6bcba973d5b3c0a2fd9/EspionSpotify/App.config) file)
-- taglib
-
 ## Translate
 You can help translate Spytify on Zanata.org, see [Translate](translate.md) for more details.
 
