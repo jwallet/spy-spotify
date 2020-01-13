@@ -74,6 +74,32 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
+        [InlineData(null, null)]
+        [InlineData("", null)]
+        [InlineData("flac", null)]
+        [InlineData("mp3", MediaFormat.Mp3)]
+        [InlineData("MP3", MediaFormat.Mp3)]
+        [InlineData("WAV", MediaFormat.Wav)]
+        [InlineData("wav", MediaFormat.Wav)]
+        internal void StringToMediaFormat_ReturnsExpectedFormat(string value, MediaFormat? expected)
+        {
+            var actual = value.ToMediaFormat();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("", null)]
+        [InlineData("API", null)]
+        [InlineData("spotify", MediaTagsAPI.Spotify)]
+        [InlineData("lastFM", MediaTagsAPI.LastFM)]
+        internal void StringToMediaTagsAPI_ReturnsExpectedAPI(string value, MediaTagsAPI? expected)
+        {
+            var actual = value.ToMediaTagsAPI();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
         [InlineData(null, "")]
         [InlineData(" ", "")]
         [InlineData("v1", "1")]

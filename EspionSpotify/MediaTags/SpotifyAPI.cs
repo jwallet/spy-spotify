@@ -1,4 +1,6 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Models;
+using EspionSpotify.Properties;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
@@ -11,12 +13,12 @@ namespace EspionSpotify.MediaTags
 {
     public class SpotifyAPI : ISpotifyAPI, IExternalAPI
     {
-        private string _clientId;
-        private string _secretId;
+        private readonly string _clientId;
+        private readonly string _secretId;
         private Token _token;
         private DateTimeOffset _nextTokenRenewal;
         private AuthorizationCodeAuth _authorizationCodeAuth;
-        private readonly LastFMAPI _lastFmApi = new LastFMAPI();
+        private readonly LastFMAPI _lastFmApi;
 
         public SpotifyAPI() { }
 
@@ -24,6 +26,7 @@ namespace EspionSpotify.MediaTags
         {
             _clientId = clientId;
             _secretId = secretId;
+            _lastFmApi = new LastFMAPI();
 
             if (!string.IsNullOrEmpty(_clientId) && !string.IsNullOrEmpty(_secretId))
             {
@@ -47,6 +50,8 @@ namespace EspionSpotify.MediaTags
             {
                 // fallback in case getting the playback did not work
                 // user might be connected with a different account that the one that granted rights
+                Settings.Default.MediaTagsAPI = (int)MediaTagsAPI.LastFM;
+                Settings.Default.Save();
                 return await _lastFmApi.UpdateTrack(track);
             }
 
