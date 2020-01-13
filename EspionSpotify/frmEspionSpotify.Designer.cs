@@ -1292,7 +1292,7 @@ namespace EspionSpotify
             this.lnkRelease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkRelease.Image = global::EspionSpotify.Properties.Resources.release;
             this.lnkRelease.ImageSize = 18;
-            this.lnkRelease.Location = new System.Drawing.Point(680, 15);
+            this.lnkRelease.Location = new System.Drawing.Point(676, 6);
             this.lnkRelease.Margin = new System.Windows.Forms.Padding(0);
             this.lnkRelease.Name = "lnkRelease";
             this.lnkRelease.Size = new System.Drawing.Size(20, 20);
