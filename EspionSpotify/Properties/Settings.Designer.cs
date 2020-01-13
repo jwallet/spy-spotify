@@ -242,6 +242,30 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Logs {
+            get {
+                return ((string)(this["Logs"]));
+            }
+            set {
+                this["Logs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MediaTagsAPI {
+            get {
+                return ((int)(this["MediaTagsAPI"]));
+            }
+            set {
+                this["MediaTagsAPI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SpotifyAPISecretId {
             get {
                 return ((string)(this["SpotifyAPISecretId"]));
@@ -260,18 +284,6 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["SpotifyAPIClientId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Logs {
-            get {
-                return ((string)(this["Logs"]));
-            }
-            set {
-                this["Logs"] = value;
             }
         }
     }

@@ -60,21 +60,22 @@ namespace EspionSpotify
             _analytics = new Analytics(Settings.Default.AnalyticsCID, Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Task.Run(async () => await _analytics.LogAction("launch"));
 
-            var clientId = Settings.Default.SpotifyAPIClientId;
-            var secretId = Settings.Default.SpotifyAPISecretId;
-            if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(secretId))
-            {
-                ExternalAPI.Instance = new MediaTags.SpotifyAPI(clientId, secretId);
-            }
 
             var indexLanguage = Settings.Default.Language;
             var indexBitRate = Settings.Default.Bitrate;
             var indexAudioEndPointDevice = Settings.Default.AudioEndPointDeviceIndex.ToNullableInt();
 
+            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId;
+            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId;
+
+            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
+
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
-            rbMp3.Checked = Settings.Default.MediaFormat == 0;
-            rbWav.Checked = Settings.Default.MediaFormat == 1;
+            rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
+            rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
+            rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
+            rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
             tgEndingSongDelay.Checked = Settings.Default.EndingSongDelayEnabled;
             tgAddSeparators.Checked = Settings.Default.TrackTitleSeparatorEnabled;
@@ -95,7 +96,7 @@ namespace EspionSpotify
             cbBitRate.SelectedIndex = indexBitRate;
             cbLanguage.SelectedIndex = indexLanguage;
 
-            _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice; // TODO: settings default stay last saved
+            _userSettings.AudioEndPointDeviceIndex = indexAudioEndPointDevice;
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
             _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
@@ -123,6 +124,23 @@ namespace EspionSpotify
             ResumeLayout();
 
             GitHub.GetVersion(this);
+        }
+
+        private void SetMediaTagsAPI(MediaTagsAPI api, bool isSpotifyAPISet)
+        {
+            switch(api)
+            {
+                case MediaTagsAPI.Spotify:
+                    if (isSpotifyAPISet)
+                    {
+                        ExternalAPI.Instance = new MediaTags.SpotifyAPI(_userSettings.SpotifyAPIClientId, _userSettings.SpotifyAPISecretId);
+                    }
+                    break;
+                case MediaTagsAPI.LastFM:
+                default:
+                    ExternalAPI.Instance = new MediaTags.LastFMAPI();
+                    break;
+            }
         }
 
         private void UpdateAudioEndPointFields()
@@ -440,10 +458,24 @@ namespace EspionSpotify
         private void RbFormat_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
-            _userSettings.MediaFormat = rb != null && rb.Tag.ToString() == "mp3" ? MediaFormat.Mp3 : MediaFormat.Wav;
-            Settings.Default.MediaFormat = (rbMp3.Checked ? 0 : 1);
+            if (!rb.Checked) return;
+            var mediaFormat = rb?.Tag?.ToString().ToMediaFormat() ?? MediaFormat.Mp3;
+            _userSettings.MediaFormat = mediaFormat;
+            tlpAPI.Visible = mediaFormat == MediaFormat.Mp3;
+            Settings.Default.MediaFormat = (int)(rbMp3.Checked ? MediaFormat.Mp3 : MediaFormat.Wav);
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"media-format?type={rb.Tag}"));
+            Task.Run(async () => await _analytics.LogAction($"media-format?type={mediaFormat.ToString()}"));
+        }
+
+        private void RbLastFMAPI_CheckedChanged(object sender, EventArgs e)
+        {
+            var rb = sender as RadioButton;
+            if (!rb.Checked) return;
+            var api = rb?.Tag?.ToString().ToMediaTagsAPI() ?? MediaTagsAPI.LastFM;
+            SetMediaTagsAPI(api, _userSettings.IsSpotifyAPISet);
+            Settings.Default.MediaTagsAPI = (int)(rbLastFMAPI.Checked ? MediaTagsAPI.LastFM : MediaTagsAPI.Spotify);
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"media-tags-api?type={api.ToString()}"));
         }
 
         private void TgRecordUnkownTrackType_CheckedChanged(object sender, EventArgs e)
@@ -656,18 +688,6 @@ namespace EspionSpotify
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab}"));
-        }
-
-        private void ShowHideLabel(Label label)
-        {
-            if (label.Visible)
-            {
-                label.Hide();
-            }
-            else
-            {
-                label.Show();
-            }
         }
 
         private void LnkRelease_Click(object sender, EventArgs e)

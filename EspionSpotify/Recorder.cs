@@ -66,7 +66,7 @@ namespace EspionSpotify
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            // TODO: add buffer handler from argument
+            // TODO: add buffer handler from argument: issue #100
             if (_writer != null) await _writer.WriteAsync(e.Buffer, 0, e.BytesRecorded);
         }
 

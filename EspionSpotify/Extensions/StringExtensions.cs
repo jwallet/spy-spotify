@@ -20,6 +20,16 @@ namespace EspionSpotify.Extensions
             return value.ToEnum<LastFMNodeStatus>(ignoreCase: true);
         }
 
+        public static MediaFormat? ToMediaFormat(this string value)
+        {
+            return value.ToEnum<MediaFormat>(ignoreCase: true);
+        }
+
+        public static MediaTagsAPI? ToMediaTagsAPI(this string value)
+        {
+            return value.ToEnum<MediaTagsAPI>(ignoreCase: true);
+        }
+
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
         {
             var types = typeof(T);
