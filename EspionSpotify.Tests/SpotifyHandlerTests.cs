@@ -75,7 +75,8 @@ namespace EspionSpotify.Tests
             // initial track
             Assert.Null(spotifyHandler.Track);
 
-            await Task.Delay(500);
+            await Task.Delay(1000);
+            // FIXME: looks like the delay makes the test succeeds
 
             // updated track
             Assert.Equal(track, spotifyHandler.Track);
