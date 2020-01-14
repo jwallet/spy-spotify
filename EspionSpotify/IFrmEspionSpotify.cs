@@ -1,4 +1,5 @@
-﻿using System.Resources;
+﻿using EspionSpotify.Enums;
+using System.Resources;
 
 namespace EspionSpotify
 {
@@ -11,6 +12,6 @@ namespace EspionSpotify
         void UpdateStartButton();
         void StopRecording();
         void UpdateNum(int num);
-        void WriteIntoConsole(string resource, params object[] args);
+        void WriteIntoConsole(TranslationKeys resource, params object[] args);
     }
 }

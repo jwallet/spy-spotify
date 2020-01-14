@@ -3,7 +3,7 @@ using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
 using System.IO.Abstractions;
-using System.Threading;
+using EspionSpotify.Extensions;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 
@@ -85,7 +85,7 @@ namespace EspionSpotify
 
             if (IsTrackExists)
             {
-                _form.WriteIntoConsole("logTrackExists", _currentTrack.ToString());
+                _form.WriteIntoConsole(I18nKeys.LogTrackExists, _currentTrack.ToString());
             }
 
             if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsTrackExists) return;
@@ -112,7 +112,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString($"logAd") ?? "Ad"}: " : "";
+            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{SongTitle}");
 
             MutesSpotifyAds(AdPlaying);
@@ -126,7 +126,7 @@ namespace EspionSpotify
 
             if (!SpotifyConnect.IsSpotifyRunning())
             {
-                _form.WriteIntoConsole("logSpotifyConnecting");
+                _form.WriteIntoConsole(I18nKeys.LogSpotifyConnecting);
                 await SpotifyConnect.Run(_fileSystem);
             }
 
@@ -154,7 +154,7 @@ namespace EspionSpotify
         {
             if (Running) return;
 
-            _form.WriteIntoConsole($"logStarting");
+            _form.WriteIntoConsole(I18nKeys.LogStarting);
 
             await RunSpotifyConnect();
             var isAudioSessionNotFound = !(await SetSpotifyAudioSessionAndWaitToStart());
@@ -171,23 +171,23 @@ namespace EspionSpotify
                     // Order is important
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
-                        _form.WriteIntoConsole("logSpotifyIsClosed");
+                        _form.WriteIntoConsole(I18nKeys.LogSpotifyIsClosed);
                         Running = false;
                     }
                     else if (isAudioSessionNotFound)
                     {
-                        _form.WriteIntoConsole("logSpotifyPlayingOutsideOfSelectedAudioEndPoint");
+                        _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
                         Running = false;
                     }
                     else if (ToggleStopRecordingDelayed)
                     {
                         ToggleStopRecordingDelayed = false;
                         _stopRecordingWhenSongEnds = true;
-                        _form.WriteIntoConsole("logStopRecordingWhenSongEnds");
+                        _form.WriteIntoConsole(I18nKeys.LogStopRecordingWhenSongEnds);
                     }
                     else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
                     {
-                        _form.WriteIntoConsole("logRecordingTimerDone");
+                        _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
                         ToggleStopRecordingDelayed = true;
                     }
                     await Task.Delay(200);
@@ -197,16 +197,16 @@ namespace EspionSpotify
             }
             else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
-                _form.WriteIntoConsole(isAudioSessionNotFound ? "logSpotifyIsClosed" : "logSpotifyNotConnected");
+                _form.WriteIntoConsole(isAudioSessionNotFound ? I18nKeys.LogSpotifyIsClosed : I18nKeys.LogSpotifyNotConnected);
             }
             else
             {
-                _form.WriteIntoConsole("logSpotifyNotFound");
+                _form.WriteIntoConsole(I18nKeys.LogSpotifyNotFound);
             }
 
             EndRecordingSession();
 
-            _form.WriteIntoConsole("logStoping");
+            _form.WriteIntoConsole(I18nKeys.LogStoping);
         }
 
         private void RecordSpotify()

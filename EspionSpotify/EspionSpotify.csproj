@@ -188,6 +188,7 @@
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\ISpotifyAPI.cs" />
     <Compile Include="Models\OutputFile.cs" />
+    <Compile Include="Translations\I18nKeys.cs" />
     <Compile Include="Translations\nl.Designer.cs">
       <DependentUpon>nl.resx</DependentUpon>
       <AutoGen>True</AutoGen>

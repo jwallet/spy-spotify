@@ -484,15 +484,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By disabling ads, you will block ads coming from partners (third parties domains). Spotify will still be able to play their own ads, because they come from the same domain that their music content, radio, friends list and daily mix..
-        /// </summary>
-        internal static string msgBodyDisableAds {
-            get {
-                return ResourceManager.GetString("msgBodyDisableAds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Het opgegeven bestandspad bestaat niet, selecteer a.u.b. een andere..
         /// </summary>
         internal static string msgBodyPathNotFound {
@@ -502,20 +493,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify moet opnieuw opstarten en toegang krijgen tot admin rechten om Spotify advertentie te blokkeren. Wilt u doorgaan en het opnieuw proberen?.
+        ///   Looks up a localized string similar to Choose the folder where you want to save the recorded audio files..
         /// </summary>
-        internal static string msgEnsureAdminContent {
+        internal static string msgFolderDialog {
             get {
-                return ResourceManager.GetString("msgEnsureAdminContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Admin rechten vereist..
-        /// </summary>
-        internal static string msgEnsureAdminTitle {
-            get {
-                return ResourceManager.GetString("msgEnsureAdminTitle", resourceCulture);
+                return ResourceManager.GetString("msgFolderDialog", resourceCulture);
             }
         }
         
@@ -543,15 +525,6 @@ namespace EspionSpotify.Translations {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable Ads.
-        /// </summary>
-        internal static string msgTitleDisableAds {
-            get {
-                return ResourceManager.GetString("msgTitleDisableAds", resourceCulture);
             }
         }
         

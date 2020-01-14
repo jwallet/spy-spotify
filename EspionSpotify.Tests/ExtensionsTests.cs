@@ -1,11 +1,8 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
+using EspionSpotify.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -37,7 +34,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void GetString_ReturnsExpectedTranslatedSpyString()
         {
-            Assert.Equal("Spy", _rm.GetString(TranslationKeys.tabRecord));
+            Assert.Equal("Spy", _rm.GetString(I18nKeys.TabRecord));
         }
     }
 
