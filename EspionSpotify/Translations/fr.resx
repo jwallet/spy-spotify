@@ -257,14 +257,6 @@
     <value>Le répertoire de sauvegarde sélectionné n'existe pas, sélectionner un autre.</value>
     <comment>message</comment>
   </data>
-  <data name="msgEnsureAdminContent" xml:space="preserve">
-    <value>Spytify doit redémarrer pour obtenir les droits d'administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?</value>
-    <comment>message</comment>
-  </data>
-  <data name="msgEnsureAdminTitle" xml:space="preserve">
-    <value>Droits d'administrateur requis</value>
-    <comment>message</comment>
-  </data>
   <data name="msgNewVersionContent" xml:space="preserve">
     <value>Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?</value>
     <comment>message</comment>
@@ -321,14 +313,6 @@
     <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
     <comment>console</comment>
   </data>
-  <data name="msgBodyDisableAds" xml:space="preserve">
-    <value>En désactivant les annonces, vous bloquerez les annonces provenant de partenaires (domaines tiers). Spotify pourra quand même jouer leurs propre annonces, puisqu'elles viennent du même domaine que leur contenu musical, radio, liste d'amis et "daily mix".</value>
-    <comment>message</comment>
-  </data>
-  <data name="msgTitleDisableAds" xml:space="preserve">
-    <value>Désactiver les annonces</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
     <value>Dupliquer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
     <comment>interface</comment>
@@ -376,5 +360,9 @@
   <data name="logMissingDlls" xml:space="preserve">
     <value>// Erreur lors de l'enregistrement: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll</value>
     <comment>console</comment>
+  </data>
+  <data name="msgFolderDialog" xml:space="preserve">
+    <value>Veuillez choisir le dossier où vous désirez sauvegarder les fichiers audio enregistrés.</value>
+    <comment>interface</comment>
   </data>
 </root>

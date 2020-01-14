@@ -54,7 +54,7 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole("logRecording", _currentOutputFile.File);
+            _form.WriteIntoConsole(I18nKeys.LogRecording, _currentOutputFile.File);
 
             while (Running)
             {
@@ -81,13 +81,13 @@ namespace EspionSpotify
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole("logDeleting", _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
+                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
                 _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
                 return;
             }
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
-            _form.WriteIntoConsole("logRecorded", _track.ToString(), length);
+            _form.WriteIntoConsole(I18nKeys.LogRecorded, _track.ToString(), length);
 
             await UpdateOutputFileBasedOnMediaFormat();    
         }
@@ -118,7 +118,7 @@ namespace EspionSpotify
                     }
                     catch (Exception ex)
                     {
-                        _form.WriteIntoConsole("logUnknownException", ex.Message);
+                        _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                         Console.WriteLine(ex.Message);
                         return null;
                     }
@@ -164,27 +164,27 @@ namespace EspionSpotify
 
         private void LogLameMP3FileWriterArgumentException(ArgumentException ex, string outputPath)
         {
-            var resource = "logUnknownException";
+            var resource = I18nKeys.LogUnknownException;
             var args = ex.Message;
 
             if (!Directory.Exists(outputPath))
             {
-                resource = "logInvalidOutput";
+                resource = I18nKeys.LogInvalidOutput;
             }
             else if (ex.Message.StartsWith("Unsupported Sample Rate"))
             {
-                resource = "logUnsupportedRate";
+                resource = I18nKeys.LogUnsupportedRate;
             }
             else if (ex.Message.StartsWith("Access to the path"))
             {
-                resource = "logNoAccessOutput";
+                resource = I18nKeys.LogNoAccessOutput;
             }
             else if (ex.Message.StartsWith("Unsupported number of channels"))
             {
                 var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
                 var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
                 numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
-                resource = "logUnsupportedNumberChannels";
+                resource = I18nKeys.LogUnsupportedNumberChannels;
                 args = numberOfChannels;
             }
 
@@ -195,11 +195,11 @@ namespace EspionSpotify
         {
             if (ex.Message.Contains("Unable to load DLL"))
             {
-                _form.WriteIntoConsole("logMissingDlls");
+                _form.WriteIntoConsole(I18nKeys.LogMissingDlls);
             }
             else
             {
-                _form.WriteIntoConsole("logUnknownException", ex.Message);
+                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
             }
 
             Console.WriteLine(ex.Message);

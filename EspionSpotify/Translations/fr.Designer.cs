@@ -484,15 +484,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En désactivant les annonces, vous bloquerez les annonces provenant de partenaires (domaines tiers). Spotify pourra quand même jouer leurs propre annonces, puisqu&apos;elles viennent du même domaine que leur contenu musical, radio, liste d&apos;amis et &quot;daily mix&quot;..
-        /// </summary>
-        internal static string msgBodyDisableAds {
-            get {
-                return ResourceManager.GetString("msgBodyDisableAds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Le répertoire de sauvegarde sélectionné n&apos;existe pas, sélectionner un autre..
         /// </summary>
         internal static string msgBodyPathNotFound {
@@ -502,20 +493,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify doit redémarrer pour obtenir les droits d&apos;administrateur et pouvoir désactiver les publicités de Spotify. Voulez-vous poursuivre et réessayer?.
+        ///   Looks up a localized string similar to Veuillez choisir le dossier où vous désirez sauvegarder les fichiers audio enregistrés..
         /// </summary>
-        internal static string msgEnsureAdminContent {
+        internal static string msgFolderDialog {
             get {
-                return ResourceManager.GetString("msgEnsureAdminContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Droits d&apos;administrateur requis.
-        /// </summary>
-        internal static string msgEnsureAdminTitle {
-            get {
-                return ResourceManager.GetString("msgEnsureAdminTitle", resourceCulture);
+                return ResourceManager.GetString("msgFolderDialog", resourceCulture);
             }
         }
         
@@ -543,15 +525,6 @@ namespace EspionSpotify.Translations {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Désactiver les annonces.
-        /// </summary>
-        internal static string msgTitleDisableAds {
-            get {
-                return ResourceManager.GetString("msgTitleDisableAds", resourceCulture);
             }
         }
         

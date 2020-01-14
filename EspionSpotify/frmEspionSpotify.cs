@@ -180,42 +180,44 @@ namespace EspionSpotify
             var rmLanguage = Translations.Languages.getResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
-            tabRecord.Text = Rm.GetString(TranslationKeys.tabRecord);
-            tabSettings.Text = Rm.GetString(TranslationKeys.tabSettings);
-            tabAdvanced.Text = Rm.GetString(TranslationKeys.tabAdvanced);
+            tabRecord.Text = Rm.GetString(I18nKeys.TabRecord);
+            tabSettings.Text = Rm.GetString(I18nKeys.TabSettings);
+            tabAdvanced.Text = Rm.GetString(I18nKeys.TabAdvanced);
 
-            lblPath.Text = Rm.GetString(TranslationKeys.lblPath);
-            lblAudioDevice.Text = Rm.GetString(TranslationKeys.lblAudioDevice);
-            lblBitRate.Text = Rm.GetString(TranslationKeys.lblBitRate);
-            lblFormat.Text = Rm.GetString(TranslationKeys.lblFormat);
-            lblMinLength.Text = Rm.GetString(TranslationKeys.lblMinLength);
-            lblLanguage.Text = Rm.GetString(TranslationKeys.lblLanguage);
-            lblAddFolders.Text = Rm.GetString(TranslationKeys.lblAddFolders);
-            lblAddSeparators.Text = Rm.GetString(TranslationKeys.lblAddSeparators);
-            lblNumFiles.Text = Rm.GetString(TranslationKeys.lblNumFiles);
-            lblNumTracks.Text = Rm.GetString(TranslationKeys.lblNumTracks);
-            lblEndingSongDelay.Text = Rm.GetString(TranslationKeys.lblEndingSongDelay);
-            lblRecordingNum.Text = Rm.GetString(TranslationKeys.lblRecordingNum);
-            lblAds.Text = Rm.GetString(TranslationKeys.lblAds);
-            lblMuteAds.Text = Rm.GetString(TranslationKeys.lblMuteAds);
-            lblSpy.Text = Rm.GetString(TranslationKeys.lblSpy);
-            lblRecorder.Text = Rm.GetString(TranslationKeys.lblRecorder);
-            lblRecordUnknownTrackType.Text = Rm.GetString(TranslationKeys.lblRecordUnknownTrackType);
-            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString(TranslationKeys.lblDuplicateAlreadyRecordedTrack);
-            lblRecordingTimer.Text = Rm.GetString(TranslationKeys.lblRecordingTimer);
+            folderBrowserDialog.Description = Rm.GetString(I18nKeys.MsgFolderDialog);
 
-            tip.SetToolTip(lnkClear, Rm.GetString(TranslationKeys.tipClear));
-            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
-            tip.SetToolTip(lnkDirectory, Rm.GetString(TranslationKeys.tipDirectory));
-            tip.SetToolTip(lnkPath, Rm.GetString(TranslationKeys.tipPath));
-            tip.SetToolTip(lnkRelease, Rm.GetString(TranslationKeys.tipRelease));
+            lblPath.Text = Rm.GetString(I18nKeys.LblPath);
+            lblAudioDevice.Text = Rm.GetString(I18nKeys.LblAudioDevice);
+            lblBitRate.Text = Rm.GetString(I18nKeys.LblBitRate);
+            lblFormat.Text = Rm.GetString(I18nKeys.LblFormat);
+            lblMinLength.Text = Rm.GetString(I18nKeys.LblMinLength);
+            lblLanguage.Text = Rm.GetString(I18nKeys.LblLanguage);
+            lblAddFolders.Text = Rm.GetString(I18nKeys.LblAddFolders);
+            lblAddSeparators.Text = Rm.GetString(I18nKeys.LblAddSeparators);
+            lblNumFiles.Text = Rm.GetString(I18nKeys.LblNumFiles);
+            lblNumTracks.Text = Rm.GetString(I18nKeys.LblNumTracks);
+            lblEndingSongDelay.Text = Rm.GetString(I18nKeys.LblEndingSongDelay);
+            lblRecordingNum.Text = Rm.GetString(I18nKeys.LblRecordingNum);
+            lblAds.Text = Rm.GetString(I18nKeys.LblAds);
+            lblMuteAds.Text = Rm.GetString(I18nKeys.LblMuteAds);
+            lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
+            lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
+            lblRecordUnknownTrackType.Text = Rm.GetString(I18nKeys.LblRecordUnknownTrackType);
+            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString(I18nKeys.LblDuplicateAlreadyRecordedTrack);
+            lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
+
+            tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
+            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
+            tip.SetToolTip(lnkDirectory, Rm.GetString(I18nKeys.TipDirectory));
+            tip.SetToolTip(lnkPath, Rm.GetString(I18nKeys.TipPath));
+            tip.SetToolTip(lnkRelease, Rm.GetString(I18nKeys.TipRelease));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, Rm.GetString(TranslationKeys.cbOptBitRate128)},
-                {LAMEPreset.ABR_160, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate160))},
-                {LAMEPreset.ABR_256, Rm.GetString(TranslationKeys.cbOptBitRate256)},
-                {LAMEPreset.ABR_320, string.Format(Rm.GetString(TranslationKeys.cbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(TranslationKeys.cbOptBitRate320))}
+                {LAMEPreset.ABR_128, Rm.GetString(I18nKeys.CbOptBitRate128)},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString(I18nKeys.CbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(I18nKeys.CbOptBitRate160))},
+                {LAMEPreset.ABR_256, Rm.GetString(I18nKeys.CbOptBitRate256)},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString(I18nKeys.CbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(I18nKeys.CbOptBitRate320))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
@@ -244,7 +246,7 @@ namespace EspionSpotify
                 return;
             }
 
-            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStartSpying));
+            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
             lnkSpy.Image = Resources.on;
             lnkSpy.Focus();
         }
@@ -333,7 +335,7 @@ namespace EspionSpotify
             return log;
         }
 
-        public void WriteIntoConsole(string resource, params object[] args)
+        public void WriteIntoConsole(TranslationKeys resource, params object[] args)
         {
             if (rtbLog.InvokeRequired)
             {
@@ -360,7 +362,7 @@ namespace EspionSpotify
                 rtbLog.AppendText(log + Environment.NewLine);
             }
 
-            rtbLog.AppendText(LogDate + Rm.GetString(TranslationKeys.logPreviousLogs) + Environment.NewLine + Environment.NewLine);
+            rtbLog.AppendText(LogDate + Rm.GetString(I18nKeys.LogPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
@@ -373,7 +375,7 @@ namespace EspionSpotify
             var watcherTask = new Task(async () => await _watcher.Run());
             watcherTask.Start();
 
-            tip.SetToolTip(lnkSpy, Rm.GetString(TranslationKeys.tipStopSying));
+            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;
             tlAdvanced.Enabled = false;
             timer1.Start();
@@ -399,8 +401,8 @@ namespace EspionSpotify
             if (Directory.Exists(_userSettings.OutputPath)) return true;
 
             MetroMessageBox.Show(this,
-                Rm.GetString(TranslationKeys.msgBodyPathNotFound),
-                Rm.GetString(TranslationKeys.msgTitlePathNotFound),
+                Rm.GetString(I18nKeys.MsgBodyPathNotFound),
+                Rm.GetString(I18nKeys.MsgTitlePathNotFound),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -553,8 +555,8 @@ namespace EspionSpotify
             if (Watcher.Ready || !Watcher.Running) return;
             e.Cancel = true;
             if (MetroMessageBox.Show(this,
-                    Rm.GetString(TranslationKeys.msgBodyCantQuit),
-                    Rm.GetString(TranslationKeys.msgTitleCantQuit),
+                    Rm.GetString(I18nKeys.MsgBodyCantQuit),
+                    Rm.GetString(I18nKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             Watcher.Running = false;

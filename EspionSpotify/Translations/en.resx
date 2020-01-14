@@ -257,14 +257,6 @@
     <value>This output path does not exist, select another one.</value>
     <comment>message</comment>
   </data>
-  <data name="msgEnsureAdminContent" xml:space="preserve">
-    <value>Spytify needs to restart and get administrator rights to be able to disable Spotify ads. Do you want to proceed and retry?</value>
-    <comment>message</comment>
-  </data>
-  <data name="msgEnsureAdminTitle" xml:space="preserve">
-    <value>Administrator rights required</value>
-    <comment>message</comment>
-  </data>
   <data name="msgNewVersionContent" xml:space="preserve">
     <value>Do you want to open GitHub to view the newest Spytify release?</value>
     <comment>message</comment>
@@ -321,14 +313,6 @@
     <value>// Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
     <comment>message</comment>
   </data>
-  <data name="msgBodyDisableAds" xml:space="preserve">
-    <value>By disabling ads, you will block ads coming from partners (third parties domains). Spotify will still be able to play their own ads, because they come from the same domain that their music content, radio, friends list and daily mix.</value>
-    <comment>interface</comment>
-  </data>
-  <data name="msgTitleDisableAds" xml:space="preserve">
-    <value>Disable Ads</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
     <value>Duplicate already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
@@ -376,5 +360,9 @@
   <data name="logMissingDlls" xml:space="preserve">
     <value>// Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll</value>
     <comment>console</comment>
+  </data>
+  <data name="msgFolderDialog" xml:space="preserve">
+    <value>Choose the folder where you want to save the recorded audio files.</value>
+    <comment>interface</comment>
   </data>
 </root>
