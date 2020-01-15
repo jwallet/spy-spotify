@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,22 +9,22 @@
     <meta name="keywords" content=""/>
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
-    <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Records Spotify to mp3 - Background noise/sound was recorded on the saved track file.</title>
+    <link rel="stylesheet" href="/spy-spotify/fr/assets/css/style.css?v=">
+    <title>Spytify - Enregistre Spotify en mp3 - Don</title>
   </head>
   <body>
     <menu class="language">
       <div class="language-row">
-        <label>Language:</label>
-        <a class="selected" role="button" onclick="onLangToggle()">English<span id="caret">▼</a>
+        <label>Langage:</label>
+        <a class="selected" role="button" onclick="onLangToggle()">Français<span id="caret">▼</a>
       </div>
       <section class="language-box">
         <ul id="langs_dropdown" role="option" opened="false">
           
-          
-          <a role="button" name="langs" value="fr" onclick="onLangChange(this)"><li>Français</li></a>
-          
            
+          
+          <a role="button" name="langs" value="en" onclick="onLangChange(this)"><li>English</li></a>
+          
         </ul>
       </section>
     </menu>
@@ -32,26 +32,68 @@
     <header class="page-header" role="banner">
       <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
       <h1 class="project-name">Spytify</h1>
-      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
+      <h2 class="project-tagline">Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés</h2>      
     </header>
     
     <nav class="nav" role="navigation">
-        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
-        <a href="./features.html" aria-label="Features" class="btn">Features</a>
-        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
+        <a href="./overview.html" aria-label="Overview" class="btn">Aperçu</a>
+        <a href="./features.html" aria-label="Features" class="btn">Fonctionnalités</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Paramètres</a>
         <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
-        <a href="./donate.html" aria-label="Donate" class="btn">Donate</a>
+        <a href="./donate.html" aria-label="Donate" class="btn">Don</a>
 
         
-          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Download</a>
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Télécharger</a>
         
     </nav>
 
     <main id="content" class="main-content" role="main">
  
-      <p>First case, Spytify disables most apps when the recording session starts. Make sure to mute in the <em>Volume Mixer</em> all applications running in a background process in your system tray that can emit a sound as well as all applications that you open while recording. Only Spotify and Spytify should not be muted.
-<br />
-Second case, you might experiment some cracking/popping sounds when playing a recorded file. These sounds can be related to your computer not being set to high cpu performance. You can enable it in your power plan settings or by changing the minimum processor power state to 100 (look on Internet for a how-to). These sounds can also be related to the quality (bitrate) being different from Spotify to Spytify. You need to make sure that the Spytify bitrate quality matches your Spotify app version. Spotify Free can’t have the same quality as Spotify Premium. If you have Spotify Premium, you need to check the <strong>High Quality 320kbp</strong> chekbox in your Spotify settings to be able to use the highest recording quality in Spytify.</p>
+      <h2 id="faire-un-don">Faire un don</h2>
+<p>😃 Vous aimez Spytify? Si oui, vous pouvez m’acheter:</p>
+<ul>
+  <li>Un café ☕ pour me garder réveiller pendant ces longues nuits de programmation.</li>
+  <li>Une couple de bières 🍻 pour célébrer une nouvelle version publiée de Spytify.</li>
+  <li>Un bon repas 🥩, pour me faire savoir que vous adorez Spytify et vous voulez me que je continue de travailler fort dessus.</li>
+</ul>
+
+<p>N’oubliez pas de me laisser un message dans le formulaire de don ci-dessous.</p>
+
+<article class="donate">
+    <section style="display:flex;flex-direction:column;">
+        <script src="https://donorbox.org/widget.js" paypalexpress="false"></script><iframe allowpaymentrequest="" frameborder="0" height="900px" name="donorbox" scrolling="no" seamless="seamless" src="https://donorbox.org/embed/spytify" style="width: auto; max-height:none!important"></iframe>
+        <a style="font-size:75%;text-align:center;argin-top:-2em;text-decoration:underline;" href="https://stripe.com/en-ca">Secured by Stripe online payments</a>
+    </section>
+    <section>
+        <h3>Top 10 des donneurs</h3>
+        <ol>
+            
+                
+                    <li style="color:#1E963C;"><strong>Anonymous - $5</strong></li>
+                
+            
+                
+                    <li><strong>Anonymous - $4</strong></li>
+                
+            
+                
+                    <li><strong>Anonymous - $1</strong></li>
+                
+            
+        </ol>
+        
+        <!-- If I reached over 10 donators -->
+            <!--  -->
+        
+        <!-- If I reached over 10 donators -->
+            <!--  -->
+        
+        <!-- If I reached over 10 donators -->
+            <!--  -->
+        
+    </section>
+</article>
+
 
 
       <footer class="site-footer">
@@ -65,11 +107,11 @@ Second case, you might experiment some cracking/popping sounds when playing a re
         </span>
         <span class="site-footer-owner">
           <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
-           is maintained by 
+           est maintenu par 
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
-          😃 Like Spytify? If you want you can <a href="./donate.html">buy me a beer</a> 🍺.
+          😃 Tu aimes Spytify? Si tu veux tu peux <a href="./donate.html">me payer une bière</a> 🍺.
         </span>
       </footer>
     </main>
@@ -95,7 +137,7 @@ Second case, you might experiment some cracking/popping sounds when playing a re
       }
       
       function changeLanguage(language) {
-        var lang = language || 'en';
+        var lang = language || 'fr';
         const { pathname: originPathname, origin } = window.location;
         var pathname = originPathname.replace('/spy-spotify', '');
         var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
@@ -131,8 +173,8 @@ Second case, you might experiment some cracking/popping sounds when playing a re
       }
 
       function setLanguage() {
-        if ('en' !== window.localStorage.getItem('lang')) {
-          window.localStorage.setItem('lang', 'en');
+        if ('fr' !== window.localStorage.getItem('lang')) {
+          window.localStorage.setItem('lang', 'fr');
         }
       }
 

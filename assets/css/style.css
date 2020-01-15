@@ -112,24 +112,30 @@ a:hover { text-decoration: underline; }
 
 .language-box ul li { color: white; padding: 0.2rem 0; padding-right: 1rem; border: 1px solid #19ff5f; border-top: 0; }
 
+.donate { display: flex; margin-top: 2em; column-gap: 2em; }
+
+@media screen and (max-width: 42em) { .donate { flex-wrap: wrap; } }
+
 .btn { display: inline-block; font-weight: 600; color: #28b450; border-color: #28b450; border-style: solid; border-width: 2px; border-radius: 0.5rem; transition: color 0.5s, background-color 0.5s, border-color 0.5s; }
 
 .btn:hover, .btn:focus, .btn:active, .btn.active { background-color: #28b450; color: white; text-decoration: none; }
-
-.btn + .btn { margin-left: 1rem; }
 
 @media screen and (min-width: 64em) { .btn { padding: 0.4rem 1rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) { .btn { padding: 0.3rem 0.9rem; font-size: 0.9rem; } }
 
-@media screen and (max-width: 42em) { .btn { display: block; width: 100%; padding: 0.5rem; font-size: 0.9rem; }
-  .btn + .btn { margin-top: 1rem; margin-left: 0; } }
+@media screen and (max-width: 42em) { .btn { display: block; width: 100%; text-align: center; padding: 0.5rem; font-size: 0.9rem; }
+  .btn + .btn { margin-top: 0.5rem; margin-left: 0; } }
 
 .btn.out { background-color: #28b450; opacity: 0.8; color: white; transition: color 0.5s, background-color 0.5s, border-color 0.5s; }
 
 .btn.out:hover, .btn.out:focus, .btn.out:active { opacity: 1; text-decoration: none; }
 
-.nav { border-top: 1rem solid #1e963c; padding: 1rem; text-align: center; }
+.nav { border-top: 1rem solid #1e963c; padding: 1rem; }
+
+@media screen and (min-width: 64em) { .nav { display: flex; justify-content: center; column-gap: 0.5em; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) { .nav { display: flex; justify-content: center; column-gap: 0.5em; } }
 
 .logo { width: 8rem; height: 8rem; }
 

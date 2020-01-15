@@ -3,14 +3,18 @@ GLOBAL:
   SHORT_DESCRIPTION: "Enregistre Spotify en mp3"
   DESCRIPTION: "Enregistre Spotify en mp3 sans publicité pendant qu'il joue et incluant les tags médias aux fichiers enregistrés"
   DONATE: "Tu aimes Spytify? Si tu veux tu peux"
-  PAYPAL: "me payer une bière sur paypal"
+  DONATE_LINK: "me payer une bière"
   MAINTAINED_BY: est maintenu par
 TABS:
   OVERVIEW: Aperçu
   FEATURES: Fonctionnalités
   SETTINGS: Paramètres
   FAQ: F.A.Q
+  DONATE: Don
   DOWNLOAD: Télécharger
+DONATE:
+  DONORS: Top 10 des donneurs
+  NO_DONORS: Aucun donateur
 FAQ:
   SPOTIFY_TRACK_CUT:
     TITLE: "Spotify joue seulement un bout d'une piste audio, ça coupe après quelques secondes."

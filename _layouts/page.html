@@ -39,6 +39,7 @@
         <a href="./features.html" aria-label="Features" class="btn">{% t TABS.FEATURES %}</a>
         <a href="./settings.html" aria-label="Settings" class="btn">{% t TABS.SETTINGS %}</a>
         <a href="./faq.html" aria-label="FAQ" class="btn">{% t TABS.FAQ %}</a>
+        <a href="./donate.html" aria-label="Donate" class="btn">{% t TABS.DONATE %}</a>
 
         {% if site.show_downloads %}
           <a href="{{ site.repository_download }}" aria-label="Download" class="btn out">{% t TABS.DOWNLOAD %}</a>
@@ -64,7 +65,7 @@
           <a href="{{ site.github.owner_rul | default: site.owner_url }}">{{ site.github.owner_name | default: site.owner_name }}</a>.
         </span>
         <span class="site-footer-credits">
-          😃 {% t GLOBAL.DONATE %} <a href="https://paypal.me/spytify">{% t GLOBAL.PAYPAL %}</a> 🍺.
+          😃 {% t GLOBAL.DONATE %} <a href="./donate.html">{% t GLOBAL.DONATE_LINK %}</a> 🍺.
         </span>
       </footer>
     </main>
