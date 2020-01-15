@@ -131,6 +131,7 @@ namespace EspionSpotify.Models
             var otherTrack = (Track)obj;
             return otherTrack.Artist == Artist
                 && otherTrack.Title == Title
+                && otherTrack.TitleExtended == TitleExtended
                 && otherTrack.Ad == Ad;
         }
 
