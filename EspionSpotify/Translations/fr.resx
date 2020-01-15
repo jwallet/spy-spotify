@@ -338,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify ne peut enregistré s'il n'utilise pas le même périphérique audio que Spotify. Voir la F.A.Q pour savoir comment déplacer Spotify vers un autre périphérique.</value>
+    <value>// Spytify ne peut enregistrer s'il n'utilise pas le même périphérique audio que Spotify. Voir la F.A.Q en ligne pour savoir comment déplacer Spotify vers un autre périphérique.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
