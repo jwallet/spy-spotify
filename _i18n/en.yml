@@ -3,14 +3,18 @@ GLOBAL:
   SHORT_DESCRIPTION: "Records Spotify to mp3"
   DESCRIPTION: "Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"
   DONATE: "Like Spytify? If you want you can"
-  PAYPAL: "buy me a beer using paypal"
+  DONATE_LINK: "buy me a beer"
   MAINTAINED_BY: is maintained by
 TABS:
   OVERVIEW: Overview
   FEATURES: Features
   SETTINGS: Settings
   FAQ: F.A.Q
+  DONATE: Donate
   DOWNLOAD: Download
+DONATE:
+  DONORS: Top 10 Donors
+  NO_DONORS: No Donors
 FAQ:
   SPOTIFY_TRACK_CUT:
     TITLE: "Spotify only plays a bit of a track, it stops playing it after some seconds."

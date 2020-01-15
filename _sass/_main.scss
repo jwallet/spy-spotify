@@ -109,6 +109,15 @@ a {
   }
 }
 
+.donate {
+  display: flex;
+  margin-top: 2em;
+  column-gap: 2em;
+  @include small {
+    flex-wrap: wrap;
+  }
+}
+
 .btn {
   display: inline-block;
   font-weight: 600;
@@ -127,11 +136,6 @@ a {
     color: $nav-active-text-color;
     text-decoration: none;
   }
-  
-
-  + .btn {
-    margin-left: 1rem;
-  }
 
   @include large {
     padding: 0.4rem 1rem;
@@ -145,11 +149,12 @@ a {
   @include small {
     display: block;
     width: 100%;
+    text-align: center;
     padding: 0.5rem;
     font-size: 0.9rem;
 
     + .btn {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       margin-left: 0;
     }
   }
@@ -172,7 +177,17 @@ a {
 .nav {
   border-top: 1rem solid $nav-bg-color; 
   padding: 1rem;
-  text-align: center;
+
+  @include large {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5em;
+  }
+  @include medium {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5em;
+  }
 }
 
 .logo {
