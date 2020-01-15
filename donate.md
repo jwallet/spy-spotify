@@ -8,7 +8,6 @@ title: TABS.DONATE
 <article class="donate">
     <section style="display:flex;flex-direction:column;">
         <script src="https://donorbox.org/widget.js" paypalExpress="false"></script><iframe allowpaymentrequest="" frameborder="0" height="900px" name="donorbox" scrolling="no" seamless="seamless" src="https://donorbox.org/embed/spytify" style="width: auto; max-height:none!important"></iframe>
-        <a style="font-size:75%;text-align:center;argin-top:-2em;text-decoration:underline;" href="https://stripe.com/en-ca">Secured by Stripe online payments</a>
     </section>
     <section>
         <h3>{% t DONATE.DONORS %}</h3>
