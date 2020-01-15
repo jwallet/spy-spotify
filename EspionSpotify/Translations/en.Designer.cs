@@ -403,7 +403,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device..
+        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the online F.A.Q. tab to know how to move Spotify towards another device..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
