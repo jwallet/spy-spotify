@@ -54,5 +54,5 @@ You can help translate Spytify on Zanata.org, see [Translate](translate.md) for 
 ## Download
 ### [Download](https://github.com/jwallet/spy-spotify/releases)
 
-## Support on Donorbox
+## Support Spytify on Donorbox
 😃 If you like Spytify, you can help me out for a [couple of beers](https://jwallet.github.io/spy-spotify/donate.html) 🍺. Donorbox takes donations with Stripe or Paypal.
