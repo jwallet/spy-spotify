@@ -8,12 +8,16 @@ namespace EspionSpotify.Models
     {
         private const string SPOTIFY = "Spotify";
 
-        public string Artist { get; set; }
-        public string Title { get; set; }
+        private string _artist = null;
+        private string _title = null;
+        private string _titleExtended = null;
+
+        public string Artist { get => _artist; set => _artist = string.IsNullOrEmpty(value) ? null : value; }
+        public string Title { get => _title; set => _title = string.IsNullOrEmpty(value) ? null : value; }
         public bool Ad { get; set; }
         public bool Playing { get; set; }
 
-        public string TitleExtended { get; set; }
+        public string TitleExtended { get => _titleExtended; set => _titleExtended = string.IsNullOrEmpty(value) ? null : value; }
 
         public string Album { get; set; }
         public string[] Genres { get; set; }
@@ -131,6 +135,7 @@ namespace EspionSpotify.Models
             var otherTrack = (Track)obj;
             return otherTrack.Artist == Artist
                 && otherTrack.Title == Title
+                && otherTrack.TitleExtended == TitleExtended
                 && otherTrack.Ad == Ad;
         }
 

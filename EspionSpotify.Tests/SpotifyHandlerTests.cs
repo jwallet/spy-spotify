@@ -91,7 +91,14 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async void NewTrack_ReturnsAllEvents()
         {
-            var previousTrack = new Track();
+            var previousTrack = new Track
+            {
+                Title = "Song Title",
+                Artist = "Artist Name",
+                Ad = false,
+                Playing = false,
+                TitleExtended = "Remastered"
+            };
             var currentTrack = new Track
             {
                 Title = "Song Title",
