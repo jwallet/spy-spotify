@@ -32,16 +32,16 @@ namespace EspionSpotify.Spotify
 
         public Track Track { get; set; }
 
-        public SpotifyHandler(ISpotifyAudioSession spotifyAudioSession)
-        {
-            SpotifyProcess = new SpotifyProcess(spotifyAudioSession);
-            AttachTimer(TIMER_INTERVAL);
-        }
-        
+        public SpotifyHandler(ISpotifyAudioSession spotifyAudioSession): this(
+            spotifyProcess: new SpotifyProcess(spotifyAudioSession)
+        ) {}
+
         public SpotifyHandler(ISpotifyProcess spotifyProcess)
         {
             SpotifyProcess = spotifyProcess;
-            AttachTimer(TIMER_INTERVAL);
+            EventTimer = new Timer();
+            SongTimer = new Timer();
+            AttachTimerToTickEvent();
         }
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
@@ -120,21 +120,16 @@ namespace EspionSpotify.Spotify
             Track.CurrentPosition++;
         }
 
-        private void AttachTimer(int interval)
+        private void AttachTimerToTickEvent()
         {
-            EventTimer = new Timer
-            {
-                Interval = interval,
-                AutoReset = false,
-                Enabled = false
-            };
-            SongTimer = new Timer
-            {
-                Interval = interval * 20,
-                AutoReset = true,
-                Enabled = false
-            };
+            EventTimer.Interval = TIMER_INTERVAL;
+            EventTimer.AutoReset = false;
+            EventTimer.Enabled = false;
             EventTimer.Elapsed += ElapsedEventTick;
+
+            SongTimer.Interval = TIMER_INTERVAL * 20;
+            SongTimer.AutoReset = true;
+            SongTimer.Enabled = false;
             SongTimer.Elapsed += ElapsedSongTick;
         }
 
