@@ -128,6 +128,11 @@ a {
   border-radius: 0.5rem;
   transition: color 0.5s, background-color 0.5s, border-color 0.5s;
 
+  &.-donate {
+    color: $nav-donate-color;
+    border-color: $nav-donate-color;
+  }
+
   &:hover,
   &:focus,
   &:active,
@@ -135,6 +140,7 @@ a {
     background-color: $nav-menu-color;
     color: $nav-active-text-color;
     text-decoration: none;
+    border-color: $nav-menu-color;
   }
 
   @include large {
@@ -172,6 +178,8 @@ a {
     opacity: 1;
     text-decoration: none;
   }
+
+
 }
 
 .nav {

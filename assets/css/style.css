@@ -118,7 +118,9 @@ a:hover { text-decoration: underline; }
 
 .btn { display: inline-block; font-weight: 600; color: #28b450; border-color: #28b450; border-style: solid; border-width: 2px; border-radius: 0.5rem; transition: color 0.5s, background-color 0.5s, border-color 0.5s; }
 
-.btn:hover, .btn:focus, .btn:active, .btn.active { background-color: #28b450; color: white; text-decoration: none; }
+.btn.-donate { color: #dc3278; border-color: #dc3278; }
+
+.btn:hover, .btn:focus, .btn:active, .btn.active { background-color: #28b450; color: white; text-decoration: none; border-color: #28b450; }
 
 @media screen and (min-width: 64em) { .btn { padding: 0.4rem 1rem; } }
 
