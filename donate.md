@@ -12,28 +12,28 @@ title: TABS.DONATE
     <section>
         <h3>{% t DONATE.DONORS %}</h3>
         <ol>
-            {% for donator in site.data.donators %}
+            {% for donor in site.data.donors %}
                 {% if forloop.index <= 1 %}
-                    <li style="color:#1E963C;"><strong>{{ donator.name }}</strong></li>
+                    <li style="color:#1E963C;"><strong>{{ donor.name }}</strong> - <em>${{ donor.donation}}</em></li>
                 {% elsif forloop.index <= 3 %}
-                    <li><strong>{{ donator.name }}</strong></li>
+                    <li><strong>{{ donor.name }}</strong> - <em>${{ donor.donation}}</em></li>
                 {% elsif forloop.index <= 10 %}
-                    <li>{{ donator.name }}</li>
+                    <li>{{ donor.name }} - <em>${{ donor.donation}}</em></li>
                 {% endif %}
             {% endfor %}
         </ol>
-        {% for donator in site.data.donators %}
-        <!-- If I reached over 10 donators -->
+        {% for donor in site.data.donors %}
+        <!-- If I reached over 10 donors -->
             <!-- {% if forloop.index > 100 %}
                 {% if forloop.last %}<span style="font-size:90%;color:#ccc;">...</span>{% endif %}
             {% elsif forloop.index > 80 %}
-                <span style="font-size:90%;color:#ccc;">{{ donator.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span style="font-size:90%;color:#ccc;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 50 %}
-                <span style="font-size:90%;color:#aaa;">{{ donator.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span style="font-size:90%;color:#aaa;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 20 %}
-                <span style="font-size:90%;color:#888;">{{ donator.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span style="font-size:90%;color:#888;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 10 %}
-                <span style="font-size:90%;color:#666;">{{ donator.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span style="font-size:90%;color:#666;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% endif %} -->
         {% else %}
             <pre>{% t DONATE.NO_DONORS %}</pre>
