@@ -9,7 +9,7 @@
 <a href="https://www.reddit.com/r/spytify">
    ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=r%2Fspytify)
 </a>
-[![Donate](https://img.shields.io/badge/Support-Donate-blueviolet)](https://jwallet.github.io/spy-spotify/donate.html)
+[![Donate](https://img.shields.io/badge/Support-Donate-ff69b4)](https://jwallet.github.io/spy-spotify/donate.html)
 
 Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.
 
@@ -54,5 +54,5 @@ You can help translate Spytify on Zanata.org, see [Translate](translate.md) for 
 ## Download
 ### [Download](https://github.com/jwallet/spy-spotify/releases)
 
-## Support Spytify on Donorbox
-😃 If you like Spytify, you can help me out for a [couple of beers](https://jwallet.github.io/spy-spotify/donate.html) 🍺. Donorbox takes donations with Stripe or Paypal.
+## Support Spytify
+😃 If you like Spytify, you can help me out for a [couple of beers](https://jwallet.github.io/spy-spotify/donate.html) 🍺.
