@@ -484,6 +484,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open the Audio Virtual Cable controller..
+        /// </summary>
+        internal static string msgBodyDriverInstallationFailed {
+            get {
+                return ResourceManager.GetString("msgBodyDriverInstallationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This output path does not exist, select another one..
         /// </summary>
         internal static string msgBodyPathNotFound {
@@ -525,6 +534,15 @@ namespace EspionSpotify.Translations {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio Virtual Cable.
+        /// </summary>
+        internal static string msgTitleDriverInstallationFailed {
+            get {
+                return ResourceManager.GetString("msgTitleDriverInstallationFailed", resourceCulture);
             }
         }
         
@@ -583,6 +601,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install Audio Virtual Cable.
+        /// </summary>
+        internal static string tipInstallVirtualCableDriver {
+            get {
+                return ResourceManager.GetString("tipInstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         internal static string tipPath {
@@ -615,6 +642,15 @@ namespace EspionSpotify.Translations {
         internal static string tipStopSying {
             get {
                 return ResourceManager.GetString("tipStopSying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall Audio Virtual Cable.
+        /// </summary>
+        internal static string tipUninstallVirtualCableDriver {
+            get {
+                return ResourceManager.GetString("tipUninstallVirtualCableDriver", resourceCulture);
             }
         }
     }

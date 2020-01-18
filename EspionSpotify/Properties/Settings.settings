@@ -32,9 +32,6 @@
     <Setting Name="TabNo" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="DisableAds" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="EndingSongDelayEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -53,7 +50,7 @@
     <Setting Name="LastVersionPrompted" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AudioEndPointDeviceIndex" Type="System.String" Scope="User">
+    <Setting Name="AudioEndPointDevice" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Logs" Type="System.String" Scope="User">

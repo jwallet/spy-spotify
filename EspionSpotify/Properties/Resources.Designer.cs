@@ -63,6 +63,16 @@ namespace EspionSpotify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_device {
+            get {
+                object obj = ResourceManager.GetObject("add_device", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap clear {
             get {
                 object obj = ResourceManager.GetObject("clear", resourceCulture);
@@ -156,6 +166,16 @@ namespace EspionSpotify.Properties {
         internal static System.Drawing.Bitmap release {
             get {
                 object obj = ResourceManager.GetObject("release", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap remove_device {
+            get {
+                object obj = ResourceManager.GetObject("remove_device", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

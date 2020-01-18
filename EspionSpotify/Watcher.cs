@@ -135,7 +135,7 @@ namespace EspionSpotify
 
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
-            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDeviceIndex);
+            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDevice);
             return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(_running);
         }
 

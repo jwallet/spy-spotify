@@ -145,18 +145,6 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DisableAds {
-            get {
-                return ((bool)(this["DisableAds"]));
-            }
-            set {
-                this["DisableAds"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EndingSongDelayEnabled {
             get {
@@ -230,12 +218,12 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string AudioEndPointDeviceIndex {
+        public string AudioEndPointDevice {
             get {
-                return ((string)(this["AudioEndPointDeviceIndex"]));
+                return ((string)(this["AudioEndPointDevice"]));
             }
             set {
-                this["AudioEndPointDeviceIndex"] = value;
+                this["AudioEndPointDevice"] = value;
             }
         }
         

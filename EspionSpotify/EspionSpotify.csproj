@@ -171,6 +171,7 @@
     <Compile Include="Controls\MetroTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Drivers\AudioVirtualCableDriver.cs" />
     <Compile Include="Enums\LastFMNodeStatus.cs" />
     <Compile Include="Enums\AlbumCoverSize.cs" />
     <Compile Include="Enums\MediaTagsAPI.cs" />
@@ -274,6 +275,48 @@
       <DependentUpon>frmEspionSpotify.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Drivers\vbaudio_cable64_2003.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable64_2003.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable64_vista.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable64_vista.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable64_win7.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable64_win7.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_2003.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_2003.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_vista.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_vista.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_win7.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_win7.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_xp.cat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Drivers\vbaudio_cable_xp.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -319,6 +362,52 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\release.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Drivers\pin_in.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\pin_out.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\readme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\VBCABLE_ControlPanel.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\VBCABLE_Setup.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\VBCABLE_Setup_x64.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable64_2003.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable64_vista.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable64_win7.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable_2003.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable_vista.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable_win7.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Drivers\vbMmeCable_xp.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\add_device.gif" />
+    <Content Include="Resources\remove_device.gif" />
+    <Content Include="setup-spotify-api.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NAudio.Lame.1.0.9\build\NAudio.Lame.targets" Condition="Exists('..\packages\NAudio.Lame.1.0.9\build\NAudio.Lame.targets')" />

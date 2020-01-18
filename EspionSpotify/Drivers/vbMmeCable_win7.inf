@@ -1,0 +1,153 @@
+[Version]
+Signature="$CHICAGO$"
+Class=MEDIA
+Provider=%Provider%
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+DriverVer=09/02/2014,1.0.3.5
+CatalogFile=vbaudio_cable_win7.cat
+
+
+[SourceDisksNames]
+222=%DiskName%,"",222
+
+[SourceDisksFiles.x86]
+vbaudio_cable_win7.sys=222
+
+
+[Manufacturer]
+%Provider%=VBCable,NTamd64, NTIA64
+
+
+[VBCable]
+%DeviceName%=VBCableInst,%HardwareId%
+
+
+[VBCable.NTamd64]
+%DeviceName%=VBCableInst,%HardwareId%
+
+
+[VBCable.NTIA64]
+%DeviceName%=VBCableInst,%HardwareId%
+
+[DestinationDirs]
+VBCableInst.CopyList=10,system32\drivers
+
+
+;======================================================
+; VB_CABLE
+;======================================================
+[VBCableInst]
+AlsoInstall=ks.registration(ks.inf),wdmaudio.registration(wdmaudio.inf)
+CopyFiles=VBCableInst.CopyList
+AddReg=VBCableInst.AddReg
+
+[VBCableInst.CopyList]
+vbaudio_cable_win7.sys
+
+[VBCableInst.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,"Topo",VBCableInst.I.Topo
+AddInterface=%KSCATEGORY_AUDIO%,"Wave",VBCableInst.I.Wave
+AddInterface=%KSCATEGORY_CAPTURE%,"Wave",VBCableInst.I.Wave
+AddInterface=%KSCATEGORY_RENDER%,"Wave",VBCableInst.I.Wave
+
+[VBCableInst.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,redbook"
+;HKR,,SetupPreferredAudioDevices,3,01,00,00,00
+HKR,,Driver,,%DriverFile%
+HKR,,NTMPDriver,,"%DriverFile%,sbemul.sys"
+
+HKR,Drivers,SubClasses,,"wave,mixer"
+
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+
+HKR,Drivers\wave\wdmaud.drv,Description,,%DeviceName%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%DeviceName%
+
+HKLM,%MediaCategories%\%VBCABLE.INPUTGUID%,Name,,%VBCABLE.INPUTNAME%
+HKLM,%MediaCategories%\%VBCABLE.INPUTGUID%,Display,1,00,00,00,00
+
+HKLM,%MediaCategories%\%VBCABLE.OUTPUTGUID%,Name,,%VBCABLE.OUTPUTNAME%
+HKLM,%MediaCategories%\%VBCABLE.OUTPUTGUID%,Display,1,00,00,00,00
+
+;======================================================
+; COMMON
+;======================================================
+[VBCableInst.I.Topo]
+AddReg=VBCableInst.I.Topo.AddReg
+
+[VBCableInst.I.Topo.AddReg]
+HKR,,CLSID,,%CLSID_Proxy%
+HKR,,FriendlyName,,%VBCABLE.NAMELine1%
+
+[VBCableInst.I.Wave]
+AddReg=VBCableInst.I.Wave.AddReg
+
+[VBCableInst.I.Wave.AddReg]
+HKR,,CLSID,,%CLSID_Proxy%
+HKR,,FriendlyName,,%VBCABLE.NAMELine1%
+
+
+
+;======================================================
+; VB_CABLE NT
+;======================================================
+[VBCableInst.NT]
+Include=ks.inf,wdmaudio.inf
+Needs=KS.Registration, WDMAUDIO.Registration
+CopyFiles=VBCableInst.CopyList
+AddReg=VBCableInst.AddReg
+
+
+
+[VBCableInst.NT.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,"Topo",VBCableInst.I.Topo
+AddInterface=%KSCATEGORY_AUDIO%,"Wave",VBCableInst.I.Wave
+AddInterface=%KSCATEGORY_CAPTURE%,"Wave",VBCableInst.I.Wave
+AddInterface=%KSCATEGORY_RENDER%,"Wave",VBCableInst.I.Wave
+
+
+
+[VBCableInst.NT.Services]
+AddService=%ServiceName%,0x2,SrvInstSection
+
+[SrvInstSection]
+DisplayName=%DeviceName% (WDM)
+ServiceType=%SERVICE_KERNEL_DRIVER%
+StartType=%SERVICE_DEMAND_START%
+ErrorControl=%SERVICE_ERROR_NORMAL%
+ServiceBinary=%12%\%DriverFile%
+
+
+;======================================================
+;COMMON STRING
+;======================================================
+[Strings]
+
+Provider="VB-Audio Software"
+DeviceName="VB-Audio Virtual Cable"
+HardwareId="VBAudioVACWDM"
+ServiceName="VBAudioVACMME"
+DriverFile="vbaudio_cable_win7.sys"
+DiskName="vbcable Driver Disk"
+
+KSCATEGORY_AUDIO="{6994AD04-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_RENDER="{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+
+CLSID_Proxy="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+
+SERVICE_KERNEL_DRIVER=1
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+
+;; FriendlyName
+VBCABLE.INPUTGUID	="{23208800-570C-4682-BB53-7F12CE497910}"
+VBCABLE.OUTPUTGUID	="{23208900-570C-4682-BB53-7F12CE497910}"
+
+VBCABLE.NAMELine1		="VB-Audio Point"
+VBCABLE.INPUTNAME		="CABLE Output"
+VBCABLE.OUTPUTNAME		="CABLE Input"
+
+MediaCategories="SYSTEM\CurrentControlSet\Control\MediaCategories"
+
