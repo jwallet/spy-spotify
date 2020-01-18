@@ -11,17 +11,20 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using EspionSpotify.Models;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
     internal static class GitHub
     {
-        private const string REPO_RELEASE_LINK = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
+        private const string API_LATEST_RELEASE_URL = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
         private const string SPYTIFY = "Spytify";
 
-        public static async void GetVersion(IFrmEspionSpotify _form)
+        public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
+
+        public static async Task GetVersion()
         {
-            if (!Uri.TryCreate(REPO_RELEASE_LINK, UriKind.Absolute, out var uri)) return;
+            if (!Uri.TryCreate(API_LATEST_RELEASE_URL, UriKind.Absolute, out var uri)) return;
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest)WebRequest.Create(uri);
@@ -52,8 +55,8 @@ namespace EspionSpotify
                     if (githubTagVersion <= assemblyVersion) return;
                     if (Settings.Default.LastVersionPrompted.ToVersion() == githubTagVersion) return;
 
-                    var dialogTitle = string.Format(_form.Rm.GetString(I18nKeys.MsgNewVersionTitle), githubTagVersion);
-                    var dialogMessage = _form.Rm.GetString(I18nKeys.MsgNewVersionContent);
+                    var dialogTitle = string.Format(FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionTitle), githubTagVersion);
+                    var dialogMessage = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionContent);
 
                     if (!string.IsNullOrEmpty(release.body))
                     {

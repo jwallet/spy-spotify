@@ -1,0 +1,12 @@
+﻿Go to https://developer.spotify.com/dashboard/applications/ and register a new application
+- (e.g.:) Name: spotify, description: none, building: i don't know
+- Accept the terms
+Click on the new spotify application that you created and click on Edit the settings
+- Set as "Redirect URI" the value "http://localhost:4002", Add and save it.
+On the spotify app dashboard, get
+- The "Client ID" 
+- The "Client Secret" (click on Show)
+Paste the ids below
+- (e.g.:)   <setting name="SpotifyAPISecretId" serializeAs="String">
+                <value>1234567890</value>
+            </setting>

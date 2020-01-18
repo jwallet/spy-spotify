@@ -21,7 +21,7 @@ namespace EspionSpotify.Models
         public ISpotifyAudioSession SpotifyAudioSession { get; set; }
         public int InternalOrderNumber { get; set; } = 1;
         public bool DuplicateAlreadyRecordedTrack { get; set; }
-        public int? AudioEndPointDeviceIndex { get; set; }
+        public int? AudioEndPointDevice { get; set; }
         public string RecordingTimer { get; set; }
         public string SpotifyAPIClientId { get; set; }
         public string SpotifyAPISecretId { get; set; }

@@ -10,6 +10,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys CbOptBitRate320 { get => TranslationKeys.cbOptBitRate320; }
         public static TranslationKeys CbOptBitRateSpotifyFree { get => TranslationKeys.cbOptBitRateSpotifyFree; }
         public static TranslationKeys CbOptBitRateSpotifyPremium { get => TranslationKeys.cbOptBitRateSpotifyPremium; }
+
         public static TranslationKeys LblAddFolders { get => TranslationKeys.lblAddFolders; }
         public static TranslationKeys LblAddSeparators { get => TranslationKeys.lblAddSeparators; }
         public static TranslationKeys LblAds { get => TranslationKeys.lblAds; }
@@ -29,6 +30,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblRecordingTimer { get => TranslationKeys.lblRecordingTimer; }
         public static TranslationKeys LblRecordUnknownTrackType { get => TranslationKeys.lblRecordUnknownTrackType; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
+
         public static TranslationKeys LogAd { get => TranslationKeys.logAd; }
         public static TranslationKeys LogDeleting { get => TranslationKeys.logDeleting; }
         public static TranslationKeys LogInvalidOutput { get => TranslationKeys.logInvalidOutput; }
@@ -50,20 +52,27 @@ namespace EspionSpotify.Models
         public static TranslationKeys LogUnknownException { get => TranslationKeys.logUnknownException; }
         public static TranslationKeys LogUnsupportedNumberChannels { get => TranslationKeys.logUnsupportedNumberChannels; }
         public static TranslationKeys LogUnsupportedRate { get => TranslationKeys.logUnsupportedRate; }
+
         public static TranslationKeys MsgBodyCantQuit { get => TranslationKeys.msgBodyCantQuit; }
+        public static TranslationKeys MsgBodyDriverInstallationFailed { get => TranslationKeys.msgBodyDriverInstallationFailed; }
         public static TranslationKeys MsgBodyPathNotFound { get => TranslationKeys.msgBodyPathNotFound; }
         public static TranslationKeys MsgFolderDialog { get => TranslationKeys.msgFolderDialog; }
         public static TranslationKeys MsgNewVersionContent { get => TranslationKeys.msgNewVersionContent; }
         public static TranslationKeys MsgNewVersionTitle { get => TranslationKeys.msgNewVersionTitle; }
         public static TranslationKeys MsgTitleCantQuit { get => TranslationKeys.msgTitleCantQuit; }
+        public static TranslationKeys MsgTitleDriverInstallationFailed { get => TranslationKeys.msgTitleDriverInstallationFailed; }
         public static TranslationKeys MsgTitlePathNotFound { get => TranslationKeys.msgTitlePathNotFound; }
+
         public static TranslationKeys TabAdvanced { get => TranslationKeys.tabAdvanced; }
         public static TranslationKeys TabRecord { get => TranslationKeys.tabRecord; }
         public static TranslationKeys TabSettings { get => TranslationKeys.tabSettings; }
+
         public static TranslationKeys TipClear { get => TranslationKeys.tipClear; }
         public static TranslationKeys TipDirectory { get => TranslationKeys.tipDirectory; }
+        public static TranslationKeys TipInstallVirtualCableDriver { get => TranslationKeys.tipInstallVirtualCableDriver; }
         public static TranslationKeys TipPath { get => TranslationKeys.tipPath; }
         public static TranslationKeys TipRelease { get => TranslationKeys.tipRelease; }
+        public static TranslationKeys TipUninstallVirtualCableDriver { get => TranslationKeys.tipUninstallVirtualCableDriver; }
         public static TranslationKeys TipStartSpying { get => TranslationKeys.tipStartSpying; }
         public static TranslationKeys TipStopSying { get => TranslationKeys.tipStopSying; }
     }

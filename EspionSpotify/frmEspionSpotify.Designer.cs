@@ -79,6 +79,7 @@ namespace EspionSpotify
             this.tgMuteAds = new MetroFramework.Controls.MetroToggle();
             this.lblAudioDevice = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.lnkAudioVirtualCable = new MetroFramework.Controls.MetroLink();
             this.cbAudioDevices = new EspionSpotify.Controls.MetroComboBox();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.tlAdvanced = new System.Windows.Forms.TableLayoutPanel();
@@ -509,16 +510,15 @@ namespace EspionSpotify
             // 
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel8.Controls.Add(this.lnkPath, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.txtPath, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(141, 10);
-            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(144, 13);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(579, 35);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel8.TabIndex = 35;
             // 
             // lnkPath
@@ -528,9 +528,10 @@ namespace EspionSpotify
             this.lnkPath.Image = global::EspionSpotify.Properties.Resources.folder;
             this.lnkPath.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lnkPath.ImageSize = 28;
-            this.lnkPath.Location = new System.Drawing.Point(542, 3);
+            this.lnkPath.Location = new System.Drawing.Point(533, 0);
+            this.lnkPath.Margin = new System.Windows.Forms.Padding(0);
             this.lnkPath.Name = "lnkPath";
-            this.lnkPath.Size = new System.Drawing.Size(34, 29);
+            this.lnkPath.Size = new System.Drawing.Size(40, 29);
             this.lnkPath.TabIndex = 46;
             this.lnkPath.UseCustomBackColor = true;
             this.lnkPath.UseSelectable = true;
@@ -556,7 +557,8 @@ namespace EspionSpotify
             this.txtPath.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.txtPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.txtPath.Lines = new string[0];
-            this.txtPath.Location = new System.Drawing.Point(3, 3);
+            this.txtPath.Location = new System.Drawing.Point(0, 0);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(0);
             this.txtPath.MaxLength = 32767;
             this.txtPath.Name = "txtPath";
             this.txtPath.PasswordChar = '\0';
@@ -651,10 +653,11 @@ namespace EspionSpotify
             this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
             this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinTime.Location = new System.Drawing.Point(42, 3);
+            this.tbMinTime.Location = new System.Drawing.Point(39, 0);
+            this.tbMinTime.Margin = new System.Windows.Forms.Padding(0);
             this.tbMinTime.Maximum = 24;
             this.tbMinTime.Name = "tbMinTime";
-            this.tbMinTime.Size = new System.Drawing.Size(528, 29);
+            this.tbMinTime.Size = new System.Drawing.Size(534, 35);
             this.tbMinTime.TabIndex = 17;
             this.tbMinTime.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tbMinTime.Value = 6;
@@ -883,17 +886,34 @@ namespace EspionSpotify
             // 
             // tableLayoutPanel5
             // 
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.Controls.Add(this.lnkAudioVirtualCable, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.cbAudioDevices, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(144, 48);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel5.TabIndex = 49;
+            // 
+            // lnkVAD
+            // 
+            this.lnkAudioVirtualCable.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lnkAudioVirtualCable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkAudioVirtualCable.Image = global::EspionSpotify.Properties.Resources.add_device;
+            this.lnkAudioVirtualCable.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lnkAudioVirtualCable.ImageSize = 28;
+            this.lnkAudioVirtualCable.Location = new System.Drawing.Point(533, 0);
+            this.lnkAudioVirtualCable.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkAudioVirtualCable.Name = "lnkVAD";
+            this.lnkAudioVirtualCable.Size = new System.Drawing.Size(40, 29);
+            this.lnkAudioVirtualCable.TabIndex = 47;
+            this.lnkAudioVirtualCable.UseCustomBackColor = true;
+            this.lnkAudioVirtualCable.UseSelectable = true;
+            this.lnkAudioVirtualCable.Click += new System.EventHandler(this.LnkVAD_Click);
             // 
             // cbAudioDevices
             // 
@@ -905,13 +925,14 @@ namespace EspionSpotify
             this.cbAudioDevices.Location = new System.Drawing.Point(0, 0);
             this.cbAudioDevices.Margin = new System.Windows.Forms.Padding(0);
             this.cbAudioDevices.Name = "cbAudioDevices";
-            this.cbAudioDevices.Size = new System.Drawing.Size(573, 29);
+            this.cbAudioDevices.Size = new System.Drawing.Size(533, 29);
             this.cbAudioDevices.Style = MetroFramework.MetroColorStyle.Green;
             this.cbAudioDevices.TabIndex = 37;
             this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.cbAudioDevices.UseCustomBackColor = true;
             this.cbAudioDevices.UseSelectable = true;
             this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
+            this.cbAudioDevices.DataSourceChanged += new System.EventHandler(this.CbAudioDevices_DataSourceChanged);
             // 
             // tabAdvanced
             // 
@@ -1521,6 +1542,7 @@ namespace EspionSpotify
         private System.Windows.Forms.TableLayoutPanel tlpAPI;
         private MetroRadioButton rbLastFMAPI;
         private MetroRadioButton rbSpotifyAPI;
+        private MetroLink lnkAudioVirtualCable;
     }
 }
 

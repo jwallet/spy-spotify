@@ -365,4 +365,20 @@
     <value>Choose the folder where you want to save the recorded audio files.</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
+    <value>Failed to open the Audio Virtual Cable controller.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitleDriverInstallationFailed" xml:space="preserve">
+    <value>Audio Virtual Cable</value>
+    <comment>message</comment>
+  </data>
+  <data name="tipInstallVirtualCableDriver" xml:space="preserve">
+    <value>Installeer Audio Virtual Cable</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipUninstallVirtualCableDriver" xml:space="preserve">
+    <value>Verwijder Audio Virtual Cable</value>
+    <comment>interface</comment>
+  </data>
 </root>
