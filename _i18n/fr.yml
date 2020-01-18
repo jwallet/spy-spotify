@@ -43,4 +43,4 @@ FAQ:
     CONTENT: "Ajouter le numéro de l'ordre d'enregistrement aux fichiers `017_Artist_-_Title.mp3` est utile si vous voulez mettre vos chansons sur CDs (disque compact)  et que votre lecteur MP3, comme ceux dans les voitures, ordonnent les chansons par nom de fichier. Vous obtiendrez un CD avec les chansons ordonnés dans le même ordre que l'album ou celui présenté par Spotify. Si c'est une liste de lecture, ordonnez là sur Spotify avant l'enregistrement."
   GET_MP3_METADATA_FROM_SPOTIFY_API:
     TITLE: "Obtenir les métadonnées MP3 de l'API Spotify au lieu de Last.fm"
-    CONTENT: "Cette option est en développement mais paramétrable dans le fichier **spytify.exe.config**. Ouvrir avec un éditeur de texte et suivre les indications des lignes en commentaires au bas du fichier pour activer la saisie des infos du média MP3 à partir de Spotify."
+    CONTENT: "Cette option est en développement mais paramétrable dans le fichier **spytify.exe.config**. Ouvrir un éditeur de texte et suivre les indications écrites dans **setup-spotify-api.txt** pour activer la saisie des infos du média MP3 à partir de Spotify."

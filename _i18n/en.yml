@@ -43,4 +43,4 @@ FAQ:
     CONTENT: "Adding the recording order number to files `017_Artist_-_Title.mp3` is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it's a playlist, order it first on Spotify before recording it."
   GET_MP3_METADATA_FROM_SPOTIFY_API:
     TITLE: "Get MP3 metadata from Spotify API instead of Last.fm"
-    CONTENT: "This option is in development but can be set in the **spytify.exe.config** file. Open an text editor and follow the steps wrote as a comment at bottom of the file to enable the gathering of MP3 media info from Spotify."
+    CONTENT: "This option is in development but can be set in the **spytify.exe.config** file. Open a text editor and follow the steps wrote in **setup-spotify-api.txt** to enable the gathering of MP3 media info from Spotify."
