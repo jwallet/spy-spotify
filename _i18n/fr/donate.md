@@ -7,11 +7,11 @@ Les plus haut dons seront ajoutés à la liste des donateurs en utilisant le nom
 
 <i style="font-size:80%">Les transactions sont manipulés par <a href="https://stripe.com/en-ca">Stripe online payments services</a> par défaut, vous pouvez sinon choisir de procéder avec <a href="https://www.paypal.com/ca/webapps/mpp/about">Paypal</a> au lieu de compléter la troisième étape.</i>
 
-## Beerpay souhaits et dons
-[Spytify est également sur Beerpay.io](https://beerpay.io/jwallet/spy-spotify), vous pouvez donner le montant que vous désirez de façon anonyme et **faire un souhait en ajoutant un récompense à un _issue_ ou un _feature_ que vous voulez**. 
+## IssueHunt
+Spytify est également sur IssueHunt, un traqueur de bugs qui vous laisse publier **une prime sur un bug**, une façon d'attirer l'attention des _bounty hunters_ (chasseurs de primes - développeurs) pour avoir votre fonctionnalité codée ou bug fixé.
 
-[![Beerpay](https://beerpay.io/jwallet/spy-spotify/badge.svg?style=beer-square)](https://beerpay.io/jwallet/spy-spotify)  [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
+Contribuez en ajoutant **une prime (_bounty_) 💰** sur un bug listé [ici](https://issuehunt.io/r/jwallet/spy-spotify?tab=idle) quee vous désirez voir résolue ou **chassez en un 🦉** pour être récompensé.
 
-<i style="font-size:80%">Les pages de Beerpay n'apparaisseront pas du tout (pages blanches) si vous avez un bloqueur de publicités actif (_issue_ connu).</i>
+<a href="https://issuehunt.io/r/jwallet/spy-spotify"><img src="./assets/images/isohunt_badge.svg" /></a>
 
 ## Faire un don
