@@ -7,11 +7,13 @@ Top donations will be added to the donors list using the full name you provided,
 
 <i style="font-size:80%">Transactions are handled by <a href="https://stripe.com/en-ca">Stripe online payments services</a> by default, otherwise you can choose to proceed with <a href="https://www.paypal.com/ca/webapps/mpp/about">Paypal</a> instead of completing the third step.</i>
 
-## Beerpay wishes and donations
-[Spytify is also on Beerpay.io](https://beerpay.io/jwallet/spy-spotify), you can give the amount you want anonymously and **make a wish by adding a bounty to an issue or feature that you want**.
+## BountySource
+[Spytify is also on BountySource](https://www.bountysource.com/teams/spy-spotify/activity), an issue tracker that you can **post a bounty on an issue that you wish see added faster to Spytify**, a way to attract bounty hunters (devs) attention to get your feature coded or a bug fixed.
 
-[![Beerpay](https://beerpay.io/jwallet/spy-spotify/badge.svg?style=beer-square)](https://beerpay.io/jwallet/spy-spotify)  [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
+**Post a bounty 💰 :** Contribute using USD or Crypto currency to an issue listed [here](https://www.bountysource.com/teams/spy-spotify/issues)
 
-<i style="font-size:80%">Beerpay pages won't appear at all (white pages) if you have an ad blocker turned on (known issue).</i>
+[![Bountysource](https://img.shields.io/bountysource/team/spy-spotify/activity?logo=bountysource&style=for-the-badge)](https://www.bountysource.com/teams/spy-spotify/issues)
+
+<i style="font-size:80%">If you have an ad blocker turned on, an issue page will always be blank on bountysource if you don't whitelist it.</i>
 
 ## Donate

@@ -7,11 +7,13 @@ Les plus haut dons seront ajoutés à la liste des donateurs en utilisant le nom
 
 <i style="font-size:80%">Les transactions sont manipulés par <a href="https://stripe.com/en-ca">Stripe online payments services</a> par défaut, vous pouvez sinon choisir de procéder avec <a href="https://www.paypal.com/ca/webapps/mpp/about">Paypal</a> au lieu de compléter la troisième étape.</i>
 
-## Beerpay souhaits et dons
-[Spytify est également sur Beerpay.io](https://beerpay.io/jwallet/spy-spotify), vous pouvez donner le montant que vous désirez de façon anonyme et **faire un souhait en ajoutant un récompense à un _issue_ ou un _feature_ que vous voulez**. 
+## BountySource
+[Spytify est également sur BountySource](https://www.bountysource.com/teams/spy-spotify/activity), un traqueur de bugs que vous pouvez **publier une prime (_bounty_) sur un _issue_ que vous souhaitez voir ajouter plus rapidement à Spytify**, une façon d'attirer l'attention des _bounty hunters_ (chasseurs de primes - développeurs) pour obtenir votre fonctionnalité codée ou bug fixé.
 
-[![Beerpay](https://beerpay.io/jwallet/spy-spotify/badge.svg?style=beer-square)](https://beerpay.io/jwallet/spy-spotify)  [![Beerpay](https://beerpay.io/jwallet/spy-spotify/make-wish.svg?style=flat-square)](https://beerpay.io/jwallet/spy-spotify?focus=wish)
+**Publier une prime 💰 :** Contribuez en utilisant la devise USD ou Crypto sur un bug listé [ici](https://www.bountysource.com/teams/spy-spotify/issues)
 
-<i style="font-size:80%">Les pages de Beerpay n'apparaisseront pas du tout (pages blanches) si vous avez un bloqueur de publicités actif (_issue_ connu).</i>
+[![Bountysource](https://img.shields.io/bountysource/team/spy-spotify/activity?logo=bountysource&style=for-the-badge)](https://www.bountysource.com/teams/spy-spotify/issues)
+
+<i style="font-size:80%">Si vous avez un bloqueur de publicité actif, la page d'un bug sur bountysource apparaîtra toujours blanc si vous ne le désactivez pas.</i>
 
 ## Faire un don
