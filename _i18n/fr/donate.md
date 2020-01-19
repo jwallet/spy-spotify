@@ -7,13 +7,11 @@ Les plus haut dons seront ajoutés à la liste des donateurs en utilisant le nom
 
 <i style="font-size:80%">Les transactions sont manipulés par <a href="https://stripe.com/en-ca">Stripe online payments services</a> par défaut, vous pouvez sinon choisir de procéder avec <a href="https://www.paypal.com/ca/webapps/mpp/about">Paypal</a> au lieu de compléter la troisième étape.</i>
 
-## BountySource
-[Spytify est également sur BountySource](https://www.bountysource.com/teams/spy-spotify/activity), un traqueur de bugs que vous pouvez **publier une prime (_bounty_) sur un _issue_ que vous souhaitez voir ajouter plus rapidement à Spytify**, une façon d'attirer l'attention des _bounty hunters_ (chasseurs de primes - développeurs) pour obtenir votre fonctionnalité codée ou bug fixé.
+## IssueHunt
+Spytify est également sur IssueHunt, un traqueur de bugs qui vous laisse publier **une prime sur un bug**, une façon d'attirer l'attention des _bounty hunters_ (chasseurs de primes - développeurs) pour avoir votre fonctionnalité codée ou bug fixé.
 
-**Publier une prime 💰 :** Contribuez en utilisant la devise USD ou Crypto sur un bug listé [ici](https://www.bountysource.com/teams/spy-spotify/issues)
+Contribuez en ajoutant **une prime (_bounty_) 💰** sur un bug listé [ici](https://issuehunt.io/r/jwallet/spy-spotify?tab=idle) quee vous désirez voir résolue ou **chassez en un 🦉** pour être récompensé.
 
-[![Bountysource](https://img.shields.io/bountysource/team/spy-spotify/activity?logo=bountysource&style=for-the-badge)](https://www.bountysource.com/teams/spy-spotify/issues)
-
-<i style="font-size:80%">Si vous avez un bloqueur de publicité actif, la page d'un bug sur bountysource apparaîtra toujours blanc si vous ne le désactivez pas.</i>
+<a href="https://issuehunt.io/r/jwallet/spy-spotify"><img src="./assets/images/isohunt_badge.svg" /></a>
 
 ## Faire un don
