@@ -11,7 +11,7 @@ url: "https://jwallet.github.io/spy-spotify/"
 logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
 languages: ['en', 'fr']
 defaultLang: en
-exclude_from_localizations: ['assets', '_sass', 'fr', 'LICENSE', 'README.md']
+exclude_from_localizations: ['_sass', 'fr', 'LICENSE', 'README.md']
 exclude: ['fr/', 'faq/', 'LICENSE', 'README.md']
 languageNames:
   fr: Français
