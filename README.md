@@ -22,8 +22,11 @@ A __free Spotify account will work__, but restricts audio quality to 120 kbps. H
 <p align="center"><img alt="Spotify Recorder logs" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/ui_record.png" /></p>
 
 ## How it works
-Spytify records what your computer's sound card outputs. Spytify records the same quality that Spotify outputs, so the recorded version will be indistinguishable from Spotify's version. Spytify records at .mp3 quality, and not at higher qualities like .FLAC, since Spotify can only deliver 320 kbps audio quality.
+Spytify records what Spotify outputs, which is a longer process than downloading a Spotify playlist with a tool.
 
+However, Spytify ensures that all tracks will be the official released one, all sound volume normalized and with media tags and album cover. Playlist Downloaders get mostly all tracks from YouTube which means that they can’t guarantee the choosen track will fit 100% the one in your playlist and they will all be the same quality.
+
+Spytify records the same quality that Spotify outputs (Spotify Free 160kbps, Spotify Premium 320kbps), so the recorded copy will be indistinguishable from Spotify’s one.
 ## App features
 
 || Feature | Description |
