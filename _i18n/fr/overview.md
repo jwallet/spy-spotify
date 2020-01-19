@@ -3,7 +3,11 @@ Spytify est un enregistreur Spotify pour Windows qui enregistre l'audio de Spoti
 <p align="center"><img alt="Spotify Recorder logs" src="./assets/images/ui_record.png" /></p>
 
 ## [Comment ça fonctionne?](#how-it-works)
-Spytify enregistre ce que votre carte de son de votre ordinateur produit. Spytify enregistre à la qualité que Spotify produit, alors la copie enregistrée sera indistinctible de celle de Spotify. Spytify enregistre à la qualité .mp3, et non à de plus hautes qualités comme .flac, puisque Spotify peut seulement envoyer une qualité audio de 320 kbps.
+Spytify enregistre le son que Spotify produit, ce qui est une procédure plus longue que de télécharger une liste de lecture Spotify avec un outil.
+
+Parcontre, Spytify assure que toutes les chansons seront celles officiellement publiées, tout volume normalisé et avec les tags média et couverture d'album. Les téléchargeurs de listes de lecture obtiennent la plupart des chansons à partir de YouTube ce qui veut dire qu'ils ne garantissent pas que la chanson choisie ressemblera à 100% à celle de votre liste et qu'elles seront tous la même qualité.
+
+Spytify enregistre la même qualité que Spotify produit (Spotify Free 160kbps, Spotify Premium 320kbps), donc la copie enregistrée sera indistinctible de celle de Spotify.
 
 <figure>
     <figcaption>Écoutez un échantillon mp3 à 120kbp/s:</figcaption>
