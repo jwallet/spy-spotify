@@ -100,6 +100,8 @@ namespace EspionSpotify.AudioSessions
 
         public void SetSpotifyVolumeToHighAndOthersToMute(bool mute)
         {
+            DefaultEndPointDevice.AudioSessionManager.RefreshSessions();
+
             var sessionAudioEndPointDevice = GetSessionsAudioEndPointDevice;
             
             for (var i = 0; i < sessionAudioEndPointDevice.Count; i++)

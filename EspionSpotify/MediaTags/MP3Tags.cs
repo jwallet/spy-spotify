@@ -1,6 +1,8 @@
 ﻿using EspionSpotify.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -45,13 +47,17 @@ namespace EspionSpotify.MediaTags
 
             await Task.WhenAll(taskGetArtXL, taskGetArtL, taskGetArtM, taskGetArtS);
 
-            mp3.Tag.Pictures = new TagLib.IPicture[4]
+            var pictures = (new TagLib.IPicture[4]
             {
                 GetAlbumCoverToPicture(Track.ArtExtraLarge),
                 GetAlbumCoverToPicture(Track.ArtLarge),
                 GetAlbumCoverToPicture(Track.ArtMedium),
                 GetAlbumCoverToPicture(Track.ArtSmall)
-            };
+            }).Where(x => x != null).ToList();
+
+            pictures.FirstOrDefault().Type = TagLib.PictureType.FrontCover;
+
+            mp3.Tag.Pictures = pictures.ToArray();
 
             if (File.Exists(CurrentFile))
             {
@@ -73,13 +79,12 @@ namespace EspionSpotify.MediaTags
 
         private TagLib.Picture GetAlbumCoverToPicture(byte[] data)
         {
-            if (data == null) return new TagLib.Picture();
+            if (data == null) return null;
 
             return new TagLib.Picture
             {
-                Type = TagLib.PictureType.FrontCover,
+                Type = TagLib.PictureType.Media,
                 MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
-                Description = "Cover",
                 Data = data
             };
         }
