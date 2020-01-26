@@ -1,6 +1,8 @@
 ﻿using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
+using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -35,16 +37,9 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void TickEventSpotifyIdling_ReturnsNoEvent()
+        internal void TickEventSpotifyIdling_ReturnsNoEvent()
         {
-            var track = new Track();
-
-            var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
-            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(track));
-
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
@@ -56,6 +51,7 @@ namespace EspionSpotify.Tests
             spotifyHandler.OnPlayStateChange += delegate (object sender, PlayStateEventArgs e)
             {
                 eventPlaying = e.Playing;
+                Assert.False(eventPlaying);
             };
 
             Track eventNewTrack = null;
@@ -64,157 +60,171 @@ namespace EspionSpotify.Tests
             {
                 eventNewTrack = e.NewTrack;
                 eventOldTrack = e.OldTrack;
+                Assert.Null(eventNewTrack);
+                Assert.Null(eventOldTrack);
             };
 
             int? eventTrackTime = null;
             spotifyHandler.OnTrackTimeChange += delegate (object sender, TrackTimeChangeEventArgs e)
             {
                 eventTrackTime = e.TrackTime;
+                Assert.Equal(0, eventTrackTime);
+            };
+        }
+
+        [Fact]
+        internal void ElapsedEventTick_ReturnsInitialSpotifyTrack()
+        {
+            var spotifyPaused = new Track();
+
+            var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(spotifyPaused);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(spotifyPaused);
+
+            var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
+
+            var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
+            {
+                ListenForEvents = true
             };
 
             // initial track
             Assert.Null(spotifyHandler.Track);
 
-            await Task.Delay(1000);
-            // FIXME: looks like the delay makes the test succeeds
+            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
 
             // updated track
-            Assert.Equal(track, spotifyHandler.Track);
-
-            // events
-            Assert.False(eventPlaying);
-            Assert.Null(eventNewTrack);
-            Assert.Null(eventOldTrack);
-            Assert.Equal(0, eventTrackTime);
+            Assert.Equal(spotifyPaused, spotifyHandler.Track);
+            spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
         }
 
         [Fact]
-        internal async void NewTrack_ReturnsAllEvents()
+        internal void ElapsedEventTick_ReturnsPlayingTrack()
         {
-            var previousTrack = new Track
-            {
-                Title = "Song Title",
-                Artist = "Artist Name",
-                Ad = false,
-                Playing = false,
-                TitleExtended = "Remastered"
-            };
-            var currentTrack = new Track
-            {
-                Title = "Song Title",
-                Artist = "Artist Name",
-                Ad = false,
-                Playing = true,
-                TitleExtended = "Live"
-            };
+            var paused = new Track() { Playing = false };
+            var playing = new Track() { Playing = false };
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
-            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(currentTrack);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(currentTrack));
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(playing);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(playing);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
-                ListenForEvents = true,
-                Track = previousTrack
+                ListenForEvents = true
             };
+            spotifyHandler.Track = paused;
 
             var eventPlaying = false;
             spotifyHandler.OnPlayStateChange += delegate (object sender, PlayStateEventArgs e)
             {
                 eventPlaying = e.Playing;
+                Assert.True(eventPlaying);
             };
+
+            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
+
+            spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
+        }
+
+        [Fact]
+        internal void ElapsedEventTick_ReturnsNewestTrack()
+        {
+            var oldTrack = new Track()
+            {
+                Artist = "Artist",
+                Title = "Title",
+                TitleExtended = "Remastered",
+                Playing = true ,
+                CurrentPosition = 240,
+                Length = 240,
+            };
+            var newestTrack = new Track()
+            {
+                Artist = "Artist",
+                Title = "Title",
+                TitleExtended = "Live",
+                Playing = true,
+                Length = 240,
+            };
+
+            var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
+            spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(newestTrack);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(newestTrack);
+
+            var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
+
+            var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
+            {
+                ListenForEvents = true
+            };
+            spotifyHandler.Track = oldTrack;
 
             Track eventNewTrack = null;
             Track eventOldTrack = null;
             spotifyHandler.OnTrackChange += delegate (object sender, TrackChangeEventArgs e)
             {
-                eventNewTrack = e.NewTrack;
                 eventOldTrack = e.OldTrack;
+                eventNewTrack = e.NewTrack;
+                Assert.Equal(oldTrack, eventOldTrack);
+                Assert.Equal(newestTrack, eventNewTrack);
             };
 
             int? eventTrackTime = null;
             spotifyHandler.OnTrackTimeChange += delegate (object sender, TrackTimeChangeEventArgs e)
             {
                 eventTrackTime = e.TrackTime;
+                Assert.Equal(0, eventTrackTime);
             };
 
-            // initial track
-            Assert.Equal(previousTrack, spotifyHandler.Track);
+            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
 
-            await Task.Delay(500);
-
-            // updated track
-            Assert.Equal(currentTrack, spotifyHandler.Track);
-
-            // events
-            Assert.True(eventPlaying);
-            Assert.Equal(currentTrack, eventNewTrack);
-            Assert.Equal(previousTrack, eventOldTrack);
-            Assert.Equal(0, eventTrackTime);
+            spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
         }
 
         [Fact]
-        internal async void TickEventSameTrackPlaying_ReturnsTrackTimeEvent()
+        internal void ElapsedEventTick_ReturnsCurrentTrack()
         {
-            var track = new Track
+            var track = new Track()
             {
-                Title = "Song Title",
-                Artist = "Artist Name",
-                Ad = false,
+                Artist = "Artist",
+                Title = "Title",
+                TitleExtended = "Live",
                 Playing = true,
-                TitleExtended = "Live"
+                CurrentPosition = 10,
+                Length = 230,
             };
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(Task.FromResult(track));
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
-            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).Returns(Task.FromResult(spotifyStatusMock.Object));
+            spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
 
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object)
             {
-                ListenForEvents = true,
-                Track = track
-            };
-            spotifyHandler.SongTimer.Start();
-
-            var eventPlaying = false;
-            spotifyHandler.OnPlayStateChange += delegate (object sender, PlayStateEventArgs e)
-            {
-                eventPlaying = e.Playing;
+                ListenForEvents = true
             };
 
-            Track eventNewTrack = null;
-            Track eventOldTrack = null;
-            spotifyHandler.OnTrackChange += delegate (object sender, TrackChangeEventArgs e)
-            {
-                eventNewTrack = e.NewTrack;
-                eventOldTrack = e.OldTrack;
-            };
+            var oldTrackStatus = track;
+            oldTrackStatus.CurrentPosition = 9;
+            spotifyHandler.Track = oldTrackStatus;
 
             int? eventTrackTime = null;
-            spotifyHandler.OnTrackTimeChange += delegate(object sender, TrackTimeChangeEventArgs e)
+            spotifyHandler.OnTrackTimeChange += delegate (object sender, TrackTimeChangeEventArgs e)
             {
                 eventTrackTime = e.TrackTime;
+                Assert.Equal(track.CurrentPosition, eventTrackTime);
             };
 
-            // initial track
-            Assert.Equal(track, spotifyHandler.Track);
+            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
 
-            await Task.Delay(1500);
-
-            // updated track
-            Assert.Equal(track, spotifyHandler.Track);
-
-            // events
-            Assert.False(eventPlaying);
-            Assert.Null(eventNewTrack);
-            Assert.Null(eventOldTrack);
-            Assert.Equal(1, eventTrackTime);
+            spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
         }
     }
 }

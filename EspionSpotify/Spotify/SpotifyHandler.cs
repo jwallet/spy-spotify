@@ -9,7 +9,8 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyHandler: ISpotifyHandler, IDisposable
     {
-        private const int TIMER_INTERVAL = 50;
+        public const int EVENT_TIMER_INTERVAL = 50;
+        public const int SONG_TIMER_INTERVAL = 1000;
 
         public Timer EventTimer { get; private set; }
         public Timer SongTimer { get; private set; }
@@ -60,7 +61,7 @@ namespace EspionSpotify.Spotify
             return await SpotifyLatestStatus.GetTrack();
         }
 
-        private async void ElapsedEventTick(object sender, ElapsedEventArgs e)
+        public async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
             SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
@@ -122,12 +123,12 @@ namespace EspionSpotify.Spotify
 
         private void AttachTimerToTickEvent()
         {
-            EventTimer.Interval = TIMER_INTERVAL;
+            EventTimer.Interval = EVENT_TIMER_INTERVAL;
             EventTimer.AutoReset = false;
             EventTimer.Enabled = false;
             EventTimer.Elapsed += ElapsedEventTick;
 
-            SongTimer.Interval = TIMER_INTERVAL * 20;
+            SongTimer.Interval = SONG_TIMER_INTERVAL;
             SongTimer.AutoReset = true;
             SongTimer.Enabled = false;
             SongTimer.Elapsed += ElapsedSongTick;
