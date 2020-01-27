@@ -1,5 +1,4 @@
-<a title="https://jwallet.github.io/spy-spotify/" href="https://jwallet.github.io/spy-spotify/">
-   <img alt="Spotify Logo" src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
+[![Spytify Logo](https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png)](https://jwallet.github.io/spy-spotify/)
    
 [![Build status](https://ci.appveyor.com/api/projects/status/s26ibv6ls9j56enr?svg=true)](https://ci.appveyor.com/project/jwallet/spy-spotify)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/jwallet/spy-spotify?compact_message)](https://ci.appveyor.com/project/jwallet/spy-spotify/build/tests)
