@@ -160,7 +160,7 @@ namespace EspionSpotify.Tests
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
 
-        [Fact(Skip = "GetDirectoryName Unsupported on Unix")]
+        [Fact]
         internal void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
         {
             _userSettings.GroupByFoldersEnabled = true;
