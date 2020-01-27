@@ -1,17 +1,13 @@
 <a title="https://jwallet.github.io/spy-spotify/" href="https://jwallet.github.io/spy-spotify/">
    <img alt="Spotify Logo" src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
-
+   
 [![Build status](https://ci.appveyor.com/api/projects/status/s26ibv6ls9j56enr?svg=true)](https://ci.appveyor.com/project/jwallet/spy-spotify)
-![AppVeyor tests](https://img.shields.io/appveyor/tests/jwallet/spy-spotify?compact_message)
-<a href="https://github.com/jwallet/spy-spotify/releases/latest">
-   <img src="https://img.shields.io/github/tag/jwallet/spy-spotify.svg?label=version" />
-   <img src="https://img.shields.io/github/downloads/jwallet/spy-spotify/total.svg?color=yellow&label=downloads" />
-</a>
-<a href="https://www.reddit.com/r/spytify">
-   ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=r%2Fspytify)
-</a>
+[![AppVeyor tests](https://img.shields.io/appveyor/tests/jwallet/spy-spotify?compact_message)](https://ci.appveyor.com/project/jwallet/spy-spotify/build/tests)
+[![Latest release](https://img.shields.io/github/tag/jwallet/spy-spotify.svg?label=version)](https://github.com/jwallet/spy-spotify/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/jwallet/spy-spotify/total.svg?color=yellow&label=downloads)](https://github.com/jwallet/spy-spotify/releases/latest)
+[![Sub Reddit](https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=r%2Fspytify)](https://www.reddit.com/r/spytify)
 [![Donate](https://img.shields.io/badge/support-donate-ff69b4)](https://jwallet.github.io/spy-spotify/donate.html)
-<a href="https://issuehunt.io/r/jwallet/spy-spotify"><img src="https://jwallet.github.io/spy-spotify/assets/images/isohunt_badge.svg" /></a>
+[![Issuehunt](https://jwallet.github.io/spy-spotify/assets/images/isohunt_badge.svg)](https://issuehunt.io/r/jwallet/spy-spotify)
 
 Spytify is a Spotify recorder for Windows which records Spotify audio without recording or playing ads, ensuring no loss in sound quality. It automatically splits songs into separate tracks and records to MP3 with media metadata, meaning you can start easily enjoying your music offline.
 
