@@ -681,12 +681,14 @@ namespace EspionSpotify
         private void TbMinTime_ValueChanged(object sender, EventArgs e)
         {
             var value = tbMinTime.Value * 5;
-            if (Settings.Default.MinimumRecordedLengthSeconds == value) return;
-
             _userSettings.MinimumRecordedLengthSeconds = value;
+
             var min = (_userSettings.MinimumRecordedLengthSeconds / 60);
             var sec = (_userSettings.MinimumRecordedLengthSeconds % 60);
             lblMinTime.Text = min + @":" + sec.ToString("00");
+
+            if (Settings.Default.MinimumRecordedLengthSeconds == value) return;
+
             Settings.Default.MinimumRecordedLengthSeconds = value;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"minimum-media-time?value={value}"));

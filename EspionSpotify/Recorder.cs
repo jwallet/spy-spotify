@@ -46,7 +46,6 @@ namespace EspionSpotify
             _currentOutputFile = _fileManager.GetOutputFile(_userSettings.OutputPath);
 
             _writer = new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
-
             if (_writer == null)
             {
                 Running = false;
@@ -92,41 +91,6 @@ namespace EspionSpotify
             await UpdateOutputFileBasedOnMediaFormat();    
         }
 
-        private Stream GetFileWriter(string file, WaveFormat waveFormat, UserSettings settings)
-        {
-            switch (settings.MediaFormat)
-            {
-                case MediaFormat.Mp3:
-                    try
-                    {
-                        return new LameMP3FileWriter(file, waveFormat, settings.Bitrate);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        LogLameMP3FileWriterArgumentException(ex, settings.OutputPath);
-                        return null;
-                    }
-                    catch (Exception ex)
-                    {
-                        LogLameMP3FileWriterException(ex);
-                        return null;
-                    }
-                case MediaFormat.Wav:
-                    try
-                    {
-                        return new WaveFileWriter(file, waveFormat);
-                    }
-                    catch (Exception ex)
-                    {
-                        _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
-                        Console.WriteLine(ex.Message);
-                        return null;
-                    }
-                default:
-                    return null;
-            }
-        }
-
         private async Task UpdateOutputFileBasedOnMediaFormat()
         {
             switch (_userSettings.MediaFormat)
@@ -137,10 +101,10 @@ namespace EspionSpotify
                 case MediaFormat.Mp3:
                     using (var reader = new WaveFileReader(_currentOutputFile.ToPendingFileString()))
                     {
-                        using (var writer = GetFileWriter(_currentOutputFile.ToTranscodingToMP3String(), _waveIn.WaveFormat, _userSettings))
+                        using (var mp3writer = new LameMP3FileWriter(_currentOutputFile.ToTranscodingToMP3String(), _waveIn.WaveFormat, _userSettings.Bitrate))
                         {
-                            await reader.CopyToAsync(writer);
-                            await writer.FlushAsync();
+                            await reader.CopyToAsync(mp3writer);
+                            if (mp3writer != null) await mp3writer.FlushAsync();
                         }
                     }
 
@@ -162,7 +126,44 @@ namespace EspionSpotify
             }
         }
 
-        private void LogLameMP3FileWriterArgumentException(ArgumentException ex, string outputPath)
+        public static bool TestFileWriter(IFrmEspionSpotify form, UserSettings settings)
+        {
+            var waveIn = new WasapiLoopbackCapture(settings.SpotifyAudioSession.AudioEndPointDevice);
+            switch (settings.MediaFormat)
+            {
+                case MediaFormat.Mp3:
+                    try
+                    {
+                        using (var writer = new LameMP3FileWriter(new MemoryStream(), waveIn.WaveFormat, settings.Bitrate)) return true;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        LogLameMP3FileWriterArgumentException(form, ex, settings.OutputPath);
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        LogLameMP3FileWriterException(form, ex);
+                        return false;
+                    }
+                case MediaFormat.Wav:
+                    try
+                    {
+                        using (var writer = new WaveFileWriter(new MemoryStream(), waveIn.WaveFormat)) return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        form.UpdateIconSpotify(true, false);
+                        form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+        }
+
+        private static void LogLameMP3FileWriterArgumentException(IFrmEspionSpotify form, ArgumentException ex, string outputPath)
         {
             var resource = I18nKeys.LogUnknownException;
             var args = ex.Message;
@@ -188,21 +189,23 @@ namespace EspionSpotify
                 args = numberOfChannels;
             }
 
-            _form.WriteIntoConsole(resource, args);
+            form.UpdateIconSpotify(true, false);
+            form.WriteIntoConsole(resource, args);
         }
 
-        private void LogLameMP3FileWriterException(Exception ex)
+        private static void LogLameMP3FileWriterException(IFrmEspionSpotify form, Exception ex)
         {
             if (ex.Message.Contains("Unable to load DLL"))
             {
-                _form.WriteIntoConsole(I18nKeys.LogMissingDlls);
+                form.WriteIntoConsole(I18nKeys.LogMissingDlls);
             }
             else
             {
-                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
             }
 
+            form.UpdateIconSpotify(true, false);
             Console.WriteLine(ex.Message);
         }
-    }
+}
 }

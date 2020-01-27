@@ -161,10 +161,16 @@ namespace EspionSpotify
             BindSpotifyEventHandlers();
             Ready = false;
 
+            if (!Recorder.TestFileWriter(_form, _userSettings))
+            {
+                EndRecordingSession();
+            }
+
             if (SpotifyConnect.IsSpotifyRunning())
             {
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
+
 
                 while (Running)
                 {
