@@ -1,7 +1,8 @@
 <a title="https://jwallet.github.io/spy-spotify/" href="https://jwallet.github.io/spy-spotify/">
    <img alt="Spotify Logo" src="https://user-images.githubusercontent.com/23088305/29906214-6daad21c-8de1-11e7-80f5-ef6791cc7825.png" /></a>
 
-[![Build Status](https://travis-ci.org/jwallet/spy-spotify.svg?branch=master)](https://travis-ci.org/jwallet/spy-spotify)
+[![Build status](https://ci.appveyor.com/api/projects/status/s26ibv6ls9j56enr?svg=true)](https://ci.appveyor.com/project/jwallet/spy-spotify)
+![AppVeyor tests](https://img.shields.io/appveyor/tests/jwallet/spy-spotify?compact_message)
 <a href="https://github.com/jwallet/spy-spotify/releases/latest">
    <img src="https://img.shields.io/github/tag/jwallet/spy-spotify.svg?label=version" />
    <img src="https://img.shields.io/github/downloads/jwallet/spy-spotify/total.svg?color=yellow&label=downloads" />
