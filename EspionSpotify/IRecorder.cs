@@ -1,10 +1,12 @@
-﻿namespace EspionSpotify
+﻿using System.Threading.Tasks;
+
+namespace EspionSpotify
 {
     public interface IRecorder
     {
         int CountSeconds { get; set; }
         bool Running { get; set; }
 
-        void Run();
+        Task Run();
     }
 }

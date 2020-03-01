@@ -34,7 +34,7 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
-        public async void Run()
+        public async Task Run()
         {
             Running = true;
             await Task.Delay(50);

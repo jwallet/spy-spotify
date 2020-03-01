@@ -150,7 +150,7 @@ namespace EspionSpotify
             Spotify.OnTrackTimeChange += OnTrackTimeChanged;
         }
 
-        public async Task Run()
+        public async void Run()
         {
             if (Running) return;
 

@@ -376,12 +376,11 @@ namespace EspionSpotify
             rtbLog.ScrollToCaret();
         }
 
-        private void StartRecording()
+        private async void StartRecording()
         {
             _watcher = new Watcher(this, _userSettings);
 
-            var watcherTask = new Task(async () => await _watcher.Run());
-            watcherTask.Start();
+            await Task.Run(_watcher.Run);
 
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;
