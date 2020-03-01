@@ -899,7 +899,7 @@ namespace EspionSpotify
             this.tableLayoutPanel5.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel5.TabIndex = 49;
             // 
-            // lnkVAD
+            // lnkAudioVirtualCable
             // 
             this.lnkAudioVirtualCable.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lnkAudioVirtualCable.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -908,7 +908,7 @@ namespace EspionSpotify
             this.lnkAudioVirtualCable.ImageSize = 28;
             this.lnkAudioVirtualCable.Location = new System.Drawing.Point(533, 0);
             this.lnkAudioVirtualCable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkAudioVirtualCable.Name = "lnkVAD";
+            this.lnkAudioVirtualCable.Name = "lnkAudioVirtualCable";
             this.lnkAudioVirtualCable.Size = new System.Drawing.Size(40, 29);
             this.lnkAudioVirtualCable.TabIndex = 47;
             this.lnkAudioVirtualCable.UseCustomBackColor = true;

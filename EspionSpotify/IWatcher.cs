@@ -16,6 +16,6 @@ namespace EspionSpotify
         bool IsTypeAllowed { get; }
         bool IsOldSong { get; }
 
-        Task Run();
+        void Run();
     }
 }
