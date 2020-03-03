@@ -55,7 +55,7 @@ namespace EspionSpotify.MediaTags
                 GetAlbumCoverToPicture(Track.ArtSmall)
             }).Where(x => x != null).ToList();
 
-            pictures.FirstOrDefault().Type = TagLib.PictureType.FrontCover;
+            if (pictures.Count > 0) pictures.First().Type = TagLib.PictureType.FrontCover;
 
             mp3.Tag.Pictures = pictures.ToArray();
 
