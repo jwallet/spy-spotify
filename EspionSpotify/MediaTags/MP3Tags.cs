@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,39 +15,56 @@ namespace EspionSpotify.MediaTags
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
+        
+        private readonly IFileSystem _fileSystem;
 
-        public async Task SaveMediaTags()
+        public MP3Tags() : this(fileSystem: new FileSystem()) { }
+
+        public MP3Tags(IFileSystem fileSystem)
         {
-            var mp3 = TagLib.File.Create(CurrentFile);
+            _fileSystem = fileSystem;
+        }
 
+        public async Task MapMediaTags(TagLib.Tag tags)
+        {
             var trackNumber = GetTrackNumber();
             if (trackNumber.HasValue)
             {
-                mp3.Tag.Track = (uint)trackNumber.Value;
+                tags.Track = (uint)trackNumber.Value;
             }
 
-            mp3.Tag.Title = Track.Title;
-            mp3.Tag.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
-            mp3.Tag.Performers = Track.Performers ?? new[] { Track.Artist };
-            
-            mp3.Tag.Album = Track.Album;
-            mp3.Tag.Genres = Track.Genres;
+            tags.Title = Track.Title;
+            tags.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
+            tags.Performers = Track.Performers ?? new[] { Track.Artist };
 
-            mp3.Tag.Disc = Track.Disc;
-            mp3.Tag.Year = Track.Year;
+            tags.Album = Track.Album;
+            tags.Genres = Track.Genres;
 
-            if (File.Exists(CurrentFile))
-            {
-                mp3.Save();
-            }
+            tags.Disc = Track.Disc;
+            tags.Year = Track.Year;
 
-            var taskGetArtXL = Track.GetArtExtraLargeAsync();
-            var taskGetArtL = Track.GetArtLargeAsync();
-            var taskGetArtM = Track.GetArtMediumAsync();
-            var taskGetArtS = Track.GetArtSmallAsync();
+            await FetchMediaPictures();
+
+            tags.Pictures = GetMediaPictureTags();
+        }
+
+        private async Task FetchMediaPictures()
+        {
+            var taskGetArtXL = GetAlbumCover(Track.ArtExtraLargeUrl);
+            var taskGetArtL = GetAlbumCover(Track.ArtLargeUrl);
+            var taskGetArtM = GetAlbumCover(Track.ArtMediumUrl);
+            var taskGetArtS = GetAlbumCover(Track.ArtSmallUrl);
 
             await Task.WhenAll(taskGetArtXL, taskGetArtL, taskGetArtM, taskGetArtS);
 
+            Track.ArtExtraLarge = await taskGetArtXL;
+            Track.ArtLarge = await taskGetArtL;
+            Track.ArtMedium = await taskGetArtM;
+            Track.ArtSmall = await taskGetArtS;
+        }
+
+        private TagLib.IPicture[] GetMediaPictureTags()
+        {
             var pictures = (new TagLib.IPicture[4]
             {
                 GetAlbumCoverToPicture(Track.ArtExtraLarge),
@@ -55,11 +73,18 @@ namespace EspionSpotify.MediaTags
                 GetAlbumCoverToPicture(Track.ArtSmall)
             }).Where(x => x != null).ToList();
 
-            pictures.FirstOrDefault().Type = TagLib.PictureType.FrontCover;
+            if (pictures.Count > 0) pictures.First().Type = TagLib.PictureType.FrontCover;
 
-            mp3.Tag.Pictures = pictures.ToArray();
+            return pictures.ToArray();
+        }
 
-            if (File.Exists(CurrentFile))
+        public async Task SaveMediaTags()
+        {
+            var mp3 = TagLib.File.Create(CurrentFile);
+            
+            await MapMediaTags(mp3.Tag);
+
+            if (_fileSystem.File.Exists(CurrentFile))
             {
                 mp3.Save();
             }
@@ -77,7 +102,7 @@ namespace EspionSpotify.MediaTags
             return Track.AlbumPosition;
         }
 
-        private TagLib.Picture GetAlbumCoverToPicture(byte[] data)
+        public static TagLib.Picture GetAlbumCoverToPicture(byte[] data)
         {
             if (data == null) return null;
 

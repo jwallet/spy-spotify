@@ -78,8 +78,8 @@ namespace EspionSpotify.MediaTags
         {
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
-            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x.Name).ToArray();
-            track.Length = trackExtra.Duration / 1000;
+            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
+            track.Length = trackExtra.Duration.HasValue ? trackExtra.Duration / 1000 : null;
             track.ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl;
             track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
             track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;

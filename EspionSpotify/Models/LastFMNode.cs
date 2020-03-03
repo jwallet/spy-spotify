@@ -57,10 +57,10 @@ namespace EspionSpotify.Models
         public string AlbumTitle => Title;
         public int? TrackPosition => Position == null ? (int?)null : Convert.ToInt32(Position);
 
-        public string ExtraLargeCoverUrl => Image.FirstOrDefault(x => x.CoverSize == AlbumCoverSize.extralarge)?.Url;
-        public string LargeCoverUrl => Image.FirstOrDefault(x => x.CoverSize == AlbumCoverSize.large)?.Url;
-        public string MediumCoverUrl => Image.FirstOrDefault(x => x.CoverSize == AlbumCoverSize.medium)?.Url;
-        public string SmallCoverUrl => Image.FirstOrDefault(x => x.CoverSize == AlbumCoverSize.small)?.Url;
+        public string ExtraLargeCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.extralarge)?.Url;
+        public string LargeCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.large)?.Url;
+        public string MediumCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.medium)?.Url;
+        public string SmallCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.small)?.Url;
 
     }
 

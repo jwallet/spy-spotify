@@ -20,7 +20,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void MapLastFMAPITrackToTrack_ReturnsExpectedTrack()
+        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
         {
             var track = new Track();
 
@@ -59,6 +59,45 @@ namespace EspionSpotify.Tests
             Assert.Equal("http://large-cover-url.local", track.ArtLargeUrl);
             Assert.Equal("http://medium-cover-url.local", track.ArtMediumUrl);
             Assert.Equal("http://small-cover-url.local", track.ArtSmallUrl);
+        }
+
+        [Fact]
+        internal void MapLastFMAPTrackToTrack_ReturnsExpectedMissingInfoTrack()
+        {
+            var track = new Track();
+
+            var trackExtra = new LastFMTrack()
+            {
+                Album = new Album()
+                {
+                    Image = new List<Image>() {
+                        null,
+                        null,
+                        null,
+                        null,
+                    }
+                },
+                Toptags = new Toptags()
+                {
+                    Tag = new List<Tag>()
+                    {
+                        null,
+                        null,
+                        null,
+                    }
+                },
+            };
+
+            _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);
+
+            Assert.Null(track.Album);
+            Assert.Null(track.AlbumPosition);
+            Assert.Equal(new string[] { }, track.Genres);
+            Assert.Null(track.Length);
+            Assert.Null(track.ArtExtraLargeUrl);
+            Assert.Null(track.ArtLargeUrl);
+            Assert.Null(track.ArtMediumUrl);
+            Assert.Null(track.ArtSmallUrl);
         }
     }
 }
