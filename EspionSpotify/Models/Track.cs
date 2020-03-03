@@ -26,10 +26,10 @@ namespace EspionSpotify.Models
         public int? CurrentPosition { get; set; }
         public int? Length { get; set; }
 
-        public string[] Performers { get; internal set; }
-        public uint Disc { get; internal set; }
-        public string[] AlbumArtists { get; internal set; }
-        public uint Year { get; internal set; }
+        public string[] Performers { get; set; }
+        public uint Disc { get; set; }
+        public string[] AlbumArtists { get; set; }
+        public uint Year { get; set; }
 
         public string ArtExtraLargeUrl { get; set; }
         public string ArtLargeUrl { get; set; }
@@ -75,23 +75,6 @@ namespace EspionSpotify.Models
             ArtLarge = track.ArtLarge;
             ArtMedium = track.ArtMedium;
             ArtSmall = track.ArtSmall;
-        }
-
-        public async Task GetArtExtraLargeAsync()
-        {
-            ArtExtraLarge = await MP3Tags.GetAlbumCover(ArtExtraLargeUrl);
-        }
-        public async Task GetArtLargeAsync()
-        {
-            ArtLarge = await MP3Tags.GetAlbumCover(ArtLargeUrl);
-        }
-        public async Task GetArtMediumAsync()
-        {
-            ArtMedium = await MP3Tags.GetAlbumCover(ArtMediumUrl);
-        }
-        public async Task GetArtSmallAsync()
-        {
-            ArtSmall = await MP3Tags.GetAlbumCover(ArtSmallUrl);
         }
 
         public override string ToString()
