@@ -60,52 +60,11 @@ a {
   }
 }
 
-.language {
-  position: absolute;
-  a {
-    cursor: pointer;
-    text-decoration: none;
-  }
-  &-row {
-    position: relative;
-    display: flex;
-    column-gap: 1rem;
-    label {
-      color: $lang-label;
-    }
-    a.selected {
-      color: $lang-selected-color;
-    }
-    a span {
-      font-size: 75%;
-      padding-left: 0.25rem;
-      color: $lang-frame;
-      margin-right: -0.1rem;
-    }
-  }
-  &-box {
-    position: relative;
-    text-align: right;
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      margin: 0;
-      padding: 0;
-      background-color: $lang-select-row-secondary;
-
-      &[opened=false] {
-        display:none;
-      }
-
-      li {
-        color: $lang-select-row;
-        padding: 0.2rem 0;
-        padding-right: 1rem;
-        border: 1px solid $lang-frame;
-        border-top: 0;
-      }
-    }
+.faq {
+  &_title:hover {
+    cursor:pointer;
+    text-decoration: underline;
+    text-decoration-color: $body-link-color;
   }
 }
 

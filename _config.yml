@@ -9,13 +9,6 @@ repository_download: "https://www.github.com/jwallet/spy-spotify/releases/latest
 owner_url: "https://www.github.com/jwallet/"
 url: "https://jwallet.github.io/spy-spotify/"
 logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
-languages: ['en', 'fr']
-defaultLang: en
-exclude_from_localizations: ['_sass', 'fr', 'LICENSE', 'README.md']
-exclude: ['fr/', 'faq/', 'LICENSE', 'README.md']
-languageNames:
-  fr: Français
-  en: English
 collections:
   faq:
     output: true

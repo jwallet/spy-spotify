@@ -1,11 +1,13 @@
 ---
 layout: page
-title: TABS.FAQ
+title: F.A.Q.
 ---
 
 {% for question in site.faq %}
 <section id="{{ question.hash }}">
-    <h3><a href="#{{question.hash}}">{% t {{ question.title  }} %}</a></h3>
+<details class="faq">
+    <summary class="faq_title"><h3>{{ question.title }}</h3></summary>
     <p>{{ question.content }}</p>
+</details>
 </section>
 {% endfor %}
