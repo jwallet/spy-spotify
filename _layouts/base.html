@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang }}">
+<html lang="{{ site.lang | default: "en-US" }}">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="{% t site.description %}"/>
-    <meta name="keywords" content="{% t site.keywords %}"/>
+    <meta name="description" content="{{ site.description }}"/>
+    <meta name="keywords" content="{{ site.keywords }}"/>
     <link rel="shortcut icon" href="{{ site.logo }}" />
     <link rel="apple-touch-icon" href="{{ site.logo }}" />
     <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
@@ -20,10 +20,8 @@
       function onLoad() {
         const { pathname: originPathname, origin } = window.location;
         const pathname = originPathname.replace('/spy-spotify', '');
-        if (pathname === '/' || [/\/..\//, /\/index.*/].some(x => x.test(pathname))) {
-          var match = pathname.match(/\/..\//);
-          var pathnameLang = match ? match[0] : pathname.replace(/index.*/, '');
-          window.location.replace(`${origin}/spy-spotify/${pathnameLang.replace('/', '')}overview.html`);
+        if (pathname === '/' || /\/index.*/.test(pathname)) {
+          window.location.replace(`${origin}/spy-spotify/overview.html`);
         }
       }
   </script>

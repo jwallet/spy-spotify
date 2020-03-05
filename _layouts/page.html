@@ -1,48 +1,33 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang }}">
+<html lang="{{ site.lang | default: "en-US" }}">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="{% t site.description %}"/>
-    <meta name="keywords" content="{% t site.keywords %}"/>
+    <meta name="description" content="{{ site.description }}"/>
+    <meta name="keywords" content="{{ site.keywords }}"/>
     <link rel="shortcut icon" href="{{ site.logo }}" />
     <link rel="apple-touch-icon" href="{{ site.logo }}" />
     <link rel="stylesheet" href="{{ 'assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <title>{{ site.title }} - {% t GLOBAL.SHORT_DESCRIPTION %} - {% t {{ page.title }} %}</title>
+    <title>{{ site.title }} - Record Spotify - {{ page.title }}</title>
   </head>
   <body>
-    <menu class="language">
-      <div class="language-row">
-        <label>{% t GLOBAL.LANGUAGE %}:</label>
-        <a class="selected" role="button" onclick="onLangToggle()">{{ site.languageNames[site.lang] }}<span id="caret">▼</a>
-      </div>
-      <section class="language-box">
-        <ul id="langs_dropdown" role="option" opened="false">
-          {% for lang in site.languageNames %}
-          {% if lang[0] == site.lang %} {% continue %} {% endif %}
-          <a role="button" name="langs" value="{{ lang[0] }}" onclick="onLangChange(this)"><li>{{ lang[1] }}</li></a>
-          {% endfor %}
-        </ul>
-      </section>
-    </menu>
-
     <header class="page-header" role="banner">
       <a href="{{ site.repository_url }}" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="{{ site.logo }}" role="logo" /></a>
       <h1 class="project-name">{{ site.title }}</h1>
-      <h2 class="project-tagline">{% t GLOBAL.DESCRIPTION %}</h2>      
+      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
     </header>
     
     <nav class="nav" role="navigation">
-        <a href="./overview.html" aria-label="Overview" class="btn">{% t TABS.OVERVIEW %}</a>
-        <a href="./features.html" aria-label="Features" class="btn">{% t TABS.FEATURES %}</a>
-        <a href="./settings.html" aria-label="Settings" class="btn">{% t TABS.SETTINGS %}</a>
-        <a href="./faq.html" aria-label="FAQ" class="btn">{% t TABS.FAQ %}</a>
-        <a href="./donate.html" aria-label="Donate" class="btn -donate">{% t TABS.DONATE %}</a>
+        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
+        <a href="./features.html" aria-label="Features" class="btn">Features</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
+        <a href="./donate.html" aria-label="Donate" class="btn -donate">Donate</a>
 
         {% if site.show_downloads %}
-          <a href="{{ site.repository_download }}" aria-label="Download" class="btn out">{% t TABS.DOWNLOAD %}</a>
+          <a href="{{ site.repository_download }}" aria-label="Download" class="btn out">Download</a>
         {% endif %}
     </nav>
 
@@ -61,11 +46,11 @@
         </span>
         <span class="site-footer-owner">
           <a href="{{ site.github.repository_url | default: site.repository_url }}" aria-label="Go to Spytify GitHub page">{{ site.github.repository_name | default: site.project_name }}</a>
-           {% t GLOBAL.MAINTAINED_BY %} 
+          is maintained by
           <a href="{{ site.github.owner_rul | default: site.owner_url }}">{{ site.github.owner_name | default: site.owner_name }}</a>.
         </span>
         <span class="site-footer-credits">
-          😃 {% t GLOBAL.DONATE %} <a href="./donate.html">{% t GLOBAL.DONATE_LINK %}</a> 🍺.
+          😃 Like Spytify? If you want you can <a href="./donate.html">buy me a beer</a> 🍺.
         </span>
       </footer>
     </main>
@@ -93,53 +78,20 @@
         });
       }
 
-      function onLangToggle() {
-        var langs = document.getElementById('langs_dropdown');
-        var toggleStatus = JSON.parse(langs.getAttribute("opened"));
-        document.getElementById('caret').innerText = toggleStatus ? '▼' : '▲';
-        langs.setAttribute("opened", String(!toggleStatus));
-      }
-      
-      function changeLanguage(language) {
-        var lang = language || '{{ site.lang }}';
-        const { pathname: originPathname, origin } = window.location;
-        var pathname = originPathname.replace('/spy-spotify', '');
-        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
-        
-        if (lang === 'en') {
-          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
-        } else if (!pathname.startsWith(`/${lang}/`)) {
-          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
-        }
-      }
-
-      function onLangChange(e) {
-        const selectedLanguage = e.getAttribute('value');
-        window.localStorage.setItem('lang', selectedLanguage);
-        changeLanguage(selectedLanguage)
-        onLangToggle()
-      }
-
       function isScrollIntoView() {
-        const { hash, pathname } = window.location;
-        console.log(window.location)
+        const { hash } = window.location;
         if (hash) {
-          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
-          var el = document.getElementById(hash.toUpperCase());
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          var el = document.querySelector(`${hash}>details`);
+          if (el) {
+            el.open = true;
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
 
       function onPageLoaded() {
-        setLanguage();
         setActiveNav();
         isScrollIntoView();
-      }
-
-      function setLanguage() {
-        if ('{{ site.lang }}' !== window.localStorage.getItem('lang')) {
-          window.localStorage.setItem('lang', '{{ site.lang }}');
-        }
       }
 
   </script>

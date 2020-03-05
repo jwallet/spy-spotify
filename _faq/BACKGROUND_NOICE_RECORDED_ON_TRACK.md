@@ -1,9 +1,0 @@
----
-layout: page
-hash: background-noice-recorded-on-track
-title: FAQ.BACKGROUND_NOICE_RECORDED_ON_TRACK.TITLE
-namespace: faq
----
-{%t FAQ.BACKGROUND_NOICE_RECORDED_ON_TRACK.CONTENT_FIRST %}
-<br />
-{%t FAQ.BACKGROUND_NOICE_RECORDED_ON_TRACK.CONTENT_SECOND %}
