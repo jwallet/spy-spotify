@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Features</title>
+    <title>Spytify - Record Spotify - Media tags and album cover are not always found.</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -33,65 +33,41 @@
 
     <main id="content" class="main-content" role="main">
  
-      <h2 id="app-features"><a href="#app-features">App features</a></h2>
+      <p>You can switch between last.fm API to Spotify API (still in development but can be set in the <strong>spytify.exe.config</strong> file).</p>
 
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th style="text-align: center">Feature</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><img alt="features" src="./assets/images/feature_no_ad.png" /></td>
-      <td style="text-align: center"><strong>No Ads</strong></td>
-      <td style="text-align: left">Mute and doesn’t record audio ads</td>
-    </tr>
-    <tr>
-      <td><img alt="features" src="./assets/images/feature_mute_apps.png" /></td>
-      <td style="text-align: center"><strong>Mutes Other Apps</strong></td>
-      <td style="text-align: left">Mutes any other applications while spying Spotify. Both apps can be <a href="./faq.html#isolate-spotify-audio-endpoint">isolated in a their own audio endpoint device</a> (sound card).</td>
-    </tr>
-    <tr>
-      <td><img alt="features" src="./assets/images/feature_audio_quality.png" /></td>
-      <td style="text-align: center"><strong>Great Audio Quality</strong></td>
-      <td style="text-align: left">Gets and records with the same great audio quality than Spotify</td>
-    </tr>
-    <tr>
-      <td><img alt="features" src="./assets/images/feature_max_out.png" /></td>
-      <td style="text-align: center"><strong>Normalize volume</strong></td>
-      <td style="text-align: left">Max out the volume of your Spotify audio session to record all song at the same volume level delivered by Spotify</td>
-    </tr>
-  </tbody>
-</table>
+<p>Open a text editor and follow these steps to enable the gathering of MP3 media info from Spotify:</p>
 
-<h2 id="file-features"><a href="#file-features">File features</a></h2>
 <ul>
-  <li>Splits the recorded sound into individual tracks using the artist and track names as the title, like so:
+  <li>Go to <a href="https://developer.spotify.com/dashboard/applications/">Spotify Developer Dashboard</a></li>
+  <li>Register a new local application, e.g.:
     <ul>
-      <li><code class="highlighter-rouge">Artist - Track.mp3</code></li>
+      <li>App or Hardware Name: spotify</li>
+      <li>App or Hardware Description: none</li>
+      <li>What are you building?: i don’t know</li>
     </ul>
   </li>
-  <li>Saves all recordings under the same path:
+  <li>Click on the new spotify application that you created and click on <em>Edit the settings</em></li>
+  <li>Set ‘Redirect URI’ with the value ‘http://localhost:4002’, add and save it.</li>
+  <li>On the spotify app dashboard, copy these info:
     <ul>
-      <li><code class="highlighter-rouge">../My Music/</code></li>
+      <li>The ‘Client ID’</li>
+      <li>The ‘Client Secret’ (click on ‘Show Client Secret’)</li>
     </ul>
   </li>
-  <li>Automatically adds metadata from Last.fm (or <a href="./faq.html#get-mp3-metadata-from-spotify-api">Spotify API</a>) to .mp3 file:
-    <ul>
-      <li># track</li>
-      <li>Track Title</li>
-      <li>Artist</li>
-      <li>Album Title</li>
-      <li>Album Art Cover</li>
-      <li>Genre</li>
-    </ul>
-  </li>
+  <li>Paste the ids in the <strong>spytify.exe.config</strong> file at theses lines</li>
 </ul>
 
-<p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="./assets/images/saved_songs_list.png" /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;setting name=\"SpotifyAPISecretId\" serializeAs=\"String\"&gt;
+    &lt;value&gt;
+        412fa2302d864432854742ba35e869cb
+    &lt;/value&gt;
+&lt;/setting&gt;
+&lt;setting name=\"SpotifyAPIClientId\" serializeAs=\"String\"&gt;
+    &lt;value&gt;
+        c3d9c679a66641f284e6740faa479e14
+    &lt;/value&gt;
+&lt;/setting&gt;
+</code></pre></div></div>
 
 
       <footer class="site-footer">

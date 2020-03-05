@@ -1,34 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content=""/>
+    <meta name="description" content="Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"/>
     <meta name="keywords" content=""/>
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Records Spotify to mp3 - Settings</title>
+    <title>Spytify - Record Spotify - Settings</title>
   </head>
   <body>
-    <menu class="language">
-      <div class="language-row">
-        <label>Language:</label>
-        <a class="selected" role="button" onclick="onLangToggle()">English<span id="caret">▼</a>
-      </div>
-      <section class="language-box">
-        <ul id="langs_dropdown" role="option" opened="false">
-          
-          
-          <a role="button" name="langs" value="fr" onclick="onLangChange(this)"><li>Français</li></a>
-          
-           
-        </ul>
-      </section>
-    </menu>
-
     <header class="page-header" role="banner">
       <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
       <h1 class="project-name">Spytify</h1>
@@ -76,7 +60,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Audio device</td>
-      <td style="text-align: left">Audio device that Spytify will listen on. Must be the same one than Spotify uses, for Spytify to be able to record. Spotify/Spytify default audio endpoint can be change in <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>. More details in <a href="./faq.html#spotify-audio-endpoint">F.A.Q.</a></td>
+      <td style="text-align: left">Audio device that Spytify will listen on. Must be the same one than Spotify uses, for Spytify to be able to record. Spotify/Spytify default audio endpoint can be change in <strong>Windows 🡂 Sound Settings 🡂 App volume and device preferences</strong>. More details in <a href="./faq.html#isolate-spotify-audio-endpoint">F.A.Q.</a></td>
       <td style="text-align: left"><code class="highlighter-rouge">Default</code></td>
     </tr>
     <tr>
@@ -190,7 +174,7 @@
         </span>
         <span class="site-footer-owner">
           <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
-           is maintained by 
+          is maintained by
           <a href="https://www.github.com/jwallet/">jwallet</a>.
         </span>
         <span class="site-footer-credits">
@@ -212,53 +196,20 @@
         });
       }
 
-      function onLangToggle() {
-        var langs = document.getElementById('langs_dropdown');
-        var toggleStatus = JSON.parse(langs.getAttribute("opened"));
-        document.getElementById('caret').innerText = toggleStatus ? '▼' : '▲';
-        langs.setAttribute("opened", String(!toggleStatus));
-      }
-      
-      function changeLanguage(language) {
-        var lang = language || 'en';
-        const { pathname: originPathname, origin } = window.location;
-        var pathname = originPathname.replace('/spy-spotify', '');
-        var pathnameCleared = pathname.replace(/\/[a-z]{2}\//, '');
-        
-        if (lang === 'en') {
-          window.location.replace(`${origin}/spy-spotify/${pathnameCleared}`);
-        } else if (!pathname.startsWith(`/${lang}/`)) {
-          window.location.replace(`${origin}/spy-spotify/${lang}${pathnameCleared}`);
-        }
-      }
-
-      function onLangChange(e) {
-        const selectedLanguage = e.getAttribute('value');
-        window.localStorage.setItem('lang', selectedLanguage);
-        changeLanguage(selectedLanguage)
-        onLangToggle()
-      }
-
       function isScrollIntoView() {
-        const { hash, pathname } = window.location;
-        console.log(window.location)
+        const { hash } = window.location;
         if (hash) {
-          // if (pathname.endsWith('/')) window.location.replace(pathname.substring(0, pathname.length -2);
-          var el = document.getElementById(hash.toUpperCase());
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          var el = document.querySelector(`${hash}>details`);
+          if (el) {
+            el.open = true;
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
 
       function onPageLoaded() {
-        setLanguage();
         setActiveNav();
         isScrollIntoView();
-      }
-
-      function setLanguage() {
-        if ('en' !== window.localStorage.getItem('lang')) {
-          window.localStorage.setItem('lang', 'en');
-        }
       }
 
   </script>
