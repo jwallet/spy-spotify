@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"/>
+    <meta name="keywords" content=""/>
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
+    <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
+    <title>Spytify - Record Spotify - Keep the same order that the playlist for your recordings.</title>
+  </head>
+  <body>
+    <header class="page-header" role="banner">
+      <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub Page"><img class="logo" alt="Spytify Logo" src="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" role="logo" /></a>
+      <h1 class="project-name">Spytify</h1>
+      <h2 class="project-tagline">Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files</h2>      
+    </header>
+    
+    <nav class="nav" role="navigation">
+        <a href="./overview.html" aria-label="Overview" class="btn">Overview</a>
+        <a href="./features.html" aria-label="Features" class="btn">Features</a>
+        <a href="./settings.html" aria-label="Settings" class="btn">Settings</a>
+        <a href="./faq.html" aria-label="FAQ" class="btn">F.A.Q</a>
+        <a href="./donate.html" aria-label="Donate" class="btn -donate">Donate</a>
+
+        
+          <a href="https://www.github.com/jwallet/spy-spotify/releases/latest/" aria-label="Download" class="btn out">Download</a>
+        
+    </nav>
+
+    <main id="content" class="main-content" role="main">
+ 
+      <p>The recording order number option <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. 
+You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
+
+<p align="center"><img alt="Recording order number option" src="./assets/images/recording_number.png" /></p>
+
+
+      <footer class="site-footer">
+        <span class="site-footer-badges">
+          <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">
+            <img alt="GitHub stars" src="https://img.shields.io/github/stars/jwallet/spy-spotify.svg?logo=github&style=social" />
+          </a>
+          <a href="https://www.reddit.com/r/spytify/" aria-label="Go to Spytify Sub Reddit">
+            <img alt="Subreddit subscribers" src="https://img.shields.io/reddit/subreddit-subscribers/spytify.svg?label=%2Fr%2Fspytify&logo=reddit&logoColor=000000&style=social">
+          </a>
+        </span>
+        <span class="site-footer-owner">
+          <a href="https://www.github.com/jwallet/spy-spotify/" aria-label="Go to Spytify GitHub page">spy-spotify</a>
+          is maintained by
+          <a href="https://www.github.com/jwallet/">jwallet</a>.
+        </span>
+        <span class="site-footer-credits">
+          😃 Like Spytify? If you want you can <a href="./donate.html">buy me a beer</a> 🍺.
+        </span>
+      </footer>
+    </main>
+
+    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", onPageLoaded);
+      function setActiveNav() {
+        document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
+          const attribute = x.getAttribute("href");
+          if (attribute && window.location.pathname.includes(attribute.substring(2))) {
+            x.className = `${x.className} active`;
+          }
+        });
+      }
+
+      function isScrollIntoView() {
+        const { hash } = window.location;
+        if (hash) {
+          var el = document.querySelector(`${hash}>details`);
+          if (el) {
+            el.open = true;
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+
+      function onPageLoaded() {
+        setActiveNav();
+        isScrollIntoView();
+      }
+
+  </script>
+  </body>
+</html>

@@ -10,6 +10,7 @@ owner_url: "https://www.github.com/jwallet/"
 url: "https://jwallet.github.io/spy-spotify/"
 logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
 lang: "en-CA"
+exclude: ['faq/', 'LICENSE', 'README.md']
 collections:
   faq:
     output: true
