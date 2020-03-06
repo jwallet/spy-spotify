@@ -116,6 +116,7 @@
     <Compile Include="SpotifyAPITests.cs" />
     <Compile Include="SpotifyHandlerTests.cs" />
     <Compile Include="SpotifyStatusTests.cs" />
+    <Compile Include="UserSettingTests.cs" />
     <Compile Include="TrackTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TranslationTests.cs" />

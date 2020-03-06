@@ -58,7 +58,7 @@ namespace EspionSpotify
             return mainWindowTitle;
         }
 
-        public static ICollection<Process> GetSpotifyProcesses()
+        internal static ICollection<Process> GetSpotifyProcesses()
         {
             var spotifyProcesses = new List<Process>();
 
