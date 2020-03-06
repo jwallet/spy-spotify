@@ -18,7 +18,7 @@ namespace EspionSpotify.MediaTags
         
         private readonly IFileSystem _fileSystem;
 
-        public MP3Tags() : this(fileSystem: new FileSystem()) { }
+        internal MP3Tags() : this(fileSystem: new FileSystem()) { }
 
         public MP3Tags(IFileSystem fileSystem)
         {
@@ -46,6 +46,20 @@ namespace EspionSpotify.MediaTags
             await FetchMediaPictures();
 
             tags.Pictures = GetMediaPictureTags();
+        }
+
+        internal async Task SaveMediaTags()
+        {
+            var mp3 = TagLib.File.Create(CurrentFile);
+            
+            await MapMediaTags(mp3.Tag);
+
+            if (_fileSystem.File.Exists(CurrentFile))
+            {
+                mp3.Save();
+            }
+
+            mp3.Dispose();
         }
 
         private async Task FetchMediaPictures()
@@ -78,20 +92,6 @@ namespace EspionSpotify.MediaTags
             return pictures.ToArray();
         }
 
-        public async Task SaveMediaTags()
-        {
-            var mp3 = TagLib.File.Create(CurrentFile);
-            
-            await MapMediaTags(mp3.Tag);
-
-            if (_fileSystem.File.Exists(CurrentFile))
-            {
-                mp3.Save();
-            }
-
-            mp3.Dispose();
-        }
-
         private int? GetTrackNumber()
         {
             if (OrderNumberInMediaTagEnabled && Count.HasValue)
@@ -102,7 +102,7 @@ namespace EspionSpotify.MediaTags
             return Track.AlbumPosition;
         }
 
-        public static TagLib.Picture GetAlbumCoverToPicture(byte[] data)
+        private static TagLib.Picture GetAlbumCoverToPicture(byte[] data)
         {
             if (data == null) return null;
 
@@ -114,7 +114,7 @@ namespace EspionSpotify.MediaTags
             };
         }
 
-        public static async Task<byte[]> GetAlbumCover(string link)
+        private static async Task<byte[]> GetAlbumCover(string link)
         {
             if (string.IsNullOrWhiteSpace(link)) return null;
 

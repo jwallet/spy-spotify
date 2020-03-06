@@ -18,6 +18,19 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
+        internal void MapSpotifyEmptyTrackToTrack_ReturnsExpectedTrack()
+        {
+            var fulltrack = new FullTrack();
+
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+
+            Assert.Null(_track.Title);
+            Assert.Equal(0, _track.AlbumPosition);
+            Assert.Equal(new string[] { }, _track.Performers);
+            Assert.Equal(0u, _track.Disc);
+        }
+
+        [Fact]
         internal void MapSpotifyTrackToTrack_ReturnsExpectedTrack()
         {
             var fulltrack = new FullTrack()
@@ -41,7 +54,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void MapSpotifyAlbumToTrackMissingAll_ReturnsExpectedTrack()
+        internal void MapSpotifyEmptyAlbumToTrack_ReturnsExpectedTrack()
         {
             var fullAlbum = new FullAlbum()
             {

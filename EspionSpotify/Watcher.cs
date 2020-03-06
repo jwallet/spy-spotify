@@ -51,7 +51,7 @@ namespace EspionSpotify
 
         public Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, fileSystem: new FileSystem()) {}
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, IFileSystem fileSystem)
+        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings, IFileSystem fileSystem)
         {
             _currentTrack = new Track();
             _form = form;
