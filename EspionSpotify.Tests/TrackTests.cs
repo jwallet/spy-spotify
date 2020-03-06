@@ -55,5 +55,34 @@ namespace EspionSpotify.Tests
             Assert.NotEqual(initialTrack.ArtExtraLargeUrl, track.ArtExtraLargeUrl);
             Assert.NotEqual(track, new Track());
         }
+
+        [Fact]
+        internal void ToTitleString_ReturnsTitleAndExtendedTitle()
+        { 
+            Assert.Equal("", new Track().ToTitleString());
+            Assert.Equal("Title", new Track { Title = "Title", Artist = "Artist", TitleExtended = "" }.ToTitleString());
+            Assert.Equal("Title - Remastered", new Track { Title = "Title", Artist = "Artist", TitleExtended = "Remastered" }.ToTitleString());
+        }
+
+        [Fact]
+        internal void TrackEquals_ReturnsAsExpected()
+        {
+            var trackEmpty = new Track();
+            var trackDetailled = new Track()
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "",
+                Ad = false,
+            };
+
+            Assert.True(trackEmpty.Equals(trackEmpty));
+            Assert.True(trackEmpty.Equals(new Track()));
+            Assert.True(trackDetailled.Equals(new Track { Title = "Title", Artist = "Artist" }));
+
+            Assert.False(trackEmpty.Equals(null));
+            Assert.False(trackEmpty.Equals(new OutputFile()));
+            Assert.False(trackEmpty.Equals(new Track() { Title = "Title" }));
+        }
     }
 }

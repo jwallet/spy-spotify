@@ -7,6 +7,6 @@ namespace EspionSpotify.Models
         public string WindowTitle { get; set; }
         public bool IsPlaying { get; set; }
 
-        public bool IsTitledSpotify { get => SpotifyStatus.WindowTitleIsSpotify(WindowTitle); }
+        internal bool IsTitledSpotify { get => SpotifyStatus.WindowTitleIsSpotify(WindowTitle); }
     }
 }

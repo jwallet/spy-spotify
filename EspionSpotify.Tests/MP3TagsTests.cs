@@ -118,9 +118,6 @@ namespace EspionSpotify.Tests
             var tags = new TagLibTab();
             await mp3Tags.MapMediaTags(tags);
 
-            var artExtraLargeExpected = MP3Tags.GetAlbumCoverToPicture(track.ArtExtraLarge);
-            artExtraLargeExpected.Type = TagLib.PictureType.FrontCover;
-
             Assert.Equal(track.ToString(), mp3Tags.Track.ToString());
 
             Assert.Equal(track.AlbumPosition, (int?)tags.Track);

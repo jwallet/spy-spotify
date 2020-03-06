@@ -23,7 +23,7 @@ namespace EspionSpotify.Models
             Count = FIRST_SONG_NAME_COUNT;
         }
 
-        public void Increment()
+        internal void Increment()
         {
             Count++;
         }

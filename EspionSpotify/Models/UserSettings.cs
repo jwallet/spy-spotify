@@ -28,12 +28,17 @@ namespace EspionSpotify.Models
 
         public bool HasRecordingTimerEnabled
         {
-            get => RecordingTimer != null && RecordingTimer != "000000";
+            get => !string.IsNullOrEmpty(RecordingTimer) && RecordingTimer.Length == 6 && RecordingTimer != "000000";
         }
 
         public double RecordingTimerMilliseconds
         {
-            get => new TimeSpan(int.Parse(RecordingTimer.Substring(0, 2)), int.Parse(RecordingTimer.Substring(2, 2)), int.Parse(RecordingTimer.Substring(4, 2))).TotalMilliseconds;
+            get => HasRecordingTimerEnabled
+                ? new TimeSpan(
+                    int.Parse(RecordingTimer.Substring(0, 2)),
+                    int.Parse(RecordingTimer.Substring(2, 2)),
+                    int.Parse(RecordingTimer.Substring(4, 2))).TotalMilliseconds
+                : 0.0;
         }
 
         public int? OrderNumber
