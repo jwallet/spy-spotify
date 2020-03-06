@@ -6,6 +6,7 @@ using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -72,21 +73,21 @@ namespace EspionSpotify.MediaTags
         {
             track.Title = spotifyTrack.Name;
             track.AlbumPosition = spotifyTrack.TrackNumber;
-            track.Performers = spotifyTrack.Artists?.Select(a => a.Name).ToArray();
+            track.Performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
             track.Disc = (uint)spotifyTrack.DiscNumber;
         }
 
         public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)
         {
-            track.AlbumArtists = spotifyAlbum.Artists.Select(a => a.Name).ToArray();
+            track.AlbumArtists = GetAlbumArtistFromSimpleArtistList(spotifyAlbum.Artists);
             track.Album = spotifyAlbum.Name;
             track.Genres = spotifyAlbum.Genres.ToArray();
-            if (uint.TryParse(spotifyAlbum.ReleaseDate?.Substring(0, 4), out var year))
+            if (DateTime.TryParse(spotifyAlbum.ReleaseDate ?? "", out var date))
             {
-                track.Year = year;
+                track.Year = (uint)date.Year;
             }
 
-            if (spotifyAlbum.Images.Count > 0)
+            if (spotifyAlbum.Images?.Count > 0)
             {
                 var sorted = spotifyAlbum.Images.OrderByDescending(i => i.Width).ToList();
 
@@ -96,6 +97,8 @@ namespace EspionSpotify.MediaTags
                 if (sorted.Count > 3) track.ArtSmallUrl = sorted[3].Url;
             }
         }
+
+        private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists) => (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
 
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
