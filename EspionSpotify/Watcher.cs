@@ -35,9 +35,6 @@ namespace EspionSpotify
         public ISpotifyHandler Spotify { get; set; }
 
         public bool RecorderUpAndRunning { get => _recorder != null && _recorder.Running; }
-        public bool NumTrackActivated { get => _userSettings.OrderNumber.HasValue; }
-        public bool AdPlaying { get => _currentTrack.Ad; }
-        public string SongTitle { get => _currentTrack.ToString(); }
         public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
         public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
         public bool IsTypeAllowed
@@ -49,11 +46,11 @@ namespace EspionSpotify
             get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
         }
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, fileSystem: new FileSystem()) {}
+        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
 
-        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings, IFileSystem fileSystem)
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
-            _currentTrack = new Track();
+            _currentTrack = track;
             _form = form;
             _fileSystem = fileSystem;
             _userSettings = userSettings;
@@ -101,7 +98,7 @@ namespace EspionSpotify
 
         public bool IsNewTrack(Track track)
         {
-            if (track == null) return false;
+            if (track == null || new Track().Equals(track)) return false;
 
             if (_currentTrack.Equals(track))
             {
@@ -113,9 +110,9 @@ namespace EspionSpotify
             _isPlaying = _currentTrack.Playing;
 
             var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
-            _form.UpdatePlayingTitle($"{adTitle}{SongTitle}");
+            _form.UpdatePlayingTitle($"{adTitle}{_currentTrack.ToString()}");
 
-            MutesSpotifyAds(AdPlaying);
+            MutesSpotifyAds(_currentTrack.Ad);
 
             return true;
         }
@@ -245,8 +242,8 @@ namespace EspionSpotify
 
             _currentTrack = track;
 
-            _form.UpdatePlayingTitle(SongTitle);
-            MutesSpotifyAds(AdPlaying);
+            _form.UpdatePlayingTitle(_currentTrack.ToString());
+            MutesSpotifyAds(_currentTrack.Ad);
 
             if (_userSettings.HasRecordingTimerEnabled)
             {
@@ -309,7 +306,7 @@ namespace EspionSpotify
 
         private void UpdateNumDown()
         {
-            if (!NumTrackActivated) return;
+            if (!_userSettings.OrderNumber.HasValue) return;
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
@@ -321,7 +318,7 @@ namespace EspionSpotify
 
         private void UpdateNumUp()
         {
-            if (!NumTrackActivated) return;
+            if (!_userSettings.OrderNumber.HasValue) return;
 
             _userSettings.InternalOrderNumber++;
             _form.UpdateNum(_userSettings.OrderNumber.Value);
