@@ -104,15 +104,6 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void IsTrackExists_FalsyWhenTrackFoundOnPause()
-        {
-            var userSettings = new UserSettings { OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = Enums.MediaFormat.Mp3 };
-            var watcherTrackFound = new Watcher(_formMock, userSettings, new Track() { Artist = "Artist", Title = "Dont Overwrite Me" }, _fileSystem);
-
-            Assert.False(watcherTrackFound.IsTrackExists);
-        }
-
-        [Fact]
         internal void IsTrackExists_TruthyWhenTrackFoundPlaying()
         {
             var userSettings = new UserSettings { OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = Enums.MediaFormat.Mp3 };
