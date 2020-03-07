@@ -67,7 +67,6 @@ namespace EspionSpotify.Tests
             Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
 
             Assert.Equal(@"C:\path\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
-            Assert.Equal(@"C:\path\Artist - Title - Live.mp3.spytify", outputFile.ToTranscodingToMP3String());
             Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
         }
 

@@ -39,11 +39,6 @@ namespace EspionSpotify.Models
             return $@"{Path}\{File}{GetAddedCount()}.{SPYTIFY}";
         }
 
-        public string ToTranscodingToMP3String()
-        {
-            return $@"{Path}\{File}{GetAddedCount()}.{Extension}.{SPYTIFY}";
-        }
-
         private string GetAddedCount()
         {
             return Count > FIRST_SONG_NAME_COUNT ? $"{Separator}{Count}" : "";
