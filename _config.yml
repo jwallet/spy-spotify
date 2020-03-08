@@ -1,3 +1,4 @@
+theme: jekyll-theme-cayman
 title: Spytify
 project_name: spy-spotify
 owner_name: jwallet
@@ -11,12 +12,12 @@ url: "https://jwallet.github.io/spy-spotify/"
 logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
 lang: "en-CA"
 exclude: ['faq/', 'LICENSE', 'README.md']
+sass:
+  sass_dir: _sass
+  style: compressed
 collections:
   faq:
     output: true
-sass:
-  sass_dir: _sass
-
 baseurl: /spy-spotify
 port: 4000
 livereload: true
