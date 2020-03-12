@@ -69,10 +69,14 @@ namespace EspionSpotify
 
         public void Init()
         {
-            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId;
-            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId;
+            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
+            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
 
             rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
+            if (_userSettings.IsSpotifyAPISet)
+            {
+                SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
+            }
 
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
@@ -326,7 +330,7 @@ namespace EspionSpotify
             if (text == null) return log;
              
             var timeStr = LogDate;
-            var indexOfColon = text.IndexOf(':');
+            var indexOfColon = text.IndexOf(": ");
             var alert = text[0] == '/' || indexOfColon == -1;
 
             rtbLog.AppendText(timeStr);
@@ -506,12 +510,13 @@ namespace EspionSpotify
         private void RbLastFMAPI_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
-            var mediaTagsAPIIndex = (int)(rbLastFMAPI.Checked ? MediaTagsAPI.LastFM : MediaTagsAPI.Spotify);
-            if (Settings.Default.MediaTagsAPI == mediaTagsAPIIndex || !rb.Checked) return;
+            var mediaTagsAPI = rbLastFMAPI.Checked ? MediaTagsAPI.LastFM : MediaTagsAPI.Spotify;
+
+            if (Settings.Default.MediaTagsAPI == (int)mediaTagsAPI || !rb.Checked) return;
 
             var api = rb?.Tag?.ToString().ToMediaTagsAPI() ?? MediaTagsAPI.LastFM;
             SetMediaTagsAPI(api, _userSettings.IsSpotifyAPISet);
-            Settings.Default.MediaTagsAPI = mediaTagsAPIIndex;
+            Settings.Default.MediaTagsAPI = (int)mediaTagsAPI;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"media-tags-api?type={api.ToString()}"));
         }
