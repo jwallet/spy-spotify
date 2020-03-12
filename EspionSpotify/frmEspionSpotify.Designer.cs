@@ -112,6 +112,8 @@ namespace EspionSpotify
             this.tip = new MetroFramework.Components.MetroToolTip();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lnkRelease = new MetroFramework.Controls.MetroLink();
+            this.lnkDonate = new MetroFramework.Controls.MetroLink();
+            this.lnkFAQ = new MetroFramework.Controls.MetroLink();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -1394,8 +1396,7 @@ namespace EspionSpotify
             // 
             this.lnkRelease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkRelease.Image = global::EspionSpotify.Properties.Resources.release;
-            this.lnkRelease.ImageSize = 18;
-            this.lnkRelease.Location = new System.Drawing.Point(676, 6);
+            this.lnkRelease.Location = new System.Drawing.Point(626, 5);
             this.lnkRelease.Margin = new System.Windows.Forms.Padding(0);
             this.lnkRelease.Name = "lnkRelease";
             this.lnkRelease.Size = new System.Drawing.Size(20, 20);
@@ -1404,6 +1405,33 @@ namespace EspionSpotify
             this.lnkRelease.UseSelectable = true;
             this.lnkRelease.Visible = false;
             this.lnkRelease.Click += new System.EventHandler(this.LnkRelease_Click);
+            // 
+            // lnkDonate
+            // 
+            this.lnkDonate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkDonate.Image = global::EspionSpotify.Properties.Resources.heart;
+            this.lnkDonate.Location = new System.Drawing.Point(652, 5);
+            this.lnkDonate.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkDonate.Name = "lnkDonate";
+            this.lnkDonate.Size = new System.Drawing.Size(20, 20);
+            this.lnkDonate.TabIndex = 42;
+            this.lnkDonate.UseCustomBackColor = true;
+            this.lnkDonate.UseSelectable = true;
+            this.lnkDonate.Click += new System.EventHandler(this.LnkDonate_Click);
+            // 
+            // lnkFAQ
+            // 
+            this.lnkFAQ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkFAQ.Image = global::EspionSpotify.Properties.Resources.faq;
+            this.lnkFAQ.ImageSize = 12;
+            this.lnkFAQ.Location = new System.Drawing.Point(676, 5);
+            this.lnkFAQ.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkFAQ.Name = "lnkFAQ";
+            this.lnkFAQ.Size = new System.Drawing.Size(20, 20);
+            this.lnkFAQ.TabIndex = 43;
+            this.lnkFAQ.UseCustomBackColor = true;
+            this.lnkFAQ.UseSelectable = true;
+            this.lnkFAQ.Click += new System.EventHandler(this.LnkFAQ_Click);
             // 
             // FrmEspionSpotify
             // 
@@ -1415,6 +1443,8 @@ namespace EspionSpotify
             this.BackImagePadding = new System.Windows.Forms.Padding(25, 15, 0, 0);
             this.BackMaxSize = 250;
             this.ClientSize = new System.Drawing.Size(780, 420);
+            this.Controls.Add(this.lnkFAQ);
+            this.Controls.Add(this.lnkDonate);
             this.Controls.Add(this.lnkRelease);
             this.Controls.Add(this.lnkSpy);
             this.Controls.Add(this.tcMenu);
@@ -1544,6 +1574,8 @@ namespace EspionSpotify
         private MetroRadioButton rbLastFMAPI;
         private MetroRadioButton rbSpotifyAPI;
         private MetroLink lnkAudioVirtualCable;
+        private MetroLink lnkDonate;
+        private MetroLink lnkFAQ;
     }
 }
 

@@ -68,6 +68,8 @@ namespace EspionSpotify.Models
         public static TranslationKeys TabSettings { get => TranslationKeys.tabSettings; }
 
         public static TranslationKeys TipClear { get => TranslationKeys.tipClear; }
+        public static TranslationKeys TipDonate { get => TranslationKeys.tipDonate; }
+        public static TranslationKeys TipFAQ { get => TranslationKeys.tipFAQ; }
         public static TranslationKeys TipDirectory { get => TranslationKeys.tipDirectory; }
         public static TranslationKeys TipInstallVirtualCableDriver { get => TranslationKeys.tipInstallVirtualCableDriver; }
         public static TranslationKeys TipPath { get => TranslationKeys.tipPath; }
