@@ -15,9 +15,7 @@ namespace EspionSpotify
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
-        private static bool _running;
-
-        public static bool Running { get => _running; internal set { _running = value; } }
+        public static bool Running { get; internal set; }
         public static bool Ready { get; private set; } = true;
         public static bool ToggleStopRecordingDelayed { get; internal set; }
 
@@ -133,7 +131,7 @@ namespace EspionSpotify
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDevice);
-            return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(_running);
+            return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
         private void BindSpotifyEventHandlers()
