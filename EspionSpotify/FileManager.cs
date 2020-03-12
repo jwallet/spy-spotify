@@ -23,6 +23,8 @@ namespace EspionSpotify
             _fileSystem = fileSystem;
         }
 
+        public string GetTempFile() => _fileSystem.Path.GetTempFileName();
+
         public OutputFile GetOutputFile(string path)
         {
             var pathName = path + GetFolderPath(_track, _userSettings, _fileSystem);
@@ -43,7 +45,8 @@ namespace EspionSpotify
             }
 
             return outputFile;
-        } 
+        }
+
 
         public void DeleteFile(string currentFile)
         {
