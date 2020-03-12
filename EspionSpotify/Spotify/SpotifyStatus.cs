@@ -10,6 +10,7 @@ namespace EspionSpotify.Spotify
     {
         public const string SPOTIFY = "spotify";
         public const string SPOTIFYFREE = "spotify free";
+        public const string ADVERTISEMENT = "advertisement";
 
         public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
 
@@ -20,6 +21,11 @@ namespace EspionSpotify.Spotify
         public static bool WindowTitleIsSpotify(string title)
         {
             return SpotifyTitles.Contains(title?.ToLowerInvariant());
+        }
+
+        public static bool WindowTitleIsAd(string title)
+        {
+            return title?.ToLowerInvariant() == ADVERTISEMENT;
         }
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
@@ -41,7 +47,7 @@ namespace EspionSpotify.Spotify
             var tags = spotifyWindowInfo.WindowTitle.Split(_windowTitleSeparator, 3, StringSplitOptions.None);
 
             var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
-            var isAd = tags.Length < 2;
+            var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
 
             CurrentTrack = new Track
             {

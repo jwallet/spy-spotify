@@ -10,7 +10,7 @@ namespace EspionSpotify.Tests
         [InlineData(null, false)]
         [InlineData("", false)]
         [InlineData("Artist Name - Song Title", false)]
-        [InlineData("Spotify Ad", false)]
+        [InlineData("Advertisement", false)]
         [InlineData("Spotify", true)]
         [InlineData("SPOTIFY", true)]
         [InlineData("spotify", true)]
@@ -18,6 +18,17 @@ namespace EspionSpotify.Tests
         internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
         {
             var actual = SpotifyStatus.WindowTitleIsSpotify(value);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Spotify", false)]
+        [InlineData("Ad", false)]
+        [InlineData("Advertisement", true)]
+        internal void SpotifyStatusWindowTitleIsAd_ReturnsWhenItMatches(string value, bool expected)
+        {
+            var actual = SpotifyStatus.WindowTitleIsAd(value);
 
             Assert.Equal(expected, actual);
         }
