@@ -113,6 +113,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OutputPath = Settings.Default.Directory;
             _userSettings.RecordUnknownTrackTypeEnabled = Settings.Default.RecordUnknownTrackTypeEnabled;
+            _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
