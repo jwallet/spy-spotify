@@ -100,24 +100,29 @@ namespace EspionSpotify.MediaTags
 
         private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists) => (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
 
+        private void RenewNextTokenRenewal()
+        {
+            // remember when to renew the 60 minutes token (10 minutes upfront)
+            _nextTokenRenewal = DateTimeOffset.UtcNow.AddSeconds(_token.ExpiresIn).AddMinutes(-10);
+        }
+
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
             _authorizationCodeAuth = (AuthorizationCodeAuth)sender;
             _authorizationCodeAuth.Stop();
 
             _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
-
-            // remember when to renew the 60 minutes token (10 minutes upfront)
-            _nextTokenRenewal = DateTimeOffset.UtcNow.AddSeconds(_token.ExpiresIn).AddMinutes(-10);
+            RenewNextTokenRenewal();
         }
 
         private async Task<SpotifyWebAPI> GetSpotifyWebAPI()
         {
             if (_token == null) return null;
 
-            if (DateTimeOffset.UtcNow >= _nextTokenRenewal)
+            if (DateTimeOffset.UtcNow >= _nextTokenRenewal || _token.IsExpired())
             {
                 _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken);
+                RenewNextTokenRenewal();
             }
 
             return new SpotifyWebAPI

@@ -350,7 +350,7 @@
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
-    <value>Enregistré {0} en : {1}</value>
+    <value>Enregistré {0} en: {1}</value>
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
