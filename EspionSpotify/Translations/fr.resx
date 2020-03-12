@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Regrouper les chansons d'un même artiste dans un dossier au nom de l'artiste</value>
+    <value>Regrouper les pistes audio dans leur propre dossier</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
