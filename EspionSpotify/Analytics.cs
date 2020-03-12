@@ -22,10 +22,11 @@ namespace EspionSpotify
 
         public Analytics(string clientId, string version)
         {
+            var osVersion = Environment.OSVersion.Version;
             cid = clientId;
             cm = version;
+            cs = $"Windows NT {osVersion.Major}.{osVersion.Minor}";
             ul = CultureInfo.CurrentCulture.Name;
-            cs = Environment.OSVersion.ToString();
         }
 
         public static string GenerateCID()
@@ -49,6 +50,7 @@ namespace EspionSpotify
                 { "an", "Spytify" }, // App name
                 { "cs", cs}, // Campaign source, OS Version
                 { "ul", ul }, // User Language
+                { "ua", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}, // user-agent overwrite
                 { "dh", "jwallet.github.io/spy-spotify" }, // Document host
                 { "dl", $"/{action}" }, // Document link
                 { "dt", action }, // Document title
