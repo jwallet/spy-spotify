@@ -69,21 +69,10 @@ namespace EspionSpotify
 
         public void Init()
         {
-            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
-            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
-
-            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
-            if (_userSettings.IsSpotifyAPISet)
-            {
-                SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
-            }
-
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
-            rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
-            rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
             tgEndingSongDelay.Checked = Settings.Default.EndingSongDelayEnabled;
             tgAddSeparators.Checked = Settings.Default.TrackTitleSeparatorEnabled;
@@ -95,6 +84,16 @@ namespace EspionSpotify
             tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
+
+            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
+            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
+            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
+            rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
+            rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
+            if (rbSpotifyAPI.Checked)
+            {
+                SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
+            }
 
             var indexAudioEndPointDevice = Settings.Default.AudioEndPointDevice.ToNullableInt();
             _audioSession = new MainAudioSession(indexAudioEndPointDevice);
