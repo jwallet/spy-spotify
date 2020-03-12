@@ -44,6 +44,7 @@ namespace EspionSpotify.Tests
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "Live",
+                Album = "Single",
                 Ad = false
             };
 
@@ -59,7 +60,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void GetOutputFile_ReturnsFileNames()
         {
-            var outputFile = _fileManager.GetOutputFile(_path);
+            var outputFile = _fileManager.GetOutputFile();
 
             Assert.Equal(_path, outputFile.Path);
             Assert.Equal(_track.ToString(), outputFile.File);
@@ -73,7 +74,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void BuildFileName_ReturnsFileName()
         {
-            var fileName = _fileManager.GetOutputFile(_path).ToString();
+            var fileName = _fileManager.GetOutputFile().ToString();
 
             Assert.Equal(@"C:\path\Artist - Title - Live.mp3", fileName);
         }
@@ -85,21 +86,32 @@ namespace EspionSpotify.Tests
             _userSettings.TrackTitleSeparator = "_";
             _userSettings.InternalOrderNumber = 100;
 
-            var fileName = _fileManager.GetOutputFile(_path).ToString();
+            var fileName = _fileManager.GetOutputFile().ToString();
 
             Assert.Equal(@"C:\path\100_Artist_-_Title_-_Live.mp3", fileName);
         }
 
         [Theory]
-        [InlineData(true, @"C:\path\Artist\Title - Live.mp3")]
+        [InlineData(true, @"C:\path\Artist\Single\Title - Live.mp3")]
         [InlineData(false, @"C:\path\Artist - Title - Live.mp3")]
         internal void BuildFileName_ReturnsFileNameGroupByFolders(bool isGroupByArtistFolder, string expectedResult)
         {
             _userSettings.GroupByFoldersEnabled = isGroupByArtistFolder;
 
-            var fileName = _fileManager.GetOutputFile(_path).ToString();
+            var fileName = _fileManager.GetOutputFile().ToString();
 
             Assert.Equal(expectedResult, fileName);
+        }
+
+        [Fact]
+        internal void BuilFileName_ReturnsFileNameGroupByFoldersWhenUntitledAlbum()
+        {
+            _track.Album = "";
+            _userSettings.GroupByFoldersEnabled = true;
+
+            var fileName = _fileManager.GetOutputFile().ToString();
+
+            Assert.Equal(@"C:\path\Artist\Untitled\Title - Live.mp3", fileName);
         }
 
         [Fact]
@@ -107,7 +119,7 @@ namespace EspionSpotify.Tests
         {
             _userSettings.MediaFormat = Enums.MediaFormat.Wav;
 
-            var fileName = _fileManager.GetOutputFile(_path).ToString();
+            var fileName = _fileManager.GetOutputFile().ToString();
 
             Assert.Equal(@"C:\path\Artist - Title - Live.wav", fileName);
         }
@@ -115,7 +127,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void GetFolderPath_ReturnsNoArtistFolderPath()
         {
-            var artistFolder = FileManager.GetFolderPath(_track, _userSettings, _fileSystem);
+            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
             Assert.Null(artistFolder);
         }
@@ -126,10 +138,11 @@ namespace EspionSpotify.Tests
             _userSettings.GroupByFoldersEnabled = true;
 
             var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
+            var albumDir = string.IsNullOrEmpty(_track.Album) ? Track.UNTITLED_ALBUM : Regex.Replace(_track.Album, _windowsExlcudedChars, string.Empty);
 
-            var artistFolder = FileManager.GetFolderPath(_track, _userSettings, _fileSystem);
+            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
-            Assert.Equal($@"\{artistDir}", artistFolder);
+            Assert.Equal($@"\{artistDir}\{albumDir}", artistFolder);
         }
 
         [Fact]
