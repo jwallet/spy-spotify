@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistré {0} en : {1}.
+        ///   Looks up a localized string similar to Enregistré {0} en: {1}.
         /// </summary>
         internal static string logRecorded {
             get {
