@@ -20,6 +20,8 @@ namespace EspionSpotify
         private const string API_LATEST_RELEASE_URL = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
         private const string SPYTIFY = "Spytify";
 
+        public const string WEBSITE_FAQ_URL = "https://jwallet.github.io/spy-spotify/faq.html";
+        public const string WEBSITE_DONATE_URL = "https://jwallet.github.io/spy-spotify/donate.html";
         public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
 
         public static async Task GetVersion()

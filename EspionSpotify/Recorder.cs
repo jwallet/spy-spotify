@@ -22,7 +22,7 @@ namespace EspionSpotify
         private WasapiLoopbackCapture _waveIn;
         private Stream _fileWriter;
         private Stream _streamWriter;
-        private MemoryStream _streamOutput;
+        private string _tempFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
 
@@ -41,8 +41,8 @@ namespace EspionSpotify
         {
             Running = true;
             await Task.Delay(50);
-            _streamOutput = new MemoryStream();
             _currentOutputFile = _fileManager.GetOutputFile(_userSettings.OutputPath);
+            _tempFile = _fileManager.GetTempFile();
 
             _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);
             _waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -50,7 +50,7 @@ namespace EspionSpotify
 
             try
             {
-                _streamWriter = new WaveFileWriter(_streamOutput, _waveIn.WaveFormat);
+                _streamWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
                 _fileWriter = GetFileWriter();
             }
             catch (Exception ex)
@@ -86,11 +86,12 @@ namespace EspionSpotify
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
             if (_streamWriter == null || _fileWriter == null) return;
-            _streamOutput.Position = 0;
-            await WriteStreamOutputToFileBasedOnNumberOfChannels();
 
             await _streamWriter.FlushAsync();
             _streamWriter.Dispose();
+
+            await WriteStreamOutputToFileBasedOnNumberOfChannels();
+
             _waveIn.Dispose();
 
             await _fileWriter.FlushAsync();
@@ -113,10 +114,13 @@ namespace EspionSpotify
 
         private async Task WriteStreamOutputToFileBasedOnNumberOfChannels()
         {
-            using (var reader = new WaveFileReader(_streamOutput))
+            using (var reader = new WaveFileReader(_tempFile))
             {
                 await reader.CopyToAsync(_fileWriter);
             }
+
+            try { _fileSystem.File.Delete(_tempFile); }
+            catch { }
             //if (_userSettings.MediaFormat == MediaFormat.Mp3 && _waveIn.WaveFormat.Channels > MP3_SUPPORTED_NUMBER_CHANNELS)
             //{
             //    // TODO: #97 NAudio Multi channel pass through

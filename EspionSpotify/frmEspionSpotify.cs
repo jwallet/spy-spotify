@@ -213,8 +213,10 @@ namespace EspionSpotify
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
             tip.SetToolTip(lnkDirectory, Rm.GetString(I18nKeys.TipDirectory));
             tip.SetToolTip(lnkPath, Rm.GetString(I18nKeys.TipPath));
-            tip.SetToolTip(lnkRelease, Rm.GetString(I18nKeys.TipRelease));
             tip.SetToolTip(lnkAudioVirtualCable, Rm.GetString(I18nKeys.TipInstallVirtualCableDriver));
+            tip.SetToolTip(lnkRelease, Rm.GetString(I18nKeys.TipRelease));
+            tip.SetToolTip(lnkDonate, Rm.GetString(I18nKeys.TipDonate));
+            tip.SetToolTip(lnkFAQ, Rm.GetString(I18nKeys.TipFAQ));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
@@ -751,7 +753,7 @@ namespace EspionSpotify
 
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab}"));
+            Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab.Text}"));
         }
 
         private void LnkRelease_Click(object sender, EventArgs e)
@@ -791,6 +793,18 @@ namespace EspionSpotify
             var isDriverInstalled = UpdateAudioVirtualCableDriverImage(_audioSession, Rm);
             UpdateAudioEndPointFields(_audioSession);
             Task.Run(async () => await _analytics.LogAction($"audio-virtual-cable-driver?status={(isDriverInstalled ? "installed" : "uninstalled")}"));
+        }
+
+        private void LnkFAQ_Click(object sender, EventArgs e)
+        {
+            Process.Start(GitHub.WEBSITE_FAQ_URL);
+            Task.Run(async () => await _analytics.LogAction($"faq"));
+        }
+
+        private void LnkDonate_Click(object sender, EventArgs e)
+        {
+            Process.Start(GitHub.WEBSITE_DONATE_URL);
+            Task.Run(async () => await _analytics.LogAction($"donate"));
         }
     }
 }
