@@ -381,4 +381,12 @@
     <value>Désinstaller Audio Virtual Cable</value>
     <comment>interface</comment>
   </data>
+  <data name="tipDonate" xml:space="preserve">
+    <value>Faire un don à Spytify</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipFAQ" xml:space="preserve">
+    <value>Voir la F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
 </root>

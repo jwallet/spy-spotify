@@ -62,6 +62,8 @@
         tabSettings,
         tipClear,
         tipDirectory,
+        tipDonate,
+        tipFAQ,
         tipInstallVirtualCableDriver,
         tipPath,
         tipRelease,

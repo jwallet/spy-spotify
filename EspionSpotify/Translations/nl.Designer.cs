@@ -601,6 +601,24 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doneren aan Spytify.
+        /// </summary>
+        internal static string tipDonate {
+            get {
+                return ResourceManager.GetString("tipDonate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zie de F.A.Q..
+        /// </summary>
+        internal static string tipFAQ {
+            get {
+                return ResourceManager.GetString("tipFAQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installeer Audio Virtual Cable.
         /// </summary>
         internal static string tipInstallVirtualCableDriver {
