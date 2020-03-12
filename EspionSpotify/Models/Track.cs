@@ -7,6 +7,7 @@ namespace EspionSpotify.Models
     public class Track
     {
         private const string SPOTIFY = "Spotify";
+        public const string UNTITLED_ALBUM = "Untitled";
 
         private string _artist = null;
         private string _title = null;

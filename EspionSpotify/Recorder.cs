@@ -41,7 +41,7 @@ namespace EspionSpotify
         {
             Running = true;
             await Task.Delay(50);
-            _currentOutputFile = _fileManager.GetOutputFile(_userSettings.OutputPath);
+            _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
             _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);

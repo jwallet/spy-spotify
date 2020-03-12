@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Groepeer nummers van dezelfde artiest in dezelfde map</value>
+    <value />
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
@@ -306,23 +306,23 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Error while recording: Unknown exception</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
+    <value />
     <comment>message</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Duplicate already recorded tracks instead of skipping them.</value>
+    <value />
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono).</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
-    <value>New version available</value>
+    <value />
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
@@ -338,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the F.A.Q. tab to know how to move Spotify towards another device.</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
-    <value>// Previous recording sesssion logs</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
@@ -354,19 +354,19 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Skipping: {0} (recording already exists)</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value>// Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll</value>
+    <value />
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">
-    <value>Choose the folder where you want to save the recorded audio files.</value>
+    <value />
     <comment>interface</comment>
   </data>
   <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
-    <value>Failed to open the Audio Virtual Cable controller.</value>
+    <value />
     <comment>message</comment>
   </data>
   <data name="msgTitleDriverInstallationFailed" xml:space="preserve">

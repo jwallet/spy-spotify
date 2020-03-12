@@ -115,7 +115,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regrouper les chansons d&apos;un même artiste dans un dossier au nom de l&apos;artiste.
+        ///   Looks up a localized string similar to Regrouper les pistes audio dans leur propre dossier.
         /// </summary>
         internal static string lblAddFolders {
             get {

@@ -25,9 +25,12 @@ namespace EspionSpotify
 
         public string GetTempFile() => _fileSystem.Path.GetTempFileName();
 
-        public OutputFile GetOutputFile(string path)
+        public OutputFile GetOutputFile()
         {
-            var pathName = path + GetFolderPath(_track, _userSettings, _fileSystem);
+            var folderPath = GetFolderPath(_track, _userSettings);
+            var pathName = _userSettings.OutputPath + folderPath;
+            CreateDirectories(_userSettings);
+
             var fileName = GenerateFileName(_track, _userSettings);
             var extension = GetMediaFormatExtension(_userSettings);
 
@@ -71,24 +74,47 @@ namespace EspionSpotify
 
         public static bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
         {
-            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings, fileSystem);
+            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings);
             var fileName = GenerateFileName(track, userSettings);
             return fileSystem.File.Exists($@"{pathWithFolder}\{fileName}.{GetMediaFormatExtension(userSettings)}");
         }
 
-        public static string GetFolderPath(Track track, UserSettings userSettings, IFileSystem fileSystem)
+        public static string GetFolderPath(Track track, UserSettings userSettings)
         {
-            string insertArtistDir = null;
-            var artistDir = Normalize.RemoveDiacritics(track.Artist);
-            artistDir = Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
+            if (!userSettings.GroupByFoldersEnabled) return null;
 
-            if (userSettings.GroupByFoldersEnabled)
-            {
-                insertArtistDir = $@"\{artistDir}";
-                fileSystem.Directory.CreateDirectory($@"{userSettings.OutputPath}\{artistDir}");
-            }
+            var artistDir = GetArtistFolderPath(track.Artist);
+            var albumDir = GetAlbumFolderPath(track.Album);
 
-            return insertArtistDir;
+            return $@"\{artistDir}\{albumDir}";
+        }
+
+        private static string GetArtistFolderPath(string trackArtist)
+        {
+            var artistDir = Normalize.RemoveDiacritics(trackArtist);
+            return Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
+        }
+
+        private static string GetAlbumFolderPath(string trackAlbum)
+        {
+            var albumDir = string.IsNullOrEmpty(trackAlbum) ? Track.UNTITLED_ALBUM : Normalize.RemoveDiacritics(trackAlbum);
+            return Regex.Replace(albumDir, _windowsExlcudedChars, string.Empty);
+        }
+
+        private void CreateDirectories(UserSettings userSettings)
+        {
+            if (!userSettings.GroupByFoldersEnabled) return;
+
+            var artistDir = GetArtistFolderPath(_track.Artist);
+            var albumDir = GetArtistFolderPath(_track.Album);
+            CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}");
+            CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}\{albumDir}");
+        }
+
+        private void CreateDirectory(string path)
+        {
+            if (_fileSystem.Directory.Exists(path)) return;
+            _fileSystem.Directory.CreateDirectory(path);
         }
 
         private static string GetMediaFormatExtension(UserSettings userSettings)
@@ -117,13 +143,17 @@ namespace EspionSpotify
 
         private void DeleteFileFolder(string currentFile)
         {
-            Console.WriteLine(currentFile);
             var folderPath = _fileSystem.Path.GetDirectoryName(currentFile);
-            Console.WriteLine(folderPath);
             if (!_fileSystem.Directory.EnumerateFiles(folderPath).Any())
             {
-                Console.WriteLine(true);
-                _fileSystem.Directory.Delete(folderPath);
+                try { _fileSystem.Directory.Delete(folderPath); }
+                catch { }
+
+                var subFolderPath = _fileSystem.Path.GetDirectoryName(folderPath);
+                if (_userSettings.OutputPath != subFolderPath && subFolderPath.Contains(_userSettings.OutputPath))
+                {
+                    DeleteFileFolder(folderPath);
+                }
             }
         }
     }
