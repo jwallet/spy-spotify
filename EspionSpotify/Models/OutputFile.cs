@@ -11,7 +11,6 @@ namespace EspionSpotify.Models
         private const string SPYTIFY = "spytify";
         private const int FIRST_SONG_NAME_COUNT = 1;
 
-
         public string Path { get; set; }
         public string File { get; set; }
         public int Count { get; private set; }
@@ -30,7 +29,6 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            
             return $@"{Path}\{File}{GetAddedCount()}.{Extension}";
         }
 
