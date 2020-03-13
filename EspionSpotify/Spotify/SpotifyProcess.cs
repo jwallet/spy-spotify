@@ -22,7 +22,7 @@ namespace EspionSpotify
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
         {
-            var isSpotifyPlaying = _spotifyAudioSession.IsSpotifyCurrentlyPlaying();
+            var isSpotifyPlaying = await _spotifyAudioSession.IsSpotifyCurrentlyPlaying();
             var processTitle = GetSpotifyTitle();
 
             if (string.IsNullOrWhiteSpace(processTitle))
@@ -33,7 +33,7 @@ namespace EspionSpotify
             var spotifyWindowInfo = new SpotifyWindowInfo
             {
                 WindowTitle = processTitle,
-                IsPlaying = await isSpotifyPlaying
+                IsPlaying = isSpotifyPlaying
             };
 
             return new SpotifyStatus(spotifyWindowInfo);
