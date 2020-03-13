@@ -97,6 +97,7 @@ namespace EspionSpotify
 
             var indexAudioEndPointDevice = Settings.Default.AudioEndPointDevice.ToNullableInt();
             _audioSession = new MainAudioSession(indexAudioEndPointDevice);
+            UpdateAudioEndPointFields(_audioSession);
 
             SetLanguageDropDown();  // do it before setting the language
 
