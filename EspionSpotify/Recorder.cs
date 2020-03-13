@@ -85,10 +85,12 @@ namespace EspionSpotify
 
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_streamWriter == null || _fileWriter == null) return;
+            if (_streamWriter == null) return;
 
             await _streamWriter.FlushAsync();
             _streamWriter.Dispose();
+
+            if (_fileWriter == null) return;
 
             await WriteStreamOutputToFileBasedOnNumberOfChannels();
 
@@ -121,9 +123,11 @@ namespace EspionSpotify
 
             try { _fileSystem.File.Delete(_tempFile); }
             catch { }
+
+            // TODO: #97 NAudio Multi channel pass through
+
             //if (_userSettings.MediaFormat == MediaFormat.Mp3 && _waveIn.WaveFormat.Channels > MP3_SUPPORTED_NUMBER_CHANNELS)
             //{
-            //    // TODO: #97 NAudio Multi channel pass through
             //    //var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(_waveIn.WaveFormat.SampleRate, MP3_SUPPORTED_NUMBER_CHANNELS);
             //    ////using (var converter = new WaveFormatConversionStream(waveFormat, reader))
             //    ////{
