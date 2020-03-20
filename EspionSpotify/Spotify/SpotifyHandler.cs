@@ -33,8 +33,8 @@ namespace EspionSpotify.Spotify
 
         public Track Track { get; set; }
 
-        public SpotifyHandler(ISpotifyAudioSession spotifyAudioSession): this(
-            spotifyProcess: new SpotifyProcess(spotifyAudioSession)
+        public SpotifyHandler(IMainAudioSession audioSession): this(
+            spotifyProcess: new SpotifyProcess(audioSession)
         ) {}
 
         public SpotifyHandler(ISpotifyProcess spotifyProcess)

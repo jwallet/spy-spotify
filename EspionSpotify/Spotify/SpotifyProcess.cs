@@ -12,17 +12,17 @@ namespace EspionSpotify
     public class SpotifyProcess: ISpotifyProcess
     {
         private readonly int? _spotifyProcessId;
-        private readonly ISpotifyAudioSession _spotifyAudioSession;
+        private readonly IMainAudioSession _audioSession;
 
-        public SpotifyProcess(ISpotifyAudioSession spotifyAudioSession)
+        public SpotifyProcess(IMainAudioSession audioSession)
         {
-            _spotifyAudioSession = spotifyAudioSession;
+            _audioSession = audioSession;
             _spotifyProcessId = GetSpotifyProcesses().FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
         }
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
         {
-            var isSpotifyPlaying = await _spotifyAudioSession.IsSpotifyCurrentlyPlaying();
+            var isSpotifyPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
             var processTitle = GetSpotifyTitle();
 
             if (string.IsNullOrWhiteSpace(processTitle))
