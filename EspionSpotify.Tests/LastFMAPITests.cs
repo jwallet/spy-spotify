@@ -4,6 +4,7 @@ using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,11 +13,28 @@ namespace EspionSpotify.Tests
 {
     public class LastFMAPITests
     {
-        private ILastFMAPI _lastFMAPI;
+        private readonly ILastFMAPI _lastFMAPI;
 
         public LastFMAPITests()
         {
             _lastFMAPI = new LastFMAPI();
+        }
+
+        [Fact]
+        internal async void TestAPIKeys_ReturnsOk()
+        {
+            var artist = "artist";
+            var title = "title";
+            foreach(var key in _lastFMAPI.ApiKeys)
+            {
+                var request = WebRequest.Create($"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={key}&artist={artist}&track={title}");
+                using (var response = await request.GetResponseAsync())
+                {
+                    var httpResponse = response as HttpWebResponse;
+                    Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+                    response.Dispose();
+                }
+            }
         }
 
         [Fact]

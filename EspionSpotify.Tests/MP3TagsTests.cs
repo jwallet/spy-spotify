@@ -65,7 +65,7 @@ namespace EspionSpotify.Tests
             Assert.Null(tags.Genres);
             Assert.Equal(0u, tags.Disc);
             Assert.Equal(0u, tags.Year);
-            Assert.Equal(new TagLib.IPicture[] { }, tags.Pictures);
+            Assert.Null(tags.Pictures);
         }
 
 
@@ -101,8 +101,7 @@ namespace EspionSpotify.Tests
                 Genres = new[] { "Hotel", "India", "Juliet" },
                 Disc = 1u,
                 Year = 2020u,
-                ArtExtraLargeUrl = ART_LINK,
-                ArtLargeUrl = ART_LINK,
+                ArtLargeUrl = "www.google.com",
                 ArtMediumUrl = ART_LINK,
                 ArtSmallUrl = ART_LINK
             };
@@ -129,13 +128,9 @@ namespace EspionSpotify.Tests
             Assert.Equal(track.Disc, tags.Disc);
             Assert.Equal(track.Year, tags.Year);
 
-            var arts = new[] { track.ArtExtraLarge, track.ArtLarge, track.ArtMedium, track.ArtSmall };
-            for (var index = 0; index < arts.Length; index++)
-            {
-                var pictureType = index == 0 ? TagLib.PictureType.FrontCover : TagLib.PictureType.Media;
-                Assert.Equal(arts[index].Length, tags.Pictures[index].Data.Count);
-                Assert.Equal(pictureType, tags.Pictures[index].Type);
-            }
+            Assert.Single(tags.Pictures);
+            Assert.Equal(track.ArtMedium.Length, tags.Pictures[0].Data.Count);
+            Assert.Equal(TagLib.PictureType.FrontCover, tags.Pictures[0].Type);
         }
     }
 }
