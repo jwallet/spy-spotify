@@ -13,13 +13,15 @@ namespace EspionSpotify.MediaTags
     {
         private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly Random _random;
-        private readonly string[] _apiKeys = new[] { "c117eb33c9d44d34734dfdcafa7a162d", "01a049d30c4e17c1586707acf5d0fb17", "82eb5ead8c6ece5c162b461615495b18" };
         private string _selectedApiKey = "";
+
+        public string[] ApiKeys { get; }
 
         public LastFMAPI()
         {
+            ApiKeys = new[] { "c117eb33c9d44d34734dfdcafa7a162d", "01a049d30c4e17c1586707acf5d0fb17", "82eb5ead8c6ece5c162b461615495b18" };
             _random = new Random();
-            _selectedApiKey = _apiKeys[_random.Next(_apiKeys.Length)];
+            _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
         }
 
         public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
