@@ -111,7 +111,7 @@ namespace EspionSpotify
 
             _fileManager.Rename(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
-            await UpdateOutputFileBasedOnMediaFormat();    
+            await UpdateOutputFileBasedOnMediaFormat();
         }
 
         private async Task WriteStreamOutputToFileBasedOnNumberOfChannels()
@@ -262,5 +262,5 @@ namespace EspionSpotify
             form.UpdateIconSpotify(true, false);
             Console.WriteLine(ex.Message);
         }
-}
+    }
 }

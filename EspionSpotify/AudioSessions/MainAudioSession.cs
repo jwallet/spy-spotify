@@ -69,9 +69,10 @@ namespace EspionSpotify.AudioSessions
                 var spotifySoundValue = 0.0;
                 await Task.Delay(SLEEP_VALUE);
 
-                lock (SpotifyAudioSessionControls)
+                var spotifyAudioSessionControls = SpotifyAudioSessionControls;
+                lock (spotifyAudioSessionControls)
                 {
-                    foreach (var audioSession in SpotifyAudioSessionControls)
+                    foreach (var audioSession in spotifyAudioSessionControls)
                     {
                         var soundValue = Math.Round(audioSession.AudioMeterInformation.MasterPeakValue * 100.0, 1);
                         if (soundValue == 0.0) continue;
@@ -88,9 +89,10 @@ namespace EspionSpotify.AudioSessions
 
         public void SetSpotifyToMute(bool mute)
         {
-            lock (SpotifyAudioSessionControls)
+            var spotifyAudioSessionControlsLocked = SpotifyAudioSessionControls;
+            lock (spotifyAudioSessionControlsLocked)
             {
-                foreach (var audioSession in SpotifyAudioSessionControls)
+                foreach (var audioSession in spotifyAudioSessionControlsLocked)
                 {
                     audioSession.SimpleAudioVolume.Mute = mute;
                 }
@@ -106,11 +108,11 @@ namespace EspionSpotify.AudioSessions
                 return false;
             }
 
-            var sessionAudioEndPointDevice = GetSessionsAudioEndPointDevice;
+            var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
 
-            for (var i = 0; i < sessionAudioEndPointDevice.Count; i++)
+            for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
             {
-                var currentAudioSessionControl = sessionAudioEndPointDevice[i];
+                var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
                 var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
                 if (!IsSpotifyAudioSessionControl(currentProcessId)) continue;
 
@@ -122,11 +124,11 @@ namespace EspionSpotify.AudioSessions
 
         public void SetSpotifyVolumeToHighAndOthersToMute(bool mute)
         {
-            var sessionAudioEndPointDevice = GetSessionsAudioEndPointDevice;
+            var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
 
-            for (var i = 0; i < sessionAudioEndPointDevice.Count; i++)
+            for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
             {
-                var currentAudioSessionControl = sessionAudioEndPointDevice[i];
+                var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
                 var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
 
                 if (currentProcessId.Equals(_spytifyProcess.Id)) continue;
