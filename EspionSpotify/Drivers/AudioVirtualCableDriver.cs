@@ -1,5 +1,6 @@
 ﻿using NAudio.CoreAudioApi;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,12 +17,12 @@ namespace EspionSpotify.Drivers
 
         public static bool IsFound { get => System.IO.File.Exists(Path); }
 
-        public static bool ExistsInAudioEndPointDevices(MMDeviceCollection audioEndPointDevices)
+        public static bool ExistsInAudioEndPointDevices(IDictionary<string, string> audioEndPointDeviceNames)
         {
-            return audioEndPointDevices.Any(x => x.DeviceFriendlyName.Equals(DriverName));
+            return audioEndPointDeviceNames.Any(x => x.Value.Contains(DriverName));
         }
         
-        public static async Task<bool> SetupDriver()
+        public static bool SetupDriver()
         {
             try
             {
@@ -36,13 +37,10 @@ namespace EspionSpotify.Drivers
                 {
                     StartInfo = psi,
                 };
-                await Task.Run(() =>
-                {
-                    process.Start();
-                    process.WaitForExit();
-                });
+                process.Start();
+                process.WaitForExit();
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }

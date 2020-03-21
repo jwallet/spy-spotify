@@ -7,6 +7,7 @@ namespace EspionSpotify.Models
 {
     public class UserSettings
     {
+        private IMainAudioSession _audioSession;
         public string OutputPath { get; set; }
         public LAMEPreset Bitrate { get; set; }
         public MediaFormat MediaFormat { get; set; }
@@ -18,13 +19,19 @@ namespace EspionSpotify.Models
         public bool EndingTrackDelayEnabled { get; set; }
         public bool MuteAdsEnabled { get; set; }
         public bool RecordUnknownTrackTypeEnabled { get; set; }
-        public ISpotifyAudioSession SpotifyAudioSession { get; set; }
         public int InternalOrderNumber { get; set; } = 1;
         public bool DuplicateAlreadyRecordedTrack { get; set; }
-        public int? AudioEndPointDevice { get; set; }
+        public string AudioEndPointDeviceID { get; set; }
         public string RecordingTimer { get; set; }
         public string SpotifyAPIClientId { get; set; }
         public string SpotifyAPISecretId { get; set; }
+
+        public IMainAudioSession AudioSession { get => _audioSession; }
+
+        public void SetAudioSession(ref IMainAudioSession audioSession)
+        {
+            _audioSession = audioSession;
+        }
 
         public bool HasRecordingTimerEnabled
         {

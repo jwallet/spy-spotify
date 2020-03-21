@@ -6,6 +6,7 @@ using System.IO.Abstractions;
 using EspionSpotify.Extensions;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
+using EspionSpotify.AudioSessions;
 
 namespace EspionSpotify
 {
@@ -48,10 +49,10 @@ namespace EspionSpotify
 
         public Watcher(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
-            _currentTrack = track;
             _form = form;
-            _fileSystem = fileSystem;
             _userSettings = userSettings;
+            _currentTrack = track;
+            _fileSystem = fileSystem;
             _userSettings.InternalOrderNumber--;
 
             Settings.Default.Logs = string.Empty;
@@ -71,7 +72,7 @@ namespace EspionSpotify
             // do not add "is current track an ad" validation, audio is already muted
             if (RecorderUpAndRunning && IsOldSong)
             {
-                _userSettings.SpotifyAudioSession.SleepWhileTheSongEnds();
+                _userSettings.AudioSession.SleepWhileTheSongEnds();
             }
 
             if (!IsNewTrack(e.NewTrack)) return;
@@ -130,13 +131,12 @@ namespace EspionSpotify
 
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
-            _userSettings.SpotifyAudioSession = new AudioSessions.SpotifyAudioSession(_userSettings.AudioEndPointDevice);
-            return await _userSettings.SpotifyAudioSession.WaitSpotifyAudioSessionToStart(Running);
+            return await _userSettings.AudioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
         private void BindSpotifyEventHandlers()
         {
-            Spotify = new SpotifyHandler(_userSettings.SpotifyAudioSession)
+            Spotify = new SpotifyHandler(_userSettings.AudioSession)
             {
                 ListenForEvents = true
             };
@@ -152,7 +152,7 @@ namespace EspionSpotify
             _form.WriteIntoConsole(I18nKeys.LogStarting);
 
             await RunSpotifyConnect();
-            var isAudioSessionNotFound = !(await SetSpotifyAudioSessionAndWaitToStart());
+            var isAudioSessionNotFound = !await SetSpotifyAudioSessionAndWaitToStart();
             BindSpotifyEventHandlers();
             Ready = false;
 
@@ -230,7 +230,7 @@ namespace EspionSpotify
 
         private async void InitializeRecordingSession()
         {
-            _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
+            _userSettings.AudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = await Spotify.GetTrack();
             if (track == null) return;
@@ -269,10 +269,10 @@ namespace EspionSpotify
         {
             Ready = true;
 
-            if (_userSettings.SpotifyAudioSession != null)
+            if (_userSettings.AudioSession != null)
             {
                 MutesSpotifyAds(false);
-                _userSettings.SpotifyAudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                _userSettings.AudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
 
                 Spotify.ListenForEvents = false;
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;
@@ -326,7 +326,7 @@ namespace EspionSpotify
         {
             if (_userSettings.MuteAdsEnabled  && !_userSettings.RecordUnknownTrackTypeEnabled)
             {
-                _userSettings.SpotifyAudioSession.SetSpotifyToMute(value);
+                _userSettings.AudioSession.SetSpotifyToMute(value);
             }
         }
     }

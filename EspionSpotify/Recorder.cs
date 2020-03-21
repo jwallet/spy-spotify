@@ -44,7 +44,7 @@ namespace EspionSpotify
             _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
-            _waveIn = new WasapiLoopbackCapture(_userSettings.SpotifyAudioSession.AudioEndPointDevice);
+            _waveIn = new WasapiLoopbackCapture(_userSettings.AudioSession.AudioMMDevicesManager.AudioEndPointDevice);
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
@@ -181,7 +181,7 @@ namespace EspionSpotify
 
         public static bool TestFileWriter(IFrmEspionSpotify form, UserSettings settings)
         {
-            var waveIn = new WasapiLoopbackCapture(settings.SpotifyAudioSession.AudioEndPointDevice);
+            var waveIn = new WasapiLoopbackCapture(settings.AudioSession.AudioMMDevicesManager.AudioEndPointDevice);
             switch (settings.MediaFormat)
             {
                 case MediaFormat.Mp3:

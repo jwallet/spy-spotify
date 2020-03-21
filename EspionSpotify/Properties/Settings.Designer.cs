@@ -218,18 +218,6 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string AudioEndPointDevice {
-            get {
-                return ((string)(this["AudioEndPointDevice"]));
-            }
-            set {
-                this["AudioEndPointDevice"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Logs {
             get {
                 return ((string)(this["Logs"]));
@@ -254,6 +242,18 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AudioEndPointDeviceID {
+            get {
+                return ((string)(this["AudioEndPointDeviceID"]));
+            }
+            set {
+                this["AudioEndPointDeviceID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n          ced9c679a66641f484e6740fff479e14\r\n        ")]
         public string SpotifyAPISecretId {
             get {
                 return ((string)(this["SpotifyAPISecretId"]));
@@ -265,7 +265,7 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n          412ea2302d86443e854740ba35e869cb\r\n        ")]
         public string SpotifyAPIClientId {
             get {
                 return ((string)(this["SpotifyAPIClientId"]));

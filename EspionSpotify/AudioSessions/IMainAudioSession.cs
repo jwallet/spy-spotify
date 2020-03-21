@@ -1,16 +1,25 @@
 ﻿using NAudio.CoreAudioApi;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EspionSpotify.AudioSessions
 {
     public interface IMainAudioSession
     {
-        int? AudioEndPointDeviceIndex { get; set; }
-        MMDevice DefaultEndPointDevice { get; set; }
-        MMDevice AudioEndPointDevice { get; set; }
-        MMDeviceCollection AudioEndPointDevices { get; set; }
-        bool IsAudioEndPointDeviceIndexAvailable();
-        int AudioDeviceVolume { get; set; }
-        void UpdateAudioEndPointDevices();
-        void SetDefaultAudioDeviceVolume(int volume);
+        MMDeviceEnumerator AudioMMDevices { get; }
+        AudioMMDevicesManager AudioMMDevicesManager { get; }
+
+        ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
+
+        int AudioDeviceVolume { get; }
+        bool IsAudioEndPointDeviceIndexAvailable { get; }
+
+        void SetAudioDeviceVolume(int volume);
+
+        void SleepWhileTheSongEnds();
+        Task<bool> IsSpotifyCurrentlyPlaying();
+        void SetSpotifyToMute(bool mute);
+        Task<bool> WaitSpotifyAudioSessionToStart(bool running);
+        void SetSpotifyVolumeToHighAndOthersToMute(bool mute = false);
     }
 }

@@ -20,6 +20,7 @@ using System.Linq;
 using EspionSpotify.MediaTags;
 using System.Text.RegularExpressions;
 using EspionSpotify.Drivers;
+using EspionSpotify.Controls;
 
 namespace EspionSpotify
 {
@@ -40,7 +41,11 @@ namespace EspionSpotify
         {
             InitializeComponent();
             SuspendLayout();
+
+            _audioSession = new MainAudioSession(Settings.Default.AudioEndPointDeviceID);
+
             _userSettings = new UserSettings();
+            _userSettings.SetAudioSession(ref _audioSession);
 
             if (string.IsNullOrEmpty(Settings.Default.Directory))
             {
@@ -65,6 +70,16 @@ namespace EspionSpotify
                 await _analytics.LogAction("launch");
                 await GitHub.GetVersion();
             });
+        }
+
+        public void SetSoundVolume(int volume)
+        {
+            if (tbVolumeWin.InvokeRequired)
+            {
+                BeginInvoke(new Action(() => SetSoundVolume(volume)));
+                return;
+            }
+            tbVolumeWin.Value = volume;
         }
 
         public void Init()
@@ -95,18 +110,16 @@ namespace EspionSpotify
                 SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
             }
 
-            var indexAudioEndPointDevice = Settings.Default.AudioEndPointDevice.ToNullableInt();
-            _audioSession = new MainAudioSession(indexAudioEndPointDevice);
-            UpdateAudioEndPointFields(_audioSession);
 
             SetLanguageDropDown();  // do it before setting the language
 
             SetLanguage(); // creates Rm and trigger fields event which requires audioSession
 
-            SetAudioEndPointDevicesDropDown(_audioSession); // affects data source which requires Rm and audioSession
-            UpdateAudioVirtualCableDriverImage(_audioSession, Rm); // requires audioSession and Rm
+            UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDevice.FriendlyName);
+            SetAudioEndPointDevicesDropDown(); // affects data source which requires Rm and audioSession
+            UpdateAudioVirtualCableDriverImage();
 
-            _userSettings.AudioEndPointDevice = indexAudioEndPointDevice;
+            _userSettings.AudioEndPointDeviceID = _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID;
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
             _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
@@ -146,29 +159,23 @@ namespace EspionSpotify
             }
         }
 
-        private void UpdateAudioEndPointFields(IMainAudioSession audioSession)
+        private void UpdateAudioEndPointFields(int volume, string friendlyName)
         {
-            tbVolumeWin.Value = audioSession.AudioDeviceVolume;
-            lblSoundCard.Text = audioSession.AudioEndPointDevice.FriendlyName;
-            lblVolume.Text = audioSession.AudioDeviceVolume + @"%";
+            lblSoundCard.Text = friendlyName;
+            lblVolume.Text = volume.ToString() + @"%";
+            tbVolumeWin.Value = volume;
         }
 
-        private void SetAudioEndPointDevicesDropDown(IMainAudioSession audioSession)
+        public void SetAudioEndPointDevicesDropDown()
         {
-            var audioEndPointDevices = new Dictionary<int, string> { };
+            var selectedID = _audioSession.IsAudioEndPointDeviceIndexAvailable
+                ? _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID
+                : _audioSession.AudioMMDevicesManager.DefaultAudioEndPointDeviceID;
 
-            for (var i = 0; i < audioSession.AudioEndPointDevices.Count; i++)
-            {
-                audioEndPointDevices.Add(i, audioSession.AudioEndPointDevices[i].FriendlyName);
-            }
-
-            var defaultEndPointDeviceIndex = audioEndPointDevices.FirstOrDefault(x => x.Value == audioSession.DefaultEndPointDevice.FriendlyName).Key;
-            var selectedIndex = audioSession.IsAudioEndPointDeviceIndexAvailable() ? audioSession.AudioEndPointDeviceIndex ?? 0 : defaultEndPointDeviceIndex;
-
-            cbAudioDevices.DataSource = new BindingSource(audioEndPointDevices, null);
+            cbAudioDevices.DataSource = new BindingSource(_audioSession.AudioMMDevicesManager.AudioEndPointDeviceNames, null);
             cbAudioDevices.DisplayMember = "Value";
             cbAudioDevices.ValueMember = "Key";
-            cbAudioDevices.SelectedIndex = selectedIndex;
+            cbAudioDevices.SelectedValue = selectedID;
         }
 
         private void SetLanguageDropDown()
@@ -465,14 +472,15 @@ namespace EspionSpotify
             icon.Refresh();
         }
 
-        private bool UpdateAudioVirtualCableDriverImage(IMainAudioSession audioSession, ResourceManager ResourceManager)
+        private bool UpdateAudioVirtualCableDriverImage()
         {
+            // requires audioSession and Rm
             lnkAudioVirtualCable.Visible = lnkAudioVirtualCable.Enabled = AudioVirtualCableDriver.IsFound;
-            var isDriverInstalled = AudioVirtualCableDriver.ExistsInAudioEndPointDevices(audioSession.AudioEndPointDevices);
+            var isDriverInstalled = AudioVirtualCableDriver.ExistsInAudioEndPointDevices(_audioSession.AudioMMDevicesManager.AudioEndPointDeviceNames);
             var bmp = isDriverInstalled ? Resources.remove_device : Resources.add_device;
             UpdateLinkImage(lnkAudioVirtualCable, bmp);
             var msgTooltip = isDriverInstalled ? I18nKeys.TipUninstallVirtualCableDriver : I18nKeys.TipInstallVirtualCableDriver;
-            tip.SetToolTip(lnkAudioVirtualCable, ResourceManager.GetString(msgTooltip));
+            tip.SetToolTip(lnkAudioVirtualCable, Rm.GetString(msgTooltip));
             return isDriverInstalled;
         }
 
@@ -656,12 +664,16 @@ namespace EspionSpotify
 
         private void CbAudioDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.AudioEndPointDevice.ToNullableInt() == cbAudioDevices.SelectedIndex) return;
+            if (cbAudioDevices.SelectedItem == null) return;
 
-            _userSettings.AudioEndPointDevice = ((KeyValuePair<int, string>)cbAudioDevices.SelectedItem).Key;
-            _audioSession = new MainAudioSession(cbAudioDevices.SelectedIndex);
-            UpdateAudioEndPointFields(_audioSession);
-            Settings.Default.AudioEndPointDevice = cbAudioDevices.SelectedIndex.ToString();
+            var selectedDeviceID = ((KeyValuePair<string, string>)cbAudioDevices.SelectedItem).Key;
+
+            if (Settings.Default.AudioEndPointDeviceID == selectedDeviceID) return;
+
+            _userSettings.AudioEndPointDeviceID = selectedDeviceID;
+            _audioSession.AudioMMDevicesManager.RefreshSelectedDevice(selectedDeviceID);
+            UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDevice.FriendlyName);
+            Settings.Default.AudioEndPointDeviceID = selectedDeviceID;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"audioEndPointDevice?selected={cbAudioDevices.SelectedValue}"));
         }
@@ -713,12 +725,12 @@ namespace EspionSpotify
 
         private void TbVolumeWin_ValueChanged(object sender, EventArgs e)
         {
-            if (_audioSession.AudioEndPointDevice.AudioEndpointVolume.Mute)
+            if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice.AudioEndpointVolume.Mute)
             {
-                _audioSession.AudioEndPointDevice.AudioEndpointVolume.Mute = false;
+                _audioSession.AudioMMDevicesManager.AudioEndPointDevice.AudioEndpointVolume.Mute = false;
             }
 
-            _audioSession.SetDefaultAudioDeviceVolume(tbVolumeWin.Value);
+            _audioSession.SetAudioDeviceVolume(tbVolumeWin.Value);
             lblVolume.Text = (tbVolumeWin.Value) + @"%";
 
             if (tbVolumeWin.Value == 0)
@@ -777,11 +789,11 @@ namespace EspionSpotify
             _userSettings.InternalOrderNumber = int.Parse(txtRecordingNum.Text);
         }
 
-        private async void LnkVAD_Click(object sender, EventArgs e)
+        private void LnkVAD_Click(object sender, EventArgs e)
         {
             lnkAudioVirtualCable.Enabled = false;
             if (!(lnkAudioVirtualCable.Visible = AudioVirtualCableDriver.IsFound)) return;
-            if (!await AudioVirtualCableDriver.SetupDriver())
+            if (!AudioVirtualCableDriver.SetupDriver())
             {
                 MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyDriverInstallationFailed),
@@ -789,15 +801,23 @@ namespace EspionSpotify
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Question);
             }
-            _audioSession = new MainAudioSession(cbAudioDevices.SelectedIndex);
-            SetAudioEndPointDevicesDropDown(_audioSession);
             lnkAudioVirtualCable.Enabled = true;
+        }
+
+        public void UpdateAudioDevicesDataSource()
+        {
+            if (cbAudioDevices.InvokeRequired)
+            {
+                BeginInvoke(new Action(UpdateAudioDevicesDataSource));
+                return;
+            }
+            SetAudioEndPointDevicesDropDown();
         }
 
         private void CbAudioDevices_DataSourceChanged(object sender, EventArgs e)
         {
-            var isDriverInstalled = UpdateAudioVirtualCableDriverImage(_audioSession, Rm);
-            UpdateAudioEndPointFields(_audioSession);
+            var isDriverInstalled = UpdateAudioVirtualCableDriverImage();
+            UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDevice.FriendlyName);
             Task.Run(async () => await _analytics.LogAction($"audio-virtual-cable-driver?status={(isDriverInstalled ? "installed" : "uninstalled")}"));
         }
 
