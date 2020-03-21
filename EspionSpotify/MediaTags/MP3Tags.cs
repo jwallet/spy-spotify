@@ -45,7 +45,7 @@ namespace EspionSpotify.MediaTags
 
             await FetchMediaPictures();
 
-            tags.Pictures = GetMediaPictureTags();
+            tags.Pictures = GetMediaPictureTag();
         }
 
         internal async Task SaveMediaTags()
@@ -77,19 +77,17 @@ namespace EspionSpotify.MediaTags
             Track.ArtSmall = await taskGetArtS;
         }
 
-        private TagLib.IPicture[] GetMediaPictureTags()
+        private TagLib.IPicture[] GetMediaPictureTag()
         {
-            var pictures = (new TagLib.IPicture[4]
+            var picture = (new TagLib.IPicture[4]
             {
                 GetAlbumCoverToPicture(Track.ArtExtraLarge),
                 GetAlbumCoverToPicture(Track.ArtLarge),
                 GetAlbumCoverToPicture(Track.ArtMedium),
                 GetAlbumCoverToPicture(Track.ArtSmall)
-            }).Where(x => x != null).ToList();
+            }).Where(x => x != null).FirstOrDefault();
 
-            if (pictures.Count > 0) pictures.First().Type = TagLib.PictureType.FrontCover;
-
-            return pictures.ToArray();
+            return picture == null ? null : new[] { picture };
         }
 
         private int? GetTrackNumber()
@@ -108,7 +106,7 @@ namespace EspionSpotify.MediaTags
 
             return new TagLib.Picture
             {
-                Type = TagLib.PictureType.Media,
+                Type = TagLib.PictureType.FrontCover,
                 MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
                 Data = data
             };
@@ -118,30 +116,37 @@ namespace EspionSpotify.MediaTags
         {
             if (string.IsNullOrWhiteSpace(link)) return null;
 
-            var request = WebRequest.Create(link);
-            using (var response = await request.GetResponseAsync())
+            try
             {
-                var stream = response.GetResponseStream();
-                if (stream == null)
+                var request = WebRequest.Create(link);
+                using (var response = await request.GetResponseAsync())
                 {
-                    response.Dispose();
-                    return null;
-                }
-                using (var reader = new BinaryReader(stream))
-                {
-                    using (var memory = new MemoryStream())
+                    var stream = response.GetResponseStream();
+                    if (stream == null)
                     {
-                        var buffer = reader.ReadBytes(4096);
-                        while (buffer.Length > 0)
-                        {
-                            await memory.WriteAsync(buffer, 0, buffer.Length);
-                            buffer = reader.ReadBytes(4096);
-                        }
                         response.Dispose();
+                        return null;
+                    }
+                    using (var reader = new BinaryReader(stream))
+                    {
+                        using (var memory = new MemoryStream())
+                        {
+                            var buffer = reader.ReadBytes(4096);
+                            while (buffer.Length > 0)
+                            {
+                                await memory.WriteAsync(buffer, 0, buffer.Length);
+                                buffer = reader.ReadBytes(4096);
+                            }
+                            response.Dispose();
 
-                        return memory.ToArray();
+                            return memory.ToArray();
+                        }
                     }
                 }
+            }
+            catch
+            {
+                return null;
             }
         }
     }
