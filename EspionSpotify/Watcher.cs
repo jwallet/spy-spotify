@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Events;
+using EspionSpotify.Events;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
@@ -53,7 +53,6 @@ namespace EspionSpotify
             _userSettings = userSettings;
             _currentTrack = track;
             _fileSystem = fileSystem;
-            _userSettings.InternalOrderNumber--;
 
             Settings.Default.Logs = string.Empty;
             Settings.Default.Save();
@@ -166,7 +165,6 @@ namespace EspionSpotify
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
 
-
                 while (Running)
                 {
                     // Order is important
@@ -194,6 +192,7 @@ namespace EspionSpotify
                     await Task.Delay(200);
                 }
 
+                UpdateNumUp();
                 DoIKeepLastSong();
             }
             else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
@@ -219,12 +218,16 @@ namespace EspionSpotify
                 return;
             }
 
+            if (_recorder != null)
+            {
+                UpdateNumUp();
+            }
+
             _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
 
             Task.Run(_recorder.Run);
 
             _form.UpdateIconSpotify(_isPlaying, true);
-            UpdateNumUp();
             CountSeconds = 0;
         }
 
@@ -289,16 +292,16 @@ namespace EspionSpotify
 
         private void DoIKeepLastSong()
         {
+            if (RecorderUpAndRunning)
+            {
+                UpdateNumDown();
+            }
+
             if (_recorder != null)
             {
                 _recorder.Running = false;
                 _recorder.CountSeconds = CountSeconds;
                 _form.UpdateIconSpotify(_isPlaying);
-            }
-
-            if (RecorderUpAndRunning)
-            {
-                UpdateNumDown();
             }
         }
 

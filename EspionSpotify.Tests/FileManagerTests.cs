@@ -91,16 +91,16 @@ namespace EspionSpotify.Tests
             Assert.Equal(@"C:\path\100_Artist_-_Title_-_Live.mp3", fileName);
         }
 
-        [Theory]
-        [InlineData(true, @"C:\path\Artist\Single\Title - Live.mp3")]
-        [InlineData(false, @"C:\path\Artist - Title - Live.mp3")]
-        internal void BuildFileName_ReturnsFileNameGroupByFolders(bool isGroupByArtistFolder, string expectedResult)
+        [Fact]
+        internal void BuildFileName_ReturnsFileNameGroupByFolders()
         {
-            _userSettings.GroupByFoldersEnabled = isGroupByArtistFolder;
+            _userSettings.GroupByFoldersEnabled = true;
 
+            var expected = @"C:\path\Artist\Single\Title - Live.mp3";
             var fileName = _fileManager.GetOutputFile().ToString();
 
-            Assert.Equal(expectedResult, fileName);
+            Assert.Equal(expected, fileName);
+            Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
         }
 
         [Fact]
@@ -109,9 +109,11 @@ namespace EspionSpotify.Tests
             _track.Album = "";
             _userSettings.GroupByFoldersEnabled = true;
 
+            var expected = @"C:\path\Artist\Untitled\Title - Live.mp3";
             var fileName = _fileManager.GetOutputFile().ToString();
 
-            Assert.Equal(@"C:\path\Artist\Untitled\Title - Live.mp3", fileName);
+            Assert.Equal(expected, fileName);
+            Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
         }
 
         [Fact]

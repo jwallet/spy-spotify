@@ -106,7 +106,7 @@ namespace EspionSpotify
             if (!userSettings.GroupByFoldersEnabled) return;
 
             var artistDir = GetArtistFolderPath(_track.Artist);
-            var albumDir = GetArtistFolderPath(_track.Album);
+            var albumDir = GetAlbumFolderPath(_track.Album);
             CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}");
             CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}\{albumDir}");
         }
