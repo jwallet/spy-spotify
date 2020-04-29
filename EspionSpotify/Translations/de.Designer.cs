@@ -22,14 +22,14 @@ namespace EspionSpotify.Translations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class en {
+    internal class de {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal en() {
+        internal de() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EspionSpotify.Translations {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EspionSpotify.Translations.en", typeof(en).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EspionSpotify.Translations.de", typeof(de).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -106,7 +106,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} High quality (Spotify Premium).
+        ///   Looks up a localized string similar to {0} Hohe Qualität (Spotify Premium).
         /// </summary>
         internal static string cbOptBitRateSpotifyPremium {
             get {
@@ -115,7 +115,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group tracks inside their own folder.
+        ///   Looks up a localized string similar to Gruppieren Sie Tracks in ihrem eigenen Ordner.
         /// </summary>
         internal static string lblAddFolders {
             get {
@@ -124,7 +124,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace files name spaces by underscores &quot;_&quot;.
+        ///   Looks up a localized string similar to Im Dateinamen Leerzeichen durch Unterstrich &quot;_&quot; ersetzen.
         /// </summary>
         internal static string lblAddSeparators {
             get {
@@ -133,7 +133,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ads:.
+        ///   Looks up a localized string similar to Werbung:.
         /// </summary>
         internal static string lblAds {
             get {
@@ -142,7 +142,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio Device:.
+        ///   Looks up a localized string similar to Audiogerät:.
         /// </summary>
         internal static string lblAudioDevice {
             get {
@@ -151,7 +151,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio quality:.
+        ///   Looks up a localized string similar to Audio Qualität:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -160,7 +160,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate already recorded tracks instead of skipping them..
+        ///   Looks up a localized string similar to Dupliziere schon aufgenommene Titel anstatt sie zu überspringen..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -169,7 +169,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delay next recording if sound is detected.
+        ///   Looks up a localized string similar to Nächste Aufnahme verzögern, wenn Ton erkannt wird.
         /// </summary>
         internal static string lblEndingSongDelay {
             get {
@@ -178,7 +178,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio format:.
+        ///   Looks up a localized string similar to Audio Format:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -187,7 +187,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language:.
+        ///   Looks up a localized string similar to Sprache:.
         /// </summary>
         internal static string lblLanguage {
             get {
@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimal length:.
+        ///   Looks up a localized string similar to Minimale Länge:.
         /// </summary>
         internal static string lblMinLength {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mute Ads.
+        ///   Looks up a localized string similar to Werbung stummschalten.
         /// </summary>
         internal static string lblMuteAds {
             get {
@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add the recording order number infront of all files name.
+        ///   Looks up a localized string similar to Füge Aufnahmereihenfolgenummer am Anfang aller Dateinamen hinzu.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace track numbers by the recording order number.
+        ///   Looks up a localized string similar to Ersetze die Titelnummer durch die Aufnahmereihenfolgenummer.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -232,7 +232,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path:.
+        ///   Looks up a localized string similar to Ausgabepfad:.
         /// </summary>
         internal static string lblPath {
             get {
@@ -241,7 +241,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorder:.
+        ///   Looks up a localized string similar to Aufnahmegerät:.
         /// </summary>
         internal static string lblRecorder {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the starting position of the recording order number.
+        ///   Looks up a localized string similar to Wähle die Startnummer der Aufnahmereihenfolgenummer.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -259,7 +259,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timer for the recording session.
+        ///   Looks up a localized string similar to Timer für die Aufnahmesitzung.
         /// </summary>
         internal static string lblRecordingTimer {
             get {
@@ -268,7 +268,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record unknown type tracks detected as an ad.
+        ///   Looks up a localized string similar to Speichere nicht erkannte Stücke als Werbung.
         /// </summary>
         internal static string lblRecordUnknownTrackType {
             get {
@@ -277,7 +277,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spy:.
+        ///   Looks up a localized string similar to Spion:.
         /// </summary>
         internal static string lblSpy {
             get {
@@ -286,7 +286,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ad.
+        ///   Looks up a localized string similar to Werbung.
         /// </summary>
         internal static string logAd {
             get {
@@ -295,7 +295,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing: {0} [&lt; {1}s].
+        ///   Looks up a localized string similar to Entferne: {0} [&lt; {1}s].
         /// </summary>
         internal static string logDeleting {
             get {
@@ -304,7 +304,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: The output directory was not found..
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Das Ausgabeverzeichnis wurde nicht gefunden..
         /// </summary>
         internal static string logInvalidOutput {
             get {
@@ -313,7 +313,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll.
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -322,7 +322,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one..
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Previous recording session logs.
+        ///   Looks up a localized string similar to // Vorherige Aufzeichnung von Sesssionsprotokollen.
         /// </summary>
         internal static string logPreviousLogs {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorded {0} in: {1}.
+        ///   Looks up a localized string similar to Aufgenommen {0} in: {1}.
         /// </summary>
         internal static string logRecorded {
             get {
@@ -349,7 +349,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recording: {0}.
+        ///   Looks up a localized string similar to Aufnahme: {0}.
         /// </summary>
         internal static string logRecording {
             get {
@@ -358,7 +358,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Recording session timer done..
+        ///   Looks up a localized string similar to // Der Timer der Aufnahmesitzung ist abgelaufen..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -367,7 +367,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify isn&apos;t running, trying to launch it..
+        ///   Looks up a localized string similar to // Spotify läuft nicht, versuche es zu starten..
         /// </summary>
         internal static string logSpotifyConnecting {
             get {
@@ -376,7 +376,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify is closed.
+        ///   Looks up a localized string similar to // Spotify ist geschlossen.
         /// </summary>
         internal static string logSpotifyIsClosed {
             get {
@@ -385,7 +385,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify didn&apos;t connect to the local API, please try again..
+        ///   Looks up a localized string similar to // Spotify ist nicht mit der lokalen API verbunden, bitte versuche es noch einmal..
         /// </summary>
         internal static string logSpotifyNotConnected {
             get {
@@ -394,7 +394,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify wasn&apos;t found or isn&apos;t installed..
+        ///   Looks up a localized string similar to // Spotify wurde nicht gefunden oder ist nicht installiert..
         /// </summary>
         internal static string logSpotifyNotFound {
             get {
@@ -403,7 +403,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the online F.A.Q. to know how to move Spotify towards another device..
+        ///   Looks up a localized string similar to // Spytify kann nicht aufnehmen, wenn es den selben Audioendpunkt benutzt wie Spotify. Schau in der online F.A.Q. nach wie Spotify umgelenkt werden kann..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -412,7 +412,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spying.
+        ///   Looks up a localized string similar to // Spioniere.
         /// </summary>
         internal static string logStarting {
             get {
@@ -421,7 +421,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // End.
+        ///   Looks up a localized string similar to // Ende.
         /// </summary>
         internal static string logStoping {
             get {
@@ -430,7 +430,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Waiting for the recording of the current audio track to end.
+        ///   Looks up a localized string similar to // Warte darauf, dass die derzeitige Aufnahme endet.
         /// </summary>
         internal static string logStopRecordingWhenSongEnds {
             get {
@@ -439,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Skipping: {0} (recording already exists).
+        ///   Looks up a localized string similar to // Überspringe: {0} (Die Aufnahme existiert bereits).
         /// </summary>
         internal static string logTrackExists {
             get {
@@ -448,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Unknown exception: {0}.
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Unbekannte Exception: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -457,7 +457,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono)..
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Mehrkanalaufnahmen werden nicht unterstützt ({0} Kanäle), Reduziere die Anzahl der Kanäle auf  2 (Stereo) oder 1 (Mono)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -466,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
+        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Das Computer Audio Format ist nicht unterstützt. Das Format muss &apos;2 Kanäle, 24 Bit, 48000 Hz (Studio Qualität)&apos; oder niedriger sein.  --&gt; Bedienpanel &gt; Ton &gt; Eigenschaften &gt; Erweitert.
         /// </summary>
         internal static string logUnsupportedRate {
             get {
@@ -475,7 +475,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you still want to leave?.
+        ///   Looks up a localized string similar to Wollen Sie immer noch gehen?.
         /// </summary>
         internal static string msgBodyCantQuit {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to open the Audio Virtual Cable controller..
+        ///   Looks up a localized string similar to Fehler beim Öffnen des Audio Virtual Cable controller..
         /// </summary>
         internal static string msgBodyDriverInstallationFailed {
             get {
@@ -493,7 +493,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This output path does not exist, select another one..
+        ///   Looks up a localized string similar to Dieser Ausgabepfad existiert nicht, wähle einen anderen..
         /// </summary>
         internal static string msgBodyPathNotFound {
             get {
@@ -502,7 +502,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the folder where you want to save the recorded audio files..
+        ///   Looks up a localized string similar to Wähle das Verzeichnis in das die Audiodateien gespeichert werden sollen..
         /// </summary>
         internal static string msgFolderDialog {
             get {
@@ -511,7 +511,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to open GitHub to view the newest Spytify release?.
+        ///   Looks up a localized string similar to Möchtest Du Github öffnen, um Dir die neuste Spytify Version anzuschauen?.
         /// </summary>
         internal static string msgNewVersionContent {
             get {
@@ -520,7 +520,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} is out!.
+        ///   Looks up a localized string similar to Version {0} ist draussen!.
         /// </summary>
         internal static string msgNewVersionTitle {
             get {
@@ -529,7 +529,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify is spying.
+        ///   Looks up a localized string similar to Spytify spioniert.
         /// </summary>
         internal static string msgTitleCantQuit {
             get {
@@ -538,7 +538,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path invalid.
+        ///   Looks up a localized string similar to Ausgabepfad ungültig.
         /// </summary>
         internal static string msgTitlePathNotFound {
             get {
@@ -547,7 +547,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Settings.
+        ///   Looks up a localized string similar to Erweiterte Einstellungen.
         /// </summary>
         internal static string tabAdvanced {
             get {
@@ -556,7 +556,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spy.
+        ///   Looks up a localized string similar to Spion.
         /// </summary>
         internal static string tabRecord {
             get {
@@ -565,7 +565,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Einstellungen.
         /// </summary>
         internal static string tabSettings {
             get {
@@ -574,7 +574,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear history.
+        ///   Looks up a localized string similar to Verlauf löschen.
         /// </summary>
         internal static string tipClear {
             get {
@@ -583,7 +583,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open output directory.
+        ///   Looks up a localized string similar to Öffne das Ausgabeverzeichnis.
         /// </summary>
         internal static string tipDirectory {
             get {
@@ -592,7 +592,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donate to Spytify.
+        ///   Looks up a localized string similar to Spenden an Spytify.
         /// </summary>
         internal static string tipDonate {
             get {
@@ -601,7 +601,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See the F.A.Q..
+        ///   Looks up a localized string similar to Siehe die FAQ.
         /// </summary>
         internal static string tipFAQ {
             get {
@@ -610,7 +610,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Install Audio Virtual Cable.
+        ///   Looks up a localized string similar to Installieren Audio Virtual Cable.
         /// </summary>
         internal static string tipInstallVirtualCableDriver {
             get {
@@ -619,7 +619,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Browse.
+        ///   Looks up a localized string similar to Durchsuchen.
         /// </summary>
         internal static string tipPath {
             get {
@@ -628,7 +628,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New version available.
+        ///   Looks up a localized string similar to Neue Version verfügbar.
         /// </summary>
         internal static string tipRelease {
             get {
@@ -637,7 +637,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start spying.
+        ///   Looks up a localized string similar to Starte spionieren.
         /// </summary>
         internal static string tipStartSpying {
             get {
@@ -646,7 +646,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop spying.
+        ///   Looks up a localized string similar to Stoppe spionieren.
         /// </summary>
         internal static string tipStopSying {
             get {
@@ -655,7 +655,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uninstall Audio Virtual Cable.
+        ///   Looks up a localized string similar to Deinstallieren Audio Virtual Cable.
         /// </summary>
         internal static string tipUninstallVirtualCableDriver {
             get {

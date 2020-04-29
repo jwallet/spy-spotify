@@ -204,6 +204,11 @@
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\ISpotifyAPI.cs" />
     <Compile Include="Models\OutputFile.cs" />
+    <Compile Include="Translations\de.Designer.cs">
+      <DependentUpon>de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Translations\I18nKeys.cs" />
     <Compile Include="Translations\nl.Designer.cs">
       <DependentUpon>nl.resx</DependentUpon>
@@ -264,6 +269,11 @@
     </Compile>
     <Compile Include="Translations\Languages.cs" />
     <Compile Include="Watcher.cs" />
+    <EmbeddedResource Include="Translations\de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translations\nl.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>nl.Designer.cs</LastGenOutput>

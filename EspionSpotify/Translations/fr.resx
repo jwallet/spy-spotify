@@ -369,10 +369,6 @@
     <value>Erreur lors de l'ouverture du controlleur Audio Virtual Cable.</value>
     <comment>message</comment>
   </data>
-  <data name="msgTitleDriverInstallationFailed" xml:space="preserve">
-    <value>Audio Virtual Cable</value>
-    <comment>message</comment>
-  </data>
   <data name="tipInstallVirtualCableDriver" xml:space="preserve">
     <value>Installer Audio Virtual Cable</value>
     <comment>interface</comment>

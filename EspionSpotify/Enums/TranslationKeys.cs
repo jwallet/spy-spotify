@@ -55,7 +55,6 @@
         msgNewVersionContent,
         msgNewVersionTitle,
         msgTitleCantQuit,
-        msgTitleDriverInstallationFailed,
         msgTitlePathNotFound,
         tabAdvanced,
         tabRecord,

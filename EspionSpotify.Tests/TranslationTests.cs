@@ -11,6 +11,7 @@ namespace EspionSpotify.Tests
     public class TranslationTests
     {
         private readonly Type _en;
+        private readonly Type _de;
         private readonly Type _fr;
         private readonly Type _nl;
         private static ResourceManager RM;
@@ -19,8 +20,11 @@ namespace EspionSpotify.Tests
         public TranslationTests()
         {
             _en = Translations.Languages.getResourcesManagerLanguageType(Enums.LanguageType.en);
+
+            _de = Translations.Languages.getResourcesManagerLanguageType(Enums.LanguageType.de);
             _fr = Translations.Languages.getResourcesManagerLanguageType(Enums.LanguageType.fr);
             _nl = Translations.Languages.getResourcesManagerLanguageType(Enums.LanguageType.nl);
+
             _keysCount = Enum.GetNames(typeof(Enums.TranslationKeys)).Count();
         }
 
@@ -28,14 +32,34 @@ namespace EspionSpotify.Tests
         internal void TranslationSetup_ShouldBeReady()
         {
             Assert.NotNull(_en);
+
+            Assert.NotNull(_de);
             Assert.NotNull(_fr);
-            //Assert.NotNull(_nl);
+            Assert.NotNull(_nl);
         }
 
         [Fact]
         internal void English_ShouldGetTranslations()
         {
             RM = new ResourceManager(_en);
+            var resourceSet = RM.GetResourceSet(CultureInfo.InvariantCulture, true, true);
+            var count = 0;
+
+            foreach (DictionaryEntry o in resourceSet)
+            {
+                count++;
+                var actual = (string)o.Key;
+                var expected = actual.ToEnum<Enums.TranslationKeys>(ignoreCase: false)?.ToString();
+                Assert.Equal(expected, actual);
+            }
+
+            Assert.Equal(count, _keysCount);
+        }
+
+        [Fact]
+        internal void German_ShouldGetTranslations()
+        {
+            RM = new ResourceManager(_de);
             var resourceSet = RM.GetResourceSet(CultureInfo.InvariantCulture, true, true);
             var count = 0;
 

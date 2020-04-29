@@ -338,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the online F.A.Q. tab to know how to move Spotify towards another device.</value>
+    <value>// Spytify cannot record if it doesn't use the same audio endpoint device than Spotify. See the online F.A.Q. to know how to move Spotify towards another device.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
-    <value>// Previous recording sesssion logs</value>
+    <value>// Previous recording session logs</value>
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
@@ -375,10 +375,6 @@
   </data>
   <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
     <value>Failed to open the Audio Virtual Cable controller.</value>
-    <comment>message</comment>
-  </data>
-  <data name="msgTitleDriverInstallationFailed" xml:space="preserve">
-    <value>Audio Virtual Cable</value>
     <comment>message</comment>
   </data>
   <data name="tipDonate" xml:space="preserve">
