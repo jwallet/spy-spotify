@@ -115,7 +115,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Groepeer tracks in hun eigen map.
         /// </summary>
         internal static string lblAddFolders {
             get {
@@ -160,7 +160,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Dupliceer reeds opgenomen tracks in plaats van ze over te slaan..
         /// </summary>
         internal static string lblDuplicateAlreadyRecordedTrack {
             get {
@@ -313,7 +313,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to //  Fout bij het opnemen: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -322,7 +322,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Vorige opnamesessie logs.
         /// </summary>
         internal static string logPreviousLogs {
             get {
@@ -403,7 +403,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Spytify kan niet opnemen als het niet hetzelfde audio-eindpuntapparaat gebruikt dan Spotify. Zie de online F.A.Q. tabblad om te weten hoe u Spotify naar een ander apparaat kunt verplaatsen..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -439,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Overslaan: {0} (opname bestaat al).
         /// </summary>
         internal static string logTrackExists {
             get {
@@ -448,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Fout tijdens opnemen: onbekende uitzondering: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -457,7 +457,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to // Fout tijdens opnemen: het opnemen van bestanden met meerdere kanalen wordt niet ondersteund ({0} kanalen), verminder het aantal kanalen tot 2 (stereo) of 1 (mono)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Kan de Audio Virtual Cable-controller niet openen..
         /// </summary>
         internal static string msgBodyDriverInstallationFailed {
             get {
@@ -502,7 +502,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Kies de map waar u de opgenomen audiobestanden wilt opslaan..
         /// </summary>
         internal static string msgFolderDialog {
             get {
@@ -637,7 +637,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Nieuwe versie beschikbaar.
         /// </summary>
         internal static string tipRelease {
             get {

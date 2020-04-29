@@ -11,7 +11,7 @@ namespace EspionSpotify.Translations
         {
             { LanguageType.en, typeof(en) },
             { LanguageType.fr, typeof(fr) },
-            //{ LanguageType.nl, typeof(nl) }
+            { LanguageType.nl, typeof(nl) }
         };
 
         public static Type getResourcesManagerLanguageType(LanguageType languageType)
@@ -23,7 +23,7 @@ namespace EspionSpotify.Translations
         {
             { LanguageType.en, "English" },
             { LanguageType.fr, "Français" },
-            //{ LanguageType.nl, "Nederlands" }
+            { LanguageType.nl, "Nederlands" }
         };
     }
 }
