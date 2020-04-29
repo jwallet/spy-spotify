@@ -138,251 +138,251 @@
     <comment>interface</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
-    <value>{0} Hoge Kwaliteit (Spotify Premium)</value>
+    <value>{0} Hohe Qualität (Spotify Premium)</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Groepeer tracks in hun eigen map</value>
+    <value>Gruppieren Sie Tracks in ihrem eigenen Ordner</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
-    <value>Vervang spaties in bestandsnamen door underscores "_"</value>
+    <value>Im Dateinamen Leerzeichen durch Unterstrich "_" ersetzen</value>
     <comment>interface</comment>
   </data>
   <data name="lblAds" xml:space="preserve">
-    <value>Reclame:</value>
+    <value>Werbung:</value>
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Audiokwaliteit:</value>
+    <value>Audio Qualität:</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
-    <value>Stel de volgende opname uit wanneer er geluid is gedetecteerd</value>
+    <value>Nächste Aufnahme verzögern, wenn Ton erkannt wird</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
-    <value>Audio formaat:</value>
+    <value>Audio Format:</value>
     <comment>interface</comment>
   </data>
   <data name="lblLanguage" xml:space="preserve">
-    <value>Taal:</value>
+    <value>Sprache:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMinLength" xml:space="preserve">
-    <value>Minimale lengte:</value>
+    <value>Minimale Länge:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMuteAds" xml:space="preserve">
-    <value>Demp advertenties</value>
+    <value>Werbung stummschalten</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
-    <value>Voeg het opname volgordenummer toe aan alle bestandsnamen</value>
+    <value>Füge Aufnahmereihenfolgenummer am Anfang aller Dateinamen hinzu</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Vervang tracknummers door opname volgordenummers</value>
+    <value>Ersetze die Titelnummer durch die Aufnahmereihenfolgenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
-    <value>Bestandspad:</value>
+    <value>Ausgabepfad:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
-    <value>Opnemer:</value>
+    <value>Aufnahmegerät:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
-    <value>Kies de startpositie van het opname volgordenummer</value>
+    <value>Wähle die Startnummer der Aufnahmereihenfolgenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Neem onbekende types van nummers op die zijn gedetecteerd als advertentie</value>
+    <value>Speichere nicht erkannte Stücke als Werbung</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
-    <value>Opname:</value>
+    <value>Spion:</value>
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
-    <value>Advertentie</value>
+    <value>Werbung</value>
     <comment>console</comment>
   </data>
   <data name="logDeleting" xml:space="preserve">
-    <value>Verwijderen: {0} [&lt; {1}s]</value>
+    <value>Entferne: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
   <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Fout tijdens opname: De output locatie kan niet worden gevonden.</value>
+    <value>// Fehler während der Aufnahme: Das Ausgabeverzeichnis wurde nicht gefunden.</value>
     <comment>interface</comment>
   </data>
   <data name="logRecording" xml:space="preserve">
-    <value>Opnemen: {0}</value>
+    <value>Aufnahme: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyConnecting" xml:space="preserve">
-    <value>// Spotify staat uit, poging tot aanzetten...</value>
+    <value>// Spotify läuft nicht, versuche es zu starten.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyIsClosed" xml:space="preserve">
-    <value>// Spotify staat uit</value>
+    <value>// Spotify ist geschlossen</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotConnected" xml:space="preserve">
-    <value>// Spotify kon niet verbinden met het lokale API, probeer het a.u.b. opnieuw</value>
+    <value>// Spotify ist nicht mit der lokalen API verbunden, bitte versuche es noch einmal.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyNotFound" xml:space="preserve">
-    <value>// Spotify kon niet worden gevonden, en is mogelijk niet geïnstalleerd.</value>
+    <value>// Spotify wurde nicht gefunden oder ist nicht installiert.</value>
     <comment>console</comment>
   </data>
   <data name="logStarting" xml:space="preserve">
-    <value>// Opnemen...</value>
+    <value>// Spioniere</value>
     <comment>console</comment>
   </data>
   <data name="logStoping" xml:space="preserve">
-    <value>// Einde</value>
+    <value>// Ende</value>
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Fout tijdens opname: Uw computer audio formaat wordt niet ondersteund. Formaat moet "2 channels, 24-bit, 48000 Hz (Studiokwaliteit)" zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd</value>
+    <value>// Fehler während der Aufnahme: Das Computer Audio Format ist nicht unterstützt. Das Format muss '2 Kanäle, 24 Bit, 48000 Hz (Studio Qualität)' oder niedriger sein.  --&gt; Bedienpanel &gt; Ton &gt; Eigenschaften &gt; Erweitert</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
-    <value>Weet u zeker dat u het programma wilt verlaten?</value>
+    <value>Wollen Sie immer noch gehen?</value>
     <comment>message</comment>
   </data>
   <data name="msgBodyPathNotFound" xml:space="preserve">
-    <value>Het opgegeven bestandspad bestaat niet, selecteer a.u.b. een andere.</value>
+    <value>Dieser Ausgabepfad existiert nicht, wähle einen anderen.</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionContent" xml:space="preserve">
-    <value>Wilt u GitHub openen om de nieuwste versie van Spytify te bekijken?</value>
+    <value>Möchtest Du Github öffnen, um Dir die neuste Spytify Version anzuschauen?</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionTitle" xml:space="preserve">
-    <value>Versie {0} is uit!</value>
+    <value>Version {0} ist draussen!</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleCantQuit" xml:space="preserve">
-    <value>Spytify is aan het opnemen</value>
+    <value>Spytify spioniert</value>
     <comment>message</comment>
   </data>
   <data name="msgTitlePathNotFound" xml:space="preserve">
-    <value>Bestandspad ongeldig</value>
+    <value>Ausgabepfad ungültig</value>
     <comment>message</comment>
   </data>
   <data name="tabAdvanced" xml:space="preserve">
-    <value>Geavanceerde Instellingen</value>
+    <value>Erweiterte Einstellungen</value>
     <comment>interface</comment>
   </data>
   <data name="tabRecord" xml:space="preserve">
-    <value>Opname</value>
+    <value>Spion</value>
     <comment>interface</comment>
   </data>
   <data name="tabSettings" xml:space="preserve">
-    <value>Instellingen</value>
+    <value>Einstellungen</value>
     <comment>interface</comment>
   </data>
   <data name="tipClear" xml:space="preserve">
-    <value>Verwijder geschiedenis</value>
+    <value>Verlauf löschen</value>
     <comment>interface</comment>
   </data>
   <data name="tipDirectory" xml:space="preserve">
-    <value>Open output bestandslocatie</value>
+    <value>Öffne das Ausgabeverzeichnis</value>
     <comment>interface</comment>
   </data>
   <data name="tipPath" xml:space="preserve">
-    <value>Zoeken</value>
+    <value>Durchsuchen</value>
     <comment>interface</comment>
   </data>
   <data name="tipStartSpying" xml:space="preserve">
-    <value>Begin opname</value>
+    <value>Starte spionieren</value>
     <comment>interface</comment>
   </data>
   <data name="tipStopSying" xml:space="preserve">
-    <value>Stop opname</value>
+    <value>Stoppe spionieren</value>
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Fout tijdens opnemen: onbekende uitzondering: {0}</value>
+    <value>// Fehler während der Aufnahme: Unbekannte Exception: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere.</value>
+    <value>// Fehler während der Aufnahme: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis.</value>
     <comment>message</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliceer reeds opgenomen tracks in plaats van ze over te slaan.</value>
+    <value>Dupliziere schon aufgenommene Titel anstatt sie zu überspringen.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Fout tijdens opnemen: het opnemen van bestanden met meerdere kanalen wordt niet ondersteund ({0} kanalen), verminder het aantal kanalen tot 2 (stereo) of 1 (mono).</value>
+    <value>// Fehler während der Aufnahme: Mehrkanalaufnahmen werden nicht unterstützt ({0} Kanäle), Reduziere die Anzahl der Kanäle auf  2 (Stereo) oder 1 (Mono).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
-    <value>Nieuwe versie beschikbaar</value>
+    <value>Neue Version verfügbar</value>
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
-    <value>Audioapparaat:</value>
+    <value>Audiogerät:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordingTimer" xml:space="preserve">
-    <value>Timer voor de opnamesessie</value>
+    <value>Timer für die Aufnahmesitzung</value>
     <comment>interface</comment>
   </data>
   <data name="logRecordingTimerDone" xml:space="preserve">
-    <value>// Timer voor de opnamesessie is voorbij.</value>
+    <value>// Der Timer der Aufnahmesitzung ist abgelaufen.</value>
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value>// Spytify kan niet opnemen als het niet hetzelfde audio-eindpuntapparaat gebruikt dan Spotify. Zie de online F.A.Q. tabblad om te weten hoe u Spotify naar een ander apparaat kunt verplaatsen.</value>
+    <value>// Spytify kann nicht aufnehmen, wenn es den selben Audioendpunkt benutzt wie Spotify. Schau in der online F.A.Q. nach wie Spotify umgelenkt werden kann.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
-    <value>// Wachten op het einde van de opname van het huidige nummer</value>
+    <value>// Warte darauf, dass die derzeitige Aufnahme endet</value>
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
-    <value>// Vorige opnamesessie logs</value>
+    <value>// Vorherige Aufzeichnung von Sesssionsprotokollen</value>
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
-    <value>Opgenomen {0} in: {1}</value>
+    <value>Aufgenommen {0} in: {1}</value>
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Overslaan: {0} (opname bestaat al)</value>
+    <value>// Überspringe: {0} (Die Aufnahme existiert bereits)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value>//  Fout bij het opnemen: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll</value>
+    <value>// Fehler während der Aufnahme: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">
-    <value>Kies de map waar u de opgenomen audiobestanden wilt opslaan.</value>
+    <value>Wähle das Verzeichnis in das die Audiodateien gespeichert werden sollen.</value>
     <comment>interface</comment>
   </data>
-  <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
-    <value>Kan de Audio Virtual Cable-controller niet openen.</value>
-    <comment>message</comment>
-  </data>
   <data name="tipInstallVirtualCableDriver" xml:space="preserve">
-    <value>Installeer Audio Virtual Cable</value>
+    <value>Installieren Audio Virtual Cable</value>
     <comment>interface</comment>
   </data>
   <data name="tipUninstallVirtualCableDriver" xml:space="preserve">
-    <value>Verwijder Audio Virtual Cable</value>
+    <value>Deinstallieren Audio Virtual Cable</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
+    <value>Fehler beim Öffnen des Audio Virtual Cable controller.</value>
+    <comment>message</comment>
+  </data>
   <data name="tipDonate" xml:space="preserve">
-    <value>Doneren aan Spytify</value>
+    <value>Spenden an Spytify</value>
     <comment>interface</comment>
   </data>
   <data name="tipFAQ" xml:space="preserve">
-    <value>Zie de F.A.Q.</value>
+    <value>Siehe die FAQ</value>
     <comment>interface</comment>
   </data>
 </root>

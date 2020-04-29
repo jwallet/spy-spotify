@@ -797,7 +797,7 @@ namespace EspionSpotify
             {
                 MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyDriverInstallationFailed),
-                    Rm.GetString(I18nKeys.MsgTitleDriverInstallationFailed),
+                    "Audio Virtual Driver",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Question);
             }

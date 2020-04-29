@@ -60,7 +60,6 @@ namespace EspionSpotify.Models
         public static TranslationKeys MsgNewVersionContent { get => TranslationKeys.msgNewVersionContent; }
         public static TranslationKeys MsgNewVersionTitle { get => TranslationKeys.msgNewVersionTitle; }
         public static TranslationKeys MsgTitleCantQuit { get => TranslationKeys.msgTitleCantQuit; }
-        public static TranslationKeys MsgTitleDriverInstallationFailed { get => TranslationKeys.msgTitleDriverInstallationFailed; }
         public static TranslationKeys MsgTitlePathNotFound { get => TranslationKeys.msgTitlePathNotFound; }
 
         public static TranslationKeys TabAdvanced { get => TranslationKeys.tabAdvanced; }

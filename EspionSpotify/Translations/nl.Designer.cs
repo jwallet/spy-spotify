@@ -538,15 +538,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio Virtual Cable.
-        /// </summary>
-        internal static string msgTitleDriverInstallationFailed {
-            get {
-                return ResourceManager.GetString("msgTitleDriverInstallationFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bestandspad ongeldig.
         /// </summary>
         internal static string msgTitlePathNotFound {
