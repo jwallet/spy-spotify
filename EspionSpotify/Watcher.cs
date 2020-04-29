@@ -218,14 +218,15 @@ namespace EspionSpotify
                 return;
             }
 
+            _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
+
+            Task.Run(_recorder.Run);
+
+            // switched after recorder, look like first song in play status gets recorded when next track starts being recorded
             if (_recorder != null)
             {
                 UpdateNumUp();
             }
-
-            _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
-
-            Task.Run(_recorder.Run);
 
             _form.UpdateIconSpotify(_isPlaying, true);
             CountSeconds = 0;
