@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value />
+    <value>Groepeer tracks in hun eigen map</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
@@ -306,23 +306,23 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value />
+    <value>// Fout tijdens opnemen: onbekende uitzondering: {0}</value>
     <comment>console</comment>
   </data>
   <data name="logNoAccessOutput" xml:space="preserve">
-    <value />
+    <value>// Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere.</value>
     <comment>message</comment>
   </data>
   <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value />
+    <value>Dupliceer reeds opgenomen tracks in plaats van ze over te slaan.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value />
+    <value>// Fout tijdens opnemen: het opnemen van bestanden met meerdere kanalen wordt niet ondersteund ({0} kanalen), verminder het aantal kanalen tot 2 (stereo) of 1 (mono).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
-    <value />
+    <value>Nieuwe versie beschikbaar</value>
     <comment>interface</comment>
   </data>
   <data name="lblAudioDevice" xml:space="preserve">
@@ -338,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
-    <value />
+    <value>// Spytify kan niet opnemen als het niet hetzelfde audio-eindpuntapparaat gebruikt dan Spotify. Zie de online F.A.Q. tabblad om te weten hoe u Spotify naar een ander apparaat kunt verplaatsen.</value>
     <comment>console</comment>
   </data>
   <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>console</comment>
   </data>
   <data name="logPreviousLogs" xml:space="preserve">
-    <value />
+    <value>// Vorige opnamesessie logs</value>
     <comment>console</comment>
   </data>
   <data name="logRecorded" xml:space="preserve">
@@ -354,19 +354,19 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value />
+    <value>// Overslaan: {0} (opname bestaat al)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value />
+    <value>//  Fout bij het opnemen: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">
-    <value />
+    <value>Kies de map waar u de opgenomen audiobestanden wilt opslaan.</value>
     <comment>interface</comment>
   </data>
   <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
-    <value />
+    <value>Kan de Audio Virtual Cable-controller niet openen.</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleDriverInstallationFailed" xml:space="preserve">

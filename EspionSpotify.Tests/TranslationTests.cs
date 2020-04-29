@@ -68,7 +68,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(count, _keysCount);
         }
 
-        [Fact(Skip = "NL unsupported yet")]
+        [Fact]
         internal void Dutch_ShouldGetTranslations()
         {
             RM = new ResourceManager(_nl);
