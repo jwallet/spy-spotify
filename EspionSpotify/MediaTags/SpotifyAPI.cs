@@ -20,6 +20,8 @@ namespace EspionSpotify.MediaTags
         private DateTimeOffset _nextTokenRenewal;
         private AuthorizationCodeAuth _authorizationCodeAuth;
         private readonly LastFMAPI _lastFmApi;
+        private readonly AuthorizationCodeAuth _auth;
+        private bool _connectionDialogOpened = false;
 
         public SpotifyAPI() { }
 
@@ -31,41 +33,71 @@ namespace EspionSpotify.MediaTags
 
             if (!string.IsNullOrEmpty(_clientId) && !string.IsNullOrEmpty(_secretId))
             {
-                var auth = new AuthorizationCodeAuth(_clientId, _secretId, redirectUrl, redirectUrl,
+                _auth = new AuthorizationCodeAuth(_clientId, _secretId, redirectUrl, redirectUrl,
                     Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
-                auth.AuthReceived += AuthOnAuthReceived;
-                auth.Start();
-                auth.OpenBrowser();
+                _auth.AuthReceived += AuthOnAuthReceived;
+                _auth.Start();
+                //_auth.OpenBrowser();
             }
+        }
+
+        private void OpenAuthenticationDialog()
+        {
+            _auth.ShowDialog = true;
+            _auth.OpenBrowser();
+            _connectionDialogOpened = true;
         }
 
         public async Task<bool> UpdateTrack(Track track)
         {
             var api = await GetSpotifyWebAPI();
 
-            if (api == null) return false;
+            if (api == null)
+            {
+                OpenAuthenticationDialog();
+                return false;
+            }
 
             var playback = await api.GetPlaybackAsync();
 
             if (playback.HasError() || playback.Item == null)
             {
-                // fallback in case getting the playback did not work
+                api.Dispose();
+
+                // open spotify authentication page if user is disconnected
                 // user might be connected with a different account that the one that granted rights
+                if (!_connectionDialogOpened)
+                {
+                    OpenAuthenticationDialog();
+                }
+
+                // fallback in case getting the playback did not work
                 Settings.Default.MediaTagsAPI = (int)MediaTagsAPI.LastFM;
                 Settings.Default.Save();
-                return await _lastFmApi.UpdateTrack(track);
+                var lastFmApiResult = await _lastFmApi.UpdateTrack(track);
+
+                return lastFmApiResult;
             }
 
             MapSpotifyTrackToTrack(track, playback.Item);
 
-            if (playback.Item.Album?.Id == null) return false;
+            if (playback.Item.Album?.Id == null)
+            {
+                api.Dispose();
+                return false;
+            }
 
             var album = await api.GetAlbumAsync(playback.Item.Album.Id);
 
-            if (album.HasError()) return false;
+            if (album.HasError())
+            {
+                api.Dispose();
+                return false;
+            }
 
             MapSpotifyAlbumToTrack(track, album);
 
+            api.Dispose();
             return true;
         }
 
