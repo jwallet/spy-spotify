@@ -39,8 +39,7 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
             {% endfor %}
         </ol>
         {% for donor in site.data.donors %}
-        <!-- If I reached over 10 donors -->
-            <!-- {% if forloop.index > 100 %}
+            {% if forloop.index > 100 %}
                 {% if forloop.last %}<span style="font-size:90%;color:#ccc;">...</span>{% endif %}
             {% elsif forloop.index > 80 %}
                 <span style="font-size:90%;color:#ccc;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
@@ -49,8 +48,8 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
             {% elsif forloop.index > 20 %}
                 <span style="font-size:90%;color:#888;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 10 %}
-                <span style="font-size:90%;color:#666;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
-            {% endif %} -->
+                <span style="font-size:90%;color:#666;" title="${{ donor.donation }}">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+            {% endif %}
         {% else %}
             <pre>No Donors</pre>
         {% endfor %}
