@@ -61,12 +61,10 @@
     </Setting>
     <Setting Name="SpotifyAPISecretId" Type="System.String" Scope="User">
       <Value Profile="(Default)">
-          ced9c679a66641f484e6740fff479e14
         </Value>
     </Setting>
     <Setting Name="SpotifyAPIClientId" Type="System.String" Scope="User">
       <Value Profile="(Default)">
-          412ea2302d86443e854740ba35e869cb
         </Value>
     </Setting>
   </Settings>

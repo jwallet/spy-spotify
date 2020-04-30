@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCLWebUtility;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
@@ -15,18 +16,25 @@ namespace EspionSpotify
         private readonly string cid;
         private readonly string cm;
         private readonly string ul;
+        private readonly string ua;
         private readonly string cs;
+        private readonly string sr;
 
         public DateTime LastRequest { get; set; } = new DateTime();
         public string LastAction { get; set; } = string.Empty;
 
         public Analytics(string clientId, string version)
         {
-            var osVersion = Environment.OSVersion.Version;
+            var osArchitecture = Environment.Is64BitOperatingSystem ? $"Win64; x64;" : $"x86";
+            var screenBounderies = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            var osPlatform = $"Windows NT { Environment.OSVersion.Version.Major}.{Environment.OSVersion.Version.Minor}";
+
             cid = clientId;
             cm = version;
-            cs = $"Windows NT {osVersion.Major}.{osVersion.Minor}";
+            cs = Environment.OSVersion.ToString();
             ul = CultureInfo.CurrentCulture.Name;
+            ua = WebUtility.UrlEncode($"Mozilla/5.0 ({osPlatform}; {osArchitecture}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36");
+            sr = $"{screenBounderies.Width}x{screenBounderies.Height}";
         }
 
         public static string GenerateCID()
@@ -48,9 +56,10 @@ namespace EspionSpotify
                 { "av", cm }, // App version
                 { "cn", "Spytify" }, // Campaign name
                 { "an", "Spytify" }, // App name
-                { "cs", cs}, // Campaign source, OS Version
+                { "cs", WebUtility.UrlEncode(cs)}, // Campaign source, OS Version
                 { "ul", ul }, // User Language
-                { "ua", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}, // user-agent overwrite
+                { "sr", sr }, // Screen resolution
+                { "ua", ua }, // User-Agent overwrite
                 { "dh", "jwallet.github.io/spy-spotify" }, // Document host
                 { "dl", $"/{action}" }, // Document link
                 { "dt", action }, // Document title
