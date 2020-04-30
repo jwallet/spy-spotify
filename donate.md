@@ -48,7 +48,7 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
             {% elsif forloop.index > 20 %}
                 <span style="font-size:90%;color:#888;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 10 %}
-                <span style="font-size:90%;color:#666;" title="${{ donor.donation }}">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span style="font-size:90%;color:#666;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% endif %}
         {% else %}
             <pre>No Donors</pre>
