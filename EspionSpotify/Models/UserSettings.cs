@@ -20,7 +20,7 @@ namespace EspionSpotify.Models
         public bool MuteAdsEnabled { get; set; }
         public bool RecordUnknownTrackTypeEnabled { get; set; }
         public int InternalOrderNumber { get; set; } = 1;
-        public bool DuplicateAlreadyRecordedTrack { get; set; }
+        public RecordRecordingsStatus RecordRecordingsStatus { get; set; }
         public string AudioEndPointDeviceID { get; set; }
         public string RecordingTimer { get; set; }
         public string SpotifyAPIClientId { get; set; }

@@ -313,8 +313,8 @@
     <value>// Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere.</value>
     <comment>message</comment>
   </data>
-  <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliceer reeds opgenomen tracks in plaats van ze over te slaan.</value>
+  <data name="lblRecordOverRecordings" xml:space="preserve">
+    <value>Opnemen reeds opgenomen tracks in plaats van ze over te slaan.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
@@ -383,6 +383,10 @@
   </data>
   <data name="tipFAQ" xml:space="preserve">
     <value>Zie de F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicate" xml:space="preserve">
+    <value>Dupliceer</value>
     <comment>interface</comment>
   </data>
 </root>

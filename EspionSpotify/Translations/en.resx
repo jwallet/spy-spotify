@@ -313,8 +313,8 @@
     <value>// Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
     <comment>message</comment>
   </data>
-  <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Duplicate already recorded tracks instead of skipping them.</value>
+  <data name="lblRecordOverRecordings" xml:space="preserve">
+    <value>Record already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
@@ -383,6 +383,10 @@
   </data>
   <data name="tipFAQ" xml:space="preserve">
     <value>See the F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicate" xml:space="preserve">
+    <value>Duplicate</value>
     <comment>interface</comment>
   </data>
 </root>

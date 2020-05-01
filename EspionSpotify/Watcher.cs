@@ -35,7 +35,7 @@ namespace EspionSpotify
 
         public bool RecorderUpAndRunning { get => _recorder != null && _recorder.Running; }
         public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
-        public bool IsTrackExists { get => !_userSettings.DuplicateAlreadyRecordedTrack && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
+        public bool IsSkipTrackActive { get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
         public bool IsTypeAllowed
         {
             get => _currentTrack.IsNormal() || IsRecordUnknownActive;
@@ -78,12 +78,12 @@ namespace EspionSpotify
 
             DoIKeepLastSong();
 
-            if (IsTrackExists)
+            if (IsSkipTrackActive)
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _currentTrack.ToString());
             }
 
-            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsTrackExists) return;
+            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsSkipTrackActive) return;
 
             RecordSpotify();
         }

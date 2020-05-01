@@ -193,13 +193,13 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DuplicateAlreadyRecordedTrack {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RecordOverRecordingsEnabled {
             get {
-                return ((bool)(this["DuplicateAlreadyRecordedTrack"]));
+                return ((bool)(this["RecordOverRecordingsEnabled"]));
             }
             set {
-                this["DuplicateAlreadyRecordedTrack"] = value;
+                this["RecordOverRecordingsEnabled"] = value;
             }
         }
         
@@ -248,6 +248,18 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["AudioEndPointDeviceID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecordDuplicateRecordingsEnabled {
+            get {
+                return ((bool)(this["RecordDuplicateRecordingsEnabled"]));
+            }
+            set {
+                this["RecordDuplicateRecordingsEnabled"] = value;
             }
         }
         
