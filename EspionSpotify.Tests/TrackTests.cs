@@ -10,7 +10,7 @@ namespace EspionSpotify.Tests
         {
             var track = new Track();
 
-            Assert.False(track.IsNormal());
+            Assert.False(track.IsNormal);
             Assert.Equal("Spotify", track.ToString());
         }
 
@@ -26,9 +26,24 @@ namespace EspionSpotify.Tests
                 TitleExtended = "Live"
             };
 
-            Assert.True(track.IsNormal());
+            Assert.True(track.IsNormal);
             Assert.Equal("Artist Name - Song Title - Live", track.ToString());
             Assert.NotEqual(track, new Track());
+        }
+
+        [Theory]
+        [InlineData("A", "B", false, true, true)]
+        [InlineData("A", "", false, true, false)]
+        [InlineData("", "B", false, true, false)]
+        [InlineData("", "", false, true, false)]
+        [InlineData(null, null, false, true, false)]
+        [InlineData("A", "B", true, true, false)]
+        [InlineData("A", "B", false, false, false)]
+        internal void IsNormal_ReturnsExpectedNormalResults(string artist, string title, bool ad, bool playing, bool expected)
+        {
+            var track = new Track() { Artist = artist, Title = title, Ad = ad, Playing = playing };
+
+            Assert.Equal(expected, track.IsNormal);
         }
 
         [Fact]

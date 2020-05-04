@@ -36,7 +36,7 @@ namespace EspionSpotify.Spotify
 
         public async Task<Track> GetTrack()
         {
-            if (!CurrentTrack.IsNormal()) return CurrentTrack;
+            if (!CurrentTrack.IsNormal) return CurrentTrack;
 
             await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
             return CurrentTrack;

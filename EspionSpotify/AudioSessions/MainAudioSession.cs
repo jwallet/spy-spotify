@@ -69,16 +69,13 @@ namespace EspionSpotify.AudioSessions
                 var spotifySoundValue = 0.0;
                 await Task.Delay(SLEEP_VALUE);
 
-                var spotifyAudioSessionControls = SpotifyAudioSessionControls;
-                lock (spotifyAudioSessionControls)
+                var spotifyAudioSessionControls = new List<AudioSessionControl>(SpotifyAudioSessionControls).AsReadOnly();
+                foreach (var audioSession in spotifyAudioSessionControls)
                 {
-                    foreach (var audioSession in spotifyAudioSessionControls)
-                    {
-                        var soundValue = Math.Round(audioSession.AudioMeterInformation.MasterPeakValue * 100.0, 1);
-                        if (soundValue == 0.0) continue;
+                    var soundValue = Math.Round(audioSession.AudioMeterInformation.MasterPeakValue * 100.0, 1);
+                    if (soundValue == 0.0) continue;
 
-                        spotifySoundValue = soundValue;
-                    }
+                    spotifySoundValue = soundValue;
                 }
 
                 samples.Add(spotifySoundValue);
@@ -89,13 +86,10 @@ namespace EspionSpotify.AudioSessions
 
         public void SetSpotifyToMute(bool mute)
         {
-            var spotifyAudioSessionControlsLocked = SpotifyAudioSessionControls;
-            lock (spotifyAudioSessionControlsLocked)
+            var spotifyAudioSessionControlsLocked = new List<AudioSessionControl>(SpotifyAudioSessionControls).AsReadOnly();
+            foreach (var audioSession in spotifyAudioSessionControlsLocked)
             {
-                foreach (var audioSession in spotifyAudioSessionControlsLocked)
-                {
-                    audioSession.SimpleAudioVolume.Mute = mute;
-                }
+                audioSession.SimpleAudioVolume.Mute = mute;
             }
         }
 
@@ -109,15 +103,18 @@ namespace EspionSpotify.AudioSessions
             }
 
             var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
-
-            for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
+            lock (sessionAudioEndPointDeviceLocked)
             {
-                var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
-                var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
-                if (!IsSpotifyAudioSessionControl(currentProcessId)) continue;
+                for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
+                {
+                    var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
+                    var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
+                    if (!IsSpotifyAudioSessionControl(currentProcessId)) continue;
 
-                return true;
+                    return true;
+                }
             }
+            
 
             return false;
         }
@@ -126,25 +123,28 @@ namespace EspionSpotify.AudioSessions
         {
             var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
 
-            for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
+            lock (sessionAudioEndPointDeviceLocked)
             {
-                var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
-                var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
-
-                if (currentProcessId.Equals(_spytifyProcess.Id)) continue;
-
-                if (IsSpotifyAudioSessionControl(currentProcessId))
+                for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
                 {
-                    SpotifyAudioSessionControls.Add(currentAudioSessionControl);
+                    var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
+                    var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
 
-                    if (currentAudioSessionControl.SimpleAudioVolume.Volume < 1)
+                    if (currentProcessId.Equals(_spytifyProcess.Id)) continue;
+
+                    if (IsSpotifyAudioSessionControl(currentProcessId))
                     {
-                        currentAudioSessionControl.SimpleAudioVolume.Volume = 1;
+                        SpotifyAudioSessionControls.Add(currentAudioSessionControl);
+
+                        if (currentAudioSessionControl.SimpleAudioVolume.Volume < 1)
+                        {
+                            currentAudioSessionControl.SimpleAudioVolume.Volume = 1;
+                        }
                     }
-                }
-                else if (!currentAudioSessionControl.SimpleAudioVolume.Mute.Equals(mute))
-                {
-                    currentAudioSessionControl.SimpleAudioVolume.Mute = mute;
+                    else if (!currentAudioSessionControl.SimpleAudioVolume.Mute.Equals(mute))
+                    {
+                        currentAudioSessionControl.SimpleAudioVolume.Mute = mute;
+                    }
                 }
             }
         }

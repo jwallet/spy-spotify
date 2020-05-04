@@ -42,7 +42,7 @@ namespace EspionSpotify.Models
         public byte[] ArtMedium { get; set; }
         public byte[] ArtSmall { get; set; }
 
-        public bool IsNormal() => Artist != null && Title != null && !Ad && Playing;
+        public bool IsNormal { get => !string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title) && !Ad && Playing; }
 
         public Track() { }
 

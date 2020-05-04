@@ -23,7 +23,7 @@ namespace EspionSpotify
             _fileSystem = fileSystem;
         }
 
-        public string GetTempFile() => _fileSystem.Path.GetTempFileName();
+        internal string GetTempFile() => _fileSystem.Path.GetTempFileName();
 
         public OutputFile GetOutputFile()
         {
