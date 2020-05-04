@@ -7,6 +7,7 @@ using EspionSpotify.Extensions;
 using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 using EspionSpotify.AudioSessions;
+using System;
 
 namespace EspionSpotify
 {
@@ -33,26 +34,40 @@ namespace EspionSpotify
         public int CountSeconds { get; set; }
         public ISpotifyHandler Spotify { get; set; }
 
-        public bool RecorderUpAndRunning { get => _recorder != null && _recorder.Running; }
-        public bool IsRecordUnknownActive { get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.Playing && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()); }
-        public bool IsSkipTrackActive { get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);  }
+        public bool RecorderUpAndRunning
+        {
+            get => _recorder != null && _recorder.Running;
+        }
+        public bool IsRecordUnknownActive
+        {
+            get => _userSettings.RecordUnknownTrackTypeEnabled
+                && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString());
+        }
+        public bool IsSkipTrackActive
+        {
+            get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
+                && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);
+        }
         public bool IsTypeAllowed
         {
-            get => _currentTrack.IsNormal() || IsRecordUnknownActive;
+            get => _currentTrack.IsNormal || IsRecordUnknownActive;
         }
         public bool IsOldSong
         { 
-            get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 && _currentTrack.CurrentPosition > _currentTrack.Length - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY;
+            get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 
+                && _currentTrack.CurrentPosition > Math.Max(0, (_currentTrack.Length ?? 0) - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY);
         }
 
-        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings): this(form, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
+        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings):
+            this(form, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
+        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem, IRecorder recorder = null)
         {
             _form = form;
             _userSettings = userSettings;
             _currentTrack = track;
             _fileSystem = fileSystem;
+            _recorder = recorder;
 
             Settings.Default.Logs = string.Empty;
             Settings.Default.Save();

@@ -9,7 +9,7 @@ using NAudio.Wave;
 
 namespace EspionSpotify
 {
-    internal class Recorder : IRecorder
+    public class Recorder : IRecorder
     {
         const int MP3_SUPPORTED_NUMBER_CHANNELS = 2;
         public int CountSeconds { get; set; }
