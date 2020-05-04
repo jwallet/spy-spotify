@@ -44,8 +44,8 @@
     <Setting Name="AnalyticsCID" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="DuplicateAlreadyRecordedTrack" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="RecordOverRecordingsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="LastVersionPrompted" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -58,6 +58,9 @@
     </Setting>
     <Setting Name="AudioEndPointDeviceID" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RecordDuplicateRecordingsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SpotifyAPISecretId" Type="System.String" Scope="User">
       <Value Profile="(Default)">

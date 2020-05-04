@@ -16,8 +16,9 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblAds { get => TranslationKeys.lblAds; }
         public static TranslationKeys LblAudioDevice { get => TranslationKeys.lblAudioDevice; }
         public static TranslationKeys LblBitRate { get => TranslationKeys.lblBitRate; }
-        public static TranslationKeys LblDuplicateAlreadyRecordedTrack { get => TranslationKeys.lblDuplicateAlreadyRecordedTrack; }
+        public static TranslationKeys LblRecordOverRecordings { get => TranslationKeys.lblRecordOverRecordings; }
         public static TranslationKeys LblEndingSongDelay { get => TranslationKeys.lblEndingSongDelay; }
+        public static TranslationKeys LblDuplicate { get => TranslationKeys.lblDuplicate; }
         public static TranslationKeys LblFormat { get => TranslationKeys.lblFormat; }
         public static TranslationKeys LblLanguage { get => TranslationKeys.lblLanguage; }
         public static TranslationKeys LblMinLength { get => TranslationKeys.lblMinLength; }

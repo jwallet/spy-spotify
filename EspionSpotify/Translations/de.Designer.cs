@@ -160,11 +160,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dupliziere schon aufgenommene Titel anstatt sie zu überspringen..
+        ///   Looks up a localized string similar to Speichere.
         /// </summary>
-        internal static string lblDuplicateAlreadyRecordedTrack {
+        internal static string lblDuplicate {
             get {
-                return ResourceManager.GetString("lblDuplicateAlreadyRecordedTrack", resourceCulture);
+                return ResourceManager.GetString("lblDuplicate", resourceCulture);
             }
         }
         
@@ -268,7 +268,16 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speichere nicht erkannte Stücke als Werbung.
+        ///   Looks up a localized string similar to Aufnehmen schon aufgenommene Titel anstatt sie zu überspringen..
+        /// </summary>
+        internal static string lblRecordOverRecordings {
+            get {
+                return ResourceManager.GetString("lblRecordOverRecordings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aufnehmen nicht erkannte Stücke als Werbung.
         /// </summary>
         internal static string lblRecordUnknownTrackType {
             get {

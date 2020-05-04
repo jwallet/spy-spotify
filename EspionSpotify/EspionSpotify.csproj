@@ -190,6 +190,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Drivers\AudioVirtualCableDriver.cs" />
+    <Compile Include="Enums\RecordRecordingsStatus.cs" />
     <Compile Include="Enums\LastFMNodeStatus.cs" />
     <Compile Include="Enums\AlbumCoverSize.cs" />
     <Compile Include="Enums\MediaTagsAPI.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
+    <Compile Include="Extensions\SettingExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />

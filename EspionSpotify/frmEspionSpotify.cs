@@ -96,7 +96,8 @@ namespace EspionSpotify
             tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
             txtPath.Text = Settings.Default.Directory;
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
-            tgDuplicateAlreadyRecordedTrack.Checked = Settings.Default.DuplicateAlreadyRecordedTrack;
+            tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
+            chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
 
@@ -121,7 +122,7 @@ namespace EspionSpotify
 
             _userSettings.AudioEndPointDeviceID = _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID;
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
-            _userSettings.DuplicateAlreadyRecordedTrack = Settings.Default.DuplicateAlreadyRecordedTrack;
+            _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
             _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
             _userSettings.GroupByFoldersEnabled = Settings.Default.GroupByFoldersEnabled;
             _userSettings.MediaFormat = (MediaFormat)Settings.Default.MediaFormat;
@@ -218,7 +219,8 @@ namespace EspionSpotify
             lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
             lblRecordUnknownTrackType.Text = Rm.GetString(I18nKeys.LblRecordUnknownTrackType);
-            lblDuplicateAlreadyRecordedTrack.Text = Rm.GetString(I18nKeys.LblDuplicateAlreadyRecordedTrack);
+            lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
+            chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
 
             tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
@@ -605,14 +607,29 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"order-number-in-media-tags?enabled={tgNumTracks.Checked}"));
         }
 
-        private void TgDuplicateAlreadyRecordedTrack_CheckedChanged(object sender, EventArgs e)
+        private void TgRecordOverRecordings_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.DuplicateAlreadyRecordedTrack == tgDuplicateAlreadyRecordedTrack.Checked) return;
+            if (Settings.Default.RecordOverRecordingsEnabled == tgRecordOverRecordings.Checked) return;
 
-            _userSettings.DuplicateAlreadyRecordedTrack = tgDuplicateAlreadyRecordedTrack.Checked;
-            Settings.Default.DuplicateAlreadyRecordedTrack = tgDuplicateAlreadyRecordedTrack.Checked;
+            Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
+            Settings.Default.RecordOverRecordingsEnabled = tgRecordOverRecordings.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"duplicate-already-recorded-track?enabled={tgDuplicateAlreadyRecordedTrack.Checked}"));
+
+            _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
+
+            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&overwrite={tgRecordOverRecordings.Checked}"));
+        }
+
+        private void ChkRecordDuplicateRecordings_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.RecordDuplicateRecordingsEnabled == chkRecordDuplicateRecordings.Checked) return;
+
+            Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
+            Settings.Default.Save();
+
+            _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
+
+            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&duplicate={chkRecordDuplicateRecordings.Checked}"));
         }
 
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)

@@ -313,8 +313,8 @@
     <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
     <comment>console</comment>
   </data>
-  <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliquer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
+  <data name="lblRecordOverRecordings" xml:space="preserve">
+    <value>Enregistrer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
@@ -383,6 +383,10 @@
   </data>
   <data name="tipFAQ" xml:space="preserve">
     <value>Voir la F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicate" xml:space="preserve">
+    <value>Dupliquer</value>
     <comment>interface</comment>
   </data>
 </root>

@@ -198,7 +198,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Speichere nicht erkannte Stücke als Werbung</value>
+    <value>Aufnehmen nicht erkannte Stücke als Werbung</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
@@ -313,8 +313,8 @@
     <value>// Fehler während der Aufnahme: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis.</value>
     <comment>message</comment>
   </data>
-  <data name="lblDuplicateAlreadyRecordedTrack" xml:space="preserve">
-    <value>Dupliziere schon aufgenommene Titel anstatt sie zu überspringen.</value>
+  <data name="lblRecordOverRecordings" xml:space="preserve">
+    <value>Aufnehmen schon aufgenommene Titel anstatt sie zu überspringen.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
@@ -383,6 +383,10 @@
   </data>
   <data name="tipFAQ" xml:space="preserve">
     <value>Siehe die FAQ</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicate" xml:space="preserve">
+    <value>Speichere</value>
     <comment>interface</comment>
   </data>
 </root>
