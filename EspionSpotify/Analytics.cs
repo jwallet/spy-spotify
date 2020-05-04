@@ -25,7 +25,7 @@ namespace EspionSpotify
 
         public Analytics(string clientId, string version)
         {
-            var osArchitecture = Environment.Is64BitOperatingSystem ? $"Win64; x64;" : $"x86";
+            var osArchitecture = Environment.Is64BitOperatingSystem ? $"Win64; x64;" : "";
             var screenBounderies = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             var osPlatform = $"Windows NT { Environment.OSVersion.Version.Major}.{Environment.OSVersion.Version.Minor}";
 

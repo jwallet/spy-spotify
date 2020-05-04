@@ -42,9 +42,22 @@ namespace EspionSpotify
                 Extension = extension
             };
 
-            while (_userSettings.DuplicateAlreadyRecordedTrack && _fileSystem.File.Exists(outputFile.ToString()))
-            {
-                outputFile.Increment();
+            switch (_userSettings.RecordRecordingsStatus) {
+                case Enums.RecordRecordingsStatus.Duplicate:
+                    while (_fileSystem.File.Exists(outputFile.ToString()))
+                    {
+                        outputFile.Increment();
+                    }
+                    break;
+                case Enums.RecordRecordingsStatus.Overwrite:
+                    break;
+                case Enums.RecordRecordingsStatus.Skip:
+                default:
+                    if (_fileSystem.File.Exists(outputFile.ToString()))
+                    {
+                        throw new InvalidOperationException();
+                    }
+                    break;
             }
 
             return outputFile;
@@ -64,10 +77,14 @@ namespace EspionSpotify
             }
         }
 
-        public void Rename(string source, string destination)
+        public void RenameFile(string source, string destination)
         {
             if (_fileSystem.File.Exists(source))
             {
+                if (_fileSystem.File.Exists(destination))
+                {
+                    _fileSystem.File.Delete(destination);
+                }
                 _fileSystem.File.Move(source, destination);
             }
         }

@@ -106,16 +106,25 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void IsTrackExists_FalsyWhenTrackNotFound()
+        internal void IsSkipTrackActive_FalsyWhenTrackNotFound()
         {
-            var userSettings = new UserSettings { OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = Enums.MediaFormat.Mp3 };
-            var watcherTrackNotFound = new Watcher(_formMock, userSettings, new Track() { Artist = "Artist", Title = "Title" }, _fileSystem);
+            var userSettings = new UserSettings {
+                RecordRecordingsStatus = Enums.RecordRecordingsStatus.Skip,
+                OutputPath = @"C:\path",
+                TrackTitleSeparator = "_",
+                MediaFormat = Enums.MediaFormat.Mp3
+            };
+            var watcherTrackNotFound = new Watcher(
+                _formMock,
+                userSettings,
+                new Track() { Artist = "Artist", Title = "Title" },
+                _fileSystem);
 
-            Assert.False(watcherTrackNotFound.IsTrackExists);
+            Assert.False(watcherTrackNotFound.IsSkipTrackActive);
         }
 
         [Fact]
-        internal void IsTrackExists_FalsyWhenCanDuplicateTrackFound()
+        internal void IsSkipTrackActive_FalsyWhenTrackFoundButDuplicateEnabled()
         {
             var userSettingsCanDuplicate = new UserSettings {
                 RecordRecordingsStatus = Enums.RecordRecordingsStatus.Duplicate,
@@ -132,7 +141,7 @@ namespace EspionSpotify.Tests
                 new Track() { Artist = "Artist", Title = "Dont Overwrite Me" },
                 _fileSystem);
 
-            Assert.False(watcherTrackFoundCanDuplicate.IsTrackExists);
+            Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
         }
 
         [Fact]
@@ -167,7 +176,7 @@ namespace EspionSpotify.Tests
             var userSettings = new UserSettings { OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = Enums.MediaFormat.Mp3 };
             var watcherTrackFound = new Watcher(_formMock, userSettings, new Track() { Artist = "Artist", Title = "Existing Track", Playing = true }, _fileSystem);
 
-            Assert.True(watcherTrackFound.IsTrackExists);
+            Assert.True(watcherTrackFound.IsSkipTrackActive);
         }
 
         [Theory]

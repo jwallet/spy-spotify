@@ -14,8 +14,8 @@ namespace EspionSpotify.Tests
     {
         private readonly UserSettings _userSettings;
         private readonly Track _track;
-        private readonly FileManager _fileManager;
-        private readonly IFileSystem _fileSystem;
+        private FileManager _fileManager;
+        private IFileSystem _fileSystem;
         private readonly string _path = @"C:\path";
 
         private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
@@ -35,8 +35,7 @@ namespace EspionSpotify.Tests
                 EndingTrackDelayEnabled = true,
                 MuteAdsEnabled = true,
                 RecordUnknownTrackTypeEnabled = false,
-                InternalOrderNumber = 1,
-                DuplicateAlreadyRecordedTrack = true
+                InternalOrderNumber = 1
             };
 
             _track = new Track
@@ -48,17 +47,13 @@ namespace EspionSpotify.Tests
                 Ad = false
             };
 
-            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-            {
-                { @"C:\path\Artist", new MockDirectoryData() },
-                { @"C:\path\Artist\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
-            });
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem);
         }
 
         [Fact]
-        internal void GetOutputFile_ReturnsFileNames()
+        internal void GetOutputFile_ReturnsFileName()
         {
             var outputFile = _fileManager.GetOutputFile();
 
@@ -66,6 +61,74 @@ namespace EspionSpotify.Tests
             Assert.Equal(_track.ToString(), outputFile.File);
             Assert.Equal(_userSettings.MediaFormat.ToString().ToLower(), outputFile.Extension);
             Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
+
+            Assert.Equal(@"C:\path\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
+            Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
+        }
+
+        [Fact]
+        internal void GetOutputFile_ThrowsExceptionOnSkipExistingFile()
+        {
+            _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Skip;
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            Assert.Throws<InvalidOperationException>(() => _fileManager.GetOutputFile());
+        }
+
+        [Fact]
+        internal void GetOutputFile_ReturnsExistingFileNameDuplicated()
+        {
+            _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Duplicate;
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            var outputFile = _fileManager.GetOutputFile();
+
+            Assert.Equal(@"C:\path\Artist - Title - Live 2.spytify", outputFile.ToPendingFileString());
+            Assert.Equal(@"C:\path\Artist - Title - Live 2.mp3", outputFile.ToString());
+        }
+
+        [Fact]
+        internal void GetOutputFile_ReturnsExistingFileNameNextDuplicated()
+        {
+            _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Duplicate;
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+                { @"C:\path\Artist - Title - Live 2.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+                { @"C:\path\Artist - Title - Live 3.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+                { @"C:\path\Artist - Title - Live 5.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            var outputFile = _fileManager.GetOutputFile();
+
+            Assert.Equal(@"C:\path\Artist - Title - Live 4.spytify", outputFile.ToPendingFileString());
+            Assert.Equal(@"C:\path\Artist - Title - Live 4.mp3", outputFile.ToString());
+        }
+
+        [Fact]
+        internal void GetOutputFile_ReturnsExistingFileNameToOverwrite()
+        {
+            _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Overwrite;
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            var outputFile = _fileManager.GetOutputFile();
 
             Assert.Equal(@"C:\path\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
             Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
@@ -155,6 +218,98 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
+        internal void RenameFile_MoveFileToDestination()
+        {
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+
+            Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.True(_fileSystem.File.Exists(@"C:\path\Artist - Title - Live.mp3"));
+        }
+
+        [Fact]
+        internal void RenameFile_MoveFileToDestinationAndOverwrite()
+        {
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title - Live.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+
+            Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.True(_fileSystem.File.Exists(@"C:\path\Artist - Title - Live.mp3"));
+        }
+
+        [Fact]
+        internal void RenameFile_CantMoveFileWhenNotFound()
+        {
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+
+            Assert.Equal(@"C:\path\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
+            Assert.Equal(@"C:\path\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.False(_fileSystem.File.Exists(@"C:\path\Artist - Title - Live.spytify"));
+            Assert.False(_fileSystem.File.Exists(@"C:\path\Artist - Title - Live.mp3"));
+        }
+
+        [Fact]
+        internal void DeleteFile_DeletesNoFileAndTrackNotFound()
+        {
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist - Title.wav", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+
+            Assert.True(_fileSystem.File.Exists(@"C:\path\Artist - Title.wav"));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+        }
+
+        [Fact]
         internal void DeleteFile_DeletesFile()
         {
             _track.Title = "Delete_Me";
@@ -169,8 +324,44 @@ namespace EspionSpotify.Tests
                 Separator = _userSettings.TrackTitleSeparator
             };
 
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist_-_Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
+            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+        }
+
+        [Fact]
+        internal void DeleteFile_DeletesNoFolderWhenGroupByFoldersEnabledAndTrackNotFound()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+
+            var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
+            var outputFile = new OutputFile
+            {
+                Path = $@"{_userSettings.OutputPath}\{artistDir}",
+                File = _track.ToTitleString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist", new MockDirectoryData() },
+                { @"C:\path\Artist\Title.wav", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+
+            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+
+            Assert.True(_fileSystem.File.Exists(@"C:\path\Artist\Title.wav"));
+            Assert.True(_fileSystem.Directory.Exists(@"C:\path\Artist"));
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
 
@@ -190,6 +381,14 @@ namespace EspionSpotify.Tests
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
             };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist", new MockDirectoryData() },
+                { @"C:\path\Artist\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 

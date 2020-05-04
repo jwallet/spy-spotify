@@ -93,12 +93,12 @@ namespace EspionSpotify
 
             DoIKeepLastSong();
 
-            if (IsTrackExists)
+            if (IsSkipTrackActive)
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _currentTrack.ToString());
             }
 
-            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsTrackExists) return;
+            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsSkipTrackActive) return;
 
             RecordSpotify();
         }

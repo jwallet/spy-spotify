@@ -160,11 +160,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dupliceer reeds opgenomen tracks in plaats van ze over te slaan..
+        ///   Looks up a localized string similar to Dupliceer.
         /// </summary>
-        internal static string lblDuplicateAlreadyRecordedTrack {
+        internal static string lblDuplicate {
             get {
-                return ResourceManager.GetString("lblDuplicateAlreadyRecordedTrack", resourceCulture);
+                return ResourceManager.GetString("lblDuplicate", resourceCulture);
             }
         }
         
@@ -264,6 +264,15 @@ namespace EspionSpotify.Translations {
         internal static string lblRecordingTimer {
             get {
                 return ResourceManager.GetString("lblRecordingTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opnemen reeds opgenomen tracks in plaats van ze over te slaan..
+        /// </summary>
+        internal static string lblRecordOverRecordings {
+            get {
+                return ResourceManager.GetString("lblRecordOverRecordings", resourceCulture);
             }
         }
         
