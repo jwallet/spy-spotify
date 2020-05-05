@@ -142,16 +142,32 @@ namespace EspionSpotify.Tests
             Assert.Equal(@"C:\path\Artist - Title - Live.mp3", fileName);
         }
 
-        [Fact]
-        internal void BuildFileName_ReturnsFileNameOrderNumbered()
+        [Theory]
+        [InlineData(0, @"C:\path\000_Artist_-_Title_-_Live.mp3")]
+        [InlineData(100, @"C:\path\100_Artist_-_Title_-_Live.mp3")]
+        [InlineData(12345, @"C:\path\999_Artist_-_Title_-_Live.mp3")]
+        internal void BuildFileName_ReturnsFileNameOrderNumbered(int orderNumber, string expected)
         {
             _userSettings.OrderNumberInfrontOfFileEnabled = true;
             _userSettings.TrackTitleSeparator = "_";
+            _userSettings.InternalOrderNumber = orderNumber;
+
+            var fileName = _fileManager.GetOutputFile().ToString();
+
+            Assert.Equal(expected, fileName);
+        }
+
+        [Fact]
+        internal void BuildFileName_ReturnsFileNameWhenOrderNumberedIsDisabled()
+        {
+            _userSettings.OrderNumberInfrontOfFileEnabled = false;
+
+            _userSettings.OrderNumberInMediaTagEnabled = true;
             _userSettings.InternalOrderNumber = 100;
 
             var fileName = _fileManager.GetOutputFile().ToString();
 
-            Assert.Equal(@"C:\path\100_Artist_-_Title_-_Live.mp3", fileName);
+            Assert.Equal(@"C:\path\Artist - Title - Live.mp3", fileName);
         }
 
         [Fact]

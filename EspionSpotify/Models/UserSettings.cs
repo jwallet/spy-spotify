@@ -50,7 +50,7 @@ namespace EspionSpotify.Models
 
         public int? OrderNumber
         {
-            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
+            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? (int?)Math.Min(InternalOrderNumber, 999) : null;
         }
 
         public bool IsSpotifyAPISet
