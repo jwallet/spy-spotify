@@ -28,9 +28,9 @@ namespace EspionSpotify
 
         public Recorder() { }
 
-        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track, IFileSystem fileSystem)
+        public Recorder(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
-            _form = espionSpotifyForm;
+            _form = form;
             _fileSystem = fileSystem;
             _track = track;
             _userSettings = userSettings;

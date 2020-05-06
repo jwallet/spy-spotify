@@ -261,7 +261,7 @@ namespace EspionSpotify
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        public void UpdateNum(int num)
+        private void UpdateNum(int num)
         {
             if (txtRecordingNum.InvokeRequired)
             {
@@ -271,7 +271,23 @@ namespace EspionSpotify
                 return;
             }
 
-            txtRecordingNum.Text = num.ToString("000");
+            txtRecordingNum.Text = num.ToString(txtRecordingNum.Mask);
+        }
+
+        public void UpdateNumDown()
+        {
+            if (!_userSettings.HasOrderNumberEnabled) return;
+
+            _userSettings.InternalOrderNumber--;
+            UpdateNum(_userSettings.InternalOrderNumber);
+        }
+
+        public void UpdateNumUp()
+        {
+            if (!_userSettings.HasOrderNumberEnabled) return;
+
+            _userSettings.InternalOrderNumber++;
+            UpdateNum(_userSettings.InternalOrderNumber);
         }
 
         public void UpdateStartButton()
