@@ -21,7 +21,7 @@ namespace EspionSpotify
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _fileWriter;
-        private Stream _streamWriter;
+        private Stream _tempWaveWriter;
         private string _tempFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
@@ -48,19 +48,7 @@ namespace EspionSpotify
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
-            try
-            {
-                _streamWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
-                _fileWriter = GetFileWriter();
-            }
-            catch (Exception ex)
-            {
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
-                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
-                Console.WriteLine(ex.Message);
-                return;
-            }
+            _tempWaveWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
 
             _waveIn.StartRecording();
             _form.WriteIntoConsole(I18nKeys.LogRecording, _currentOutputFile.File);
@@ -76,23 +64,24 @@ namespace EspionSpotify
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             // TODO: add buffer handler from argument: issue #100
-            if (_streamWriter != null)
+            if (_tempWaveWriter != null)
             {
-                await _streamWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
-                await _streamWriter.FlushAsync();
+                await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+                await _tempWaveWriter.FlushAsync();
             }
         }
 
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_streamWriter == null) return;
+            if (_tempWaveWriter == null) return;
 
-            await _streamWriter.FlushAsync();
-            _streamWriter.Dispose();
+            await _tempWaveWriter.FlushAsync();
+            _tempWaveWriter.Dispose();
 
-            if (_fileWriter == null) return;
-
-            await WriteStreamOutputToFileBasedOnNumberOfChannels();
+            using (var fileWriter = CreateOutputFileBasedOnMediaFormat())
+            {
+                await WriteStreamOutputToFileBasedOnNumberOfChannels(fileWriter);
+            }
 
             _waveIn.Dispose();
 
@@ -110,15 +99,13 @@ namespace EspionSpotify
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _track.ToString(), length);
 
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
-
-            await UpdateOutputFileBasedOnMediaFormat();
         }
 
-        private async Task WriteStreamOutputToFileBasedOnNumberOfChannels()
+        private async Task WriteStreamOutputToFileBasedOnNumberOfChannels(Stream fileWriter)
         {
             using (var reader = new WaveFileReader(_tempFile))
             {
-                await reader.CopyToAsync(_fileWriter);
+                await reader.CopyToAsync(fileWriter);
             }
 
             try { _fileSystem.File.Delete(_tempFile); }
@@ -146,7 +133,7 @@ namespace EspionSpotify
             //}
         }
 
-        private async Task UpdateOutputFileBasedOnMediaFormat()
+        private Stream CreateOutputFileBasedOnMediaFormat()
         {
             switch (_userSettings.MediaFormat)
             {
@@ -158,20 +145,9 @@ namespace EspionSpotify
                         Count = _userSettings.OrderNumber,
                         CurrentFile = _currentOutputFile.ToString()
                     };
-                    await mp3TagsInfo.SaveMediaTags();
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        public Stream GetFileWriter()
-        {
-            switch(_userSettings.MediaFormat)
-            {
-                case MediaFormat.Mp3:
                     var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(_waveIn.WaveFormat.SampleRate, MP3_SUPPORTED_NUMBER_CHANNELS);
-                    return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate);
+                    
+                    return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate, id3Tags);
                 case MediaFormat.Wav:
                     return new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
                 default:

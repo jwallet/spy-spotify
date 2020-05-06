@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Models;
+using NAudio.Lame;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,21 +12,24 @@ namespace EspionSpotify.MediaTags
 {
     public class MP3Tags
     {
-        public string CurrentFile { get; set; }
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
         
-        private readonly IFileSystem _fileSystem;
 
-        internal MP3Tags() : this(fileSystem: new FileSystem()) { }
-
-        public MP3Tags(IFileSystem fileSystem)
+        public MP3Tags(Track track, bool orderNumberInMediaTagEnabled, int? count)
         {
-            _fileSystem = fileSystem;
+            Count = count;
+            OrderNumberInMediaTagEnabled = orderNumberInMediaTagEnabled;
+            Track = track;
         }
 
-        public async Task MapMediaTags(TagLib.Tag tags)
+        public async Task<ID3TagData> GetMediaTags()
+        {
+            return MapMediaTags(new ID3TagData());
+        }
+
+        public async Task MapMediaTags(ID3TagData tags)
         {
             var trackNumber = GetTrackNumber();
             if (trackNumber.HasValue)
@@ -46,20 +50,6 @@ namespace EspionSpotify.MediaTags
             await FetchMediaPictures();
 
             tags.Pictures = GetMediaPictureTag();
-        }
-
-        internal async Task SaveMediaTags()
-        {
-            var mp3 = TagLib.File.Create(CurrentFile);
-            
-            await MapMediaTags(mp3.Tag);
-
-            if (_fileSystem.File.Exists(CurrentFile))
-            {
-                mp3.Save();
-            }
-
-            mp3.Dispose();
         }
 
         private async Task FetchMediaPictures()
