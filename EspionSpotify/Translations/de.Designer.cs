@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge Aufnahmereihenfolgenummer am Anfang aller Dateinamen hinzu.
+        ///   Looks up a localized string similar to Fügen Sie die Zählernummer vor allen Dateinamen hinzu.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ersetze die Titelnummer durch die Aufnahmereihenfolgenummer.
+        ///   Looks up a localized string similar to Ersetzen Sie die Titelnummer durch den Zählerwert.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wähle die Startnummer der Aufnahmereihenfolgenummer.
+        ///   Looks up a localized string similar to Wählen Sie die Startposition des Zählers.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -318,6 +318,15 @@ namespace EspionSpotify.Translations {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Zähler: Maximales Dateisequenzpräfix von {0} erreicht.
+        /// </summary>
+        internal static string logMaxFileSequenceReached {
+            get {
+                return ResourceManager.GetString("logMaxFileSequenceReached", resourceCulture);
             }
         }
         
@@ -624,6 +633,15 @@ namespace EspionSpotify.Translations {
         internal static string tipInstallVirtualCableDriver {
             get {
                 return ResourceManager.GetString("tipInstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STRG wirkt sich auf den Maskenwert aus.
+        /// </summary>
+        internal static string tipNumModifierHold {
+            get {
+                return ResourceManager.GetString("tipNumModifierHold", resourceCulture);
             }
         }
         

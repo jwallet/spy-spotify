@@ -155,7 +155,7 @@ namespace EspionSpotify
                     {
                         Track = _track,
                         OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                        Count = _userSettings.OrderNumber,
+                        Count = _userSettings.OrderNumberAsTag,
                         CurrentFile = _currentOutputFile.ToString()
                     };
                     await mp3TagsInfo.SaveMediaTags();

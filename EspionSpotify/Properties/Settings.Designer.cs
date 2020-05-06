@@ -286,5 +286,17 @@ namespace EspionSpotify.Properties {
                 this["SpotifyAPIClientId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("000")]
+        public string OrderNumberMask {
+            get {
+                return ((string)(this["OrderNumberMask"]));
+            }
+            set {
+                this["OrderNumberMask"] = value;
+            }
+        }
     }
 }

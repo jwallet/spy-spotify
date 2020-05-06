@@ -177,24 +177,12 @@
     <value>Demp advertenties</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumFiles" xml:space="preserve">
-    <value>Voeg het opname volgordenummer toe aan alle bestandsnamen</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblNumTracks" xml:space="preserve">
-    <value>Vervang tracknummers door opname volgordenummers</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblPath" xml:space="preserve">
     <value>Bestandspad:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
     <value>Opnemer:</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblRecordingNum" xml:space="preserve">
-    <value>Kies de startpositie van het opname volgordenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
@@ -388,5 +376,25 @@
   <data name="lblDuplicate" xml:space="preserve">
     <value>Dupliceer</value>
     <comment>interface</comment>
+  </data>
+  <data name="tipNumModifierHold" xml:space="preserve">
+    <value>CTRL heeft invloed op de maskerwaarde</value>
+    <comment>interface **</comment>
+  </data>
+  <data name="lblNumFiles" xml:space="preserve">
+    <value>Voeg het tellernummer toe voor alle bestandsnaam</value>
+    <comment>interface **</comment>
+  </data>
+  <data name="lblNumTracks" xml:space="preserve">
+    <value>Vervang het tracknummer door de tellerwaarde</value>
+    <comment>interface **</comment>
+  </data>
+  <data name="lblRecordingNum" xml:space="preserve">
+    <value>Kies de startpositie van de teller</value>
+    <comment>interface **</comment>
+  </data>
+  <data name="logMaxFileSequenceReached" xml:space="preserve">
+    <value>// Teller: Max. Voorvoegsel voor bestandsreeks van {0} bereikt</value>
+    <comment>console **</comment>
   </data>
 </root>

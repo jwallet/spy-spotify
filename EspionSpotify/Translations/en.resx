@@ -178,11 +178,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
-    <value>Add the recording order number infront of all files name</value>
+    <value>Add the counter number in front of all files name</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Replace track numbers by the recording order number</value>
+    <value>Replace track number by the counter value</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -194,7 +194,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
-    <value>Choose the starting position of the recording order number</value>
+    <value>Choose the starting position of the counter</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
@@ -387,6 +387,14 @@
   </data>
   <data name="lblDuplicate" xml:space="preserve">
     <value>Duplicate</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logMaxFileSequenceReached" xml:space="preserve">
+    <value>// Counter: Max file sequence prefix of {0} reached</value>
+    <comment>console</comment>
+  </data>
+  <data name="tipNumModifierHold" xml:space="preserve">
+    <value>CTRL affects the mask value</value>
     <comment>interface</comment>
   </data>
 </root>

@@ -57,6 +57,10 @@ namespace EspionSpotify
             get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 
                 && _currentTrack.CurrentPosition > Math.Max(0, (_currentTrack.Length ?? 0) - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY);
         }
+        public bool IsMaxOrderNumberAsFileExceeded
+        {
+            get => _userSettings.OrderNumberInfrontOfFileEnabled && _userSettings.OrderNumberAsFile == _userSettings.OrderNumberMax;
+        }
 
         internal Watcher(IFrmEspionSpotify form, UserSettings userSettings):
             this(form, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
@@ -98,7 +102,12 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _currentTrack.ToString());
             }
 
-            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsSkipTrackActive) return;
+            if (IsMaxOrderNumberAsFileExceeded)
+            {
+                _form.WriteIntoConsole(I18nKeys.LogMaxFileSequenceReached, _userSettings.OrderNumberMax);
+            }
+
+            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsSkipTrackActive || IsMaxOrderNumberAsFileExceeded) return;
 
             RecordSpotify();
         }
@@ -323,22 +332,22 @@ namespace EspionSpotify
 
         private void UpdateNumDown()
         {
-            if (!_userSettings.OrderNumber.HasValue) return;
+            if (!_userSettings.HasOrderNumberEnabled) return;
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _userSettings.InternalOrderNumber--;
             }
 
-            _form.UpdateNum(_userSettings.OrderNumber.Value);
+            _form.UpdateNum(_userSettings.InternalOrderNumber);
         }
 
         private void UpdateNumUp()
         {
-            if (!_userSettings.OrderNumber.HasValue) return;
+            if (!_userSettings.HasOrderNumberEnabled) return;
 
             _userSettings.InternalOrderNumber++;
-            _form.UpdateNum(_userSettings.OrderNumber.Value);
+            _form.UpdateNum(_userSettings.InternalOrderNumber);
         }
 
         private void MutesSpotifyAds(bool value)

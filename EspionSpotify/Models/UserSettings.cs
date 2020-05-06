@@ -25,6 +25,14 @@ namespace EspionSpotify.Models
         public string RecordingTimer { get; set; }
         public string SpotifyAPIClientId { get; set; }
         public string SpotifyAPISecretId { get; set; }
+        public string OrderNumberMask { get; set; } = "000";
+        public int OrderNumberMax
+        {
+            get
+            {
+                return Convert.ToInt32(OrderNumberMask.Replace('0', '9').ToString());
+            }
+        }
 
         public IMainAudioSession AudioSession { get => _audioSession; }
 
@@ -48,9 +56,19 @@ namespace EspionSpotify.Models
                 : 0.0;
         }
 
-        public int? OrderNumber
+        public bool HasOrderNumberEnabled
         {
-            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
+            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled;
+        }
+
+        public int? OrderNumberAsTag
+        {
+            get => OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
+        }
+
+        public int? OrderNumberAsFile
+        {
+            get => OrderNumberInfrontOfFileEnabled ? (int?)Math.Min(InternalOrderNumber, OrderNumberMax) : null;
         }
 
         public bool IsSpotifyAPISet
