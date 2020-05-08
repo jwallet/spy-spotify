@@ -39,8 +39,11 @@ namespace EspionSpotify
 
         public async Task Run()
         {
+            if (_userSettings.InternalOrderNumber > 999) return;
+
             Running = true;
             await Task.Delay(50);
+
             _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
