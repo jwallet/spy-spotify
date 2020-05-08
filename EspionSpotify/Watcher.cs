@@ -107,6 +107,7 @@ namespace EspionSpotify
             if (!IsNewTrack(e.NewTrack)) return;
 
             DoIKeepLastSong();
+            StopLastRecorder();
 
             if (IsSkipTrackActive)
             {
@@ -226,12 +227,9 @@ namespace EspionSpotify
                     }
                     await Task.Delay(200);
                 }
-                _recorderTasks.RemoveAll(t => t.Status == TaskStatus.RanToCompletion);
-                if (_recorderTasks.Count > 1)
-                {
-                    _form.UpdateNumUp();
-                    DoIKeepLastSong();
-                }
+
+                DoIKeepLastSong();
+                StopLastRecorder();
             }
             else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
@@ -336,17 +334,25 @@ namespace EspionSpotify
 
         private void DoIKeepLastSong()
         {
+            // always increment when session ends
+            if (!Running && _recorderTasks.Any(t => t.Status != TaskStatus.RanToCompletion))
+            {
+                _form.UpdateNumUp();
+            }
+            // valid if the track is removed, go back one count
             if (RecorderUpAndRunning && CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.UpdateNumDown();
             }
+        }
 
-            if (_recorder != null)
-            {
-                _recorder.Running = false;
-                _recorder.CountSeconds = CountSeconds;
-                _form.UpdateIconSpotify(_isPlaying);
-            }
+        private void StopLastRecorder()
+        {
+            if (_recorder == null) return;
+            
+            _recorder.Running = false;
+            _recorder.CountSeconds = CountSeconds;
+            _form.UpdateIconSpotify(_isPlaying);
         }
 
         private void MutesSpotifyAds(bool value)
