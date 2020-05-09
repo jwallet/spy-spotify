@@ -154,7 +154,7 @@ namespace EspionSpotify
                 fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
             }
 
-            var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumber ?? 0).ToString("000 ") : null;
+            var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
             return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator); ;
         }
 

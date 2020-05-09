@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add the recording order number infront of all files name.
+        ///   Looks up a localized string similar to Add the counter number in front of all files name.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace track numbers by the recording order number.
+        ///   Looks up a localized string similar to Replace track number by the counter value.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the starting position of the recording order number.
+        ///   Looks up a localized string similar to Choose the starting position of the counter.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -318,6 +318,15 @@ namespace EspionSpotify.Translations {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Counter: Max file sequence prefix of {0} reached.
+        /// </summary>
+        internal static string logMaxFileSequenceReached {
+            get {
+                return ResourceManager.GetString("logMaxFileSequenceReached", resourceCulture);
             }
         }
         
@@ -624,6 +633,15 @@ namespace EspionSpotify.Translations {
         internal static string tipInstallVirtualCableDriver {
             get {
                 return ResourceManager.GetString("tipInstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL affects the mask value.
+        /// </summary>
+        internal static string tipNumModifierHold {
+            get {
+                return ResourceManager.GetString("tipNumModifierHold", resourceCulture);
             }
         }
         

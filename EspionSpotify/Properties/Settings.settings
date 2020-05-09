@@ -70,5 +70,8 @@
       <Value Profile="(Default)">
         </Value>
     </Setting>
+    <Setting Name="OrderNumberMask" Type="System.String" Scope="User">
+      <Value Profile="(Default)">000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
