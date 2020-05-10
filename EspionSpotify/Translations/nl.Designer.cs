@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voeg het opname volgordenummer toe aan alle bestandsnamen.
+        ///   Looks up a localized string similar to Voeg het tellernummer toe voor alle bestandsnaam.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vervang tracknummers door opname volgordenummers.
+        ///   Looks up a localized string similar to Vervang het tracknummer door de tellerwaarde.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kies de startpositie van het opname volgordenummer.
+        ///   Looks up a localized string similar to Kies de startpositie van de teller.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -318,6 +318,15 @@ namespace EspionSpotify.Translations {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Teller: Max. Voorvoegsel voor bestandsreeks van {0} bereikt.
+        /// </summary>
+        internal static string logMaxFileSequenceReached {
+            get {
+                return ResourceManager.GetString("logMaxFileSequenceReached", resourceCulture);
             }
         }
         
@@ -624,6 +633,15 @@ namespace EspionSpotify.Translations {
         internal static string tipInstallVirtualCableDriver {
             get {
                 return ResourceManager.GetString("tipInstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL heeft invloed op de maskerwaarde.
+        /// </summary>
+        internal static string tipNumModifierHold {
+            get {
+                return ResourceManager.GetString("tipNumModifierHold", resourceCulture);
             }
         }
         

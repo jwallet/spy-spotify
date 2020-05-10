@@ -198,19 +198,19 @@ namespace EspionSpotify.AudioSessions
         public void Dispose()
         {
             Dispose(true);
-            AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
-            AudioMMDevices.Dispose();
+            
             GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-                return;
+            if (_disposed) return;
 
             if (disposing)
             {
                 _disposeHandle.Dispose();
+                AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
+                AudioMMDevices.Dispose();
             }
 
             _disposed = true;

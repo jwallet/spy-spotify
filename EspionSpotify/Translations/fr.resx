@@ -178,11 +178,11 @@
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
-    <value>Inscrire au début du nom des fichiers enregistrés l'ordre d'enregistrement</value>
+    <value>Inscrire au début du nom des fichiers enregistrés la valeur du compteur</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Remplacer le numéro de position cd (album track) par l'ordre d'enregistrement</value>
+    <value>Remplacer le numéro de position cd (album track) par la valeur du compteur</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -194,7 +194,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordingNum" xml:space="preserve">
-    <value>Modifier la position de départ du compteur de l'ordre d'enregistrement</value>
+    <value>Modifier la position de départ du compteur</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
@@ -387,6 +387,14 @@
   </data>
   <data name="lblDuplicate" xml:space="preserve">
     <value>Dupliquer</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logMaxFileSequenceReached" xml:space="preserve">
+    <value>// Compteur: Max de la séquence de préfix de fichier de {0} atteint</value>
+    <comment>console</comment>
+  </data>
+  <data name="tipNumModifierHold" xml:space="preserve">
+    <value>CTRL affecte la valeur du masque</value>
     <comment>interface</comment>
   </data>
 </root>

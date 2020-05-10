@@ -11,7 +11,8 @@ namespace EspionSpotify
         void UpdateRecordedTime(int? time);
         void UpdateStartButton();
         void StopRecording();
-        void UpdateNum(int num);
+        void UpdateNumUp();
+        void UpdateNumDown();
         void WriteIntoConsole(TranslationKeys resource, params object[] args);
     }
 }

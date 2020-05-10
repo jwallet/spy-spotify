@@ -20,7 +20,6 @@ using System.Linq;
 using EspionSpotify.MediaTags;
 using System.Text.RegularExpressions;
 using EspionSpotify.Drivers;
-using EspionSpotify.Controls;
 
 namespace EspionSpotify
 {
@@ -100,6 +99,7 @@ namespace EspionSpotify
             chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
+            txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
 
             _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
             _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
@@ -135,8 +135,9 @@ namespace EspionSpotify
             _userSettings.RecordUnknownTrackTypeEnabled = Settings.Default.RecordUnknownTrackTypeEnabled;
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
+            _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
 
-            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(_userSettings.OrderNumberMask);
 
             var _logs = Settings.Default.Logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             WritePreviousLogsIntoConsole(_logs);
@@ -233,6 +234,8 @@ namespace EspionSpotify
             tip.SetToolTip(lnkRelease, Rm.GetString(I18nKeys.TipRelease));
             tip.SetToolTip(lnkDonate, Rm.GetString(I18nKeys.TipDonate));
             tip.SetToolTip(lnkFAQ, Rm.GetString(I18nKeys.TipFAQ));
+            tip.SetToolTip(lnkNumPlus, Rm.GetString(I18nKeys.TipNumModifierHold));
+            tip.SetToolTip(lnkNumMinus, Rm.GetString(I18nKeys.TipNumModifierHold));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
@@ -261,7 +264,7 @@ namespace EspionSpotify
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        public void UpdateNum(int num)
+        private void UpdateNum(int num)
         {
             if (txtRecordingNum.InvokeRequired)
             {
@@ -271,7 +274,23 @@ namespace EspionSpotify
                 return;
             }
 
-            txtRecordingNum.Text = num.ToString("000");
+            txtRecordingNum.Text = num.ToString(txtRecordingNum.Mask);
+        }
+
+        public void UpdateNumDown()
+        {
+            if (!_userSettings.HasOrderNumberEnabled) return;
+
+            _userSettings.InternalOrderNumber--;
+            UpdateNum(_userSettings.InternalOrderNumber);
+        }
+
+        public void UpdateNumUp()
+        {
+            if (!_userSettings.HasOrderNumberEnabled) return;
+
+            _userSettings.InternalOrderNumber++;
+            UpdateNum(_userSettings.InternalOrderNumber);
         }
 
         public void UpdateStartButton()
@@ -699,22 +718,36 @@ namespace EspionSpotify
 
         private void LnkNumMinus_Click(object sender, EventArgs e)
         {
-            if (_userSettings.InternalOrderNumber - 1 >= 0)
+            if (ModifierKeys == Keys.Control && txtRecordingNum.Mask.Length > 1)
+            {
+                txtRecordingNum.Mask = txtRecordingNum.Mask.Substring(1);
+                _userSettings.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.Save();
+            }
+            else if (_userSettings.InternalOrderNumber - 1 >= 0)
             {
                 _userSettings.InternalOrderNumber--;
             }
 
-            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(txtRecordingNum.Mask);
         }
 
         private void LnkNumPlus_Click(object sender, EventArgs e)
         {
-            if (_userSettings.InternalOrderNumber + 1 < 1000)
+            if (ModifierKeys == Keys.Control && txtRecordingNum.Mask.Length < 6)
+            {
+                txtRecordingNum.Mask = $"{txtRecordingNum.Mask}0";
+                _userSettings.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.Save();
+            }
+            else if (_userSettings.InternalOrderNumber + 1 <= _userSettings.OrderNumberMax)
             {
                 _userSettings.InternalOrderNumber++;
             }
 
-            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString("000");
+            txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(txtRecordingNum.Mask);
         }
 
         private void LnkDirectory_Click(object sender, EventArgs e)

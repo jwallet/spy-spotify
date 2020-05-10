@@ -35,6 +35,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LogAd { get => TranslationKeys.logAd; }
         public static TranslationKeys LogDeleting { get => TranslationKeys.logDeleting; }
         public static TranslationKeys LogInvalidOutput { get => TranslationKeys.logInvalidOutput; }
+        public static TranslationKeys LogMaxFileSequenceReached { get => TranslationKeys.logMaxFileSequenceReached; }
         public static TranslationKeys LogMissingDlls { get => TranslationKeys.logMissingDlls; }
         public static TranslationKeys LogNoAccessOutput { get => TranslationKeys.logNoAccessOutput; }
         public static TranslationKeys LogPreviousLogs { get => TranslationKeys.logPreviousLogs; }
@@ -72,6 +73,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys TipFAQ { get => TranslationKeys.tipFAQ; }
         public static TranslationKeys TipDirectory { get => TranslationKeys.tipDirectory; }
         public static TranslationKeys TipInstallVirtualCableDriver { get => TranslationKeys.tipInstallVirtualCableDriver; }
+        public static TranslationKeys TipNumModifierHold { get => TranslationKeys.tipNumModifierHold; }
         public static TranslationKeys TipPath { get => TranslationKeys.tipPath; }
         public static TranslationKeys TipRelease { get => TranslationKeys.tipRelease; }
         public static TranslationKeys TipUninstallVirtualCableDriver { get => TranslationKeys.tipUninstallVirtualCableDriver; }

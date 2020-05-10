@@ -229,5 +229,21 @@ namespace EspionSpotify.Tests
             Assert.False(watcher.IsNewTrack(new Track { Artist = "Spotify Free" }));
             Assert.True(watcher.IsNewTrack(new Track { Artist = "Artist", Title = "Title" }));
         }
+
+        [Theory]
+        [InlineData(true, 10000, true)]
+        [InlineData(true, 9999, true)]
+        [InlineData(false, 9999, false)]
+        [InlineData(true, 9998, false)]
+        internal void IsMaxOrderNumberAsFileExceeded_ReturnsExpectedResults(bool enabled, int orderNumber, bool expected)
+        {
+            _userSettings.OrderNumberInfrontOfFileEnabled = enabled;
+            _userSettings.OrderNumberInMediaTagEnabled = true;
+            _userSettings.OrderNumberMask = "0000";
+            _userSettings.InternalOrderNumber = orderNumber;
+            var watcher = new Watcher(_formMock, _userSettings, new Track(), _fileSystem);
+
+            Assert.Equal(expected, watcher.IsMaxOrderNumberAsFileExceeded);
+        }
     }
 }
