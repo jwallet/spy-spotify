@@ -10,50 +10,51 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.MediaTags
 {
-    public class MP3Tags
+    public class MapperID3: IMapperID3
     {
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
         
 
-        public MP3Tags(Track track, bool orderNumberInMediaTagEnabled, int? count)
+        public MapperID3(Track track, bool orderNumberInMediaTagEnabled, int? count = null)
         {
             Count = count;
             OrderNumberInMediaTagEnabled = orderNumberInMediaTagEnabled;
             Track = track;
         }
 
-        public async Task<ID3TagData> GetMediaTags()
+        public async Task<ID3TagData> GetTags()
         {
-            return MapMediaTags(new ID3TagData());
-        }
+            var tags = new ID3TagData();
 
-        public async Task MapMediaTags(ID3TagData tags)
-        {
             var trackNumber = GetTrackNumber();
             if (trackNumber.HasValue)
             {
-                tags.Track = (uint)trackNumber.Value;
+                tags.Track = trackNumber.Value.ToString();
             }
 
             tags.Title = Track.Title;
-            tags.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
-            tags.Performers = Track.Performers ?? new[] { Track.Artist };
+            tags.Subtitle = Track.TitleExtended;
+
+            tags.Artist = Track.Performers != null ? string.Join(", ", Track.Performers) : Track.Artist;
+            tags.AlbumArtist = Track.Performers != null ? string.Join(", ", Track.AlbumArtists) : Track.Artist;
 
             tags.Album = Track.Album;
-            tags.Genres = Track.Genres;
-
-            tags.Disc = Track.Disc;
-            tags.Year = Track.Year;
+            tags.Year = Track.Year.ToString();
+            tags.Genre = Track.Genres != null ? string.Join("/", Track.Genres) : null;
 
             await FetchMediaPictures();
 
-            tags.Pictures = GetMediaPictureTag();
+            tags.AlbumArt = GetMediaPictureTag();
+
+            return tags;
         }
 
         private async Task FetchMediaPictures()
         {
+            if (new[] { Track.ArtExtraLarge, Track.ArtLarge, Track.ArtMedium, Track.ArtSmall }.Any(x => x != null)) return;
+
             var taskGetArtXL = GetAlbumCover(Track.ArtExtraLargeUrl);
             var taskGetArtL = GetAlbumCover(Track.ArtLargeUrl);
             var taskGetArtM = GetAlbumCover(Track.ArtMediumUrl);
@@ -67,17 +68,17 @@ namespace EspionSpotify.MediaTags
             Track.ArtSmall = await taskGetArtS;
         }
 
-        private TagLib.IPicture[] GetMediaPictureTag()
+        private byte[] GetMediaPictureTag()
         {
-            var picture = (new TagLib.IPicture[4]
+            var pictures = new List<byte[]>
             {
-                GetAlbumCoverToPicture(Track.ArtExtraLarge),
-                GetAlbumCoverToPicture(Track.ArtLarge),
-                GetAlbumCoverToPicture(Track.ArtMedium),
-                GetAlbumCoverToPicture(Track.ArtSmall)
-            }).Where(x => x != null).FirstOrDefault();
+                Track.ArtExtraLarge,
+                Track.ArtLarge,
+                Track.ArtMedium,
+                Track.ArtSmall
+            }.Where(x => x != null);
 
-            return picture == null ? null : new[] { picture };
+            return pictures.Any() ? pictures.First() : null;
         }
 
         private int? GetTrackNumber()
@@ -88,18 +89,6 @@ namespace EspionSpotify.MediaTags
             }
 
             return Track.AlbumPosition;
-        }
-
-        private static TagLib.Picture GetAlbumCoverToPicture(byte[] data)
-        {
-            if (data == null) return null;
-
-            return new TagLib.Picture
-            {
-                Type = TagLib.PictureType.FrontCover,
-                MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
-                Data = data
-            };
         }
 
         private static async Task<byte[]> GetAlbumCover(string link)

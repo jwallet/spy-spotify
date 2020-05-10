@@ -14,7 +14,8 @@ namespace EspionSpotify.Tests
 {
     public class MP3TagsTests
     {
-        const string ART_LINK = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/spytify-espion-spotify-logo-small.png";
+        const string SPOTIFY_LOGO_EN_LINK = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo-en.png";
+        const string SPOTIFY_LOGO_FR_LINK = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo-fr.png";
         private readonly IFileSystem _fileSystem;
         private readonly Track _track;
         private readonly OutputFile _currentFile;
@@ -45,46 +46,31 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async void DefaultTrack_ReturnsNoTags()
         {
-            var mp3Tags = new MP3Tags(_fileSystem)
-            {
-                CurrentFile = _currentFile.ToString(),
-                Count = null,
-                OrderNumberInMediaTagEnabled = false,
-                Track = _track
-            };
+            var mapper = new MapperID3(_track, false);
+            
+            var tags = await mapper.GetTags();
 
-            var tags = new TagLibTab();
-            await mp3Tags.MapMediaTags(tags);
-
-            Assert.Equal(_track.ToString(), mp3Tags.Track.ToString());
+            Assert.Equal(_track.ToString(), tags.Track.ToString());
 
             Assert.Equal(_track.Title, tags.Title);
-            Assert.Equal(_track.Artist, tags.AlbumArtists.FirstOrDefault());
-            Assert.Equal(_track.Artist, tags.Performers.FirstOrDefault());
+            Assert.Equal(_track.Artist, tags.AlbumArtist);
+            Assert.Equal(_track.Artist, tags.Artist);
             Assert.Null(tags.Album);
-            Assert.Null(tags.Genres);
-            Assert.Equal(0u, tags.Disc);
-            Assert.Equal(0u, tags.Year);
-            Assert.Null(tags.Pictures);
+            Assert.Null(tags.Genre);
+            Assert.Null(tags.Year);
+            Assert.Null(tags.AlbumArt);
         }
 
 
         [Fact]
         internal async void TrackNumber_ReturnsTrackNumberTag()
         {
-            var mp3Tags = new MP3Tags(_fileSystem)
-            {
-                CurrentFile = _currentFile.ToString(),
-                Count = 2,
-                OrderNumberInMediaTagEnabled = true,
-                Track = _track
-            };
+            var mapper = new MapperID3(_track, true, 2);
 
-            var tags = new TagLibTab();
-            await mp3Tags.MapMediaTags(tags);
+            var tags = await mapper.GetTags();
 
             Assert.Equal(_track.Title, tags.Title);
-            Assert.Equal(2u, tags.Track);
+            Assert.Equal("2", tags.Track);
         }
 
         [Fact]
@@ -99,38 +85,27 @@ namespace EspionSpotify.Tests
                 Performers = new[] { "Delta", "Echo", "Foxtrot" },
                 Album = "Golf",
                 Genres = new[] { "Hotel", "India", "Juliet" },
-                Disc = 1u,
-                Year = 2020u,
+                Year = 2020,
                 ArtLargeUrl = "www.google.com",
-                ArtMediumUrl = ART_LINK,
-                ArtSmallUrl = ART_LINK
+                ArtMediumUrl = SPOTIFY_LOGO_EN_LINK,
+                ArtSmallUrl = SPOTIFY_LOGO_FR_LINK
             };
 
-            var mp3Tags = new MP3Tags(_fileSystem)
-            {
-                CurrentFile = _currentFile.ToString(),
-                Count = null,
-                OrderNumberInMediaTagEnabled = false,
-                Track = track
-            };
+            var mapper = new MapperID3(track, false);
 
-            var tags = new TagLibTab();
-            await mp3Tags.MapMediaTags(tags);
+            var tags = await mapper.GetTags();
 
-            Assert.Equal(track.ToString(), mp3Tags.Track.ToString());
+            Assert.Equal(track.ToString(), tags.Track.ToString());
 
-            Assert.Equal(track.AlbumPosition, (int?)tags.Track);
+            Assert.Equal(track.AlbumPosition.ToString(), tags.Track);
             Assert.Equal(track.Title, tags.Title);
-            Assert.Equal(track.AlbumArtists, tags.AlbumArtists);
-            Assert.Equal(track.Performers, tags.Performers);
+            Assert.Equal(string.Join(", ", track.AlbumArtists), tags.AlbumArtist);
+            Assert.Equal(string.Join(", ", track.Performers), tags.Artist);
             Assert.Equal(track.Album, tags.Album);
-            Assert.Equal(track.Genres, tags.Genres);
-            Assert.Equal(track.Disc, tags.Disc);
-            Assert.Equal(track.Year, tags.Year);
+            Assert.Equal(string.Join("/", track.Genres), tags.Genre);
+            Assert.Equal(track.Year.ToString(), tags.Year);
 
-            Assert.Single(tags.Pictures);
-            Assert.Equal(track.ArtMedium.Length, tags.Pictures[0].Data.Count);
-            Assert.Equal(TagLib.PictureType.FrontCover, tags.Pictures[0].Type);
+            Assert.Equal(track.ArtMedium.Length, tags.AlbumArt.Length);
         }
     }
 }

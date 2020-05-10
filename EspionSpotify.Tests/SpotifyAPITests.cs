@@ -27,7 +27,6 @@ namespace EspionSpotify.Tests
             Assert.Null(_track.Title);
             Assert.Equal(0, _track.AlbumPosition);
             Assert.Equal(new string[] { }, _track.Performers);
-            Assert.Equal(0u, _track.Disc);
         }
 
         [Fact]
@@ -50,7 +49,6 @@ namespace EspionSpotify.Tests
             Assert.Equal("Name", _track.Title);
             Assert.Equal(3, _track.AlbumPosition);
             Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.Performers);
-            Assert.Equal(12345u, _track.Disc);
         }
 
         [Fact]
@@ -69,7 +67,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(new string[0], _track.AlbumArtists);
             Assert.Equal("", _track.Album);
             Assert.Equal(new string[0], _track.Genres);
-            Assert.Equal(0u, _track.Year);
+            Assert.Equal(0, _track.Year);
             Assert.Null(_track.ArtExtraLargeUrl);
             Assert.Null(_track.ArtLargeUrl);
             Assert.Null(_track.ArtMediumUrl);
@@ -97,7 +95,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
-            Assert.Equal(2010u, _track.Year);
+            Assert.Equal(2010, _track.Year);
             Assert.Null(_track.ArtExtraLargeUrl);
             Assert.Null(_track.ArtLargeUrl);
             Assert.Null(_track.ArtMediumUrl);
@@ -139,7 +137,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
-            Assert.Equal(2010u, _track.Year);
+            Assert.Equal(2010, _track.Year);
             Assert.Equal("http://256x256.img", _track.ArtExtraLargeUrl);
             Assert.Equal("http://64x64.img", _track.ArtLargeUrl);
             Assert.Null(_track.ArtMediumUrl);
@@ -205,7 +203,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
-            Assert.Equal(2010u, _track.Year);
+            Assert.Equal(2010, _track.Year);
             Assert.Equal("http://512x512.img", _track.ArtExtraLargeUrl);
             Assert.Equal("http://256x256.img", _track.ArtLargeUrl);
             Assert.Equal("http://128x128.img", _track.ArtMediumUrl);

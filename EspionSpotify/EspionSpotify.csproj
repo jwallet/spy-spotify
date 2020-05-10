@@ -229,8 +229,8 @@
     <Compile Include="Enums\LanguageType.cs" />
     <Compile Include="MediaTags\ExternalAPI.cs" />
     <Compile Include="MediaTags\IExternalAPI.cs" />
-    <Compile Include="MediaTags\IMP3Tags.cs" />
-    <Compile Include="MediaTags\MP3Tags.cs" />
+    <Compile Include="MediaTags\IMapperID3.cs" />
+    <Compile Include="MediaTags\MapperID3.cs" />
     <Compile Include="MediaTags\SpotifyAPI.cs" />
     <Compile Include="Models\GitHub\Asset.cs" />
     <Compile Include="Models\GitHub\Release.cs" />

@@ -20,7 +20,6 @@ namespace EspionSpotify
         private readonly IFrmEspionSpotify _form;
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
-        private Stream _fileWriter;
         private Stream _tempWaveWriter;
         private string _tempFile;
         private readonly FileManager _fileManager;
@@ -81,7 +80,7 @@ namespace EspionSpotify
 
             try
             {
-                using (var fileWriter = CreateOutputFileBasedOnMediaFormat())
+                using (var fileWriter = await CreateOutputFileBasedOnMediaFormat())
                 {
                     await WriteStreamOutputToFileBasedOnNumberOfChannels(fileWriter);
                 }
@@ -97,7 +96,6 @@ namespace EspionSpotify
             finally
             {
                 _waveIn.Dispose();
-                _fileWriter.Dispose();
             }
             
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
@@ -146,21 +144,19 @@ namespace EspionSpotify
             //}
         }
 
-        private Stream CreateOutputFileBasedOnMediaFormat()
+        private async Task<Stream> CreateOutputFileBasedOnMediaFormat()
         {
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var mp3TagsInfo = new MediaTags.MP3Tags()
-                    {
-                        Track = _track,
-                        OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                        Count = _userSettings.OrderNumberAsTag,
-                        CurrentFile = _currentOutputFile.ToString()
-                    };
+                    var tagsID3 = await new MediaTags.MapperID3(
+                        _track,
+                        _userSettings.OrderNumberInMediaTagEnabled,
+                        _userSettings.OrderNumberAsTag
+                    ).GetTags();
+
                     var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(_waveIn.WaveFormat.SampleRate, MP3_SUPPORTED_NUMBER_CHANNELS);
-                    
-                    return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate, id3Tags);
+                    return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate, tagsID3);
                 case MediaFormat.Wav:
                     return new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
                 default:
