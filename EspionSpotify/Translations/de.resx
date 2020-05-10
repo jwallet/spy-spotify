@@ -177,24 +177,12 @@
     <value>Werbung stummschalten</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumFiles" xml:space="preserve">
-    <value>Füge Aufnahmereihenfolgenummer am Anfang aller Dateinamen hinzu</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblNumTracks" xml:space="preserve">
-    <value>Ersetze die Titelnummer durch die Aufnahmereihenfolgenummer</value>
-    <comment>interface</comment>
-  </data>
   <data name="lblPath" xml:space="preserve">
     <value>Ausgabepfad:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
     <value>Aufnahmegerät:</value>
-    <comment>interface</comment>
-  </data>
-  <data name="lblRecordingNum" xml:space="preserve">
-    <value>Wähle die Startnummer der Aufnahmereihenfolgenummer</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordUnknownTrackType" xml:space="preserve">
@@ -388,5 +376,25 @@
   <data name="lblDuplicate" xml:space="preserve">
     <value>Speichere</value>
     <comment>interface</comment>
+  </data>
+  <data name="tipNumModifierHold" xml:space="preserve">
+    <value>STRG wirkt sich auf den Maskenwert aus</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumFiles" xml:space="preserve">
+    <value>Fügen Sie die Zählernummer vor allen Dateinamen hinzu</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumTracks" xml:space="preserve">
+    <value>Ersetzen Sie die Titelnummer durch den Zählerwert</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingNum" xml:space="preserve">
+    <value>Wählen Sie die Startposition des Zählers</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logMaxFileSequenceReached" xml:space="preserve">
+    <value>// Zähler: Maximales Dateisequenzpräfix von {0} erreicht</value>
+    <comment>console</comment>
   </data>
 </root>

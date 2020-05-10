@@ -28,9 +28,9 @@ namespace EspionSpotify
 
         public Recorder() { }
 
-        public Recorder(IFrmEspionSpotify espionSpotifyForm, UserSettings userSettings, Track track, IFileSystem fileSystem)
+        public Recorder(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
-            _form = espionSpotifyForm;
+            _form = form;
             _fileSystem = fileSystem;
             _track = track;
             _userSettings = userSettings;
@@ -39,8 +39,11 @@ namespace EspionSpotify
 
         public async Task Run()
         {
+            if (_userSettings.InternalOrderNumber > 999) return;
+
             Running = true;
             await Task.Delay(50);
+
             _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
@@ -67,7 +70,6 @@ namespace EspionSpotify
             if (_tempWaveWriter != null)
             {
                 await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
-                await _tempWaveWriter.FlushAsync();
             }
         }
 
@@ -75,19 +77,29 @@ namespace EspionSpotify
         {
             if (_tempWaveWriter == null) return;
 
-            await _tempWaveWriter.FlushAsync();
             _tempWaveWriter.Dispose();
 
-            using (var fileWriter = CreateOutputFileBasedOnMediaFormat())
+            try
             {
-                await WriteStreamOutputToFileBasedOnNumberOfChannels(fileWriter);
+                using (var fileWriter = CreateOutputFileBasedOnMediaFormat())
+                {
+                    await WriteStreamOutputToFileBasedOnNumberOfChannels(fileWriter);
+                }
             }
-
-            _waveIn.Dispose();
-
-            await _fileWriter.FlushAsync();
-            _fileWriter.Dispose();
-
+            catch (Exception ex)
+            {
+                Running = false;
+                _form.UpdateIconSpotify(true, false);
+                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            finally
+            {
+                _waveIn.Dispose();
+                _fileWriter.Dispose();
+            }
+            
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
@@ -105,6 +117,7 @@ namespace EspionSpotify
         {
             using (var reader = new WaveFileReader(_tempFile))
             {
+                reader.Position = 0;
                 await reader.CopyToAsync(fileWriter);
             }
 
@@ -142,7 +155,7 @@ namespace EspionSpotify
                     {
                         Track = _track,
                         OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                        Count = _userSettings.OrderNumber,
+                        Count = _userSettings.OrderNumberAsTag,
                         CurrentFile = _currentOutputFile.ToString()
                     };
                     var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(_waveIn.WaveFormat.SampleRate, MP3_SUPPORTED_NUMBER_CHANNELS);

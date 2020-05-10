@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inscrire au début du nom des fichiers enregistrés l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Inscrire au début du nom des fichiers enregistrés la valeur du compteur.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remplacer le numéro de position cd (album track) par l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Remplacer le numéro de position cd (album track) par la valeur du compteur.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modifier la position de départ du compteur de l&apos;ordre d&apos;enregistrement.
+        ///   Looks up a localized string similar to Modifier la position de départ du compteur.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -318,6 +318,15 @@ namespace EspionSpotify.Translations {
         internal static string logInvalidOutput {
             get {
                 return ResourceManager.GetString("logInvalidOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Compteur: Max de la séquence de préfix de fichier de {0} atteint.
+        /// </summary>
+        internal static string logMaxFileSequenceReached {
+            get {
+                return ResourceManager.GetString("logMaxFileSequenceReached", resourceCulture);
             }
         }
         
@@ -624,6 +633,15 @@ namespace EspionSpotify.Translations {
         internal static string tipInstallVirtualCableDriver {
             get {
                 return ResourceManager.GetString("tipInstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL affecte la valeur du masque.
+        /// </summary>
+        internal static string tipNumModifierHold {
+            get {
+                return ResourceManager.GetString("tipNumModifierHold", resourceCulture);
             }
         }
         
