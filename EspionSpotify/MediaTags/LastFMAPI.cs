@@ -26,15 +26,15 @@ namespace EspionSpotify.MediaTags
 
         public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
-        public async Task<bool> UpdateTrack(Track track)
+        public async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
-            var artist = WebUtility.UrlEncode(track.Artist);
-            var title = WebUtility.UrlEncode(track.Title);
+            var encodedArtist = WebUtility.UrlEncode(track.Artist);
+            var encodedTitle = WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
 
             try
             {
-                var url = GetTrackInfo(artist, title);
+                var url = GetTrackInfo(encodedArtist, encodedTitle);
                 api.Load(url);
             }
             catch (Exception ex)
@@ -65,11 +65,10 @@ namespace EspionSpotify.MediaTags
             }
             else
             {
-                var retryWithTrack = track;
-                retryWithTrack.Title = Regex.Replace(retryWithTrack.Title, @" \(.*?\)| \- .*", "");
-                if (retryWithTrack.Title != track.Title && await UpdateTrack(retryWithTrack))
+                var simplifiedTitle = Regex.Replace(track.Title, @" \(.*?\)| \- .*", "");
+                if (simplifiedTitle != forceQueryTitle && await UpdateTrack(track, simplifiedTitle))
                 {
-                    MapLastFMTrackToTrack(retryWithTrack, trackExtra);
+                    MapLastFMTrackToTrack(track, trackExtra);
                 }
             }
 
