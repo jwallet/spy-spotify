@@ -82,7 +82,6 @@ namespace EspionSpotify
             if (_streamWriter != null)
             {
                 await _streamWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
-                await _streamWriter.FlushAsync();
             }
         }
 
@@ -90,18 +89,28 @@ namespace EspionSpotify
         {
             if (_streamWriter == null) return;
 
-            await _streamWriter.FlushAsync();
             _streamWriter.Dispose();
 
             if (_fileWriter == null) return;
 
-            await WriteStreamOutputToFileBasedOnNumberOfChannels();
-
-            _waveIn.Dispose();
-
-            await _fileWriter.FlushAsync();
-            _fileWriter.Dispose();
-
+            try
+            {
+                await WriteStreamOutputToFileBasedOnNumberOfChannels();
+            }
+            catch (Exception ex)
+            {
+                Running = false;
+                _form.UpdateIconSpotify(true, false);
+                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            finally
+            {
+                _waveIn.Dispose();
+                _fileWriter.Dispose();
+            }
+            
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
@@ -121,6 +130,7 @@ namespace EspionSpotify
         {
             using (var reader = new WaveFileReader(_tempFile))
             {
+                reader.Position = 0;
                 await reader.CopyToAsync(_fileWriter);
             }
 

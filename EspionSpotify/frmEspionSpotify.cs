@@ -111,8 +111,11 @@ namespace EspionSpotify
                 SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
             }
 
-            SetLanguageDropDown();  // do it before setting the language
+#if DEBUG
+            this.Text = "                        DEBUG";
+#endif
 
+            SetLanguageDropDown();  // do it before setting the language
             SetLanguage(); // creates Rm and trigger fields event which requires audioSession
 
             UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDevice.FriendlyName);
