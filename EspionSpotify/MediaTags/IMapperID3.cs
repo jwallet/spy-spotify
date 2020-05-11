@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.MediaTags
 {
-    public interface IMP3Tags
+    public interface IMapperID3
     {
         string CurrentFile { get; set; }
         int? Count { get; set; }
