@@ -15,6 +15,7 @@ namespace EspionSpotify.Tests
         public override uint Track { get; set; }
 
         public override string Title { get; set; }
+        public override string Subtitle { get; set; }
         public override string[] AlbumArtists { get; set; }
         public override string[] Performers { get; set; }
 

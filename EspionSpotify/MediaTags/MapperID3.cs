@@ -39,6 +39,8 @@ namespace EspionSpotify.MediaTags
             }
 
             tags.Title = Track.Title;
+            tags.Subtitle = Track.TitleExtended;
+
             tags.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
             tags.Performers = Track.Performers ?? new[] { Track.Artist };
 

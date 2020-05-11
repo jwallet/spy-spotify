@@ -48,7 +48,7 @@ namespace EspionSpotify.MediaTags
             _connectionDialogOpened = true;
         }
 
-        public async Task<bool> UpdateTrack(Track track)
+        public async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = await GetSpotifyWebAPI();
 

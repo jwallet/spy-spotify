@@ -5,6 +5,6 @@ namespace EspionSpotify.MediaTags
 {
     public interface IExternalAPI
     {
-        Task<bool> UpdateTrack(Track track);
+        Task<bool> UpdateTrack(Track track, string forceQueryTitle = null);
     }
 }
