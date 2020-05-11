@@ -39,7 +39,7 @@ namespace EspionSpotify
 
         public async Task Run()
         {
-            if (_userSettings.InternalOrderNumber > 999) return;
+            if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
 
             Running = true;
             await Task.Delay(50);
@@ -100,7 +100,6 @@ namespace EspionSpotify
             catch (Exception ex)
             {
                 Running = false;
-                _form.UpdateIconSpotify(true, false);
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 return;
