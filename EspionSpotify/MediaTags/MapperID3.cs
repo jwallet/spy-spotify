@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.MediaTags
 {
-    public class MP3Tags
+    public class MapperID3
     {
         public string CurrentFile { get; set; }
         public int? Count { get; set; }
@@ -18,14 +18,19 @@ namespace EspionSpotify.MediaTags
         
         private readonly IFileSystem _fileSystem;
 
-        internal MP3Tags() : this(fileSystem: new FileSystem()) { }
+        internal MapperID3(string currentFile, Track track, bool orderNumberInMediaTagEnabled, int? count = null):
+            this(fileSystem: new FileSystem(), currentFile, track, orderNumberInMediaTagEnabled, count) { }
 
-        public MP3Tags(IFileSystem fileSystem)
+        public MapperID3(IFileSystem fileSystem, string currentFile, Track track, bool orderNumberInMediaTagEnabled, int? count = null)
         {
             _fileSystem = fileSystem;
+            CurrentFile = currentFile;
+            Track = track;
+            OrderNumberInMediaTagEnabled = orderNumberInMediaTagEnabled;
+            Count = count;
         }
 
-        public async Task MapMediaTags(TagLib.Tag tags)
+        public async Task MapTags(TagLib.Tag tags)
         {
             var trackNumber = GetTrackNumber();
             if (trackNumber.HasValue)
@@ -40,8 +45,8 @@ namespace EspionSpotify.MediaTags
             tags.Album = Track.Album;
             tags.Genres = Track.Genres;
 
-            tags.Disc = Track.Disc;
-            tags.Year = Track.Year;
+            tags.Disc = (uint)(Track.Disc ?? 0);
+            tags.Year = (uint)(Track.Year ?? 0);
 
             await FetchMediaPictures();
 
@@ -52,7 +57,7 @@ namespace EspionSpotify.MediaTags
         {
             var mp3 = TagLib.File.Create(CurrentFile);
             
-            await MapMediaTags(mp3.Tag);
+            await MapTags(mp3.Tag);
 
             if (_fileSystem.File.Exists(CurrentFile))
             {
@@ -79,15 +84,15 @@ namespace EspionSpotify.MediaTags
 
         private TagLib.IPicture[] GetMediaPictureTag()
         {
-            var picture = (new TagLib.IPicture[4]
+            var pictures = (new TagLib.IPicture[4]
             {
                 GetAlbumCoverToPicture(Track.ArtExtraLarge),
                 GetAlbumCoverToPicture(Track.ArtLarge),
                 GetAlbumCoverToPicture(Track.ArtMedium),
                 GetAlbumCoverToPicture(Track.ArtSmall)
-            }).Where(x => x != null).FirstOrDefault();
+            }).Where(x => x != null);
 
-            return picture == null ? null : new[] { picture };
+            return pictures.Any() ? new[] { pictures.First() } : null;
         }
 
         private int? GetTrackNumber()

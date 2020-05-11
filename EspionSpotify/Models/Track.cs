@@ -28,9 +28,9 @@ namespace EspionSpotify.Models
         public int? Length { get; set; }
 
         public string[] Performers { get; set; }
-        public uint Disc { get; set; }
+        public int? Disc { get; set; }
         public string[] AlbumArtists { get; set; }
-        public uint Year { get; set; }
+        public int? Year { get; set; }
 
         public string ArtExtraLargeUrl { get; set; }
         public string ArtLargeUrl { get; set; }

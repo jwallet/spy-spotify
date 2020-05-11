@@ -21,7 +21,7 @@ namespace EspionSpotify
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _fileWriter;
-        private Stream _streamWriter;
+        private Stream _tempWaveWriter;
         private string _tempFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
@@ -53,7 +53,7 @@ namespace EspionSpotify
 
             try
             {
-                _streamWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
+                _tempWaveWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
                 _fileWriter = GetFileWriter();
             }
             catch (Exception ex)
@@ -79,17 +79,17 @@ namespace EspionSpotify
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             // TODO: add buffer handler from argument: issue #100
-            if (_streamWriter != null)
+            if (_tempWaveWriter != null)
             {
-                await _streamWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+                await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
             }
         }
 
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_streamWriter == null) return;
+            if (_tempWaveWriter == null) return;
 
-            _streamWriter.Dispose();
+            _tempWaveWriter.Dispose();
 
             if (_fileWriter == null) return;
 
@@ -164,14 +164,12 @@ namespace EspionSpotify
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var mp3TagsInfo = new MediaTags.MP3Tags()
-                    {
-                        Track = _track,
-                        OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled,
-                        Count = _userSettings.OrderNumberAsTag,
-                        CurrentFile = _currentOutputFile.ToString()
-                    };
-                    await mp3TagsInfo.SaveMediaTags();
+                    var mapper = new MediaTags.MapperID3(
+                        _currentOutputFile.ToString(),
+                        _track,
+                        _userSettings.OrderNumberInMediaTagEnabled,
+                        _userSettings.OrderNumberAsTag);
+                    await mapper.SaveMediaTags();
                     return;
                 default:
                     return;

@@ -106,7 +106,7 @@ namespace EspionSpotify.MediaTags
             track.Title = spotifyTrack.Name;
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
-            track.Disc = (uint)spotifyTrack.DiscNumber;
+            track.Disc = spotifyTrack.DiscNumber;
         }
 
         public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)
@@ -116,7 +116,7 @@ namespace EspionSpotify.MediaTags
             track.Genres = spotifyAlbum.Genres.ToArray();
             if (DateTime.TryParse(spotifyAlbum.ReleaseDate ?? "", out var date))
             {
-                track.Year = (uint)date.Year;
+                track.Year = date.Year;
             }
 
             if (spotifyAlbum.Images?.Count > 0)
