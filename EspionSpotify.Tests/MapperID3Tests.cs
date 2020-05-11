@@ -54,6 +54,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(_track.ToString(), mapper.Track.ToString());
 
             Assert.Equal(_track.Title, tags.Title);
+            Assert.Equal(_track.TitleExtended, tags.Subtitle);
             Assert.Equal(_track.Artist, tags.AlbumArtists.FirstOrDefault());
             Assert.Equal(_track.Artist, tags.Performers.FirstOrDefault());
             Assert.Null(tags.Album);
@@ -83,6 +84,7 @@ namespace EspionSpotify.Tests
             {
                 Artist = "Artist",
                 Title = "Song",
+                TitleExtended = "Live",
                 AlbumPosition = 1,
                 AlbumArtists = new[] { "Alpha", "Bravo", "Charlie" },
                 Performers = new[] { "Delta", "Echo", "Foxtrot" },
@@ -104,6 +106,7 @@ namespace EspionSpotify.Tests
 
             Assert.Equal(track.AlbumPosition, (int?)tags.Track);
             Assert.Equal(track.Title, tags.Title);
+            Assert.Equal(track.TitleExtended, tags.Subtitle);
             Assert.Equal(track.AlbumArtists, tags.AlbumArtists);
             Assert.Equal(track.Performers, tags.Performers);
             Assert.Equal(track.Album, tags.Album);
