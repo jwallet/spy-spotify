@@ -313,7 +313,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Le répertoire de sauvegarde est introuvable..
+        ///   Looks up a localized string similar to // Erreur: Le répertoire de sauvegarde est introuvable..
         /// </summary>
         internal static string logInvalidOutput {
             get {
@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll.
+        ///   Looks up a localized string similar to // Erreur: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu&apos;administrateur ou changez le pour un autre..
+        ///   Looks up a localized string similar to // Erreur: L&apos;accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu&apos;administrateur ou changez le pour un autre..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -466,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Exception inconnue: {0}.
+        ///   Looks up a localized string similar to // Erreur: Exception inconnue: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -475,7 +475,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: L&apos;enregistrement multi-canaux de fichiers n&apos;est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono)..
+        ///   Looks up a localized string similar to // Attention: L&apos;encodage de mp3 en multi-canaux ({0}) n&apos;est pas supporté, il sera encodé en stéréo (2)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Erreur lors de l&apos;enregistrement: Format audio de votre ordinateur non supporté. Le format doit être &apos;2 canaux, 24 bit, 48000 Hz (Studio Quality)&apos; (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés)..
+        ///   Looks up a localized string similar to // Erreur: Format audio de votre ordinateur non supporté. Le format doit être &apos;2 canaux, 24 bit, 48000 Hz (Studio Quality)&apos; (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés)..
         /// </summary>
         internal static string logUnsupportedRate {
             get {

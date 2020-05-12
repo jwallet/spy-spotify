@@ -130,32 +130,28 @@ namespace EspionSpotify
             using (var reader = new WaveFileReader(_tempFile))
             {
                 reader.Position = 0;
-                await reader.CopyToAsync(_fileWriter);
+
+                if (_userSettings.MediaFormat == MediaFormat.Mp3 && _waveIn.WaveFormat.Channels > MP3_SUPPORTED_NUMBER_CHANNELS)
+                {
+                    var waveProvider = new MultiplexingWaveProvider(new IWaveProvider[] { reader }, MP3_SUPPORTED_NUMBER_CHANNELS);
+                    waveProvider.ConnectInputToOutput(0, 0);
+                    waveProvider.ConnectInputToOutput(1, 1);
+
+                    byte[] data = new byte[MP3_SUPPORTED_NUMBER_CHANNELS * _waveIn.WaveFormat.SampleRate * _waveIn.WaveFormat.Channels];
+                    int bytesRead;
+                    while ((bytesRead = waveProvider.Read(data, 0, data.Length)) > 0)
+                    {
+                        await _fileWriter.WriteAsync(data, 0, bytesRead);
+                    }
+                }
+                else
+                {
+                    await reader.CopyToAsync(_fileWriter);
+                }
             }
 
             try { _fileSystem.File.Delete(_tempFile); }
             catch { }
-
-            // TODO: #97 NAudio Multi channel pass through
-
-            //if (_userSettings.MediaFormat == MediaFormat.Mp3 && _waveIn.WaveFormat.Channels > MP3_SUPPORTED_NUMBER_CHANNELS)
-            //{
-            //    //var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(_waveIn.WaveFormat.SampleRate, MP3_SUPPORTED_NUMBER_CHANNELS);
-            //    ////using (var converter = new WaveFormatConversionStream(waveFormat, reader))
-            //    ////{
-            //    ////    await converter.CopyToAsync(_fileWriter);
-            //    ////}
-            //    //using (var r = new RawSourceWaveStream(_streamOutput, waveFormat)) {
-            //    //    await r.CopyToAsync(_fileWriter);
-            //    //}
-            //}
-            //else
-            //{
-            //    using (var reader = new WaveFileReader(_streamOutput))
-            //    {
-            //        await reader.CopyToAsync(_fileWriter);
-            //    }
-            //}
         }
 
         private async Task UpdateOutputFileBasedOnMediaFormat()
@@ -197,14 +193,11 @@ namespace EspionSpotify
                 case MediaFormat.Mp3:
                     try
                     {
-                        // TODO: #97 NAudio Multi channel pass through
-                        //return true;
                         using (var writer = new LameMP3FileWriter(new MemoryStream(), waveIn.WaveFormat, settings.Bitrate)) return true;
                     }
                     catch (ArgumentException ex)
                     {
-                        LogLameMP3FileWriterArgumentException(form, ex, settings.OutputPath);
-                        return false;
+                        return LogLameMP3FileWriterArgumentException(form, ex, settings.OutputPath);
                     }
                     catch (Exception ex)
                     {
@@ -228,10 +221,19 @@ namespace EspionSpotify
             }
         }
 
-        private static void LogLameMP3FileWriterArgumentException(IFrmEspionSpotify form, ArgumentException ex, string outputPath)
+        private static bool LogLameMP3FileWriterArgumentException(IFrmEspionSpotify form, ArgumentException ex, string outputPath)
         {
             var resource = I18nKeys.LogUnknownException;
             var args = ex.Message;
+
+            if (ex.Message.StartsWith("Unsupported number of channels"))
+            {
+                var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
+                var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
+                numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
+                form.WriteIntoConsole(I18nKeys.LogUnsupportedNumberChannels, numberOfChannels);
+                return true;
+            }
 
             if (!Directory.Exists(outputPath))
             {
@@ -245,17 +247,11 @@ namespace EspionSpotify
             {
                 resource = I18nKeys.LogNoAccessOutput;
             }
-            else if (ex.Message.StartsWith("Unsupported number of channels"))
-            {
-                var numberOfChannels = ex.Message.Length > 32 ? ex.Message.Remove(0, 31) : "?";
-                var indexOfBreakLine = numberOfChannels.IndexOf("\r\n");
-                numberOfChannels = numberOfChannels.Substring(0, indexOfBreakLine != -1 ? indexOfBreakLine : 0);
-                resource = I18nKeys.LogUnsupportedNumberChannels;
-                args = numberOfChannels;
-            }
 
             form.UpdateIconSpotify(true, false);
             form.WriteIntoConsole(resource, args);
+
+            return false;
         }
 
         private static void LogLameMP3FileWriterException(IFrmEspionSpotify form, Exception ex)

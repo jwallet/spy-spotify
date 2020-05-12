@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll.
+        ///   Looks up a localized string similar to // Error: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Access to the output directory is denied, run Spytify as an administrator or change for another one..
+        ///   Looks up a localized string similar to // Error: Access to the output directory is denied, run Spytify as an administrator or change for another one..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -466,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Unknown exception: {0}.
+        ///   Looks up a localized string similar to // Error: Unknown exception: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -475,7 +475,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Recording multi-channel files is not supported ({0} channels), reduce the number of channels to 2 (stereo) or 1 (mono)..
+        ///   Looks up a localized string similar to // Warning: Multi-channel ({0}) mp3 encoding is not supported, it will be encoded to stereo (2)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error while recording: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
+        ///   Looks up a localized string similar to // Error: Your computer audio format is not supported. Format needs to be &apos;2 channels, 24 bit, 48000 Hz (Studio Quality)&apos; or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced.
         /// </summary>
         internal static string logUnsupportedRate {
             get {

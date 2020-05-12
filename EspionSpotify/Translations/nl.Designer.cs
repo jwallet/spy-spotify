@@ -313,7 +313,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout tijdens opname: De output locatie kan niet worden gevonden..
+        ///   Looks up a localized string similar to // Fout: De output locatie kan niet worden gevonden..
         /// </summary>
         internal static string logInvalidOutput {
             get {
@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //  Fout bij het opnemen: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll.
+        ///   Looks up a localized string similar to //  Fout: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere..
+        ///   Looks up a localized string similar to // Fout: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere..
         /// </summary>
         internal static string logNoAccessOutput {
             get {
@@ -466,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout tijdens opnemen: onbekende uitzondering: {0}.
+        ///   Looks up a localized string similar to // Fout: onbekende uitzondering: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -475,7 +475,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout tijdens opnemen: het opnemen van bestanden met meerdere kanalen wordt niet ondersteund ({0} kanalen), verminder het aantal kanalen tot 2 (stereo) of 1 (mono)..
+        ///   Looks up a localized string similar to // Waarschuwing: Meerkanaals ({0}) mp3-codering wordt niet ondersteund, deze wordt gecodeerd naar stereo (2)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout tijdens opname: Uw computer audio formaat wordt niet ondersteund. Formaat moet &quot;2 channels, 24-bit, 48000 Hz (Studiokwaliteit)&quot; zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd.
+        ///   Looks up a localized string similar to // Fout: Uw computer audio formaat wordt niet ondersteund. Formaat moet &quot;2 channels, 24-bit, 48000 Hz (Studiokwaliteit)&quot; zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd.
         /// </summary>
         internal static string logUnsupportedRate {
             get {
