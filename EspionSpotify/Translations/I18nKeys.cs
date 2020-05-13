@@ -34,10 +34,8 @@ namespace EspionSpotify.Models
 
         public static TranslationKeys LogAd { get => TranslationKeys.logAd; }
         public static TranslationKeys LogDeleting { get => TranslationKeys.logDeleting; }
-        public static TranslationKeys LogInvalidOutput { get => TranslationKeys.logInvalidOutput; }
         public static TranslationKeys LogMaxFileSequenceReached { get => TranslationKeys.logMaxFileSequenceReached; }
         public static TranslationKeys LogMissingDlls { get => TranslationKeys.logMissingDlls; }
-        public static TranslationKeys LogNoAccessOutput { get => TranslationKeys.logNoAccessOutput; }
         public static TranslationKeys LogPreviousLogs { get => TranslationKeys.logPreviousLogs; }
         public static TranslationKeys LogRecorded { get => TranslationKeys.logRecorded; }
         public static TranslationKeys LogRecording { get => TranslationKeys.logRecording; }

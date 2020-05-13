@@ -193,6 +193,7 @@
     <Compile Include="Enums\MediaTagsAPI.cs" />
     <Compile Include="Enums\MediaFormat.cs" />
     <Compile Include="Enums\TranslationKeys.cs" />
+    <Compile Include="Enums\WaveFormatMP3Restriction.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
+    <Compile Include="Extensions\WaveFormatExtensions.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="IFrmEspionSpotify.cs" />
     <Compile Include="MediaTags\ILastFMAPI.cs" />

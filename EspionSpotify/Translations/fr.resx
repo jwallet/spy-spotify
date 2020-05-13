@@ -213,10 +213,6 @@
     <value>Effacement de: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Erreur: Le répertoire de sauvegarde est introuvable.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
@@ -246,7 +242,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Erreur: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
+    <value>// Attention: Le taux d'échantillon audio de {0}Hz n'est pas supporté. L'audio sera encodé en 48000Hz.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -309,16 +305,12 @@
     <value>// Erreur: Exception inconnue: {0}</value>
     <comment>console</comment>
   </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Erreur: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
     <value>Enregistrer les pistes audio déjà enregistrées au lieu de passer au prochain.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Attention: L'encodage de mp3 en multi-canaux ({0}) n'est pas supporté, il sera encodé en stéréo (2).</value>
+    <value>// Attention: L'audio {0}-canaux n'est pas supporté. L'audio sera encodé en stéréo (2).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">

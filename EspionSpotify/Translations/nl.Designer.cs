@@ -313,15 +313,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout: De output locatie kan niet worden gevonden..
-        /// </summary>
-        internal static string logInvalidOutput {
-            get {
-                return ResourceManager.GetString("logInvalidOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Teller: Max. Voorvoegsel voor bestandsreeks van {0} bereikt.
         /// </summary>
         internal static string logMaxFileSequenceReached {
@@ -336,15 +327,6 @@ namespace EspionSpotify.Translations {
         internal static string logMissingDlls {
             get {
                 return ResourceManager.GetString("logMissingDlls", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // Fout: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere..
-        /// </summary>
-        internal static string logNoAccessOutput {
-            get {
-                return ResourceManager.GetString("logNoAccessOutput", resourceCulture);
             }
         }
         
@@ -475,7 +457,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Waarschuwing: Meerkanaals ({0}) mp3-codering wordt niet ondersteund, deze wordt gecodeerd naar stereo (2)..
+        ///   Looks up a localized string similar to // Waarschuwing: {0}-kanaals audio wordt niet ondersteund. De audio wordt gecodeerd naar 2 (stereo)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fout: Uw computer audio formaat wordt niet ondersteund. Formaat moet &quot;2 channels, 24-bit, 48000 Hz (Studiokwaliteit)&quot; zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd.
+        ///   Looks up a localized string similar to // Waarschuwing: Samplefrequentie van {0}Hz wordt niet ondersteund. De audio wordt gecodeerd naar 48000Hz..
         /// </summary>
         internal static string logUnsupportedRate {
             get {

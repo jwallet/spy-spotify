@@ -201,10 +201,6 @@
     <value>Entferne: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Fehler: Das Ausgabeverzeichnis wurde nicht gefunden.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Aufnahme: {0}</value>
     <comment>console</comment>
@@ -234,7 +230,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Fehler: Das Computer Audio Format ist nicht unterstützt. Das Format muss '2 Kanäle, 24 Bit, 48000 Hz (Studio Qualität)' oder niedriger sein.  --&gt; Bedienpanel &gt; Ton &gt; Eigenschaften &gt; Erweitert</value>
+    <value>// Warnung: Eine Abtastrate von {0}Hz wird nicht unterstützt. Das Audio wird auf 48000Hz codiert.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -297,16 +293,12 @@
     <value>// Fehler: Unbekannte Exception: {0}</value>
     <comment>console</comment>
   </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Fehler: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis.</value>
-    <comment>message</comment>
-  </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
     <value>Aufnehmen schon aufgenommene Titel anstatt sie zu überspringen.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Warnung: Die Mehrkanal-MP3-Codierung ({0}) wird nicht unterstützt, sie wird in Stereo (2) codiert.</value>
+    <value>// Warnung: {0}-Kanal-Audio wird nicht unterstützt. Das Audio wird auf 2 (Stereo) codiert.</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">

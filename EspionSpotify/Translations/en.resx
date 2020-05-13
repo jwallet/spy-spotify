@@ -213,10 +213,6 @@
     <value>Removing: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Error while recording: The output directory was not found.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Recording: {0}</value>
     <comment>console</comment>
@@ -246,7 +242,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Error: Your computer audio format is not supported. Format needs to be '2 channels, 24 bit, 48000 Hz (Studio Quality)' or lower.  --&gt; Control panel &gt; Sound &gt; Properties &gt; Advanced</value>
+    <value>// Warning: Sample rate of {0}Hz is not supported. The audio will be encoded to 48000Hz.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -309,16 +305,12 @@
     <value>// Error: Unknown exception: {0}</value>
     <comment>console</comment>
   </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Error: Access to the output directory is denied, run Spytify as an administrator or change for another one.</value>
-    <comment>message</comment>
-  </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
     <value>Record already recorded tracks instead of skipping them.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Warning: Multi-channel ({0}) mp3 encoding is not supported, it will be encoded to stereo (2).</value>
+    <value>// Warning: {0}-channels audio is not supported. The audio will be encoded to 2 (stereo).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
