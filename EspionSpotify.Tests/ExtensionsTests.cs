@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
+using NAudio.Wave;
 using System;
 using System.Resources;
 using Xunit;
@@ -204,6 +205,41 @@ namespace EspionSpotify.Tests
         internal class LinqArrayDouble
         {
             internal double value { get; set; }
+        }
+    }
+
+    public class WaveFormatExtensionsTest
+    {
+        [Fact]
+        internal void WaveFormatRestriction_ReturnsChannelCodeOverStereo()
+        {
+            var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(Recorder.MP3_MAX_SAMPLE_RATE, 6);
+
+            Assert.Contains(WaveFormatMP3Restriction.Channel, waveFormat.GetMP3RestrictionCode());
+        }
+
+        [Fact]
+        internal void WaveFormatRestriction_ReturnsSampleRateCodeOver48k()
+        {
+            var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(96000, Recorder.MP3_MAX_NUMBER_CHANNELS);
+
+            Assert.Contains(WaveFormatMP3Restriction.SampleRate, waveFormat.GetMP3RestrictionCode());
+        }
+
+        [Fact]
+        internal void WaveFormatRestriction_ReturnsSampleRateAndChannelCodesOverLimit()
+        {
+            var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(96000, 6);
+
+            Assert.Equal(new[] { WaveFormatMP3Restriction.Channel, WaveFormatMP3Restriction.SampleRate }, waveFormat.GetMP3RestrictionCode());
+        }
+
+        [Fact]
+        internal void WaveFormatRestriction_ReturnsNoCodeUnderIEEE()
+        {
+            var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(Recorder.MP3_MAX_SAMPLE_RATE, Recorder.MP3_MAX_NUMBER_CHANNELS);
+
+            Assert.Empty(waveFormat.GetMP3RestrictionCode());
         }
     }
 }

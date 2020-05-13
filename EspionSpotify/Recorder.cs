@@ -139,7 +139,7 @@ namespace EspionSpotify
                 reader.Position = 0;
                 if (_userSettings.MediaFormat == MediaFormat.Mp3 && restrictions.Any())
                 {
-                    await WriteWaveProviderReducerToMP3FileWriter(GetMp3WaveProvider(reader));
+                    await WriteWaveProviderReducerToMP3FileWriter(GetMp3WaveProvider(reader, _waveIn.WaveFormat));
                 }
                 else
                 {
@@ -170,7 +170,7 @@ namespace EspionSpotify
             switch(_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var waveFormat = GetWaveFormatMP3SupportedBasedOnWaveInFormat();
+                    var waveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
                     return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate);
                 case MediaFormat.Wav:
                     return new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
@@ -251,16 +251,16 @@ namespace EspionSpotify
             Console.WriteLine(ex.Message);
         }
 
-        private WaveFormat GetWaveFormatMP3SupportedBasedOnWaveInFormat()
+        private WaveFormat GetWaveFormatMP3Supported(WaveFormat waveFormat)
         {
             return WaveFormat.CreateIeeeFloatWaveFormat(
-                        Math.Min(MP3_MAX_SAMPLE_RATE, _waveIn.WaveFormat.SampleRate),
-                        Math.Min(MP3_MAX_NUMBER_CHANNELS, _waveIn.WaveFormat.Channels));
+                        Math.Min(MP3_MAX_SAMPLE_RATE, waveFormat.SampleRate),
+                        Math.Min(MP3_MAX_NUMBER_CHANNELS, waveFormat.Channels));
         }
 
         private IWaveProvider GetWaveProviderMP3ChannelReducer(IWaveProvider stream)
         {
-            var waveProvider = new NAudio.Wave.MultiplexingWaveProvider(new IWaveProvider[] { stream }, MP3_MAX_NUMBER_CHANNELS);
+            var waveProvider = new MultiplexingWaveProvider(new IWaveProvider[] { stream }, MP3_MAX_NUMBER_CHANNELS);
             waveProvider.ConnectInputToOutput(0, 0);
             waveProvider.ConnectInputToOutput(1, 1);
             return waveProvider;
@@ -268,12 +268,12 @@ namespace EspionSpotify
 
         private IWaveProvider GetWaveProviderMP3SamplerReducer(IWaveProvider stream)
         {
-            return new NAudio.Wave.MediaFoundationResampler(stream, MP3_MAX_SAMPLE_RATE);
+            return new MediaFoundationResampler(stream, MP3_MAX_SAMPLE_RATE);
         }
 
         private async Task WriteWaveProviderReducerToMP3FileWriter(IWaveProvider stream)
         {
-            var mp3WaveFormat = GetWaveFormatMP3SupportedBasedOnWaveInFormat();
+            var mp3WaveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
             byte[] data = new byte[mp3WaveFormat.Channels * mp3WaveFormat.SampleRate * _waveIn.WaveFormat.Channels];
             int bytesRead;
             while ((bytesRead = stream.Read(data, 0, data.Length)) > 0)
@@ -282,9 +282,9 @@ namespace EspionSpotify
             }
         }
 
-        private IWaveProvider GetMp3WaveProvider(IWaveProvider stream)
+        private IWaveProvider GetMp3WaveProvider(IWaveProvider stream, WaveFormat waveFormat)
         {
-            var restrictions = _waveIn.WaveFormat.GetMP3RestrictionCode();
+            var restrictions = waveFormat.GetMP3RestrictionCode();
             if (restrictions.Contains(WaveFormatMP3Restriction.Channel))
             {
                 stream = GetWaveProviderMP3ChannelReducer(stream);
