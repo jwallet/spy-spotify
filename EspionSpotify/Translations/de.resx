@@ -201,10 +201,6 @@
     <value>Entferne: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: Das Ausgabeverzeichnis wurde nicht gefunden.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Aufnahme: {0}</value>
     <comment>console</comment>
@@ -234,7 +230,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: Das Computer Audio Format ist nicht unterstützt. Das Format muss '2 Kanäle, 24 Bit, 48000 Hz (Studio Qualität)' oder niedriger sein.  --&gt; Bedienpanel &gt; Ton &gt; Eigenschaften &gt; Erweitert</value>
+    <value>// Warnung: Eine Abtastrate von {0}Hz wird nicht unterstützt. Das Audio wird auf 48000Hz codiert.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -294,19 +290,15 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: Unbekannte Exception: {0}</value>
+    <value>// Fehler: Unbekannte Exception: {0}</value>
     <comment>console</comment>
-  </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis.</value>
-    <comment>message</comment>
   </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
     <value>Aufnehmen schon aufgenommene Titel anstatt sie zu überspringen.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: Mehrkanalaufnahmen werden nicht unterstützt ({0} Kanäle), Reduziere die Anzahl der Kanäle auf  2 (Stereo) oder 1 (Mono).</value>
+    <value>// Warnung: {0}-Kanal-Audio wird nicht unterstützt. Das Audio wird auf 2 (Stereo) codiert.</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
@@ -346,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value>// Fehler während der Aufnahme: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll</value>
+    <value>// Fehler: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">

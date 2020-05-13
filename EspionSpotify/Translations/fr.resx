@@ -213,10 +213,6 @@
     <value>Effacement de: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Le répertoire de sauvegarde est introuvable.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Enregistrement de: {0}</value>
     <comment>console</comment>
@@ -246,7 +242,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Format audio de votre ordinateur non supporté. Le format doit être '2 canaux, 24 bit, 48000 Hz (Studio Quality)' (Panneau de configuration &gt; Son &gt; Propriétés &gt; Avancés).</value>
+    <value>// Attention: Le taux d'échantillon audio de {0}Hz n'est pas supporté. L'audio sera encodé en 48000Hz.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -306,11 +302,7 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Exception inconnue: {0}</value>
-    <comment>console</comment>
-  </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: L'accès au répertoire de sauvegarde est refusé, éxécutez Spytify en tant qu'administrateur ou changez le pour un autre.</value>
+    <value>// Erreur: Exception inconnue: {0}</value>
     <comment>console</comment>
   </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
@@ -318,7 +310,7 @@
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: L'enregistrement multi-canaux de fichiers n'est pas supporté ({0} canaux), veuillez réduire le nombre de canaux à 2 (stéréo) ou 1 (mono).</value>
+    <value>// Attention: L'audio {0}-canaux n'est pas supporté. L'audio sera encodé en stéréo (2).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
@@ -358,7 +350,7 @@
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value>// Erreur lors de l'enregistrement: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll</value>
+    <value>// Erreur: Fichiers DLL manquants - libmp3lame.32.dll et libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">

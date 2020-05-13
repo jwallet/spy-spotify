@@ -313,15 +313,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Das Ausgabeverzeichnis wurde nicht gefunden..
-        /// </summary>
-        internal static string logInvalidOutput {
-            get {
-                return ResourceManager.GetString("logInvalidOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Zähler: Maximales Dateisequenzpräfix von {0} erreicht.
         /// </summary>
         internal static string logMaxFileSequenceReached {
@@ -331,20 +322,11 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll.
+        ///   Looks up a localized string similar to // Fehler: DLL Dateien fehlen - libmp3lame.32.dll und libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
                 return ResourceManager.GetString("logMissingDlls", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Der Zugriff auf das Ausgabeverzeichnis wurde verweigert, starte Spytify als Administrator oder wähle ein anderes Verzeichnis..
-        /// </summary>
-        internal static string logNoAccessOutput {
-            get {
-                return ResourceManager.GetString("logNoAccessOutput", resourceCulture);
             }
         }
         
@@ -466,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Unbekannte Exception: {0}.
+        ///   Looks up a localized string similar to // Fehler: Unbekannte Exception: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -475,7 +457,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Mehrkanalaufnahmen werden nicht unterstützt ({0} Kanäle), Reduziere die Anzahl der Kanäle auf  2 (Stereo) oder 1 (Mono)..
+        ///   Looks up a localized string similar to // Warnung: {0}-Kanal-Audio wird nicht unterstützt. Das Audio wird auf 2 (Stereo) codiert..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -484,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Fehler während der Aufnahme: Das Computer Audio Format ist nicht unterstützt. Das Format muss &apos;2 Kanäle, 24 Bit, 48000 Hz (Studio Qualität)&apos; oder niedriger sein.  --&gt; Bedienpanel &gt; Ton &gt; Eigenschaften &gt; Erweitert.
+        ///   Looks up a localized string similar to // Warnung: Eine Abtastrate von {0}Hz wird nicht unterstützt. Das Audio wird auf 48000Hz codiert..
         /// </summary>
         internal static string logUnsupportedRate {
             get {

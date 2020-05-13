@@ -201,10 +201,6 @@
     <value>Verwijderen: {0} [&lt; {1}s]</value>
     <comment>console</comment>
   </data>
-  <data name="logInvalidOutput" xml:space="preserve">
-    <value>// Fout tijdens opname: De output locatie kan niet worden gevonden.</value>
-    <comment>interface</comment>
-  </data>
   <data name="logRecording" xml:space="preserve">
     <value>Opnemen: {0}</value>
     <comment>console</comment>
@@ -234,7 +230,7 @@
     <comment>console</comment>
   </data>
   <data name="logUnsupportedRate" xml:space="preserve">
-    <value>// Fout tijdens opname: Uw computer audio formaat wordt niet ondersteund. Formaat moet "2 channels, 24-bit, 48000 Hz (Studiokwaliteit)" zijn of lager. --&gt; Configuratiescherm &gt; Geluid &gt; Eigenschappen &gt; Geavanceerd</value>
+    <value>// Waarschuwing: Samplefrequentie van {0}Hz wordt niet ondersteund. De audio wordt gecodeerd naar 48000Hz.</value>
     <comment>console</comment>
   </data>
   <data name="msgBodyCantQuit" xml:space="preserve">
@@ -294,19 +290,15 @@
     <comment>interface</comment>
   </data>
   <data name="logUnknownException" xml:space="preserve">
-    <value>// Fout tijdens opnemen: onbekende uitzondering: {0}</value>
+    <value>// Fout: onbekende uitzondering: {0}</value>
     <comment>console</comment>
-  </data>
-  <data name="logNoAccessOutput" xml:space="preserve">
-    <value>// Fout tijdens opnemen: toegang tot de uitvoermap is geweigerd, voer Spytify uit als beheerder of wijzig voor een andere.</value>
-    <comment>message</comment>
   </data>
   <data name="lblRecordOverRecordings" xml:space="preserve">
     <value>Opnemen reeds opgenomen tracks in plaats van ze over te slaan.</value>
     <comment>interface</comment>
   </data>
   <data name="logUnsupportedNumberChannels" xml:space="preserve">
-    <value>// Fout tijdens opnemen: het opnemen van bestanden met meerdere kanalen wordt niet ondersteund ({0} kanalen), verminder het aantal kanalen tot 2 (stereo) of 1 (mono).</value>
+    <value>// Waarschuwing: {0}-kanaals audio wordt niet ondersteund. De audio wordt gecodeerd naar 2 (stereo).</value>
     <comment>console</comment>
   </data>
   <data name="tipRelease" xml:space="preserve">
@@ -346,7 +338,7 @@
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
-    <value>//  Fout bij het opnemen: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll</value>
+    <value>//  Fout: DLL-bestanden ontbreken - libmp3lame.32.dll en libmp3lame.64.dll</value>
     <comment>console</comment>
   </data>
   <data name="msgFolderDialog" xml:space="preserve">
