@@ -10,7 +10,7 @@ owner_url: "https://www.github.com/jwallet/"
 url: "https://jwallet.github.io/spy-spotify/"
 logo: "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png"
 lang: "en-CA"
-exclude: ['faq/', 'LICENSE', 'README.md']
+exclude: ['faq/', 'LICENSE', 'README.md', 'EspionSpotify/', 'EspionSpotify.Tests/', 'packages/', '_site/', '.jekyll-cache/', '.vs/']
 sass:
   sass_dir: _sass
   style: compressed
