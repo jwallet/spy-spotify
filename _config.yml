@@ -1,5 +1,6 @@
 title: Spytify
 project_name: spy-spotify
+theme: jekyll-theme-hacker
 owner_name: jwallet
 description: "Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files"
 show_downloads: true
