@@ -59,10 +59,15 @@
     </section>
     <section>
         <h3>Generous Donors</h3>
+        
         <ol>
             
                 
-                    <li style="color:#1E963C;"><strong>Fresh Dumb</strong> - <em>$ 43.54</em></li>
+                    <li style="color:#1E963C;"><strong>Fresh Dumb</strong> - <em>$43.54</em></li>
+                
+            
+                
+                    <li><strong>LongLive DNB</strong> - <em>$39.43</em></li>
                 
             
                 
@@ -70,7 +75,7 @@
                 
             
                 
-                    <li><strong>Az Ows</strong> - <em>$13.81</em></li>
+                    <li>Az Ows - <em>$13.81</em></li>
                 
             
                 
@@ -90,15 +95,19 @@
                 
             
                 
+                    <li>Anonymous - <em>$11.60</em></li>
+                
+            
+                
                     <li>Felix Uster - <em>$11.34</em></li>
                 
             
                 
-                    <li>Absolute Zer0 - <em>$11.20</em></li>
+            
                 
             
                 
-                    <li>Anonymous - <em>$10.00</em></li>
+            
                 
             
                 
@@ -144,7 +153,19 @@
             
         
             
+                <span style="font-size:90%;color:#666;">Absolute Zer0,</span>
+            
+        
+            
                 <span style="font-size:90%;color:#666;">Gene S.,</span>
+            
+        
+            
+                <span style="font-size:90%;color:#666;">Anonymous,</span>
+            
+        
+            
+                <span style="font-size:90%;color:#666;">will cook,</span>
             
         
             
@@ -168,19 +189,23 @@
             
         
             
-                <span style="font-size:90%;color:#666;">Anonymous,</span>
-            
-        
-            
-                <span style="font-size:90%;color:#666;">Anonymous,</span>
-            
-        
-            
                 <span style="font-size:90%;color:#666;">Hoang Nguyen,</span>
             
         
             
-                <span style="font-size:90%;color:#666;">Anonymous</span>
+                <span style="font-size:90%;color:#888;">Anonymous,</span>
+            
+        
+            
+                <span style="font-size:90%;color:#888;">Anonymous,</span>
+            
+        
+            
+                <span style="font-size:90%;color:#888;">Hoang Nguyen,</span>
+            
+        
+            
+                <span style="font-size:90%;color:#888;">Anonymous</span>
             
         
     </section>
@@ -221,13 +246,13 @@
         });
       }
 
-      function isScrollIntoView() {
+      function isScrollIntoView(scroll = true) {
         const { hash } = window.location;
         if (hash) {
           var el = document.querySelector(`${hash}>details`);
           if (el) {
             el.open = true;
-            el.scrollIntoView({ behavior: 'smooth' });
+            if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }

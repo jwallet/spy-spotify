@@ -1,3 +1,8 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
 @import "normalize";
 @import "variables";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
@@ -61,10 +66,23 @@ a {
 }
 
 .faq {
-  &_title:hover {
-    cursor:pointer;
-    text-decoration: underline;
-    text-decoration-color: $body-link-color;
+  &_title {
+    margin-left: -2em;
+    padding-left: 2em;
+    :hover {
+      cursor:pointer;
+      text-decoration: underline;
+      text-decoration-color: $body-link-color;
+    }
+  }
+  &_anchor {
+    display:none;
+    &:hover,
+    .faq_title:hover & {
+      display:inherit;
+      position: absolute;
+      margin-left: -2.5em;
+    }
   }
 }
 

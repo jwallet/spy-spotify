@@ -27,8 +27,9 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
     </section>
     <section>
         <h3>Generous Donors</h3>
+        {% assign sortedDonors = site.data.donors | sort: 'donation' | reverse %}
         <ol>
-            {% for donor in site.data.donors %}
+            {% for donor in sortedDonors %}
                 {% if forloop.index <= 1 %}
                     <li style="color:#1E963C;"><strong>{{ donor.name }}</strong> - <em>${{ donor.donation}}</em></li>
                 {% elsif forloop.index <= 3 %}
@@ -38,7 +39,7 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
                 {% endif %}
             {% endfor %}
         </ol>
-        {% for donor in site.data.donors %}
+        {% for donor in sortedDonors %}
             {% if forloop.index > 100 %}
                 {% if forloop.last %}<span style="font-size:90%;color:#ccc;">...</span>{% endif %}
             {% elsif forloop.index > 80 %}

@@ -72,13 +72,13 @@ You will get a CD with songs ordered in the same order than the album or the one
         });
       }
 
-      function isScrollIntoView() {
+      function isScrollIntoView(scroll = true) {
         const { hash } = window.location;
         if (hash) {
           var el = document.querySelector(`${hash}>details`);
           if (el) {
             el.open = true;
-            el.scrollIntoView({ behavior: 'smooth' });
+            if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }

@@ -34,7 +34,7 @@
     <main id="content" class="main-content" role="main">
  
       <p>Use <a href="https://www.audacityteam.org/">Audacity</a> (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type.
-Sometimes, Spotify doesn’t provide the current track info in time resulting in these results.</p>
+Sometimes, Spotify doesn’t provide the current track info in time resulting in these results. Also, you may have better results after <a href="#maximize-quality-spotify-settings">tweaking Spotify settings</a>.</p>
 
 
       <footer class="site-footer">
@@ -70,13 +70,13 @@ Sometimes, Spotify doesn’t provide the current track info in time resulting in
         });
       }
 
-      function isScrollIntoView() {
+      function isScrollIntoView(scroll = true) {
         const { hash } = window.location;
         if (hash) {
           var el = document.querySelector(`${hash}>details`);
           if (el) {
             el.open = true;
-            el.scrollIntoView({ behavior: 'smooth' });
+            if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }

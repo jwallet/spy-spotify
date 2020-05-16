@@ -1,7 +1,7 @@
 ---
 layout: page
 hash: media-tags-not-found
-title: Media tags and album cover are not always found.
+title: Media tags and album cover are not always found (Switch to Spotify API).
 namespace: faq
 ---
 You can switch between last.fm API to Spotify API (still in development but can be set in the **spytify.exe.config** file).

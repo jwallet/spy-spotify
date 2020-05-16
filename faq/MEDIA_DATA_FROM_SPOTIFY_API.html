@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Media tags and album cover are not always found.</title>
+    <title>Spytify - Record Spotify - Media tags and album cover are not always found (Switch to Spotify API).</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -103,13 +103,13 @@
         });
       }
 
-      function isScrollIntoView() {
+      function isScrollIntoView(scroll = true) {
         const { hash } = window.location;
         if (hash) {
           var el = document.querySelector(`${hash}>details`);
           if (el) {
             el.open = true;
-            el.scrollIntoView({ behavior: 'smooth' });
+            if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }
