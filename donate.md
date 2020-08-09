@@ -5,8 +5,8 @@ title: Donate
 
 Do you enjoy Spytify? If so, use [the donation form below](#donate) to offer me:
 - A coffee ☕ to keep me awake during those long nights of coding.
-- A couple of beers 🍻 to celebrate a new Spytify version that came out.
-- A good meal 🥩, to let me know that you love Spytify and you want me to keep working hard on it.
+- A beer 🍺 to celebrate a new Spytify version that came out.
+- More beers 🍻, to let me know that you love Spytify and you want me to keep working hard on it.
 
 Top donations will be added to the donors list using the full name you provided, it doesn't need to be your real name. Don't forget to leave me a message/comment, I love reading those!
 
