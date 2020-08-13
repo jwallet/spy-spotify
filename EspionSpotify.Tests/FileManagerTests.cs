@@ -411,5 +411,33 @@ namespace EspionSpotify.Tests
             Assert.False(_fileSystem.Directory.Exists($@"{_userSettings.OutputPath}\{artistDir}"));
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
+
+        [Fact]
+        internal void UpdateOutputFileWithLatestTrackInfo_UpdateFile()
+        {
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            var latestTrack = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                Album = "Single",
+                Ad = false,
+                AlbumArtists = new[] { "DJ" },
+                Performers = new[] { "Artist", "Featuring" },
+            };
+
+            _fileManager.UpdateOutputFileWithLatestTrackInfo(outputFile, latestTrack);
+
+            Assert.Equal("DJ - Title - Live", outputFile.File);
+            Assert.Equal(@"C:\path\DJ - Title - Live.mp3", outputFile.ToString());
+        }
     }
 }

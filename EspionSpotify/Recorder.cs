@@ -82,7 +82,6 @@ namespace EspionSpotify
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            // TODO: add buffer handler from argument: issue #100
             if (_tempWaveWriter != null)
             {
                 await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
@@ -93,6 +92,7 @@ namespace EspionSpotify
         {
             if (_tempWaveWriter == null) return;
 
+            await _tempWaveWriter.FlushAsync();
             _tempWaveWriter.Dispose();
 
             if (_fileWriter == null) return;
@@ -126,6 +126,7 @@ namespace EspionSpotify
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _track.ToString(), length);
 
+            _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track);
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
             await UpdateOutputFileBasedOnMediaFormat();
