@@ -37,7 +37,6 @@ namespace EspionSpotify.MediaTags
                     Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
                 _auth.AuthReceived += AuthOnAuthReceived;
                 _auth.Start();
-                //_auth.OpenBrowser();
             }
         }
 

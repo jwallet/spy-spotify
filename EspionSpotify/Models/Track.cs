@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.MediaTags;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TagLib;
 
@@ -84,7 +85,8 @@ namespace EspionSpotify.Models
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
-                song = $"{Artist} - {Title}";
+                var artist = AlbumArtists == null ? Artist : string.Join(",", AlbumArtists);
+                song = $"{artist} - {Title}";
 
                 if (!string.IsNullOrEmpty(TitleExtended))
                 {

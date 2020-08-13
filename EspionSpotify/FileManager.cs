@@ -63,6 +63,11 @@ namespace EspionSpotify
             return outputFile;
         }
 
+        public OutputFile UpdateOutputFileWithLatestTrackInfo(OutputFile outputFile, Track track)
+        {
+            outputFile.File = GenerateFileName(track, _userSettings);
+            return outputFile;
+        }
 
         public void DeleteFile(string currentFile)
         {
