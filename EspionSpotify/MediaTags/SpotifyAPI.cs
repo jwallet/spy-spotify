@@ -74,6 +74,9 @@ namespace EspionSpotify.MediaTags
                 // fallback in case getting the playback did not work
                 Settings.Default.MediaTagsAPI = (int)MediaTagsAPI.LastFM;
                 Settings.Default.Save();
+
+                FrmEspionSpotify.Instance.UpdateMediaTagsAPIToggle(MediaTagsAPI.LastFM);
+                
                 var lastFmApiResult = await _lastFmApi.UpdateTrack(track);
 
                 return lastFmApiResult;

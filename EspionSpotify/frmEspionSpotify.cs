@@ -353,6 +353,17 @@ namespace EspionSpotify
             lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "";
         }
 
+        public void UpdateMediaTagsAPIToggle(MediaTagsAPI value)
+        {
+            if (rbLastFMAPI.InvokeRequired)
+            {
+                BeginInvoke(new Action(() => UpdateMediaTagsAPIToggle(value)));
+                return;
+            }
+
+            rbLastFMAPI.Checked = MediaTagsAPI.LastFM == value;
+        }
+
         private string WriteRtbLine(RichTextBox rtbLog, string text)
         {
             var log = "";
@@ -538,7 +549,7 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"media-format?type={mediaFormat.ToString()}"));
         }
 
-        private void RbLastFMAPI_CheckedChanged(object sender, EventArgs e)
+        private void RbMediaTagsAPI_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
             var mediaTagsAPI = rbLastFMAPI.Checked ? MediaTagsAPI.LastFM : MediaTagsAPI.Spotify;

@@ -797,7 +797,7 @@ namespace EspionSpotify
             this.rbLastFMAPI.Text = "LastFM API";
             this.rbLastFMAPI.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.rbLastFMAPI.UseSelectable = true;
-            this.rbLastFMAPI.CheckedChanged += new System.EventHandler(this.RbLastFMAPI_CheckedChanged);
+            this.rbLastFMAPI.CheckedChanged += new System.EventHandler(this.RbMediaTagsAPI_CheckedChanged);
             // 
             // rbSpotifyAPI
             // 
@@ -814,7 +814,7 @@ namespace EspionSpotify
             this.rbSpotifyAPI.Text = "Spotify API";
             this.rbSpotifyAPI.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.rbSpotifyAPI.UseSelectable = true;
-            this.rbSpotifyAPI.CheckedChanged += new System.EventHandler(this.RbLastFMAPI_CheckedChanged);
+            this.rbSpotifyAPI.CheckedChanged += new System.EventHandler(this.RbMediaTagsAPI_CheckedChanged);
             // 
             // lblAds
             // 
