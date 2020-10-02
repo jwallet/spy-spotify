@@ -256,11 +256,11 @@ namespace EspionSpotify
                 return;
             }
 
-            _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
-            _recorderTasks.Add(Task.Run(_recorder.Run));
-
             ManageRecorderTasks();
             CountSeconds = 0;
+
+            _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
+            _recorderTasks.Add(Task.Run(_recorder.Run));
 
             _form.UpdateIconSpotify(_isPlaying, true);
         }
@@ -326,11 +326,11 @@ namespace EspionSpotify
 
         private void ManageRecorderTasks()
         {
-            _recorderTasks.RemoveAll(x => x.Status == TaskStatus.RanToCompletion);
-            if (_recorderTasks.Count > 1)
+            if (_recorderTasks.Count > 0)
             {
                 _form.UpdateNumUp();
             }
+            _recorderTasks.RemoveAll(x => x.Status == TaskStatus.RanToCompletion);
         }
 
         private void DoIKeepLastSong()
