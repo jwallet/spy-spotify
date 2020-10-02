@@ -7,7 +7,6 @@ namespace EspionSpotify.Models
 {
     public class UserSettings
     {
-        private IMainAudioSession _audioSession;
         public string OutputPath { get; set; }
         public LAMEPreset Bitrate { get; set; }
         public MediaFormat MediaFormat { get; set; }
@@ -32,13 +31,6 @@ namespace EspionSpotify.Models
             {
                 return Convert.ToInt32(OrderNumberMask.Replace('0', '9').ToString());
             }
-        }
-
-        public IMainAudioSession AudioSession { get => _audioSession; }
-
-        public void SetAudioSession(ref IMainAudioSession audioSession)
-        {
-            _audioSession = audioSession;
         }
 
         public bool HasRecordingTimerEnabled

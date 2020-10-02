@@ -24,6 +24,7 @@ namespace EspionSpotify
         public static bool ToggleStopRecordingDelayed { get; internal set; }
 
         private IRecorder _recorder;
+        private readonly IMainAudioSession _audioSession;
         private Timer _recordingTimer;
         private bool _isPlaying;
         private Track _currentTrack;
@@ -65,12 +66,13 @@ namespace EspionSpotify
             get => _userSettings.OrderNumberInfrontOfFileEnabled && _userSettings.OrderNumberAsFile == _userSettings.OrderNumberMax;
         }
 
-        internal Watcher(IFrmEspionSpotify form, UserSettings userSettings):
-            this(form, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
+        internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings):
+            this(form, audioSession, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
 
-        public Watcher(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem, IRecorder recorder = null)
+        public Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track, IFileSystem fileSystem, IRecorder recorder = null)
         {
             _form = form;
+            _audioSession = audioSession;
             _userSettings = userSettings;
             _currentTrack = track;
             _fileSystem = fileSystem;
@@ -101,7 +103,7 @@ namespace EspionSpotify
             // do not add "is current track an ad" validation, audio is already muted
             if (RecorderUpAndRunning && IsOldSong)
             {
-                _userSettings.AudioSession.SleepWhileTheSongEnds();
+                _audioSession.SleepWhileTheSongEnds();
             }
 
             if (!IsNewTrack(e.NewTrack)) return;
@@ -166,12 +168,12 @@ namespace EspionSpotify
 
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
-            return await _userSettings.AudioSession.WaitSpotifyAudioSessionToStart(Running);
+            return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
         private void BindSpotifyEventHandlers()
         {
-            Spotify = new SpotifyHandler(_userSettings.AudioSession)
+            Spotify = new SpotifyHandler(_audioSession)
             {
                 ListenForEvents = true
             };
@@ -191,7 +193,7 @@ namespace EspionSpotify
             BindSpotifyEventHandlers();
             Ready = false;
 
-            if (!Recorder.TestFileWriter(_form, _userSettings))
+            if (!Recorder.TestFileWriter(_form, _audioSession, _userSettings))
             {
                 EndRecordingSession();
             }
@@ -254,8 +256,7 @@ namespace EspionSpotify
                 return;
             }
 
-            _recorder = new Recorder(_form, _userSettings, _currentTrack, _fileSystem);
-
+            _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
             _recorderTasks.Add(Task.Run(_recorder.Run));
 
             ManageRecorderTasks();
@@ -266,7 +267,7 @@ namespace EspionSpotify
 
         private async void InitializeRecordingSession()
         {
-            _userSettings.AudioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
+            _audioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = await Spotify.GetTrack();
             if (track == null) return;
@@ -305,10 +306,10 @@ namespace EspionSpotify
         {
             Ready = true;
 
-            if (_userSettings.AudioSession != null)
+            if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
-                _userSettings.AudioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
 
                 Spotify.ListenForEvents = false;
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;
@@ -359,7 +360,7 @@ namespace EspionSpotify
         {
             if (_userSettings.MuteAdsEnabled  && !_userSettings.RecordUnknownTrackTypeEnabled)
             {
-                _userSettings.AudioSession.SetSpotifyToMute(value);
+                _audioSession.SetSpotifyToMute(value);
             }
         }
     }

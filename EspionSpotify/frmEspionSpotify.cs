@@ -44,7 +44,6 @@ namespace EspionSpotify
             _audioSession = new MainAudioSession(Settings.Default.AudioEndPointDeviceID);
 
             _userSettings = new UserSettings();
-            _userSettings.SetAudioSession(ref _audioSession);
 
             if (string.IsNullOrEmpty(Settings.Default.Directory))
             {
@@ -396,7 +395,7 @@ namespace EspionSpotify
 
         private async void StartRecording()
         {
-            _watcher = new Watcher(this, _userSettings);
+            _watcher = new Watcher(this, _audioSession, _userSettings);
 
             await Task.Run(_watcher.Run);
 

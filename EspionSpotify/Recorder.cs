@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
@@ -22,6 +23,7 @@ namespace EspionSpotify
         private readonly UserSettings _userSettings;
         private readonly Track _track;
         private readonly IFrmEspionSpotify _form;
+        private readonly IMainAudioSession _audioSession;
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _fileWriter;
@@ -30,11 +32,12 @@ namespace EspionSpotify
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
 
-        public Recorder() { }
+        public Recorder() {}
 
-        public Recorder(IFrmEspionSpotify form, UserSettings userSettings, Track track, IFileSystem fileSystem)
+        public Recorder(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
             _form = form;
+            _audioSession = audioSession;
             _fileSystem = fileSystem;
             _track = track;
             _userSettings = userSettings;
@@ -51,7 +54,7 @@ namespace EspionSpotify
             _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
-            _waveIn = new WasapiLoopbackCapture(_userSettings.AudioSession.AudioMMDevicesManager.AudioEndPointDevice);
+            _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
@@ -180,9 +183,9 @@ namespace EspionSpotify
             }
         }
 
-        public static bool TestFileWriter(IFrmEspionSpotify form, UserSettings settings)
+        public static bool TestFileWriter(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings settings)
         {
-            var waveIn = new WasapiLoopbackCapture(settings.AudioSession.AudioMMDevicesManager.AudioEndPointDevice);
+            var waveIn = new WasapiLoopbackCapture(audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             switch (settings.MediaFormat)
             {
                 case MediaFormat.Mp3:
