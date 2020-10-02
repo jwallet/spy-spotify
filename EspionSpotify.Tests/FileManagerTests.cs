@@ -434,7 +434,7 @@ namespace EspionSpotify.Tests
                 Performers = new[] { "Artist", "Featuring" },
             };
 
-            _fileManager.UpdateOutputFileWithLatestTrackInfo(outputFile, latestTrack);
+            _fileManager.UpdateOutputFileWithLatestTrackInfo(outputFile, latestTrack, _userSettings);
 
             Assert.Equal("DJ - Title - Live", outputFile.File);
             Assert.Equal(@"C:\path\DJ - Title - Live.mp3", outputFile.ToString());
