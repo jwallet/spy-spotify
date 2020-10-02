@@ -73,12 +73,7 @@ namespace EspionSpotify
 
         public void SetSoundVolume(int volume)
         {
-            if (tbVolumeWin.InvokeRequired)
-            {
-                BeginInvoke(new Action(() => SetSoundVolume(volume)));
-                return;
-            }
-            tbVolumeWin.Value = volume;
+            tbVolumeWin.SetPropertyThreadSafe(() => tbVolumeWin.Value = volume);
         }
 
         public void Init()
@@ -266,15 +261,7 @@ namespace EspionSpotify
 
         private void UpdateNum(int num)
         {
-            if (txtRecordingNum.InvokeRequired)
-            {
-                var x = BeginInvoke(new Action(() => UpdateNum(num)));
-                x.AsyncWaitHandle.WaitOne();
-                EndInvoke(x);
-                return;
-            }
-
-            txtRecordingNum.Text = num.ToString(txtRecordingNum.Mask);
+            txtRecordingNum.SetPropertyThreadSafe(() => txtRecordingNum.Text = num.ToString(txtRecordingNum.Mask));
         }
 
         public void UpdateNumDown()
@@ -295,73 +282,49 @@ namespace EspionSpotify
 
         public void UpdateStartButton()
         {
-            if (lnkSpy.InvokeRequired)
+            lnkSpy.SetPropertyThreadSafe(() =>
             {
-                BeginInvoke(new Action(UpdateStartButton));
-                return;
-            }
-
-            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
-            lnkSpy.Image = Resources.on;
-            lnkSpy.Focus();
+                tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
+                lnkSpy.Image = Resources.on;
+                lnkSpy.Focus();
+            });
         }
 
         public void UpdateIconSpotify(bool isSpotifyPlaying, bool isRecording = false)
         {
-            if (iconSpotify.InvokeRequired)
+            iconSpotify.SetPropertyThreadSafe(() =>
             {
-                BeginInvoke(new Action(() => UpdateIconSpotify(isSpotifyPlaying, isRecording)));
-                return;
-            }
-
-            if (isRecording)
-            {
-                iconSpotify.BackgroundImage = Resources.record;
-                Task.Run(async () => await _analytics.LogAction("record"));
-            }
-            else if (isSpotifyPlaying)
-            {
-                iconSpotify.BackgroundImage = Resources.play;
-                Task.Run(async () => await _analytics.LogAction("play"));
-            }
-            else
-            {
-                iconSpotify.BackgroundImage = Resources.pause;
-                Task.Run(async () => await _analytics.LogAction("pause"));
-            }
+                if (isRecording)
+                {
+                    iconSpotify.BackgroundImage = Resources.record;
+                    Task.Run(async () => await _analytics.LogAction("record"));
+                }
+                else if (isSpotifyPlaying)
+                {
+                    iconSpotify.BackgroundImage = Resources.play;
+                    Task.Run(async () => await _analytics.LogAction("play"));
+                }
+                else
+                {
+                    iconSpotify.BackgroundImage = Resources.pause;
+                    Task.Run(async () => await _analytics.LogAction("pause"));
+                }
+            });
         }
 
         public void UpdatePlayingTitle(string text)
         {
-            if (lblPlayingTitle.InvokeRequired)
-            {
-                BeginInvoke(new Action(() => UpdatePlayingTitle(text)));
-                return;
-            }
-
-            lblPlayingTitle.Text = text;
+            lblPlayingTitle.SetPropertyThreadSafe(() => lblPlayingTitle.Text = text);
         }
 
         public void UpdateRecordedTime(int? time)
         {
-            if (lblRecordedTime.InvokeRequired)
-            {
-                BeginInvoke(new Action(() => UpdateRecordedTime(time)));
-                return;
-            }
-
-            lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "";
+            lblRecordedTime.SetPropertyThreadSafe(() => lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "");
         }
 
         public void UpdateMediaTagsAPIToggle(MediaTagsAPI value)
         {
-            if (rbLastFMAPI.InvokeRequired)
-            {
-                BeginInvoke(new Action(() => UpdateMediaTagsAPIToggle(value)));
-                return;
-            }
-
-            rbLastFMAPI.Checked = MediaTagsAPI.LastFM == value;
+            rbLastFMAPI.SetPropertyThreadSafe(() => rbLastFMAPI.Checked = MediaTagsAPI.LastFM == value);
         }
 
         private string WriteRtbLine(RichTextBox rtbLog, string text)
@@ -403,20 +366,17 @@ namespace EspionSpotify
 
         public void WriteIntoConsole(TranslationKeys resource, params object[] args)
         {
-            if (rtbLog.InvokeRequired)
+            rtbLog.SetPropertyThreadSafe(() =>
             {
-                BeginInvoke(new Action(() => WriteIntoConsole(resource, args)));
-                return;
-            }
+                var formatted = string.Format(Rm.GetString(resource), args);
+                var log = WriteRtbLine(rtbLog, formatted);
 
-            var formatted = string.Format(Rm.GetString(resource), args);
-            var log = WriteRtbLine(rtbLog, formatted);
-
-            if (!string.IsNullOrEmpty(log))
-            {
-                Settings.Default.Logs += $";{log}";
-                Settings.Default.Save();
-            }
+                if (!string.IsNullOrEmpty(log))
+                {
+                    Settings.Default.Logs += $";{log}";
+                    Settings.Default.Save();
+                }
+            });
         }
 
         private void WritePreviousLogsIntoConsole(string[] logs)
@@ -576,7 +536,7 @@ namespace EspionSpotify
                 tgMuteAds.Checked = false;
             }
 
-            Task.Run(async () => await _analytics.LogAction($"record-unknown-type?enabled={tgRecordUnkownTrackType.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"record-unknown-type?enabled={ tgRecordUnkownTrackType.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
@@ -586,7 +546,7 @@ namespace EspionSpotify
             _userSettings.MuteAdsEnabled = tgMuteAds.Checked;
             Settings.Default.MuteAdsEnabled = tgMuteAds.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"mute-ads?enabled={tgMuteAds.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"mute-ads?enabled={tgMuteAds.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgEndingSongDelay_CheckedChanged(object sender, EventArgs e)
@@ -596,7 +556,7 @@ namespace EspionSpotify
             _userSettings.EndingTrackDelayEnabled = tgEndingSongDelay.Checked;
             Settings.Default.EndingSongDelayEnabled = tgEndingSongDelay.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"delay-on-ending-song?enabled={tgEndingSongDelay.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"delay-on-ending-song?enabled={tgEndingSongDelay.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgAddFolders_CheckedChanged(object sender, EventArgs e)
@@ -606,7 +566,7 @@ namespace EspionSpotify
             _userSettings.GroupByFoldersEnabled = tgAddFolders.Checked;
             Settings.Default.GroupByFoldersEnabled = tgAddFolders.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"group-by-folders?enabled={tgAddFolders.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"group-by-folders?enabled={tgAddFolders.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgAddSeparators_CheckedChanged(object sender, EventArgs e)
@@ -616,7 +576,7 @@ namespace EspionSpotify
             _userSettings.TrackTitleSeparator = tgAddSeparators.Checked ? "_" : " ";
             Settings.Default.TrackTitleSeparatorEnabled = tgAddSeparators.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"track-title-separator?enabled={tgAddSeparators.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"track-title-separator?enabled={tgAddSeparators.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgNumFiles_CheckedChanged(object sender, EventArgs e)
@@ -626,7 +586,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
             Settings.Default.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"order-number-in-front-of-files?enabled={tgNumFiles.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"order-number-in-front-of-files?enabled={tgNumFiles.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgNumTracks_CheckedChanged(object sender, EventArgs e)
@@ -636,7 +596,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
             Settings.Default.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"order-number-in-media-tags?enabled={tgNumTracks.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"order-number-in-media-tags?enabled={tgNumTracks.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgRecordOverRecordings_CheckedChanged(object sender, EventArgs e)
@@ -649,7 +609,7 @@ namespace EspionSpotify
 
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
 
-            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&overwrite={tgRecordOverRecordings.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&overwrite={tgRecordOverRecordings.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void ChkRecordDuplicateRecordings_CheckedChanged(object sender, EventArgs e)
@@ -661,7 +621,7 @@ namespace EspionSpotify
 
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
 
-            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&duplicate={chkRecordDuplicateRecordings.Checked}"));
+            Task.Run(async () => await _analytics.LogAction($"record-recordings-status?status={_userSettings.RecordRecordingsStatus}&duplicate={chkRecordDuplicateRecordings.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
@@ -708,7 +668,7 @@ namespace EspionSpotify
             _userSettings.Bitrate = ((KeyValuePair<LAMEPreset, string>)cbBitRate.SelectedItem).Key;
             Settings.Default.Bitrate = cbBitRate.SelectedIndex;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"bitrate?selected={cbBitRate.SelectedValue}"));
+            Task.Run(async () => await _analytics.LogAction($"bitrate?selected={cbBitRate.GetPropertyThreadSafe(c => c.SelectedValue)}"));
         }
 
         private void CbAudioDevices_SelectedIndexChanged(object sender, EventArgs e)
@@ -724,7 +684,7 @@ namespace EspionSpotify
             UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDevice.FriendlyName);
             Settings.Default.AudioEndPointDeviceID = selectedDeviceID;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"audioEndPointDevice?selected={cbAudioDevices.SelectedValue}"));
+            Task.Run(async () => await _analytics.LogAction($"audioEndPointDevice?selected={cbAudioDevices.GetPropertyThreadSafe(c => c.SelectedValue)}"));
         }
 
         private void LnkNumMinus_Click(object sender, EventArgs e)
@@ -825,7 +785,7 @@ namespace EspionSpotify
             Settings.Default.Language = cbLanguage.SelectedIndex;
             Settings.Default.Save();
             SetLanguage();
-            Task.Run(async () => await _analytics.LogAction($"language?selected={cbLanguage.SelectedValue}"));
+            Task.Run(async () => await _analytics.LogAction($"language?selected={cbLanguage.GetPropertyThreadSafe(c => c.SelectedValue)}"));
         }
 
         private void TcMenu_SelectedIndexChanged(object sender, EventArgs e)
@@ -834,7 +794,7 @@ namespace EspionSpotify
 
             Settings.Default.TabNo = tcMenu.SelectedIndex;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.SelectedTab.Text}"));
+            Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.GetPropertyThreadSafe(c => c.SelectedTab.Text)}"));
         }
 
         private void LnkRelease_Click(object sender, EventArgs e)
@@ -869,12 +829,7 @@ namespace EspionSpotify
 
         public void UpdateAudioDevicesDataSource()
         {
-            if (cbAudioDevices.InvokeRequired)
-            {
-                BeginInvoke(new Action(UpdateAudioDevicesDataSource));
-                return;
-            }
-            SetAudioEndPointDevicesDropDown();
+            cbAudioDevices.SetPropertyThreadSafe(() => SetAudioEndPointDevicesDropDown());
         }
 
         private void CbAudioDevices_DataSourceChanged(object sender, EventArgs e)
