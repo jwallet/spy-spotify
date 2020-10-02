@@ -3,6 +3,7 @@ using Xunit;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Collections.Generic;
+using EspionSpotify.AudioSessions;
 
 namespace EspionSpotify.Tests
 {
@@ -11,10 +12,12 @@ namespace EspionSpotify.Tests
         private readonly IFrmEspionSpotify _formMock;
         private IFileSystem _fileSystem;
         private readonly UserSettings _userSettings;
+        private readonly IMainAudioSession _audioSession;
 
         public WatcherTests()
         {
             _formMock = new Moq.Mock<IFrmEspionSpotify>().Object;
+            _audioSession = new Moq.Mock<IMainAudioSession>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
         }
@@ -28,7 +31,12 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void RecorderUpAndRunning_FalsyWhenNoRecorder()
         {
-            var watcher = new Watcher(_formMock, _userSettings, new Track(), _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                _userSettings,
+                new Track(),
+                _fileSystem);
 
             Assert.False(watcher.RecorderUpAndRunning);
         }
@@ -37,7 +45,13 @@ namespace EspionSpotify.Tests
         internal void RecorderUpAndRunning_FalsyWhenRecorderNotRunning()
         {
             var recorder = new Recorder();
-            var watcher = new Watcher(_formMock, _userSettings, new Track(), _fileSystem, recorder);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                _userSettings,
+                new Track(),
+                _fileSystem,
+                recorder);
 
             Assert.False(watcher.RecorderUpAndRunning);
         }
@@ -46,7 +60,13 @@ namespace EspionSpotify.Tests
         internal void RecorderUpAndRunning_TruthyWhenRecorderRunning()
         {
             var recorder = new Recorder() { Running = true };
-            var watcher = new Watcher(_formMock, _userSettings, new Track(), _fileSystem, recorder);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                _userSettings,
+                new Track(),
+                _fileSystem,
+                recorder);
 
             Assert.True(watcher.RecorderUpAndRunning);
         }
@@ -55,7 +75,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
-            var watcher = new Watcher(_formMock, userSettings, new Track() { Artist = "Spotify Free" }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track() { Playing = true, Artist = "Spotify Free" },
+                _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -64,7 +89,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
-            var watcher = new Watcher(_formMock, userSettings, new Track() { Playing = true, Artist = "Spotify Free" }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track() { Playing = true, Artist = "Spotify Free" },
+                _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -73,7 +103,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_FalsyWhenDisabledAndAnyTitlePlaying()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = false };
-            var watcher = new Watcher(_formMock, userSettings, new Track { Playing = true, Artist = "Podcast" }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track { Playing = true, Artist = "Podcast" },
+                _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -82,7 +117,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_FalsyWhenAnyTitlePlaying()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
-            var watcher = new Watcher(_formMock, userSettings, new Track { Playing = true, Artist = "Podcast", Ad = false }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track { Playing = true, Artist = "Podcast", Ad = false },
+                _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -91,7 +131,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_TruthyWhenAnyTitlePlayingAsAd()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
-            var watcher = new Watcher(_formMock, userSettings, new Track { Playing = true, Artist = "Podcast", Ad = true }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track { Playing = true, Artist = "Podcast", Ad = true },
+                _fileSystem);
 
             Assert.True(watcher.IsRecordUnknownActive);
         }
@@ -100,7 +145,12 @@ namespace EspionSpotify.Tests
         internal void IsRecordUnknownActive_TruthyWhenTrackIsPlaying()
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
-            var watcher = new Watcher(_formMock, userSettings, new Track { Playing = true, Artist = "#3 - Podcast", Ad = false }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track { Playing = true, Artist = "#3 - Podcast", Ad = false },
+                _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -116,6 +166,7 @@ namespace EspionSpotify.Tests
             };
             var watcherTrackNotFound = new Watcher(
                 _formMock,
+                _audioSession,
                 userSettings,
                 new Track() { Artist = "Artist", Title = "Title" },
                 _fileSystem);
@@ -137,7 +188,9 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist_-_Dont_Overwrite_Me.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
             var watcherTrackFoundCanDuplicate = new Watcher(
-                _formMock, userSettingsCanDuplicate,
+                _formMock,
+                _audioSession,
+                userSettingsCanDuplicate,
                 new Track() { Artist = "Artist", Title = "Dont Overwrite Me" },
                 _fileSystem);
 
@@ -159,7 +212,9 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist_-_Dont_Overwrite_Me.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
             var watcherTrackFoundCanDuplicate = new Watcher(
-                _formMock, userSettingsCanDuplicate,
+                _formMock,
+                _audioSession,
+                userSettingsCanDuplicate,
                 new Track() { Artist = "Artist", Title = "Dont Overwrite Me" },
                 _fileSystem);
 
@@ -174,7 +229,12 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist_-_Existing_Track.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
             var userSettings = new UserSettings { OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = Enums.MediaFormat.Mp3 };
-            var watcherTrackFound = new Watcher(_formMock, userSettings, new Track() { Artist = "Artist", Title = "Existing Track", Playing = true }, _fileSystem);
+            var watcherTrackFound = new Watcher(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track() { Artist = "Artist", Title = "Existing Track", Playing = true },
+                _fileSystem);
 
             Assert.True(watcherTrackFound.IsSkipTrackActive);
         }
@@ -196,7 +256,7 @@ namespace EspionSpotify.Tests
                 track.Title = null;
             }
             _userSettings.RecordUnknownTrackTypeEnabled = recordUnknownTrackTypeEnabled;
-            var watcher = new Watcher(_formMock, _userSettings, track, _fileSystem);
+            var watcher = new Watcher(_formMock, _audioSession, _userSettings, track, _fileSystem);
 
             Assert.Equal(expected, watcher.IsTypeAllowed);
         }
@@ -214,7 +274,7 @@ namespace EspionSpotify.Tests
         {
             _userSettings.EndingTrackDelayEnabled = endingTrackDelayEnabled;
             var track = new Track() { CurrentPosition = trackCurrentPosition, Length = trackLength };
-            var watcher = new Watcher(_formMock, _userSettings, track, _fileSystem);
+            var watcher = new Watcher(_formMock, _audioSession, _userSettings, track, _fileSystem);
 
             Assert.Equal(expected, watcher.IsOldSong);
         }
@@ -222,7 +282,12 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsNewTrack_ReturnsExpectedResults()
         {
-            var watcher = new Watcher(_formMock, _userSettings, new Track { Artist = "Spotify Free" }, _fileSystem);
+            var watcher = new Watcher(
+                _formMock,
+                _audioSession,
+                _userSettings,
+                new Track { Artist = "Spotify Free" },
+                _fileSystem);
 
             Assert.False(watcher.IsNewTrack(null));
             Assert.False(watcher.IsNewTrack(new Track()));
@@ -241,7 +306,7 @@ namespace EspionSpotify.Tests
             _userSettings.OrderNumberInMediaTagEnabled = true;
             _userSettings.OrderNumberMask = "0000";
             _userSettings.InternalOrderNumber = orderNumber;
-            var watcher = new Watcher(_formMock, _userSettings, new Track(), _fileSystem);
+            var watcher = new Watcher(_formMock, _audioSession, _userSettings, new Track(), _fileSystem);
 
             Assert.Equal(expected, watcher.IsMaxOrderNumberAsFileExceeded);
         }
