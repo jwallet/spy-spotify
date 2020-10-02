@@ -36,11 +36,13 @@ namespace EspionSpotify
 
         public Recorder(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
+            _userSettings = new UserSettings();
+            userSettings.CopyAllTo(_userSettings);
+
             _form = form;
             _audioSession = audioSession;
             _fileSystem = fileSystem;
             _track = track;
-            _userSettings = userSettings;
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
@@ -129,7 +131,7 @@ namespace EspionSpotify
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _track.ToString(), length);
 
-            _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track);
+            _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
             await UpdateOutputFileBasedOnMediaFormat();
