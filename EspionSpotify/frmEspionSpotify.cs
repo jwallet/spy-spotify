@@ -25,7 +25,7 @@ namespace EspionSpotify
 {
     public sealed partial class FrmEspionSpotify : MetroForm, IFrmEspionSpotify
     {
-        private IMainAudioSession _audioSession;
+        private readonly IMainAudioSession _audioSession;
         private Watcher _watcher;
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
@@ -178,9 +178,12 @@ namespace EspionSpotify
 
         private void SetLanguageDropDown()
         {
+            var selectedId = Settings.Default.Language;
+
             cbLanguage.DataSource = new BindingSource(Translations.Languages.dropdownListValues, null);
             cbLanguage.DisplayMember = "Value";
             cbLanguage.ValueMember = "Key";
+            cbLanguage.SelectedIndex = selectedId;
         }
 
         private void SetLanguage()
