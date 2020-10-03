@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -105,30 +106,31 @@ namespace EspionSpotify
         {
             if (!userSettings.GroupByFoldersEnabled) return null;
 
-            var artistDir = GetArtistFolderPath(track.Artist);
-            var albumDir = GetAlbumFolderPath(track.Album);
+            var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
+            var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
 
             return $@"\{artistDir}\{albumDir}";
         }
 
-        private static string GetArtistFolderPath(string trackArtist)
+        private static string GetArtistFolderPath(Track track, string trackTitleSeparator)
         {
-            var artistDir = Normalize.RemoveDiacritics(trackArtist);
-            return Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty);
+            var artistDir = Normalize.RemoveDiacritics(track.Artist);
+            return Regex.Replace(artistDir, _windowsExlcudedChars, string.Empty).Replace(" ", trackTitleSeparator);
         }
 
-        private static string GetAlbumFolderPath(string trackAlbum)
+        private static string GetAlbumFolderPath(Track track, string trackTitleSeparator)
         {
-            var albumDir = string.IsNullOrEmpty(trackAlbum) ? Track.UNTITLED_ALBUM : Normalize.RemoveDiacritics(trackAlbum);
-            return Regex.Replace(albumDir, _windowsExlcudedChars, string.Empty);
+            var albumInfos = new List<string>() { string.IsNullOrEmpty(track.Album) ? Track.UNTITLED_ALBUM : Normalize.RemoveDiacritics(track.Album) };
+            if (track.Year.HasValue) albumInfos.Add($"({track.Year.Value})");
+            return Regex.Replace(string.Join(" ", albumInfos), _windowsExlcudedChars, string.Empty).Replace(" ", trackTitleSeparator);
         }
 
         private void CreateDirectories(UserSettings userSettings)
         {
             if (!userSettings.GroupByFoldersEnabled) return;
 
-            var artistDir = GetArtistFolderPath(_track.Artist);
-            var albumDir = GetAlbumFolderPath(_track.Album);
+            var artistDir = GetArtistFolderPath(_track, userSettings.TrackTitleSeparator);
+            var albumDir = GetAlbumFolderPath(_track, userSettings.TrackTitleSeparator);
             CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}");
             CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}\{albumDir}");
         }
