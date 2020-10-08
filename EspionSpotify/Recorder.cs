@@ -71,6 +71,7 @@ namespace EspionSpotify
                 _form.UpdateIconSpotify(true, false);
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
                 return;
             }
 
@@ -113,6 +114,7 @@ namespace EspionSpotify
                 Running = false;
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
                 return;
             }
             finally
@@ -214,6 +216,7 @@ namespace EspionSpotify
                         form.UpdateIconSpotify(true, false);
                         form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                         Console.WriteLine(ex.Message);
+                        Program.ReportException(ex);
                         return false;
                     }
                 default:
@@ -250,6 +253,7 @@ namespace EspionSpotify
             }
             else
             {
+                Program.ReportException(ex);
                 form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
             }
 
