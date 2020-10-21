@@ -86,6 +86,7 @@ namespace EspionSpotify
             {
                 content.Dispose();
                 Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
             }
         }
     }
