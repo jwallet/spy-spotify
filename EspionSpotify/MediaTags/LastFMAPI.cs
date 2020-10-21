@@ -40,6 +40,7 @@ namespace EspionSpotify.MediaTags
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
                 return false;
             }
 
