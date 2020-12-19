@@ -106,8 +106,6 @@ namespace EspionSpotify
             try
             {
                 await WriteTempWaveToMediaFile();
-                try { _fileSystem.File.Delete(_tempFile); }
-                catch { }
             }
             catch (Exception ex)
             {
@@ -122,7 +120,10 @@ namespace EspionSpotify
                 _waveIn.Dispose();
                 _fileWriter.Dispose();
             }
-            
+
+            try { _fileSystem.File.Delete(_tempFile); }
+            catch { }
+
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);

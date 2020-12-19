@@ -15,6 +15,8 @@ namespace EspionSpotify.MediaTags
         private readonly Random _random;
         private string _selectedApiKey = "";
 
+        public bool IsAuthenticated { get => true; }
+
         public string[] ApiKeys { get; }
 
         public LastFMAPI()

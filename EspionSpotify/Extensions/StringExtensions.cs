@@ -46,6 +46,12 @@ namespace EspionSpotify.Extensions
             return string.IsNullOrEmpty(tag) ? string.Empty : _regexTag.Replace(tag, string.Empty);
         }
 
+        public static int? ToNullableInt(this string value)
+        {
+            if (int.TryParse(value, out int i)) return i;
+            return null;
+        }
+
         public static Version ToVersion(this string value)
         {
             var versionString = value.ToVersionAsString();
