@@ -30,6 +30,12 @@ namespace EspionSpotify
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
+        
+        private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
+                TranslationKeys.logRecording,
+                TranslationKeys.logRecorded,
+                TranslationKeys.logDeleting
+            };
 
         public ResourceManager Rm { get; private set; }
         public static FrmEspionSpotify Instance { get; private set; }
@@ -299,16 +305,19 @@ namespace EspionSpotify
                 if (isRecording)
                 {
                     iconSpotify.BackgroundImage = Resources.record;
+                    lblPlayingTitle.ForeColor = lblPlayingTitle.ForeColor.SpotifyPrimaryText();
                     Task.Run(async () => await _analytics.LogAction("record"));
                 }
                 else if (isSpotifyPlaying)
                 {
                     iconSpotify.BackgroundImage = Resources.play;
+                    lblPlayingTitle.ForeColor = lblPlayingTitle.ForeColor.SpotifySecondaryText();
                     Task.Run(async () => await _analytics.LogAction("play"));
                 }
                 else
                 {
                     iconSpotify.BackgroundImage = Resources.pause;
+                    lblPlayingTitle.ForeColor = lblPlayingTitle.ForeColor.SpotifySecondaryText();
                     Task.Run(async () => await _analytics.LogAction("pause"));
                 }
             });
@@ -338,29 +347,45 @@ namespace EspionSpotify
                MessageBoxIcon.Question);
         }
 
-        private string WriteRtbLine(RichTextBox rtbLog, string text)
+        private string WriteRtbLine(RichTextBox rtbLog, TranslationKeys resource, params object[] args)
         {
+            var text = string.Format(Rm.GetString(resource), args);
             var log = "";
 
             if (text == null) return log;
              
             var timeStr = LogDate;
             var indexOfColon = text.IndexOf(": ");
-            var alert = text[0] == '/' || indexOfColon == -1;
+ 
 
             rtbLog.AppendText(timeStr);
 
-            if (!alert)
+            if (_recorderStatusTranslationKeys.Contains(resource))
             {
-                var isDeleting = Regex.IsMatch(text, @"\[< \d+s\]");
                 var attrb = text.Substring(0, indexOfColon);
                 var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
+
                 rtbLog.AppendText(attrb);
                 rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
-                rtbLog.SelectionColor = Color.White;
+                rtbLog.SelectionColor = resource.Equals(TranslationKeys.logRecording)
+                    ? rtbLog.SelectionColor.SpotifyPrimaryText()
+                    : rtbLog.SelectionColor.SpotifySecondaryText();
+                rtbLog.SelectionFont = new Font(
+                    rtbLog.SelectionFont.FontFamily,
+                    rtbLog.SelectionFont.Size,
+                    FontStyle.Bold
+                );
+
                 rtbLog.AppendText(msg + Environment.NewLine);
                 rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                rtbLog.SelectionColor = isDeleting ? Color.IndianRed : Color.SpringGreen;
+                rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(TranslationKeys.logDeleting)
+                    ? rtbLog.SelectionColor.SpotifySecondaryTextAlternate()
+                    : rtbLog.SelectionColor.SpotifySecondaryText();
+                rtbLog.SelectionFont = new Font(
+                    rtbLog.SelectionFont.FontFamily,
+                    rtbLog.SelectionFont.Size,
+                    FontStyle.Regular
+                );
 
                 log = $";{timeStr}{attrb}{msg}";
             }
@@ -379,8 +404,7 @@ namespace EspionSpotify
         {
             rtbLog.SetPropertyThreadSafe(() =>
             {
-                var formatted = string.Format(Rm.GetString(resource), args);
-                var log = WriteRtbLine(rtbLog, formatted);
+                var log = WriteRtbLine(rtbLog, resource, args);
 
                 if (!string.IsNullOrEmpty(log))
                 {

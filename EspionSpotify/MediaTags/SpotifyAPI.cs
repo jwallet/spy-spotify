@@ -59,9 +59,23 @@ namespace EspionSpotify.MediaTags
                 return false;
             }
 
-            var playback = await api.GetPlaybackAsync();
+            PlaybackContext playback = null;
+            
+            try
+            {
+                playback = await api.GetPlaybackAsync();
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+            }
 
-            if (playback.HasError() || playback.Item == null)
+            if (playback == null || playback.Item == null)
+            {
+                return false;
+            }
+
+            if (playback.HasError())
             {
                 api.Dispose();
 
@@ -95,17 +109,26 @@ namespace EspionSpotify.MediaTags
                 return false;
             }
 
-            var album = await api.GetAlbumAsync(playback.Item.Album.Id);
-
-            if (album.HasError())
+            try
             {
+                var album = await api.GetAlbumAsync(playback.Item.Album.Id);
+
+                if (album.HasError())
+                {
+                    api.Dispose();
+                    return false;
+                }
+
+                MapSpotifyAlbumToTrack(track, album);
+
                 api.Dispose();
-                return false;
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
             }
 
-            MapSpotifyAlbumToTrack(track, album);
 
-            api.Dispose();
             return true;
         }
 
@@ -151,9 +174,17 @@ namespace EspionSpotify.MediaTags
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
             _authorizationCodeAuth = (AuthorizationCodeAuth)sender;
-            _authorizationCodeAuth.Stop();
+            try
+            {
+                _authorizationCodeAuth.Stop();
 
-            _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
+                _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+            }
+
             RenewNextTokenRenewal();
         }
 
@@ -163,15 +194,38 @@ namespace EspionSpotify.MediaTags
 
             if (DateTimeOffset.UtcNow >= _nextTokenRenewal || _token.IsExpired())
             {
-                _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken);
+                try
+                {
+                    _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken);
+                }
+                catch (Exception ex)
+                {
+                    var x = ex;
+                }
                 RenewNextTokenRenewal();
             }
 
-            return new SpotifyWebAPI
+            if (_token.HasError())
             {
-                AccessToken = _token.AccessToken,
-                TokenType = _token.TokenType
-            };
+                FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogUnknownException, $"{_token.Error} {_token.ErrorDescription}");
+                return null;
+            }
+
+            SpotifyWebAPI api = null;
+            try
+            {
+                api = new SpotifyWebAPI
+                {
+                    AccessToken = _token.AccessToken,
+                    TokenType = _token.TokenType
+                };
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+            }
+
+            return api;
         }
     }
 }
