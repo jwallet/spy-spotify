@@ -196,7 +196,6 @@
     <Compile Include="Enums\WaveFormatMP3Restriction.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\ClassPropertyExtensions.cs" />
-    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
     <Compile Include="Extensions\SettingExtensions.cs" />

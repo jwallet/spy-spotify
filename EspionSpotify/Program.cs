@@ -1,6 +1,5 @@
 ﻿using ExceptionReporting;
 using System;
-using System.Configuration;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -50,28 +49,20 @@ namespace EspionSpotify
         // Creates the error message and displays it.
         internal static void ReportException(Exception ex)
         {
-            var emailPassword = Environment.GetEnvironmentVariable("spytify_email_support_password", EnvironmentVariableTarget.Machine);
             ExceptionReporter er = new ExceptionReporter()
             {
                 Config =
                 {
                     AppName = Application.ProductName,
                     CompanyName = Application.CompanyName,
-                    TitleText = "Error Report",
+                    WebServiceUrl = "https://exception-mailer.herokuapp.com/send",
+                    TitleText = "Exception Report",
                     TakeScreenshot = true,
-                    SendMethod = ReportSendMethod.SMTP,
-                    SmtpServer = "smtp.gmail.com",
-                    SmtpUseDefaultCredentials = false,
-                    SmtpPort = 587,
+                    SendMethod = ReportSendMethod.WebService,
                     TopMost = true,
                     ShowFlatButtons = true,
                     ShowLessDetailButton = true,
-                    SmtpUseSsl = true,
                     ReportTemplateFormat = TemplateFormat.Markdown,
-                    EmailReportAddress = "report.spytify@gmail.com",
-                    SmtpFromAddress = "report.spytify@gmail.com",
-                    SmtpUsername = "report.spytify@gmail.com",
-                    SmtpPassword = emailPassword,
                 },
             };
             er.Show(ex);
