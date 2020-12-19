@@ -10,6 +10,7 @@ using EspionSpotify.AudioSessions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EspionSpotify.MediaTags;
 
 namespace EspionSpotify
 {
@@ -249,6 +250,7 @@ namespace EspionSpotify
 
         private void RecordSpotify()
         {
+            if (!ExternalAPI.Instance.IsAuthenticated) return;
             if (_stopRecordingWhenSongEnds)
             {
                 Running = false;

@@ -389,4 +389,12 @@
     <value>CTRL affecte la valeur du masque</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyFailedToUseSpotifyAPI" xml:space="preserve">
+    <value>Connexion perdue avec Spotify API. Soyez certain d'autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Entre temps Spytify utilisera LastFM API.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
+    <value>Spotify API a échoué</value>
+    <comment>message</comment>
+  </data>
 </root>

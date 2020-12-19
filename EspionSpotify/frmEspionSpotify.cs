@@ -329,6 +329,15 @@ namespace EspionSpotify
             rbLastFMAPI.SetPropertyThreadSafe(() => rbLastFMAPI.Checked = MediaTagsAPI.LastFM == value);
         }
 
+        public void ShowFailedToUseSpotifyAPIMessage()
+        {
+            MetroMessageBox.Show(Instance,
+               Rm.GetString(I18nKeys.MsgBodyFailedToUseSpotifyAPI),
+               Rm.GetString(I18nKeys.MsgTitleFailedToUseSpotifyAPI),
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Question);
+        }
+
         private string WriteRtbLine(RichTextBox rtbLog, string text)
         {
             var log = "";
@@ -396,11 +405,12 @@ namespace EspionSpotify
             rtbLog.ScrollToCaret();
         }
 
-        private async void StartRecording()
+        private void StartRecording()
         {
             _watcher = new Watcher(this, _audioSession, _userSettings);
 
-            await Task.Run(_watcher.Run);
+            var thread = new Thread(_watcher.Run);
+            thread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;

@@ -23,6 +23,8 @@ namespace EspionSpotify.MediaTags
         private readonly AuthorizationCodeAuth _auth;
         private bool _connectionDialogOpened = false;
 
+        public bool IsAuthenticated { get => _token != null; }
+
         public SpotifyAPI() { }
 
         public SpotifyAPI(string clientId, string secretId, string redirectUrl = "http://localhost:4002")
@@ -74,8 +76,12 @@ namespace EspionSpotify.MediaTags
                 Settings.Default.MediaTagsAPI = (int)MediaTagsAPI.LastFM;
                 Settings.Default.Save();
 
-                FrmEspionSpotify.Instance.UpdateMediaTagsAPIToggle(MediaTagsAPI.LastFM);
-                
+                _ = Task.Run(() =>
+                  {
+                      FrmEspionSpotify.Instance.UpdateMediaTagsAPIToggle(MediaTagsAPI.LastFM);
+                      FrmEspionSpotify.Instance.ShowFailedToUseSpotifyAPIMessage();
+                  });
+
                 var lastFmApiResult = await _lastFmApi.UpdateTrack(track);
 
                 return lastFmApiResult;
@@ -105,9 +111,11 @@ namespace EspionSpotify.MediaTags
 
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
+            var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
+            track.Artist = performers.FirstOrDefault();
             track.Title = spotifyTrack.Name;
             track.AlbumPosition = spotifyTrack.TrackNumber;
-            track.Performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
+            track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;
         }
 

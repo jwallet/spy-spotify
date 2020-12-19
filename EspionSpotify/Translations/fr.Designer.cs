@@ -493,6 +493,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connexion perdue avec Spotify API. Soyez certain d&apos;autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Entre temps Spytify utilisera LastFM API..
+        /// </summary>
+        internal static string msgBodyFailedToUseSpotifyAPI {
+            get {
+                return ResourceManager.GetString("msgBodyFailedToUseSpotifyAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Le répertoire de sauvegarde sélectionné n&apos;existe pas, sélectionner un autre..
         /// </summary>
         internal static string msgBodyPathNotFound {
@@ -534,6 +543,15 @@ namespace EspionSpotify.Translations {
         internal static string msgTitleCantQuit {
             get {
                 return ResourceManager.GetString("msgTitleCantQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify API a échoué.
+        /// </summary>
+        internal static string msgTitleFailedToUseSpotifyAPI {
+            get {
+                return ResourceManager.GetString("msgTitleFailedToUseSpotifyAPI", resourceCulture);
             }
         }
         

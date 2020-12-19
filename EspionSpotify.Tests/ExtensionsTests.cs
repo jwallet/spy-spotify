@@ -8,21 +8,6 @@ using Xunit;
 
 namespace EspionSpotify.Tests
 {
-    public class IntExtensionsTests
-    {
-        [Theory]
-        [InlineData(null, null)]
-        [InlineData("", null)]
-        [InlineData("a", null)]
-        [InlineData("0", 0)]
-        [InlineData("1", 1)]
-        internal void StringToNullableInt_ReturnsExpectedInt(string value, int? expected)
-        {
-            var actual = value.ToNullableInt();
-            Assert.Equal(expected, actual);
-        }
-    }
-
     public class ResourceManagerTests
     {
         private readonly ResourceManager _rm;
@@ -41,6 +26,18 @@ namespace EspionSpotify.Tests
 
     public class StringExtensionsTest
     {
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("", null)]
+        [InlineData("a", null)]
+        [InlineData("0", 0)]
+        [InlineData("1", 1)]
+        internal void StringToNullableInt_ReturnsExpectedInt(string value, int? expected)
+        {
+            var actual = value.ToNullableInt();
+            Assert.Equal(expected, actual);
+        }
+
         [Theory]
         [InlineData(null, null)]
         [InlineData("", null)]
