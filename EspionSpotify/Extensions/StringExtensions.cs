@@ -30,6 +30,12 @@ namespace EspionSpotify.Extensions
             return value.ToEnum<MediaTagsAPI>(ignoreCase: true);
         }
 
+        public static int? ToNullableInt(this string value)
+        {
+            if (int.TryParse(value, out int i)) return i;
+            return null;
+        }
+
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
         {
             var types = typeof(T);
@@ -44,12 +50,6 @@ namespace EspionSpotify.Extensions
         public static string ToVersionAsString(this string tag)
         {
             return string.IsNullOrEmpty(tag) ? string.Empty : _regexTag.Replace(tag, string.Empty);
-        }
-
-        public static int? ToNullableInt(this string value)
-        {
-            if (int.TryParse(value, out int i)) return i;
-            return null;
         }
 
         public static Version ToVersion(this string value)
