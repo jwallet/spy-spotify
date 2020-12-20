@@ -346,7 +346,7 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Passe: {0} (l'enregistrement existe déjà)</value>
+    <value>Passe: {0} (l'enregistrement existe déjà)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">

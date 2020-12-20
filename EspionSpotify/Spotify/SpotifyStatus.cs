@@ -34,11 +34,16 @@ namespace EspionSpotify.Spotify
             SetSongInfo(ref spotifyWindowInfo);
         }
 
-        public async Task<Track> GetTrack()
+        public Track GetTrack()
         {
             if (!CurrentTrack.IsNormal) return CurrentTrack;
+            
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
+            });
 
-            await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
             return CurrentTrack;
         }
 

@@ -19,6 +19,8 @@ namespace EspionSpotify.Models
         public bool Ad { get; set; }
         public bool Playing { get; set; }
 
+        public bool MetaDataUpdated { get; set; }
+
         public string TitleExtended { get => _titleExtended; set => _titleExtended = string.IsNullOrEmpty(value) ? null : value; }
 
         public string Album { get; set; }

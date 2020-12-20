@@ -439,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Overslaan: {0} (opname bestaat al).
+        ///   Looks up a localized string similar to Overslaan: {0} (opname bestaat al).
         /// </summary>
         internal static string logTrackExists {
             get {

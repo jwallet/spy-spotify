@@ -58,7 +58,7 @@ namespace EspionSpotify.Spotify
                 return (await SpotifyProcess.GetSpotifyStatus())?.CurrentTrack;
             }
 
-            return await SpotifyLatestStatus.GetTrack();
+            return SpotifyLatestStatus.GetTrack();
         }
 
         public async void ElapsedEventTick(object sender, ElapsedEventArgs e)
@@ -92,10 +92,10 @@ namespace EspionSpotify.Spotify
                 if (!newestTrack.Equals(Track))
                 {
                     SongTimer.Start();
-                    await Task.Run(async () => OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
+                    await Task.Run(() => OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
                         OldTrack = Track,
-                        NewTrack = await SpotifyLatestStatus.GetTrack()
+                        NewTrack = SpotifyLatestStatus.GetTrack()
                     }));
                 }
                 if (Track.CurrentPosition != null || newestTrack != null)

@@ -31,6 +31,13 @@ namespace EspionSpotify
         private string _tempFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
+        private bool _canBeSkippedValidated = false;
+
+        public bool IsSkipTrackActive
+        {
+            get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
+                && FileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
+        }
 
         public Recorder() {}
 
@@ -53,7 +60,6 @@ namespace EspionSpotify
             Running = true;
             await Task.Delay(50);
 
-            _currentOutputFile = _fileManager.GetOutputFile();
             _tempFile = _fileManager.GetTempFile();
 
             _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
@@ -63,7 +69,6 @@ namespace EspionSpotify
             try
             {
                 _tempWaveWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
-                _fileWriter = GetFileWriter();
             }
             catch (Exception ex)
             {
@@ -76,14 +81,31 @@ namespace EspionSpotify
             }
 
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(I18nKeys.LogRecording, _currentOutputFile.File);
+            _form.WriteIntoConsole(I18nKeys.LogRecording, _track.ToString());
 
             while (Running)
             {
+                if (StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
+        }
+
+        private bool StopRecordingIfTrackCanBeSkipped()
+        {
+            if (_canBeSkippedValidated || !_track.MetaDataUpdated) return false;
+            
+            _canBeSkippedValidated = true;
+            if (IsSkipTrackActive)
+            {
+                _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
+                Running = false;
+                _form.UpdateIconSpotify(true, false);
+                return true;
+            }
+
+            return false;
         }
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
@@ -101,10 +123,11 @@ namespace EspionSpotify
             await _tempWaveWriter.FlushAsync();
             _tempWaveWriter.Dispose();
 
-            if (_fileWriter == null) return;
-
             try
             {
+                _currentOutputFile = _fileManager.GetOutputFile();
+                _fileWriter = GetFileWriter();
+
                 await WriteTempWaveToMediaFile();
             }
             catch (Exception ex)
@@ -117,8 +140,8 @@ namespace EspionSpotify
             }
             finally
             {
-                _waveIn.Dispose();
-                _fileWriter.Dispose();
+                if (_waveIn != null) _waveIn.Dispose();
+                if (_fileWriter != null) _fileWriter.Dispose();
             }
 
             try { _fileSystem.File.Delete(_tempFile); }

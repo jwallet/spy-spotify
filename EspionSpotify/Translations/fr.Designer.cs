@@ -439,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Passe: {0} (l&apos;enregistrement existe déjà).
+        ///   Looks up a localized string similar to Passe: {0} (l&apos;enregistrement existe déjà).
         /// </summary>
         internal static string logTrackExists {
             get {

@@ -28,7 +28,9 @@ namespace EspionSpotify.MediaTags
 
         public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
-        public async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
+        public async Task UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
+
+        private async Task UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
             var encodedArtist = WebUtility.UrlEncode(track.Artist);
@@ -43,22 +45,19 @@ namespace EspionSpotify.MediaTags
             {
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
-                return false;
+                return;
             }
 
             var apiReturn = api.DocumentElement;
 
-            if (apiReturn == null)
-            {
-                return false;   
-            }
+            if (apiReturn == null) return;
 
             var serializer = new XmlSerializer(typeof(LastFMNode));
             var xmlNode = apiReturn.SelectSingleNode("/lfm");
 
             var node = serializer.Deserialize(new XmlNodeReader(xmlNode)) as LastFMNode;
 
-            if (node.Status != Enums.LastFMNodeStatus.ok) return false;
+            if (node.Status != Enums.LastFMNodeStatus.ok) return;
 
             var trackExtra = node.Track;
 
@@ -69,13 +68,12 @@ namespace EspionSpotify.MediaTags
             else
             {
                 var simplifiedTitle = Regex.Replace(track.Title, @" \(.*?\)| \- .*", "");
-                if (simplifiedTitle != forceQueryTitle && await UpdateTrack(track, simplifiedTitle))
+                if (simplifiedTitle != forceQueryTitle)
                 {
-                    MapLastFMTrackToTrack(track, trackExtra);
+                    await UpdateTrack(track, simplifiedTitle);
+                    return;
                 }
             }
-
-            return true;
         }
 
         public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
@@ -88,6 +86,8 @@ namespace EspionSpotify.MediaTags
             track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
             track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
             track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
+
+            track.MetaDataUpdated = true;
         }
     }
 }

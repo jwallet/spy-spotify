@@ -48,11 +48,6 @@ namespace EspionSpotify
             get => _userSettings.RecordUnknownTrackTypeEnabled
                 && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString());
         }
-        public bool IsSkipTrackActive
-        {
-            get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
-                && FileManager.IsPathFileNameExists(_currentTrack, _userSettings, _fileSystem);
-        }
         public bool IsTypeAllowed
         {
             get => _currentTrack.IsNormal || IsRecordUnknownActive;
@@ -112,17 +107,12 @@ namespace EspionSpotify
             DoIKeepLastSong();
             StopLastRecorder();
 
-            if (IsSkipTrackActive)
-            {
-                _form.WriteIntoConsole(I18nKeys.LogTrackExists, _currentTrack.ToString());
-            }
-
             if (IsMaxOrderNumberAsFileExceeded)
             {
                 _form.WriteIntoConsole(I18nKeys.LogMaxFileSequenceReached, _userSettings.OrderNumberMax);
             }
 
-            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsSkipTrackActive || IsMaxOrderNumberAsFileExceeded) return;
+            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsMaxOrderNumberAsFileExceeded) return;
 
             RecordSpotify();
         }

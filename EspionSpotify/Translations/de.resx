@@ -334,7 +334,7 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Überspringe: {0} (Die Aufnahme existiert bereits)</value>
+    <value>Überspringe: {0} (Die Aufnahme existiert bereits)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">

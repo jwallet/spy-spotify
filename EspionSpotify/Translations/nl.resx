@@ -334,7 +334,7 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Overslaan: {0} (opname bestaat al)</value>
+    <value>Overslaan: {0} (opname bestaat al)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">

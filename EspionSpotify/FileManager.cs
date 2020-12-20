@@ -49,19 +49,10 @@ namespace EspionSpotify
                     {
                         outputFile.Increment();
                     }
-                    break;
-                case Enums.RecordRecordingsStatus.Overwrite:
-                    break;
-                case Enums.RecordRecordingsStatus.Skip:
+                    return outputFile;
                 default:
-                    if (_fileSystem.File.Exists(outputFile.ToString()))
-                    {
-                        throw new InvalidOperationException();
-                    }
-                    break;
+                    return outputFile;
             }
-
-            return outputFile;
         }
 
         public OutputFile UpdateOutputFileWithLatestTrackInfo(OutputFile outputFile, Track track, UserSettings userSettings)

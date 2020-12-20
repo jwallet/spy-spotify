@@ -67,20 +67,6 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void GetOutputFile_ThrowsExceptionOnSkipExistingFile()
-        {
-            _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Skip;
-            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-            {
-                { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
-            });
-
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
-
-            Assert.Throws<InvalidOperationException>(() => _fileManager.GetOutputFile());
-        }
-
-        [Fact]
         internal void GetOutputFile_ReturnsExistingFileNameDuplicated()
         {
             _userSettings.RecordRecordingsStatus = Enums.RecordRecordingsStatus.Duplicate;
