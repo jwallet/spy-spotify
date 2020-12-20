@@ -156,7 +156,7 @@ namespace EspionSpotify
             this.tcMenu.ItemSize = new System.Drawing.Size(100, 34);
             this.tcMenu.Location = new System.Drawing.Point(20, 70);
             this.tcMenu.Name = "tcMenu";
-            this.tcMenu.SelectedIndex = 2;
+            this.tcMenu.SelectedIndex = 0;
             this.tcMenu.Size = new System.Drawing.Size(740, 330);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
@@ -342,7 +342,7 @@ namespace EspionSpotify
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.tableLayoutPanel3.ColumnCount = 5;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -364,13 +364,14 @@ namespace EspionSpotify
             // lblPlayingTitle
             // 
             this.lblPlayingTitle.AutoSize = true;
-            this.lblPlayingTitle.BackColor = System.Drawing.Color.Black;
+            this.lblPlayingTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.lblPlayingTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPlayingTitle.ForeColor = System.Drawing.Color.SpringGreen;
-            this.lblPlayingTitle.Location = new System.Drawing.Point(344, 0);
+            this.lblPlayingTitle.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.lblPlayingTitle.ForeColor = System.Drawing.Color.White;
+            this.lblPlayingTitle.Location = new System.Drawing.Point(343, 0);
             this.lblPlayingTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblPlayingTitle.Name = "lblPlayingTitle";
-            this.lblPlayingTitle.Size = new System.Drawing.Size(49, 35);
+            this.lblPlayingTitle.Size = new System.Drawing.Size(51, 35);
             this.lblPlayingTitle.TabIndex = 34;
             this.lblPlayingTitle.Text = "Spotify";
             this.lblPlayingTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -379,11 +380,11 @@ namespace EspionSpotify
             // 
             // iconSpotify
             // 
-            this.iconSpotify.BackColor = System.Drawing.Color.Black;
+            this.iconSpotify.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.iconSpotify.BackgroundImage = global::EspionSpotify.Properties.Resources.pause;
             this.iconSpotify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.iconSpotify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconSpotify.Location = new System.Drawing.Point(309, 6);
+            this.iconSpotify.Location = new System.Drawing.Point(308, 6);
             this.iconSpotify.Margin = new System.Windows.Forms.Padding(0, 6, 6, 6);
             this.iconSpotify.Name = "iconSpotify";
             this.iconSpotify.Size = new System.Drawing.Size(29, 23);
@@ -392,10 +393,10 @@ namespace EspionSpotify
             // lblRecordedTime
             // 
             this.lblRecordedTime.AutoSize = true;
-            this.lblRecordedTime.BackColor = System.Drawing.Color.Black;
+            this.lblRecordedTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.lblRecordedTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblRecordedTime.ForeColor = System.Drawing.Color.SpringGreen;
-            this.lblRecordedTime.Location = new System.Drawing.Point(309, 0);
+            this.lblRecordedTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(187)))), ((int)(((byte)(88)))));
+            this.lblRecordedTime.Location = new System.Drawing.Point(308, 0);
             this.lblRecordedTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblRecordedTime.Name = "lblRecordedTime";
             this.lblRecordedTime.Size = new System.Drawing.Size(1, 35);
@@ -406,11 +407,11 @@ namespace EspionSpotify
             // 
             // rtbLog
             // 
-            this.rtbLog.BackColor = System.Drawing.Color.Black;
+            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbLog.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbLog.ForeColor = System.Drawing.Color.Silver;
+            this.rtbLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(179)))), ((int)(((byte)(179)))));
             this.rtbLog.Location = new System.Drawing.Point(0, 35);
             this.rtbLog.Margin = new System.Windows.Forms.Padding(0);
             this.rtbLog.Name = "rtbLog";
@@ -1195,7 +1196,7 @@ namespace EspionSpotify
             this.txtRecordingNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRecordingNum.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtRecordingNum.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtRecordingNum.ForeColor = System.Drawing.Color.Silver;
+            this.txtRecordingNum.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(179)))), ((int)(((byte)(179)))));
             this.txtRecordingNum.Location = new System.Drawing.Point(23, 3);
             this.txtRecordingNum.Mask = "000";
             this.txtRecordingNum.Name = "txtRecordingNum";
@@ -1342,7 +1343,7 @@ namespace EspionSpotify
             this.txtRecordingTimer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRecordingTimer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtRecordingTimer.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRecordingTimer.ForeColor = System.Drawing.Color.Silver;
+            this.txtRecordingTimer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(179)))), ((int)(((byte)(179)))));
             this.txtRecordingTimer.Location = new System.Drawing.Point(494, 3);
             this.txtRecordingTimer.Mask = "00h00m00s";
             this.txtRecordingTimer.Name = "txtRecordingTimer";
