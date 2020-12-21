@@ -346,7 +346,7 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Passe: {0} (l'enregistrement existe déjà)</value>
+    <value>Passe: {0} (l'enregistrement existe déjà)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
@@ -396,5 +396,9 @@
   <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
     <value>Spotify API a échoué</value>
     <comment>message</comment>
+  </data>
+  <data name="logRecordingDataExceeded" xml:space="preserve">
+    <value>// L'enregistrement de {0} était en train d'excéder en données, souvent causé par Spotify ne répondant plus après avoir été trop longtemps en arrière-plan ou que votre ordinateur est en mode économie d'énergie.</value>
+    <comment>console</comment>
   </data>
 </root>

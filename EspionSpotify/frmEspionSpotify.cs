@@ -34,7 +34,8 @@ namespace EspionSpotify
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
                 TranslationKeys.logRecording,
                 TranslationKeys.logRecorded,
-                TranslationKeys.logDeleting
+                TranslationKeys.logDeleting,
+                TranslationKeys.logTrackExists,
             };
 
         public ResourceManager Rm { get; private set; }
@@ -350,23 +351,22 @@ namespace EspionSpotify
         private string WriteRtbLine(RichTextBox rtbLog, TranslationKeys resource, params object[] args)
         {
             var text = string.Format(Rm.GetString(resource), args);
-            var log = "";
 
-            if (text == null) return log;
+            if (text == null) return "";
              
             var timeStr = LogDate;
             var indexOfColon = text.IndexOf(": ");
  
-
             rtbLog.AppendText(timeStr);
 
             if (_recorderStatusTranslationKeys.Contains(resource))
             {
-                var attrb = text.Substring(0, indexOfColon);
+                var type = text.Substring(0, indexOfColon);
                 var msg = text.Substring(indexOfColon, text.Length - indexOfColon);
 
-                rtbLog.AppendText(attrb);
-                rtbLog.Select(rtbLog.TextLength - attrb.Length, attrb.Length + 1);
+                // set message type
+                rtbLog.AppendText(type);
+                rtbLog.Select(rtbLog.TextLength - type.Length, type.Length + 1);
                 rtbLog.SelectionColor = resource.Equals(TranslationKeys.logRecording)
                     ? rtbLog.SelectionColor.SpotifyPrimaryText()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
@@ -376,6 +376,7 @@ namespace EspionSpotify
                     FontStyle.Bold
                 );
 
+                // set message msg
                 rtbLog.AppendText(msg + Environment.NewLine);
                 rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
                 rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(TranslationKeys.logDeleting)
@@ -386,8 +387,6 @@ namespace EspionSpotify
                     rtbLog.SelectionFont.Size,
                     FontStyle.Regular
                 );
-
-                log = $";{timeStr}{attrb}{msg}";
             }
             else
             {
@@ -397,7 +396,7 @@ namespace EspionSpotify
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
 
-            return log;
+            return $";{timeStr}{text}";
         }
 
         public void WriteIntoConsole(TranslationKeys resource, params object[] args)
@@ -433,8 +432,7 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _audioSession, _userSettings);
 
-            var thread = new Thread(_watcher.Run);
-            thread.Start();
+            Task.Run(_watcher.Run);
 
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;
@@ -669,7 +667,9 @@ namespace EspionSpotify
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
+            
             Watcher.Running = false;
+            
             Thread.Sleep(1000);
             Task.Run(async () => await _analytics.LogAction("exit"));
             Close();

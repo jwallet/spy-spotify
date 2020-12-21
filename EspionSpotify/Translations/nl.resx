@@ -334,7 +334,7 @@
     <comment>console</comment>
   </data>
   <data name="logTrackExists" xml:space="preserve">
-    <value>// Overslaan: {0} (opname bestaat al)</value>
+    <value>Overslaan: {0} (opname bestaat al)</value>
     <comment>console</comment>
   </data>
   <data name="logMissingDlls" xml:space="preserve">
@@ -396,5 +396,9 @@
   <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
     <value>Spotify API Failed</value>
     <comment>message -- translate me</comment>
+  </data>
+  <data name="logRecordingDataExceeded" xml:space="preserve">
+    <value>// Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode.</value>
+    <comment>console - translate me</comment>
   </data>
 </root>

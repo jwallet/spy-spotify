@@ -358,6 +358,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode..
+        /// </summary>
+        internal static string logRecordingDataExceeded {
+            get {
+                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Der Timer der Aufnahmesitzung ist abgelaufen..
         /// </summary>
         internal static string logRecordingTimerDone {
@@ -439,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Überspringe: {0} (Die Aufnahme existiert bereits).
+        ///   Looks up a localized string similar to Überspringe: {0} (Die Aufnahme existiert bereits).
         /// </summary>
         internal static string logTrackExists {
             get {

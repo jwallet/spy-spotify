@@ -35,6 +35,7 @@
         logPreviousLogs,
         logRecorded,
         logRecording,
+        logRecordingDataExceeded,
         logRecordingTimerDone,
         logSpotifyConnecting,
         logSpotifyIsClosed,
