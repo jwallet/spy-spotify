@@ -27,7 +27,6 @@ namespace EspionSpotify
     {
         private readonly IMainAudioSession _audioSession;
         private Watcher _watcher;
-        private Thread _watcherThread;
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
@@ -433,10 +432,7 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _audioSession, _userSettings);
 
-            _watcherThread = new Thread(_watcher.Run);
-            _watcherThread.SetApartmentState(ApartmentState.STA);
-            _watcherThread.IsBackground = true;
-            _watcherThread.Start();
+            Task.Run(_watcher.Run);
 
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;
@@ -453,7 +449,6 @@ namespace EspionSpotify
             }
             
             Watcher.Running = false;
-            _watcherThread.Join();
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
             tlSettings.Enabled = true;
@@ -674,8 +669,6 @@ namespace EspionSpotify
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             
             Watcher.Running = false;
-            
-            if (_watcherThread != null) _watcherThread.Abort();
             
             Thread.Sleep(1000);
             Task.Run(async () => await _analytics.LogAction("exit"));
