@@ -27,6 +27,7 @@ namespace EspionSpotify
     {
         private readonly IMainAudioSession _audioSession;
         private Watcher _watcher;
+        private Thread _watcherThread;
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
@@ -351,14 +352,12 @@ namespace EspionSpotify
         private string WriteRtbLine(RichTextBox rtbLog, TranslationKeys resource, params object[] args)
         {
             var text = string.Format(Rm.GetString(resource), args);
-            var log = "";
 
-            if (text == null) return log;
+            if (text == null) return "";
              
             var timeStr = LogDate;
             var indexOfColon = text.IndexOf(": ");
  
-
             rtbLog.AppendText(timeStr);
 
             if (_recorderStatusTranslationKeys.Contains(resource))
@@ -389,8 +388,6 @@ namespace EspionSpotify
                     rtbLog.SelectionFont.Size,
                     FontStyle.Regular
                 );
-
-                log = $";{timeStr}{type}{msg}";
             }
             else
             {
@@ -400,7 +397,7 @@ namespace EspionSpotify
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
 
-            return log;
+            return $";{timeStr}{text}";
         }
 
         public void WriteIntoConsole(TranslationKeys resource, params object[] args)
@@ -436,8 +433,10 @@ namespace EspionSpotify
         {
             _watcher = new Watcher(this, _audioSession, _userSettings);
 
-            var thread = new Thread(_watcher.Run);
-            thread.Start();
+            _watcherThread = new Thread(_watcher.Run);
+            _watcherThread.SetApartmentState(ApartmentState.STA);
+            _watcherThread.IsBackground = true;
+            _watcherThread.Start();
 
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
             tlSettings.Enabled = false;
@@ -454,6 +453,7 @@ namespace EspionSpotify
             }
             
             Watcher.Running = false;
+            _watcherThread.Join();
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
             tlSettings.Enabled = true;
@@ -672,7 +672,11 @@ namespace EspionSpotify
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
+            
             Watcher.Running = false;
+            
+            if (_watcherThread != null) _watcherThread.Abort();
+            
             Thread.Sleep(1000);
             Task.Run(async () => await _analytics.LogAction("exit"));
             Close();
