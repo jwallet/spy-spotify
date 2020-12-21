@@ -16,6 +16,7 @@ namespace EspionSpotify
     {
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
+        public const long WAV_MAX_SIZE_BYTES = 4000000000;
 
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
@@ -110,9 +111,17 @@ namespace EspionSpotify
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            if (_tempWaveWriter != null)
+            if (_tempWaveWriter == null) return;
+            
+            if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
             {
                 await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+            }
+            else
+            {
+                _form.WriteIntoConsole(I18nKeys.LogRecordingDataExceeded, _track.ToString());
+                Running = false;
+                _form.UpdateIconSpotify(true, false);
             }
         }
 

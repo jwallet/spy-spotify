@@ -397,4 +397,8 @@
     <value>Spotify API a échoué</value>
     <comment>message</comment>
   </data>
+  <data name="logRecordingDataExceeded" xml:space="preserve">
+    <value>// L'enregistrement de {0} était en train d'excéder en données, souvent causé par Spotify ne répondant plus après avoir été trop longtemps en arrière-plan ou que votre ordinateur est en mode économie d'énergie.</value>
+    <comment>console</comment>
+  </data>
 </root>
