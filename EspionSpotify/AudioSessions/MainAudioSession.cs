@@ -130,9 +130,12 @@ namespace EspionSpotify.AudioSessions
                     var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
                     var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
 
-                    if (currentProcessId.Equals(_spytifyProcess.Id)) continue;
-
-                    if (IsSpotifyAudioSessionControl(currentProcessId))
+                    if (currentProcessId.Equals(_spytifyProcess.Id))
+                    {
+                        if (currentAudioSessionControl.SimpleAudioVolume.Volume == 1) continue;
+                        currentAudioSessionControl.SimpleAudioVolume.Volume = 1;
+                    }
+                    else if (IsSpotifyAudioSessionControl(currentProcessId))
                     {
                         SpotifyAudioSessionControls.Add(currentAudioSessionControl);
 
