@@ -207,6 +207,7 @@
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\ISpotifyAPI.cs" />
     <Compile Include="Models\OutputFile.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Translations\de.Designer.cs">
       <DependentUpon>de.resx</DependentUpon>
       <AutoGen>True</AutoGen>

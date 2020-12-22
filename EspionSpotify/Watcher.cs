@@ -193,6 +193,7 @@ namespace EspionSpotify
             {
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
+                NativeMethods.PreventSleep();
 
                 while (Running)
                 {
@@ -223,6 +224,7 @@ namespace EspionSpotify
 
                 DoIKeepLastSong();
                 StopLastRecorder();
+                NativeMethods.AllowSleep();
             }
             else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
