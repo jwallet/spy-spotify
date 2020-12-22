@@ -103,6 +103,7 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
                 Running = false;
                 _form.UpdateIconSpotify(true, false);
+                DeleteTempFile();
                 return true;
             }
 
@@ -111,7 +112,7 @@ namespace EspionSpotify
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            if (_tempWaveWriter == null) return;
+            if (_tempWaveWriter == null || !Running) return;
             
             if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
             {
@@ -153,8 +154,7 @@ namespace EspionSpotify
                 if (_fileWriter != null) _fileWriter.Dispose();
             }
 
-            try { _fileSystem.File.Delete(_tempFile); }
-            catch { }
+            DeleteTempFile();
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
