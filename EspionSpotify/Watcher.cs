@@ -11,11 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EspionSpotify.MediaTags;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
+using System.Threading;
 
 namespace EspionSpotify
 {
-    public class Watcher : IWatcher
+    public class Watcher : IWatcher, IDisposable
     {
+        private bool _disposed = false;
+        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
         private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
@@ -34,7 +39,7 @@ namespace EspionSpotify
 
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
-        private readonly List<Task> _recorderTasks = new List<Task>();
+        private readonly List<RecorderTask> _recorderTasks = new List<RecorderTask>();
 
         public int CountSeconds { get; set; }
         public ISpotifyHandler Spotify { get; set; }
@@ -254,7 +259,8 @@ namespace EspionSpotify
             CountSeconds = 0;
 
             _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
-            _recorderTasks.Add(Task.Run(_recorder.Run));
+            var token = new CancellationTokenSource();
+            _recorderTasks.Add(new RecorderTask() { Task = Task.Run(() => _recorder.Run(token)), Token = token });
 
             _form.UpdateIconSpotify(_isPlaying, true);
         }
@@ -299,7 +305,7 @@ namespace EspionSpotify
         private void EndRecordingSession()
         {
             Ready = true;
-
+            
             if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
@@ -324,13 +330,13 @@ namespace EspionSpotify
             {
                 _form.UpdateNumUp();
             }
-            _recorderTasks.RemoveAll(x => x.Status == TaskStatus.RanToCompletion);
+            _recorderTasks.RemoveAll(x => x.Task.Status == TaskStatus.RanToCompletion);
         }
 
         private void DoIKeepLastSong()
         {
             // always increment when session ends
-            if (!Running && _recorderTasks.Any(t => t.Status != TaskStatus.RanToCompletion))
+            if (!Running && _recorderTasks.Any(t => t.Task.Status != TaskStatus.RanToCompletion))
             {
                 _form.UpdateNumUp();
             }
@@ -357,5 +363,32 @@ namespace EspionSpotify
                 _audioSession.SetSpotifyToMute(value);
             }
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                _disposeHandle.Dispose();
+                if (_recorder != null) _recorder.Dispose();
+                _recorderTasks.ForEach(x => {
+                    x.Token.Cancel();
+                    x.Task.Wait();
+                    x.Task.Dispose();
+                    x.Token.Dispose();
+                });
+            }
+
+            _disposed = true;
+        }
     }
+
 }

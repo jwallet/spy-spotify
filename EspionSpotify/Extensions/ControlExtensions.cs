@@ -13,7 +13,7 @@ namespace EspionSpotify.Extensions
         public static TResult GetPropertyThreadSafe<TControl, TResult>(this TControl control, Func<TControl, TResult> getter)
             where TControl : Control
         {
-            if (control.InvokeRequired)
+            if (control.IsInvokeRequired())
             {
                 return (TResult)control.Invoke(getter, control);
             }
@@ -26,7 +26,7 @@ namespace EspionSpotify.Extensions
         public static void SetPropertyThreadSafe<TControl>(this TControl control, MethodInvoker setter)
            where TControl : Control
         {
-            if (control.InvokeRequired)
+            if (control.IsInvokeRequired())
             {
                 control.Invoke(setter);
             }
@@ -34,6 +34,12 @@ namespace EspionSpotify.Extensions
             {
                 setter();
             }
+        }
+
+        public static bool IsInvokeRequired<TControl>(this TControl control)
+            where TControl : Control
+        {
+            return !control.IsDisposed && control.InvokeRequired;
         }
     }
 }

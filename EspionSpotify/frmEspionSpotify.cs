@@ -442,7 +442,7 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            if (tlSettings.InvokeRequired || tlAdvanced.InvokeRequired)
+            if (tlSettings.IsInvokeRequired() || tlAdvanced.IsInvokeRequired())
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
@@ -669,6 +669,7 @@ namespace EspionSpotify
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             
             Watcher.Running = false;
+            _watcher.Dispose();
             
             Thread.Sleep(1000);
             Task.Run(async () => await _analytics.LogAction("exit"));

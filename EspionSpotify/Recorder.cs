@@ -2,18 +2,24 @@ using System;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
+using Microsoft.Win32.SafeHandles;
 using NAudio.Lame;
 using NAudio.Wave;
 
 namespace EspionSpotify
 {
-    public class Recorder : IRecorder
+    public class Recorder : IRecorder, IDisposable
     {
+        private bool _disposed = false;
+        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
         public const long WAV_MAX_SIZE_BYTES = 4000000000;
@@ -54,7 +60,7 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
-        public async Task Run()
+        public async Task Run(CancellationTokenSource token)
         {
             if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
 
@@ -87,6 +93,7 @@ namespace EspionSpotify
             while (Running)
             {
                 if (StopRecordingIfTrackCanBeSkipped()) return;
+                if (token.IsCancellationRequested) return;
                 await Task.Delay(50);
             }
 
@@ -337,6 +344,39 @@ namespace EspionSpotify
                 stream = GetWaveProviderMP3SamplerReducer(stream);
             }
             return stream;
+        }
+
+        private void DeleteTempFile()
+        {
+            if (!_fileSystem.File.Exists(_tempFile)) return;
+            try { _fileSystem.File.Delete(_tempFile); }
+            catch { }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                _disposeHandle.Dispose();
+
+                _waveIn.Dispose();
+                DeleteTempFile();
+
+                if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
+                try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
+                catch { }
+            }
+
+            _disposed = true;
         }
     }
 }

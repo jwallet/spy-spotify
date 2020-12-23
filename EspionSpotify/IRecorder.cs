@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
@@ -7,6 +8,8 @@ namespace EspionSpotify
         int CountSeconds { get; set; }
         bool Running { get; set; }
 
-        Task Run();
+        Task Run(CancellationTokenSource token);
+
+        void Dispose();
     }
 }
