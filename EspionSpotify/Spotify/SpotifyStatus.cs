@@ -1,4 +1,5 @@
-﻿using EspionSpotify.MediaTags;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
 using System.Linq;
@@ -11,13 +12,11 @@ namespace EspionSpotify.Spotify
         public const string SPOTIFY = "spotify";
         public const string SPOTIFYFREE = "spotify free";
         public const string ADVERTISEMENT = "advertisement";
-        public const string TITLE_SEPARATOR = " - ";
 
         public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
 
         public Track CurrentTrack { get; set; }
 
-        private string[] _windowTitleSeparator { get; }
 
         public static bool WindowTitleIsSpotify(string title)
         {
@@ -31,7 +30,6 @@ namespace EspionSpotify.Spotify
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            _windowTitleSeparator = new[] { TITLE_SEPARATOR };
             SetSongInfo(ref spotifyWindowInfo);
         }
 
@@ -50,7 +48,7 @@ namespace EspionSpotify.Spotify
 
         private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = GetTags(spotifyWindowInfo.WindowTitle);
+            var tags = GetDashTags(spotifyWindowInfo.WindowTitle);
 
             var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
@@ -65,7 +63,25 @@ namespace EspionSpotify.Spotify
             };
         }
 
-        public static string[] GetTags(string title, int maxSize = 3) => title.Split(new[] { TITLE_SEPARATOR }, maxSize, StringSplitOptions.None);
+        public static string[] GetDashTags(string title, int maxSize = 3)
+        {
+            return title.Split(new[] { $" - " }, maxSize, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static (string[], TitleSeparatorType) GetTitleTags(string title, int maxSize = 2)
+        {
+            var byDash = GetDashTags(title, maxSize);
+            var byParenthesis = title.Split(new[] { $" (" }, maxSize, StringSplitOptions.RemoveEmptyEntries);
+            if (byParenthesis.Length == 2) byParenthesis[1] = byParenthesis[1].Replace(")", "");
+            if (byDash.Length == 1 && byParenthesis.Length == 2)
+            {
+                return (byParenthesis, TitleSeparatorType.Parenthesis);
+            }
+            else
+            {
+                return (byDash, TitleSeparatorType.Dash);
+            }
+        }
 
         public static string GetTitleTag(string[] tags, int maxValue) => tags.Length >= maxValue && maxValue != 0 ? tags[maxValue - 1] ?? null : null;
     }

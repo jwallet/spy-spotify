@@ -107,16 +107,22 @@ namespace EspionSpotify.MediaTags
                 api.Dispose();
                 return;
             }
-
-            var album = await api.GetAlbumAsync(playback.Item.Album.Id);
-
-            if (album.HasError())
+            else
             {
-                api.Dispose();
-                return;
+                var album = await api.GetAlbumAsync(playback.Item.Album.Id);
+
+                if (album.HasError())
+                {
+                    api.Dispose();
+                    return;
+                }
+                else
+                {
+                    MapSpotifyAlbumToTrack(track, album);
+                }
             }
 
-            MapSpotifyAlbumToTrack(track, album);
+            track.MetaDataUpdated = true;
 
             api.Dispose();
         }
@@ -124,7 +130,12 @@ namespace EspionSpotify.MediaTags
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
             var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
-            var titleParts = SpotifyStatus.GetTags(spotifyTrack.Name, 2);
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, 2);
+
+            track.SetArtistFromAPI(performers.FirstOrDefault());
+            track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
+            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2));
+            track.TitleExtendedSeparatorType = separatorType;
 
             track.Artist = performers.FirstOrDefault();
             track.Title = SpotifyStatus.GetTitleTag(titleParts, 1);
@@ -132,8 +143,6 @@ namespace EspionSpotify.MediaTags
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;
-
-            track.MetaDataUpdated = true;
         }
 
         public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using PCLWebUtility;
+using EspionSpotify.Spotify;
 
 namespace EspionSpotify.MediaTags
 {
@@ -74,10 +75,19 @@ namespace EspionSpotify.MediaTags
                     return;
                 }
             }
+
+            track.MetaDataUpdated = true;
         }
 
         public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
         {
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(trackExtra.Name, 2);
+
+            track.SetArtistFromAPI(trackExtra.Artist?.Name);
+            track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
+            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2));
+            track.TitleExtendedSeparatorType = separatorType;
+
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
             track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
@@ -86,8 +96,6 @@ namespace EspionSpotify.MediaTags
             track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
             track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
             track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
-
-            track.MetaDataUpdated = true;
         }
     }
 }

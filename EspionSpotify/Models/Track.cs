@@ -1,4 +1,5 @@
-﻿using EspionSpotify.MediaTags;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.MediaTags;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TagLib;
@@ -11,17 +12,40 @@ namespace EspionSpotify.Models
         public const string UNTITLED_ALBUM = "Untitled";
 
         private string _artist = null;
+        private string _apiArtist = null;
         private string _title = null;
+        private string _apiTitle = null;
         private string _titleExtended = null;
+        private string _apiTitleExtended = null;
 
-        public string Artist { get => _artist; set => _artist = string.IsNullOrEmpty(value) ? null : value; }
-        public string Title { get => _title; set => _title = string.IsNullOrEmpty(value) ? null : value; }
+        private TitleSeparatorType _titleSeparatorType = TitleSeparatorType.Dash;
+
+        public string Artist
+        {
+            get => _apiArtist ?? _artist;
+            set => _artist = string.IsNullOrEmpty(value) ? null : value;
+        }
+        public string Title
+        {
+            get => _apiTitle ?? _title;
+            set => _title = string.IsNullOrEmpty(value) ? null : value;
+        }
+        public string TitleExtended
+        {
+            get => _apiTitleExtended ?? _titleExtended;
+            set => _titleExtended = string.IsNullOrEmpty(value) ? null : value;
+        }
+
+        public TitleSeparatorType TitleExtendedSeparatorType { set => _titleSeparatorType = value; }
+
+        public void SetArtistFromAPI(string value) => _apiArtist = value;
+        public void SetTitleFromAPI(string value) => _apiTitle = value;
+        public void SetTitleExtendedFromAPI(string value) => _apiTitleExtended = value;
+
         public bool Ad { get; set; }
         public bool Playing { get; set; }
 
         public bool MetaDataUpdated { get; set; }
-
-        public string TitleExtended { get => _titleExtended; set => _titleExtended = string.IsNullOrEmpty(value) ? null : value; }
 
         public string Album { get; set; }
         public string[] Genres { get; set; }
@@ -81,18 +105,25 @@ namespace EspionSpotify.Models
             ArtSmall = track.ArtSmall;
         }
 
+        private string GetTitleExtended()
+        {
+            return !string.IsNullOrEmpty(TitleExtended)
+                ? _titleSeparatorType == TitleSeparatorType.Dash ? $" - {TitleExtended}" : $" ({TitleExtended})"
+                : string.Empty;
+        }
+
         public override string ToString()
         {
             var song = SPOTIFY;
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
-                var artist = AlbumArtists == null ? Artist : string.Join(",", AlbumArtists);
-                song = $"{artist} - {Title}";
+                var artists = string.Join(",", AlbumArtists ?? Performers ?? new[] { Artist });
+                song = $"{artists} - {Title}";
 
                 if (!string.IsNullOrEmpty(TitleExtended))
                 {
-                    song += $" - {TitleExtended}";
+                    song += GetTitleExtended();
                 }
             }
 
@@ -110,7 +141,7 @@ namespace EspionSpotify.Models
 
             if (!string.IsNullOrEmpty(TitleExtended))
             {
-                song += $" - {TitleExtended}";
+                song += GetTitleExtended();
             }
 
             return song;
