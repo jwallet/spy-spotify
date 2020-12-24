@@ -177,6 +177,9 @@
   <ItemGroup>
     <Compile Include="Analytics.cs" />
     <Compile Include="AudioSessions\AudioMMDevicesManager.cs" />
+    <Compile Include="Controls\MetroCredentialsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\MetroComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -274,6 +277,9 @@
     </Compile>
     <Compile Include="Translations\Languages.cs" />
     <Compile Include="Watcher.cs" />
+    <EmbeddedResource Include="Controls\MetroCredentialsForm.resx">
+      <DependentUpon>MetroCredentialsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translations\de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>de.Designer.cs</LastGenOutput>
@@ -435,10 +441,8 @@
     <None Include="Resources\beer.gif" />
     <None Include="Resources\faq.gif" />
     <None Include="Resources\heart.gif" />
+    <None Include="Resources\key.gif" />
     <Content Include="Resources\remove_device.gif" />
-    <Content Include="setup-spotify-api.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NAudio.Lame.1.0.9\build\NAudio.Lame.targets" Condition="Exists('..\packages\NAudio.Lame.1.0.9\build\NAudio.Lame.targets')" />

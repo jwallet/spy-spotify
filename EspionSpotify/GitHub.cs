@@ -21,6 +21,7 @@ namespace EspionSpotify
         private const string SPYTIFY = "Spytify";
 
         public const string WEBSITE_FAQ_URL = "https://jwallet.github.io/spy-spotify/faq.html";
+        public const string WEBSITE_FAQ_SPOTIFY_API_URL = "https://jwallet.github.io/spy-spotify/faq.html#media-tags-not-found";
         public const string WEBSITE_DONATE_URL = "https://jwallet.github.io/spy-spotify/donate.html";
         public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
 

@@ -371,7 +371,7 @@
   </data>
   <data name="tipNumModifierHold" xml:space="preserve">
     <value>CTRL heeft invloed op de maskerwaarde</value>
-    <comment>interface **</comment>
+    <comment>interface**</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
     <value>Voeg het tellernummer toe voor alle bestandsnaam</value>
@@ -400,5 +400,33 @@
   <data name="logRecordingDataExceeded" xml:space="preserve">
     <value>// Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode.</value>
     <comment>console - translate me</comment>
+  </data>
+  <data name="lblClientId" xml:space="preserve">
+    <value>Client ID:</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="lblSecretId" xml:space="preserve">
+    <value>Client Secret:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipFAQSpotifyAPI" xml:space="preserve">
+    <value>See how to configure and use Spotify API</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="tipSpotifyAPICredentials" xml:space="preserve">
+    <value>Manage Spotify API credentials</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="titleSpotifyAPICredentials" xml:space="preserve">
+    <value>Spotify API Credentials</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="watermarkClientId" xml:space="preserve">
+    <value>Paste the Client ID here</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="watermarkSecretId" xml:space="preserve">
+    <value>Paste the Client Secret here</value>
+    <comment>interface -- translate me</comment>
   </data>
 </root>

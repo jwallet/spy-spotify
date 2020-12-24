@@ -18,8 +18,8 @@ using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
 using EspionSpotify.MediaTags;
-using System.Text.RegularExpressions;
 using EspionSpotify.Drivers;
+using EspionSpotify.Controls;
 
 namespace EspionSpotify
 {
@@ -30,6 +30,7 @@ namespace EspionSpotify
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
+        private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
         
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
                 TranslationKeys.logRecording,
@@ -102,9 +103,8 @@ namespace EspionSpotify
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
             txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
 
-            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
-            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
-            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
+            SetSpotifyAPIOption();
+
             rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
             rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
             if (rbSpotifyAPI.Checked)
@@ -113,7 +113,7 @@ namespace EspionSpotify
             }
 
 #if DEBUG
-            this.Text = "                        DEBUG";
+            Style = MetroColorStyle.Orange;
 #endif
 
             SetLanguageDropDown();  // do it before setting the language
@@ -145,6 +145,13 @@ namespace EspionSpotify
 
             var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;
+        }
+
+        private void SetSpotifyAPIOption()
+        {
+            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
+            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
+            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
         private void SetMediaTagsAPI(MediaTagsAPI api, bool isSpotifyAPISet)
@@ -240,6 +247,7 @@ namespace EspionSpotify
             tip.SetToolTip(lnkFAQ, Rm.GetString(I18nKeys.TipFAQ));
             tip.SetToolTip(lnkNumPlus, Rm.GetString(I18nKeys.TipNumModifierHold));
             tip.SetToolTip(lnkNumMinus, Rm.GetString(I18nKeys.TipNumModifierHold));
+            tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18nKeys.TipSpotifyAPICredentials));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
@@ -886,6 +894,25 @@ namespace EspionSpotify
         {
             Process.Start(GitHub.WEBSITE_DONATE_URL);
             Task.Run(async () => await _analytics.LogAction($"donate"));
+        }
+
+        private void LnkSpotifyCredentials_Click(object sender, EventArgs e)
+        {
+            if (_frmSpotifyApiCredentials == null || _frmSpotifyApiCredentials.IsDisposed)
+            {
+                _frmSpotifyApiCredentials = new FrmSpotifyAPICredentials(_analytics);
+            }
+            
+            var result = _frmSpotifyApiCredentials.ShowDialog(this);
+            
+            SetSpotifyAPIOption();
+            
+            if (result == DialogResult.No)
+            {
+                rbLastFMAPI.Checked = true;
+            }
+
+            _frmSpotifyApiCredentials.Dispose();
         }
     }
 }

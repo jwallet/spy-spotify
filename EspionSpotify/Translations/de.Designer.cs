@@ -160,6 +160,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client ID:.
+        /// </summary>
+        internal static string lblClientId {
+            get {
+                return ResourceManager.GetString("lblClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Speichere.
         /// </summary>
         internal static string lblDuplicate {
@@ -282,6 +291,15 @@ namespace EspionSpotify.Translations {
         internal static string lblRecordUnknownTrackType {
             get {
                 return ResourceManager.GetString("lblRecordUnknownTrackType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client Secret:.
+        /// </summary>
+        internal static string lblSecretId {
+            get {
+                return ResourceManager.GetString("lblSecretId", resourceCulture);
             }
         }
         
@@ -637,6 +655,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See how to configure and use Spotify API.
+        /// </summary>
+        internal static string tipFAQSpotifyAPI {
+            get {
+                return ResourceManager.GetString("tipFAQSpotifyAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installieren Audio Virtual Cable.
         /// </summary>
         internal static string tipInstallVirtualCableDriver {
@@ -673,6 +700,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Spotify API credentials.
+        /// </summary>
+        internal static string tipSpotifyAPICredentials {
+            get {
+                return ResourceManager.GetString("tipSpotifyAPICredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Starte spionieren.
         /// </summary>
         internal static string tipStartSpying {
@@ -696,6 +732,33 @@ namespace EspionSpotify.Translations {
         internal static string tipUninstallVirtualCableDriver {
             get {
                 return ResourceManager.GetString("tipUninstallVirtualCableDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spotify API Credentials.
+        /// </summary>
+        internal static string titleSpotifyAPICredentials {
+            get {
+                return ResourceManager.GetString("titleSpotifyAPICredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste the Client ID here.
+        /// </summary>
+        internal static string watermarkClientId {
+            get {
+                return ResourceManager.GetString("watermarkClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste the Client Secret here.
+        /// </summary>
+        internal static string watermarkSecretId {
+            get {
+                return ResourceManager.GetString("watermarkSecretId", resourceCulture);
             }
         }
     }

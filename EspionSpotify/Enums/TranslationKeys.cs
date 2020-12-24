@@ -13,6 +13,7 @@
         lblAds,
         lblAudioDevice,
         lblBitRate,
+        lblClientId,
         lblRecordOverRecordings,
         lblDuplicate,
         lblEndingSongDelay,
@@ -27,6 +28,7 @@
         lblRecordingNum,
         lblRecordingTimer,
         lblRecordUnknownTrackType,
+        lblSecretId,
         lblSpy,
         logAd,
         logDeleting,
@@ -66,12 +68,17 @@
         tipDirectory,
         tipDonate,
         tipFAQ,
+        tipFAQSpotifyAPI,
         tipInstallVirtualCableDriver,
         tipNumModifierHold,
         tipPath,
         tipRelease,
         tipUninstallVirtualCableDriver,
+        tipSpotifyAPICredentials,
         tipStartSpying,
-        tipStopSying
+        tipStopSying,
+        titleSpotifyAPICredentials,
+        watermarkClientId,
+        watermarkSecretId
     }
 }

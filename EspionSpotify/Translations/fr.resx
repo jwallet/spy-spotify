@@ -401,4 +401,32 @@
     <value>// L'enregistrement de {0} était en train d'excéder en données, souvent causé par Spotify ne répondant plus après avoir été trop longtemps en arrière-plan ou que votre ordinateur est en mode économie d'énergie.</value>
     <comment>console</comment>
   </data>
+  <data name="lblClientId" xml:space="preserve">
+    <value>Client ID:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSecretId" xml:space="preserve">
+    <value>Client Secret:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipFAQSpotifyAPI" xml:space="preserve">
+    <value>Voyez comment configurer et utiliser Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipSpotifyAPICredentials" xml:space="preserve">
+    <value>Gérer les identifiants Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="titleSpotifyAPICredentials" xml:space="preserve">
+    <value>Identifiants Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkClientId" xml:space="preserve">
+    <value>Coller le Client ID ici</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkSecretId" xml:space="preserve">
+    <value>Coller le Client Secret ici</value>
+    <comment>interface</comment>
+  </data>
 </root>

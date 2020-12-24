@@ -79,8 +79,7 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
@@ -92,13 +91,14 @@ namespace EspionSpotify
 
             while (Running)
             {
-                if (StopRecordingIfTrackCanBeSkipped()) return;
-                if (token.IsCancellationRequested) return;
+                if (token.IsCancellationRequested || StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
         }
+
+      
 
         private bool StopRecordingIfTrackCanBeSkipped()
         {
@@ -108,8 +108,7 @@ namespace EspionSpotify
             if (IsSkipTrackActive)
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
                 DeleteTempFile();
                 return true;
             }
@@ -128,8 +127,7 @@ namespace EspionSpotify
             else
             {
                 _form.WriteIntoConsole(I18nKeys.LogRecordingDataExceeded, _track.ToString());
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
             }
         }
 
@@ -351,6 +349,12 @@ namespace EspionSpotify
             if (!_fileSystem.File.Exists(_tempFile)) return;
             try { _fileSystem.File.Delete(_tempFile); }
             catch { }
+        }
+
+        private void ForceStopRecording()
+        {
+            _form.UpdateIconSpotify(true, false);
+            Running = false;
         }
 
         public void Dispose()
