@@ -22,5 +22,7 @@ namespace EspionSpotify.AudioSessions
         void SetSpotifyToMute(bool mute);
         Task<bool> WaitSpotifyAudioSessionToStart(bool running);
         void SetSpotifyVolumeToHighAndOthersToMute(bool mute = false);
+
+        void Dispose();
     }
 }

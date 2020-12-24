@@ -91,14 +91,13 @@ namespace EspionSpotify
 
             while (Running)
             {
-                if (token.IsCancellationRequested || StopRecordingIfTrackCanBeSkipped()) return;
+                if (token.IsCancellationRequested) return;
+                if (StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
         }
-
-      
 
         private bool StopRecordingIfTrackCanBeSkipped()
         {
@@ -109,7 +108,6 @@ namespace EspionSpotify
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
                 ForceStopRecording();
-                DeleteTempFile();
                 return true;
             }
 
@@ -175,6 +173,9 @@ namespace EspionSpotify
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
             await UpdateOutputFileBasedOnMediaFormat();
+
+            _waveIn.DataAvailable -= WaveIn_DataAvailable;
+            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
         }
 
         private async Task WriteTempWaveToMediaFile()
@@ -348,13 +349,16 @@ namespace EspionSpotify
         {
             if (!_fileSystem.File.Exists(_tempFile)) return;
             try { _fileSystem.File.Delete(_tempFile); }
-            catch { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
         private void ForceStopRecording()
         {
             _form.UpdateIconSpotify(true, false);
             Running = false;
+            DeleteTempFile();
+            _waveIn.DataAvailable -= WaveIn_DataAvailable;
+            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
         }
 
         public void Dispose()
@@ -370,14 +374,30 @@ namespace EspionSpotify
 
             if (disposing)
             {
-                _disposeHandle.Dispose();
+                if (_waveIn != null)
+                {
+                    _waveIn.DataAvailable -= WaveIn_DataAvailable;
+                    _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+                    _waveIn.Dispose();
+                }
 
-                _waveIn.Dispose();
+                if (_tempWaveWriter != null)
+                {
+                    _tempWaveWriter.Dispose();
+                }
+
+                if (_fileWriter != null)
+                {
+                    _fileWriter.Dispose();
+                }
+
                 DeleteTempFile();
 
                 if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
                 try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
-                catch { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                _disposeHandle.Dispose();
             }
 
             _disposed = true;

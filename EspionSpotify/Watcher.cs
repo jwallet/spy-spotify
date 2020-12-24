@@ -378,14 +378,22 @@ namespace EspionSpotify
 
             if (disposing)
             {
-                _disposeHandle.Dispose();
-                if (_recorder != null) _recorder.Dispose();
+                DoIKeepLastSong();
+                StopLastRecorder();
+                NativeMethods.AllowSleep();
+
+                EndRecordingSession();
+
                 _recorderTasks.ForEach(x => {
                     x.Token.Cancel();
                     x.Task.Wait();
                     x.Task.Dispose();
                     x.Token.Dispose();
                 });
+
+                if (_recorder != null) _recorder.Dispose();
+
+                _disposeHandle.Dispose();
             }
 
             _disposed = true;

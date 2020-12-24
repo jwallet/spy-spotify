@@ -669,7 +669,9 @@ namespace EspionSpotify
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Watcher.Ready || !Watcher.Running) return;
+            
             e.Cancel = true;
+            
             if (MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyCantQuit),
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
@@ -678,9 +680,10 @@ namespace EspionSpotify
             
             Watcher.Running = false;
             _watcher.Dispose();
+            _audioSession.Dispose();
             
-            Thread.Sleep(1000);
             Task.Run(async () => await _analytics.LogAction("exit"));
+
             Close();
         }
 

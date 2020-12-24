@@ -26,13 +26,16 @@ namespace EspionSpotify.Extensions
         public static void SetPropertyThreadSafe<TControl>(this TControl control, MethodInvoker setter)
            where TControl : Control
         {
-            if (control.IsInvokeRequired())
+            lock (control)
             {
-                control.Invoke(setter);
-            }
-            else
-            {
-                setter();
+                if (control.IsInvokeRequired())
+                {
+                    control.Invoke(setter);
+                }
+                else
+                {
+                    setter();
+                }
             }
         }
 

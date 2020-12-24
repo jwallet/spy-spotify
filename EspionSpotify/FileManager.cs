@@ -162,7 +162,7 @@ namespace EspionSpotify
             if (!_fileSystem.Directory.EnumerateFiles(folderPath).Any())
             {
                 try { _fileSystem.Directory.Delete(folderPath); }
-                catch { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 var subFolderPath = _fileSystem.Path.GetDirectoryName(folderPath);
                 if (_userSettings.OutputPath != subFolderPath && subFolderPath.Contains(_userSettings.OutputPath))
