@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
+using EspionSpotify.Spotify;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
@@ -123,9 +124,11 @@ namespace EspionSpotify.MediaTags
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
             var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
+            var titleParts = SpotifyStatus.GetTags(spotifyTrack.Name, 2);
 
             track.Artist = performers.FirstOrDefault();
-            track.Title = spotifyTrack.Name;
+            track.Title = SpotifyStatus.GetTitleTag(titleParts, 1);
+            track.TitleExtended = SpotifyStatus.GetTitleTag(titleParts, 2);
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;

@@ -316,6 +316,7 @@ namespace EspionSpotify
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;
                 Spotify.OnTrackChange -= OnTrackChanged;
                 Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                Spotify.Dispose();
             }
 
             _form.UpdateStartButton();

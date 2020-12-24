@@ -11,6 +11,7 @@ namespace EspionSpotify.Spotify
         public const string SPOTIFY = "spotify";
         public const string SPOTIFYFREE = "spotify free";
         public const string ADVERTISEMENT = "advertisement";
+        public const string TITLE_SEPARATOR = " - ";
 
         public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
 
@@ -30,7 +31,7 @@ namespace EspionSpotify.Spotify
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            _windowTitleSeparator = new[] {" - "};
+            _windowTitleSeparator = new[] { TITLE_SEPARATOR };
             SetSongInfo(ref spotifyWindowInfo);
         }
 
@@ -49,7 +50,7 @@ namespace EspionSpotify.Spotify
 
         private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = spotifyWindowInfo.WindowTitle.Split(_windowTitleSeparator, 3, StringSplitOptions.None);
+            var tags = GetTags(spotifyWindowInfo.WindowTitle);
 
             var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
@@ -64,6 +65,8 @@ namespace EspionSpotify.Spotify
             };
         }
 
-        private string GetTitleTag(string[] tags, int maxValue) => tags.Length >= maxValue ? tags[maxValue - 1] ?? null : null;
+        public static string[] GetTags(string title, int maxSize = 3) => title.Split(new[] { TITLE_SEPARATOR }, maxSize, StringSplitOptions.None);
+
+        public static string GetTitleTag(string[] tags, int maxValue) => tags.Length >= maxValue && maxValue != 0 ? tags[maxValue - 1] ?? null : null;
     }
 }

@@ -20,7 +20,23 @@ namespace EspionSpotify.AudioSessions
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public string AudioEndPointDeviceID { get; private set; }
         public string DefaultAudioEndPointDeviceID { get; private set; }
-        public MMDevice AudioEndPointDevice { get => AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID) ? AudioEndPointDeviceID : DefaultAudioEndPointDeviceID); }
+        
+        public MMDevice AudioEndPointDevice {
+            get
+            {
+                try
+                {
+                    return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
+                        ? AudioEndPointDeviceID
+                        : DefaultAudioEndPointDeviceID);
+                }
+                catch
+                {
+                    return AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+                }
+            }
+        }
+
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
         public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice.AudioSessionManager.Sessions; }
