@@ -681,7 +681,8 @@ namespace EspionSpotify
             Watcher.Running = false;
             _watcher.Dispose();
             _audioSession.Dispose();
-            
+            Instance.Dispose();
+
             Task.Run(async () => await _analytics.LogAction("exit"));
 
             Close();

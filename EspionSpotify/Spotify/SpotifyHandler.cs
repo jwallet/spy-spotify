@@ -2,13 +2,19 @@
 using EspionSpotify.Events;
 using EspionSpotify.Models;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
+using Timer = System.Timers.Timer;
+using ElapsedEventArgs = System.Timers.ElapsedEventArgs;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace EspionSpotify.Spotify
 {
     public class SpotifyHandler: ISpotifyHandler, IDisposable
     {
+        private bool _disposed = false;
+
         public const int EVENT_TIMER_INTERVAL = 50;
         public const int SONG_TIMER_INTERVAL = 1000;
 
@@ -66,7 +72,7 @@ namespace EspionSpotify.Spotify
             SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
             {
-                EventTimer.Start();
+                EventTimerStart();
                 return;
             }
 
@@ -77,11 +83,11 @@ namespace EspionSpotify.Spotify
                 {
                     if (newestTrack.Playing)
                     {
-                        SongTimer.Start();
+                        SongTimer?.Start();
                     }
                     else
                     {
-                        SongTimer.Stop();
+                        SongTimer?.Stop();
                     }
 
                     _ = Task.Run(() => OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
@@ -91,7 +97,7 @@ namespace EspionSpotify.Spotify
                 }
                 if (!newestTrack.Equals(Track))
                 {
-                    SongTimer.Start();
+                    SongTimer?.Start();
                     _ = Task.Run(() => OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
                         OldTrack = Track,
@@ -111,7 +117,19 @@ namespace EspionSpotify.Spotify
                 newestTrack.CurrentPosition = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : (int?)null;
                 Track = newestTrack;
             }
-            EventTimer.Start();
+            EventTimerStart();
+        }
+
+        private void EventTimerStart()
+        {
+            try
+            {
+                EventTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void ElapsedSongTick(object sender, ElapsedEventArgs e)
@@ -136,21 +154,38 @@ namespace EspionSpotify.Spotify
 
         public void Dispose()
         {
-            if (EventTimer != null)
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
             {
-                EventTimer.Stop();
-                EventTimer.Enabled = false;
-                EventTimer.Elapsed -= ElapsedEventTick;
-                EventTimer.Dispose();
+
+                if (EventTimer != null)
+                {
+                    EventTimer.Stop();
+                    EventTimer.Enabled = false;
+                    EventTimer.Elapsed -= ElapsedEventTick;
+
+                    EventTimer.Dispose();
+                }
+
+                if (SongTimer != null)
+                {
+                    SongTimer.Stop();
+                    SongTimer.Enabled = false;
+                    SongTimer.Elapsed -= ElapsedSongTick;
+
+                    SongTimer.Dispose();
+                }
             }
 
-            if (SongTimer != null)
-            {
-                SongTimer.Stop();
-                SongTimer.Enabled = false;
-                SongTimer.Elapsed -= ElapsedSongTick;
-                SongTimer.Dispose();
-            }
+            _disposed = true;
         }
     }
 }

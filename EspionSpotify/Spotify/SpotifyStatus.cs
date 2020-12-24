@@ -48,7 +48,8 @@ namespace EspionSpotify.Spotify
 
         private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = GetDashTags(spotifyWindowInfo.WindowTitle);
+            var tags = GetDashTags(spotifyWindowInfo.WindowTitle, 2);
+            var (titleTags, separatorType) = GetTitleTags(GetTitleTag(tags, 2) ?? "", 2);
 
             var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
@@ -58,8 +59,9 @@ namespace EspionSpotify.Spotify
                 Ad = isAd && isPlaying,
                 Playing = isPlaying,
                 Artist = GetTitleTag(tags, 1),
-                Title = GetTitleTag(tags, 2),
-                TitleExtended = GetTitleTag(tags, 3),
+                Title = GetTitleTag(titleTags, 1),
+                TitleExtended = GetTitleTag(titleTags, 2),
+                TitleExtendedSeparatorType = separatorType,
             };
         }
 

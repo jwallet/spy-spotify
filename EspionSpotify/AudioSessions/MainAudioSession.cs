@@ -15,7 +15,6 @@ namespace EspionSpotify.AudioSessions
         private const int NUMBER_OF_SAMPLES = 3;
 
         private bool _disposed = false;
-        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
 
         private readonly Process _spytifyProcess;
         private readonly string _audioEndPointDeviceID;
@@ -213,7 +212,6 @@ namespace EspionSpotify.AudioSessions
 
             if (disposing)
             {
-                _disposeHandle.Dispose();
                 AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
                 AudioMMDevices.Dispose();
             }

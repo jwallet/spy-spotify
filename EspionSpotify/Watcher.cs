@@ -20,7 +20,6 @@ namespace EspionSpotify
     public class Watcher : IWatcher, IDisposable
     {
         private bool _disposed = false;
-        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
         private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
@@ -389,12 +388,10 @@ namespace EspionSpotify
                     x.Token.Cancel();
                     x.Task.Wait();
                     x.Task.Dispose();
-                    x.Token.Dispose();
+                    //x.Token.Dispose();
                 });
 
                 if (_recorder != null) _recorder.Dispose();
-
-                _disposeHandle.Dispose();
             }
 
             _disposed = true;

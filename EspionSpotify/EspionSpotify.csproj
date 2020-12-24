@@ -192,6 +192,7 @@
     <Compile Include="Enums\AlbumCoverSize.cs" />
     <Compile Include="Enums\MediaTagsAPI.cs" />
     <Compile Include="Enums\MediaFormat.cs" />
+    <Compile Include="Enums\TitleSeparatorType.cs" />
     <Compile Include="Enums\TranslationKeys.cs" />
     <Compile Include="Enums\WaveFormatMP3Restriction.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />

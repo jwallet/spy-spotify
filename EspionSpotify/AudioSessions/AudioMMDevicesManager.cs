@@ -12,7 +12,6 @@ namespace EspionSpotify.AudioSessions
     public class AudioMMDevicesManager : NAudio.CoreAudioApi.Interfaces.IMMNotificationClient, IDisposable
     {
         private bool _disposed = false;
-        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
         private MMDevice _defaultEndpointVolumeController;
 
         internal bool volumeNotificationEmitted = false;
@@ -24,16 +23,9 @@ namespace EspionSpotify.AudioSessions
         public MMDevice AudioEndPointDevice {
             get
             {
-                try
-                {
-                    return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
-                        ? AudioEndPointDeviceID
-                        : DefaultAudioEndPointDeviceID);
-                }
-                catch
-                {
-                    return AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-                }
+                return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
+                    ? AudioEndPointDeviceID
+                    : DefaultAudioEndPointDeviceID);
             }
         }
 
@@ -119,8 +111,7 @@ namespace EspionSpotify.AudioSessions
         public void Dispose()
         {
             Dispose(true);
-            AudioMMDevices.Dispose();
-            _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
+ 
             GC.SuppressFinalize(this);
         }
 
@@ -131,7 +122,9 @@ namespace EspionSpotify.AudioSessions
 
             if (disposing)
             {
-                _disposeHandle.Dispose();
+                _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
+                _defaultEndpointVolumeController.Dispose();
+                AudioMMDevices.Dispose();
             }
 
             _disposed = true;

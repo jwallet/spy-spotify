@@ -18,7 +18,6 @@ namespace EspionSpotify
     public class Recorder : IRecorder, IDisposable
     {
         private bool _disposed = false;
-        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
 
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
@@ -39,6 +38,7 @@ namespace EspionSpotify
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private bool _canBeSkippedValidated = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public bool IsSkipTrackActive
         {
@@ -60,8 +60,10 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
-        public async Task Run(CancellationTokenSource token)
+        public async Task Run(CancellationTokenSource cancellationTokenSource)
         {
+            _cancellationTokenSource = cancellationTokenSource;
+
             if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
 
             Running = true;
@@ -86,12 +88,13 @@ namespace EspionSpotify
                 return;
             }
 
+            _waveIn.ShareMode = NAudio.CoreAudioApi.AudioClientShareMode.Shared;
             _waveIn.StartRecording();
             _form.WriteIntoConsole(I18nKeys.LogRecording, _track.ToString());
 
             while (Running)
             {
-                if (token.IsCancellationRequested) return;
+                if (_cancellationTokenSource.IsCancellationRequested) return;
                 if (StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
@@ -190,7 +193,7 @@ namespace EspionSpotify
                 }
                 else
                 {
-                    await reader.CopyToAsync(_fileWriter);
+                    await reader.CopyToAsync(_fileWriter,81920, _cancellationTokenSource.Token);
                 }
             }
         }
@@ -356,9 +359,16 @@ namespace EspionSpotify
         {
             _form.UpdateIconSpotify(true, false);
             Running = false;
-            DeleteTempFile();
+            
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+            _waveIn.StopRecording();
+            _waveIn.Dispose();
+            
+            _tempWaveWriter.Close();
+            _tempWaveWriter.Dispose();
+
+            DeleteTempFile();
         }
 
         public void Dispose()
@@ -378,11 +388,13 @@ namespace EspionSpotify
                 {
                     _waveIn.DataAvailable -= WaveIn_DataAvailable;
                     _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+                    _waveIn.StopRecording();
                     _waveIn.Dispose();
                 }
 
                 if (_tempWaveWriter != null)
                 {
+                    _tempWaveWriter.Close();
                     _tempWaveWriter.Dispose();
                 }
 
@@ -396,8 +408,6 @@ namespace EspionSpotify
                 if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
                 try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
-
-                _disposeHandle.Dispose();
             }
 
             _disposed = true;
