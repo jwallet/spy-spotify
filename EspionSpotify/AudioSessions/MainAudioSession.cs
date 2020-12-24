@@ -18,6 +18,7 @@ namespace EspionSpotify.AudioSessions
         private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
 
         private readonly Process _spytifyProcess;
+        private readonly string _audioEndPointDeviceID;
         private ICollection<int> _spotifyProcessesIds;
 
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
@@ -26,11 +27,13 @@ namespace EspionSpotify.AudioSessions
         public bool IsAudioEndPointDeviceIndexAvailable { get => AudioMMDevicesManager.AudioEndPointDeviceNames.ContainsKey(AudioMMDevicesManager.AudioEndPointDeviceID); }
 
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; } = new List<AudioSessionControl>();
+        public void ClearSpotifyAudioSessionControls() => SpotifyAudioSessionControls = new List<AudioSessionControl>();
 
         private SessionCollection GetSessionsAudioEndPointDevice => AudioMMDevicesManager.GetAudioEndPointDeviceSessions;
 
         public MainAudioSession(string audioEndPointDeviceID)
         {
+            _audioEndPointDeviceID = audioEndPointDeviceID;
             _spytifyProcess = Process.GetCurrentProcess();
 
             AudioMMDevices = new MMDeviceEnumerator();
@@ -114,7 +117,6 @@ namespace EspionSpotify.AudioSessions
                     return true;
                 }
             }
-            
 
             return false;
         }

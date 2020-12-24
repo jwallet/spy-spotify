@@ -194,7 +194,12 @@ namespace EspionSpotify
                 EndRecordingSession();
             }
 
-            if (SpotifyConnect.IsSpotifyRunning())
+            if (isAudioSessionNotFound)
+            {
+                _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
+                Running = false;
+            }
+            else if (SpotifyConnect.IsSpotifyRunning())
             {
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
@@ -208,11 +213,6 @@ namespace EspionSpotify
                         _form.WriteIntoConsole(I18nKeys.LogSpotifyIsClosed);
                         Running = false;
                     }
-                    else if (isAudioSessionNotFound)
-                    {
-                        _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
-                        Running = false;
-                    }
                     else if (ToggleStopRecordingDelayed)
                     {
                         ToggleStopRecordingDelayed = false;
@@ -224,7 +224,7 @@ namespace EspionSpotify
                         _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
                         ToggleStopRecordingDelayed = true;
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(500);
                 }
 
                 DoIKeepLastSong();
@@ -310,6 +310,7 @@ namespace EspionSpotify
             {
                 MutesSpotifyAds(false);
                 _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                _audioSession.ClearSpotifyAudioSessionControls();
 
                 Spotify.ListenForEvents = false;
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;

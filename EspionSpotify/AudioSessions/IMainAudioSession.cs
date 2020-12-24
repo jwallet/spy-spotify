@@ -10,6 +10,7 @@ namespace EspionSpotify.AudioSessions
         AudioMMDevicesManager AudioMMDevicesManager { get; }
 
         ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
+        void ClearSpotifyAudioSessionControls();
 
         int AudioDeviceVolume { get; }
         bool IsAudioEndPointDeviceIndexAvailable { get; }
