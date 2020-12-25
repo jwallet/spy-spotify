@@ -382,11 +382,7 @@ namespace EspionSpotify
                 rtbLog.SelectionColor = resource.Equals(TranslationKeys.logRecording)
                     ? rtbLog.SelectionColor.SpotifyPrimaryText()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
-                rtbLog.SelectionFont = new Font(
-                    rtbLog.SelectionFont.FontFamily,
-                    rtbLog.SelectionFont.Size,
-                    FontStyle.Bold
-                );
+                rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Bold);
 
                 // set message msg
                 rtbLog.AppendText(msg + Environment.NewLine);
@@ -394,11 +390,7 @@ namespace EspionSpotify
                 rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(TranslationKeys.logDeleting)
                     ? rtbLog.SelectionColor.SpotifySecondaryTextAlternate()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
-                rtbLog.SelectionFont = new Font(
-                    rtbLog.SelectionFont.FontFamily,
-                    rtbLog.SelectionFont.Size,
-                    FontStyle.Regular
-                );
+                rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
             }
             else
             {
@@ -436,6 +428,9 @@ namespace EspionSpotify
 
             rtbLog.AppendText(LogDate + Rm.GetString(I18nKeys.LogPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
+            rtbLog.Select(0, rtbLog.TextLength);
+            rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
+            
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
         }
@@ -510,6 +505,15 @@ namespace EspionSpotify
             icon.Image.Dispose();
             icon.Image = bmp;
             icon.Refresh();
+        }
+
+        private Font GetDefaultSelectionFont(FontStyle style)
+        {
+            return new Font(
+                new FontFamily("Courier New"),
+                8.25f,
+                style
+            );
         }
 
         private bool UpdateAudioVirtualCableDriverImage()
@@ -821,8 +825,6 @@ namespace EspionSpotify
             {
                 if (iconVolume.BackgroundImage != Resources.volup) iconVolume.BackgroundImage = Resources.volup;
             }
-
-            Task.Run(async () => await _analytics.LogAction("volume"));
         }
 
         private void Focus_Hover(object sender, EventArgs e)
