@@ -40,10 +40,12 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
         {
-            var track = new Track();
+            var track = new Track() { Artist = "Artist", Title = "Title" };
 
             var trackExtra = new LastFMTrack()
             {
+                Name = "Updated Title",
+                Artist = new Artist { Name = "Updated Artist" },
                 Album = new Album()
                 {
                     Title = "Album Title",
@@ -69,6 +71,8 @@ namespace EspionSpotify.Tests
 
             _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);
 
+            Assert.Equal("Updated Title", track.Title);
+            Assert.Equal("Updated Artist", track.Artist);
             Assert.Equal("Album Title", track.Album);
             Assert.Equal(5, track.AlbumPosition);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, track.Genres);
@@ -82,10 +86,11 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapLastFMAPTrackToTrack_ReturnsExpectedMissingInfoTrack()
         {
-            var track = new Track();
+            var track = new Track() { Artist = "Artist", Title = "Title" };
 
             var trackExtra = new LastFMTrack()
             {
+                Artist = new Artist(),
                 Album = new Album()
                 {
                     Image = new List<Image>() {
@@ -108,6 +113,8 @@ namespace EspionSpotify.Tests
 
             _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);
 
+            Assert.Equal("Title", track.Title);
+            Assert.Equal("Artist", track.Artist);
             Assert.Null(track.Album);
             Assert.Null(track.AlbumPosition);
             Assert.Equal(new string[] { }, track.Genres);

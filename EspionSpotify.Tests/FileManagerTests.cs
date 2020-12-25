@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using NAudio.Lame;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace EspionSpotify.Tests
                 OrderNumberInfrontOfFileEnabled = false,
                 EndingTrackDelayEnabled = true,
                 MuteAdsEnabled = true,
-                RecordEverythingEnabled = false,
+                RecordUnknownTrackTypeEnabled = false,
                 InternalOrderNumber = 1
             };
 
@@ -43,6 +44,7 @@ namespace EspionSpotify.Tests
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 Album = "Single",
                 Ad = false
             };
@@ -419,6 +421,7 @@ namespace EspionSpotify.Tests
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 Album = "Single",
                 Ad = false,
                 AlbumArtists = new[] { "DJ" },

@@ -34,7 +34,7 @@ namespace EspionSpotify.Models
             set => _titleExtended = string.IsNullOrEmpty(value) ? null : value;
         }
 
-        public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.Dash;
+        public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.None;
 
         public void SetArtistFromAPI(string value) => _apiArtist = value;
         public void SetTitleFromAPI(string value) => _apiTitle = value;
@@ -105,9 +105,16 @@ namespace EspionSpotify.Models
 
         private string GetTitleExtended()
         {
-            return !string.IsNullOrEmpty(TitleExtended)
-                ? TitleExtendedSeparatorType == TitleSeparatorType.Dash ? $" - {TitleExtended}" : $" ({TitleExtended})"
-                : string.Empty;
+            if (string.IsNullOrEmpty(TitleExtended)) return null;
+            switch (TitleExtendedSeparatorType)
+            {
+                case TitleSeparatorType.Dash:
+                    return $" - {TitleExtended}";
+                case TitleSeparatorType.Parenthesis:
+                    return $" ({TitleExtended})";
+                default:
+                    return "";
+            }
         }
 
         public override string ToString()

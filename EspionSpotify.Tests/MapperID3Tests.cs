@@ -87,6 +87,7 @@ namespace EspionSpotify.Tests
                 Artist = "Artist",
                 Title = "Song",
                 TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 AlbumPosition = 1,
                 AlbumArtists = new[] { "Alpha", "Bravo", "Charlie" },
                 Performers = new[] { "Delta", "Echo", "Foxtrot" },
