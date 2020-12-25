@@ -170,12 +170,12 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool RecordUnknownTrackTypeEnabled {
+        public bool RecordEverythingEnabled {
             get {
-                return ((bool)(this["RecordUnknownTrackTypeEnabled"]));
+                return ((bool)(this["RecordEverythingEnabled"]));
             }
             set {
-                this["RecordUnknownTrackTypeEnabled"] = value;
+                this["RecordEverythingEnabled"] = value;
             }
         }
         
@@ -308,6 +308,18 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["ExtraTitleToSubtitleEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecordNoAdsEnabled {
+            get {
+                return ((bool)(this["RecordNoAdsEnabled"]));
+            }
+            set {
+                this["RecordNoAdsEnabled"] = value;
             }
         }
     }

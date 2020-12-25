@@ -88,6 +88,8 @@ namespace EspionSpotify
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
             chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
+            chkRecordNoAds.Enabled = Settings.Default.RecordEverythingEnabled;
+
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
@@ -101,7 +103,8 @@ namespace EspionSpotify
             tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
             tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
             chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
-            tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
+            tgRecordEverything.Checked = Settings.Default.RecordEverythingEnabled;
+            chkRecordNoAds.Checked = Settings.Default.RecordNoAdsEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
             txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
 
@@ -135,7 +138,8 @@ namespace EspionSpotify
             _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OutputPath = Settings.Default.Directory;
-            _userSettings.RecordUnknownTrackTypeEnabled = Settings.Default.RecordUnknownTrackTypeEnabled;
+            _userSettings.RecordEverythingEnabled = Settings.Default.RecordEverythingEnabled;
+            _userSettings.RecordNoAdsEnabled = Settings.Default.RecordNoAdsEnabled;
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
@@ -235,7 +239,8 @@ namespace EspionSpotify
             lblMuteAds.Text = Rm.GetString(I18nKeys.LblMuteAds);
             lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
-            lblRecordUnknownTrackType.Text = Rm.GetString(I18nKeys.LblRecordUnknownTrackType);
+            lblRecordEverything.Text = Rm.GetString(I18nKeys.LblRecordEverything);
+            chkRecordNoAds.Text = Rm.GetString(I18nKeys.LblRecordNoAds);
             lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
             chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
@@ -574,20 +579,34 @@ namespace EspionSpotify
             Task.Run(async () => await _analytics.LogAction($"media-tags-api?type={api.ToString()}"));
         }
 
-        private void TgRecordUnkownTrackType_CheckedChanged(object sender, EventArgs e)
+        private void TgRecordEverything_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordUnknownTrackTypeEnabled == tgRecordUnkownTrackType.Checked) return;
+            if (Settings.Default.RecordEverythingEnabled == tgRecordEverything.Checked) return;
 
-            _userSettings.RecordUnknownTrackTypeEnabled = tgRecordUnkownTrackType.Checked;
-            Settings.Default.RecordUnknownTrackTypeEnabled = tgRecordUnkownTrackType.Checked;
+            chkRecordNoAds.Enabled = tgRecordEverything.Checked;
+
+            _userSettings.RecordEverythingEnabled = tgRecordEverything.Checked;
+            Settings.Default.RecordEverythingEnabled = tgRecordEverything.Checked;
             Settings.Default.Save();
 
-            if (tgRecordUnkownTrackType.Checked)
+            if (tgRecordEverything.Checked)
             {
                 tgMuteAds.Checked = false;
             }
 
-            Task.Run(async () => await _analytics.LogAction($"record-unknown-type?enabled={ tgRecordUnkownTrackType.GetPropertyThreadSafe(c => c.Checked)}"));
+            Task.Run(async () => await _analytics.LogAction(
+                $"record-everything?enabled={tgRecordEverything.GetPropertyThreadSafe(c => c.Checked)}&except-ads={_userSettings.RecordNoAdsEnabled}"));
+        }
+
+        private void ChkRecordNoAds_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.RecordNoAdsEnabled == chkRecordDuplicateRecordings.Checked) return;
+
+            Settings.Default.RecordNoAdsEnabled = chkRecordNoAds.Checked;
+            Settings.Default.Save();
+
+            Task.Run(async () => await _analytics.LogAction(
+                $"record-everything?enabled={_userSettings.RecordEverythingEnabled}&except-ads={chkRecordNoAds.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
@@ -653,6 +672,8 @@ namespace EspionSpotify
         private void TgRecordOverRecordings_CheckedChanged(object sender, EventArgs e)
         {
             if (Settings.Default.RecordOverRecordingsEnabled == tgRecordOverRecordings.Checked) return;
+
+            chkRecordDuplicateRecordings.Enabled = tgRecordOverRecordings.Checked;
 
             Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
             Settings.Default.RecordOverRecordingsEnabled = tgRecordOverRecordings.Checked;

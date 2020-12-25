@@ -49,8 +49,9 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordUnknownTrackTypeEnabled
-                && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString());
+            get => _userSettings.RecordEverythingEnabled
+                && (_userSettings.RecordNoAdsEnabled
+                    || !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()));
         }
         public bool IsTypeAllowed
         {
@@ -200,6 +201,11 @@ namespace EspionSpotify
             }
             else if (SpotifyConnect.IsSpotifyRunning())
             {
+                if (!ExternalAPI.Instance.IsAuthenticated)
+                {
+                    await ExternalAPI.Instance.Authenticate();
+                }
+
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
                 NativeMethods.PreventSleep();
@@ -359,7 +365,7 @@ namespace EspionSpotify
 
         private void MutesSpotifyAds(bool value)
         {
-            if (_userSettings.MuteAdsEnabled  && !_userSettings.RecordUnknownTrackTypeEnabled)
+            if (_userSettings.MuteAdsEnabled  && !_userSettings.RecordEverythingEnabled)
             {
                 _audioSession.SetSpotifyToMute(value);
             }
@@ -388,7 +394,6 @@ namespace EspionSpotify
                     x.Token.Cancel();
                     x.Task.Wait();
                     x.Task.Dispose();
-                    //x.Token.Dispose();
                 });
 
                 if (_recorder != null) _recorder.Dispose();

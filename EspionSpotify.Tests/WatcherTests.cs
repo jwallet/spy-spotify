@@ -74,7 +74,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
+            var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -88,7 +88,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
+            var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -102,7 +102,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_FalsyWhenDisabledAndAnyTitlePlaying()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = false };
+            var userSettings = new UserSettings { RecordEverythingEnabled = false };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -116,7 +116,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_FalsyWhenAnyTitlePlaying()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
+            var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -130,7 +130,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_TruthyWhenAnyTitlePlayingAsAd()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
+            var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -144,7 +144,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsRecordUnknownActive_TruthyWhenTrackIsPlaying()
         {
-            var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
+            var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
@@ -171,7 +171,7 @@ namespace EspionSpotify.Tests
                 track.Artist = "Spotify";
                 track.Title = null;
             }
-            _userSettings.RecordUnknownTrackTypeEnabled = recordUnknownTrackTypeEnabled;
+            _userSettings.RecordEverythingEnabled = recordUnknownTrackTypeEnabled;
             var watcher = new Watcher(_formMock, _audioSession, _userSettings, track, _fileSystem);
 
             Assert.Equal(expected, watcher.IsTypeAllowed);

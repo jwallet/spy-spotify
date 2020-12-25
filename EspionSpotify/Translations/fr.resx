@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -197,8 +197,8 @@
     <value>Modifier la position de départ du compteur</value>
     <comment>interface</comment>
   </data>
-  <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Enregistrer les pistes de type inconnu détectées en tant que publicité</value>
+  <data name="lblRecordEverything" xml:space="preserve">
+    <value>Enregistrer tout.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
@@ -435,6 +435,10 @@
   </data>
   <data name="lblID3" xml:space="preserve">
     <value>Tags Média:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordNoAds" xml:space="preserve">
+    <value>Excepté les annonces</value>
     <comment>interface</comment>
   </data>
   <data name="tipSpotifyAPIDashboard" xml:space="preserve">

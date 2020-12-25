@@ -1,4 +1,4 @@
-namespace EspionSpotify.Enums
+﻿namespace EspionSpotify.Enums
 {
     public enum TranslationKeys
     {
@@ -26,7 +26,8 @@ namespace EspionSpotify.Enums
         lblNumTracks,
         lblPath,
         lblRecorder,
-        lblRecordUnknownTrackType,
+        lblRecordEverything,
+        lblRecordNoAds,
         lblRecordingNum,
         lblRecordingTimer,
         lblRecordOverRecordings,

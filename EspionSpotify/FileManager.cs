@@ -1,3 +1,4 @@
+﻿using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System;
@@ -35,7 +36,7 @@ namespace EspionSpotify
         {
             var folderPath = GetFolderPath(_track, _userSettings);
             var pathName = GetOutputPath(_track, _userSettings) + folderPath;
-
+            
             CreateDirectories(_track, _userSettings);
 
             var fileName = GenerateFileName(_track, _userSettings, _now);
@@ -125,12 +126,21 @@ namespace EspionSpotify
         private static string GetOutputPath(Track track, UserSettings userSettings)
         {
             var outputPath = userSettings.OutputPath;
+            if (userSettings.RecordEverythingEnabled && !userSettings.RecordNoAdsEnabled && track.Ad) {
+                return $@"{outputPath}\{SpotifyStatus.ADVERTISEMENT.Capitalize()}";
+            }
             return outputPath;
         }
 
         private void CreateDirectories(Track track, UserSettings userSettings)
         {
             var outputPath = userSettings.OutputPath;
+            if (track.Ad && userSettings.RecordEverythingEnabled && !userSettings.RecordNoAdsEnabled)
+            {
+                outputPath = $@"{outputPath}\{SpotifyStatus.ADVERTISEMENT.Capitalize()}";
+                CreateDirectory(outputPath);
+            }
+
             if (!userSettings.GroupByFoldersEnabled) return;
 
             var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
@@ -158,7 +168,12 @@ namespace EspionSpotify
                 ? Normalize.RemoveDiacritics(track.ToTitleString())
                 : Normalize.RemoveDiacritics(track.ToString());
 
-                fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
+            if (track.Ad)
+            {
+                fileName = now.ToString("yyyyMMddHHmmss");
+            }
+
+            fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
 
             var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
             return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator); ;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -185,8 +185,8 @@
     <value>Aufnahmegerät:</value>
     <comment>interface</comment>
   </data>
-  <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Aufnehmen nicht erkannte Stücke als Werbung</value>
+  <data name="lblRecordEverything" xml:space="preserve">
+    <value>Alles Aufnehmen.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
@@ -435,6 +435,10 @@
   </data>
   <data name="lblID3" xml:space="preserve">
     <value>Medien-Tags:</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="lblRecordNoAds" xml:space="preserve">
+    <value>Außer Anzeigen</value>
     <comment>interface**</comment>
   </data>
   <data name="tipSpotifyAPIDashboard" xml:space="preserve">
