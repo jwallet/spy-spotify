@@ -187,11 +187,29 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move extra title of the track to the subtitle tag.
+        /// </summary>
+        internal static string lblExtraTitleToSubtitle {
+            get {
+                return ResourceManager.GetString("lblExtraTitleToSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audio format:.
         /// </summary>
         internal static string lblFormat {
             get {
                 return ResourceManager.GetString("lblFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media Tags:.
+        /// </summary>
+        internal static string lblID3 {
+            get {
+                return ResourceManager.GetString("lblID3", resourceCulture);
             }
         }
         
@@ -232,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace track number by the counter value.
+        ///   Looks up a localized string similar to Replace track number tag by the counter value.
         /// </summary>
         internal static string lblNumTracks {
             get {

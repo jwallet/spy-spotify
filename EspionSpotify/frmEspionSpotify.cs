@@ -98,6 +98,7 @@ namespace EspionSpotify
             txtPath.Text = Settings.Default.Directory;
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
+            tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
             chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
@@ -137,6 +138,7 @@ namespace EspionSpotify
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
+            _userSettings.ExtraTitleToSubtitleEnabled = Settings.Default.ExtraTitleToSubtitleEnabled;
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(_userSettings.OrderNumberMask);
 
@@ -236,6 +238,8 @@ namespace EspionSpotify
             lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
             chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
+            lblExtraTitleToSubtitle.Text = Rm.GetString(I18nKeys.LblExtraTitleToSubtitle);
+            lblID3.Text = Rm.GetString(I18nKeys.LblID3);
 
             tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
@@ -917,6 +921,16 @@ namespace EspionSpotify
             }
 
             _frmSpotifyApiCredentials.Dispose();
+        }
+
+        private void TgExtraTitleToSubtitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.ExtraTitleToSubtitleEnabled == tgExtraTitleToSubtitle.Checked) return;
+
+            _userSettings.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
+            Settings.Default.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"move-extra-title-to-subtitle?enabled={tgExtraTitleToSubtitle.GetPropertyThreadSafe(c => c.Checked)}"));
         }
     }
 }

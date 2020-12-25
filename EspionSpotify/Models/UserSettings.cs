@@ -18,6 +18,7 @@ namespace EspionSpotify.Models
         public bool EndingTrackDelayEnabled { get; set; }
         public bool MuteAdsEnabled { get; set; }
         public bool RecordUnknownTrackTypeEnabled { get; set; }
+        public bool ExtraTitleToSubtitleEnabled { get; set; }
         public int InternalOrderNumber { get; set; } = 1;
         public RecordRecordingsStatus RecordRecordingsStatus { get; set; }
         public string AudioEndPointDeviceID { get; set; }

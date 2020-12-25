@@ -206,8 +206,7 @@ namespace EspionSpotify
                     var mapper = new MediaTags.MapperID3(
                         _currentOutputFile.ToString(),
                         _track,
-                        _userSettings.OrderNumberInMediaTagEnabled,
-                        _userSettings.OrderNumberAsTag);
+                        _userSettings);
                     await mapper.SaveMediaTags();
                     return;
                 default:

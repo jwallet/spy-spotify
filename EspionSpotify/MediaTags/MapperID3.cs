@@ -11,6 +11,7 @@ namespace EspionSpotify.MediaTags
 {
     public class MapperID3
     {
+        private bool _extraTitleToSubtitleEnabled;
         public string CurrentFile { get; set; }
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
@@ -18,16 +19,26 @@ namespace EspionSpotify.MediaTags
         
         private readonly IFileSystem _fileSystem;
 
-        internal MapperID3(string currentFile, Track track, bool orderNumberInMediaTagEnabled, int? count = null):
-            this(fileSystem: new FileSystem(), currentFile, track, orderNumberInMediaTagEnabled, count) { }
+        private bool IsMovingExtraTitleToSubtitle
+        {
+            get
+            {
+                return _extraTitleToSubtitleEnabled
+                    && Track.TitleExtendedSeparatorType == Enums.TitleSeparatorType.Parenthesis;
+            }
+        }
 
-        public MapperID3(IFileSystem fileSystem, string currentFile, Track track, bool orderNumberInMediaTagEnabled, int? count = null)
+        internal MapperID3(string currentFile, Track track, UserSettings userSettings):
+            this(fileSystem: new FileSystem(), currentFile, track, userSettings) { }
+
+        public MapperID3(IFileSystem fileSystem, string currentFile, Track track, UserSettings userSettings)
         {
             _fileSystem = fileSystem;
             CurrentFile = currentFile;
             Track = track;
-            OrderNumberInMediaTagEnabled = orderNumberInMediaTagEnabled;
-            Count = count;
+            OrderNumberInMediaTagEnabled = userSettings.OrderNumberInMediaTagEnabled;
+            Count = userSettings.OrderNumberAsTag;
+            _extraTitleToSubtitleEnabled = userSettings.ExtraTitleToSubtitleEnabled;
         }
 
         public async Task MapTags(TagLib.Tag tags)
@@ -38,8 +49,8 @@ namespace EspionSpotify.MediaTags
                 tags.Track = (uint)trackNumber.Value;
             }
 
-            tags.Title = Track.Title;
-            tags.Subtitle = Track.TitleExtended;
+            tags.Title = IsMovingExtraTitleToSubtitle ? Track.Title : Track.ToTitleString();
+            tags.Subtitle = IsMovingExtraTitleToSubtitle ? Track.TitleExtended : null;
 
             tags.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
             tags.Performers = Track.Performers ?? new[] { Track.Artist };

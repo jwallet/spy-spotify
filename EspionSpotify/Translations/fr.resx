@@ -182,7 +182,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Remplacer le numéro de position cd (album track) par la valeur du compteur</value>
+    <value>Remplacer le tag numéro de position cd (album track) par la valeur du compteur</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -427,6 +427,14 @@
   </data>
   <data name="watermarkSecretId" xml:space="preserve">
     <value>Coller le Client Secret ici</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Déplacer l'extra du titre de la piste audio dans le tag second titre</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Tags Média:</value>
     <comment>interface</comment>
   </data>
 </root>

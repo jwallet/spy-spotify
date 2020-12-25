@@ -182,7 +182,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Replace track number by the counter value</value>
+    <value>Replace track number tag by the counter value</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -427,6 +427,14 @@
   </data>
   <data name="watermarkSecretId" xml:space="preserve">
     <value>Paste the Client Secret here</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Move extra title of the track to the subtitle tag</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Media Tags:</value>
     <comment>interface</comment>
   </data>
 </root>

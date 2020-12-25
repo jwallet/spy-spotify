@@ -18,8 +18,6 @@ namespace EspionSpotify.Models
         private string _titleExtended = null;
         private string _apiTitleExtended = null;
 
-        private TitleSeparatorType _titleSeparatorType = TitleSeparatorType.Dash;
-
         public string Artist
         {
             get => _apiArtist ?? _artist;
@@ -36,7 +34,7 @@ namespace EspionSpotify.Models
             set => _titleExtended = string.IsNullOrEmpty(value) ? null : value;
         }
 
-        public TitleSeparatorType TitleExtendedSeparatorType { set => _titleSeparatorType = value; }
+        public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.Dash;
 
         public void SetArtistFromAPI(string value) => _apiArtist = value;
         public void SetTitleFromAPI(string value) => _apiTitle = value;
@@ -108,7 +106,7 @@ namespace EspionSpotify.Models
         private string GetTitleExtended()
         {
             return !string.IsNullOrEmpty(TitleExtended)
-                ? _titleSeparatorType == TitleSeparatorType.Dash ? $" - {TitleExtended}" : $" ({TitleExtended})"
+                ? TitleExtendedSeparatorType == TitleSeparatorType.Dash ? $" - {TitleExtended}" : $" ({TitleExtended})"
                 : string.Empty;
         }
 

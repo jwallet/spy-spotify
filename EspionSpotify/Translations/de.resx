@@ -429,4 +429,12 @@
     <value>Paste the Client Secret here</value>
     <comment>interface -- translate me</comment>
   </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Move extra title of the track to the subtitle tag</value>
+    <comment>interface -- translate me</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Media Tags:</value>
+    <comment>interface -- translate me</comment>
+  </data>
 </root>

@@ -298,5 +298,17 @@ namespace EspionSpotify.Properties {
                 this["SpotifyAPIClientId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExtraTitleToSubtitleEnabled {
+            get {
+                return ((bool)(this["ExtraTitleToSubtitleEnabled"]));
+            }
+            set {
+                this["ExtraTitleToSubtitleEnabled"] = value;
+            }
+        }
     }
 }
