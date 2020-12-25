@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,23 +119,23 @@
   </resheader>
   <data name="cbOptBitRate128" xml:space="preserve">
     <value>128kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate160" xml:space="preserve">
     <value>160kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate256" xml:space="preserve">
     <value>256kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate320" xml:space="preserve">
     <value>320kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
     <value>{0} (Spotify Free)</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
     <value>{0} Hohe Qualität (Spotify Premium)</value>
@@ -390,51 +390,55 @@
     <comment>console</comment>
   </data>
   <data name="msgBodyFailedToUseSpotifyAPI" xml:space="preserve">
-    <value>Lost connection to Spotify API. Make sure you authorized Spytify on the same Spotify account that is currently connected to Spotify-Desktop app to be able to get metadata of the current track. In the meantime Spytify will use LastFM API.</value>
-    <comment>message -- translate me</comment>
+    <value>Verbindung zur Spotify-API unterbrochen. Stellen Sie sicher, dass Sie Spytify für dasselbe Spotify-Konto autorisiert haben, das derzeit mit der Spotify-Desktop-App verbunden ist, um Metadaten des aktuellen Titels abrufen zu können. In der Zwischenzeit wird Spytify die LastFM-API verwenden.</value>
+    <comment>message**</comment>
   </data>
   <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
-    <value>Spotify API Failed</value>
-    <comment>message -- translate me</comment>
+    <value>Spotify API ist fehlgeschlagen</value>
+    <comment>message**</comment>
   </data>
   <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode.</value>
-    <comment>console - translate me</comment>
+    <value>// Die Aufzeichnung von {0} würde die Datenmenge überschreiten, was häufig darauf zurückzuführen ist, dass Spotify nicht reagiert, nachdem es zu lange im Hintergrund war oder sich Ihr Computer im Energiesparmodus befindet.</value>
+    <comment>console**</comment>
   </data>
   <data name="lblClientId" xml:space="preserve">
-    <value>Client ID:</value>
-    <comment>interface</comment>
+    <value>Client-ID:</value>
+    <comment>interface --</comment>
   </data>
   <data name="lblSecretId" xml:space="preserve">
-    <value>Client Secret:</value>
-    <comment>interface</comment>
+    <value>Client-Secret:</value>
+    <comment>interface --</comment>
   </data>
   <data name="tipFAQSpotifyAPI" xml:space="preserve">
-    <value>See how to configure and use Spotify API</value>
-    <comment>interface -- translate me</comment>
+    <value>Erfahren Sie, wie Sie die Spotify-API konfigurieren und verwenden</value>
+    <comment>interface**</comment>
   </data>
   <data name="tipSpotifyAPICredentials" xml:space="preserve">
-    <value>Manage Spotify API credentials</value>
-    <comment>interface -- translate me</comment>
+    <value>Verwalten der Spotify-API-Anmeldeinformationen</value>
+    <comment>interface**</comment>
   </data>
   <data name="titleSpotifyAPICredentials" xml:space="preserve">
-    <value>Spotify API Credentials</value>
-    <comment>interface -- translate me</comment>
+    <value>Spotify API-Anmeldeinformationen</value>
+    <comment>interface**</comment>
   </data>
   <data name="watermarkClientId" xml:space="preserve">
-    <value>Paste the Client ID here</value>
-    <comment>interface -- translate me</comment>
+    <value>Fügen Sie hier die Client-ID ein</value>
+    <comment>interface**</comment>
   </data>
   <data name="watermarkSecretId" xml:space="preserve">
-    <value>Paste the Client Secret here</value>
-    <comment>interface -- translate me</comment>
+    <value>Fügen Sie hier das Client-Secret ein</value>
+    <comment>interface**</comment>
   </data>
   <data name="lblExtraTitleToSubtitle" xml:space="preserve">
-    <value>Move extra title of the track to the subtitle tag</value>
-    <comment>interface -- translate me</comment>
+    <value>Verschieben Sie den zusätzlichen Titel des Titels in das Untertitel-Tag</value>
+    <comment>interface**</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Media Tags:</value>
-    <comment>interface -- translate me</comment>
+    <value>Medien-Tags:</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="tipSpotifyAPIDashboard" xml:space="preserve">
+    <value>Spotify API Dashboard</value>
+    <comment>interface**</comment>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Enums;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Models
 {
@@ -82,6 +82,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys TipNumModifierHold { get => TranslationKeys.tipNumModifierHold; }
         public static TranslationKeys TipPath { get => TranslationKeys.tipPath; }
         public static TranslationKeys TipRelease { get => TranslationKeys.tipRelease; }
+        public static TranslationKeys TipSpotifyAPIDashboard { get => TranslationKeys.tipSpotifyAPIDashboard; }
         public static TranslationKeys TipUninstallVirtualCableDriver { get => TranslationKeys.tipUninstallVirtualCableDriver; }
         public static TranslationKeys TipSpotifyAPICredentials { get => TranslationKeys.tipSpotifyAPICredentials; }
         public static TranslationKeys TipStartSpying { get => TranslationKeys.tipStartSpying; }

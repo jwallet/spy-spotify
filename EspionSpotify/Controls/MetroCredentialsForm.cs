@@ -20,7 +20,7 @@ namespace EspionSpotify.Controls
 
         private const int OAUTH2_KEY_LENGTH = 32;
         private MetroFramework.Components.MetroToolTip tip;
-
+        private MetroLink lnkSpotifyAPIDashboard;
         private readonly Analytics _analytics;
 
         public FrmSpotifyAPICredentials(Analytics analytics)
@@ -41,6 +41,7 @@ namespace EspionSpotify.Controls
             txtSecretId.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.WatermarkSecretId);
 
             tip.SetToolTip(lnkFAQSpotifyAPI, FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TipFAQSpotifyAPI));
+            tip.SetToolTip(lnkSpotifyAPIDashboard, FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TipSpotifyAPIDashboard));
         }
 
         #region Components
@@ -54,6 +55,7 @@ namespace EspionSpotify.Controls
             this.lblSecretId = new MetroFramework.Controls.MetroLabel();
             this.lnkFAQSpotifyAPI = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
+            this.lnkSpotifyAPIDashboard = new MetroFramework.Controls.MetroLink();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -206,18 +208,33 @@ namespace EspionSpotify.Controls
             this.tip.StyleManager = null;
             this.tip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
-            // frmSpotifyAPICredentials
+            // lnkSpotifyAPIDashboard
+            // 
+            this.lnkSpotifyAPIDashboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkSpotifyAPIDashboard.Image = global::EspionSpotify.Properties.Resources.spotify;
+            this.lnkSpotifyAPIDashboard.ImageSize = 14;
+            this.lnkSpotifyAPIDashboard.Location = new System.Drawing.Point(344, 5);
+            this.lnkSpotifyAPIDashboard.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkSpotifyAPIDashboard.Name = "lnkSpotifyAPIDashboard";
+            this.lnkSpotifyAPIDashboard.Size = new System.Drawing.Size(18, 18);
+            this.lnkSpotifyAPIDashboard.TabIndex = 45;
+            this.lnkSpotifyAPIDashboard.UseCustomBackColor = true;
+            this.lnkSpotifyAPIDashboard.UseSelectable = true;
+            this.lnkSpotifyAPIDashboard.Click += new System.EventHandler(this.LnkSpotifyAPIDashboard_Click);
+            // 
+            // FrmSpotifyAPICredentials
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(420, 160);
+            this.Controls.Add(this.lnkSpotifyAPIDashboard);
             this.Controls.Add(this.lnkFAQSpotifyAPI);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Movable = false;
-            this.Name = "frmSpotifyAPICredentials";
+            this.Name = "FrmSpotifyAPICredentials";
             this.Padding = new System.Windows.Forms.Padding(10, 60, 10, 20);
             this.Resizable = false;
             this.ShowIcon = false;
@@ -273,6 +290,12 @@ namespace EspionSpotify.Controls
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void LnkSpotifyAPIDashboard_Click(object sender, EventArgs e)
+        {
+            Process.Start(MediaTags.SpotifyAPI.SPOTIFY_API_DASHBOARD_URL);
+            Task.Run(async () => await _analytics.LogAction($"spotify-api-dashboard"));
         }
     }
 }

@@ -87,6 +87,7 @@ namespace EspionSpotify
         {
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
+            chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;

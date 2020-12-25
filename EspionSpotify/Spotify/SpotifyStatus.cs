@@ -17,7 +17,6 @@ namespace EspionSpotify.Spotify
 
         public Track CurrentTrack { get; set; }
 
-
         public static bool WindowTitleIsSpotify(string title)
         {
             return SpotifyTitles.Contains(title?.ToLowerInvariant());

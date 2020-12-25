@@ -11,8 +11,10 @@ namespace EspionSpotify.Models
         private const string SPYTIFY = "spytify";
         private const int FIRST_SONG_NAME_COUNT = 1;
 
+        private string _file;
+        public string File { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
+
         public string Path { get; set; }
-        public string File { get; set; }
         public int Count { get; private set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
@@ -29,12 +31,12 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            return $@"{Path}\{File}{GetAddedCount()}.{Extension}";
+            return $@"{Path}\{_file}{GetAddedCount()}.{Extension}";
         }
 
         public string ToPendingFileString()
         {
-            return $@"{Path}\{File}{GetAddedCount()}.{SPYTIFY}";
+            return $@"{Path}\{_file}{GetAddedCount()}.{SPYTIFY}";
         }
 
         private string GetAddedCount()

@@ -46,7 +46,8 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async void DefaultTrack_ReturnsNoTags()
         {
-            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, false);
+            var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = false };
+            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, userSettings);
 
             var tags = new TagLibTab();
             await mapper.MapTags(tags);
@@ -68,7 +69,8 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async void TrackNumber_ReturnsTrackNumberTag()
         {
-            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, true, 2);
+            var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = true, InternalOrderNumber = 2 };
+            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, userSettings);
 
             var tags = new TagLibTab();
             await mapper.MapTags(tags);
@@ -97,7 +99,8 @@ namespace EspionSpotify.Tests
                 ArtSmallUrl = ART_LINK2
             };
 
-            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), track, false);
+            var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = false };
+            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), track, userSettings);
 
             var tags = new TagLibTab();
             await mapper.MapTags(tags);

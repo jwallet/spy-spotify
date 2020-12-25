@@ -1,4 +1,4 @@
-﻿namespace EspionSpotify.Enums
+namespace EspionSpotify.Enums
 {
     public enum TranslationKeys
     {
@@ -14,7 +14,6 @@
         lblAudioDevice,
         lblBitRate,
         lblClientId,
-        lblRecordOverRecordings,
         lblDuplicate,
         lblEndingSongDelay,
         lblExtraTitleToSubtitle,
@@ -27,9 +26,10 @@
         lblNumTracks,
         lblPath,
         lblRecorder,
+        lblRecordUnknownTrackType,
         lblRecordingNum,
         lblRecordingTimer,
-        lblRecordUnknownTrackType,
+        lblRecordOverRecordings,
         lblSecretId,
         lblSpy,
         logAd,
@@ -55,14 +55,14 @@
         logUnsupportedRate,
         msgBodyCantQuit,
         msgBodyDriverInstallationFailed,
-        msgBodyPathNotFound,
         msgBodyFailedToUseSpotifyAPI,
+        msgBodyPathNotFound,
         msgFolderDialog,
         msgNewVersionContent,
         msgNewVersionTitle,
         msgTitleCantQuit,
-        msgTitlePathNotFound,
         msgTitleFailedToUseSpotifyAPI,
+        msgTitlePathNotFound,
         tabAdvanced,
         tabRecord,
         tabSettings,
@@ -75,10 +75,11 @@
         tipNumModifierHold,
         tipPath,
         tipRelease,
-        tipUninstallVirtualCableDriver,
         tipSpotifyAPICredentials,
+        tipSpotifyAPIDashboard,
         tipStartSpying,
         tipStopSying,
+        tipUninstallVirtualCableDriver,
         titleSpotifyAPICredentials,
         watermarkClientId,
         watermarkSecretId

@@ -43,7 +43,7 @@ namespace EspionSpotify
         public bool IsSkipTrackActive
         {
             get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
-                && FileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
+                && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
         }
 
         public Recorder() {}

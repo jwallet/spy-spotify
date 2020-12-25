@@ -24,6 +24,8 @@ namespace EspionSpotify.MediaTags
         private string _refreshToken;
         private bool _connectionDialogOpened = false;
 
+        public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
+
         public bool IsAuthenticated { get => _token != null; }
 
         public SpotifyAPI() { }
@@ -48,6 +50,16 @@ namespace EspionSpotify.MediaTags
             _auth.ShowDialog = true;
             _auth.OpenBrowser();
             _connectionDialogOpened = true;
+        }
+
+        public async Task Authenticate()
+        {
+            var api = await GetSpotifyWebAPI();
+
+            if (api == null)
+            {
+                OpenAuthenticationDialog();
+            }
         }
 
         public async Task UpdateTrack(Track track) => await UpdateTrack(track, retry: false);

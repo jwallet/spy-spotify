@@ -27,6 +27,8 @@ namespace EspionSpotify.MediaTags
             _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
         }
 
+        public async Task Authenticate() { }
+
         public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
         public async Task UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);

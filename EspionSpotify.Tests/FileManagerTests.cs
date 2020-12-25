@@ -34,7 +34,7 @@ namespace EspionSpotify.Tests
                 OrderNumberInfrontOfFileEnabled = false,
                 EndingTrackDelayEnabled = true,
                 MuteAdsEnabled = true,
-                RecordUnknownTrackTypeEnabled = false,
+                RecordEverythingEnabled = false,
                 InternalOrderNumber = 1
             };
 
@@ -49,7 +49,7 @@ namespace EspionSpotify.Tests
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             var outputFile = _fileManager.GetOutputFile();
 
@@ -95,7 +95,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title - Live 5.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             var outputFile = _fileManager.GetOutputFile();
 
@@ -112,7 +112,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             var outputFile = _fileManager.GetOutputFile();
 
@@ -219,7 +219,8 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void IsPathFileNameExists_ReturnsExists()
         {
-            var result = FileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+            var result = _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
             Assert.False(result);
         }
 
@@ -239,7 +240,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title - Live.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
 
@@ -264,7 +265,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title - Live.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
 
@@ -307,7 +308,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist - Title.wav", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
@@ -335,7 +336,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist_-_Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
@@ -362,7 +363,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist\Title.wav", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
@@ -394,7 +395,7 @@ namespace EspionSpotify.Tests
                 { @"C:\path\Artist\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
-            _fileManager = new FileManager(_userSettings, _track, _fileSystem);
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
