@@ -57,14 +57,16 @@ namespace EspionSpotify.Tests
         {
             var trackExtra = new LastFMTrack()
             {
-                Name = "Updated Title",
-                Artist = new Artist { Name = "Updated Artist" },
+                Name = "Do not want updated Title from this api",
+                Artist = new Artist { Name = "Do not want updated Artist from this api" },
             };
 
             _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
 
-            Assert.Equal("Updated Title", _track.Title);
-            Assert.Equal("Updated Artist", _track.Artist);
+            Assert.Equal("Title", _track.Title);
+            Assert.Equal("Artist", _track.Artist);
+            Assert.NotEqual(trackExtra.Name, _track.Title);
+            Assert.NotEqual(trackExtra.Artist.Name, _track.Artist);
         }
 
         [Fact]
@@ -82,34 +84,13 @@ namespace EspionSpotify.Tests
             Assert.Equal("Artist", _track.Artist);
         }
 
-        [Theory]
-        [InlineData("Title", TitleSeparatorType.None, "Title", null)]
-        [InlineData("Title - Live", TitleSeparatorType.Dash, "Title", "Live")]
-        [InlineData("Title (feat. Other Artist)", TitleSeparatorType.Parenthesis, "Title", "feat. Other Artist")]
-        [InlineData("Title (feat. Other Artist) - Live", TitleSeparatorType.Dash, "Title (feat. Other Artist)", "Live")]
-        internal void MapLastFMAPITrackToTrack_DefinesTitleExtended(
-            string apiTitle,
-            TitleSeparatorType expectedSeparator, string expectedTitle, string expectedTitleExtended)
-        {
-            var trackExtra = new LastFMTrack()
-            {
-                Name = apiTitle
-            };
-
-            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
-
-            Assert.Equal(expectedSeparator, _track.TitleExtendedSeparatorType);
-            Assert.Equal(expectedTitle, _track.Title);
-            Assert.Equal(expectedTitleExtended, _track.TitleExtended);
-        }
-
         [Fact]
         internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
         {
             var trackExtra = new LastFMTrack()
             {
-                Name = "Updated Title",
-                Artist = new Artist { Name = "Updated Artist" },
+                Name = "Do not want updated Title from this api",
+                Artist = new Artist { Name = "Do not want updated Artist from this api" },
                 Album = new Album()
                 {
                     Title = "Album Title",
@@ -135,9 +116,9 @@ namespace EspionSpotify.Tests
 
             _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
 
-            Assert.Equal("Updated Title", _track.Title);
-            Assert.Equal("Updated Artist", _track.Artist);
-            Assert.Equal("Album Title", _track.Album);
+            Assert.NotEqual(trackExtra.Name, _track.Title);
+            Assert.NotEqual(trackExtra.Artist.Name, _track.Artist);
+            Assert.Equal(trackExtra.Album.Title, _track.Album);
             Assert.Equal(5, _track.AlbumPosition);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
             Assert.Equal(1337, _track.Length);
@@ -185,6 +166,7 @@ namespace EspionSpotify.Tests
             Assert.Equal("Artist - Title - Live", track.ToString());
             Assert.Equal("Title", track.Title);
             Assert.Equal("Artist", track.Artist);
+            Assert.Equal(trackExtra.Album.Title, _track.Album);
             Assert.Null(track.Album);
             Assert.Null(track.AlbumPosition);
             Assert.Equal(new string[] { }, track.Genres);
