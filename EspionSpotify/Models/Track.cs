@@ -36,9 +36,28 @@ namespace EspionSpotify.Models
 
         public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.None;
 
-        public void SetArtistFromAPI(string value) => _apiArtist = value;
-        public void SetTitleFromAPI(string value) => _apiTitle = value;
-        public void SetTitleExtendedFromAPI(string value) => _apiTitleExtended = value;
+        public void SetArtistFromAPI(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiArtist = value;
+            }
+        }
+        public void SetTitleFromAPI(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiTitle = value;
+            }
+        }
+        public void SetTitleExtendedFromAPI(string value, TitleSeparatorType separatorType)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiTitleExtended = value;
+                TitleExtendedSeparatorType = separatorType;
+            }
+        }
 
         public bool Ad { get; set; }
         public bool Playing { get; set; }
@@ -79,6 +98,7 @@ namespace EspionSpotify.Models
             Playing = track.Playing;
 
             TitleExtended = track.TitleExtended;
+            TitleExtendedSeparatorType = track.TitleExtendedSeparatorType;
 
             Album = track.Album;
             Genres = track.Genres;
@@ -123,7 +143,7 @@ namespace EspionSpotify.Models
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
-                var artists = string.Join(",", AlbumArtists ?? Performers ?? new[] { Artist });
+                var artists = string.Join(", ", AlbumArtists ?? Performers ?? new[] { Artist });
                 song = $"{artists} - {Title}";
 
                 if (!string.IsNullOrEmpty(TitleExtended))

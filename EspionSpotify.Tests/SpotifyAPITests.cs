@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using SpotifyAPI.Web.Models;
 using EspionSpotify.MediaTags;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Tests
 {
@@ -13,7 +14,7 @@ namespace EspionSpotify.Tests
 
         public SpotifyAPITests()
         {
-            _track = new Track();
+            _track = new Track() { Artist = "Artist", Title = "Title" };
             _spotifyAPI = new MediaTags.SpotifyAPI();
         }
 
@@ -24,7 +25,7 @@ namespace EspionSpotify.Tests
 
             _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
 
-            Assert.Null(_track.Title);
+            Assert.NotNull(_track.Title);
             Assert.Equal(0, _track.AlbumPosition);
             Assert.Equal(new string[] { }, _track.Performers);
             Assert.Equal(0, _track.Disc);
@@ -35,22 +36,81 @@ namespace EspionSpotify.Tests
         {
             var fulltrack = new FullTrack()
             {
-                Name = "Name",
+                Name = "Title",
                 TrackNumber = 3,
                 Artists = new List<SimpleArtist>()
                 {
-                    new SimpleArtist { Name = "Artist 1" },
-                    new SimpleArtist { Name = "Artist 2" }
+                    new SimpleArtist { Name = "Artist" },
+                    new SimpleArtist { Name = "Other Artist" }
                 },
                 DiscNumber = 12345,
             };
 
             _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
 
-            Assert.Equal("Name", _track.Title);
+            Assert.Equal("Title", _track.Title);
+            Assert.Equal("Artist", _track.Artist);
             Assert.Equal(3, _track.AlbumPosition);
-            Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.Performers);
+            Assert.Equal(new[] { "Artist", "Other Artist" }, _track.Performers);
             Assert.Equal(12345, _track.Disc);
+        }
+
+        [Fact]
+        internal void MapSpotifyTrackToTrack_OverwritesSpytifyTrack()
+        {
+            var fulltrack = new FullTrack()
+            {
+                Name = "Updated Title",
+                Artists = new List<SimpleArtist>()
+                {
+                    new SimpleArtist { Name = "Updated Artist" },
+                    new SimpleArtist { Name = "Other Artist" }
+                },
+            };
+
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+
+            Assert.Equal("Updated Title", _track.Title);
+            Assert.Equal("Updated Artist", _track.Artist);
+        }
+
+        [Fact]
+        internal void MapSpotifyTrackToTrack_KeepSpytifyTrackIfEmpty()
+        {
+            var fulltrack = new FullTrack()
+            {
+                Name = "",
+                Artists = new List<SimpleArtist>()
+                {
+                    new SimpleArtist { Name = "" },
+                },
+            };
+
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+
+            Assert.Equal("Title", _track.Title);
+            Assert.Equal("Artist", _track.Artist);
+        }
+
+        [Theory]
+        [InlineData("Title", TitleSeparatorType.None, "Title", null)]
+        [InlineData("Title - Live", TitleSeparatorType.Dash, "Title", "Live")]
+        [InlineData("Title (feat. Other Artist)", TitleSeparatorType.Parenthesis, "Title", "feat. Other Artist")]
+        [InlineData("Title (feat. Other Artist) - Live", TitleSeparatorType.Dash, "Title (feat. Other Artist)", "Live")]
+        internal void MapSpotifyTrackToTrack_DefinesTitleExtended(
+            string apiTitle,
+            TitleSeparatorType expectedSeparator, string expectedTitle, string expectedTitleExtended)
+        {
+            var fulltrack = new FullTrack()
+            {
+                Name = apiTitle,
+            };
+
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+
+            Assert.Equal(expectedSeparator, _track.TitleExtendedSeparatorType);
+            Assert.Equal(expectedTitle, _track.Title);
+            Assert.Equal(expectedTitleExtended, _track.TitleExtended);
         }
 
         [Fact]
@@ -83,8 +143,8 @@ namespace EspionSpotify.Tests
             {
                 Artists = new List<SimpleArtist>()
                 {
-                    new SimpleArtist { Name = "Artist 1" },
-                    new SimpleArtist { Name = "Artist 2" }
+                    new SimpleArtist { Name = "Artist" },
+                    new SimpleArtist { Name = "Other Artist" }
                 },
                 Name = "Album Name",
                 Genres = new List<string>() { "Reggae", "Rock", "Jazz" },
@@ -94,7 +154,7 @@ namespace EspionSpotify.Tests
 
             _spotifyAPI.MapSpotifyAlbumToTrack(_track, fullAlbum);
 
-            Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
+            Assert.Equal(new[] { "Artist", "Other Artist" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
             Assert.Equal(2010, _track.Year);
@@ -111,8 +171,8 @@ namespace EspionSpotify.Tests
             {
                 Artists = new List<SimpleArtist>()
                 {
-                    new SimpleArtist { Name = "Artist 1" },
-                    new SimpleArtist { Name = "Artist 2" }
+                    new SimpleArtist { Name = "Artist" },
+                    new SimpleArtist { Name = "Other Artist" }
                 },
                 Name = "Album Name",
                 Genres = new List<string>() { "Reggae", "Rock", "Jazz" },
@@ -136,7 +196,7 @@ namespace EspionSpotify.Tests
 
             _spotifyAPI.MapSpotifyAlbumToTrack(_track, fullAlbum);
 
-            Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
+            Assert.Equal(new[] { "Artist", "Other Artist" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
             Assert.Equal(2010, _track.Year);
@@ -153,8 +213,8 @@ namespace EspionSpotify.Tests
             {
                 Artists = new List<SimpleArtist>()
                 {
-                    new SimpleArtist { Name = "Artist 1" },
-                    new SimpleArtist { Name = "Artist 2" }
+                    new SimpleArtist { Name = "Artist" },
+                    new SimpleArtist { Name = "Other Artist" }
                 },
                 Name = "Album Name",
                 Genres = new List<string>() { "Reggae", "Rock", "Jazz" },
@@ -202,7 +262,7 @@ namespace EspionSpotify.Tests
 
             _spotifyAPI.MapSpotifyAlbumToTrack(_track, fullAlbum);
 
-            Assert.Equal(new[] { "Artist 1", "Artist 2" }, _track.AlbumArtists);
+            Assert.Equal(new[] { "Artist", "Other Artist" }, _track.AlbumArtists);
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
             Assert.Equal(2010, _track.Year);

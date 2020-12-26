@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
 using System;
@@ -14,10 +15,12 @@ namespace EspionSpotify.Tests
     public class LastFMAPITests
     {
         private readonly ILastFMAPI _lastFMAPI;
+        private readonly Track _track;
 
         public LastFMAPITests()
         {
             _lastFMAPI = new LastFMAPI();
+            _track = new Track() { Artist = "Artist", Title = "Title" };
         }
 
         [Fact]
@@ -38,10 +41,71 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
+        internal void MapLastFMAPIEmptyTrackToTrack_ReturnsExpectedTrack()
+        {
+            var previousTrack = new Track(_track);
+            var trackExtra = new LastFMTrack();
+
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
+
+            Assert.NotNull(_track.Title);
+            Assert.Equal(previousTrack, _track);
+        }
+
+        [Fact]
+        internal void MapLastFMAPITrackToTrack_OverwritesSpytifyTrack()
+        {
+            var trackExtra = new LastFMTrack()
+            {
+                Name = "Updated Title",
+                Artist = new Artist { Name = "Updated Artist" },
+            };
+
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
+
+            Assert.Equal("Updated Title", _track.Title);
+            Assert.Equal("Updated Artist", _track.Artist);
+        }
+
+        [Fact]
+        internal void MapLastFMAPITrackToTrack_KeepSpytifyTrackIfEmpty()
+        {
+            var trackExtra = new LastFMTrack()
+            {
+                Name = "",
+                Artist = new Artist { Name = "" },
+            };
+
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
+
+            Assert.Equal("Title", _track.Title);
+            Assert.Equal("Artist", _track.Artist);
+        }
+
+        [Theory]
+        [InlineData("Title", TitleSeparatorType.None, "Title", null)]
+        [InlineData("Title - Live", TitleSeparatorType.Dash, "Title", "Live")]
+        [InlineData("Title (feat. Other Artist)", TitleSeparatorType.Parenthesis, "Title", "feat. Other Artist")]
+        [InlineData("Title (feat. Other Artist) - Live", TitleSeparatorType.Dash, "Title (feat. Other Artist)", "Live")]
+        internal void MapLastFMAPITrackToTrack_DefinesTitleExtended(
+            string apiTitle,
+            TitleSeparatorType expectedSeparator, string expectedTitle, string expectedTitleExtended)
+        {
+            var trackExtra = new LastFMTrack()
+            {
+                Name = apiTitle
+            };
+
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
+
+            Assert.Equal(expectedSeparator, _track.TitleExtendedSeparatorType);
+            Assert.Equal(expectedTitle, _track.Title);
+            Assert.Equal(expectedTitleExtended, _track.TitleExtended);
+        }
+
+        [Fact]
         internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
         {
-            var track = new Track() { Artist = "Artist", Title = "Title" };
-
             var trackExtra = new LastFMTrack()
             {
                 Name = "Updated Title",
@@ -69,24 +133,29 @@ namespace EspionSpotify.Tests
                 Duration = 1337000,
             };
 
-            _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
 
-            Assert.Equal("Updated Title", track.Title);
-            Assert.Equal("Updated Artist", track.Artist);
-            Assert.Equal("Album Title", track.Album);
-            Assert.Equal(5, track.AlbumPosition);
-            Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, track.Genres);
-            Assert.Equal(1337, track.Length);
-            Assert.Equal("http://xlarge-cover-url.local", track.ArtExtraLargeUrl);
-            Assert.Equal("http://large-cover-url.local", track.ArtLargeUrl);
-            Assert.Equal("http://medium-cover-url.local", track.ArtMediumUrl);
-            Assert.Equal("http://small-cover-url.local", track.ArtSmallUrl);
+            Assert.Equal("Updated Title", _track.Title);
+            Assert.Equal("Updated Artist", _track.Artist);
+            Assert.Equal("Album Title", _track.Album);
+            Assert.Equal(5, _track.AlbumPosition);
+            Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
+            Assert.Equal(1337, _track.Length);
+            Assert.Equal("http://xlarge-cover-url.local", _track.ArtExtraLargeUrl);
+            Assert.Equal("http://large-cover-url.local", _track.ArtLargeUrl);
+            Assert.Equal("http://medium-cover-url.local", _track.ArtMediumUrl);
+            Assert.Equal("http://small-cover-url.local", _track.ArtSmallUrl);
         }
 
         [Fact]
         internal void MapLastFMAPTrackToTrack_ReturnsExpectedMissingInfoTrack()
         {
-            var track = new Track() { Artist = "Artist", Title = "Title" };
+            var track = new Track() {
+                Artist = "Artist",
+                Title = "Title",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash
+            };
 
             var trackExtra = new LastFMTrack()
             {
@@ -113,6 +182,7 @@ namespace EspionSpotify.Tests
 
             _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);
 
+            Assert.Equal("Artist - Title - Live", track.ToString());
             Assert.Equal("Title", track.Title);
             Assert.Equal("Artist", track.Artist);
             Assert.Null(track.Album);

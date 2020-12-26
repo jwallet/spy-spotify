@@ -66,24 +66,27 @@ namespace EspionSpotify.Spotify
 
         public static string[] GetDashTags(string title, int maxSize = 3)
         {
-            return (title ?? "").Split(new[] { $" - " }, maxSize, StringSplitOptions.RemoveEmptyEntries);
+            return title.Split(new[] { $" - " }, maxSize, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static (string[], TitleSeparatorType) GetTitleTags(string title, int maxSize = 2)
         {
             if (string.IsNullOrWhiteSpace(title)) return (null, TitleSeparatorType.None);
-
+            
             var byDash = GetDashTags(title, maxSize);
             var byParenthesis = title.Split(new[] { $" (" }, maxSize, StringSplitOptions.RemoveEmptyEntries);
             if (byParenthesis.Length == 2) byParenthesis[1] = byParenthesis[1].Replace(")", "");
-            if (byDash.Length == 1 && byParenthesis.Length == 2)
-            {
-                return (byParenthesis, TitleSeparatorType.Parenthesis);
-            }
-            else
+            
+            if (byDash.Length > 1)
             {
                 return (byDash, TitleSeparatorType.Dash);
             }
+            if (byParenthesis.Length > 1)
+            {
+                return (byParenthesis, TitleSeparatorType.Parenthesis);
+            }
+
+            return (new[] { title }, TitleSeparatorType.None);
         }
 
         public static string GetTitleTag(string[] tags, int maxValue) => tags != null && tags.Length >= maxValue && maxValue != 0 ? tags[maxValue - 1] ?? null : null;

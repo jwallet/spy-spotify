@@ -209,9 +209,6 @@ namespace EspionSpotify.Tests
             _track.Artist = "Artist DJ";
             _track.Year = 2020;
 
-            var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
-            var albumDir = string.IsNullOrEmpty(_track.Album) ? Track.UNTITLED_ALBUM : Regex.Replace(_track.Album, _windowsExlcudedChars, string.Empty);
-
             var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
             Assert.Equal($@"\Artist_DJ\Single_(2020)", artistFolder);

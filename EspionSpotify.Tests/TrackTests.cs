@@ -85,14 +85,35 @@ namespace EspionSpotify.Tests
                 {
                     Title = "Title",
                     Artist = "Artist",
-                    TitleExtended = ""
+                    TitleExtended = "Must Not Return",
+                    TitleExtendedSeparatorType = TitleSeparatorType.None,
                 }.ToTitleString());
-            
+
             Assert.Equal(
                 "Title - Remastered",
                 new Track
                 {
                     Title = "Title",
+                    Artist = "Artist",
+                    TitleExtended = "Remastered",
+                    TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                }.ToTitleString());
+
+            Assert.Equal(
+                "Title (Featuring Other)",
+                new Track
+                {
+                    Title = "Title",
+                    Artist = "Artist",
+                    TitleExtended = "Featuring Other",
+                    TitleExtendedSeparatorType = TitleSeparatorType.Parenthesis
+                }.ToTitleString());
+
+            Assert.Equal(
+                "Title (Featuring Other) - Remastered",
+                new Track
+                {
+                    Title = "Title (Featuring Other)",
                     Artist = "Artist",
                     TitleExtended = "Remastered",
                     TitleExtendedSeparatorType = TitleSeparatorType.Dash

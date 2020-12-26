@@ -80,7 +80,29 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void APITrack_ReturnsPartTags()
+        internal async void APITrack_WithParenthesisExtendedTitle_ReturnsPartTags()
+        {
+            var track = new Track
+            {
+                Artist = "Artist",
+                Title = "Song",
+                TitleExtended = "feat. Other",
+                TitleExtendedSeparatorType = TitleSeparatorType.Parenthesis,
+            };
+
+            var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = false };
+            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), track, userSettings);
+
+            var tags = new TagLibTab();
+            await mapper.MapTags(tags);
+
+            Assert.Equal("Artist - Song (feat. Other)", mapper.Track.ToString());
+            Assert.Equal(track.ToString(), mapper.Track.ToString());
+            Assert.Equal(track.ToTitleString(), mapper.Track.ToTitleString());
+        }
+
+        [Fact]
+        internal async void APITrack_WithDashedExtendedTitle_ReturnsPartTags()
         {
             var track = new Track
             {
@@ -88,6 +110,27 @@ namespace EspionSpotify.Tests
                 Title = "Song",
                 TitleExtended = "Live",
                 TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+            };
+
+            var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = false };
+            var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), track, userSettings);
+
+            var tags = new TagLibTab();
+            await mapper.MapTags(tags);
+
+            Assert.Equal("Artist - Song - Live", mapper.Track.ToString());
+            Assert.Equal(track.ToString(), mapper.Track.ToString());
+            Assert.Equal(track.ToTitleString(), mapper.Track.ToTitleString());
+        }
+
+        [Fact]
+        internal async void APITrack_ReturnsPartTags()
+        {
+            var track = new Track
+            {
+                Artist = "Artist",
+                Title = "Song",
+                TitleExtendedSeparatorType = TitleSeparatorType.None,
                 AlbumPosition = 1,
                 AlbumArtists = new[] { "Alpha", "Bravo", "Charlie" },
                 Performers = new[] { "Delta", "Echo", "Foxtrot" },
@@ -106,7 +149,9 @@ namespace EspionSpotify.Tests
             var tags = new TagLibTab();
             await mapper.MapTags(tags);
 
+            Assert.Equal("Alpha, Bravo, Charlie - Song", mapper.Track.ToString());
             Assert.Equal(track.ToString(), mapper.Track.ToString());
+            Assert.Equal(track.ToTitleString(), mapper.Track.ToTitleString());
 
             Assert.Equal(track.AlbumPosition, (int?)tags.Track);
             Assert.Equal(track.Title, tags.Title);

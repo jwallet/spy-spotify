@@ -87,8 +87,7 @@ namespace EspionSpotify.MediaTags
 
             track.SetArtistFromAPI(trackExtra.Artist?.Name);
             track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
-            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2));
-            track.TitleExtendedSeparatorType = separatorType;
+            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2), separatorType);
 
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
