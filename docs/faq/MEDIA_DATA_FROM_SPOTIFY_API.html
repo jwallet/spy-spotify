@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Media tags and album cover are not always found (Switch to Spotify API).</title>
+    <title>Spytify - Record Spotify - Media tags and album cover are not always found (Switch to Spotify API)</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -47,27 +47,19 @@
     </ul>
   </li>
   <li>Click on the new spotify application that you created and click on <em>Edit the settings</em></li>
-  <li>Set ‘Redirect URI’ with the value ‘http://localhost:4002’, add and save it.</li>
-  <li>On the spotify app dashboard, copy these info:
-    <ul>
-      <li>The ‘Client ID’</li>
-      <li>The ‘Client Secret’ (click on ‘Show Client Secret’)</li>
-    </ul>
-  </li>
-  <li>Paste the ids in the <strong>spytify.exe.config</strong> file at theses lines</li>
+  <li>Set ‘Redirect URI’ with the value <strong>http://localhost:4002</strong>, add and save it.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;setting name=\"SpotifyAPISecretId\" serializeAs=\"String\"&gt;
-    &lt;value&gt;
-        412fa2302d864432854742ba35e869cb
-    &lt;/value&gt;
-&lt;/setting&gt;
-&lt;setting name=\"SpotifyAPIClientId\" serializeAs=\"String\"&gt;
-    &lt;value&gt;
-        c3d9c679a66641f284e6740faa479e14
-    &lt;/value&gt;
-&lt;/setting&gt;
-</code></pre></div></div>
+<p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
+
+<p>On the spotify API dashboard, copy these info and paste them in Spytify in <em>Settings</em> using the key icon:</p>
+
+<ul>
+  <li>The <em>Client ID</em></li>
+  <li>The <em>Client Secret</em> (click on <em>Show Client Secret</em>)</li>
+</ul>
+
+<p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
 
 
       <footer class="site-footer">

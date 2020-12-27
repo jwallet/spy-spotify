@@ -91,7 +91,7 @@
                 Keep the same order that the playlist for your recordings.
             </h3>
         </summary>
-        <p><p>The recording order number option <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. 
+        <p><p>The recording order number option <code class="language-plaintext highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. 
 You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
 
 <p align="center"><img alt="Recording order number option" src="./assets/images/recording_number.png" /></p>
@@ -146,7 +146,7 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#media-tags-not-found" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Media tags and album cover are not always found (Switch to Spotify API).
+                Media tags and album cover are not always found (Switch to Spotify API)
             </h3>
         </summary>
         <p><p>You can switch between last.fm API to Spotify API (still in development but can be set in the <strong>spytify.exe.config</strong> file).</p>
@@ -163,27 +163,19 @@ You will get a CD with songs ordered in the same order than the album or the one
     </ul>
   </li>
   <li>Click on the new spotify application that you created and click on <em>Edit the settings</em></li>
-  <li>Set ‘Redirect URI’ with the value ‘http://localhost:4002’, add and save it.</li>
-  <li>On the spotify app dashboard, copy these info:
-    <ul>
-      <li>The ‘Client ID’</li>
-      <li>The ‘Client Secret’ (click on ‘Show Client Secret’)</li>
-    </ul>
-  </li>
-  <li>Paste the ids in the <strong>spytify.exe.config</strong> file at theses lines</li>
+  <li>Set ‘Redirect URI’ with the value <strong>http://localhost:4002</strong>, add and save it.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;setting name=\"SpotifyAPISecretId\" serializeAs=\"String\"&gt;
-    &lt;value&gt;
-        412fa2302d864432854742ba35e869cb
-    &lt;/value&gt;
-&lt;/setting&gt;
-&lt;setting name=\"SpotifyAPIClientId\" serializeAs=\"String\"&gt;
-    &lt;value&gt;
-        c3d9c679a66641f284e6740faa479e14
-    &lt;/value&gt;
-&lt;/setting&gt;
-</code></pre></div></div>
+<p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
+
+<p>On the spotify API dashboard, copy these info and paste them in Spytify in <em>Settings</em> using the key icon:</p>
+
+<ul>
+  <li>The <em>Client ID</em></li>
+  <li>The <em>Client Secret</em> (click on <em>Show Client Secret</em>)</li>
+</ul>
+
+<p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
 </p>
     </details>
 </section>
