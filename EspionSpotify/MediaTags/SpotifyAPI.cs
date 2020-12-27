@@ -183,8 +183,12 @@ namespace EspionSpotify.MediaTags
 
             _authorizationCodeAuth.Stop();
 
-            _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
-            _refreshToken = _token.RefreshToken;
+            try
+            {
+                _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
+                _refreshToken = _token.RefreshToken;
+            }
+            catch { }
         }
 
         private async Task<SpotifyWebAPI> GetSpotifyWebAPI()
@@ -193,7 +197,11 @@ namespace EspionSpotify.MediaTags
 
             if (_token.IsExpired())
             {
-                _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken ?? _refreshToken);
+                try
+                {
+                    _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken ?? _refreshToken);
+                }
+                catch { }
             }
 
             SpotifyWebAPI api = null;
