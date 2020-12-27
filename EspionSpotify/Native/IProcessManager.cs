@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IProcess = EspionSpotify.Native.Models.IProcess;
+﻿using IProcess = EspionSpotify.Native.Models.IProcess;
 
 namespace EspionSpotify.Native
 {

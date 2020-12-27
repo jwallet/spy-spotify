@@ -2,16 +2,13 @@
 using EspionSpotify.Events;
 using EspionSpotify.Models;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using Timer = System.Timers.Timer;
 using ElapsedEventArgs = System.Timers.ElapsedEventArgs;
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
+using Timer = System.Timers.Timer;
 
 namespace EspionSpotify.Spotify
 {
-    public class SpotifyHandler: ISpotifyHandler, IDisposable
+    public class SpotifyHandler : ISpotifyHandler, IDisposable
     {
         private bool _disposed = false;
 
@@ -39,9 +36,10 @@ namespace EspionSpotify.Spotify
 
         public Track Track { get; set; }
 
-        public SpotifyHandler(IMainAudioSession audioSession): this(
+        public SpotifyHandler(IMainAudioSession audioSession) : this(
             spotifyProcess: new SpotifyProcess(audioSession)
-        ) {}
+        )
+        { }
 
         public SpotifyHandler(ISpotifyProcess spotifyProcess)
         {

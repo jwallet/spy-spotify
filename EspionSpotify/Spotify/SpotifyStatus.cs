@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.Spotify
 {
-    public class SpotifyStatus: ISpotifyStatus
+    public class SpotifyStatus : ISpotifyStatus
     {
         public static string[] SpotifyTitles = new[] { Constants.SPOTIFY.ToLowerInvariant(), Constants.SPOTIFYFREE.ToLowerInvariant() };
 
@@ -64,11 +64,11 @@ namespace EspionSpotify.Spotify
         public static (string[], TitleSeparatorType) GetTitleTags(string title, int maxSize = 2)
         {
             if (string.IsNullOrWhiteSpace(title)) return (null, TitleSeparatorType.None);
-            
+
             var byDash = GetDashTags(title, maxSize);
             var byParenthesis = title.Split(new[] { $" (" }, maxSize, StringSplitOptions.RemoveEmptyEntries);
             if (byParenthesis.Length == 2) byParenthesis[1] = byParenthesis[1].Replace(")", "");
-            
+
             if (byDash.Length > 1)
             {
                 return (byDash, TitleSeparatorType.Dash);

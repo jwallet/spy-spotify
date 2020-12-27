@@ -33,7 +33,7 @@ namespace EspionSpotify.Controls
             txtSecretId.Text = Settings.Default.SpotifyAPISecretId?.Trim();
 
             Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TitleSpotifyAPICredentials);
-            
+
             lblClientId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblClientId);
             lblSecretId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblSecretId);
 
@@ -103,7 +103,9 @@ namespace EspionSpotify.Controls
             this.txtClientId.MaxLength = 32;
             this.txtClientId.Name = "txtClientId";
             this.txtClientId.PasswordChar = '\0';
+#pragma warning disable CS0618 // Type or member is obsolete
             this.txtClientId.PromptText = "PASTE_KEY_ID_HERE";
+#pragma warning restore CS0618 // Type or member is obsolete
             this.txtClientId.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtClientId.SelectedText = "";
             this.txtClientId.SelectionLength = 0;
@@ -144,7 +146,9 @@ namespace EspionSpotify.Controls
             this.txtSecretId.MaxLength = 32;
             this.txtSecretId.Name = "txtSecretId";
             this.txtSecretId.PasswordChar = '\0';
+#pragma warning disable CS0618 // Type or member is obsolete
             this.txtSecretId.PromptText = "PASTE_KEY_ID_HERE";
+#pragma warning restore CS0618 // Type or member is obsolete
             this.txtSecretId.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtSecretId.SelectedText = "";
             this.txtSecretId.SelectionLength = 0;

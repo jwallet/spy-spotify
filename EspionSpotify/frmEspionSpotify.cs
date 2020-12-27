@@ -1,25 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Resources;
-using System.Threading;
-using System.Windows.Forms;
+using EspionSpotify.AudioSessions;
+using EspionSpotify.Controls;
+using EspionSpotify.Drivers;
+using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
+using EspionSpotify.MediaTags;
+using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using MetroFramework;
 using MetroFramework.Forms;
 using NAudio.Lame;
-using EspionSpotify.Models;
-using EspionSpotify.Enums;
-using EspionSpotify.AudioSessions;
-using System.Reflection;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using EspionSpotify.Extensions;
+using System.Drawing;
+using System.IO;
 using System.Linq;
-using EspionSpotify.MediaTags;
-using EspionSpotify.Drivers;
-using EspionSpotify.Controls;
+using System.Reflection;
+using System.Resources;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EspionSpotify
 {
@@ -31,7 +30,7 @@ namespace EspionSpotify
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
-        
+
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
                 TranslationKeys.logRecording,
                 TranslationKeys.logRecorded,
@@ -72,7 +71,8 @@ namespace EspionSpotify
 
             Init();
 
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 await _analytics.LogAction("launch");
                 await GitHub.GetVersion();
             });
@@ -163,7 +163,7 @@ namespace EspionSpotify
 
         private void SetMediaTagsAPI(MediaTagsAPI api, bool isSpotifyAPISet)
         {
-            switch(api)
+            switch (api)
             {
                 case MediaTagsAPI.Spotify:
                     if (isSpotifyAPISet)
@@ -371,10 +371,10 @@ namespace EspionSpotify
             var text = string.Format(Rm.GetString(resource), args);
 
             if (text == null) return "";
-             
+
             var timeStr = LogDate;
             var indexOfColon = text.IndexOf(": ");
- 
+
             rtbLog.AppendText(timeStr);
 
             if (_recorderStatusTranslationKeys.Contains(resource))
@@ -427,7 +427,7 @@ namespace EspionSpotify
         {
             if (logs.Length == 0) return;
 
-            foreach(var log in logs)
+            foreach (var log in logs)
             {
                 rtbLog.AppendText(log + Environment.NewLine);
             }
@@ -436,7 +436,7 @@ namespace EspionSpotify
 
             rtbLog.Select(0, rtbLog.TextLength);
             rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
-            
+
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
         }
@@ -460,7 +460,7 @@ namespace EspionSpotify
                 BeginInvoke(new Action(StopRecording));
                 return;
             }
-            
+
             Watcher.Running = false;
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
@@ -700,23 +700,26 @@ namespace EspionSpotify
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Watcher.Ready || !Watcher.Running) return;
-            
-            e.Cancel = true;
-            
+
             if (MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyCantQuit),
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) != DialogResult.Yes) return;
-            
+                    MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+                return;
+            };
+
             Watcher.Running = false;
             _watcher.Dispose();
             _audioSession.Dispose();
-            Instance.Dispose();
 
             Task.Run(async () => await _analytics.LogAction("exit"));
 
-            Close();
+#if !DEBUG
+            Environment.Exit(0);
+#endif
         }
 
         private void LnkPath_Click(object sender, EventArgs e)
@@ -852,7 +855,7 @@ namespace EspionSpotify
 
         private void Focus_Hover(object sender, EventArgs e)
         {
-            var ctrl = (Control) sender;
+            var ctrl = (Control)sender;
             ctrl.Focus();
         }
 
@@ -935,11 +938,11 @@ namespace EspionSpotify
             {
                 _frmSpotifyApiCredentials = new FrmSpotifyAPICredentials(_analytics);
             }
-            
+
             var result = _frmSpotifyApiCredentials.ShowDialog(this);
-            
+
             SetSpotifyAPIOption();
-            
+
             if (result == DialogResult.No)
             {
                 rbLastFMAPI.Checked = true;

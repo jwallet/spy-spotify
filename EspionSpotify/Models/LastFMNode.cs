@@ -1,9 +1,9 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using EspionSpotify.Extensions;
 
 namespace EspionSpotify.Models
 {

@@ -3,7 +3,7 @@ using System.Resources;
 
 namespace EspionSpotify
 {
-    public interface IFrmEspionSpotify 
+    public interface IFrmEspionSpotify
     {
         ResourceManager Rm { get; }
         void UpdateIconSpotify(bool isSpotifyPlaying, bool isRecording = false);

@@ -1,18 +1,18 @@
+using EspionSpotify.AudioSessions;
 using EspionSpotify.Events;
+using EspionSpotify.Extensions;
+using EspionSpotify.MediaTags;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
-using System.IO.Abstractions;
-using EspionSpotify.Extensions;
-using System.Threading.Tasks;
-using Timer = System.Timers.Timer;
-using EspionSpotify.AudioSessions;
 using System;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Linq;
-using EspionSpotify.MediaTags;
 using System.Threading;
-using EspionSpotify.Native;
+using System.Threading.Tasks;
+using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
 {
@@ -54,8 +54,8 @@ namespace EspionSpotify
             get => _currentTrack.IsNormal || IsRecordUnknownActive;
         }
         public bool IsOldSong
-        { 
-            get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0 
+        {
+            get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0
                 && _currentTrack.CurrentPosition > Math.Max(0, (_currentTrack.Length ?? 0) - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY);
         }
         public bool IsMaxOrderNumberAsFileExceeded
@@ -63,8 +63,9 @@ namespace EspionSpotify
             get => _userSettings.OrderNumberInfrontOfFileEnabled && _userSettings.OrderNumberAsFile == _userSettings.OrderNumberMax;
         }
 
-        internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings):
-            this(form, audioSession, userSettings, track: new Track(), fileSystem: new FileSystem()) {}
+        internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings) :
+            this(form, audioSession, userSettings, track: new Track(), fileSystem: new FileSystem())
+        { }
 
         public Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track, IFileSystem fileSystem, IRecorder recorder = null)
         {
@@ -305,7 +306,7 @@ namespace EspionSpotify
         private void EndRecordingSession()
         {
             Ready = true;
-            
+
             if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
@@ -352,7 +353,7 @@ namespace EspionSpotify
         private void StopLastRecorder()
         {
             if (_recorder == null) return;
-            
+
             _recorder.Running = false;
             _recorder.CountSeconds = CountSeconds;
             _form.UpdateIconSpotify(_isPlaying);
@@ -360,7 +361,7 @@ namespace EspionSpotify
 
         private void MutesSpotifyAds(bool value)
         {
-            if (_userSettings.MuteAdsEnabled  && !_userSettings.RecordEverythingEnabled)
+            if (_userSettings.MuteAdsEnabled && !_userSettings.RecordEverythingEnabled)
             {
                 _audioSession.SetSpotifyToMute(value);
             }
@@ -380,12 +381,23 @@ namespace EspionSpotify
             if (disposing)
             {
                 DoIKeepLastSong();
-                StopLastRecorder();
                 NativeMethods.AllowSleep();
 
-                EndRecordingSession();
+                if (_audioSession != null)
+                {
+                    MutesSpotifyAds(false);
+                    _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                    _audioSession.ClearSpotifyAudioSessionControls();
 
-                _recorderTasks.ForEach(x => {
+                    Spotify.ListenForEvents = false;
+                    Spotify.OnPlayStateChange -= OnPlayStateChanged;
+                    Spotify.OnTrackChange -= OnTrackChanged;
+                    Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                    Spotify.Dispose();
+                }
+
+                _recorderTasks.ForEach(x =>
+                {
                     x.Token.Cancel();
                     x.Task.Wait();
                     x.Task.Dispose();

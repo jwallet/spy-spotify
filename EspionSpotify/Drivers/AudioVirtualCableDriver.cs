@@ -1,11 +1,7 @@
-﻿using NAudio.CoreAudioApi;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.Drivers
 {
@@ -21,7 +17,7 @@ namespace EspionSpotify.Drivers
         {
             return audioEndPointDeviceNames.Any(x => x.Value.Contains(DriverName));
         }
-        
+
         public static bool SetupDriver()
         {
             try

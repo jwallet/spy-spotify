@@ -1,14 +1,9 @@
 ﻿using EspionSpotify.Native.Models;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.Native
 {
-    public class ProcessManager: IProcessManager
+    public class ProcessManager : IProcessManager
     {
         public IProcess GetCurrentProcess()
         {

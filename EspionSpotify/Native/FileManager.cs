@@ -1,6 +1,4 @@
-﻿using EspionSpotify.Extensions;
-using EspionSpotify.Models;
-using EspionSpotify.Spotify;
+﻿using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,8 +17,9 @@ namespace EspionSpotify.Native
 
         private static readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
-        internal FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem):
-            this(userSettings, track, fileSystem, now: DateTime.Now) { }
+        internal FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem) :
+            this(userSettings, track, fileSystem, now: DateTime.Now)
+        { }
 
         public FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem, DateTime now)
         {
@@ -36,7 +35,7 @@ namespace EspionSpotify.Native
         {
             var folderPath = GetFolderPath(_track, _userSettings);
             var pathName = _userSettings.OutputPath + folderPath;
-            
+
             CreateDirectories(_track, _userSettings);
 
             var fileName = GenerateFileName(_track, _userSettings, _now);
@@ -50,7 +49,8 @@ namespace EspionSpotify.Native
                 Extension = extension
             };
 
-            switch (_userSettings.RecordRecordingsStatus) {
+            switch (_userSettings.RecordRecordingsStatus)
+            {
                 case Enums.RecordRecordingsStatus.Duplicate:
                     while (_fileSystem.File.Exists(outputFile.ToString()))
                     {
@@ -129,7 +129,7 @@ namespace EspionSpotify.Native
 
             var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
             var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
-            
+
             var outputPath = userSettings.OutputPath;
             CreateDirectory($@"{outputPath}\{artistDir}");
             CreateDirectory($@"{outputPath}\{artistDir}\{albumDir}");

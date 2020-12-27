@@ -10,8 +10,8 @@ namespace EspionSpotify.Spotify
     {
         Timer EventTimer { get; }
         Timer SongTimer { get; }
-        ISpotifyProcess SpotifyProcess { get;}
-        ISpotifyStatus SpotifyLatestStatus  { get;}
+        ISpotifyProcess SpotifyProcess { get; }
+        ISpotifyStatus SpotifyLatestStatus { get; }
         bool ListenForEvents { get; set; }
 
         Track Track { get; set; }

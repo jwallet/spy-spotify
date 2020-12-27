@@ -1,7 +1,5 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -17,7 +15,7 @@ namespace EspionSpotify.MediaTags
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
-        
+
         private readonly IFileSystem _fileSystem;
 
         private bool IsMovingExtraTitleToSubtitle
@@ -30,8 +28,9 @@ namespace EspionSpotify.MediaTags
             }
         }
 
-        internal MapperID3(string currentFile, Track track, UserSettings userSettings):
-            this(fileSystem: new FileSystem(), currentFile, track, userSettings) { }
+        internal MapperID3(string currentFile, Track track, UserSettings userSettings) :
+            this(fileSystem: new FileSystem(), currentFile, track, userSettings)
+        { }
 
         public MapperID3(IFileSystem fileSystem, string currentFile, Track track, UserSettings userSettings)
         {
@@ -70,16 +69,15 @@ namespace EspionSpotify.MediaTags
 
         internal async Task SaveMediaTags()
         {
-            var mp3 = TagLib.File.Create(CurrentFile);
-            
-            await MapTags(mp3.Tag);
-
-            if (_fileSystem.File.Exists(CurrentFile))
+            using (var mp3 = TagLib.File.Create(CurrentFile))
             {
-                mp3.Save();
-            }
+                await MapTags(mp3.Tag);
 
-            mp3.Dispose();
+                if (_fileSystem.File.Exists(CurrentFile))
+                {
+                    mp3.Save();
+                }
+            }
         }
 
         private async Task FetchMediaPictures()
@@ -144,7 +142,6 @@ namespace EspionSpotify.MediaTags
                     var stream = response.GetResponseStream();
                     if (stream == null)
                     {
-                        response.Dispose();
                         return null;
                     }
                     using (var reader = new BinaryReader(stream))
@@ -157,7 +154,6 @@ namespace EspionSpotify.MediaTags
                                 await memory.WriteAsync(buffer, 0, buffer.Length);
                                 buffer = reader.ReadBytes(4096);
                             }
-                            response.Dispose();
 
                             return memory.ToArray();
                         }

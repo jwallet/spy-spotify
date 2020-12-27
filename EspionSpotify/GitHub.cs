@@ -1,17 +1,17 @@
 ﻿using EspionSpotify.Extensions;
+using EspionSpotify.Models;
 using EspionSpotify.Models.GitHub;
 using EspionSpotify.Properties;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
-using EspionSpotify.Models;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EspionSpotify
 {
@@ -38,7 +38,7 @@ namespace EspionSpotify
 
             try
             {
-                using (var response = (HttpWebResponse) await request.GetResponseAsync())
+                using (var response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode != HttpStatusCode.OK) return;
 
