@@ -52,7 +52,7 @@ Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Sp
 
 <p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/saved_songs_list.png" /></p>
 
-## Want a feature fast?
+## Want a feature quicker?
 
 Spytify is supported by _IssueHunt_. [![Issuehunt](https://jwallet.github.io/spy-spotify/assets/images/isohunt_badge.svg)](https://issuehunt.io/r/jwallet/spy-spotify)
 
