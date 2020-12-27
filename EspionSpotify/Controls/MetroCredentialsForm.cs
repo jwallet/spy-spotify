@@ -33,7 +33,7 @@ namespace EspionSpotify.Controls
             txtSecretId.Text = Settings.Default.SpotifyAPISecretId?.Trim();
 
             Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TitleSpotifyAPICredentials);
-            
+
             lblClientId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblClientId);
             lblSecretId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblSecretId);
 

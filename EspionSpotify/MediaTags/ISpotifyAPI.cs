@@ -1,6 +1,5 @@
 ﻿using EspionSpotify.Models;
 using SpotifyAPI.Web.Models;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.MediaTags
 {

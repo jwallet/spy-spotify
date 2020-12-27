@@ -1,18 +1,16 @@
-using System;
-using System.IO;
-using System.IO.Abstractions;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
-using Microsoft.Win32.SafeHandles;
 using NAudio.Lame;
 using NAudio.Wave;
+using System;
+using System.IO;
+using System.IO.Abstractions;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
@@ -47,7 +45,7 @@ namespace EspionSpotify
                 && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
         }
 
-        public Recorder() {}
+        public Recorder() { }
 
         public Recorder(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track, IFileSystem fileSystem)
         {
@@ -106,7 +104,7 @@ namespace EspionSpotify
         private bool StopRecordingIfTrackCanBeSkipped()
         {
             if (_canBeSkippedValidated || !_track.MetaDataUpdated) return false;
-            
+
             _canBeSkippedValidated = true;
             if (IsSkipTrackActive)
             {
@@ -121,7 +119,7 @@ namespace EspionSpotify
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             if (_tempWaveWriter == null || !Running) return;
-            
+
             if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
             {
                 await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
@@ -194,7 +192,7 @@ namespace EspionSpotify
                 }
                 else
                 {
-                    await reader.CopyToAsync(_fileWriter,81920, _cancellationTokenSource.Token);
+                    await reader.CopyToAsync(_fileWriter, 81920, _cancellationTokenSource.Token);
                 }
             }
         }
@@ -217,7 +215,7 @@ namespace EspionSpotify
 
         public Stream GetFileWriter()
         {
-            switch(_userSettings.MediaFormat)
+            switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
                     var waveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
@@ -359,12 +357,12 @@ namespace EspionSpotify
         {
             _form.UpdateIconSpotify(true, false);
             Running = false;
-            
+
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
             _waveIn.StopRecording();
             _waveIn.Dispose();
-            
+
             _tempWaveWriter.Close();
             _tempWaveWriter.Dispose();
 

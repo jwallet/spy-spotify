@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EspionSpotify.Extensions
+﻿namespace EspionSpotify.Extensions
 {
     public static class ClassPropertyExtensions
     {
@@ -21,7 +15,7 @@ namespace EspionSpotify.Extensions
                 {
                     if (!childProperty.CanWrite || !parentProperty.CanRead) break;
                     if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType)
-                    {   
+                    {
                         childProperty.SetValue(target, parentProperty.GetValue(source));
                         break;
                     }

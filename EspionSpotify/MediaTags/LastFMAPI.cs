@@ -1,12 +1,11 @@
 ﻿using EspionSpotify.Models;
+using PCLWebUtility;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using PCLWebUtility;
-using EspionSpotify.Spotify;
 
 namespace EspionSpotify.MediaTags
 {

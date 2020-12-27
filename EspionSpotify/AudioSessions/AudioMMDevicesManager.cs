@@ -1,11 +1,7 @@
-﻿using Microsoft.Win32.SafeHandles;
-using NAudio.CoreAudioApi;
+﻿using NAudio.CoreAudioApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -19,8 +15,9 @@ namespace EspionSpotify.AudioSessions
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public string AudioEndPointDeviceID { get; private set; }
         public string DefaultAudioEndPointDeviceID { get; private set; }
-        
-        public MMDevice AudioEndPointDevice {
+
+        public MMDevice AudioEndPointDevice
+        {
             get
             {
                 return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
@@ -111,7 +108,7 @@ namespace EspionSpotify.AudioSessions
         public void Dispose()
         {
             Dispose(true);
- 
+
             GC.SuppressFinalize(this);
         }
 

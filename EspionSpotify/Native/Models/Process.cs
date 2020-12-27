@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EspionSpotify.Native.Models
+﻿namespace EspionSpotify.Native.Models
 {
-    public class Process: IProcess
+    public class Process : IProcess
     {
         public int Id { get; set; }
         public string MainWindowTitle { get; set; }

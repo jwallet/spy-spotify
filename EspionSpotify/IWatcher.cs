@@ -1,6 +1,4 @@
-﻿using EspionSpotify.Models;
-using EspionSpotify.Spotify;
-using System.Threading.Tasks;
+﻿using EspionSpotify.Spotify;
 
 namespace EspionSpotify
 {
@@ -9,7 +7,7 @@ namespace EspionSpotify
         int CountSeconds { get; set; }
         ISpotifyHandler Spotify { get; set; }
 
-        bool RecorderUpAndRunning { get;  }
+        bool RecorderUpAndRunning { get; }
         bool IsTypeAllowed { get; }
         bool IsOldSong { get; }
 

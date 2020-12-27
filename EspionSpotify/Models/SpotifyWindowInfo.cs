@@ -1,5 +1,5 @@
 ﻿using EspionSpotify.Spotify;
-    
+
 namespace EspionSpotify.Models
 {
     public class SpotifyWindowInfo

@@ -1,5 +1,4 @@
-﻿using EspionSpotify.Spotify;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
@@ -48,7 +47,7 @@ namespace EspionSpotify
                     foreach (var path in SpotifyPossiblePaths)
                     {
                         if (!fileSystem.File.Exists(path)) continue;
-                         Process.Start(path);
+                        Process.Start(path);
                         break;
                     }
                 }

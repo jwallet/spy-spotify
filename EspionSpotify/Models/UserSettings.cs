@@ -1,5 +1,4 @@
-﻿using EspionSpotify.AudioSessions;
-using EspionSpotify.Enums;
+﻿using EspionSpotify.Enums;
 using NAudio.Lame;
 using System;
 

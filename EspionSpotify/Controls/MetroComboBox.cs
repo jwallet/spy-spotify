@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace EspionSpotify.Controls
 {
-    public class MetroComboBox: MetroFramework.Controls.MetroComboBox
+    public class MetroComboBox : MetroFramework.Controls.MetroComboBox
     {
         protected override void OnMouseWheel(MouseEventArgs e)
         {

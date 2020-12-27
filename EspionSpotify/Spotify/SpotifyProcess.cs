@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
-    public class SpotifyProcess: ISpotifyProcess
+    public class SpotifyProcess : ISpotifyProcess
     {
         private readonly int? _spotifyProcessId;
         private readonly IMainAudioSession _audioSession;
         private readonly IProcessManager _processManager;
 
-        internal SpotifyProcess(IMainAudioSession audioSession):
-            this(audioSession, processManager: new ProcessManager()) { }
-        
+        internal SpotifyProcess(IMainAudioSession audioSession) :
+            this(audioSession, processManager: new ProcessManager())
+        { }
+
         public SpotifyProcess(IMainAudioSession audioSession, IProcessManager processManager)
         {
             _processManager = processManager;

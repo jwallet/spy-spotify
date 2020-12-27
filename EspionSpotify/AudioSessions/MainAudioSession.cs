@@ -21,7 +21,7 @@ namespace EspionSpotify.AudioSessions
 
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public AudioMMDevicesManager AudioMMDevicesManager { get; private set; }
-        public int AudioDeviceVolume { get => (int)(AudioMMDevicesManager.AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);  }
+        public int AudioDeviceVolume { get => (int)(AudioMMDevicesManager.AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100); }
         public bool IsAudioEndPointDeviceIndexAvailable { get => AudioMMDevicesManager.AudioEndPointDeviceNames.ContainsKey(AudioMMDevicesManager.AudioEndPointDeviceID); }
 
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; } = new List<AudioSessionControl>();
@@ -29,8 +29,9 @@ namespace EspionSpotify.AudioSessions
 
         private SessionCollection GetSessionsAudioEndPointDevice => AudioMMDevicesManager.GetAudioEndPointDeviceSessions;
 
-        internal MainAudioSession(string audioEndPointDevice):
-            this(audioEndPointDevice, processManager: new ProcessManager()) { }
+        internal MainAudioSession(string audioEndPointDevice) :
+            this(audioEndPointDevice, processManager: new ProcessManager())
+        { }
 
         public MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager)
         {
@@ -206,7 +207,7 @@ namespace EspionSpotify.AudioSessions
         public void Dispose()
         {
             Dispose(true);
-            
+
             GC.SuppressFinalize(this);
         }
 

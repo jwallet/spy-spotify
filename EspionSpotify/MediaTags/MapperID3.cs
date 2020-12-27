@@ -1,7 +1,5 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -17,7 +15,7 @@ namespace EspionSpotify.MediaTags
         public int? Count { get; set; }
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
-        
+
         private readonly IFileSystem _fileSystem;
 
         private bool IsMovingExtraTitleToSubtitle
@@ -30,8 +28,9 @@ namespace EspionSpotify.MediaTags
             }
         }
 
-        internal MapperID3(string currentFile, Track track, UserSettings userSettings):
-            this(fileSystem: new FileSystem(), currentFile, track, userSettings) { }
+        internal MapperID3(string currentFile, Track track, UserSettings userSettings) :
+            this(fileSystem: new FileSystem(), currentFile, track, userSettings)
+        { }
 
         public MapperID3(IFileSystem fileSystem, string currentFile, Track track, UserSettings userSettings)
         {
@@ -71,7 +70,7 @@ namespace EspionSpotify.MediaTags
         internal async Task SaveMediaTags()
         {
             var mp3 = TagLib.File.Create(CurrentFile);
-            
+
             await MapTags(mp3.Tag);
 
             if (_fileSystem.File.Exists(CurrentFile))

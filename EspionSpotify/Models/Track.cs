@@ -1,11 +1,5 @@
 ﻿using EspionSpotify.Enums;
-using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
 using EspionSpotify.Spotify;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TagLib;
 
 namespace EspionSpotify.Models
 {
@@ -86,7 +80,8 @@ namespace EspionSpotify.Models
         public byte[] ArtMedium { get; set; }
         public byte[] ArtSmall { get; set; }
 
-        public bool IsNormal {
+        public bool IsNormal
+        {
             get =>
                 !string.IsNullOrEmpty(Artist)
                 && !string.IsNullOrEmpty(Title)

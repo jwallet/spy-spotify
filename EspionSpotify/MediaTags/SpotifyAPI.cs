@@ -75,7 +75,7 @@ namespace EspionSpotify.MediaTags
             }
 
             var playback = await api.GetPlaybackAsync();
-            
+
             if (playback == null || playback.Item == null)
             {
                 if (!retry)

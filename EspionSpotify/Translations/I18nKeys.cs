@@ -89,7 +89,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys TipStartSpying { get => TranslationKeys.tipStartSpying; }
         public static TranslationKeys TipStopSying { get => TranslationKeys.tipStopSying; }
 
-        public static TranslationKeys TitleSpotifyAPICredentials { get => TranslationKeys.titleSpotifyAPICredentials;  }
+        public static TranslationKeys TitleSpotifyAPICredentials { get => TranslationKeys.titleSpotifyAPICredentials; }
 
         public static TranslationKeys WatermarkClientId { get => TranslationKeys.watermarkClientId; }
         public static TranslationKeys WatermarkSecretId { get => TranslationKeys.watermarkSecretId; }
