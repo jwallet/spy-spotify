@@ -139,7 +139,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OutputPath = Settings.Default.Directory;
             _userSettings.RecordEverythingEnabled = Settings.Default.RecordEverythingEnabled;
-            _userSettings.RecordNoAdsEnabled = Settings.Default.RecordNoAdsEnabled;
+            _userSettings.RecordAdsEnabled = !Settings.Default.RecordNoAdsEnabled;
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
@@ -595,13 +595,14 @@ namespace EspionSpotify
             }
 
             Task.Run(async () => await _analytics.LogAction(
-                $"record-everything?enabled={tgRecordEverything.GetPropertyThreadSafe(c => c.Checked)}&except-ads={_userSettings.RecordNoAdsEnabled}"));
+                $"record-everything?enabled={tgRecordEverything.GetPropertyThreadSafe(c => c.Checked)}&except-ads={!_userSettings.RecordAdsEnabled}"));
         }
 
         private void ChkRecordNoAds_CheckedChanged(object sender, EventArgs e)
         {
             if (Settings.Default.RecordNoAdsEnabled == chkRecordDuplicateRecordings.Checked) return;
 
+            _userSettings.RecordAdsEnabled = !chkRecordNoAds.Checked;
             Settings.Default.RecordNoAdsEnabled = chkRecordNoAds.Checked;
             Settings.Default.Save();
 

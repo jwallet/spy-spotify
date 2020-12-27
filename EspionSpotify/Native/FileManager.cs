@@ -126,8 +126,8 @@ namespace EspionSpotify.Native
         private static string GetOutputPath(Track track, UserSettings userSettings)
         {
             var outputPath = userSettings.OutputPath;
-            if (userSettings.RecordEverythingEnabled && !userSettings.RecordNoAdsEnabled && track.Ad) {
-                return $@"{outputPath}\{SpotifyStatus.ADVERTISEMENT.Capitalize()}";
+            if (userSettings.RecordEverythingEnabled && userSettings.RecordAdsEnabled && track.Ad) {
+                return $@"{outputPath}\{Constants.ADVERTISEMENT}";
             }
             return outputPath;
         }
@@ -135,9 +135,9 @@ namespace EspionSpotify.Native
         private void CreateDirectories(Track track, UserSettings userSettings)
         {
             var outputPath = userSettings.OutputPath;
-            if (track.Ad && userSettings.RecordEverythingEnabled && !userSettings.RecordNoAdsEnabled)
+            if (track.Ad && userSettings.RecordEverythingEnabled && userSettings.RecordAdsEnabled)
             {
-                outputPath = $@"{outputPath}\{SpotifyStatus.ADVERTISEMENT.Capitalize()}";
+                outputPath = $@"{outputPath}\{Constants.ADVERTISEMENT}";
                 CreateDirectory(outputPath);
             }
 

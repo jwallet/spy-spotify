@@ -47,7 +47,7 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.IsUnknown;
+            get => _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
         }
         public bool IsTypeAllowed
         {
