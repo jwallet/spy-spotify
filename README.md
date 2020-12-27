@@ -12,7 +12,7 @@ Spytify is a Spotify recorder for Windows which records Spotify audio without re
 
 Spytify runs on Windows only. Requirements:
 
-- Microsoft Framework ([.NET 4.6](https://www.microsoft.com/en-US/download/details.aspx?id=48130) or higher)
+- Microsoft Framework ([.NET 4.6.1](https://www.microsoft.com/en-ca/download/details.aspx?id=49981) or higher)
 - Spotify Desktop application
 
 A **free Spotify account will work**, but restricts audio quality to 120 kbps. Having a Premium Spotify subsciption will enable recording of up to 320 kbps audio.
