@@ -126,6 +126,22 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
+        [InlineData(null, null)]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("test", "Test")]
+        [InlineData("-abc", "-abc")]
+        [InlineData("123", "123")]
+        [InlineData("Abc", "Abc")]
+        [InlineData("aBC", "ABC")]
+        [InlineData("a b c", "A b c")]
+        internal void StringCapitalize_ReturnsExpected(string value, string expected)
+        {
+            var actual = value.Capitalize();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
         [InlineData("v0.1-beta", 0, 1)]
         [InlineData("1.123", 1, 123)]
         [InlineData("1.1.0.0", 1, 1, 0, 0)]

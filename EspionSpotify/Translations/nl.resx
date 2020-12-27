@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,23 +119,23 @@
   </resheader>
   <data name="cbOptBitRate128" xml:space="preserve">
     <value>128kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate160" xml:space="preserve">
     <value>160kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate256" xml:space="preserve">
     <value>256kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate320" xml:space="preserve">
     <value>320kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
     <value>{0} (Spotify Free)</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
     <value>{0} Hoge Kwaliteit (Spotify Premium)</value>
@@ -371,7 +371,7 @@
   </data>
   <data name="tipNumModifierHold" xml:space="preserve">
     <value>CTRL heeft invloed op de maskerwaarde</value>
-    <comment>interface **</comment>
+    <comment>interface**</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
     <value>Voeg het tellernummer toe voor alle bestandsnaam</value>
@@ -390,15 +390,55 @@
     <comment>console **</comment>
   </data>
   <data name="msgBodyFailedToUseSpotifyAPI" xml:space="preserve">
-    <value>Lost connection to Spotify API. Make sure you authorized Spytify on the same Spotify account that is currently connected to Spotify-Desktop app to be able to get metadata of the current track. In the meantime Spytify will use LastFM API.</value>
-    <comment>message -- translate me</comment>
+    <value>Verbinding met Spotify API verbroken. Zorg ervoor dat je Spytify hebt geautoriseerd op hetzelfde Spotify-account dat momenteel is verbonden met de Spotify-Desktop-app om metadata van de huidige track te kunnen krijgen. In de tussentijd zal Spytify LastFM API gebruiken.</value>
+    <comment>message**</comment>
   </data>
   <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
-    <value>Spotify API Failed</value>
-    <comment>message -- translate me</comment>
+    <value>Spotify API is mislukt</value>
+    <comment>message**</comment>
   </data>
   <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode.</value>
-    <comment>console - translate me</comment>
+    <value>// De opname van {0} zou de hoeveelheid gegevens overschrijden, vaak veroorzaakt doordat Spotify niet reageerde na te lang op de achtergrond te hebben gewerkt of omdat uw computer zich in de energiebesparende modus bevindt.</value>
+    <comment>console**</comment>
+  </data>
+  <data name="lblClientId" xml:space="preserve">
+    <value>Client ID:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="lblSecretId" xml:space="preserve">
+    <value>Client Secret:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="tipFAQSpotifyAPI" xml:space="preserve">
+    <value>Zie hoe u Spotify API configureert en gebruikt</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="tipSpotifyAPICredentials" xml:space="preserve">
+    <value>Beheer Spotify API inloggegevens</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="titleSpotifyAPICredentials" xml:space="preserve">
+    <value>Spotify API Inloggegevens</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="watermarkClientId" xml:space="preserve">
+    <value>Plak hier de Client ID</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="watermarkSecretId" xml:space="preserve">
+    <value>Plak hier de Client Secret</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Verplaats de extra titel van de track naar de ondertitel-tag</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Mediatags:</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="tipSpotifyAPIDashboard" xml:space="preserve">
+    <value>Spotify API-dashboard</value>
+    <comment>interface**</comment>
   </data>
 </root>

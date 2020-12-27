@@ -11,11 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EspionSpotify.MediaTags;
+using System.Threading;
+using EspionSpotify.Native;
 
 namespace EspionSpotify
 {
-    public class Watcher : IWatcher
+    public class Watcher : IWatcher, IDisposable
     {
+        private bool _disposed = false;
         private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
@@ -34,7 +37,7 @@ namespace EspionSpotify
 
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
-        private readonly List<Task> _recorderTasks = new List<Task>();
+        private readonly List<RecorderTask> _recorderTasks = new List<RecorderTask>();
 
         public int CountSeconds { get; set; }
         public ISpotifyHandler Spotify { get; set; }
@@ -45,8 +48,7 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordUnknownTrackTypeEnabled
-                && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString());
+            get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.IsUnknown;
         }
         public bool IsTypeAllowed
         {
@@ -136,7 +138,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
+            var adTitle = !IsRecordUnknownActive && _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{_currentTrack.ToString()}");
 
             MutesSpotifyAds(_currentTrack.Ad);
@@ -189,10 +191,16 @@ namespace EspionSpotify
                 EndRecordingSession();
             }
 
-            if (SpotifyConnect.IsSpotifyRunning())
+            if (isAudioSessionNotFound)
+            {
+                _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
+                Running = false;
+            }
+            else if (SpotifyConnect.IsSpotifyRunning())
             {
                 _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
+                NativeMethods.PreventSleep();
 
                 while (Running)
                 {
@@ -200,11 +208,6 @@ namespace EspionSpotify
                     if (!SpotifyConnect.IsSpotifyRunning())
                     {
                         _form.WriteIntoConsole(I18nKeys.LogSpotifyIsClosed);
-                        Running = false;
-                    }
-                    else if (isAudioSessionNotFound)
-                    {
-                        _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
                         Running = false;
                     }
                     else if (ToggleStopRecordingDelayed)
@@ -218,11 +221,12 @@ namespace EspionSpotify
                         _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
                         ToggleStopRecordingDelayed = true;
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(500);
                 }
 
                 DoIKeepLastSong();
                 StopLastRecorder();
+                NativeMethods.AllowSleep();
             }
             else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
@@ -252,7 +256,8 @@ namespace EspionSpotify
             CountSeconds = 0;
 
             _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
-            _recorderTasks.Add(Task.Run(_recorder.Run));
+            var token = new CancellationTokenSource();
+            _recorderTasks.Add(new RecorderTask() { Task = Task.Run(() => _recorder.Run(token)), Token = token });
 
             _form.UpdateIconSpotify(_isPlaying, true);
         }
@@ -297,16 +302,18 @@ namespace EspionSpotify
         private void EndRecordingSession()
         {
             Ready = true;
-
+            
             if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
                 _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                _audioSession.ClearSpotifyAudioSessionControls();
 
                 Spotify.ListenForEvents = false;
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;
                 Spotify.OnTrackChange -= OnTrackChanged;
                 Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                Spotify.Dispose();
             }
 
             _form.UpdateStartButton();
@@ -322,13 +329,13 @@ namespace EspionSpotify
             {
                 _form.UpdateNumUp();
             }
-            _recorderTasks.RemoveAll(x => x.Status == TaskStatus.RanToCompletion);
+            _recorderTasks.RemoveAll(x => x.Task.Status == TaskStatus.RanToCompletion);
         }
 
         private void DoIKeepLastSong()
         {
             // always increment when session ends
-            if (!Running && _recorderTasks.Any(t => t.Status != TaskStatus.RanToCompletion))
+            if (!Running && _recorderTasks.Any(t => t.Task.Status != TaskStatus.RanToCompletion))
             {
                 _form.UpdateNumUp();
             }
@@ -355,5 +362,38 @@ namespace EspionSpotify
                 _audioSession.SetSpotifyToMute(value);
             }
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                DoIKeepLastSong();
+                StopLastRecorder();
+                NativeMethods.AllowSleep();
+
+                EndRecordingSession();
+
+                _recorderTasks.ForEach(x => {
+                    x.Token.Cancel();
+                    x.Task.Wait();
+                    x.Task.Dispose();
+                    //x.Token.Dispose();
+                });
+
+                if (_recorder != null) _recorder.Dispose();
+            }
+
+            _disposed = true;
+        }
     }
+
 }

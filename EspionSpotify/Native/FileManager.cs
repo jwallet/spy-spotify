@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Models;
+using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using System;
 using System.Collections.Generic;
@@ -7,21 +7,26 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace EspionSpotify
+namespace EspionSpotify.Native
 {
     public class FileManager
     {
         private readonly UserSettings _userSettings;
         private readonly Track _track;
         private readonly IFileSystem _fileSystem;
+        private readonly DateTime _now;
 
         private static readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
 
-        public FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem)
+        internal FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem):
+            this(userSettings, track, fileSystem, now: DateTime.Now) { }
+
+        public FileManager(UserSettings userSettings, Track track, IFileSystem fileSystem, DateTime now)
         {
             _userSettings = userSettings;
             _track = track;
             _fileSystem = fileSystem;
+            _now = now;
         }
 
         internal string GetTempFile() => _fileSystem.Path.GetTempFileName();
@@ -29,10 +34,11 @@ namespace EspionSpotify
         public OutputFile GetOutputFile()
         {
             var folderPath = GetFolderPath(_track, _userSettings);
-            var pathName = _userSettings.OutputPath + folderPath;
-            CreateDirectories(_userSettings);
+            var pathName = GetOutputPath(_track, _userSettings) + folderPath;
 
-            var fileName = GenerateFileName(_track, _userSettings);
+            CreateDirectories(_track, _userSettings);
+
+            var fileName = GenerateFileName(_track, _userSettings, _now);
             var extension = GetMediaFormatExtension(_userSettings);
 
             var outputFile = new OutputFile
@@ -57,7 +63,7 @@ namespace EspionSpotify
 
         public OutputFile UpdateOutputFileWithLatestTrackInfo(OutputFile outputFile, Track track, UserSettings userSettings)
         {
-            outputFile.File = GenerateFileName(track, userSettings);
+            outputFile.File = GenerateFileName(track, userSettings, _now);
             return outputFile;
         }
 
@@ -86,10 +92,10 @@ namespace EspionSpotify
             }
         }
 
-        public static bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
+        public bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
         {
             var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings);
-            var fileName = GenerateFileName(track, userSettings);
+            var fileName = GenerateFileName(track, userSettings, _now);
             return fileSystem.File.Exists($@"{pathWithFolder}\{fileName}.{GetMediaFormatExtension(userSettings)}");
         }
 
@@ -116,18 +122,27 @@ namespace EspionSpotify
             return Regex.Replace(string.Join(" ", albumInfos), _windowsExlcudedChars, string.Empty).Replace(" ", trackTitleSeparator);
         }
 
-        private void CreateDirectories(UserSettings userSettings)
+        private static string GetOutputPath(Track track, UserSettings userSettings)
         {
+            var outputPath = userSettings.OutputPath;
+            return outputPath;
+        }
+
+        private void CreateDirectories(Track track, UserSettings userSettings)
+        {
+            var outputPath = userSettings.OutputPath;
             if (!userSettings.GroupByFoldersEnabled) return;
 
-            var artistDir = GetArtistFolderPath(_track, userSettings.TrackTitleSeparator);
-            var albumDir = GetAlbumFolderPath(_track, userSettings.TrackTitleSeparator);
-            CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}");
-            CreateDirectory($@"{_userSettings.OutputPath}\{artistDir}\{albumDir}");
+            var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
+            var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
+            
+            CreateDirectory($@"{outputPath}\{artistDir}");
+            CreateDirectory($@"{outputPath}\{artistDir}\{albumDir}");
         }
 
         private void CreateDirectory(string path)
         {
+            if (path.Split(new[] { '\\' }).Contains("")) return;
             if (_fileSystem.Directory.Exists(path)) return;
             _fileSystem.Directory.CreateDirectory(path);
         }
@@ -137,20 +152,13 @@ namespace EspionSpotify
             return userSettings.MediaFormat.ToString().ToLower();
         }
 
-        private static string GenerateFileName(Track track, UserSettings userSettings)
+        private static string GenerateFileName(Track track, UserSettings userSettings, DateTime now)
         {
-            string fileName;
+            var fileName = userSettings.GroupByFoldersEnabled
+                ? Normalize.RemoveDiacritics(track.ToTitleString())
+                : Normalize.RemoveDiacritics(track.ToString());
 
-            if (userSettings.GroupByFoldersEnabled)
-            {
-                fileName = Normalize.RemoveDiacritics(track.ToTitleString());
                 fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
-            }
-            else
-            {
-                fileName = Normalize.RemoveDiacritics(track.ToString());
-                fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
-            }
 
             var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
             return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator); ;
@@ -162,7 +170,7 @@ namespace EspionSpotify
             if (!_fileSystem.Directory.EnumerateFiles(folderPath).Any())
             {
                 try { _fileSystem.Directory.Delete(folderPath); }
-                catch { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 var subFolderPath = _fileSystem.Path.GetDirectoryName(folderPath);
                 if (_userSettings.OutputPath != subFolderPath && subFolderPath.Contains(_userSettings.OutputPath))

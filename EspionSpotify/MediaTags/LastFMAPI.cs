@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using PCLWebUtility;
+using EspionSpotify.Spotify;
 
 namespace EspionSpotify.MediaTags
 {
@@ -13,9 +14,7 @@ namespace EspionSpotify.MediaTags
     {
         private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly Random _random;
-        private string _selectedApiKey = "";
-
-        public bool IsAuthenticated { get => true; }
+        private readonly string _selectedApiKey = "";
 
         public string[] ApiKeys { get; }
 
@@ -74,6 +73,8 @@ namespace EspionSpotify.MediaTags
                     return;
                 }
             }
+
+            track.MetaDataUpdated = true;
         }
 
         public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
@@ -86,8 +87,11 @@ namespace EspionSpotify.MediaTags
             track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
             track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
             track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
-
-            track.MetaDataUpdated = true;
         }
+
+        #region NotImplementedExternalAPI
+        public bool IsAuthenticated { get => true; }
+        public async Task Authenticate() => await Task.CompletedTask;
+        #endregion
     }
 }

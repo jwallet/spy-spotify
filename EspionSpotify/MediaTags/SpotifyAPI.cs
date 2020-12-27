@@ -1,6 +1,7 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
+using EspionSpotify.Spotify;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
@@ -22,6 +23,8 @@ namespace EspionSpotify.MediaTags
         private readonly AuthorizationCodeAuth _auth;
         private string _refreshToken;
         private bool _connectionDialogOpened = false;
+
+        public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
 
         public bool IsAuthenticated { get => _token != null; }
 
@@ -49,6 +52,16 @@ namespace EspionSpotify.MediaTags
             _connectionDialogOpened = true;
         }
 
+        public async Task Authenticate()
+        {
+            var api = await GetSpotifyWebAPI();
+
+            if (api == null)
+            {
+                OpenAuthenticationDialog();
+            }
+        }
+
         public async Task UpdateTrack(Track track) => await UpdateTrack(track, retry: false);
 
         private async Task UpdateTrack(Track track, bool retry = false)
@@ -62,7 +75,7 @@ namespace EspionSpotify.MediaTags
             }
 
             var playback = await api.GetPlaybackAsync();
-
+            
             if (playback == null || playback.Item == null)
             {
                 if (!retry)
@@ -106,16 +119,22 @@ namespace EspionSpotify.MediaTags
                 api.Dispose();
                 return;
             }
-
-            var album = await api.GetAlbumAsync(playback.Item.Album.Id);
-
-            if (album.HasError())
+            else
             {
-                api.Dispose();
-                return;
+                var album = await api.GetAlbumAsync(playback.Item.Album.Id);
+
+                if (album.HasError())
+                {
+                    api.Dispose();
+                    return;
+                }
+                else
+                {
+                    MapSpotifyAlbumToTrack(track, album);
+                }
             }
 
-            MapSpotifyAlbumToTrack(track, album);
+            track.MetaDataUpdated = true;
 
             api.Dispose();
         }
@@ -123,14 +142,15 @@ namespace EspionSpotify.MediaTags
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
             var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, 2);
 
-            track.Artist = performers.FirstOrDefault();
-            track.Title = spotifyTrack.Name;
+            track.SetArtistFromAPI(performers.FirstOrDefault());
+            track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
+            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2), separatorType);
+
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;
-
-            track.MetaDataUpdated = true;
         }
 
         public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)

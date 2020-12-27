@@ -42,6 +42,7 @@ namespace EspionSpotify
                 ReportException((Exception)e.ExceptionObject);
             });
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
             thread.Join();
         }

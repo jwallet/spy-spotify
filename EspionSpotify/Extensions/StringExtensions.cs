@@ -60,5 +60,11 @@ namespace EspionSpotify.Extensions
 
             return new Version(versionString);
         }
+
+        public static string Capitalize(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return input;
+            return input.First().ToString().ToUpper() + input.Substring(1);
+        }
     }
 }

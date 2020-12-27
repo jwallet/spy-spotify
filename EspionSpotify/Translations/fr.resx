@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,23 +119,23 @@
   </resheader>
   <data name="cbOptBitRate128" xml:space="preserve">
     <value>128kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate160" xml:space="preserve">
     <value>160kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate256" xml:space="preserve">
     <value>256kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRate320" xml:space="preserve">
     <value>320kbps</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
     <value>{0} (Spotify Free)</value>
-    <comment>interface</comment>
+    <comment>interface --</comment>
   </data>
   <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
     <value>{0} Haute qualité (Spotify Premium)</value>
@@ -182,7 +182,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblNumTracks" xml:space="preserve">
-    <value>Remplacer le numéro de position cd (album track) par la valeur du compteur</value>
+    <value>Remplacer le tag numéro de position cd (album track) par la valeur du compteur</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -400,5 +400,45 @@
   <data name="logRecordingDataExceeded" xml:space="preserve">
     <value>// L'enregistrement de {0} était en train d'excéder en données, souvent causé par Spotify ne répondant plus après avoir été trop longtemps en arrière-plan ou que votre ordinateur est en mode économie d'énergie.</value>
     <comment>console</comment>
+  </data>
+  <data name="lblClientId" xml:space="preserve">
+    <value>Client ID:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="lblSecretId" xml:space="preserve">
+    <value>Client Secret:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="tipFAQSpotifyAPI" xml:space="preserve">
+    <value>Voyez comment configurer et utiliser Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipSpotifyAPICredentials" xml:space="preserve">
+    <value>Gérer les identifiants Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="titleSpotifyAPICredentials" xml:space="preserve">
+    <value>Identifiants Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkClientId" xml:space="preserve">
+    <value>Coller le Client ID ici</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkSecretId" xml:space="preserve">
+    <value>Coller le Client Secret ici</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Déplacer l'extra du titre de la piste audio dans le tag second titre</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Tags Média:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipSpotifyAPIDashboard" xml:space="preserve">
+    <value>Tableau de bord de Spotify API</value>
+    <comment>interface**</comment>
   </data>
 </root>

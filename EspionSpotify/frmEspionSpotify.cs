@@ -18,8 +18,8 @@ using System.Diagnostics;
 using EspionSpotify.Extensions;
 using System.Linq;
 using EspionSpotify.MediaTags;
-using System.Text.RegularExpressions;
 using EspionSpotify.Drivers;
+using EspionSpotify.Controls;
 
 namespace EspionSpotify
 {
@@ -30,6 +30,7 @@ namespace EspionSpotify
         private readonly UserSettings _userSettings;
         private readonly Analytics _analytics;
         private bool _toggleStopRecordingDelayed;
+        private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
         
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
                 TranslationKeys.logRecording,
@@ -86,6 +87,7 @@ namespace EspionSpotify
         {
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
+            chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
@@ -97,14 +99,14 @@ namespace EspionSpotify
             txtPath.Text = Settings.Default.Directory;
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
             tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
+            tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
             chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
             tgRecordUnkownTrackType.Checked = Settings.Default.RecordUnknownTrackTypeEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
             txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
 
-            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
-            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
-            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
+            SetSpotifyAPIOption();
+
             rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
             rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
             if (rbSpotifyAPI.Checked)
@@ -113,7 +115,7 @@ namespace EspionSpotify
             }
 
 #if DEBUG
-            this.Text = "                        DEBUG";
+            Style = MetroColorStyle.Orange;
 #endif
 
             SetLanguageDropDown();  // do it before setting the language
@@ -137,6 +139,7 @@ namespace EspionSpotify
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
+            _userSettings.ExtraTitleToSubtitleEnabled = Settings.Default.ExtraTitleToSubtitleEnabled;
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(_userSettings.OrderNumberMask);
 
@@ -145,6 +148,13 @@ namespace EspionSpotify
 
             var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;
+        }
+
+        private void SetSpotifyAPIOption()
+        {
+            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
+            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
+            rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
         private void SetMediaTagsAPI(MediaTagsAPI api, bool isSpotifyAPISet)
@@ -229,6 +239,8 @@ namespace EspionSpotify
             lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
             chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
+            lblExtraTitleToSubtitle.Text = Rm.GetString(I18nKeys.LblExtraTitleToSubtitle);
+            lblID3.Text = Rm.GetString(I18nKeys.LblID3);
 
             tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
@@ -240,6 +252,7 @@ namespace EspionSpotify
             tip.SetToolTip(lnkFAQ, Rm.GetString(I18nKeys.TipFAQ));
             tip.SetToolTip(lnkNumPlus, Rm.GetString(I18nKeys.TipNumModifierHold));
             tip.SetToolTip(lnkNumMinus, Rm.GetString(I18nKeys.TipNumModifierHold));
+            tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18nKeys.TipSpotifyAPICredentials));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
@@ -370,11 +383,7 @@ namespace EspionSpotify
                 rtbLog.SelectionColor = resource.Equals(TranslationKeys.logRecording)
                     ? rtbLog.SelectionColor.SpotifyPrimaryText()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
-                rtbLog.SelectionFont = new Font(
-                    rtbLog.SelectionFont.FontFamily,
-                    rtbLog.SelectionFont.Size,
-                    FontStyle.Bold
-                );
+                rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Bold);
 
                 // set message msg
                 rtbLog.AppendText(msg + Environment.NewLine);
@@ -382,11 +391,7 @@ namespace EspionSpotify
                 rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(TranslationKeys.logDeleting)
                     ? rtbLog.SelectionColor.SpotifySecondaryTextAlternate()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
-                rtbLog.SelectionFont = new Font(
-                    rtbLog.SelectionFont.FontFamily,
-                    rtbLog.SelectionFont.Size,
-                    FontStyle.Regular
-                );
+                rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
             }
             else
             {
@@ -424,6 +429,9 @@ namespace EspionSpotify
 
             rtbLog.AppendText(LogDate + Rm.GetString(I18nKeys.LogPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
+            rtbLog.Select(0, rtbLog.TextLength);
+            rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
+            
             rtbLog.SelectionStart = rtbLog.TextLength;
             rtbLog.ScrollToCaret();
         }
@@ -442,7 +450,7 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            if (tlSettings.InvokeRequired || tlAdvanced.InvokeRequired)
+            if (tlSettings.IsInvokeRequired() || tlAdvanced.IsInvokeRequired())
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
@@ -498,6 +506,15 @@ namespace EspionSpotify
             icon.Image.Dispose();
             icon.Image = bmp;
             icon.Refresh();
+        }
+
+        private Font GetDefaultSelectionFont(FontStyle style)
+        {
+            return new Font(
+                new FontFamily("Courier New"),
+                8.25f,
+                style
+            );
         }
 
         private bool UpdateAudioVirtualCableDriverImage()
@@ -661,7 +678,9 @@ namespace EspionSpotify
         private void FrmEspionSpotify_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Watcher.Ready || !Watcher.Running) return;
+            
             e.Cancel = true;
+            
             if (MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyCantQuit),
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
@@ -669,9 +688,12 @@ namespace EspionSpotify
                     MessageBoxIcon.Question) != DialogResult.Yes) return;
             
             Watcher.Running = false;
-            
-            Thread.Sleep(1000);
+            _watcher.Dispose();
+            _audioSession.Dispose();
+            Instance.Dispose();
+
             Task.Run(async () => await _analytics.LogAction("exit"));
+
             Close();
         }
 
@@ -804,8 +826,6 @@ namespace EspionSpotify
             {
                 if (iconVolume.BackgroundImage != Resources.volup) iconVolume.BackgroundImage = Resources.volup;
             }
-
-            Task.Run(async () => await _analytics.LogAction("volume"));
         }
 
         private void Focus_Hover(object sender, EventArgs e)
@@ -885,6 +905,35 @@ namespace EspionSpotify
         {
             Process.Start(GitHub.WEBSITE_DONATE_URL);
             Task.Run(async () => await _analytics.LogAction($"donate"));
+        }
+
+        private void LnkSpotifyCredentials_Click(object sender, EventArgs e)
+        {
+            if (_frmSpotifyApiCredentials == null || _frmSpotifyApiCredentials.IsDisposed)
+            {
+                _frmSpotifyApiCredentials = new FrmSpotifyAPICredentials(_analytics);
+            }
+            
+            var result = _frmSpotifyApiCredentials.ShowDialog(this);
+            
+            SetSpotifyAPIOption();
+            
+            if (result == DialogResult.No)
+            {
+                rbLastFMAPI.Checked = true;
+            }
+
+            _frmSpotifyApiCredentials.Dispose();
+        }
+
+        private void TgExtraTitleToSubtitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.ExtraTitleToSubtitleEnabled == tgExtraTitleToSubtitle.Checked) return;
+
+            _userSettings.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
+            Settings.Default.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"move-extra-title-to-subtitle?enabled={tgExtraTitleToSubtitle.GetPropertyThreadSafe(c => c.Checked)}"));
         }
     }
 }

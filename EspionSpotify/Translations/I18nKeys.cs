@@ -1,4 +1,4 @@
-﻿using EspionSpotify.Enums;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Models
 {
@@ -16,20 +16,24 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblAds { get => TranslationKeys.lblAds; }
         public static TranslationKeys LblAudioDevice { get => TranslationKeys.lblAudioDevice; }
         public static TranslationKeys LblBitRate { get => TranslationKeys.lblBitRate; }
-        public static TranslationKeys LblRecordOverRecordings { get => TranslationKeys.lblRecordOverRecordings; }
-        public static TranslationKeys LblEndingSongDelay { get => TranslationKeys.lblEndingSongDelay; }
+        public static TranslationKeys LblClientId { get => TranslationKeys.lblClientId; }
         public static TranslationKeys LblDuplicate { get => TranslationKeys.lblDuplicate; }
+        public static TranslationKeys LblEndingSongDelay { get => TranslationKeys.lblEndingSongDelay; }
+        public static TranslationKeys LblExtraTitleToSubtitle { get => TranslationKeys.lblExtraTitleToSubtitle; }
         public static TranslationKeys LblFormat { get => TranslationKeys.lblFormat; }
+        public static TranslationKeys LblID3 { get => TranslationKeys.lblID3; }
         public static TranslationKeys LblLanguage { get => TranslationKeys.lblLanguage; }
         public static TranslationKeys LblMinLength { get => TranslationKeys.lblMinLength; }
         public static TranslationKeys LblMuteAds { get => TranslationKeys.lblMuteAds; }
         public static TranslationKeys LblNumFiles { get => TranslationKeys.lblNumFiles; }
         public static TranslationKeys LblNumTracks { get => TranslationKeys.lblNumTracks; }
         public static TranslationKeys LblPath { get => TranslationKeys.lblPath; }
+        public static TranslationKeys LblRecordOverRecordings { get => TranslationKeys.lblRecordOverRecordings; }
         public static TranslationKeys LblRecorder { get => TranslationKeys.lblRecorder; }
         public static TranslationKeys LblRecordingNum { get => TranslationKeys.lblRecordingNum; }
         public static TranslationKeys LblRecordingTimer { get => TranslationKeys.lblRecordingTimer; }
         public static TranslationKeys LblRecordUnknownTrackType { get => TranslationKeys.lblRecordUnknownTrackType; }
+        public static TranslationKeys LblSecretId { get => TranslationKeys.lblSecretId; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
 
         public static TranslationKeys LogAd { get => TranslationKeys.logAd; }
@@ -72,13 +76,21 @@ namespace EspionSpotify.Models
         public static TranslationKeys TipClear { get => TranslationKeys.tipClear; }
         public static TranslationKeys TipDonate { get => TranslationKeys.tipDonate; }
         public static TranslationKeys TipFAQ { get => TranslationKeys.tipFAQ; }
+        public static TranslationKeys TipFAQSpotifyAPI { get => TranslationKeys.tipFAQSpotifyAPI; }
         public static TranslationKeys TipDirectory { get => TranslationKeys.tipDirectory; }
         public static TranslationKeys TipInstallVirtualCableDriver { get => TranslationKeys.tipInstallVirtualCableDriver; }
         public static TranslationKeys TipNumModifierHold { get => TranslationKeys.tipNumModifierHold; }
         public static TranslationKeys TipPath { get => TranslationKeys.tipPath; }
         public static TranslationKeys TipRelease { get => TranslationKeys.tipRelease; }
+        public static TranslationKeys TipSpotifyAPIDashboard { get => TranslationKeys.tipSpotifyAPIDashboard; }
         public static TranslationKeys TipUninstallVirtualCableDriver { get => TranslationKeys.tipUninstallVirtualCableDriver; }
+        public static TranslationKeys TipSpotifyAPICredentials { get => TranslationKeys.tipSpotifyAPICredentials; }
         public static TranslationKeys TipStartSpying { get => TranslationKeys.tipStartSpying; }
         public static TranslationKeys TipStopSying { get => TranslationKeys.tipStopSying; }
+
+        public static TranslationKeys TitleSpotifyAPICredentials { get => TranslationKeys.titleSpotifyAPICredentials;  }
+
+        public static TranslationKeys WatermarkClientId { get => TranslationKeys.watermarkClientId; }
+        public static TranslationKeys WatermarkSecretId { get => TranslationKeys.watermarkSecretId; }
     }
 }

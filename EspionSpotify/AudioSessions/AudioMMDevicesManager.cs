@@ -12,7 +12,6 @@ namespace EspionSpotify.AudioSessions
     public class AudioMMDevicesManager : NAudio.CoreAudioApi.Interfaces.IMMNotificationClient, IDisposable
     {
         private bool _disposed = false;
-        private readonly SafeHandle _disposeHandle = new SafeFileHandle(IntPtr.Zero, true);
         private MMDevice _defaultEndpointVolumeController;
 
         internal bool volumeNotificationEmitted = false;
@@ -20,7 +19,16 @@ namespace EspionSpotify.AudioSessions
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public string AudioEndPointDeviceID { get; private set; }
         public string DefaultAudioEndPointDeviceID { get; private set; }
-        public MMDevice AudioEndPointDevice { get => AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID) ? AudioEndPointDeviceID : DefaultAudioEndPointDeviceID); }
+        
+        public MMDevice AudioEndPointDevice {
+            get
+            {
+                return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
+                    ? AudioEndPointDeviceID
+                    : DefaultAudioEndPointDeviceID);
+            }
+        }
+
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
         public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice.AudioSessionManager.Sessions; }
@@ -103,8 +111,7 @@ namespace EspionSpotify.AudioSessions
         public void Dispose()
         {
             Dispose(true);
-            AudioMMDevices.Dispose();
-            _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
+ 
             GC.SuppressFinalize(this);
         }
 
@@ -115,7 +122,9 @@ namespace EspionSpotify.AudioSessions
 
             if (disposing)
             {
-                _disposeHandle.Dispose();
+                _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
+                _defaultEndpointVolumeController.Dispose();
+                AudioMMDevices.Dispose();
             }
 
             _disposed = true;

@@ -2,18 +2,24 @@ using System;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
+using Microsoft.Win32.SafeHandles;
 using NAudio.Lame;
 using NAudio.Wave;
 
 namespace EspionSpotify
 {
-    public class Recorder : IRecorder
+    public class Recorder : IRecorder, IDisposable
     {
+        private bool _disposed = false;
+
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
         public const long WAV_MAX_SIZE_BYTES = 4000000000;
@@ -33,11 +39,12 @@ namespace EspionSpotify
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private bool _canBeSkippedValidated = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public bool IsSkipTrackActive
         {
             get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
-                && FileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
+                && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
         }
 
         public Recorder() {}
@@ -54,8 +61,10 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
-        public async Task Run()
+        public async Task Run(CancellationTokenSource cancellationTokenSource)
         {
+            _cancellationTokenSource = cancellationTokenSource;
+
             if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
 
             Running = true;
@@ -73,19 +82,20 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
                 return;
             }
 
+            _waveIn.ShareMode = NAudio.CoreAudioApi.AudioClientShareMode.Shared;
             _waveIn.StartRecording();
             _form.WriteIntoConsole(I18nKeys.LogRecording, _track.ToString());
 
             while (Running)
             {
+                if (_cancellationTokenSource.IsCancellationRequested) return;
                 if (StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
@@ -101,8 +111,7 @@ namespace EspionSpotify
             if (IsSkipTrackActive)
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
                 return true;
             }
 
@@ -111,7 +120,7 @@ namespace EspionSpotify
 
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            if (_tempWaveWriter == null) return;
+            if (_tempWaveWriter == null || !Running) return;
             
             if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
             {
@@ -120,8 +129,7 @@ namespace EspionSpotify
             else
             {
                 _form.WriteIntoConsole(I18nKeys.LogRecordingDataExceeded, _track.ToString());
-                Running = false;
-                _form.UpdateIconSpotify(true, false);
+                ForceStopRecording();
             }
         }
 
@@ -153,8 +161,7 @@ namespace EspionSpotify
                 if (_fileWriter != null) _fileWriter.Dispose();
             }
 
-            try { _fileSystem.File.Delete(_tempFile); }
-            catch { }
+            DeleteTempFile();
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
@@ -170,6 +177,9 @@ namespace EspionSpotify
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
             await UpdateOutputFileBasedOnMediaFormat();
+
+            _waveIn.DataAvailable -= WaveIn_DataAvailable;
+            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
         }
 
         private async Task WriteTempWaveToMediaFile()
@@ -184,7 +194,7 @@ namespace EspionSpotify
                 }
                 else
                 {
-                    await reader.CopyToAsync(_fileWriter);
+                    await reader.CopyToAsync(_fileWriter,81920, _cancellationTokenSource.Token);
                 }
             }
         }
@@ -197,8 +207,7 @@ namespace EspionSpotify
                     var mapper = new MediaTags.MapperID3(
                         _currentOutputFile.ToString(),
                         _track,
-                        _userSettings.OrderNumberInMediaTagEnabled,
-                        _userSettings.OrderNumberAsTag);
+                        _userSettings);
                     await mapper.SaveMediaTags();
                     return;
                 default:
@@ -337,6 +346,71 @@ namespace EspionSpotify
                 stream = GetWaveProviderMP3SamplerReducer(stream);
             }
             return stream;
+        }
+
+        private void DeleteTempFile()
+        {
+            if (!_fileSystem.File.Exists(_tempFile)) return;
+            try { _fileSystem.File.Delete(_tempFile); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        private void ForceStopRecording()
+        {
+            _form.UpdateIconSpotify(true, false);
+            Running = false;
+            
+            _waveIn.DataAvailable -= WaveIn_DataAvailable;
+            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+            _waveIn.StopRecording();
+            _waveIn.Dispose();
+            
+            _tempWaveWriter.Close();
+            _tempWaveWriter.Dispose();
+
+            DeleteTempFile();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                if (_waveIn != null)
+                {
+                    _waveIn.DataAvailable -= WaveIn_DataAvailable;
+                    _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+                    _waveIn.StopRecording();
+                    _waveIn.Dispose();
+                }
+
+                if (_tempWaveWriter != null)
+                {
+                    _tempWaveWriter.Close();
+                    _tempWaveWriter.Dispose();
+                }
+
+                if (_fileWriter != null)
+                {
+                    _fileWriter.Dispose();
+                }
+
+                DeleteTempFile();
+
+                if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
+                try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+            }
+
+            _disposed = true;
         }
     }
 }

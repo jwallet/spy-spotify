@@ -1,21 +1,24 @@
 ﻿using System.Text;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace EspionSpotify
 {
     internal static class Normalize
     {
+        private static char[] _reservedSystemChars = { '\\','/',':','*','?', '"', '<', '>', '|'};
+
         public static string RemoveDiacritics(string text)
         {
             if (text == null) return string.Empty;
 
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var normalizedString = text.Trim().Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();
 
             foreach (var c in normalizedString)
             {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                if (!_reservedSystemChars.Contains(c))
                 {
                     stringBuilder.Append(c);
                 }
