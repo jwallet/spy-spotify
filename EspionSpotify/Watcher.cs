@@ -197,12 +197,6 @@ namespace EspionSpotify
             }
             else if (SpotifyConnect.IsSpotifyRunning())
             {
-                if (!ExternalAPI.Instance.IsAuthenticated)
-                {
-                    await ExternalAPI.Instance.Authenticate();
-                }
-
-                _currentTrack = await Spotify.GetTrack();
                 InitializeRecordingSession();
                 NativeMethods.PreventSleep();
 
@@ -268,6 +262,11 @@ namespace EspionSpotify
 
         private async void InitializeRecordingSession()
         {
+            if (!ExternalAPI.Instance.IsAuthenticated && Spotify.SpotifyLatestStatus == null)
+            {
+                await ExternalAPI.Instance.Authenticate();
+            }
+
             _audioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = await Spotify.GetTrack();

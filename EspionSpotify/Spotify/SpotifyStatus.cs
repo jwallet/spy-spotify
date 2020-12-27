@@ -25,7 +25,7 @@ namespace EspionSpotify.Spotify
 
         public Track GetTrack()
         {
-            if (false && !CurrentTrack.IsNormal) return CurrentTrack;
+            if (!CurrentTrack.IsNormal) return CurrentTrack;
 
             _ = Task.Run(async () =>
             {
