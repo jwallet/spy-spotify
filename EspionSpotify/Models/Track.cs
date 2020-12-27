@@ -10,9 +10,6 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private const string SPOTIFY = SpotifyStatus.SPOTIFY;
-        public const string UNTITLED_ALBUM = "Untitled";
-
         private string _artist = null;
         private string _apiArtist = null;
         private string _title = null;
@@ -156,7 +153,7 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            var song = SPOTIFY.Capitalize();
+            var song = Constants.SPOTIFY;
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {

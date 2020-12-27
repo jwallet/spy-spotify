@@ -4,7 +4,6 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Collections.Generic;
 using EspionSpotify.AudioSessions;
-using EspionSpotify.Spotify;
 
 namespace EspionSpotify.Tests
 {
@@ -73,8 +72,8 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData(SpotifyStatus.SPOTIFY)]
-        [InlineData(SpotifyStatus.SPOTIFYFREE)]
+        [InlineData(Constants.SPOTIFY)]
+        [InlineData(Constants.SPOTIFYFREE)]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive(string title)
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
@@ -89,9 +88,9 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData(SpotifyStatus.SPOTIFY)]
-        [InlineData(SpotifyStatus.SPOTIFYFREE)]
-        [InlineData(SpotifyStatus.ADVERTISEMENT)]
+        [InlineData(Constants.SPOTIFY)]
+        [InlineData(Constants.SPOTIFYFREE)]
+        [InlineData(Constants.ADVERTISEMENT)]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying(string title)
         {
             var userSettings = new UserSettings { RecordUnknownTrackTypeEnabled = true };
@@ -174,7 +173,7 @@ namespace EspionSpotify.Tests
             if (isSpotify)
             {
                 track.Playing = false;
-                track.Artist = "Spotify";
+                track.Artist = Constants.SPOTIFY;
                 track.Title = null;
             }
             _userSettings.RecordUnknownTrackTypeEnabled = recordUnknownTrackTypeEnabled;
@@ -208,12 +207,12 @@ namespace EspionSpotify.Tests
                 _formMock,
                 _audioSession,
                 _userSettings,
-                new Track { Artist = "Spotify Free" },
+                new Track { Artist = Constants.SPOTIFYFREE },
                 _fileSystem);
 
             Assert.False(watcher.IsNewTrack(null));
             Assert.False(watcher.IsNewTrack(new Track()));
-            Assert.False(watcher.IsNewTrack(new Track { Artist = "Spotify Free" }));
+            Assert.False(watcher.IsNewTrack(new Track { Artist = Constants.SPOTIFYFREE }));
             Assert.True(watcher.IsNewTrack(new Track { Artist = "Artist", Title = "Title" }));
         }
 

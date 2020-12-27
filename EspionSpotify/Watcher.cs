@@ -19,7 +19,6 @@ namespace EspionSpotify
     public class Watcher : IWatcher, IDisposable
     {
         private bool _disposed = false;
-        private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
@@ -317,7 +316,7 @@ namespace EspionSpotify
             }
 
             _form.UpdateStartButton();
-            _form.UpdatePlayingTitle(SPOTIFY);
+            _form.UpdatePlayingTitle(Constants.SPOTIFY);
             _form.UpdateIconSpotify(false);
             _form.UpdateRecordedTime(null);
             _form.StopRecording();

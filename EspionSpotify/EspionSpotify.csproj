@@ -177,6 +177,7 @@
   <ItemGroup>
     <Compile Include="Analytics.cs" />
     <Compile Include="AudioSessions\AudioMMDevicesManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controls\MetroCredentialsForm.cs">
       <SubType>Form</SubType>
     </Compile>

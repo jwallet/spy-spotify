@@ -9,11 +9,7 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyStatus: ISpotifyStatus
     {
-        public const string SPOTIFY = "spotify";
-        public const string SPOTIFYFREE = "spotify free";
-        public const string ADVERTISEMENT = "advertisement";
-
-        public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
+        public static string[] SpotifyTitles = new[] { Constants.SPOTIFY.ToLowerInvariant(), Constants.SPOTIFYFREE.ToLowerInvariant() };
 
         public Track CurrentTrack { get; set; }
 
@@ -24,7 +20,7 @@ namespace EspionSpotify.Spotify
 
         public static bool WindowTitleIsAd(string title)
         {
-            return title?.ToLowerInvariant() == ADVERTISEMENT;
+            return title?.ToLowerInvariant() == Constants.ADVERTISEMENT.ToLowerInvariant();
         }
 
         public Track GetTrack()
