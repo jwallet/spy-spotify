@@ -42,7 +42,6 @@ namespace EspionSpotify
             this.lnkClear = new MetroFramework.Controls.MetroLink();
             this.lblSoundCard = new MetroFramework.Controls.MetroLabel();
             this.lblVolume = new MetroFramework.Controls.MetroLabel();
-            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
             this.iconVolume = new MetroFramework.Controls.MetroPanel();
             this.tlpConsoleFrame = new System.Windows.Forms.TableLayoutPanel();
             this.tlpConsole = new System.Windows.Forms.TableLayoutPanel();
@@ -60,10 +59,7 @@ namespace EspionSpotify
             this.lnkPath = new MetroFramework.Controls.MetroLink();
             this.txtPath = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
-            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
             this.lblMinTime = new MetroFramework.Controls.MetroLabel();
             this.lblFormat = new MetroFramework.Controls.MetroLabel();
             this.lblMinLength = new MetroFramework.Controls.MetroLabel();
@@ -81,7 +77,6 @@ namespace EspionSpotify
             this.lblAudioDevice = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lnkAudioVirtualCable = new MetroFramework.Controls.MetroLink();
-            this.cbAudioDevices = new EspionSpotify.Controls.MetroComboBox();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.tlAdvanced = new System.Windows.Forms.TableLayoutPanel();
             this.lblSpy = new MetroFramework.Controls.MetroLabel();
@@ -123,6 +118,11 @@ namespace EspionSpotify
             this.lnkRelease = new MetroFramework.Controls.MetroLink();
             this.lnkDonate = new MetroFramework.Controls.MetroLink();
             this.lnkFAQ = new MetroFramework.Controls.MetroLink();
+            this.tbVolumeWin = new EspionSpotify.Controls.MetroTrackBar();
+            this.cbBitRate = new EspionSpotify.Controls.MetroComboBox();
+            this.cbLanguage = new EspionSpotify.Controls.MetroComboBox();
+            this.tbMinTime = new EspionSpotify.Controls.MetroTrackBar();
+            this.cbAudioDevices = new EspionSpotify.Controls.MetroComboBox();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -286,20 +286,6 @@ namespace EspionSpotify
             this.lblVolume.Text = "000%";
             this.lblVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblVolume.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // tbVolumeWin
-            // 
-            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
-            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
-            this.tbVolumeWin.Name = "tbVolumeWin";
-            this.tbVolumeWin.Size = new System.Drawing.Size(132, 23);
-            this.tbVolumeWin.TabIndex = 11;
-            this.tbVolumeWin.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tbVolumeWin.Value = 0;
-            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
-            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // iconVolume
             // 
@@ -606,42 +592,6 @@ namespace EspionSpotify
             this.tableLayoutPanel12.Size = new System.Drawing.Size(573, 29);
             this.tableLayoutPanel12.TabIndex = 37;
             // 
-            // cbBitRate
-            // 
-            this.cbBitRate.BackColor = System.Drawing.Color.Black;
-            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbBitRate.ForeColor = System.Drawing.Color.White;
-            this.cbBitRate.FormattingEnabled = true;
-            this.cbBitRate.ItemHeight = 23;
-            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
-            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
-            this.cbBitRate.Name = "cbBitRate";
-            this.cbBitRate.Size = new System.Drawing.Size(573, 29);
-            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbBitRate.TabIndex = 37;
-            this.cbBitRate.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbBitRate.UseCustomBackColor = true;
-            this.cbBitRate.UseSelectable = true;
-            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
-            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
-            // 
-            // cbLanguage
-            // 
-            this.cbLanguage.BackColor = System.Drawing.Color.Black;
-            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbLanguage.ForeColor = System.Drawing.Color.White;
-            this.cbLanguage.FormattingEnabled = true;
-            this.cbLanguage.ItemHeight = 23;
-            this.cbLanguage.Location = new System.Drawing.Point(144, 188);
-            this.cbLanguage.Name = "cbLanguage";
-            this.cbLanguage.Size = new System.Drawing.Size(573, 29);
-            this.cbLanguage.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbLanguage.TabIndex = 44;
-            this.cbLanguage.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbLanguage.UseCustomBackColor = true;
-            this.cbLanguage.UseSelectable = true;
-            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
-            // 
             // tableLayoutPanel9
             // 
             this.tableLayoutPanel9.ColumnCount = 2;
@@ -661,22 +611,6 @@ namespace EspionSpotify
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(573, 35);
             this.tableLayoutPanel9.TabIndex = 11;
-            // 
-            // tbMinTime
-            // 
-            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
-            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinTime.Location = new System.Drawing.Point(39, 0);
-            this.tbMinTime.Margin = new System.Windows.Forms.Padding(0);
-            this.tbMinTime.Maximum = 24;
-            this.tbMinTime.Name = "tbMinTime";
-            this.tbMinTime.Size = new System.Drawing.Size(534, 35);
-            this.tbMinTime.TabIndex = 17;
-            this.tbMinTime.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tbMinTime.Value = 6;
-            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
-            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // lblMinTime
             // 
@@ -946,25 +880,6 @@ namespace EspionSpotify
             this.lnkAudioVirtualCable.UseCustomBackColor = true;
             this.lnkAudioVirtualCable.UseSelectable = true;
             this.lnkAudioVirtualCable.Click += new System.EventHandler(this.LnkVAD_Click);
-            // 
-            // cbAudioDevices
-            // 
-            this.cbAudioDevices.BackColor = System.Drawing.Color.Black;
-            this.cbAudioDevices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbAudioDevices.ForeColor = System.Drawing.Color.White;
-            this.cbAudioDevices.FormattingEnabled = true;
-            this.cbAudioDevices.ItemHeight = 23;
-            this.cbAudioDevices.Location = new System.Drawing.Point(0, 0);
-            this.cbAudioDevices.Margin = new System.Windows.Forms.Padding(0);
-            this.cbAudioDevices.Name = "cbAudioDevices";
-            this.cbAudioDevices.Size = new System.Drawing.Size(533, 29);
-            this.cbAudioDevices.Style = MetroFramework.MetroColorStyle.Green;
-            this.cbAudioDevices.TabIndex = 37;
-            this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.cbAudioDevices.UseCustomBackColor = true;
-            this.cbAudioDevices.UseSelectable = true;
-            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
-            this.cbAudioDevices.DataSourceChanged += new System.EventHandler(this.CbAudioDevices_DataSourceChanged);
             // 
             // tabAdvanced
             // 
@@ -1592,6 +1507,91 @@ namespace EspionSpotify
             this.lnkFAQ.UseSelectable = true;
             this.lnkFAQ.Click += new System.EventHandler(this.LnkFAQ_Click);
             // 
+            // tbVolumeWin
+            // 
+            this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
+            this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
+            this.tbVolumeWin.Name = "tbVolumeWin";
+            this.tbVolumeWin.Size = new System.Drawing.Size(132, 23);
+            this.tbVolumeWin.TabIndex = 11;
+            this.tbVolumeWin.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbVolumeWin.Value = 0;
+            this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
+            this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
+            // cbBitRate
+            // 
+            this.cbBitRate.BackColor = System.Drawing.Color.Black;
+            this.cbBitRate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbBitRate.ForeColor = System.Drawing.Color.White;
+            this.cbBitRate.FormattingEnabled = true;
+            this.cbBitRate.ItemHeight = 23;
+            this.cbBitRate.Location = new System.Drawing.Point(0, 0);
+            this.cbBitRate.Margin = new System.Windows.Forms.Padding(0);
+            this.cbBitRate.Name = "cbBitRate";
+            this.cbBitRate.Size = new System.Drawing.Size(573, 29);
+            this.cbBitRate.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbBitRate.TabIndex = 37;
+            this.cbBitRate.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbBitRate.UseCustomBackColor = true;
+            this.cbBitRate.UseSelectable = true;
+            this.cbBitRate.SelectedIndexChanged += new System.EventHandler(this.CbBitRate_SelectedIndexChanged);
+            this.cbBitRate.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
+            // cbLanguage
+            // 
+            this.cbLanguage.BackColor = System.Drawing.Color.Black;
+            this.cbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbLanguage.ForeColor = System.Drawing.Color.White;
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.ItemHeight = 23;
+            this.cbLanguage.Location = new System.Drawing.Point(144, 188);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(573, 29);
+            this.cbLanguage.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbLanguage.TabIndex = 44;
+            this.cbLanguage.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbLanguage.UseCustomBackColor = true;
+            this.cbLanguage.UseSelectable = true;
+            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.CbLanguage_SelectedIndexChanged);
+            // 
+            // tbMinTime
+            // 
+            this.tbMinTime.BackColor = System.Drawing.Color.Transparent;
+            this.tbMinTime.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbMinTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMinTime.Location = new System.Drawing.Point(39, 0);
+            this.tbMinTime.Margin = new System.Windows.Forms.Padding(0);
+            this.tbMinTime.Maximum = 24;
+            this.tbMinTime.Name = "tbMinTime";
+            this.tbMinTime.Size = new System.Drawing.Size(534, 35);
+            this.tbMinTime.TabIndex = 17;
+            this.tbMinTime.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbMinTime.Value = 6;
+            this.tbMinTime.ValueChanged += new System.EventHandler(this.TbMinTime_ValueChanged);
+            this.tbMinTime.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
+            // cbAudioDevices
+            // 
+            this.cbAudioDevices.BackColor = System.Drawing.Color.Black;
+            this.cbAudioDevices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbAudioDevices.ForeColor = System.Drawing.Color.White;
+            this.cbAudioDevices.FormattingEnabled = true;
+            this.cbAudioDevices.ItemHeight = 23;
+            this.cbAudioDevices.Location = new System.Drawing.Point(0, 0);
+            this.cbAudioDevices.Margin = new System.Windows.Forms.Padding(0);
+            this.cbAudioDevices.Name = "cbAudioDevices";
+            this.cbAudioDevices.Size = new System.Drawing.Size(533, 29);
+            this.cbAudioDevices.Style = MetroFramework.MetroColorStyle.Green;
+            this.cbAudioDevices.TabIndex = 37;
+            this.cbAudioDevices.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cbAudioDevices.UseCustomBackColor = true;
+            this.cbAudioDevices.UseSelectable = true;
+            this.cbAudioDevices.SelectedIndexChanged += new System.EventHandler(this.CbAudioDevices_SelectedIndexChanged);
+            this.cbAudioDevices.DataSourceChanged += new System.EventHandler(this.CbAudioDevices_DataSourceChanged);
+            // 
             // FrmEspionSpotify
             // 
             this.AcceptButton = this.lnkSpy;
@@ -1614,7 +1614,7 @@ namespace EspionSpotify
             this.Padding = new System.Windows.Forms.Padding(20, 70, 20, 20);
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Style = MetroFramework.MetroColorStyle.Green;
+            this.Style = MetroFramework.MetroColorStyle.White;
             this.Text = "Spytify";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEspionSpotify_FormClosing);
