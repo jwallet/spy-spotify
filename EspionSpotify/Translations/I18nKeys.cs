@@ -1,4 +1,4 @@
-using EspionSpotify.Enums;
+﻿using EspionSpotify.Enums;
 
 namespace EspionSpotify.Models
 {
@@ -32,7 +32,8 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblRecorder { get => TranslationKeys.lblRecorder; }
         public static TranslationKeys LblRecordingNum { get => TranslationKeys.lblRecordingNum; }
         public static TranslationKeys LblRecordingTimer { get => TranslationKeys.lblRecordingTimer; }
-        public static TranslationKeys LblRecordUnknownTrackType { get => TranslationKeys.lblRecordUnknownTrackType; }
+        public static TranslationKeys LblRecordEverything { get => TranslationKeys.lblRecordEverything; }
+        public static TranslationKeys LblRecordAds { get => TranslationKeys.lblRecordAds; }
         public static TranslationKeys LblSecretId { get => TranslationKeys.lblSecretId; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -197,8 +197,8 @@
     <value>Choose the starting position of the counter</value>
     <comment>interface</comment>
   </data>
-  <data name="lblRecordUnknownTrackType" xml:space="preserve">
-    <value>Record unknown type tracks detected as an ad</value>
+  <data name="lblRecordEverything" xml:space="preserve">
+    <value>Record everything.</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">
@@ -435,6 +435,10 @@
   </data>
   <data name="lblID3" xml:space="preserve">
     <value>Media Tags:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordAds" xml:space="preserve">
+    <value>Including ads</value>
     <comment>interface</comment>
   </data>
   <data name="tipSpotifyAPIDashboard" xml:space="preserve">

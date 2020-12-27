@@ -36,7 +36,7 @@ namespace EspionSpotify.Tests
                 OrderNumberInfrontOfFileEnabled = false,
                 EndingTrackDelayEnabled = true,
                 MuteAdsEnabled = true,
-                RecordUnknownTrackTypeEnabled = false,
+                RecordEverythingEnabled = false,
                 InternalOrderNumber = 1
             };
 

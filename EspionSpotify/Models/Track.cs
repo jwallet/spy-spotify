@@ -2,6 +2,7 @@
 using EspionSpotify.Extensions;
 using EspionSpotify.MediaTags;
 using EspionSpotify.Spotify;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TagLib;

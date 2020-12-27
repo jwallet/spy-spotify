@@ -38,7 +38,7 @@
     <Setting Name="MuteAdsEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="RecordUnknownTrackTypeEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="RecordEverythingEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="AnalyticsCID" Type="System.String" Scope="User">
@@ -72,6 +72,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ExtraTitleToSubtitleEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RecordAdsEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
