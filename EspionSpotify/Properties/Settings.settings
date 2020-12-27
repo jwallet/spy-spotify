@@ -36,10 +36,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MuteAdsEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="RecordEverythingEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="AnalyticsCID" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
