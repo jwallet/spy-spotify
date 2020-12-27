@@ -268,7 +268,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incluant les annonces.
+        ///   Looks up a localized string similar to Seulement les annonces.
         /// </summary>
         internal static string lblRecordAds {
             get {

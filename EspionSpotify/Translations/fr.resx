@@ -438,7 +438,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">
-    <value>Incluant les annonces</value>
+    <value>Seulement les annonces</value>
     <comment>interface</comment>
   </data>
   <data name="tipSpotifyAPIDashboard" xml:space="preserve">

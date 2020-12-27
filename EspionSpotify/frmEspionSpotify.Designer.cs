@@ -91,7 +91,7 @@ namespace EspionSpotify
             this.lblEndingSongDelay = new MetroFramework.Controls.MetroLabel();
             this.tgEndingSongDelay = new MetroFramework.Controls.MetroToggle();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkRecordAds = new MetroFramework.Controls.MetroCheckBox();
+            this.chkRecordOnlyAds = new MetroFramework.Controls.MetroCheckBox();
             this.lblRecordEverything = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.lblRecordingNum = new MetroFramework.Controls.MetroLabel();
@@ -1097,7 +1097,7 @@ namespace EspionSpotify
             this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Controls.Add(this.chkRecordAds, 1, 0);
+            this.tableLayoutPanel15.Controls.Add(this.chkRecordOnlyAds, 1, 0);
             this.tableLayoutPanel15.Controls.Add(this.lblRecordEverything, 0, 0);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 28);
@@ -1108,22 +1108,22 @@ namespace EspionSpotify
             this.tableLayoutPanel15.Size = new System.Drawing.Size(474, 28);
             this.tableLayoutPanel15.TabIndex = 49;
             // 
-            // chkRecordAds
+            // chkRecordOnlyAds
             // 
-            this.chkRecordAds.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkRecordOnlyAds.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkRecordAds.AutoSize = true;
-            this.chkRecordAds.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkRecordAds.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
-            this.chkRecordAds.Location = new System.Drawing.Point(153, 3);
-            this.chkRecordAds.Name = "chkRecordAds";
-            this.chkRecordAds.Size = new System.Drawing.Size(116, 22);
-            this.chkRecordAds.Style = MetroFramework.MetroColorStyle.Green;
-            this.chkRecordAds.TabIndex = 46;
-            this.chkRecordAds.Text = "LBL_RECORD_ADS";
-            this.chkRecordAds.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.chkRecordAds.UseSelectable = true;
-            this.chkRecordAds.CheckedChanged += new System.EventHandler(this.ChkRecordAds_CheckedChanged);
+            this.chkRecordOnlyAds.AutoSize = true;
+            this.chkRecordOnlyAds.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkRecordOnlyAds.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
+            this.chkRecordOnlyAds.Location = new System.Drawing.Point(153, 3);
+            this.chkRecordOnlyAds.Name = "chkRecordOnlyAds";
+            this.chkRecordOnlyAds.Size = new System.Drawing.Size(149, 22);
+            this.chkRecordOnlyAds.Style = MetroFramework.MetroColorStyle.Green;
+            this.chkRecordOnlyAds.TabIndex = 46;
+            this.chkRecordOnlyAds.Text = "LBL_RECORD_ONLY_ADS";
+            this.chkRecordOnlyAds.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.chkRecordOnlyAds.UseSelectable = true;
+            this.chkRecordOnlyAds.CheckedChanged += new System.EventHandler(this.ChkRecordAds_CheckedChanged);
             // 
             // lblRecordEverything
             // 
@@ -1751,7 +1751,7 @@ namespace EspionSpotify
         private MetroToggle tgExtraTitleToSubtitle;
         private MetroLabel lblExtraTitleToSubtitle;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
-        private MetroCheckBox chkRecordAds;
+        private MetroCheckBox chkRecordOnlyAds;
     }
 }
 
