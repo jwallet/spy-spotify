@@ -177,6 +177,7 @@
   <ItemGroup>
     <Compile Include="Analytics.cs" />
     <Compile Include="AudioSessions\AudioMMDevicesManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controls\MetroCredentialsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,13 +207,17 @@
     <Compile Include="Events\TrackChangeEventArgs.cs" />
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
     <Compile Include="Extensions\WaveFormatExtensions.cs" />
-    <Compile Include="FileManager.cs" />
+    <Compile Include="Native\Models\Process.cs" />
+    <Compile Include="Native\FileManager.cs" />
     <Compile Include="IFrmEspionSpotify.cs" />
+    <Compile Include="Native\Models\IProcess.cs" />
+    <Compile Include="Native\IProcessManager.cs" />
     <Compile Include="MediaTags\ILastFMAPI.cs" />
     <Compile Include="MediaTags\ISpotifyAPI.cs" />
     <Compile Include="Models\OutputFile.cs" />
     <Compile Include="Models\RecorderTask.cs" />
-    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\ProcessManager.cs" />
     <Compile Include="Translations\de.Designer.cs">
       <DependentUpon>de.resx</DependentUpon>
       <AutoGen>True</AutoGen>

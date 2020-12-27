@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using EspionSpotify.Models;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Tests
 {
@@ -23,7 +24,8 @@ namespace EspionSpotify.Tests
                 Artist = "Artist Name",
                 Ad = false,
                 Playing = true,
-                TitleExtended = "Live"
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash
             };
 
             Assert.True(track.IsNormal);
@@ -55,7 +57,8 @@ namespace EspionSpotify.Tests
                 Artist = "Artist Name",
                 Ad = false,
                 Playing = true,
-                TitleExtended = "Live"
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash
             };
 
             var track = new Track(initialTrack)
@@ -75,8 +78,46 @@ namespace EspionSpotify.Tests
         internal void ToTitleString_ReturnsTitleAndExtendedTitle()
         { 
             Assert.Equal("", new Track().ToTitleString());
-            Assert.Equal("Title", new Track { Title = "Title", Artist = "Artist", TitleExtended = "" }.ToTitleString());
-            Assert.Equal("Title - Remastered", new Track { Title = "Title", Artist = "Artist", TitleExtended = "Remastered" }.ToTitleString());
+            
+            Assert.Equal(
+                "Title",
+                new Track
+                {
+                    Title = "Title",
+                    Artist = "Artist",
+                    TitleExtended = "Must Not Return",
+                    TitleExtendedSeparatorType = TitleSeparatorType.None,
+                }.ToTitleString());
+
+            Assert.Equal(
+                "Title - Remastered",
+                new Track
+                {
+                    Title = "Title",
+                    Artist = "Artist",
+                    TitleExtended = "Remastered",
+                    TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                }.ToTitleString());
+
+            Assert.Equal(
+                "Title (Featuring Other)",
+                new Track
+                {
+                    Title = "Title",
+                    Artist = "Artist",
+                    TitleExtended = "Featuring Other",
+                    TitleExtendedSeparatorType = TitleSeparatorType.Parenthesis
+                }.ToTitleString());
+
+            Assert.Equal(
+                "Title (Featuring Other) - Remastered",
+                new Track
+                {
+                    Title = "Title (Featuring Other)",
+                    Artist = "Artist",
+                    TitleExtended = "Remastered",
+                    TitleExtendedSeparatorType = TitleSeparatorType.Dash
+                }.ToTitleString());
         }
 
         [Fact]

@@ -11,16 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EspionSpotify.MediaTags;
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 using System.Threading;
+using EspionSpotify.Native;
 
 namespace EspionSpotify
 {
     public class Watcher : IWatcher, IDisposable
     {
         private bool _disposed = false;
-        private const string SPOTIFY = "Spotify";
         private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
@@ -49,9 +47,7 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordEverythingEnabled
-                && (_userSettings.RecordNoAdsEnabled
-                    || !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()));
+            get => _userSettings.RecordUnknownTrackTypeEnabled && _currentTrack.IsUnknown;
         }
         public bool IsTypeAllowed
         {
@@ -141,7 +137,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
+            var adTitle = !IsRecordUnknownActive && _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{_currentTrack.ToString()}");
 
             MutesSpotifyAds(_currentTrack.Ad);
@@ -325,7 +321,7 @@ namespace EspionSpotify
             }
 
             _form.UpdateStartButton();
-            _form.UpdatePlayingTitle(SPOTIFY);
+            _form.UpdatePlayingTitle(Constants.SPOTIFY);
             _form.UpdateIconSpotify(false);
             _form.UpdateRecordedTime(null);
             _form.StopRecording();

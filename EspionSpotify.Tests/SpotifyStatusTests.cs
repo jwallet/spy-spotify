@@ -10,11 +10,11 @@ namespace EspionSpotify.Tests
         [InlineData(null, false)]
         [InlineData("", false)]
         [InlineData("Artist Name - Song Title", false)]
-        [InlineData("Advertisement", false)]
-        [InlineData("Spotify", true)]
+        [InlineData(Constants.ADVERTISEMENT, false)]
+        [InlineData(Constants.SPOTIFY, true)]
+        [InlineData(Constants.SPOTIFYFREE, true)]
         [InlineData("SPOTIFY", true)]
         [InlineData("spotify", true)]
-        [InlineData("Spotify Free", true)]
         internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
         {
             var actual = SpotifyStatus.WindowTitleIsSpotify(value);
@@ -23,9 +23,9 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData("Spotify", false)]
+        [InlineData(Constants.SPOTIFY, false)]
         [InlineData("Ad", false)]
-        [InlineData("Advertisement", true)]
+        [InlineData(Constants.ADVERTISEMENT, true)]
         internal void SpotifyStatusWindowTitleIsAd_ReturnsWhenItMatches(string value, bool expected)
         {
             var actual = SpotifyStatus.WindowTitleIsAd(value);
@@ -38,18 +38,18 @@ namespace EspionSpotify.Tests
         {
             var expectedTrack = new Track
             {
-                Artist = "Spotify"
+                Artist = Constants.SPOTIFY
             };
             var spotifyWindowInfo = new SpotifyWindowInfo
             {
-                WindowTitle = "Spotify",
+                WindowTitle = Constants.SPOTIFY,
                 IsPlaying = false
             };
 
             var status = new SpotifyStatus(spotifyWindowInfo);
 
             Assert.Equal(expectedTrack, status.CurrentTrack);
-            Assert.Equal("Spotify", status.CurrentTrack.ToString());
+            Assert.Equal(Constants.SPOTIFY, status.CurrentTrack.ToString());
         }
 
         [Theory]
@@ -78,9 +78,9 @@ namespace EspionSpotify.Tests
         }
 
         [Theory]
-        [InlineData("Spotify")]
+        [InlineData(Constants.SPOTIFY)]
         [InlineData("Spotify Sponsor")]
-        [InlineData("PODCAST #1337: DAILY NEWS")]
+        [InlineData("#1337: DAILY NEWS")]
         internal void SpotifyStatusSpotifyPlayingAdOrUnknown_ReturnsExpectingTrack(string windowTitle)
         {
             var expectedTrack = new Track

@@ -14,9 +14,7 @@ namespace EspionSpotify.MediaTags
     {
         private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly Random _random;
-        private string _selectedApiKey = "";
-
-        public bool IsAuthenticated { get => true; }
+        private readonly string _selectedApiKey = "";
 
         public string[] ApiKeys { get; }
 
@@ -26,8 +24,6 @@ namespace EspionSpotify.MediaTags
             _random = new Random();
             _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
         }
-
-        public async Task Authenticate() { }
 
         public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
@@ -83,13 +79,6 @@ namespace EspionSpotify.MediaTags
 
         public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
         {
-            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(trackExtra.Name, 2);
-
-            track.SetArtistFromAPI(trackExtra.Artist?.Name);
-            track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
-            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2));
-            track.TitleExtendedSeparatorType = separatorType;
-
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
             track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
@@ -99,5 +88,10 @@ namespace EspionSpotify.MediaTags
             track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
             track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
         }
+
+        #region NotImplementedExternalAPI
+        public bool IsAuthenticated { get => true; }
+        public async Task Authenticate() => await Task.CompletedTask;
+        #endregion
     }
 }

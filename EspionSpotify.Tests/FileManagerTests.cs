@@ -1,4 +1,6 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Models;
+using EspionSpotify.Native;
 using NAudio.Lame;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,7 @@ namespace EspionSpotify.Tests
                 OrderNumberInfrontOfFileEnabled = false,
                 EndingTrackDelayEnabled = true,
                 MuteAdsEnabled = true,
-                RecordEverythingEnabled = false,
+                RecordUnknownTrackTypeEnabled = false,
                 InternalOrderNumber = 1
             };
 
@@ -43,6 +45,7 @@ namespace EspionSpotify.Tests
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 Album = "Single",
                 Ad = false
             };
@@ -206,9 +209,6 @@ namespace EspionSpotify.Tests
             _userSettings.TrackTitleSeparator = "_";
             _track.Artist = "Artist DJ";
             _track.Year = 2020;
-
-            var artistDir = Regex.Replace(_track.Artist, _windowsExlcudedChars, string.Empty);
-            var albumDir = string.IsNullOrEmpty(_track.Album) ? Track.UNTITLED_ALBUM : Regex.Replace(_track.Album, _windowsExlcudedChars, string.Empty);
 
             var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
@@ -419,6 +419,7 @@ namespace EspionSpotify.Tests
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 Album = "Single",
                 Ad = false,
                 AlbumArtists = new[] { "DJ" },

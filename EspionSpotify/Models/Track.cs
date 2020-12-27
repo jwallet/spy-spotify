@@ -1,5 +1,7 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.MediaTags;
+using EspionSpotify.Spotify;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,9 +11,6 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private const string SPOTIFY = "Spotify";
-        public const string UNTITLED_ALBUM = "Untitled";
-
         private string _artist = null;
         private string _apiArtist = null;
         private string _title = null;
@@ -35,11 +34,30 @@ namespace EspionSpotify.Models
             set => _titleExtended = string.IsNullOrEmpty(value) ? null : value;
         }
 
-        public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.Dash;
+        public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.None;
 
-        public void SetArtistFromAPI(string value) => _apiArtist = value;
-        public void SetTitleFromAPI(string value) => _apiTitle = value;
-        public void SetTitleExtendedFromAPI(string value) => _apiTitleExtended = value;
+        public void SetArtistFromAPI(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiArtist = value;
+            }
+        }
+        public void SetTitleFromAPI(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiTitle = value;
+            }
+        }
+        public void SetTitleExtendedFromAPI(string value, TitleSeparatorType separatorType)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiTitleExtended = value;
+                TitleExtendedSeparatorType = separatorType;
+            }
+        }
 
         public bool Ad { get; set; }
         public bool Playing { get; set; }
@@ -68,7 +86,22 @@ namespace EspionSpotify.Models
         public byte[] ArtMedium { get; set; }
         public byte[] ArtSmall { get; set; }
 
-        public bool IsNormal { get => !string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title) && !Ad && Playing; }
+        public bool IsNormal {
+            get =>
+                !string.IsNullOrEmpty(Artist)
+                && !string.IsNullOrEmpty(Title)
+                && !Ad
+                && Playing;
+        }
+        public bool IsUnknown
+        {
+            get =>
+                !string.IsNullOrEmpty(Artist)
+                && string.IsNullOrEmpty(Title)
+                && !SpotifyStatus.WindowTitleIsAd(Artist)
+                && !SpotifyStatus.WindowTitleIsSpotify(Artist)
+                && Playing;
+        }
 
         public Track() { }
 
@@ -80,6 +113,7 @@ namespace EspionSpotify.Models
             Playing = track.Playing;
 
             TitleExtended = track.TitleExtended;
+            TitleExtendedSeparatorType = track.TitleExtendedSeparatorType;
 
             Album = track.Album;
             Genres = track.Genres;
@@ -106,18 +140,25 @@ namespace EspionSpotify.Models
 
         private string GetTitleExtended()
         {
-            return !string.IsNullOrEmpty(TitleExtended)
-                ? TitleExtendedSeparatorType == TitleSeparatorType.Dash ? $" - {TitleExtended}" : $" ({TitleExtended})"
-                : string.Empty;
+            if (string.IsNullOrEmpty(TitleExtended)) return null;
+            switch (TitleExtendedSeparatorType)
+            {
+                case TitleSeparatorType.Dash:
+                    return $" - {TitleExtended}";
+                case TitleSeparatorType.Parenthesis:
+                    return $" ({TitleExtended})";
+                default:
+                    return "";
+            }
         }
 
         public override string ToString()
         {
-            var song = SPOTIFY;
+            var song = Constants.SPOTIFY;
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
-                var artists = string.Join(",", AlbumArtists ?? Performers ?? new[] { Artist });
+                var artists = string.Join(", ", AlbumArtists ?? Performers ?? new[] { Artist });
                 song = $"{artists} - {Title}";
 
                 if (!string.IsNullOrEmpty(TitleExtended))
@@ -125,8 +166,7 @@ namespace EspionSpotify.Models
                     song += GetTitleExtended();
                 }
             }
-
-            if (Ad)
+            else if (!string.IsNullOrEmpty(Artist))
             {
                 song = Artist;
             }

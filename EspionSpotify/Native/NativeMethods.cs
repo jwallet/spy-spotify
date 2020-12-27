@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EspionSpotify
+namespace EspionSpotify.Native
 {
     internal static class NativeMethods
     {

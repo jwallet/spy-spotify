@@ -71,29 +71,34 @@ namespace EspionSpotify.Tests
             Assert.True(watcher.RecorderUpAndRunning);
         }
 
-        [Fact]
-        internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive()
+        [Theory]
+        [InlineData(Constants.SPOTIFY)]
+        [InlineData(Constants.SPOTIFYFREE)]
+        internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive(string title)
         {
             var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
                 userSettings,
-                new Track() { Playing = true, Artist = "Spotify Free" },
+                new Track() { Playing = false, Artist = title },
                 _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
 
-        [Fact]
-        internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying()
+        [Theory]
+        [InlineData(Constants.SPOTIFY)]
+        [InlineData(Constants.SPOTIFYFREE)]
+        [InlineData(Constants.ADVERTISEMENT)]
+        internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying(string title)
         {
             var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
                 userSettings,
-                new Track() { Playing = true, Artist = "Spotify Free" },
+                new Track() { Playing = true, Artist = title },
                 _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
@@ -114,7 +119,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void IsRecordUnknownActive_FalsyWhenAnyTitlePlaying()
+        internal void IsRecordUnknownActive_ThruthyWhenAnyTitlePlaying()
         {
             var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
@@ -124,7 +129,7 @@ namespace EspionSpotify.Tests
                 new Track { Playing = true, Artist = "Podcast", Ad = false },
                 _fileSystem);
 
-            Assert.False(watcher.IsRecordUnknownActive);
+            Assert.True(watcher.IsRecordUnknownActive);
         }
 
         [Fact]
@@ -142,14 +147,14 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void IsRecordUnknownActive_TruthyWhenTrackIsPlaying()
+        internal void IsRecordUnknownActive_FalsyWhenNormalTrackIsPlaying()
         {
             var userSettings = new UserSettings { RecordEverythingEnabled = true };
             var watcher = new Watcher(
                 _formMock,
                 _audioSession,
                 userSettings,
-                new Track { Playing = true, Artist = "#3 - Podcast", Ad = false },
+                new Track { Playing = true, Artist = "#3", Title = "Podcast" },
                 _fileSystem);
 
             Assert.False(watcher.IsRecordUnknownActive);
@@ -168,7 +173,7 @@ namespace EspionSpotify.Tests
             if (isSpotify)
             {
                 track.Playing = false;
-                track.Artist = "Spotify";
+                track.Artist = Constants.SPOTIFY;
                 track.Title = null;
             }
             _userSettings.RecordEverythingEnabled = recordUnknownTrackTypeEnabled;
@@ -202,12 +207,12 @@ namespace EspionSpotify.Tests
                 _formMock,
                 _audioSession,
                 _userSettings,
-                new Track { Artist = "Spotify Free" },
+                new Track { Artist = Constants.SPOTIFYFREE },
                 _fileSystem);
 
             Assert.False(watcher.IsNewTrack(null));
             Assert.False(watcher.IsNewTrack(new Track()));
-            Assert.False(watcher.IsNewTrack(new Track { Artist = "Spotify Free" }));
+            Assert.False(watcher.IsNewTrack(new Track { Artist = Constants.SPOTIFYFREE }));
             Assert.True(watcher.IsNewTrack(new Track { Artist = "Artist", Title = "Title" }));
         }
 

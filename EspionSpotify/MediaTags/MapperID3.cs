@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +24,9 @@ namespace EspionSpotify.MediaTags
         {
             get
             {
-                return _extraTitleToSubtitleEnabled
-                    && Track.TitleExtendedSeparatorType == Enums.TitleSeparatorType.Parenthesis;
+                var separatorType = Track.TitleExtendedSeparatorType;
+                return separatorType == TitleSeparatorType.Dash
+                    || (_extraTitleToSubtitleEnabled && separatorType == TitleSeparatorType.Parenthesis);
             }
         }
 

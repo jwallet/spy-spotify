@@ -8,7 +8,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace EspionSpotify
+namespace EspionSpotify.Native
 {
     public class FileManager
     {
@@ -118,7 +118,7 @@ namespace EspionSpotify
 
         private static string GetAlbumFolderPath(Track track, string trackTitleSeparator)
         {
-            var albumInfos = new List<string>() { string.IsNullOrEmpty(track.Album) ? Track.UNTITLED_ALBUM : Normalize.RemoveDiacritics(track.Album) };
+            var albumInfos = new List<string>() { string.IsNullOrEmpty(track.Album) ? Constants.UNTITLED_ALBUM : Normalize.RemoveDiacritics(track.Album) };
             if (track.Year.HasValue) albumInfos.Add($"({track.Year.Value})");
             return Regex.Replace(string.Join(" ", albumInfos), _windowsExlcudedChars, string.Empty).Replace(" ", trackTitleSeparator);
         }

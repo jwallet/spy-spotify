@@ -9,11 +9,7 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyStatus: ISpotifyStatus
     {
-        public const string SPOTIFY = "spotify";
-        public const string SPOTIFYFREE = "spotify free";
-        public const string ADVERTISEMENT = "advertisement";
-
-        public static string[] SpotifyTitles = new[] { SPOTIFY, SPOTIFYFREE };
+        public static string[] SpotifyTitles = new[] { Constants.SPOTIFY.ToLowerInvariant(), Constants.SPOTIFYFREE.ToLowerInvariant() };
 
         public Track CurrentTrack { get; set; }
 
@@ -24,18 +20,13 @@ namespace EspionSpotify.Spotify
 
         public static bool WindowTitleIsAd(string title)
         {
-            return title?.ToLowerInvariant() == ADVERTISEMENT;
-        }
-
-        public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
-        {
-            SetSongInfo(ref spotifyWindowInfo);
+            return title?.ToLowerInvariant() == Constants.ADVERTISEMENT.ToLowerInvariant();
         }
 
         public Track GetTrack()
         {
             if (!CurrentTrack.IsNormal) return CurrentTrack;
-            
+
             _ = Task.Run(async () =>
             {
                 await Task.Delay(1000);
@@ -45,12 +36,13 @@ namespace EspionSpotify.Spotify
             return CurrentTrack;
         }
 
-        private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
+        public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = GetDashTags(spotifyWindowInfo.WindowTitle, 2);
-            var (titleTags, separatorType) = GetTitleTags(GetTitleTag(tags, 2) ?? "", 2);
+            var tags = SpotifyStatus.GetDashTags(spotifyWindowInfo.WindowTitle, 2);
+            var longTitlePart = SpotifyStatus.GetTitleTag(tags, 2);
+            var (titleTags, separatorType) = SpotifyStatus.GetTitleTags(longTitlePart ?? "", 2);
 
-            var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
+            var isPlaying = spotifyWindowInfo.IsPlaying;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
 
             CurrentTrack = new Track
@@ -71,19 +63,24 @@ namespace EspionSpotify.Spotify
 
         public static (string[], TitleSeparatorType) GetTitleTags(string title, int maxSize = 2)
         {
+            if (string.IsNullOrWhiteSpace(title)) return (null, TitleSeparatorType.None);
+            
             var byDash = GetDashTags(title, maxSize);
             var byParenthesis = title.Split(new[] { $" (" }, maxSize, StringSplitOptions.RemoveEmptyEntries);
             if (byParenthesis.Length == 2) byParenthesis[1] = byParenthesis[1].Replace(")", "");
-            if (byDash.Length == 1 && byParenthesis.Length == 2)
-            {
-                return (byParenthesis, TitleSeparatorType.Parenthesis);
-            }
-            else
+            
+            if (byDash.Length > 1)
             {
                 return (byDash, TitleSeparatorType.Dash);
             }
+            if (byParenthesis.Length > 1)
+            {
+                return (byParenthesis, TitleSeparatorType.Parenthesis);
+            }
+
+            return (new[] { title }, TitleSeparatorType.None);
         }
 
-        public static string GetTitleTag(string[] tags, int maxValue) => tags.Length >= maxValue && maxValue != 0 ? tags[maxValue - 1] ?? null : null;
+        public static string GetTitleTag(string[] tags, int maxValue) => tags != null && tags.Length >= maxValue && maxValue != 0 ? tags[maxValue - 1] ?? null : null;
     }
 }

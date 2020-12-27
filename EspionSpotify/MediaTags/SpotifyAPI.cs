@@ -75,7 +75,7 @@ namespace EspionSpotify.MediaTags
             }
 
             var playback = await api.GetPlaybackAsync();
-
+            
             if (playback == null || playback.Item == null)
             {
                 if (!retry)
@@ -146,12 +146,8 @@ namespace EspionSpotify.MediaTags
 
             track.SetArtistFromAPI(performers.FirstOrDefault());
             track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
-            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2));
-            track.TitleExtendedSeparatorType = separatorType;
+            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2), separatorType);
 
-            track.Artist = performers.FirstOrDefault();
-            track.Title = SpotifyStatus.GetTitleTag(titleParts, 1);
-            track.TitleExtended = SpotifyStatus.GetTitleTag(titleParts, 2);
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;
