@@ -165,7 +165,7 @@ namespace EspionSpotify
             this.tcMenu.ItemSize = new System.Drawing.Size(100, 34);
             this.tcMenu.Location = new System.Drawing.Point(20, 70);
             this.tcMenu.Name = "tcMenu";
-            this.tcMenu.SelectedIndex = 2;
+            this.tcMenu.SelectedIndex = 0;
             this.tcMenu.Size = new System.Drawing.Size(740, 330);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
@@ -286,18 +286,21 @@ namespace EspionSpotify
             this.lblVolume.Text = "000%";
             this.lblVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblVolume.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblVolume.Visible = false;
             // 
             // tbVolumeWin
             // 
             this.tbVolumeWin.BackColor = System.Drawing.Color.Transparent;
             this.tbVolumeWin.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbVolumeWin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbVolumeWin.Enabled = false;
             this.tbVolumeWin.Location = new System.Drawing.Point(83, 3);
             this.tbVolumeWin.Name = "tbVolumeWin";
             this.tbVolumeWin.Size = new System.Drawing.Size(132, 23);
             this.tbVolumeWin.TabIndex = 11;
             this.tbVolumeWin.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tbVolumeWin.Value = 0;
+            this.tbVolumeWin.Visible = false;
             this.tbVolumeWin.ValueChanged += new System.EventHandler(this.TbVolumeWin_ValueChanged);
             this.tbVolumeWin.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
@@ -316,6 +319,7 @@ namespace EspionSpotify
             this.iconVolume.VerticalScrollbarBarColor = true;
             this.iconVolume.VerticalScrollbarHighlightOnWheel = false;
             this.iconVolume.VerticalScrollbarSize = 10;
+            this.iconVolume.Visible = false;
             // 
             // tlpConsoleFrame
             // 
@@ -951,6 +955,7 @@ namespace EspionSpotify
             // 
             this.cbAudioDevices.BackColor = System.Drawing.Color.Black;
             this.cbAudioDevices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbAudioDevices.Enabled = false;
             this.cbAudioDevices.ForeColor = System.Drawing.Color.White;
             this.cbAudioDevices.FormattingEnabled = true;
             this.cbAudioDevices.ItemHeight = 23;

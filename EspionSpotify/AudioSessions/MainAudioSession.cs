@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Native;
+﻿using EspionSpotify.Extensions;
+using EspionSpotify.Native;
 using NAudio.CoreAudioApi;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,15 @@ namespace EspionSpotify.AudioSessions
 
         private readonly IProcessManager _processManager;
         private readonly int _spytifyProcessId;
-        private readonly string _audioEndPointDeviceID;
         private ICollection<int> _spotifyProcessesIds;
 
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public AudioMMDevicesManager AudioMMDevicesManager { get; private set; }
-        public int AudioDeviceVolume { get => (int)(AudioMMDevicesManager.AudioEndPointDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100); }
-        public bool IsAudioEndPointDeviceIndexAvailable { get => AudioMMDevicesManager.AudioEndPointDeviceNames.ContainsKey(AudioMMDevicesManager.AudioEndPointDeviceID); }
+        public int AudioDeviceVolume { get => (int)((AudioMMDevicesManager.AudioEndPointDevice?.AudioEndpointVolume?.MasterVolumeLevelScalar ?? 0f) * 100); }
+        public bool IsAudioEndPointDeviceIndexAvailable
+        {
+            get => AudioMMDevicesManager.AudioEndPointDeviceNames.IncludesKey(AudioMMDevicesManager.AudioEndPointDeviceID);
+        }
 
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; } = new List<AudioSessionControl>();
         public void ClearSpotifyAudioSessionControls() => SpotifyAudioSessionControls = new List<AudioSessionControl>();
@@ -37,17 +40,17 @@ namespace EspionSpotify.AudioSessions
         {
             _processManager = processManager;
 
-            _audioEndPointDeviceID = audioEndPointDeviceID;
             _spytifyProcessId = _processManager.GetCurrentProcess().Id;
 
             AudioMMDevices = new MMDeviceEnumerator();
-            AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, _audioEndPointDeviceID);
+            AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
 
             AudioMMDevices.RegisterEndpointNotificationCallback(AudioMMDevicesManager);
         }
 
         public void SetAudioDeviceVolume(int volume)
         {
+            if (AudioMMDevicesManager.AudioEndPointDevice == null) return;
             if (AudioMMDevicesManager.volumeNotificationEmitted)
             {
                 AudioMMDevicesManager.volumeNotificationEmitted = false;
