@@ -35,7 +35,7 @@ namespace EspionSpotify.Native
         public OutputFile GetOutputFile()
         {
             var folderPath = GetFolderPath(_track, _userSettings);
-            var pathName = GetOutputPath(_track, _userSettings) + folderPath;
+            var pathName = _userSettings.OutputPath + folderPath;
             
             CreateDirectories(_track, _userSettings);
 
@@ -123,29 +123,14 @@ namespace EspionSpotify.Native
             return Regex.Replace(string.Join(" ", albumInfos), _windowsExlcudedChars, string.Empty).Replace(" ", trackTitleSeparator);
         }
 
-        private static string GetOutputPath(Track track, UserSettings userSettings)
-        {
-            var outputPath = userSettings.OutputPath;
-            if (userSettings.RecordEverythingEnabled && userSettings.RecordAdsEnabled && track.Ad) {
-                return $@"{outputPath}\{Constants.ADVERTISEMENT}";
-            }
-            return outputPath;
-        }
-
         private void CreateDirectories(Track track, UserSettings userSettings)
         {
-            var outputPath = userSettings.OutputPath;
-            if (track.Ad && userSettings.RecordEverythingEnabled && userSettings.RecordAdsEnabled)
-            {
-                outputPath = $@"{outputPath}\{Constants.ADVERTISEMENT}";
-                CreateDirectory(outputPath);
-            }
-
             if (!userSettings.GroupByFoldersEnabled) return;
 
             var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
             var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
             
+            var outputPath = userSettings.OutputPath;
             CreateDirectory($@"{outputPath}\{artistDir}");
             CreateDirectory($@"{outputPath}\{artistDir}\{albumDir}");
         }
@@ -168,9 +153,9 @@ namespace EspionSpotify.Native
                 ? Normalize.RemoveDiacritics(track.ToTitleString())
                 : Normalize.RemoveDiacritics(track.ToString());
 
-            if (track.Ad)
+            if (track.Ad && !track.IsUnknown)
             {
-                fileName = now.ToString("yyyyMMddHHmmss");
+                fileName = $"{Constants.ADVERTISEMENT} {now.ToString("yyyyMMddHHmmss")}";
             }
 
             fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
