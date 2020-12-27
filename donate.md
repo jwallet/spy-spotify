@@ -3,7 +3,9 @@ layout: page
 title: Donate
 ---
 
-Do you enjoy Spytify? If so, use [the donation form below](#donate) to offer me:
+## Donate
+
+Do you enjoy Spytify? If so, use the donation form below to offer me:
 
 - A coffee ☕ to keep me awake during those long nights of coding.
 - A beer 🍺 to celebrate a new Spytify version that came out.
@@ -23,8 +25,6 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
 <a href="https://issuehunt.io/r/jwallet/spy-spotify"><img src="./assets/images/isohunt_badge.svg" /></a> -->
 
 <!-- [![Donate](https://img.shields.io/badge/Donate via-PayPal.Me-success.svg)](https://www.paypal.com/paypalme/spyspotify) -->
-
-<!-- ## Donate -->
 
 <article class="donate">
     <section style="display:flex;flex-direction:column;">
@@ -61,3 +61,13 @@ Contribute by adding **a bounty 💰** on an issue listed [here](https://issuehu
         {% endfor %}
     </section>
 </article>
+
+## Comments
+
+{% for comment in site.data.comments %}
+
+<blockquote>{{comment.quote}}
+    <div style="text-align:right;font-size:90%;">- {{comment.name}}</div>
+</blockquote>
+
+{% endfor %}
