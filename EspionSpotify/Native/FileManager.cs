@@ -7,7 +7,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace EspionSpotify
+namespace EspionSpotify.Native
 {
     public class FileManager
     {

@@ -1,5 +1,7 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.MediaTags;
+using EspionSpotify.Spotify;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TagLib;
@@ -8,7 +10,7 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private const string SPOTIFY = "Spotify";
+        private const string SPOTIFY = SpotifyStatus.SPOTIFY;
         public const string UNTITLED_ALBUM = "Untitled";
 
         private string _artist = null;
@@ -86,7 +88,22 @@ namespace EspionSpotify.Models
         public byte[] ArtMedium { get; set; }
         public byte[] ArtSmall { get; set; }
 
-        public bool IsNormal { get => !string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title) && !Ad && Playing; }
+        public bool IsNormal {
+            get =>
+                !string.IsNullOrEmpty(Artist)
+                && !string.IsNullOrEmpty(Title)
+                && !Ad
+                && Playing;
+        }
+        public bool IsUnknown
+        {
+            get =>
+                !string.IsNullOrEmpty(Artist)
+                && string.IsNullOrEmpty(Title)
+                && !SpotifyStatus.WindowTitleIsAd(Artist)
+                && !SpotifyStatus.WindowTitleIsSpotify(Artist)
+                && Playing;
+        }
 
         public Track() { }
 
@@ -139,7 +156,7 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            var song = SPOTIFY;
+            var song = SPOTIFY.Capitalize();
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
@@ -151,8 +168,7 @@ namespace EspionSpotify.Models
                     song += GetTitleExtended();
                 }
             }
-
-            if (Ad)
+            else if (!string.IsNullOrEmpty(Artist))
             {
                 song = Artist;
             }

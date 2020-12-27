@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using NAudio.Lame;
 using System;
 using System.Collections.Generic;

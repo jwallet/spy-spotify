@@ -1,10 +1,8 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using EspionSpotify.Native;
 using NAudio.CoreAudioApi;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace EspionSpotify.AudioSessions
@@ -16,7 +14,8 @@ namespace EspionSpotify.AudioSessions
 
         private bool _disposed = false;
 
-        private readonly Process _spytifyProcess;
+        private readonly IProcessManager _processManager;
+        private readonly int _spytifyProcessId;
         private readonly string _audioEndPointDeviceID;
         private ICollection<int> _spotifyProcessesIds;
 
@@ -30,13 +29,18 @@ namespace EspionSpotify.AudioSessions
 
         private SessionCollection GetSessionsAudioEndPointDevice => AudioMMDevicesManager.GetAudioEndPointDeviceSessions;
 
-        public MainAudioSession(string audioEndPointDeviceID)
+        internal MainAudioSession(string audioEndPointDevice):
+            this(audioEndPointDevice, processManager: new ProcessManager()) { }
+
+        public MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager)
         {
+            _processManager = processManager;
+
             _audioEndPointDeviceID = audioEndPointDeviceID;
-            _spytifyProcess = Process.GetCurrentProcess();
+            _spytifyProcessId = _processManager.GetCurrentProcess().Id;
 
             AudioMMDevices = new MMDeviceEnumerator();
-            AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
+            AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, _audioEndPointDeviceID);
 
             AudioMMDevices.RegisterEndpointNotificationCallback(AudioMMDevicesManager);
         }
@@ -97,7 +101,7 @@ namespace EspionSpotify.AudioSessions
 
         public async Task<bool> WaitSpotifyAudioSessionToStart(bool running)
         {
-            _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).ToList();
+            _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses(_processManager).Select(x => x.Id).ToList();
 
             if (await IsSpotifyPlayingOutsideDefaultAudioEndPoint(running))
             {
@@ -131,7 +135,7 @@ namespace EspionSpotify.AudioSessions
                     var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
                     var currentProcessId = (int)currentAudioSessionControl.GetProcessID;
 
-                    if (currentProcessId.Equals(_spytifyProcess.Id))
+                    if (currentProcessId.Equals(_spytifyProcessId))
                     {
                         if (currentAudioSessionControl.SimpleAudioVolume.Volume == 1) continue;
                         currentAudioSessionControl.SimpleAudioVolume.Volume = 1;
@@ -180,7 +184,7 @@ namespace EspionSpotify.AudioSessions
 
                 await Task.Delay(300);
 
-                _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses().Select(x => x.Id).ToList();
+                _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses(_processManager).Select(x => x.Id).ToList();
             }
 
             var sessionAudioSelectedEndPointDevice = GetSessionsAudioEndPointDevice;

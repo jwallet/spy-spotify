@@ -27,15 +27,10 @@ namespace EspionSpotify.Spotify
             return title?.ToLowerInvariant() == ADVERTISEMENT;
         }
 
-        public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
-        {
-            SetSongInfo(ref spotifyWindowInfo);
-        }
-
         public Track GetTrack()
         {
             if (!CurrentTrack.IsNormal) return CurrentTrack;
-            
+
             _ = Task.Run(async () =>
             {
                 await Task.Delay(1000);
@@ -45,12 +40,13 @@ namespace EspionSpotify.Spotify
             return CurrentTrack;
         }
 
-        private void SetSongInfo(ref SpotifyWindowInfo spotifyWindowInfo)
+        public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = GetDashTags(spotifyWindowInfo.WindowTitle, 2);
-            var (titleTags, separatorType) = GetTitleTags(GetTitleTag(tags, 2) ?? "", 2);
+            var tags = SpotifyStatus.GetDashTags(spotifyWindowInfo.WindowTitle, 2);
+            var longTitlePart = SpotifyStatus.GetTitleTag(tags, 2);
+            var (titleTags, separatorType) = SpotifyStatus.GetTitleTags(longTitlePart ?? "", 2);
 
-            var isPlaying = spotifyWindowInfo.IsPlaying || !spotifyWindowInfo.IsTitledSpotify;
+            var isPlaying = spotifyWindowInfo.IsPlaying;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
 
             CurrentTrack = new Track

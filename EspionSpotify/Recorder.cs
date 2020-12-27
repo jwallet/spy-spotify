@@ -9,6 +9,7 @@ using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using Microsoft.Win32.SafeHandles;
 using NAudio.Lame;
 using NAudio.Wave;
