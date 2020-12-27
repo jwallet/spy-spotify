@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EspionSpotify.Extensions;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -20,15 +21,39 @@ namespace EspionSpotify.AudioSessions
         {
             get
             {
-                return AudioMMDevices.GetDevice(AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID)
+                var deviceName = AudioEndPointDeviceNames.IncludesKey(AudioEndPointDeviceID)
                     ? AudioEndPointDeviceID
-                    : DefaultAudioEndPointDeviceID);
+                    : DefaultAudioEndPointDeviceID;
+                return deviceName != null ? AudioMMDevices.GetDevice(deviceName) : null;
             }
         }
+
+        public bool? AudioEndPointDeviceMute { get => AudioEndPointDevice?.AudioEndpointVolume?.Mute; }
+
+        public string AudioEndPointDeviceName { get => AudioEndPointDevice?.FriendlyName; }
 
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
         public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice.AudioSessionManager.Sessions; }
+
+        private MMDevice GetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
+        {
+            if (!AudioMMDevices.HasDefaultAudioEndpoint(dataFlow, deviceRole)) return null;
+            return AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+        }
+        
+        public void SetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
+        {
+            _defaultEndpointVolumeController = GetDefaultAudioEndpoint(dataFlow, deviceRole);
+
+            if (_defaultEndpointVolumeController == null) return;
+
+            DefaultAudioEndPointDeviceID = _defaultEndpointVolumeController?.ID;
+            if (DefaultAudioEndPointDeviceID != null)
+            {
+                _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
+            }
+        }
 
         public AudioMMDevicesManager(MMDeviceEnumerator audioMMDevices, string audioEndpointDeviceID)
         {
@@ -40,9 +65,7 @@ namespace EspionSpotify.AudioSessions
                 .Select(x => new KeyValuePair<string, string>(x.ID, x.FriendlyName))
                 .ToDictionary(o => o.Key, o => o.Value);
 
-            _defaultEndpointVolumeController = AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            DefaultAudioEndPointDeviceID = _defaultEndpointVolumeController.ID;
-            _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
+            SetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
         }
 
         public void RefreshSelectedDevice(string audioEndpointDeviceID)
@@ -61,10 +84,13 @@ namespace EspionSpotify.AudioSessions
         public void OnDefaultDeviceChanged(DataFlow dataFlow, Role deviceRole, string defaultDeviceId)
         {
             if (!AudioMMDevices.HasDefaultAudioEndpoint(dataFlow, deviceRole)) return;
-            _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
-            _defaultEndpointVolumeController = AudioMMDevices.GetDefaultAudioEndpoint(dataFlow, deviceRole);
-            DefaultAudioEndPointDeviceID = _defaultEndpointVolumeController.ID;
-            _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
+            
+            if (DefaultAudioEndPointDeviceID != null && _defaultEndpointVolumeController != null)
+            {
+                _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
+            }
+            
+            SetDefaultAudioEndpoint(dataFlow, deviceRole);
         }
 
         public void OnDeviceAdded(string deviceId) { }
@@ -78,24 +104,26 @@ namespace EspionSpotify.AudioSessions
                 case DeviceState.Active:
                     var device = AudioMMDevices.GetDevice(deviceId);
                     if (device.DataFlow != DataFlow.Render) return;
-                    if (!AudioEndPointDeviceNames.ContainsKey(deviceId))
+                    if (!AudioEndPointDeviceNames.IncludesKey(deviceId))
                     {
                         AudioEndPointDeviceNames.Add(deviceId, device.FriendlyName);
                     }
                     break;
                 default:
-                    if (AudioEndPointDeviceNames.ContainsKey(deviceId))
+                    if (AudioEndPointDeviceNames.IncludesKey(deviceId))
                     {
                         AudioEndPointDeviceNames.Remove(deviceId);
                     }
                     break;
             }
 
-            if (!AudioEndPointDeviceNames.ContainsKey(DefaultAudioEndPointDeviceID))
+            if (DefaultAudioEndPointDeviceID == null
+                || !AudioEndPointDeviceNames.IncludesKey(DefaultAudioEndPointDeviceID))
             {
-                DefaultAudioEndPointDeviceID = AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia).ID;
+                DefaultAudioEndPointDeviceID = GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia)?.ID;
             }
-            if (!AudioEndPointDeviceNames.ContainsKey(AudioEndPointDeviceID))
+
+            if (!AudioEndPointDeviceNames.IncludesKey(AudioEndPointDeviceID))
             {
                 AudioEndPointDeviceID = DefaultAudioEndPointDeviceID;
             }
