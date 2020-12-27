@@ -437,8 +437,8 @@
     <value>Tags Média:</value>
     <comment>interface</comment>
   </data>
-  <data name="lblRecordNoAds" xml:space="preserve">
-    <value>Excepté les annonces</value>
+  <data name="lblRecordAds" xml:space="preserve">
+    <value>Incluant les annonces</value>
     <comment>interface</comment>
   </data>
   <data name="tipSpotifyAPIDashboard" xml:space="preserve">

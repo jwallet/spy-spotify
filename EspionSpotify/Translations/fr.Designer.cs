@@ -268,6 +268,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incluant les annonces.
+        /// </summary>
+        internal static string lblRecordAds {
+            get {
+                return ResourceManager.GetString("lblRecordAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enregistreur:.
         /// </summary>
         internal static string lblRecorder {
@@ -300,15 +309,6 @@ namespace EspionSpotify.Translations {
         internal static string lblRecordingTimer {
             get {
                 return ResourceManager.GetString("lblRecordingTimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Excepté les annonces.
-        /// </summary>
-        internal static string lblRecordNoAds {
-            get {
-                return ResourceManager.GetString("lblRecordNoAds", resourceCulture);
             }
         }
         

@@ -33,7 +33,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblRecordingNum { get => TranslationKeys.lblRecordingNum; }
         public static TranslationKeys LblRecordingTimer { get => TranslationKeys.lblRecordingTimer; }
         public static TranslationKeys LblRecordEverything { get => TranslationKeys.lblRecordEverything; }
-        public static TranslationKeys LblRecordNoAds { get => TranslationKeys.lblRecordNoAds; }
+        public static TranslationKeys LblRecordAds { get => TranslationKeys.lblRecordAds; }
         public static TranslationKeys LblSecretId { get => TranslationKeys.lblSecretId; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
 

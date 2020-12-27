@@ -27,7 +27,7 @@
         lblPath,
         lblRecorder,
         lblRecordEverything,
-        lblRecordNoAds,
+        lblRecordAds,
         lblRecordingNum,
         lblRecordingTimer,
         lblRecordOverRecordings,

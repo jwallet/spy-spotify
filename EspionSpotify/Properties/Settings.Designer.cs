@@ -313,13 +313,13 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool RecordNoAdsEnabled {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RecordAdsEnabled {
             get {
-                return ((bool)(this["RecordNoAdsEnabled"]));
+                return ((bool)(this["RecordAdsEnabled"]));
             }
             set {
-                this["RecordNoAdsEnabled"] = value;
+                this["RecordAdsEnabled"] = value;
             }
         }
     }

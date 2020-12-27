@@ -88,7 +88,7 @@ namespace EspionSpotify
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
             chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
-            chkRecordNoAds.Enabled = Settings.Default.RecordEverythingEnabled;
+            chkRecordAds.Enabled = Settings.Default.RecordEverythingEnabled;
 
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
@@ -104,7 +104,7 @@ namespace EspionSpotify
             tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
             chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
             tgRecordEverything.Checked = Settings.Default.RecordEverythingEnabled;
-            chkRecordNoAds.Checked = Settings.Default.RecordNoAdsEnabled;
+            chkRecordAds.Checked = Settings.Default.RecordAdsEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
             txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
 
@@ -139,7 +139,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
             _userSettings.OutputPath = Settings.Default.Directory;
             _userSettings.RecordEverythingEnabled = Settings.Default.RecordEverythingEnabled;
-            _userSettings.RecordAdsEnabled = !Settings.Default.RecordNoAdsEnabled;
+            _userSettings.RecordAdsEnabled = Settings.Default.RecordAdsEnabled;
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
             _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
@@ -240,7 +240,7 @@ namespace EspionSpotify
             lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
             lblRecordEverything.Text = Rm.GetString(I18nKeys.LblRecordEverything);
-            chkRecordNoAds.Text = Rm.GetString(I18nKeys.LblRecordNoAds);
+            chkRecordAds.Text = Rm.GetString(I18nKeys.LblRecordAds);
             lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
             chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
@@ -583,7 +583,7 @@ namespace EspionSpotify
         {
             if (Settings.Default.RecordEverythingEnabled == tgRecordEverything.Checked) return;
 
-            chkRecordNoAds.Enabled = tgRecordEverything.Checked;
+            chkRecordAds.Enabled = tgRecordEverything.Checked;
 
             _userSettings.RecordEverythingEnabled = tgRecordEverything.Checked;
             Settings.Default.RecordEverythingEnabled = tgRecordEverything.Checked;
@@ -595,19 +595,19 @@ namespace EspionSpotify
             }
 
             Task.Run(async () => await _analytics.LogAction(
-                $"record-everything?enabled={tgRecordEverything.GetPropertyThreadSafe(c => c.Checked)}&except-ads={!_userSettings.RecordAdsEnabled}"));
+                $"record-everything?enabled={tgRecordEverything.GetPropertyThreadSafe(c => c.Checked)}&including-ads={_userSettings.RecordAdsEnabled}"));
         }
 
-        private void ChkRecordNoAds_CheckedChanged(object sender, EventArgs e)
+        private void ChkRecordAds_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordNoAdsEnabled == chkRecordDuplicateRecordings.Checked) return;
+            if (Settings.Default.RecordAdsEnabled == chkRecordAds.Checked) return;
 
-            _userSettings.RecordAdsEnabled = !chkRecordNoAds.Checked;
-            Settings.Default.RecordNoAdsEnabled = chkRecordNoAds.Checked;
+            _userSettings.RecordAdsEnabled = chkRecordAds.Checked;
+            Settings.Default.RecordAdsEnabled = chkRecordAds.Checked;
             Settings.Default.Save();
 
             Task.Run(async () => await _analytics.LogAction(
-                $"record-everything?enabled={_userSettings.RecordEverythingEnabled}&except-ads={chkRecordNoAds.GetPropertyThreadSafe(c => c.Checked)}"));
+                $"record-everything?enabled={_userSettings.RecordEverythingEnabled}&including-ads={chkRecordAds.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
