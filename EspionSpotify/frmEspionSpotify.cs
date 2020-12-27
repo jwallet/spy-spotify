@@ -701,22 +701,25 @@ namespace EspionSpotify
         {
             if (Watcher.Ready || !Watcher.Running) return;
 
-            e.Cancel = true;
-
             if (MetroMessageBox.Show(this,
                     Rm.GetString(I18nKeys.MsgBodyCantQuit),
                     Rm.GetString(I18nKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) != DialogResult.Yes) return;
+                    MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+                return;
+            };
 
             Watcher.Running = false;
             _watcher.Dispose();
             _audioSession.Dispose();
-            Instance.Dispose();
 
             Task.Run(async () => await _analytics.LogAction("exit"));
 
-            Close();
+#if !DEBUG
+            Environment.Exit(0);
+#endif
         }
 
         private void LnkPath_Click(object sender, EventArgs e)

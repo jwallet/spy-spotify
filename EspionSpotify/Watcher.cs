@@ -381,10 +381,20 @@ namespace EspionSpotify
             if (disposing)
             {
                 DoIKeepLastSong();
-                StopLastRecorder();
                 NativeMethods.AllowSleep();
 
-                EndRecordingSession();
+                if (_audioSession != null)
+                {
+                    MutesSpotifyAds(false);
+                    _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                    _audioSession.ClearSpotifyAudioSessionControls();
+
+                    Spotify.ListenForEvents = false;
+                    Spotify.OnPlayStateChange -= OnPlayStateChanged;
+                    Spotify.OnTrackChange -= OnTrackChanged;
+                    Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
+                    Spotify.Dispose();
+                }
 
                 _recorderTasks.ForEach(x =>
                 {

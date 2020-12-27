@@ -69,16 +69,15 @@ namespace EspionSpotify.MediaTags
 
         internal async Task SaveMediaTags()
         {
-            var mp3 = TagLib.File.Create(CurrentFile);
-
-            await MapTags(mp3.Tag);
-
-            if (_fileSystem.File.Exists(CurrentFile))
+            using (var mp3 = TagLib.File.Create(CurrentFile))
             {
-                mp3.Save();
-            }
+                await MapTags(mp3.Tag);
 
-            mp3.Dispose();
+                if (_fileSystem.File.Exists(CurrentFile))
+                {
+                    mp3.Save();
+                }
+            }
         }
 
         private async Task FetchMediaPictures()
@@ -143,7 +142,6 @@ namespace EspionSpotify.MediaTags
                     var stream = response.GetResponseStream();
                     if (stream == null)
                     {
-                        response.Dispose();
                         return null;
                     }
                     using (var reader = new BinaryReader(stream))
@@ -156,7 +154,6 @@ namespace EspionSpotify.MediaTags
                                 await memory.WriteAsync(buffer, 0, buffer.Length);
                                 buffer = reader.ReadBytes(4096);
                             }
-                            response.Dispose();
 
                             return memory.ToArray();
                         }

@@ -178,6 +178,8 @@ namespace EspionSpotify
 
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
+
+            Dispose();
         }
 
         private async Task WriteTempWaveToMediaFile()
@@ -405,7 +407,7 @@ namespace EspionSpotify
 
                 if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
                 try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
+                catch (Exception ex) { Console.WriteLine($"test {ex.Message}"); }
             }
 
             _disposed = true;
