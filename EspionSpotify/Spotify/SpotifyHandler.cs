@@ -11,6 +11,7 @@ namespace EspionSpotify.Spotify
     public class SpotifyHandler : ISpotifyHandler, IDisposable
     {
         private bool _disposed = false;
+        private bool _processingEvents = false;
 
         public const int EVENT_TIMER_INTERVAL = 50;
         public const int SONG_TIMER_INTERVAL = 1000;
@@ -30,7 +31,7 @@ namespace EspionSpotify.Spotify
             set
             {
                 _listenForEvents = value;
-                EventTimer.Enabled = value;
+                EventTimerEnabled(value);
             }
         }
 
@@ -67,10 +68,15 @@ namespace EspionSpotify.Spotify
 
         public async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
-            await TriggerEvent();
+            // avoid concurrences
+            if (_processingEvents == true) return;
+            
+            _processingEvents = true;
+            await TriggerEvents();
+            _processingEvents = false;
         }
 
-        public async Task TriggerEvent()
+        public async Task TriggerEvents()
         { 
             SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
@@ -128,6 +134,18 @@ namespace EspionSpotify.Spotify
             try
             {
                 EventTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void EventTimerEnabled(bool value)
+        {
+            try
+            {
+                EventTimer.Enabled = value;
             }
             catch (Exception ex)
             {

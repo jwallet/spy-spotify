@@ -70,26 +70,40 @@ namespace EspionSpotify.Native
 
         public void DeleteFile(string currentFile)
         {
-            if (_fileSystem.File.Exists(currentFile))
+            try
             {
-                _fileSystem.File.Delete(currentFile);
-            }
+                if (_fileSystem.File.Exists(currentFile))
+                {
+                    _fileSystem.File.Delete(currentFile);
+                }
 
-            if (_userSettings.GroupByFoldersEnabled)
+                if (_userSettings.GroupByFoldersEnabled && Path.GetExtension(currentFile).ToLowerInvariant() != ".tmp")
+                {
+                    DeleteFileFolder(currentFile);
+                }
+            }
+            catch (Exception ex)
             {
-                DeleteFileFolder(currentFile);
+                Console.WriteLine(ex.Message);
             }
         }
 
         public void RenameFile(string source, string destination)
         {
-            if (_fileSystem.File.Exists(source))
+            try
             {
-                if (_fileSystem.File.Exists(destination))
+                if (_fileSystem.File.Exists(source))
                 {
-                    _fileSystem.File.Delete(destination);
+                    if (_fileSystem.File.Exists(destination))
+                    {
+                        _fileSystem.File.Delete(destination);
+                    }
+                    _fileSystem.File.Move(source, destination);
                 }
-                _fileSystem.File.Move(source, destination);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
