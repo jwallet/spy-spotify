@@ -136,7 +136,18 @@ namespace EspionSpotify
             if (_tempWaveWriter == null) return;
 
             await _tempWaveWriter.FlushAsync();
+            var isTempWaveEmpty = _tempWaveWriter.Length == 0;
+
             _tempWaveWriter.Dispose();
+
+            if (isTempWaveEmpty)
+            {
+                Running = false;
+                _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
+                _fileManager.DeleteFile(_tempFile);
+                if (_waveIn != null) _waveIn.Dispose();
+                return;
+            }
 
             try
             {
@@ -157,9 +168,8 @@ namespace EspionSpotify
             {
                 if (_waveIn != null) _waveIn.Dispose();
                 if (_fileWriter != null) _fileWriter.Dispose();
+                _fileManager.DeleteFile(_tempFile);
             }
-
-            _fileManager.DeleteFile(_tempFile);
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
