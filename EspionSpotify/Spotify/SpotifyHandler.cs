@@ -31,7 +31,7 @@ namespace EspionSpotify.Spotify
             set
             {
                 _listenForEvents = value;
-                EventTimer.Enabled = value;
+                EventTimerEnabled(value);
             }
         }
 
@@ -134,6 +134,18 @@ namespace EspionSpotify.Spotify
             try
             {
                 EventTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void EventTimerEnabled(bool value)
+        {
+            try
+            {
+                EventTimer.Enabled = value;
             }
             catch (Exception ex)
             {

@@ -376,6 +376,7 @@ namespace EspionSpotify.Tests
         internal void DeleteFile_DeletesFolderWhenGroupByFoldersEnabled()
         {
             _userSettings.GroupByFoldersEnabled = true;
+            _userSettings.MediaFormat = MediaFormat.Mp3;
             _track.Title = "Delete_Me";
             _track.TitleExtended = "";
             _userSettings.TrackTitleSeparator = "_";
@@ -401,6 +402,24 @@ namespace EspionSpotify.Tests
 
             Assert.False(_fileSystem.Directory.Exists($@"{_userSettings.OutputPath}\{artistDir}"));
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+        }
+
+        [Fact]
+        internal void DeleteFile_DeletesTempFile()
+        {
+            var tempFilePath = @"C:\Local\Temp\123.tmp";
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\Local", new MockDirectoryData() },
+                { tempFilePath, new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            _fileManager.DeleteFile(tempFilePath);
+
+            Assert.True(_fileSystem.Directory.Exists(@"C:\local\Temp"));
+            Assert.False(_fileSystem.File.Exists(tempFilePath));
         }
 
         [Fact]

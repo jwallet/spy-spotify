@@ -77,7 +77,7 @@ namespace EspionSpotify.Native
                     _fileSystem.File.Delete(currentFile);
                 }
 
-                if (_userSettings.GroupByFoldersEnabled && Path.GetExtension(currentFile).ToLowerInvariant().Contains(GetMediaFormatExtension(_userSettings)))
+                if (_userSettings.GroupByFoldersEnabled && Path.GetExtension(currentFile).ToLowerInvariant() != ".tmp")
                 {
                     DeleteFileFolder(currentFile);
                 }
