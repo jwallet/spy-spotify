@@ -21,6 +21,7 @@ namespace EspionSpotify.Spotify
         event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
         Task<Track> GetTrack();
+        Task TriggerEvent();
 
         void Dispose();
     }
