@@ -166,10 +166,8 @@ namespace EspionSpotify
 
         private void BindSpotifyEventHandlers()
         {
-            Spotify = new SpotifyHandler(_audioSession)
-            {
-                ListenForEvents = true
-            };
+            Spotify = new SpotifyHandler(_audioSession);
+
             Spotify.OnPlayStateChange += OnPlayStateChanged;
             Spotify.OnTrackChange += OnTrackChanged;
             Spotify.OnTrackTimeChange += OnTrackTimeChanged;
@@ -263,20 +261,17 @@ namespace EspionSpotify
 
         private async void InitializeRecordingSession()
         {
-            if (!ExternalAPI.Instance.IsAuthenticated && Spotify.SpotifyLatestStatus == null)
-            {
-                await ExternalAPI.Instance.Authenticate();
-            }
-
             _audioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
             var track = await Spotify.GetTrack();
+
             if (track == null) return;
 
             _isPlaying = track.Playing;
             _form.UpdateIconSpotify(_isPlaying);
 
-            _currentTrack = track;
+            Spotify.Track = new Track();
+            Spotify.ListenForEvents = true;
 
             _form.UpdatePlayingTitle(_currentTrack.ToString());
             MutesSpotifyAds(_currentTrack.Ad);

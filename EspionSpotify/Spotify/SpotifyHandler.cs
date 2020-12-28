@@ -67,6 +67,11 @@ namespace EspionSpotify.Spotify
 
         public async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
+            await TriggerEvent();
+        }
+
+        public async Task TriggerEvent()
+        { 
             SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
             {
