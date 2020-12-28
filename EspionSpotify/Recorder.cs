@@ -159,7 +159,7 @@ namespace EspionSpotify
                 if (_fileWriter != null) _fileWriter.Dispose();
             }
 
-            DeleteTempFile();
+            _fileManager.DeleteFile(_tempFile);
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
@@ -348,13 +348,6 @@ namespace EspionSpotify
             return stream;
         }
 
-        private void DeleteTempFile()
-        {
-            if (!_fileSystem.File.Exists(_tempFile)) return;
-            try { _fileSystem.File.Delete(_tempFile); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
-        }
-
         private void ForceStopRecording()
         {
             _form.UpdateIconSpotify(true, false);
@@ -368,7 +361,7 @@ namespace EspionSpotify
             _tempWaveWriter.Close();
             _tempWaveWriter.Dispose();
 
-            DeleteTempFile();
+            _fileManager.DeleteFile(_tempFile);
         }
 
         public void Dispose()
@@ -403,11 +396,12 @@ namespace EspionSpotify
                     _fileWriter.Dispose();
                 }
 
-                DeleteTempFile();
+                _fileManager.DeleteFile(_tempFile);
 
-                if (_currentOutputFile == null || !_fileSystem.File.Exists(_currentOutputFile.ToPendingFileString())) return;
-                try { _fileSystem.File.Delete(_currentOutputFile.ToPendingFileString()); }
-                catch (Exception ex) { Console.WriteLine($"test {ex.Message}"); }
+                if (_currentOutputFile != null)
+                {
+                    _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
+                }
             }
 
             _disposed = true;

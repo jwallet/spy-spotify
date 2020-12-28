@@ -273,8 +273,8 @@ namespace EspionSpotify
             Spotify.Track = new Track();
             Spotify.ListenForEvents = true;
 
-            _form.UpdatePlayingTitle(_currentTrack.ToString());
-            MutesSpotifyAds(_currentTrack.Ad);
+            _form.UpdatePlayingTitle(track.ToString());
+            MutesSpotifyAds(track.Ad);
 
             if (_userSettings.HasRecordingTimerEnabled)
             {
