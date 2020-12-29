@@ -75,18 +75,16 @@ namespace EspionSpotify.MediaTags
             }
 
             var playback = await api.GetPlaybackAsync();
+            var hasNoPlayback = playback == null || playback.Item == null;
 
-            if (playback == null || playback.Item == null)
+            if (!retry && hasNoPlayback)
             {
-                if (!retry)
-                {
-                    await Task.Delay(3000);
-                    await UpdateTrack(track, retry: true);
-                }
+                await Task.Delay(3000);
+                await UpdateTrack(track, retry: true);
                 return;
             }
 
-            if (playback.HasError())
+            if (hasNoPlayback || playback.HasError())
             {
                 api.Dispose();
 
@@ -98,6 +96,7 @@ namespace EspionSpotify.MediaTags
                 }
 
                 // fallback in case getting the playback did not work
+                ExternalAPI.Instance = _lastFmApi;
                 Settings.Default.MediaTagsAPI = (int)MediaTagsAPI.LastFM;
                 Settings.Default.Save();
 
