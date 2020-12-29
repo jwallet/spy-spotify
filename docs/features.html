@@ -68,6 +68,7 @@
 </table>
 
 <h2 id="file-features"><a href="#file-features">File features</a></h2>
+
 <ul>
   <li>Splits the recorded sound into individual tracks using the artist and track names as the title, like so:
     <ul>
@@ -118,6 +119,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");

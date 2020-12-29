@@ -49,4 +49,4 @@ After installing the driver, it will appear in the audio device list.
 
 If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won't be able to hear anything since it's a virtual device that has no physical output.
 
-The way to use it properly is to [isolate Spotify and Spytify on this virtual device](./faq.html#isolate-spotify-audio-endpoint) to record better audio, and you can use the [Spotify web app](https://open.spotify.com) with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.
+The way to use it properly is to [isolate Spotify and Spytify on this virtual device](#isolate-spotify-audio-endpoint) to record better audio, and you can use the [Spotify web app](https://open.spotify.com) with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.

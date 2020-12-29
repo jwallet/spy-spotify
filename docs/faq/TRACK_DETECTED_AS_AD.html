@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Why podcasts/others are detected as ads and cannot be recorded.</title>
+    <title>Spytify - Record Spotify - Why podcasts/others are detected as ads and cannot be recorded?</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -62,6 +62,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");

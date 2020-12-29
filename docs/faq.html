@@ -86,7 +86,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 
 <p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output.</p>
 
-<p>The way to use it properly is to <a href="./faq.html#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
+<p>The way to use it properly is to <a href="#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
 </p>
     </details>
 </section>
@@ -104,7 +104,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
         <p><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint.</p>
 
 <blockquote>
-  <p>If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like <a href="./faq.html#install-better-audio-endpoint-device">Virtual Audio Cable that comes with Spytify</a>) to have recordings closer to the original Spotify quality.</p>
+  <p>If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like <a href="#install-better-audio-endpoint-device">Virtual Audio Cable that comes with Spytify</a>) to have recordings closer to the original Spotify quality.</p>
 </blockquote>
 
 <p>So, to move both apps to a different endpoint:</p>
@@ -268,7 +268,7 @@ You will get a CD with songs ordered in the same order than the album or the one
                 Why am I hearing background/outside noise on my recordings?
             </h3>
         </summary>
-        <p><p>Any background noises can be removed by <a href="./faq.html#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
+        <p><p>Any background noises can be removed by <a href="#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
 
 <p>Make sure Spytify successfully muted all applications in the <em>Volume Mixer</em> while recording. Only Spotify and Spytify should not be muted.</p>
 
@@ -318,7 +318,7 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#track-detected-as-ad" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Why podcasts/others are detected as ads and cannot be recorded.
+                Why podcasts/others are detected as ads and cannot be recorded?
             </h3>
         </summary>
         <p><p>Podcast, audio book and any other uncommon track type are detected as an ad. By default, Spytify won’t record those but you can change that behavior in <strong>Advanced settings</strong> by enabling <strong>Record everything</strong>. Be aware that you may record real ads at this point, and when using that option the <strong>Mute ads</strong> option will be turned off.</p>
@@ -370,6 +370,8 @@ Sometimes, Spotify doesn’t provide the current track info in time resulting in
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");

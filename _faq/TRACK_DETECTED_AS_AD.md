@@ -1,7 +1,7 @@
 ---
 layout: page
 hash: track-detected-as-ad
-title: Why podcasts/others are detected as ads and cannot be recorded.
+title: Why podcasts/others are detected as ads and cannot be recorded?
 namespace: faq
 ---
 

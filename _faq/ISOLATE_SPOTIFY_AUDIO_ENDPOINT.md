@@ -7,7 +7,7 @@ namespace: faq
 
 By using the Spytify setting **Audio Device**, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint.
 
-> If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like [Virtual Audio Cable that comes with Spytify](./faq.html#install-better-audio-endpoint-device)) to have recordings closer to the original Spotify quality.
+> If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like [Virtual Audio Cable that comes with Spytify](#install-better-audio-endpoint-device)) to have recordings closer to the original Spotify quality.
 
 So, to move both apps to a different endpoint:
 

@@ -5,7 +5,7 @@ title: Why am I hearing background/outside noise on my recordings?
 namespace: faq
 ---
 
-Any background noises can be removed by [isolating both apps on a different audio device](./faq.html#isolate-spotify-audio-endpoint) or using a virtual audio cable that links both app together and reduces the quality loss a lot.
+Any background noises can be removed by [isolating both apps on a different audio device](#isolate-spotify-audio-endpoint) or using a virtual audio cable that links both app together and reduces the quality loss a lot.
 
 Make sure Spytify successfully muted all applications in the _Volume Mixer_ while recording. Only Spotify and Spytify should not be muted.
 

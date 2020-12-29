@@ -69,6 +69,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");

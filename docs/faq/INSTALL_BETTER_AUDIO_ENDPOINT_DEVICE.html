@@ -75,7 +75,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 
 <p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output.</p>
 
-<p>The way to use it properly is to <a href="./faq.html#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
+<p>The way to use it properly is to <a href="#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
 
 
       <footer class="site-footer">
@@ -102,6 +102,8 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");

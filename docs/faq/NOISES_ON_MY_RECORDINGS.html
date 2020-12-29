@@ -33,7 +33,7 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>Any background noises can be removed by <a href="./faq.html#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
+      <p>Any background noises can be removed by <a href="#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
 
 <p>Make sure Spytify successfully muted all applications in the <em>Volume Mixer</em> while recording. Only Spotify and Spytify should not be muted.</p>
 
@@ -75,6 +75,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", onPageLoaded);
+      window.addEventListener("hashchange", isScrollIntoView, false);
+
       function setActiveNav() {
         document.querySelectorAll(`nav[role="navigation"]>a`).forEach(x => {
           const attribute = x.getAttribute("href");
