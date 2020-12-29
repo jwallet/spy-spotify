@@ -2,15 +2,8 @@
 $large-breakpoint: 64em !default;
 $medium-breakpoint: 42em !default;
 
-// Languages
-$lang-selected-color: rgb(40, 180, 80) !default;
-$lang-frame:rgb(25, 255, 95) !default;
-$lang-label: white !default;
-$lang-select-row: white !default;
-$lang-select-row-secondary: #252525 !default;
-
 // Headers
-$header-heading-color: #29B754 !default;
+$header-heading-color: #21da65 !default;
 $header-heading-color-secondary: rgb(25, 255, 95) !default;
 $header-bg-color: #222 !default;
 
@@ -25,15 +18,15 @@ $body-link-color: rgb(30, 150, 60) !default;
 $blockquote-text-color: #777 !default;
 
 // Code
-$code-bg-color: #333 !default;
-$code-text-color: rgb(0, 220, 0) !default;
+$code-bg-color: #282828 !default;
+$code-text-color: #21da65 !default;
 
 // Borders
 $border-color: #999 !default;
-$table-border-color: #DDD !default;
-$hr-border-color: #BBB !default;
+$table-border-color: #ddd !default;
+$hr-border-color: #bbb !default;
 
 // Buttons
-$nav-menu-color:  rgb(40, 180, 80) !default;
+$nav-menu-color: rgb(40, 180, 80) !default;
 $nav-active-text-color: white !default;
 $nav-donate-color: rgb(255, 105, 180) !default;
