@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Spotify;
+using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
@@ -11,6 +12,6 @@ namespace EspionSpotify
         bool IsTypeAllowed { get; }
         bool IsOldSong { get; }
 
-        void Run();
+        Task Run();
     }
 }

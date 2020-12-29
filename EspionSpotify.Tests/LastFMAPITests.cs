@@ -24,7 +24,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void TestAPIKeys_ReturnsOk()
+        internal async Task TestAPIKeys_ReturnsOk()
         {
             var artist = "artist";
             var title = "title";

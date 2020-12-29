@@ -173,7 +173,7 @@ namespace EspionSpotify
             Spotify.OnTrackTimeChange += OnTrackTimeChanged;
         }
 
-        public async void Run()
+        public async Task Run()
         {
             if (Running) return;
 
@@ -196,7 +196,7 @@ namespace EspionSpotify
             }
             else if (SpotifyConnect.IsSpotifyRunning())
             {
-                InitializeRecordingSession();
+                await InitializeRecordingSession();
                 NativeMethods.PreventSleep();
 
                 while (Running)
@@ -259,7 +259,7 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(_isPlaying, true);
         }
 
-        private async void InitializeRecordingSession()
+        private async Task InitializeRecordingSession()
         {
             _audioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
 
@@ -278,11 +278,11 @@ namespace EspionSpotify
 
             if (_userSettings.HasRecordingTimerEnabled)
             {
-                EnableRecordingTimer();
+                await Task.Run(EnableRecordingTimer);
             }
         }
 
-        private async void EnableRecordingTimer()
+        private async Task EnableRecordingTimer()
         {
             _recordingTimer = new Timer(_userSettings.RecordingTimerMilliseconds)
             {

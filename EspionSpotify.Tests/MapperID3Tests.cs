@@ -44,7 +44,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void DefaultTrack_ReturnsNoTags()
+        internal async Task DefaultTrack_ReturnsNoTags()
         {
             var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = false };
             var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, userSettings);
@@ -67,7 +67,7 @@ namespace EspionSpotify.Tests
 
 
         [Fact]
-        internal async void TrackNumber_ReturnsTrackNumberTag()
+        internal async Task TrackNumber_ReturnsTrackNumberTag()
         {
             var userSettings = new UserSettings() { OrderNumberInMediaTagEnabled = true, InternalOrderNumber = 2 };
             var mapper = new MapperID3(_fileSystem, _currentFile.ToString(), _track, userSettings);
@@ -80,7 +80,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void APITrack_WithParenthesisExtendedTitle_ReturnsPartTags()
+        internal async Task APITrack_WithParenthesisExtendedTitle_ReturnsPartTags()
         {
             var track = new Track
             {
@@ -102,7 +102,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void APITrack_WithDashedExtendedTitle_ReturnsPartTags()
+        internal async Task APITrack_WithDashedExtendedTitle_ReturnsPartTags()
         {
             var track = new Track
             {
@@ -124,7 +124,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void APITrack_ReturnsPartTags()
+        internal async Task APITrack_ReturnsPartTags()
         {
             var track = new Track
             {
