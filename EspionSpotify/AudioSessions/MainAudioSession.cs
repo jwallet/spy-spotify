@@ -62,7 +62,7 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
-        public async void SleepWhileTheSongEnds()
+        public async Task SleepWhileTheSongEnds()
         {
             for (var times = 1000; await IsSpotifyCurrentlyPlaying() && times > 0; times -= SLEEP_VALUE * NUMBER_OF_SAMPLES)
             {

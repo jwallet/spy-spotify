@@ -17,7 +17,7 @@ namespace EspionSpotify.AudioSessions
 
         void SetAudioDeviceVolume(int volume);
 
-        void SleepWhileTheSongEnds();
+        Task SleepWhileTheSongEnds();
         Task<bool> IsSpotifyCurrentlyPlaying();
         void SetSpotifyToMute(bool mute);
         Task<bool> WaitSpotifyAudioSessionToStart(bool running);

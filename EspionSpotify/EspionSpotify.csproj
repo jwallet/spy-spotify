@@ -447,6 +447,12 @@
     <Content Include="Drivers\vbMmeCable_xp.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="libmp3lame.32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libmp3lame.64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\add_device.gif" />
     <None Include="Resources\spotify.gif" />
     <None Include="Resources\faq.gif" />
