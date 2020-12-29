@@ -1,27 +1,26 @@
 ---
 layout: page
 hash: media-tags-not-found
-title: "Media tags and album cover are not always found (Switch to Spotify API)"
+title: "How to use Spotify API to get better (more accurate) media metadata and album cover?"
 namespace: faq
 ---
 
-You can switch between last.fm API to Spotify API (still in development but can be set in the **spytify.exe.config** file).
+You can switch between last.fm API to Spotify API to get more accurate metadata, but it requires an account to be able to gather media info from Spotify.
 
-Open a text editor and follow these steps to enable the gathering of MP3 media info from Spotify:
+Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications/), log in using your Spotify account and register a new local application:
 
-- Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications/)
-- Register a new local application, e.g.:
-  - App or Hardware Name: spotify
-  - App or Hardware Description: none
-  - What are you building?: i don't know
-- Click on the new spotify application that you created and click on _Edit the settings_
-- Set 'Redirect URI' with the value **http://localhost:4002**, add and save it.
+<p align="center"><img alt="Spotify API Dashboard - Create App" src="./assets/images/faq_spotify_api_create_app.png" /></p>
+
+Once created, click on your new spotify application and click on _Edit the settings_
+
+<p align="center"><img alt="Spotify API Dashboard - Edit App" src="./assets/images/faq_spotify_api_edit_app.png" /></p>
+
+Add a _Redirect URI_ with the value **http://localhost:4002**, click on **Add**, and on **Save** at the bottom.
 
 <p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
 
-On the spotify API dashboard, copy these info and paste them in Spytify in _Settings_ using the key icon:
+On your app dashboard, copy your _Client ID_ and _Client Secret_ info to Spytify _Spotify API Credentials_ setting form using the key 🔑 icon:
 
-- The _Client ID_
-- The _Client Secret_ (click on _Show Client Secret_)
+> Expand the _Show Client Secret_ on the dashboard to reveal the key.
 
 <p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>

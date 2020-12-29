@@ -34,24 +34,59 @@
     <main id="content" class="main-content" role="main">
  
       
-<section id="background-noise-recorded-on-track">
+<section id="install-better-audio-endpoint-device">
     <details class="faq">
         <summary class="faq_title">
             <h3>
-                <a href="#background-noise-recorded-on-track" class="faq_anchor">
+                <a href="#install-better-audio-endpoint-device" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Hearing background noise on my recordings.
+                Which audio endpoint device should I use for best recording quality? (Virtual Audio Cable)
             </h3>
         </summary>
-        <p><p>Make sure Spytify successfully muted all applications in the <em>Volume Mixer</em> while recording. Only Spotify and Spytify should not be muted.</p>
+        <p><p>In Spytify <strong>Settings</strong> tab, under <strong>Audio Device</strong>, you will find a list of hardware devices that emit sounds, but you can also add <em>virtual devices</em> to this list.</p>
 
-<p>Cracking/popping sounds may come from :</p>
+<blockquote>
+  <p>Virtual devices don’t have to do the big round-trip to render sound to you through a physical device, they can bypass that and keep the original audio quality much longer when sending it to different endpoints.</p>
 
-<ul>
-  <li>Cracking sounds can be heard while playing songs on Spotify and ends up being recorded to the recording file.</li>
-  <li>Can be caused by your computer using a low consumption power plan settings that reduces the cpu max performance and impacts at the same time the audio encoding.</li>
-</ul>
+  <p>Below is the difference of using a <strong>normal/low</strong> end audio device versus a <strong>decent/high</strong> end audio device versus a <strong>virtual</strong> device, all recorded at <code class="language-plaintext highlighter-rouge">2CH 24bits 44kHz @320kpbs</code> using a <em>Michael Bubble</em> xmas song.</p>
+</blockquote>
+
+<div style="display:flex">
+    <figure style="margin: 0">
+        <figcaption>Normal <i style="font-size:85%">(RealTek High Definition)</i></figcaption>
+        <audio controls="" src="./assets/audio/worst-2CH-24bits-44kHz-320kbps.mp3">
+                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+        </audio>
+    </figure>
+    <figure style="margin: 0 5px;">
+        <figcaption>Decent <i style="font-size:85%">(Crystal Sound 3)</i></figcaption>
+        <audio controls="" src="./assets/audio/better-2CH-24bits-44kHz-320kbps.mp3">
+                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+        </audio>
+    </figure>
+    <figure style="margin: 0">
+        <figcaption>Virtual <i style="font-size:85%">(Virtual Audio Cable)</i></figcaption>
+        <audio controls="" src="./assets/audio/virtual-2CH-24bits-44kHz-320kbps.mp3">
+                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+        </audio>
+    </figure>
+</div>
+
+<p>Spytify comes with a Virtual device that you can install from the app, or download it yourself: <a href="https://www.vb-audio.com/Cable/">Virtual Audio Cable Device</a>
+Go to Settings, at the far right of <strong>Audio Device</strong>, click on the <strong>Speakers</strong> button and the click on <em>Install Driver</em></p>
+
+<p align="center"><img alt="Open Virtual Audio Cable device" src="./assets/images/faq_open_vac.png" /></p>
+
+<p>After installing the driver, it will appear in the audio device list.</p>
+
+<blockquote>
+  <p>The selected audio device has to be the one that Spotify is set on.</p>
+</blockquote>
+
+<p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output.</p>
+
+<p>The way to use it properly is to <a href="./faq.html#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
 </p>
     </details>
 </section>
@@ -63,10 +98,16 @@
                 <a href="#isolate-spotify-audio-endpoint" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Isolate Spotify audio to a different audio endpoint device.
+                How to isolate Spotify and Spytify to a different audio endpoint device to eliminate noise?
             </h3>
         </summary>
-        <p><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint (install <a href="https://www.vb-audio.com/Cable/">virtual audio cable</a> if you need another one) and use the Windows 10 setting to move Spotify to the same audio endpoint.</p>
+        <p><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint.</p>
+
+<blockquote>
+  <p>If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like <a href="./faq.html#install-better-audio-endpoint-device">Virtual Audio Cable that comes with Spytify</a>) to have recordings closer to the original Spotify quality.</p>
+</blockquote>
+
+<p>So, to move both apps to a different endpoint:</p>
 
 <ul>
   <li>Press Windows key and type <strong>Sound mixer options</strong>, you should land on the setting page titled <em>App volume and device preferences</em>.</li>
@@ -88,10 +129,10 @@
                 <a href="#recording-order-number" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Keep the same order that the playlist for your recordings.
+                How to keep the same order than the recorded playlist on my recordings?
             </h3>
         </summary>
-        <p><p>The recording order number option <code class="language-plaintext highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename. 
+        <p><p>The recording order number option <code class="language-plaintext highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename.
 You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
 
 <p align="center"><img alt="Recording order number option" src="./assets/images/recording_number.png" /></p>
@@ -106,10 +147,28 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#maximize-quality-spotify-settings" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Maximize audio quality in Spotify.
+                How can I maximize the audio quality of my recordings?
             </h3>
         </summary>
-        <p><p>Using Spotify desktop app, click on your profile and go to your settings.</p>
+        <p><p>Spytify relies on your audio device quality to record audio files. If your choosen audio endpoint device in Spytify produces bad <code class="language-plaintext highlighter-rouge">.mp3</code> quality, I suggest you :</p>
+
+<ul>
+  <li>Use another device like the your main PC sound board.</li>
+  <li>Avoid using a bluetooth audio device.</li>
+  <li>Avoid using a cheap external usb sound card.</li>
+  <li>Use a different computer/laptop if it has a better sound card.</li>
+  <li>Install Virtual Audio Cable that comes with Spytify and connect both apps with it.</li>
+</ul>
+
+<p>When encoding, <code class="language-plaintext highlighter-rouge">.mp3</code> has a limitation of 2 channels (stereo) and a sample rate of 44,000 Hz, compare to <code class="language-plaintext highlighter-rouge">.wav</code> that has less limations.</p>
+
+<p>You can increase the bitrate in Spytify settings, but if you have <em>Spotify Free</em> it normally delivers music to <code class="language-plaintext highlighter-rouge">160kbps</code> and <code class="language-plaintext highlighter-rouge">320kbps</code> on Premium.</p>
+
+<p align="center"><img alt="Spytify audio settings" src="./assets/images/faq_audio_profile.png" /></p>
+
+<hr />
+
+<p>Using Spotify desktop app, click on your profile and go to your settings.</p>
 
 <p>In <strong>Music Quality</strong> section you will find:</p>
 
@@ -146,34 +205,28 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#media-tags-not-found" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Media tags and album cover are not always found (Switch to Spotify API)
+                How to use Spotify API to get better (more accurate) media metadata and album cover?
             </h3>
         </summary>
-        <p><p>You can switch between last.fm API to Spotify API (still in development but can be set in the <strong>spytify.exe.config</strong> file).</p>
+        <p><p>You can switch between last.fm API to Spotify API to get more accurate metadata, but it requires an account to be able to gather media info from Spotify.</p>
 
-<p>Open a text editor and follow these steps to enable the gathering of MP3 media info from Spotify:</p>
+<p>Go to <a href="https://developer.spotify.com/dashboard/applications/">Spotify Developer Dashboard</a>, log in using your Spotify account and register a new local application:</p>
 
-<ul>
-  <li>Go to <a href="https://developer.spotify.com/dashboard/applications/">Spotify Developer Dashboard</a></li>
-  <li>Register a new local application, e.g.:
-    <ul>
-      <li>App or Hardware Name: spotify</li>
-      <li>App or Hardware Description: none</li>
-      <li>What are you building?: i don’t know</li>
-    </ul>
-  </li>
-  <li>Click on the new spotify application that you created and click on <em>Edit the settings</em></li>
-  <li>Set ‘Redirect URI’ with the value <strong>http://localhost:4002</strong>, add and save it.</li>
-</ul>
+<p align="center"><img alt="Spotify API Dashboard - Create App" src="./assets/images/faq_spotify_api_create_app.png" /></p>
+
+<p>Once created, click on your new spotify application and click on <em>Edit the settings</em></p>
+
+<p align="center"><img alt="Spotify API Dashboard - Edit App" src="./assets/images/faq_spotify_api_edit_app.png" /></p>
+
+<p>Add a <em>Redirect URI</em> with the value <strong>http://localhost:4002</strong>, click on <strong>Add</strong>, and on <strong>Save</strong> at the bottom.</p>
 
 <p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
 
-<p>On the spotify API dashboard, copy these info and paste them in Spytify in <em>Settings</em> using the key icon:</p>
+<p>On your app dashboard, copy your <em>Client ID</em> and <em>Client Secret</em> info to Spytify <em>Spotify API Credentials</em> setting form using the key 🔑 icon:</p>
 
-<ul>
-  <li>The <em>Client ID</em></li>
-  <li>The <em>Client Secret</em> (click on <em>Show Client Secret</em>)</li>
-</ul>
+<blockquote>
+  <p>Expand the <em>Show Client Secret</em> on the dashboard to reveal the key.</p>
+</blockquote>
 
 <p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
 </p>
@@ -187,10 +240,11 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#multiple-channels-not-supported" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Multiple channels audio endpoint not supported.
+                How to reduce my audio endpoint quality for mp3 encoding since multi-channel is not supported?
             </h3>
         </summary>
-        <p><p>Multi channels audio endpoint device are not supported when encoding to MP3, it must be stereo or mono channels. You can change an audio endpoint channels configuration by:</p>
+        <p><p>Multi channels audio endpoint device are not supported when encoding to MP3, it must be at least <em>stereo</em> channels with a sample rate of <em>44,000 Hz</em>. You can change an audio endpoint channels configuration by:</p>
+
 <ul>
   <li>Typing <strong>Sound Settings</strong> in Windows menu</li>
   <li>On the right side bar, use the link <strong>Sound Control Panel</strong></li>
@@ -199,7 +253,37 @@ You will get a CD with songs ordered in the same order than the album or the one
   <li>Make sure <em>Stereo</em> channels is selected, otherwise select it, then applies the changes.</li>
 </ul>
 
-<p align="center"><img alt="Maximize Spotify audio quality" src="./assets/images/stereo_channels.gif" /></p>
+<p align="center"><img alt="Spotify audio device multi-channel fallback" src="./assets/images/faq_fallback_stereo_channels.gif" /></p>
+</p>
+    </details>
+</section>
+
+<section id="background-noise-recorded-on-track">
+    <details class="faq">
+        <summary class="faq_title">
+            <h3>
+                <a href="#background-noise-recorded-on-track" class="faq_anchor">
+                    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
+                </a>
+                Why am I hearing background/outside noise on my recordings?
+            </h3>
+        </summary>
+        <p><p>Any background noises can be removed by <a href="./faq.html#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
+
+<p>Make sure Spytify successfully muted all applications in the <em>Volume Mixer</em> while recording. Only Spotify and Spytify should not be muted.</p>
+
+<p align="center"><img alt="Volume mixer muted other apps" src="./assets/images/faq_volume_mixer_mute.png" /></p>
+
+<p>Cracking/popping sounds may come from :</p>
+
+<ul>
+  <li>Cracking sounds can be heard while playing songs on Spotify and ends up being recorded to the recording file.</li>
+  <li>Can be caused by your computer using a low consumption power plan settings that reduces the cpu max performance and impacts at the same time the audio encoding.</li>
+</ul>
+
+<p>On Windows set your power plan to performance and in the taskbar set the performance to 100% (if you are on a laptop for instance).</p>
+
+<p align="center"><img alt="Set power mode to Best performance" src="./assets/images/faq_performance.png" /></p>
 </p>
     </details>
 </section>
@@ -211,10 +295,18 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#spotify-track-cut" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Spotify only plays a bit of a track, it stops playing it after some seconds.
+                Why Spotify now only plays a part of my tracks that I usually play on the app?
             </h3>
         </summary>
-        <p><p>Spotify looks for local music files before playing a track. If it finds one matching the metadata of the current song, it will play the local one instead. Cut track means that you started recording this track once and you ended the session too early. Just delete these incomplete tracks in your music directory to solve your issue. You can display local files in your Spotify Desktop app settings in the <strong>Local File</strong> section with the toggle <em>Show Local Files</em>.</p>
+        <p><p>By default, Spotify looks for local music files before playing a track if the option is enabled in Spotify settings. If it finds one that matches the metadata of the current track, it will play the local one instead. Only part of tracks play because the recording probably stop before the end of the song, resulting in a partial recorded track.</p>
+
+<p>You can display local files in your Spotify Desktop app settings in the <strong>Local Files</strong> section with the toggle <em>Show Local Files</em>.</p>
+
+<p>Just delete those that are incomplete tracks in your music directory or in the Spotify app to solve your issue.</p>
+
+<p>You can also remove your <em>Music library</em> from the setting <strong>Show songs from</strong>.</p>
+
+<p align="center"><img alt="Spotify local files settings" src="./assets/images/faq_local_file_issue.png" /></p>
 </p>
     </details>
 </section>
@@ -226,10 +318,12 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#track-detected-as-ad" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Tracks are detected as an ad.
+                Why podcasts/others are detected as ads and cannot be recorded.
             </h3>
         </summary>
-        <p><p>Podcast, audio book and any other uncommon track type are detected as an ad. Also, Spotify doesn’t return to Spytify the right info when you switch between radios, playlists and albums, resulting in a track detected as an ad. If this happens, replay the current song, if this happens too often, create a playlist of the songs you want to save and play it.</p>
+        <p><p>Podcast, audio book and any other uncommon track type are detected as an ad. By default, Spytify won’t record those but you can change that behavior in <strong>Advanced settings</strong> by enabling <strong>Record everything</strong>. Be aware that you may record real ads at this point, and when using that option the <strong>Mute ads</strong> option will be turned off.</p>
+
+<p>Also, some tracks may be identified as ads sometimes because Spotify is changing track but it did not give the proper track title to Spytify yet, maybe because is still loading or it just had an issue. When this happen, it’s often because you navigate in the app between a radio station and a playlist. Restarting the track normally fix the issue. If it happens too often, create a playlist of the songs you want to record and play it to the end.</p>
 </p>
     </details>
 </section>
@@ -241,7 +335,7 @@ You will get a CD with songs ordered in the same order than the album or the one
                 <a href="#track-overlap-on-recorded-track" class="faq_anchor">
                     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
                 </a>
-                Tracks overlap at the ends of recorded tracks.
+                Why some tracks overlap another track at the beginning/end of it?
             </h3>
         </summary>
         <p><p>Use <a href="https://www.audacityteam.org/">Audacity</a> (a free editor for audio files) to cut the audio section that you want to remove and export it back to the same audio type.

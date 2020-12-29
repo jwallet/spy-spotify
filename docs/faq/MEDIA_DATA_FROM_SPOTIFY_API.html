@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Media tags and album cover are not always found (Switch to Spotify API)</title>
+    <title>Spytify - Record Spotify - How to use Spotify API to get better (more accurate) media metadata and album cover?</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -33,31 +33,25 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>You can switch between last.fm API to Spotify API (still in development but can be set in the <strong>spytify.exe.config</strong> file).</p>
+      <p>You can switch between last.fm API to Spotify API to get more accurate metadata, but it requires an account to be able to gather media info from Spotify.</p>
 
-<p>Open a text editor and follow these steps to enable the gathering of MP3 media info from Spotify:</p>
+<p>Go to <a href="https://developer.spotify.com/dashboard/applications/">Spotify Developer Dashboard</a>, log in using your Spotify account and register a new local application:</p>
 
-<ul>
-  <li>Go to <a href="https://developer.spotify.com/dashboard/applications/">Spotify Developer Dashboard</a></li>
-  <li>Register a new local application, e.g.:
-    <ul>
-      <li>App or Hardware Name: spotify</li>
-      <li>App or Hardware Description: none</li>
-      <li>What are you building?: i don’t know</li>
-    </ul>
-  </li>
-  <li>Click on the new spotify application that you created and click on <em>Edit the settings</em></li>
-  <li>Set ‘Redirect URI’ with the value <strong>http://localhost:4002</strong>, add and save it.</li>
-</ul>
+<p align="center"><img alt="Spotify API Dashboard - Create App" src="./assets/images/faq_spotify_api_create_app.png" /></p>
+
+<p>Once created, click on your new spotify application and click on <em>Edit the settings</em></p>
+
+<p align="center"><img alt="Spotify API Dashboard - Edit App" src="./assets/images/faq_spotify_api_edit_app.png" /></p>
+
+<p>Add a <em>Redirect URI</em> with the value <strong>http://localhost:4002</strong>, click on <strong>Add</strong>, and on <strong>Save</strong> at the bottom.</p>
 
 <p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
 
-<p>On the spotify API dashboard, copy these info and paste them in Spytify in <em>Settings</em> using the key icon:</p>
+<p>On your app dashboard, copy your <em>Client ID</em> and <em>Client Secret</em> info to Spytify <em>Spotify API Credentials</em> setting form using the key 🔑 icon:</p>
 
-<ul>
-  <li>The <em>Client ID</em></li>
-  <li>The <em>Client Secret</em> (click on <em>Show Client Secret</em>)</li>
-</ul>
+<blockquote>
+  <p>Expand the <em>Show Client Secret</em> on the dashboard to reveal the key.</p>
+</blockquote>
 
 <p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
 

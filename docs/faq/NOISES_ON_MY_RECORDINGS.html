@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - How to isolate Spotify and Spytify to a different audio endpoint device to eliminate noise?</title>
+    <title>Spytify - Record Spotify - Why am I hearing background/outside noise on my recordings?</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -33,23 +33,22 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint.</p>
+      <p>Any background noises can be removed by <a href="./faq.html#isolate-spotify-audio-endpoint">isolating both apps on a different audio device</a> or using a virtual audio cable that links both app together and reduces the quality loss a lot.</p>
 
-<blockquote>
-  <p>If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like <a href="./faq.html#install-better-audio-endpoint-device">Virtual Audio Cable that comes with Spytify</a>) to have recordings closer to the original Spotify quality.</p>
-</blockquote>
+<p>Make sure Spytify successfully muted all applications in the <em>Volume Mixer</em> while recording. Only Spotify and Spytify should not be muted.</p>
 
-<p>So, to move both apps to a different endpoint:</p>
+<p align="center"><img alt="Volume mixer muted other apps" src="./assets/images/faq_volume_mixer_mute.png" /></p>
+
+<p>Cracking/popping sounds may come from :</p>
 
 <ul>
-  <li>Press Windows key and type <strong>Sound mixer options</strong>, you should land on the setting page titled <em>App volume and device preferences</em>.</li>
-  <li>Make sure Spotify is playing and set the app to the desired endpoint using the <strong>Output</strong> select list.</li>
-  <li>Restart Spotify. Spotify and Spytify should now be isolated from any undesired sound.</li>
+  <li>Cracking sounds can be heard while playing songs on Spotify and ends up being recorded to the recording file.</li>
+  <li>Can be caused by your computer using a low consumption power plan settings that reduces the cpu max performance and impacts at the same time the audio encoding.</li>
 </ul>
 
-<p>If you can’t find the Windows 10 setting, try the section <strong><em>Windows 10 Settings 🡂 System 🡂 Sound</em></strong>, scroll down to the <strong><em>Advanced sound options 🡂 App volume and device preferences</em></strong> setting.</p>
+<p>On Windows set your power plan to performance and in the taskbar set the performance to 100% (if you are on a laptop for instance).</p>
 
-<p align="center"><img alt="Spotify and Spytify using a different audio device" src="./assets/images/audio_output_device.gif" /></p>
+<p align="center"><img alt="Set power mode to Best performance" src="./assets/images/faq_performance.png" /></p>
 
 
       <footer class="site-footer">

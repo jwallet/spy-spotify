@@ -1,7 +1,7 @@
 ---
 layout: page
 hash: track-overlap-on-recorded-track
-title: Tracks overlap at the ends of recorded tracks.
+title: Why some tracks overlap another track at the beginning/end of it?
 namespace: faq
 ---
 

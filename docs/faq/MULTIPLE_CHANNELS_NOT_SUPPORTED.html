@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Multiple channels audio endpoint not supported.</title>
+    <title>Spytify - Record Spotify - How to reduce my audio endpoint quality for mp3 encoding since multi-channel is not supported?</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -33,7 +33,8 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>Multi channels audio endpoint device are not supported when encoding to MP3, it must be stereo or mono channels. You can change an audio endpoint channels configuration by:</p>
+      <p>Multi channels audio endpoint device are not supported when encoding to MP3, it must be at least <em>stereo</em> channels with a sample rate of <em>44,000 Hz</em>. You can change an audio endpoint channels configuration by:</p>
+
 <ul>
   <li>Typing <strong>Sound Settings</strong> in Windows menu</li>
   <li>On the right side bar, use the link <strong>Sound Control Panel</strong></li>
@@ -42,7 +43,7 @@
   <li>Make sure <em>Stereo</em> channels is selected, otherwise select it, then applies the changes.</li>
 </ul>
 
-<p align="center"><img alt="Maximize Spotify audio quality" src="./assets/images/stereo_channels.gif" /></p>
+<p align="center"><img alt="Spotify audio device multi-channel fallback" src="./assets/images/faq_fallback_stereo_channels.gif" /></p>
 
 
       <footer class="site-footer">

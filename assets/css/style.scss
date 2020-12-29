@@ -5,7 +5,7 @@
 
 @import "normalize";
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {
@@ -66,20 +66,23 @@ a {
 }
 
 .faq {
+  summary::-webkit-details-marker {
+    display: none;
+  }
   &_title {
     margin-left: -2em;
     padding-left: 2em;
     :hover {
-      cursor:pointer;
+      cursor: pointer;
       text-decoration: underline;
       text-decoration-color: $body-link-color;
     }
   }
   &_anchor {
-    display:none;
+    display: none;
     &:hover,
     .faq_title:hover & {
-      display:inherit;
+      display: inherit;
       position: absolute;
       margin-left: -2.5em;
     }
@@ -148,19 +151,17 @@ a {
   opacity: 0.8;
   color: $nav-active-text-color;
   transition: color 0.5s, background-color 0.5s, border-color 0.5s;
-  
+
   &:hover,
   &:focus,
   &:active {
     opacity: 1;
     text-decoration: none;
   }
-
-
 }
 
 .nav {
-  border-top: 1rem solid $nav-bg-color; 
+  border-top: 1rem solid $nav-bg-color;
   padding: 1rem;
 
   @include large {
@@ -187,7 +188,7 @@ a {
 
 .page-header {
   text-align: center;
-  margin: auto;  
+  margin: auto;
   background-color: $header-bg-color;
 
   @include large {
@@ -281,13 +282,13 @@ a {
   h1,
   h2 {
     border-left: 0.6rem groove $section-headings-color;
-    padding-left: 0.9rem;    
+    padding-left: 0.9rem;
   }
 
   h3 {
     border-left: 0.3rem solid $section-headings-color;
     padding-left: 1rem;
-    margin-left: 0.3rem;    
+    margin-left: 0.3rem;
   }
 
   p {
