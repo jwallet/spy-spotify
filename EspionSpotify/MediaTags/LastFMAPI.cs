@@ -2,6 +2,7 @@
 using PCLWebUtility;
 using System;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -11,9 +12,10 @@ namespace EspionSpotify.MediaTags
 {
     public class LastFMAPI : ILastFMAPI, IExternalAPI
     {
-        private const string API_DOMAIN = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
+        private const string API_TRACK_URI = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
         private readonly Random _random;
         private readonly string _selectedApiKey = "";
+        private bool _loggedSilentExceptionOnce = false;
 
         public string[] ApiKeys { get; }
 
@@ -24,20 +26,30 @@ namespace EspionSpotify.MediaTags
             _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
         }
 
-        public string GetTrackInfo(string artist, string title) => $"{API_DOMAIN}&api_key={_selectedApiKey}&artist={artist}&track={title}";
+        public string GetTrackInfo(string artist, string title) => $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
         public async Task UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
 
         private async Task UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
-            var encodedArtist = WebUtility.UrlEncode(track.Artist);
-            var encodedTitle = WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
+            var encodedArtist = PCLWebUtility.WebUtility.UrlEncode(track.Artist);
+            var encodedTitle = PCLWebUtility.WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
 
             try
             {
                 var url = GetTrackInfo(encodedArtist, encodedTitle);
                 api.Load(url);
+            }
+            catch (WebException ex) when (ex.Status == WebExceptionStatus.NameResolutionFailure)
+            {
+                Console.WriteLine(ex.Message);
+                if (_loggedSilentExceptionOnce == false)
+                {
+                    FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                    _loggedSilentExceptionOnce = true;
+                }
+                return;
             }
             catch (Exception ex)
             {
