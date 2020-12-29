@@ -121,6 +121,8 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
             el.open = true;
             if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
+        } else {
+          document.querySelector('details').open = true;
         }
       }
 

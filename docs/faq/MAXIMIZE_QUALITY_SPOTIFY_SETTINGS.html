@@ -122,6 +122,8 @@
             el.open = true;
             if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
+        } else {
+          document.querySelector('details').open = true;
         }
       }
 

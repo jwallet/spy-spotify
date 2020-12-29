@@ -4,6 +4,7 @@ title: F.A.Q.
 ---
 
 {% for question in site.faq %}
+
 <section id="{{ question.hash }}">
     <details class="faq">
         <summary class="faq_title">

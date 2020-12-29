@@ -389,6 +389,8 @@ Sometimes, Spotify doesn’t provide the current track info in time resulting in
             el.open = true;
             if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
+        } else {
+          document.querySelector('details').open = true;
         }
       }
 
