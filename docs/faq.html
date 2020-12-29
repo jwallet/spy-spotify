@@ -52,26 +52,24 @@
   <p>Below is the difference of using a <strong>normal/low</strong> end audio device versus a <strong>decent/high</strong> end audio device versus a <strong>virtual</strong> device, all recorded at <code class="language-plaintext highlighter-rouge">2CH 24bits 44kHz @160kpbs</code> using a <em>Michael Bubble</em> xmas song.</p>
 </blockquote>
 
-<div style="display:flex">
-    <figure style="margin: 0">
-        <figcaption>Normal <i style="font-size:85%">(RealTek High Definition)</i></figcaption>
-        <audio controls="" src="./assets/audio/worst-2CH-24bits-44kHz-160kbps.mp3">
-                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-        </audio>
-    </figure>
-    <figure style="margin: 0 5px;">
-        <figcaption>Decent <i style="font-size:85%">(Crystal Sound 3)</i></figcaption>
-        <audio controls="" src="./assets/audio/better-2CH-24bits-44kHz-160kbps.mp3">
-                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-        </audio>
-    </figure>
-    <figure style="margin: 0">
-        <figcaption>Virtual <i style="font-size:85%">(Virtual Audio Cable)</i></figcaption>
-        <audio controls="" src="./assets/audio/virtual-2CH-24bits-44kHz-160kbps.mp3">
-                <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-        </audio>
-    </figure>
-</div>
+<figure>
+    <figcaption>Normal <i style="font-size:85%">(RealTek High Definition)</i></figcaption>
+    <audio controls="" src="./assets/audio/worst-2CH-24bits-44kHz-160kbps.mp3">
+            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+    </audio>
+</figure>
+<figure>
+    <figcaption>Decent <i style="font-size:85%">(Crystal Sound 3)</i></figcaption>
+    <audio controls="" src="./assets/audio/better-2CH-24bits-44kHz-160kbps.mp3">
+            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+    </audio>
+</figure>
+<figure>
+    <figcaption>Virtual <i style="font-size:85%">(Virtual Audio Cable)</i></figcaption>
+    <audio controls="" src="./assets/audio/virtual-2CH-24bits-44kHz-160kbps.mp3">
+            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
+    </audio>
+</figure>
 
 <p>Spytify comes with a Virtual device that you can install from the app, or download it yourself: <a href="https://www.vb-audio.com/Cable/">Virtual Audio Cable Device</a>
 Go to Settings, at the far right of <strong>Audio Device</strong>, click on the <strong>Speakers</strong> button and the click on <em>Install Driver</em></p>
@@ -84,7 +82,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
   <p>The selected audio device has to be the one that Spotify is set on.</p>
 </blockquote>
 
-<p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output.</p>
+<p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output, unless you reroute the output to your main audio device by turning on the Windows option <a href="#listen-to-virtual-device">Listen to this device</a>.</p>
 
 <p>The way to use it properly is to <a href="#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
 </p>
@@ -136,6 +134,27 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
 
 <p align="center"><img alt="Recording order number option" src="./assets/images/recording_number.png" /></p>
+</p>
+    </details>
+</section>
+
+<section id="listen-to-virtual-device">
+    <details class="faq">
+        <summary class="faq_title">
+            <h3>
+                <a href="#listen-to-virtual-device" class="faq_anchor">
+                    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>
+                </a>
+                How to reroute sound/output of a virtual audio device to my main audio device to listen to it?
+            </h3>
+        </summary>
+        <p><p><a href="#install-better-audio-endpoint-device">Virtual Audio Device</a> are a good way to isolate apps together and get better recordings quality. However, by default, the apps you set on this device cannot be heard once you move them to this device, even if you change your default audio device for this one.</p>
+
+<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can set the Windows option <code class="language-plaintext highlighter-rouge">Listen to this device</code> in the device properties.</p>
+
+<p>Right click on the Audio 🔉 icon in the taskbar and select <strong>Open Sound settings</strong>, go down to the <em>Sound</em> section and select <strong>Sound Control Panel</strong>. In the <em>Recording</em> tab, select the <strong>CABLE Output</strong> device, then click on <strong>Properties</strong>. In the Device properties window, under <em>Listen</em> tab, check the option <code class="language-plaintext highlighter-rouge">Listen to this device</code>.</p>
+
+<p align="center"><img alt="Listen to the virtual device output" src="./assets/images/faq_listen_to_cable_output.png" /></p>
 </p>
     </details>
 </section>

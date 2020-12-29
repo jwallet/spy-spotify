@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo.png" />
     <link rel="stylesheet" href="/spy-spotify/assets/css/style.css?v=">
-    <title>Spytify - Record Spotify - Which audio endpoint device should I use for best recording quality? (Virtual Audio Cable)</title>
+    <title>Spytify - Record Spotify - How to reroute sound/output of a virtual audio device to my main audio device to listen to it?</title>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -33,47 +33,13 @@
 
     <main id="content" class="main-content" role="main">
  
-      <p>In Spytify <strong>Settings</strong> tab, under <strong>Audio Device</strong>, you will find a list of hardware devices that emit sounds, but you can also add <em>virtual devices</em> to this list.</p>
+      <p><a href="#install-better-audio-endpoint-device">Virtual Audio Device</a> are a good way to isolate apps together and get better recordings quality. However, by default, the apps you set on this device cannot be heard once you move them to this device, even if you change your default audio device for this one.</p>
 
-<blockquote>
-  <p>Virtual devices don’t have to do the big round-trip to render sound to you through a physical device, they can bypass that and keep the original audio quality much longer when sending it to different endpoints.</p>
+<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can set the Windows option <code class="language-plaintext highlighter-rouge">Listen to this device</code> in the device properties.</p>
 
-  <p>Below is the difference of using a <strong>normal/low</strong> end audio device versus a <strong>decent/high</strong> end audio device versus a <strong>virtual</strong> device, all recorded at <code class="language-plaintext highlighter-rouge">2CH 24bits 44kHz @160kpbs</code> using a <em>Michael Bubble</em> xmas song.</p>
-</blockquote>
+<p>Right click on the Audio 🔉 icon in the taskbar and select <strong>Open Sound settings</strong>, go down to the <em>Sound</em> section and select <strong>Sound Control Panel</strong>. In the <em>Recording</em> tab, select the <strong>CABLE Output</strong> device, then click on <strong>Properties</strong>. In the Device properties window, under <em>Listen</em> tab, check the option <code class="language-plaintext highlighter-rouge">Listen to this device</code>.</p>
 
-<figure>
-    <figcaption>Normal <i style="font-size:85%">(RealTek High Definition)</i></figcaption>
-    <audio controls="" src="./assets/audio/worst-2CH-24bits-44kHz-160kbps.mp3">
-            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-    </audio>
-</figure>
-<figure>
-    <figcaption>Decent <i style="font-size:85%">(Crystal Sound 3)</i></figcaption>
-    <audio controls="" src="./assets/audio/better-2CH-24bits-44kHz-160kbps.mp3">
-            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-    </audio>
-</figure>
-<figure>
-    <figcaption>Virtual <i style="font-size:85%">(Virtual Audio Cable)</i></figcaption>
-    <audio controls="" src="./assets/audio/virtual-2CH-24bits-44kHz-160kbps.mp3">
-            <code>Your browser does not support the <kbd>audio</kbd> element.</code>
-    </audio>
-</figure>
-
-<p>Spytify comes with a Virtual device that you can install from the app, or download it yourself: <a href="https://www.vb-audio.com/Cable/">Virtual Audio Cable Device</a>
-Go to Settings, at the far right of <strong>Audio Device</strong>, click on the <strong>Speakers</strong> button and the click on <em>Install Driver</em></p>
-
-<p align="center"><img alt="Open Virtual Audio Cable device" src="./assets/images/faq_open_vac.png" /></p>
-
-<p>After installing the driver, it will appear in the audio device list.</p>
-
-<blockquote>
-  <p>The selected audio device has to be the one that Spotify is set on.</p>
-</blockquote>
-
-<p>If you change your default audio output (Audio icon in the taskbar) to this device, you will be able to record better quality with Spotify/Spytify. However, you won’t be able to hear anything since it’s a virtual device that has no physical output, unless you reroute the output to your main audio device by turning on the Windows option <a href="#listen-to-virtual-device">Listen to this device</a>.</p>
-
-<p>The way to use it properly is to <a href="#isolate-spotify-audio-endpoint">isolate Spotify and Spytify on this virtual device</a> to record better audio, and you can use the <a href="https://open.spotify.com">Spotify web app</a> with a different account for your daily music needs while your playlist is being recorded, or just let Spytify record overnight.</p>
+<p align="center"><img alt="Listen to the virtual device output" src="./assets/images/faq_listen_to_cable_output.png" /></p>
 
 
       <footer class="site-footer">
