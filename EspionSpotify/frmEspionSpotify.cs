@@ -32,10 +32,10 @@ namespace EspionSpotify
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
 
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
-                TranslationKeys.logRecording,
-                TranslationKeys.logRecorded,
-                TranslationKeys.logDeleting,
-                TranslationKeys.logTrackExists,
+                I18nKeys.LogRecording,
+                I18nKeys.LogRecorded,
+                I18nKeys.LogDeleting,
+                I18nKeys.LogTrackExists,
             };
 
         public ResourceManager Rm { get; private set; }
@@ -406,7 +406,7 @@ namespace EspionSpotify
                 // set message type
                 rtbLog.AppendText(type);
                 rtbLog.Select(rtbLog.TextLength - type.Length, type.Length + 1);
-                rtbLog.SelectionColor = resource.Equals(TranslationKeys.logRecording)
+                rtbLog.SelectionColor = resource.Equals(I18nKeys.LogRecording)
                     ? rtbLog.SelectionColor.SpotifyPrimaryText()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
                 rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Bold);
@@ -414,7 +414,7 @@ namespace EspionSpotify
                 // set message msg
                 rtbLog.AppendText(msg + Environment.NewLine);
                 rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(TranslationKeys.logDeleting)
+                rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(I18nKeys.LogDeleting)
                     ? rtbLog.SelectionColor.SpotifySecondaryTextAlternate()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
                 rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);

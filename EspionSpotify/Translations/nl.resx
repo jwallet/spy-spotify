@@ -445,4 +445,8 @@
     <value>Spotify API-dashboard</value>
     <comment>interface**</comment>
   </data>
+  <data name="logException" xml:space="preserve">
+    <value>// Fout: {0}</value>
+    <comment>console</comment>
+  </data>
 </root>

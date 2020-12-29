@@ -358,6 +358,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Fehler: {0}.
+        /// </summary>
+        internal static string logException {
+            get {
+                return ResourceManager.GetString("logException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Zähler: Maximales Dateisequenzpräfix von {0} erreicht.
         /// </summary>
         internal static string logMaxFileSequenceReached {
