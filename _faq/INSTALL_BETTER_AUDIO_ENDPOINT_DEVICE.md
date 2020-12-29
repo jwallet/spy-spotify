@@ -9,14 +9,14 @@ In Spytify **Settings** tab, under **Audio Device**, you will find a list of har
 
 > Virtual devices don't have to do the big round-trip to render sound to you through a physical device, they can bypass that and keep the original audio quality much longer when sending it to different endpoints.
 >
-> Below is the difference of using a **normal/low** end audio device versus a **decent/high** end audio device versus a **virtual** device, all recorded at `2CH 24bits 44kHz @320kpbs` using a _Michael Bubble_ xmas song.
+> Below is the difference of using a **normal/low** end audio device versus a **decent/high** end audio device versus a **virtual** device, all recorded at `2CH 24bits 44kHz @160kpbs` using a _Michael Bubble_ xmas song.
 
 <div style="display:flex">
     <figure style="margin: 0">
         <figcaption>Normal <i style="font-size:85%">(RealTek High Definition)</i></figcaption>
         <audio
             controls
-            src="./assets/audio/worst-2CH-24bits-44kHz-320kbps.mp3">
+            src="./assets/audio/worst-2CH-24bits-44kHz-160kbps.mp3">
                 <code>Your browser does not support the <kbd>audio</kbd> element.</code>
         </audio>
     </figure>
@@ -24,7 +24,7 @@ In Spytify **Settings** tab, under **Audio Device**, you will find a list of har
         <figcaption>Decent <i style="font-size:85%">(Crystal Sound 3)</i></figcaption>
         <audio
             controls
-            src="./assets/audio/better-2CH-24bits-44kHz-320kbps.mp3">
+            src="./assets/audio/better-2CH-24bits-44kHz-160kbps.mp3">
                 <code>Your browser does not support the <kbd>audio</kbd> element.</code>
         </audio>
     </figure>
@@ -32,7 +32,7 @@ In Spytify **Settings** tab, under **Audio Device**, you will find a list of har
         <figcaption>Virtual <i style="font-size:85%">(Virtual Audio Cable)</i></figcaption>
         <audio
             controls
-            src="./assets/audio/virtual-2CH-24bits-44kHz-320kbps.mp3">
+            src="./assets/audio/virtual-2CH-24bits-44kHz-160kbps.mp3">
                 <code>Your browser does not support the <kbd>audio</kbd> element.</code>
         </audio>
     </figure>
