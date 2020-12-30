@@ -1,4 +1,4 @@
-﻿namespace EspionSpotify.MediaTags
+﻿namespace EspionSpotify.API
 {
     public static class ExternalAPI
     {

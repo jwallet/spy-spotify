@@ -1,7 +1,7 @@
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Events;
 using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Properties;
@@ -47,7 +47,7 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
+            get => !_userSettings.MuteAdsEnabled && _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
         }
         public bool IsTypeAllowed
         {

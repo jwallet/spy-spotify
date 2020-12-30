@@ -1,5 +1,5 @@
 ﻿using EspionSpotify.Enums;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using System;
 using System.Linq;
@@ -23,9 +23,13 @@ namespace EspionSpotify.Spotify
             return title?.ToLowerInvariant() == Constants.ADVERTISEMENT.ToLowerInvariant();
         }
 
-        public Track GetTrack()
+        public async Task<Track> GetTrack()
         {
-            if (!CurrentTrack.IsNormal) return CurrentTrack;
+            if (!CurrentTrack.IsNormal)
+            {
+                await ExternalAPI.Instance.Authenticate();
+                return CurrentTrack;
+            }
 
             _ = Task.Run(async () =>
             {
@@ -43,7 +47,7 @@ namespace EspionSpotify.Spotify
             var (titleTags, separatorType) = SpotifyStatus.GetTitleTags(longTitlePart ?? "", 2);
 
             var isPlaying = spotifyWindowInfo.IsPlaying;
-            var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd;
+            var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd || tags.First() == Constants.SPOTIFY;
 
             CurrentTrack = new Track
             {

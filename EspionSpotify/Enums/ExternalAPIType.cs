@@ -1,6 +1,6 @@
 ﻿namespace EspionSpotify.Enums
 {
-    public enum MediaTagsAPI
+    public enum ExternalAPIType
     {
         LastFM = 0,
         Spotify

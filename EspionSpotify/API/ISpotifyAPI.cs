@@ -1,7 +1,7 @@
 ﻿using EspionSpotify.Models;
 using SpotifyAPI.Web.Models;
 
-namespace EspionSpotify.MediaTags
+namespace EspionSpotify.API
 {
     public interface ISpotifyAPI
     {

@@ -79,7 +79,7 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(spotifyPaused);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(spotifyPaused);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(spotifyPaused);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
             spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
@@ -107,7 +107,7 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(playing);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(playing);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(playing);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
             spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
@@ -153,7 +153,7 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(newestTrack);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(newestTrack);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(newestTrack);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
             spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);
@@ -201,7 +201,7 @@ namespace EspionSpotify.Tests
 
             var spotifyStatusMock = new Moq.Mock<ISpotifyStatus>();
             spotifyStatusMock.Setup(x => x.CurrentTrack).Returns(track);
-            spotifyStatusMock.Setup(x => x.GetTrack()).Returns(track);
+            spotifyStatusMock.Setup(x => x.GetTrack()).ReturnsAsync(track);
 
             var spotifyProcessMock = new Moq.Mock<ISpotifyProcess>();
             spotifyProcessMock.Setup(x => x.GetSpotifyStatus()).ReturnsAsync(spotifyStatusMock.Object);

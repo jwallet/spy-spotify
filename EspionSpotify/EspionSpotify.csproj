@@ -194,7 +194,7 @@
     <Compile Include="Enums\RecordRecordingsStatus.cs" />
     <Compile Include="Enums\LastFMNodeStatus.cs" />
     <Compile Include="Enums\AlbumCoverSize.cs" />
-    <Compile Include="Enums\MediaTagsAPI.cs" />
+    <Compile Include="Enums\ExternalAPIType.cs" />
     <Compile Include="Enums\MediaFormat.cs" />
     <Compile Include="Enums\TitleSeparatorType.cs" />
     <Compile Include="Enums\TranslationKeys.cs" />
@@ -216,8 +216,8 @@
     <Compile Include="IFrmEspionSpotify.cs" />
     <Compile Include="Native\Models\IProcess.cs" />
     <Compile Include="Native\IProcessManager.cs" />
-    <Compile Include="MediaTags\ILastFMAPI.cs" />
-    <Compile Include="MediaTags\ISpotifyAPI.cs" />
+    <Compile Include="API\ILastFMAPI.cs" />
+    <Compile Include="API\ISpotifyAPI.cs" />
     <Compile Include="Models\OutputFile.cs" />
     <Compile Include="Models\RecorderTask.cs" />
     <Compile Include="Native\NativeMethods.cs" />
@@ -240,11 +240,11 @@
     </Compile>
     <Compile Include="AudioSessions\IMainAudioSession.cs" />
     <Compile Include="Enums\LanguageType.cs" />
-    <Compile Include="MediaTags\ExternalAPI.cs" />
-    <Compile Include="MediaTags\IExternalAPI.cs" />
-    <Compile Include="MediaTags\IMapperID3.cs" />
-    <Compile Include="MediaTags\MapperID3.cs" />
-    <Compile Include="MediaTags\SpotifyAPI.cs" />
+    <Compile Include="API\ExternalAPI.cs" />
+    <Compile Include="API\IExternalAPI.cs" />
+    <Compile Include="API\IMapperID3.cs" />
+    <Compile Include="API\MapperID3.cs" />
+    <Compile Include="API\SpotifyAPI.cs" />
     <Compile Include="Models\GitHub\Asset.cs" />
     <Compile Include="Models\GitHub\Release.cs" />
     <Compile Include="Models\GitHub\User.cs" />
@@ -256,7 +256,7 @@
     <Compile Include="Spotify\SpotifyStatus.cs" />
     <Compile Include="Models\SpotifyWindowInfo.cs" />
     <Compile Include="Models\Track.cs" />
-    <Compile Include="MediaTags\LastFMAPI.cs" />
+    <Compile Include="API\LastFMAPI.cs" />
     <Compile Include="Normalize.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

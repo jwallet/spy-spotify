@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.AudioSessions;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Native.Models;
@@ -29,8 +30,7 @@ namespace EspionSpotify
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
         {
-            var isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
-            var processTitle = GetSpotifyTitle();
+            var (processTitle, isSpotifyAudioPlaying) = await GetSpotifyTitle();
             var isWindowTitledSpotify = SpotifyStatus.WindowTitleIsSpotify(processTitle);
 
             if (string.IsNullOrWhiteSpace(processTitle))
@@ -47,23 +47,36 @@ namespace EspionSpotify
             return new SpotifyStatus(spotifyWindowInfo);
         }
 
-        private string GetSpotifyTitle()
+        private async Task<(string, bool)> GetSpotifyTitle()
         {
-            if (!_spotifyProcessId.HasValue)
-            {
-                return null;
-            }
-
             string mainWindowTitle = null;
-
-            try
+            var isSpotifyAudioPlaying = false;
+            
+            if (_spotifyProcessId.HasValue)
             {
-                var process = _processManager.GetProcessById(_spotifyProcessId.Value);
-                mainWindowTitle = process.MainWindowTitle;
+                try
+                {
+                    if (ExternalAPI.Instance.GetTypeAPI == Enums.ExternalAPIType.Spotify && ExternalAPI.Instance.IsAuthenticated)
+                    {
+                        var (title, isPlaying) = await ExternalAPI.Instance.GetCurrentPlayback();
+                        mainWindowTitle = title;
+                        isSpotifyAudioPlaying = isPlaying;
+                    }
+                    // always fallback if it was not properly set by spotify api
+                    if (mainWindowTitle == null)
+                    {
+                        isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
+                        var process = _processManager.GetProcessById(_spotifyProcessId.Value);
+                        mainWindowTitle = process.MainWindowTitle;
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception) { }
 
-            return mainWindowTitle;
+            return (mainWindowTitle, isSpotifyAudioPlaying);
         }
 
         internal static ICollection<IProcess> GetSpotifyProcesses(IProcessManager processManager)

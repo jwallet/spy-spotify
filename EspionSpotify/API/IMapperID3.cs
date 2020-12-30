@@ -1,7 +1,7 @@
 ﻿using EspionSpotify.Models;
 using System.Threading.Tasks;
 
-namespace EspionSpotify.MediaTags
+namespace EspionSpotify.API
 {
     public interface IMapperID3
     {

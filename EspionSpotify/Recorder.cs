@@ -220,7 +220,7 @@ namespace EspionSpotify
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var mapper = new MediaTags.MapperID3(
+                    var mapper = new API.MapperID3(
                         _currentOutputFile.ToString(),
                         _track,
                         _userSettings);

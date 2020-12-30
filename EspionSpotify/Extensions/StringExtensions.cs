@@ -25,9 +25,9 @@ namespace EspionSpotify.Extensions
             return value.ToEnum<MediaFormat>(ignoreCase: true);
         }
 
-        public static MediaTagsAPI? ToMediaTagsAPI(this string value)
+        public static ExternalAPIType? ToMediaTagsAPI(this string value)
         {
-            return value.ToEnum<MediaTagsAPI>(ignoreCase: true);
+            return value.ToEnum<ExternalAPIType>(ignoreCase: true);
         }
 
         public static int? ToNullableInt(this string value)
