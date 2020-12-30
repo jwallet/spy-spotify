@@ -356,7 +356,7 @@ namespace EspionSpotify
 
         private void MutesSpotifyAds(bool value)
         {
-            if (_userSettings.MuteAdsEnabled && !_userSettings.RecordEverythingEnabled)
+            if (_userSettings.MuteAdsEnabled || !value)
             {
                 _audioSession.SetSpotifyToMute(value);
             }
