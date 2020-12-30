@@ -31,7 +31,6 @@ namespace EspionSpotify
         private readonly IMainAudioSession _audioSession;
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
-        private Stream _fileWriter;
         private Stream _tempWaveWriter;
         private string _tempFile;
         private readonly FileManager _fileManager;
@@ -152,8 +151,6 @@ namespace EspionSpotify
             try
             {
                 _currentOutputFile = _fileManager.GetOutputFile();
-                _fileWriter = GetFileWriter();
-
                 await WriteTempWaveToMediaFile();
             }
             catch (Exception ex)
@@ -167,7 +164,6 @@ namespace EspionSpotify
             finally
             {
                 if (_waveIn != null) _waveIn.Dispose();
-                if (_fileWriter != null) _fileWriter.Dispose();
                 _fileManager.DeleteFile(_tempFile);
             }
 
@@ -195,16 +191,26 @@ namespace EspionSpotify
         private async Task WriteTempWaveToMediaFile()
         {
             var restrictions = _waveIn.WaveFormat.GetMP3RestrictionCode();
-            using (var reader = new WaveFileReader(_tempFile))
+            using (var tempFileStream = _fileSystem.File.OpenRead(_tempFile))
             {
-                reader.Position = 0;
-                if (_userSettings.MediaFormat == MediaFormat.Mp3 && restrictions.Any())
+                tempFileStream.Position = 0;
+                using (var tempReader = new WaveFileReader(tempFileStream))
                 {
-                    await WriteWaveProviderReducerToMP3FileWriter(GetMp3WaveProvider(reader, _waveIn.WaveFormat));
-                }
-                else
-                {
-                    await reader.CopyToAsync(_fileWriter, 81920, _cancellationTokenSource.Token);
+                    tempReader.Position = 0;
+                    using (var mediaFileStream = _fileSystem.FileStream.Create(_currentOutputFile.ToPendingFileString(), FileMode.Create, FileAccess.Write, FileShare.Read))
+                    {
+                        using (var mediaWriter = GetMediaFileWriter(mediaFileStream))
+                        {
+                            if (_userSettings.MediaFormat == MediaFormat.Mp3 && restrictions.Any())
+                            {
+                                await WriteWaveProviderReducerToMP3FileWriter(GetMp3WaveProvider(tempReader, _waveIn.WaveFormat), mediaWriter);
+                            }
+                            else
+                            {
+                                await tempReader.CopyToAsync(mediaWriter, 81920, _cancellationTokenSource.Token);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -225,15 +231,15 @@ namespace EspionSpotify
             }
         }
 
-        public Stream GetFileWriter()
+        public Stream GetMediaFileWriter(Stream stream)
         {
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
                     var waveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
-                    return new LameMP3FileWriter(_currentOutputFile.ToPendingFileString(), waveFormat, _userSettings.Bitrate);
+                    return new LameMP3FileWriter(stream, waveFormat, _userSettings.Bitrate);
                 case MediaFormat.Wav:
-                    return new WaveFileWriter(_currentOutputFile.ToPendingFileString(), _waveIn.WaveFormat);
+                    return new WaveFileWriter(stream, _waveIn.WaveFormat);
                 default:
                     throw new Exception("Failed to get FileWriter");
             }
@@ -333,14 +339,14 @@ namespace EspionSpotify
             return new MediaFoundationResampler(stream, MP3_MAX_SAMPLE_RATE);
         }
 
-        private async Task WriteWaveProviderReducerToMP3FileWriter(IWaveProvider stream)
+        private async Task WriteWaveProviderReducerToMP3FileWriter(IWaveProvider stream, Stream mediaWriter)
         {
             var mp3WaveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
             byte[] data = new byte[mp3WaveFormat.Channels * mp3WaveFormat.SampleRate * _waveIn.WaveFormat.Channels];
             int bytesRead;
             while ((bytesRead = stream.Read(data, 0, data.Length)) > 0)
             {
-                await _fileWriter.WriteAsync(data, 0, bytesRead);
+                await mediaWriter.WriteAsync(data, 0, bytesRead);
             }
         }
 
@@ -399,11 +405,6 @@ namespace EspionSpotify
                 {
                     _tempWaveWriter.Close();
                     _tempWaveWriter.Dispose();
-                }
-
-                if (_fileWriter != null)
-                {
-                    _fileWriter.Dispose();
                 }
 
                 _fileManager.DeleteFile(_tempFile);
