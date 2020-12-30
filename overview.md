@@ -26,9 +26,15 @@ Spytify records the same quality that Spotify outputs (Spotify Free 160kbps, Spo
 
 ### [Standard use](#standard-use)
 
-A standard use is to start a recording session at night using your favorite playlist and let it work overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads.
+A standard use is to start a recording session using your favorite playlist and let it record overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads and with metadata.
 
-Don't forget to check the F.A.Q. for tips, like _How to isolate Spytify and Spotify on a virtual audio device to avoid background noices_ and _How to connect to Spotify API for more accurate media tags_.
+A recorder requires a good sound card to be able to record good quality, that's why we ship Spytify with a Virtual Audio Cable device, we can install it in Settings using the **Speakers+** icon.
+
+Don't forget to hit the [F.A.Q.](./faq.html) for tips on:
+
+- [_How to install Virtual Audio Cable device for better recording quality._](./faq.html#install-better-audio-endpoint-device)
+- [_How to isolate Spytify and Spotify on a virtual audio device to avoid background noices._](./faq.html#isolate-spotify-audio-endpoint)
+- [_How to connect to Spotify API for more accurate media tags._](./faq.html#media-tags-not-found)
 
 ## [Requirements](#requirements)
 
