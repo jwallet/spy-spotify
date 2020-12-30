@@ -35,6 +35,7 @@
         lblSpy,
         logAd,
         logDeleting,
+        logException,
         logMaxFileSequenceReached,
         logMissingDlls,
         logPreviousLogs,

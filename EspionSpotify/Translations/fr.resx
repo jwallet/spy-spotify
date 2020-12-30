@@ -445,4 +445,8 @@
     <value>Tableau de bord de Spotify API</value>
     <comment>interface**</comment>
   </data>
+  <data name="logException" xml:space="preserve">
+    <value>// Erreur: {0}</value>
+    <comment>console</comment>
+  </data>
 </root>
