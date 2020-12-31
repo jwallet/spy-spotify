@@ -39,13 +39,16 @@ title: Settings
 | Replace files name spaces by underscores `_`            | Remove from the file name any space and replace it by underscores `Artist_-_Title.mp3`                                                                                                                                                                                                                    | `Off`         |
 | Record already recorded tracks instead of skipping them | When the feature is `On`: If `Duplicate` is checked and the current track was already recordedSpytify will just add a number to the file name and keep recording, otherwise it will `overwrite` the file that matches the track title. When `off` Spytify won't record if the track was already recorded. | `Off` (skip)  |
 
+>
+
 | Spy Parameter                             | Description and values                                                                       | Default value |
 | :---------------------------------------- | :------------------------------------------------------------------------------------------- | :------------ |
 | Delay next recording if sound is detected | Delay the recording of the next song if sound is detected or the 1 second timeout is reached | `On`          |
 | Record everything                         | Records anything that plays and unmute ads, because podcasts are detected as an ad           | `Off`         |
 
-| Media Tags Parameter | Description and values  
- | Default value |
+>
+
+| Media Tags Parameter                              | Description and values                                                                                                                                                                                                                                                                     | Default value |
 | :------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
-| Replace track number tag by the counter value | Replace the album track number in the media info by the recording order number | `Off` |
-| Move extra title of the track to the subtitle tag | Spytify will always set the track detail `Live`/`Remastered` like `Artist - Title (feat. Other) - Live` to the subtitle tag. However if it records a track like `Artist - Title (feat. Other)`, it can set the part between parenthesis as the subtitle tag if this feature is turned `On` | `Off` |
+| Replace track number tag by the counter value     | Replace the album track number in the media info by the recording order number                                                                                                                                                                                                             | `Off`         |
+| Move extra title of the track to the subtitle tag | Spytify will always set the track detail `Live`/`Remastered` like `Artist - Title (feat. Other) - Live` to the subtitle tag. However if it records a track like `Artist - Title (feat. Other)`, it can set the part between parenthesis as the subtitle tag if this feature is turned `On` | `Off`         |

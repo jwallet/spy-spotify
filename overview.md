@@ -7,7 +7,7 @@ Spytify is a Spotify recorder for Windows which records Spotify audio without re
 
 <p align="center"><img alt="Spotify Recorder logs" src="./assets/images/ui_record.png" /></p>
 
-## [How it works?](#how-it-works)
+### [How it works?](#how-it-works)
 
 Spytify records what Spotify outputs, which is a longer process than downloading a Spotify playlist with a tool.
 
@@ -36,7 +36,7 @@ Don't forget to hit the [F.A.Q.](./faq.html) for tips on:
 - [_How to isolate Spytify and Spotify on a virtual audio device to avoid background noices._](./faq.html#isolate-spotify-audio-endpoint)
 - [_How to connect to Spotify API for more accurate media tags._](./faq.html#media-tags-not-found)
 
-## [Requirements](#requirements)
+### [Requirements](#requirements)
 
 Spytify runs on Windows only.
 
