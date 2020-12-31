@@ -274,7 +274,6 @@ namespace EspionSpotify
                 MutesSpotifyAds(track.Ad);
             }
 
-            Spotify.Track = new Track();
             Spotify.ListenForEvents = true;
 
             if (_userSettings.HasRecordingTimerEnabled)

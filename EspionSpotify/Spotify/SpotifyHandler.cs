@@ -31,6 +31,10 @@ namespace EspionSpotify.Spotify
             set
             {
                 _listenForEvents = value;
+                if (_listenForEvents)
+                {
+                    Track = new Track();
+                }
                 EventTimerEnabled(value);
             }
         }
@@ -66,18 +70,18 @@ namespace EspionSpotify.Spotify
             return await SpotifyLatestStatus.GetTrack();
         }
 
-        public async void ElapsedEventTick(object sender, ElapsedEventArgs e)
+        private async void ElapsedEventTick(object sender, ElapsedEventArgs e)
         {
-            // avoid concurrences
-            if (_processingEvents == true) return;
-            
-            _processingEvents = true;
             await Task.Run(async () => await TriggerEvents());
-            _processingEvents = false;
         }
 
         public async Task TriggerEvents()
-        { 
+        {
+            // avoid concurrences
+            if (_processingEvents == true) return;
+
+            _processingEvents = true;
+
             SpotifyLatestStatus = await SpotifyProcess.GetSpotifyStatus();
             if (SpotifyLatestStatus?.CurrentTrack == null)
             {
@@ -121,12 +125,16 @@ namespace EspionSpotify.Spotify
                     }));
                 }
             }
+
             if (newestTrack != null)
             {
                 newestTrack.CurrentPosition = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : (int?)null;
                 Track = newestTrack;
             }
+
             EventTimerStart();
+
+            _processingEvents = false;
         }
 
         private void EventTimerStart()

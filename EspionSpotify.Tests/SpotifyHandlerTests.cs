@@ -70,10 +70,12 @@ namespace EspionSpotify.Tests
                 eventTrackTime = e.TrackTime;
                 Assert.Equal(0, eventTrackTime);
             };
+
+            spotifyHandler.Dispose();
         }
 
         [Fact]
-        internal void ElapsedEventTick_ReturnsInitialSpotifyTrack()
+        internal async Task TriggerEvents_ReturnsInitialSpotifyTrack()
         {
             var spotifyPaused = new Track();
 
@@ -90,17 +92,19 @@ namespace EspionSpotify.Tests
             };
 
             // initial track
-            Assert.Null(spotifyHandler.Track);
+            Assert.Equal(new Track(), spotifyHandler.Track);
 
-            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
+            await spotifyHandler.TriggerEvents(); ;
 
             // updated track
             Assert.Equal(spotifyPaused, spotifyHandler.Track);
             spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
+
+            spotifyHandler.Dispose();
         }
 
         [Fact]
-        internal void ElapsedEventTick_ReturnsPlayingTrack()
+        internal async Task TriggerEvents_ReturnsPlayingTrack()
         {
             var paused = new Track() { Playing = false };
             var playing = new Track() { Playing = false };
@@ -125,13 +129,15 @@ namespace EspionSpotify.Tests
                 Assert.True(eventPlaying);
             };
 
-            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
+            await spotifyHandler.TriggerEvents();
 
             spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
+
+            spotifyHandler.Dispose();
         }
 
         [Fact]
-        internal void ElapsedEventTick_ReturnsNewestTrack()
+        internal async Task TriggerEvents_ReturnsNewestTrack()
         {
             var oldTrack = new Track()
             {
@@ -181,13 +187,15 @@ namespace EspionSpotify.Tests
                 Assert.Equal(0, eventTrackTime);
             };
 
-            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
+            await spotifyHandler.TriggerEvents();
 
             spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
+
+            spotifyHandler.Dispose();
         }
 
         [Fact]
-        internal void ElapsedEventTick_ReturnsCurrentTrack()
+        internal async Task TriggerEvents_ReturnsCurrentTrack()
         {
             var track = new Track()
             {
@@ -222,9 +230,11 @@ namespace EspionSpotify.Tests
                 Assert.Equal(track.CurrentPosition, eventTrackTime);
             };
 
-            spotifyHandler.ElapsedEventTick(new object { }, new EventArgs() as System.Timers.ElapsedEventArgs);
+            await spotifyHandler.TriggerEvents();
 
             spotifyProcessMock.Verify(n => n.GetSpotifyStatus(), Times.Once);
+
+            spotifyHandler.Dispose();
         }
     }
 }
