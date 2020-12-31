@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace EspionSpotify.MediaTags
+namespace EspionSpotify.API
 {
     public class MapperID3
     {

@@ -3,7 +3,7 @@ using EspionSpotify.Controls;
 using EspionSpotify.Drivers;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using MetroFramework;
@@ -110,11 +110,11 @@ namespace EspionSpotify
 
             SetSpotifyAPIOption();
 
-            rbLastFMAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.LastFM || !_userSettings.IsSpotifyAPISet;
-            rbSpotifyAPI.Checked = Settings.Default.MediaTagsAPI == (int)MediaTagsAPI.Spotify && _userSettings.IsSpotifyAPISet;
+            rbLastFMAPI.Checked = Settings.Default.ExternalAPI == (int)ExternalAPIType.LastFM || !_userSettings.IsSpotifyAPISet;
+            rbSpotifyAPI.Checked = Settings.Default.ExternalAPI == (int)ExternalAPIType.Spotify && _userSettings.IsSpotifyAPISet;
             if (rbSpotifyAPI.Checked)
             {
-                SetMediaTagsAPI(MediaTagsAPI.Spotify, _userSettings.IsSpotifyAPISet);
+                SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
             }
 
 #if DEBUG
@@ -161,19 +161,19 @@ namespace EspionSpotify
             rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
-        private void SetMediaTagsAPI(MediaTagsAPI api, bool isSpotifyAPISet)
+        private void SetExternalAPI(ExternalAPIType api, bool isSpotifyAPISet)
         {
             switch (api)
             {
-                case MediaTagsAPI.Spotify:
+                case ExternalAPIType.Spotify:
                     if (isSpotifyAPISet)
                     {
-                        ExternalAPI.Instance = new MediaTags.SpotifyAPI(_userSettings.SpotifyAPIClientId, _userSettings.SpotifyAPISecretId);
+                        API.ExternalAPI.Instance = new API.SpotifyAPI(_userSettings.SpotifyAPIClientId, _userSettings.SpotifyAPISecretId);
                     }
                     break;
-                case MediaTagsAPI.LastFM:
+                case ExternalAPIType.LastFM:
                 default:
-                    ExternalAPI.Instance = new MediaTags.LastFMAPI();
+                    API.ExternalAPI.Instance = new API.LastFMAPI();
                     break;
             }
         }
@@ -373,9 +373,9 @@ namespace EspionSpotify
             lblRecordedTime.SetPropertyThreadSafe(() => lblRecordedTime.Text = time.HasValue ? TimeSpan.FromSeconds(time.Value).ToString(@"mm\:ss") : "");
         }
 
-        public void UpdateMediaTagsAPIToggle(MediaTagsAPI value)
+        public void UpdateExternalAPIToggle(ExternalAPIType value)
         {
-            rbLastFMAPI.SetPropertyThreadSafe(() => rbLastFMAPI.Checked = MediaTagsAPI.LastFM == value);
+            rbLastFMAPI.SetPropertyThreadSafe(() => rbLastFMAPI.Checked = ExternalAPIType.LastFM == value);
         }
 
         public void ShowFailedToUseSpotifyAPIMessage()
@@ -589,13 +589,13 @@ namespace EspionSpotify
         private void RbMediaTagsAPI_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
-            var mediaTagsAPI = rbLastFMAPI.Checked ? MediaTagsAPI.LastFM : MediaTagsAPI.Spotify;
+            var mediaTagsAPI = rbLastFMAPI.Checked ? ExternalAPIType.LastFM : ExternalAPIType.Spotify;
 
-            if (Settings.Default.MediaTagsAPI == (int)mediaTagsAPI || !rb.Checked) return;
+            if (Settings.Default.ExternalAPI == (int)mediaTagsAPI || !rb.Checked) return;
 
-            var api = rb?.Tag?.ToString().ToMediaTagsAPI() ?? MediaTagsAPI.LastFM;
-            SetMediaTagsAPI(api, _userSettings.IsSpotifyAPISet);
-            Settings.Default.MediaTagsAPI = (int)mediaTagsAPI;
+            var api = rb?.Tag?.ToString().ToMediaTagsAPI() ?? ExternalAPIType.LastFM;
+            SetExternalAPI(api, _userSettings.IsSpotifyAPISet);
+            Settings.Default.ExternalAPI = (int)mediaTagsAPI;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"media-tags-api?type={api.ToString()}"));
         }

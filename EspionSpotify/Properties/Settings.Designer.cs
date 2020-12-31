@@ -230,12 +230,12 @@ namespace EspionSpotify.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int MediaTagsAPI {
+        public int ExternalAPI {
             get {
-                return ((int)(this["MediaTagsAPI"]));
+                return ((int)(this["ExternalAPI"]));
             }
             set {
-                this["MediaTagsAPI"] = value;
+                this["ExternalAPI"] = value;
             }
         }
         

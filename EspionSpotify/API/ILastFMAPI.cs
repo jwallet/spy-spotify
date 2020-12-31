@@ -1,6 +1,6 @@
 ﻿using EspionSpotify.Models;
 
-namespace EspionSpotify.MediaTags
+namespace EspionSpotify.API
 {
     public interface ILastFMAPI
     {

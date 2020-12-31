@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Models;
+using System.Threading.Tasks;
 
 namespace EspionSpotify.Spotify
 {
@@ -6,6 +7,6 @@ namespace EspionSpotify.Spotify
     {
         Track CurrentTrack { get; set; }
 
-        Track GetTrack();
+        Task<Track> GetTrack();
     }
 }

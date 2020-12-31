@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 using SpotifyAPI.Web.Models;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Enums;
 
 namespace EspionSpotify.Tests
@@ -15,7 +15,7 @@ namespace EspionSpotify.Tests
         public SpotifyAPITests()
         {
             _track = new Track() { Artist = "Artist", Title = "Title" };
-            _spotifyAPI = new MediaTags.SpotifyAPI();
+            _spotifyAPI = new API.SpotifyAPI();
         }
 
         [Fact]

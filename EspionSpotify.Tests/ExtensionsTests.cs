@@ -86,9 +86,9 @@ namespace EspionSpotify.Tests
         [InlineData(null, null)]
         [InlineData("", null)]
         [InlineData("API", null)]
-        [InlineData("spotify", MediaTagsAPI.Spotify)]
-        [InlineData("lastFM", MediaTagsAPI.LastFM)]
-        internal void StringToMediaTagsAPI_ReturnsExpectedAPI(string value, MediaTagsAPI? expected)
+        [InlineData("spotify", ExternalAPIType.Spotify)]
+        [InlineData("lastFM", ExternalAPIType.LastFM)]
+        internal void StringToMediaTagsAPI_ReturnsExpectedAPI(string value, ExternalAPIType? expected)
         {
             var actual = value.ToMediaTagsAPI();
             Assert.Equal(expected, actual);

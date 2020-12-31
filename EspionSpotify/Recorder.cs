@@ -199,7 +199,7 @@ namespace EspionSpotify
                     tempReader.Position = 0;
                     using (var mediaFileStream = _fileSystem.FileStream.Create(_currentOutputFile.ToPendingFileString(), FileMode.Create, FileAccess.Write, FileShare.Read))
                     {
-                        using (var mediaWriter = GetMediaFileWriter(mediaFileStream))
+                        using (var mediaWriter = GetMediaFileWriter(mediaFileStream, _waveIn.WaveFormat))
                         {
                             if (_userSettings.MediaFormat == MediaFormat.Mp3 && restrictions.Any())
                             {
@@ -220,7 +220,7 @@ namespace EspionSpotify
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var mapper = new MediaTags.MapperID3(
+                    var mapper = new API.MapperID3(
                         _currentOutputFile.ToString(),
                         _track,
                         _userSettings);
@@ -231,15 +231,15 @@ namespace EspionSpotify
             }
         }
 
-        public Stream GetMediaFileWriter(Stream stream)
+        public Stream GetMediaFileWriter(Stream stream, WaveFormat waveFormat)
         {
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
-                    var waveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
-                    return new LameMP3FileWriter(stream, waveFormat, _userSettings.Bitrate);
+                    var supportedWaveFormat = GetWaveFormatMP3Supported(waveFormat);
+                    return new LameMP3FileWriter(stream, supportedWaveFormat, _userSettings.Bitrate);
                 case MediaFormat.Wav:
-                    return new WaveFileWriter(stream, _waveIn.WaveFormat);
+                    return new WaveFileWriter(stream, waveFormat);
                 default:
                     throw new Exception("Failed to get FileWriter");
             }

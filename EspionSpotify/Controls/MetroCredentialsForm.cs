@@ -298,7 +298,7 @@ namespace EspionSpotify.Controls
 
         private void LnkSpotifyAPIDashboard_Click(object sender, EventArgs e)
         {
-            Process.Start(MediaTags.SpotifyAPI.SPOTIFY_API_DASHBOARD_URL);
+            Process.Start(API.SpotifyAPI.SPOTIFY_API_DASHBOARD_URL);
             Task.Run(async () => await _analytics.LogAction($"spotify-api-dashboard"));
         }
     }

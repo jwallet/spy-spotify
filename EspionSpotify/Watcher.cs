@@ -1,7 +1,7 @@
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Events;
 using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Properties;
@@ -19,7 +19,6 @@ namespace EspionSpotify
     public class Watcher : IWatcher, IDisposable
     {
         private bool _disposed = false;
-        private const bool MUTE = true;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
 
         public static bool Running { get; internal set; }
@@ -47,7 +46,7 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
+            get => !_userSettings.MuteAdsEnabled && _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
         }
         public bool IsTypeAllowed
         {
@@ -261,20 +260,21 @@ namespace EspionSpotify
 
         private async Task InitializeRecordingSession()
         {
-            _audioSession.SetSpotifyVolumeToHighAndOthersToMute(MUTE);
+            _audioSession.SetSpotifyVolumeToHighAndOthersToMute(true);
+            _audioSession.SetSpotifyToMute(false);
 
             var track = await Spotify.GetTrack();
 
-            if (track == null) return;
+            if (track != null)
+            {
+                _isPlaying = track.Playing;
+                _form.UpdateIconSpotify(_isPlaying);
 
-            _isPlaying = track.Playing;
-            _form.UpdateIconSpotify(_isPlaying);
+                _form.UpdatePlayingTitle(track.ToString());
+                MutesSpotifyAds(track.Ad);
+            }
 
-            Spotify.Track = new Track();
             Spotify.ListenForEvents = true;
-
-            _form.UpdatePlayingTitle(track.ToString());
-            MutesSpotifyAds(track.Ad);
 
             if (_userSettings.HasRecordingTimerEnabled)
             {
@@ -356,7 +356,7 @@ namespace EspionSpotify
 
         private void MutesSpotifyAds(bool value)
         {
-            if (_userSettings.MuteAdsEnabled && !_userSettings.RecordEverythingEnabled)
+            if (_userSettings.MuteAdsEnabled)
             {
                 _audioSession.SetSpotifyToMute(value);
             }

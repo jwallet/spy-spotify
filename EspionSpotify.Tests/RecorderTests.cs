@@ -4,6 +4,11 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Collections.Generic;
 using EspionSpotify.AudioSessions;
+using System.IO;
+using NAudio.Lame;
+using NAudio.Wave;
+using System;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Tests
 {
@@ -106,6 +111,51 @@ namespace EspionSpotify.Tests
                 _fileSystem);
 
             Assert.True(watcherTrackFound.IsSkipTrackActive);
+        }
+
+        [Fact]
+        internal void GetMediaFileWriter_WithWavFormat_ReturnsWaveFileWriter()
+        {
+            var userSettings = new UserSettings { MediaFormat = Enums.MediaFormat.Wav };
+
+            var result = new Recorder(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track(),
+                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+
+            Assert.IsType<WaveFileWriter>(result);
+        }
+
+        [Fact]
+        internal void GetMediaFileWriter_WithMp3Format_ReturnsLameMP3FileWriter()
+        {
+            var userSettings = new UserSettings { MediaFormat = Enums.MediaFormat.Mp3, Bitrate = LAMEPreset.ABR_160 };
+
+            var result = new Recorder(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track(),
+                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+
+            Assert.IsType<LameMP3FileWriter>(result);
+        }
+
+        [Fact]
+        internal void GetMediaFileWriter_WithUnknownFormat_ThrowsException()
+        {
+            var userSettings = new UserSettings { MediaFormat = (MediaFormat)Int16.MinValue, Bitrate = LAMEPreset.ABR_160 };
+
+            var exception = Assert.Throws<Exception>(() => new Recorder(
+                _formMock,
+                _audioSession,
+                userSettings,
+                new Track(),
+                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
+
+            Assert.Equal("Failed to get FileWriter", exception.Message);
         }
     }
 }

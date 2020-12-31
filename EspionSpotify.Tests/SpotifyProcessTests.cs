@@ -1,6 +1,6 @@
 ﻿using EspionSpotify.AudioSessions;
 using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Native.Models;

@@ -53,7 +53,7 @@
     <Setting Name="Logs" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="MediaTagsAPI" Type="System.Int32" Scope="User">
+    <Setting Name="ExternalAPI" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AudioEndPointDeviceID" Type="System.String" Scope="User">

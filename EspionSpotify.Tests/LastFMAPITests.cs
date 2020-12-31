@@ -1,6 +1,6 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
-using EspionSpotify.MediaTags;
+using EspionSpotify.API;
 using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;

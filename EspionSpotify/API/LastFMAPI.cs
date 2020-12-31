@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using PCLWebUtility;
 using System;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace EspionSpotify.MediaTags
+namespace EspionSpotify.API
 {
     public class LastFMAPI : ILastFMAPI, IExternalAPI
     {
@@ -25,6 +26,8 @@ namespace EspionSpotify.MediaTags
             _random = new Random();
             _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
         }
+
+        public ExternalAPIType GetTypeAPI { get => ExternalAPIType.LastFM; }
 
         public string GetTrackInfo(string artist, string title) => $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
@@ -103,6 +106,10 @@ namespace EspionSpotify.MediaTags
         #region NotImplementedExternalAPI
         public bool IsAuthenticated { get => true; }
         public async Task Authenticate() => await Task.CompletedTask;
+        public async Task<(string, bool)> GetCurrentPlayback()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
