@@ -32,9 +32,10 @@ A recorder requires a good sound card to be able to record good quality, that's 
 
 Don't forget to hit the [F.A.Q.](./faq.html) for tips on:
 
-- [_How to install Virtual Audio Cable device for better recording quality._](./faq.html#install-better-audio-endpoint-device)
-- [_How to isolate Spytify and Spotify on a virtual audio device to avoid background noices._](./faq.html#isolate-spotify-audio-endpoint)
-- [_How to connect to Spotify API for more accurate media tags._](./faq.html#media-tags-not-found)
+- [_How to install Virtual Audio Cable device for better recording quality?_](./faq.html#install-better-audio-endpoint-device)
+- [_How to isolate Spytify and Spotify on a virtual audio device to avoid background noices?_](./faq.html#isolate-spotify-audio-endpoint)
+- [_How to reroute sound/output of a virtual audio device to my main audio device to listen to it?_](./faq.html#listen-to-virtual-device)
+- [_How to connect to Spotify API for more accurate media tags?_](./faq.html#media-tags-not-found)
 
 ### [Requirements](#requirements)
 

@@ -15,7 +15,7 @@ title: F.A.Q.
                 {{ question.title }}
             </h3>
         </summary>
-        <p>{{ question.content }}</p>
+        <article>{{ question.content }}</article>
     </details>
 </section>
 {% endfor %}
