@@ -5,7 +5,7 @@ namespace EspionSpotify
 {
     internal static class Normalize
     {
-        private static char[] _reservedSystemChars = { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
+        private static readonly char[] _reservedSystemChars = { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
 
         public static string RemoveDiacritics(string text)
         {
