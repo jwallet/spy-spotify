@@ -757,10 +757,11 @@ namespace EspionSpotify
 
         private void TxtPath_TextChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.Directory == txtPath.Text) return;
+            var path = txtPath.Text.Trim(new[] { '/', ' ', '\\' });
+            if (Settings.Default.Directory == path) return;
 
-            _userSettings.OutputPath = txtPath.Text;
-            Settings.Default.Directory = txtPath.Text;
+            _userSettings.OutputPath = path;
+            Settings.Default.Directory = path;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction("set-output-folder"));
         }

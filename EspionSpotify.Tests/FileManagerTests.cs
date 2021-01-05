@@ -344,6 +344,34 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
+        internal void DeleteFile_WithBadlyFormattedPath_DeletesFile()
+        {
+            _track.Title = "Delete_Me";
+            _track.TitleExtended = "";
+            _userSettings.TrackTitleSeparator = "_";
+            _userSettings.OutputPath = $@"{_path}\";
+
+            var outputFile = new OutputFile
+            {
+                Path = _userSettings.OutputPath,
+                File = _track.ToString(),
+                Extension = _userSettings.MediaFormat.ToString().ToLower(),
+                Separator = _userSettings.TrackTitleSeparator
+            };
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { @"C:\path\Artist_-_Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+
+            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+        }
+
+        [Fact]
         internal void DeleteFile_DeletesNoFolderWhenGroupByFoldersEnabledAndTrackNotFound()
         {
             _userSettings.GroupByFoldersEnabled = true;
