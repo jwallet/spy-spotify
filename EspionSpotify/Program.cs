@@ -1,4 +1,6 @@
-﻿using ExceptionReporting;
+﻿using EspionSpotify.Properties;
+using ExceptionReporting;
+using NAudio.Lame;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -50,6 +52,72 @@ namespace EspionSpotify
         // Creates the error message and displays it.
         internal static void ReportException(Exception ex)
         {
+            string template = null;
+            try
+            {
+                template = @"# {{App.Title}}
+
+**Version**:     {{App.Version}}  
+**Region**:      {{App.Region}}  
+{{#if App.User}}
+**User**:        {{App.User}}  
+{{/if}}    
+**Date**: {{Error.Date}}  
+**Time**: {{Error.Time}}  
+{{#if Error.Explanation}}
+**User Explanation**: {{Error.Explanation}}  
+{{/if}}
+
+**Error Message**: {{Error.Message}}
+ 
+## Stack Traces
+```shell
+{{Error.FullStackTrace}} 
+```
+
+## Logs
+```console
+{{Logs}}
+```
+
+## Settings
+{{Settings}}
+ 
+## Assembly References
+{{#App.AssemblyRefs}}
+ - {{Name}}, Version={{Version}}  
+{{/App.AssemblyRefs}}
+
+## System Info  
+```console
+{{SystemInfo}}
+```
+".Replace("{{Logs}}", string.Join(@"\n\r", Settings.Default.Logs.Split(';'))).Replace("{{Settings}}", $@"**Output Directory**:   {Settings.Default.Directory}
+**Bitrate**:   {(LAMEPreset)Settings.Default.Bitrate}
+**Media Format**:   {(Enums.MediaFormat)Settings.Default.MediaFormat}
+**Min. Media Length**:   {Settings.Default.MinimumRecordedLengthSeconds}
+**Group Media in Folder**:   {Settings.Default.GroupByFoldersEnabled}
+**Track Title Separator Underscore**:   {Settings.Default.TrackTitleSeparatorEnabled}
+**Counter In File Name**:   {Settings.Default.OrderNumberInfrontOfFileEnabled}
+**Counter In Media Tag**:   {Settings.Default.OrderNumberInMediaTagEnabled}
+**Language**:   {(Enums.LanguageType)Settings.Default.Language}
+**Tab No**:   {Settings.Default.TabNo}
+**Delay When Track Ends**:   {Settings.Default.EndingSongDelayEnabled}
+**Mute Ads**:   {Settings.Default.MuteAdsEnabled}
+**Record Everything**:   {Settings.Default.RecordEverythingEnabled}
+**Analytics CID**:   {Settings.Default.AnalyticsCID}
+**Record Over Recordings**:   {Settings.Default.RecordOverRecordingsEnabled}
+**Last Version Prompted**:   {Settings.Default.LastVersionPrompted}
+**External API**:   {(Enums.ExternalAPIType)Settings.Default.ExternalAPI}
+**Audio Endpoint Device ID**:   {Settings.Default.AudioEndPointDeviceID}
+**Record Duplicate Recordings**:   {Settings.Default.RecordDuplicateRecordingsEnabled}
+**Counter Mask**:   {Settings.Default.OrderNumberMask}
+**Spotify API IDs**:   {!string.IsNullOrWhiteSpace(Settings.Default.SpotifyAPISecretId) && !string.IsNullOrWhiteSpace(Settings.Default.SpotifyAPIClientId)}
+**Extra Title To Subtitle**:   {Settings.Default.ExtraTitleToSubtitleEnabled}
+**Record Ads**:   {Settings.Default.RecordAdsEnabled}");
+            }
+            catch { };
+
             ExceptionReporter er = new ExceptionReporter()
             {
                 Config =
@@ -63,6 +131,7 @@ namespace EspionSpotify
                     TopMost = true,
                     ShowFlatButtons = true,
                     ShowLessDetailButton = true,
+                    ReportCustomTemplate = !string.IsNullOrWhiteSpace(template) ? template : null,
                     ReportTemplateFormat = TemplateFormat.Markdown,
                 },
             };

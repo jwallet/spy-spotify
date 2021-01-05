@@ -70,6 +70,10 @@ namespace EspionSpotify.Native
 
         public void DeleteFile(string currentFile)
         {
+            if (string.IsNullOrWhiteSpace(currentFile))
+            {
+                throw new Exception($"Current file cannot be null.");
+            }
             try
             {
                 if (_fileSystem.File.Exists(currentFile))
@@ -90,6 +94,10 @@ namespace EspionSpotify.Native
 
         public void RenameFile(string source, string destination)
         {
+            if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(destination))
+            {
+                throw new Exception($"Source / Destination paths cannot be null.");
+            }
             try
             {
                 if (_fileSystem.File.Exists(source))
@@ -120,6 +128,8 @@ namespace EspionSpotify.Native
 
             var artistDir = GetArtistFolderPath(track, userSettings.TrackTitleSeparator);
             var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
+
+            if (string.IsNullOrEmpty(artistDir) || string.IsNullOrEmpty(albumDir)) throw new Exception("Artist / Album cannot be null.");
 
             return $@"\{artistDir}\{albumDir}";
         }
