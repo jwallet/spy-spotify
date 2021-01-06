@@ -757,7 +757,7 @@ namespace EspionSpotify
 
         private void TxtPath_TextChanged(object sender, EventArgs e)
         {
-            var path = txtPath.Text.Trim(new[] { '/', ' ', '\\' });
+            var path = txtPath.Text.TrimEndPath();
             if (Settings.Default.Directory == path) return;
 
             _userSettings.OutputPath = path;

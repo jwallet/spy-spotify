@@ -5,7 +5,7 @@ namespace EspionSpotify
 {
     internal static class Normalize
     {
-        private static readonly char[] _reservedSystemChars = { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
+        internal static readonly char[] reservedSystemChars = { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
 
         public static string RemoveDiacritics(string text)
         {
@@ -16,7 +16,7 @@ namespace EspionSpotify
 
             foreach (var c in normalizedString)
             {
-                if (!_reservedSystemChars.Contains(c))
+                if (!reservedSystemChars.Contains(c))
                 {
                     stringBuilder.Append(c);
                 }

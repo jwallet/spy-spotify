@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Extensions;
+using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +35,7 @@ namespace EspionSpotify.Native
         public OutputFile GetOutputFile()
         {
             var folderPath = GetFolderPath(_track, _userSettings);
-            var pathName = _userSettings.OutputPath + folderPath;
+            var pathName = _userSettings.OutputPath.TrimEndPath() + folderPath;
 
             CreateDirectories(_track, _userSettings);
 
@@ -72,7 +73,7 @@ namespace EspionSpotify.Native
         {
             if (string.IsNullOrWhiteSpace(currentFile))
             {
-                throw new Exception($"Current file cannot be null.");
+                throw new Exception($"File name cannot be null.");
             }
             try
             {
@@ -96,7 +97,7 @@ namespace EspionSpotify.Native
         {
             if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(destination))
             {
-                throw new Exception($"Source / Destination paths cannot be null.");
+                throw new Exception($"Source / Destination file name cannot be null.");
             }
             try
             {
@@ -155,13 +156,18 @@ namespace EspionSpotify.Native
             var albumDir = GetAlbumFolderPath(track, userSettings.TrackTitleSeparator);
 
             var outputPath = userSettings.OutputPath;
-            CreateDirectory($@"{outputPath}\{artistDir}");
-            CreateDirectory($@"{outputPath}\{artistDir}\{albumDir}");
+            CreateDirectory(outputPath, artistDir);
+            CreateDirectory(outputPath, artistDir, albumDir);
         }
 
-        private void CreateDirectory(string path)
+        private void CreateDirectory(string outputPath, params string[] directories)
         {
-            if (path.Split(new[] { '\\' }).Contains("")) return;
+            if (directories.Any(x => string.IsNullOrWhiteSpace(x)))
+            {
+                throw new Exception("One or more directories has no name.");
+            }
+
+            var path = string.Join(@"\", new[] { outputPath }.Concat(directories));
             if (_fileSystem.Directory.Exists(path)) return;
             _fileSystem.Directory.CreateDirectory(path);
         }
@@ -173,16 +179,21 @@ namespace EspionSpotify.Native
 
         private static string GenerateFileName(Track track, UserSettings userSettings, DateTime now)
         {
-            var fileName = userSettings.GroupByFoldersEnabled
-                ? Normalize.RemoveDiacritics(track.ToTitleString())
-                : Normalize.RemoveDiacritics(track.ToString());
+            if (string.IsNullOrEmpty(track.Artist)) throw new Exception("Cannot recognize this type of track.");
+            
+            var fileName = Normalize.RemoveDiacritics(userSettings.GroupByFoldersEnabled
+                ? track.ToTitleString()
+                : track.ToString());
 
             if (track.Ad && !track.IsUnknown)
             {
                 fileName = $"{Constants.ADVERTISEMENT} {now.ToString("yyyyMMddHHmmss")}";
             }
-
+            
             fileName = Regex.Replace(fileName, _windowsExlcudedChars, string.Empty);
+
+            if (string.IsNullOrWhiteSpace(fileName)) throw new Exception("File name cannot be empty.");
+            if (new[] { Constants.SPOTIFY, Constants.SPOTIFYFREE }.Contains(fileName)) throw new Exception($"File name cannot be {Constants.SPOTIFY}.");
 
             var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
             return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator); ;

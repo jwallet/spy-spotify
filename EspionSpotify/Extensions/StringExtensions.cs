@@ -36,6 +36,17 @@ namespace EspionSpotify.Extensions
             return null;
         }
 
+        public static string TrimEndPath(this string path)
+        {
+            return path?.Trim()?.TrimEnd(Normalize.reservedSystemChars);
+        }
+
+        public static bool IsNullOrInvalidSpotifyStatus(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value)
+                || new[] { Constants.SPOTIFY, Constants.SPOTIFYFREE, Constants.ADVERTISEMENT }.Contains(value);
+        }
+
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
         {
             var types = typeof(T);
