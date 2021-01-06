@@ -58,10 +58,6 @@ Spytify is supported by _IssueHunt_. [![Issuehunt](https://jwallet.github.io/spy
 
 That means you can have your issue (feature/improvement) prioritized, just open an [feature request](https://github.com/jwallet/spy-spotify/issues/new/choose) on this repository and go to our IssueHunt page and fund [your issue](https://issuehunt.io/r/jwallet/spy-spotify?tab=idle) to promote it. When the bounty will be interesting enough for someone to work on it, he will then submit a Pull Request with his code on this repo and link it to the IssueHunt page. Once the code is merged and approved by the repo owner, the bounty will be rewarded to the PR author if the requested feature was covered by the PR otherwise the funders can be refunded or we will wait for another PR. See a past example [here](https://issuehunt.io/r/jwallet/spy-spotify/issues/282)
 
-## Translate
-
-You can help translate Spytify on Zanata.org, see [Translate](translate.md) for more details.
-
 ## Download
 
 ### [Download](https://github.com/jwallet/spy-spotify/releases)
