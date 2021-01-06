@@ -173,7 +173,7 @@ namespace EspionSpotify.Models
         {
             var song = Title ?? "";
 
-            if (!string.IsNullOrEmpty(TitleExtended))
+            if (!string.IsNullOrEmpty(song) && !string.IsNullOrEmpty(TitleExtended))
             {
                 song += GetTitleExtended();
             }

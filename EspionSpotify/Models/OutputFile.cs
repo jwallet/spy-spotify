@@ -1,4 +1,6 @@
-﻿namespace EspionSpotify.Models
+﻿using EspionSpotify.Extensions;
+
+namespace EspionSpotify.Models
 {
     public class OutputFile
     {
@@ -25,13 +27,13 @@
 
         public override string ToString()
         {
-            if (string.IsNullOrWhiteSpace(_file)) return null;
+            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return $@"{Path}\{_file}{GetAddedCount()}.{Extension}";
         }
 
         public string ToPendingFileString()
         {
-            if (string.IsNullOrWhiteSpace(_file)) return null;
+            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return $@"{Path}\{_file}{GetAddedCount()}.{SPYTIFY}";
         }
 
