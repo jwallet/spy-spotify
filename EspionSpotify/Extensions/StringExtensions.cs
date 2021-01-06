@@ -38,7 +38,7 @@ namespace EspionSpotify.Extensions
 
         public static string TrimEndPath(this string path)
         {
-            return path?.TrimEnd(Normalize.reservedSystemChars);
+            return path?.Trim()?.TrimEnd(Normalize.reservedSystemChars);
         }
 
         public static bool IsNullOrInvalidSpotifyStatus(this string value)

@@ -40,6 +40,31 @@ namespace EspionSpotify.Tests
 
         [Theory]
         [InlineData(null, null)]
+        [InlineData("", "")]
+        [InlineData(@"\\path\home\", @"\\path\home")]
+        [InlineData(@"/path/home//", @"/path/home")]
+        [InlineData(@"C:\path\ ", @"C:\path")]
+        internal void StringTrimEndPath_ReturnsExpectedString(string value, string expected)
+        {
+            var actual = value.TrimEndPath();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(null, true)]
+        [InlineData("", true)]
+        [InlineData(Constants.SPOTIFY, true)]
+        [InlineData(Constants.SPOTIFYFREE, true)]
+        [InlineData(Constants.ADVERTISEMENT, true)]
+        [InlineData("Spytify", false)]
+        internal void StringIsNullOrInvalidSpotifyStatus_ReturnsExpectedString(string value, bool expected)
+        {
+            var actual = value.IsNullOrInvalidSpotifyStatus();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(null, null)]
         [InlineData("", null)]
         [InlineData("xsmall", null)]
         [InlineData("SMALL", AlbumCoverSize.small)]
