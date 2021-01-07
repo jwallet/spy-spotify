@@ -1,0 +1,452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cbOptBitRate128" xml:space="preserve">
+    <value>128kbps</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="cbOptBitRate160" xml:space="preserve">
+    <value>160kbps</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="cbOptBitRate256" xml:space="preserve">
+    <value>256kbps</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="cbOptBitRate320" xml:space="preserve">
+    <value>320kbps</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="cbOptBitRateSpotifyFree" xml:space="preserve">
+    <value>{0} (Spotify Free)</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="cbOptBitRateSpotifyPremium" xml:space="preserve">
+    <value>{0} Alta qualidade (Spotify Premium)</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAddFolders" xml:space="preserve">
+    <value>Agrupar faixas dentro de suas respectivas pastas</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAddSeparators" xml:space="preserve">
+    <value>Substituir espaços por underline "_" nos nomes dos arquivos</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAds" xml:space="preserve">
+    <value>Anúncios:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblBitRate" xml:space="preserve">
+    <value>Qualidade de áudio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblEndingSongDelay" xml:space="preserve">
+    <value>Atrasar próxima gravação se a música for detectada</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblFormat" xml:space="preserve">
+    <value>Formato de áudio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblLanguage" xml:space="preserve">
+    <value>Idioma:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinLength" xml:space="preserve">
+    <value>Duração mínima:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMuteAds" xml:space="preserve">
+    <value>Bloquear anúncios</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumFiles" xml:space="preserve">
+    <value>Adicione o número do contador na frente do nome de todos os arquivos</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblNumTracks" xml:space="preserve">
+    <value>Substitua a etiqueta do número da faixa pelo valor do contador</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblPath" xml:space="preserve">
+    <value>Músicas salvas em:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecorder" xml:space="preserve">
+    <value>Gravador:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingNum" xml:space="preserve">
+    <value>Escolha a posição inicial do contador</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordEverything" xml:space="preserve">
+    <value>Registre tudo.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblSpy" xml:space="preserve">
+    <value>Ouvir:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logAd" xml:space="preserve">
+    <value>Anúncio</value>
+    <comment>console</comment>
+  </data>
+  <data name="logDeleting" xml:space="preserve">
+    <value>Removendo: {0} [&lt; {1}s]</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecording" xml:space="preserve">
+    <value>Gravando: {0}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyConnecting" xml:space="preserve">
+    <value>// Spotify não está sendo executado, tentando iniciá-lo.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyIsClosed" xml:space="preserve">
+    <value>// Spotify está fechado</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyNotConnected" xml:space="preserve">
+    <value>// Spotify não se conectou com a API local, por favor tente novamente</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyNotFound" xml:space="preserve">
+    <value>// Spotify não foi encontrado ou não está instalado.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStarting" xml:space="preserve">
+    <value>// Ouvindo</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStoping" xml:space="preserve">
+    <value>// Fim</value>
+    <comment>console</comment>
+  </data>
+  <data name="logUnsupportedRate" xml:space="preserve">
+    <value>// Aviso: a taxa de amostragem de {0} Hz não é suportada. O áudio será codificado para 48000Hz.</value>
+    <comment>console</comment>
+  </data>
+  <data name="msgBodyCantQuit" xml:space="preserve">
+    <value>Ainda deseja sair?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgBodyPathNotFound" xml:space="preserve">
+    <value>Caminho de destino inexistente, selecione outro.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgNewVersionContent" xml:space="preserve">
+    <value>Deseja abrir o GitHub para baixar a versão mais recente?</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgNewVersionTitle" xml:space="preserve">
+    <value>Saiu a versão {0}!</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitleCantQuit" xml:space="preserve">
+    <value>Spytify está ouvindo</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathNotFound" xml:space="preserve">
+    <value>Caminho de destino inválido</value>
+    <comment>message</comment>
+  </data>
+  <data name="tabAdvanced" xml:space="preserve">
+    <value>Configurações avançadas</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tabRecord" xml:space="preserve">
+    <value>Ouvir</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tabSettings" xml:space="preserve">
+    <value>Configurações</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipClear" xml:space="preserve">
+    <value>Limpar histórico</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipDirectory" xml:space="preserve">
+    <value>Abrir pasta de destino</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipPath" xml:space="preserve">
+    <value>Navegar</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipStartSpying" xml:space="preserve">
+    <value>Começar a ouvir</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipStopSying" xml:space="preserve">
+    <value>Parar de ouvir</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logUnknownException" xml:space="preserve">
+    <value>// Erro: Erro desconhecido {0}</value>
+    <comment>console</comment>
+  </data>
+  <data name="lblRecordOverRecordings" xml:space="preserve">
+    <value>Grave faixas já gravadas em vez de pulá-las.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logUnsupportedNumberChannels" xml:space="preserve">
+    <value>// Aviso: {0} -canais de áudio não são suportados. O áudio será codificado em 2 (estéreo).</value>
+    <comment>console</comment>
+  </data>
+  <data name="tipRelease" xml:space="preserve">
+    <value>Nova versão disponível</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblAudioDevice" xml:space="preserve">
+    <value>Dispositivo de Áudio:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordingTimer" xml:space="preserve">
+    <value>Temporizador para a sessão de gravação</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logRecordingTimerDone" xml:space="preserve">
+    <value>// Fim do tempo programado para gravação.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logSpotifyPlayingOutsideOfSelectedAudioEndPoint" xml:space="preserve">
+    <value>// O Spytify não pode gravar se não usar o mesmo dispositivo de endpoint de áudio do Spotify. Veja o F.A.Q. online para saber como mover o Spotify para outro dispositivo.</value>
+    <comment>console</comment>
+  </data>
+  <data name="logStopRecordingWhenSongEnds" xml:space="preserve">
+    <value>// Esperando o término da gravação da faixa atual</value>
+    <comment>console</comment>
+  </data>
+  <data name="logPreviousLogs" xml:space="preserve">
+    <value>// Registros de gravações anteriores</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecorded" xml:space="preserve">
+    <value>Gravado {0} em: {1}</value>
+    <comment>console</comment>
+  </data>
+  <data name="logTrackExists" xml:space="preserve">
+    <value>// Pulando: {0} (gravação já existe)</value>
+    <comment>console</comment>
+  </data>
+  <data name="logMissingDlls" xml:space="preserve">
+    <value>// Erro de gravação: arquivos de DLLs não encontradas: libmp3lame.32.dll e libmp3lame.64.dll</value>
+    <comment>console</comment>
+  </data>
+  <data name="msgFolderDialog" xml:space="preserve">
+    <value>Selecione a pasta onde serão salvas as gravações.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipInstallVirtualCableDriver" xml:space="preserve">
+    <value>Instalar Audio Virtual Cable</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipUninstallVirtualCableDriver" xml:space="preserve">
+    <value>Desinstalar Audio Virtual Cable</value>
+    <comment>interface</comment>
+  </data>
+  <data name="msgBodyDriverInstallationFailed" xml:space="preserve">
+    <value>Falha ao iniciar o controlador Audio Virtual Cable.</value>
+    <comment>message</comment>
+  </data>
+  <data name="tipDonate" xml:space="preserve">
+    <value>Doar para Spytify</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipFAQ" xml:space="preserve">
+    <value>Ver o F.A.Q.</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblDuplicate" xml:space="preserve">
+    <value>Duplicar</value>
+    <comment>interface</comment>
+  </data>
+  <data name="logMaxFileSequenceReached" xml:space="preserve">
+    <value>// Contador: Prefixo máximo de sequência de arquivo de {0} atingido</value>
+    <comment>console</comment>
+  </data>
+  <data name="tipNumModifierHold" xml:space="preserve">
+    <value>CTRL afeta o valor da máscara</value>
+    <comment>interface</comment>
+  </data>
+  <data name="msgBodyFailedToUseSpotifyAPI" xml:space="preserve">
+    <value>Conexão perdida com a API Spotify. Certifique-se de ter autorizado o Spytify na mesma conta do Spotify que está atualmente conectada ao aplicativo Spotify-Desktop para poder obter metadados da faixa atual. Nesse ínterim, o Spytify usará a API LastFM.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">
+    <value>Spotify API Falhou</value>
+    <comment>message</comment>
+  </data>
+  <data name="logRecordingDataExceeded" xml:space="preserve">
+    <value>// A gravação de {0} estava ultrapassando os dados, geralmente devido ao Spotify não responder após ficar em segundo plano por muito tempo ou o computador estar no modo de economia de energia.</value>
+    <comment>console</comment>
+  </data>
+  <data name="lblClientId" xml:space="preserve">
+    <value>Client ID:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="lblSecretId" xml:space="preserve">
+    <value>Client Secret:</value>
+    <comment>interface --</comment>
+  </data>
+  <data name="tipFAQSpotifyAPI" xml:space="preserve">
+    <value>Veja como configurar e usar a Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipSpotifyAPICredentials" xml:space="preserve">
+    <value>Gerenciar credenciais Spotify API</value>
+    <comment>interface</comment>
+  </data>
+  <data name="titleSpotifyAPICredentials" xml:space="preserve">
+    <value>Spotify API Credentials</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkClientId" xml:space="preserve">
+    <value>Cole o Client ID aqui</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkSecretId" xml:space="preserve">
+    <value>Cole o Client Secret aqui</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblExtraTitleToSubtitle" xml:space="preserve">
+    <value>Mova o título extra da faixa para a etiqueta da legenda</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblID3" xml:space="preserve">
+    <value>Tags de mídia:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblRecordAds" xml:space="preserve">
+    <value>Incluindo anúncios</value>
+    <comment>interface</comment>
+  </data>
+  <data name="tipSpotifyAPIDashboard" xml:space="preserve">
+    <value>Painel Spotify API</value>
+    <comment>interface**</comment>
+  </data>
+  <data name="logException" xml:space="preserve">
+    <value>// Erro: {0}</value>
+    <comment>console</comment>
+  </data>
+</root>
