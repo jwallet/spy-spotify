@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Enums;
 using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -38,7 +39,7 @@ namespace EspionSpotify.Extensions
 
         public static string TrimEndPath(this string path)
         {
-            return path?.Trim()?.TrimEnd(Normalize.reservedSystemChars);
+            return path?.Trim()?.TrimEnd(Path.GetInvalidFileNameChars());
         }
 
         public static bool IsNullOrInvalidSpotifyStatus(this string value)

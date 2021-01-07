@@ -19,9 +19,7 @@ namespace EspionSpotify.Tests
         private FileManager _fileManager;
         private IFileSystem _fileSystem;
         private readonly string _path = @"C:\path";
-        private readonly string _unixPath = @"\\path\home";
-
-        private readonly string _windowsExlcudedChars = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]";
+        private readonly string _networkPath = @"\\path\home";
 
         public FileManagerTests()
         {
@@ -135,18 +133,18 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void BuildFileName_ReturnsUnixFileName()
         {
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var fileName = _fileManager.GetOutputFile().ToString();
 
-            Assert.Equal($@"{_unixPath}\Artist - Title - Live.mp3", fileName);
+            Assert.Equal($@"{_networkPath}\Artist - Title - Live.mp3", fileName);
         }
 
         [Fact]
         internal void BuildFileName_WithBadlyFormattedPath_Throws()
         {
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _track.Artist = null;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -179,7 +177,7 @@ namespace EspionSpotify.Tests
         {
             _userSettings.OrderNumberInfrontOfFileEnabled = true;
             _userSettings.TrackTitleSeparator = "_";
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _userSettings.InternalOrderNumber = orderNumber;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -220,9 +218,9 @@ namespace EspionSpotify.Tests
         internal void BuildFileName_ReturnsUnixFileNameGroupByFolders()
         {
             _userSettings.GroupByFoldersEnabled = true;
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
 
-            var expected = $@"{_unixPath}\Artist\Single\Title - Live.mp3";
+            var expected = $@"{_networkPath}\Artist\Single\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var fileName = _fileManager.GetOutputFile().ToString();
@@ -232,15 +230,44 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void BuildFileName_WithBadlyFormattedGroupPath_Throws()
+        internal void BuildFileName_WithUnknownTrackWithGroupPath_ReturnsFileNameWithoutFolder()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Artist = "123 Podcast";
+            _track.Title = null;
+
+            var expected = $@"{_path}\{_track.Artist}.mp3";
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            var fileName = _fileManager.GetOutputFile().ToString();
+            Assert.Equal(expected, fileName);
+        }
+
+        [Fact]
+        internal void BuildFileName_WithBadlyFormattedArtistGroupPath_Throws()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Title = null;
+            _track.Artist = "\\";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
             Assert.Equal("File name cannot be empty.", ex.Message);
+        }
+
+        [Fact]
+        internal void BuildFileName_WithBadlyFormattedTitleGroupPath_Throws()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Title = "?";
+            _track.Artist = null;
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
+            Assert.Equal("One or more directories has no name.", ex.Message);
         }
 
         [Fact]
@@ -262,10 +289,10 @@ namespace EspionSpotify.Tests
         internal void BuilFileName_ReturnsUnixFileNameGroupByFoldersWhenUntitledAlbum()
         {
             _track.Album = "";
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _userSettings.GroupByFoldersEnabled = true;
 
-            var expected = $@"{_unixPath}\Artist\Untitled\Title - Live.mp3";
+            var expected = $@"{_networkPath}\Artist\Untitled\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var fileName = _fileManager.GetOutputFile().ToString();
@@ -288,13 +315,13 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void BuildFileName_ReturnsUnixFileNameWav()
         {
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _userSettings.MediaFormat = Enums.MediaFormat.Wav;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var fileName = _fileManager.GetOutputFile().ToString();
 
-            Assert.Equal($@"{_unixPath}\Artist - Title - Live.wav", fileName);
+            Assert.Equal($@"{_networkPath}\Artist - Title - Live.wav", fileName);
         }
 
         [Fact]
@@ -315,7 +342,7 @@ namespace EspionSpotify.Tests
 
             var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
 
-            Assert.Equal($@"\Artist_DJ\Single_(2020)", artistFolder);
+            Assert.Equal($@"Artist_DJ\Single_(2020)", artistFolder);
             Assert.Contains(_userSettings.TrackTitleSeparator, artistFolder);
         }
 
@@ -347,11 +374,11 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void RenameFile_WithUnixFormattedPath_MoveFileToDestination()
         {
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { $@"{_unixPath}\Artist - Title - Live.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+                { $@"{_networkPath}\Artist - Title - Live.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -359,8 +386,8 @@ namespace EspionSpotify.Tests
 
             _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
 
-            Assert.Equal($@"{_unixPath}\Artist - Title - Live.mp3", outputFile.ToString());
-            Assert.True(_fileSystem.File.Exists($@"{_unixPath}\Artist - Title - Live.mp3"));
+            Assert.Equal($@"{_networkPath}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.True(_fileSystem.File.Exists($@"{_networkPath}\Artist - Title - Live.mp3"));
         }
 
         [Fact]
@@ -466,16 +493,16 @@ namespace EspionSpotify.Tests
         {
             _userSettings.GroupByFoldersEnabled = true;
             _userSettings.MediaFormat = MediaFormat.Mp3;
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _track.Title = "Rename_Me";
             _track.TitleExtended = "";
             _userSettings.TrackTitleSeparator = "_";
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { $@"{_unixPath}\Artist", new MockDirectoryData() },
-                { $@"{_unixPath}\Artist\Single", new MockDirectoryData() },
-                { $@"{_unixPath}\Artist\Single\Rename_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+                { $@"{_networkPath}\Artist", new MockDirectoryData() },
+                { $@"{_networkPath}\Artist\Single", new MockDirectoryData() },
+                { $@"{_networkPath}\Artist\Single\Rename_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -485,8 +512,8 @@ namespace EspionSpotify.Tests
 
             _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
 
-            Assert.True(_fileSystem.Directory.Exists($@"{_unixPath}\Artist"));
-            Assert.True(_fileSystem.Directory.Exists($@"{_unixPath}\Artist\Single"));
+            Assert.True(_fileSystem.Directory.Exists($@"{_networkPath}\Artist"));
+            Assert.True(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single"));
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
             Assert.True(_fileSystem.File.Exists(outputFile.ToString()));
         }
@@ -552,11 +579,11 @@ namespace EspionSpotify.Tests
             _track.Album = null;
             _userSettings.GroupByFoldersEnabled = true;
             _userSettings.TrackTitleSeparator = " ";
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { $@"{_unixPath}\Artist\Untitled\Delete Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+                { $@"{_networkPath}\Artist\Untitled\Delete Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -651,7 +678,7 @@ namespace EspionSpotify.Tests
         internal void DeleteFile_DeletesUnixFileAndFolderWhenGroupByFoldersEnabled()
         {
             _userSettings.GroupByFoldersEnabled = true;
-            _userSettings.OutputPath = _unixPath;
+            _userSettings.OutputPath = _networkPath;
             _userSettings.MediaFormat = MediaFormat.Mp3;
             _track.Title = "Delete_Me";
             _track.TitleExtended = "";
@@ -659,9 +686,9 @@ namespace EspionSpotify.Tests
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { $@"{_unixPath}\Artist", new MockDirectoryData() },
-                { $@"{_unixPath}\Artist\Single", new MockDirectoryData() },
-                { $@"{_unixPath}\Artist\Single\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+                { $@"{_networkPath}\Artist", new MockDirectoryData() },
+                { $@"{_networkPath}\Artist\Single", new MockDirectoryData() },
+                { $@"{_networkPath}\Artist\Single\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
@@ -671,9 +698,9 @@ namespace EspionSpotify.Tests
 
             _fileManager.DeleteFile(outputFile.ToPendingFileString());
 
-            Assert.False(_fileSystem.Directory.Exists($@"{_unixPath}\Artist"));
-            Assert.False(_fileSystem.Directory.Exists($@"{_unixPath}\Artist\Single"));
-            Assert.False(_fileSystem.Directory.Exists($@"{_unixPath}\Artist\Single\Delete_Me.spytify"));
+            Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist"));
+            Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single"));
+            Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single\Delete_Me.spytify"));
             Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
         }
 

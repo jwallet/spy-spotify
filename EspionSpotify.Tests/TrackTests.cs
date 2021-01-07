@@ -11,7 +11,7 @@ namespace EspionSpotify.Tests
         {
             var track = new Track();
 
-            Assert.False(track.IsNormal);
+            Assert.False(track.IsNormalPlaying);
             Assert.Equal("Spotify", track.ToString());
         }
 
@@ -28,7 +28,7 @@ namespace EspionSpotify.Tests
                 TitleExtendedSeparatorType = TitleSeparatorType.Dash
             };
 
-            Assert.True(track.IsNormal);
+            Assert.True(track.IsNormalPlaying);
             Assert.Equal("Artist Name - Song Title - Live", track.ToString());
             Assert.NotEqual(track, new Track());
         }
@@ -45,7 +45,7 @@ namespace EspionSpotify.Tests
         {
             var track = new Track() { Artist = artist, Title = title, Ad = ad, Playing = playing };
 
-            Assert.Equal(expected, track.IsNormal);
+            Assert.Equal(expected, track.IsNormalPlaying);
         }
 
         [Fact]

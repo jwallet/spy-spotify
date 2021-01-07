@@ -14,7 +14,7 @@ namespace EspionSpotify.Tests
 
         public ResourceManagerTests()
         {
-            _rm = new ResourceManager(Translations.Languages.getResourcesManagerLanguageType(LanguageType.en));
+            _rm = new ResourceManager(Translations.Languages.GetResourcesManagerLanguageType(LanguageType.en));
         }
 
         [Fact]

@@ -85,18 +85,19 @@ namespace EspionSpotify.Models
             get =>
                 !string.IsNullOrEmpty(Artist)
                 && !string.IsNullOrEmpty(Title)
-                && !Ad
-                && Playing;
+                && !Ad;
         }
+        public bool IsNormalPlaying => IsNormal && Playing;
+
         public bool IsUnknown
         {
             get =>
                 !string.IsNullOrEmpty(Artist)
                 && string.IsNullOrEmpty(Title)
                 && !SpotifyStatus.WindowTitleIsAd(Artist)
-                && !SpotifyStatus.WindowTitleIsSpotify(Artist)
-                && Playing;
+                && !SpotifyStatus.WindowTitleIsSpotify(Artist);
         }
+        public bool IsUnknownPlaying => IsUnknown && Playing;
 
         public Track() { }
 
@@ -171,14 +172,14 @@ namespace EspionSpotify.Models
 
         public string ToTitleString()
         {
-            var song = Title ?? "";
+            var song = (IsUnknownPlaying ? Artist : Title);
 
-            if (!string.IsNullOrEmpty(song) && !string.IsNullOrEmpty(TitleExtended))
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(TitleExtended))
             {
                 song += GetTitleExtended();
             }
 
-            return song;
+            return song ?? "";
         }
 
         public override bool Equals(object obj)

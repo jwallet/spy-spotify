@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EspionSpotify.Native;
 
 namespace EspionSpotify
 {
@@ -137,7 +138,7 @@ namespace EspionSpotify
             _userSettings.MinimumRecordedLengthSeconds = Settings.Default.MinimumRecordedLengthSeconds;
             _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
             _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
-            _userSettings.OutputPath = Settings.Default.Directory;
+            _userSettings.OutputPath = FileManager.GetCleanPath(Settings.Default.Directory);
             _userSettings.RecordEverythingEnabled = Settings.Default.RecordEverythingEnabled;
             _userSettings.RecordAdsEnabled = Settings.Default.RecordAdsEnabled;
             _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
@@ -235,7 +236,7 @@ namespace EspionSpotify
 
             var languageType = (LanguageType)indexLanguage;
 
-            var rmLanguage = Translations.Languages.getResourcesManagerLanguageType(languageType);
+            var rmLanguage = Translations.Languages.GetResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
             tabRecord.Text = Rm.GetString(I18nKeys.TabRecord);
@@ -757,13 +758,13 @@ namespace EspionSpotify
 
         private void TxtPath_TextChanged(object sender, EventArgs e)
         {
-            var path = txtPath.Text.TrimEndPath();
+            var path = FileManager.GetCleanPath(txtPath.Text);
             if (Settings.Default.Directory == path) return;
 
             _userSettings.OutputPath = path;
             Settings.Default.Directory = path;
             Settings.Default.Save();
-            Task.Run(async () => await _analytics.LogAction("set-output-folder"));
+            Task.Run(async () => await _analytics.LogAction($"set-output-folder?path={path}"));
         }
 
         private void CbBitRate_SelectedIndexChanged(object sender, EventArgs e)

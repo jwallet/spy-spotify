@@ -91,7 +91,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(windowTitle, track.ToString());
             Assert.Empty(track.ToTitleString());
             Assert.False(track.Playing);
-            Assert.False(track.IsNormal);
+            Assert.False(track.IsNormalPlaying);
             Assert.False(track.Ad);
         }
 
@@ -117,7 +117,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(windowTitle, track.ToString());
             Assert.True(track.Playing);
             Assert.True(track.Ad);
-            Assert.False(track.IsUnknown);
+            Assert.False(track.IsUnknownPlaying);
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace EspionSpotify.Tests
             Assert.Equal(windowTitle, track.ToString());
             Assert.True(track.Playing);
             Assert.True(track.Ad);
-            Assert.False(track.IsUnknown);
+            Assert.False(track.IsUnknownPlaying);
         }
 
         [Theory]
@@ -163,8 +163,8 @@ namespace EspionSpotify.Tests
             Assert.Equal(windowTitle, track.ToString());
             Assert.True(track.Playing);
             Assert.True(track.Ad);
-            Assert.False(track.IsNormal);
-            Assert.True(track.IsUnknown);
+            Assert.False(track.IsNormalPlaying);
+            Assert.True(track.IsUnknownPlaying);
         }
 
         [Theory]
@@ -192,8 +192,8 @@ namespace EspionSpotify.Tests
             Assert.NotEqual(windowTitle, track.ToTitleString());
             Assert.True(track.Playing);
             Assert.False(track.Ad);
-            Assert.True(track.IsNormal);
-            Assert.False(track.IsUnknown);
+            Assert.True(track.IsNormalPlaying);
+            Assert.False(track.IsUnknownPlaying);
         }
 
         [Fact]
@@ -216,8 +216,8 @@ namespace EspionSpotify.Tests
             Assert.NotEqual(windowTitle, track.ToTitleString());
             Assert.True(track.Playing);
             Assert.False(track.Ad);
-            Assert.True(track.IsNormal);
-            Assert.False(track.IsUnknown);
+            Assert.True(track.IsNormalPlaying);
+            Assert.False(track.IsUnknownPlaying);
         }
     }
 }
