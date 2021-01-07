@@ -219,12 +219,32 @@
     <Compile Include="Models\RecorderTask.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\ProcessManager.cs" />
+    <Compile Include="Translations\I18nKeys.cs" />
+    <Compile Include="Translations\cs.Designer.cs">
+      <DependentUpon>cs.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Translations\de.Designer.cs">
       <DependentUpon>de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Translations\I18nKeys.cs" />
+    <Compile Include="Translations\es.Designer.cs">
+      <DependentUpon>es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translations\it.Designer.cs">
+      <DependentUpon>it.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translations\ja.Designer.cs">
+      <DependentUpon>ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Translations\nl.Designer.cs">
       <DependentUpon>nl.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -234,6 +254,31 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translations\fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translations\pl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translations\pt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translations\ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translations\tr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>tr.resx</DependentUpon>
     </Compile>
     <Compile Include="AudioSessions\IMainAudioSession.cs" />
     <Compile Include="Enums\LanguageType.cs" />
@@ -277,19 +322,34 @@
     <Compile Include="Models\UserSettings.cs" />
     <Compile Include="AudioSessions\MainAudioSession.cs" />
     <Compile Include="IWatcher.cs" />
-    <Compile Include="Translations\fr.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>fr.resx</DependentUpon>
-    </Compile>
     <Compile Include="Translations\Languages.cs" />
     <Compile Include="Watcher.cs" />
     <EmbeddedResource Include="Controls\MetroCredentialsForm.resx">
       <DependentUpon>MetroCredentialsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translations\cs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>cs.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translations\de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\es.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>es.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\it.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>it.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\ja.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ja.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Translations\nl.resx">
@@ -314,6 +374,26 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEspionSpotify.resx">
       <DependentUpon>frmEspionSpotify.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\pl.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>pl.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>pt.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ru.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translations\tr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>tr.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Drivers\vbaudio_cable64_2003.cat">

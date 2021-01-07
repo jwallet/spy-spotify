@@ -30,18 +30,18 @@ namespace EspionSpotify.Translations
 
         internal static readonly Dictionary<LanguageType, string> dropdownListValues = new Dictionary<LanguageType, string>
         {
-            { LanguageType.en, "English 🇺🇸" },
-            { LanguageType.cs, "Čeština 🇨🇿" }, // Czech
-            { LanguageType.de, "Deutsch 🇩🇪" }, // German
-            { LanguageType.es, "Española 🇪🇸" }, // Spanish
-            { LanguageType.fr, "Français 🇫🇷" }, // French
-            { LanguageType.it, "Italiano 🇮🇹" }, // Italian
-            { LanguageType.ja, "Nihonjin 🇯🇵" }, // Japanese
-            { LanguageType.nl, "Nederlands 🇳🇱" }, // Dutch
-            { LanguageType.pl, "Polskie 🇵🇱" }, // Polish
-            { LanguageType.pt, "Português 🇵🇹" }, // Portuguese
-            { LanguageType.ru, "Roshia 🇷🇺" }, // Russian
-            { LanguageType.tr, "Türk 🇹🇷" }, // Turkish
+            { LanguageType.en, "English" },
+            { LanguageType.cs, "Čeština" }, // Czech
+            { LanguageType.de, "Deutsch" }, // German
+            { LanguageType.es, "Española" }, // Spanish
+            { LanguageType.fr, "Français" }, // French
+            { LanguageType.it, "Italiano" }, // Italian
+            { LanguageType.ja, "Nihonjin" }, // Japanese
+            { LanguageType.nl, "Nederlands" }, // Dutch
+            { LanguageType.pl, "Polskie" }, // Polish
+            { LanguageType.pt, "Português" }, // Portuguese
+            { LanguageType.ru, "Roshia" }, // Russian
+            { LanguageType.tr, "Türk" }, // Turkish
         };
     }
 }
