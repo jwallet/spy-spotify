@@ -106,7 +106,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} High quality (Spotify Premium).
+        ///   Looks up a localized string similar to {0} Vysoká kvalita (Spotify Premium).
         /// </summary>
         internal static string cbOptBitRateSpotifyPremium {
             get {
@@ -115,7 +115,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group tracks inside their own folder.
+        ///   Looks up a localized string similar to Seskupte skladby do své vlastní složky.
         /// </summary>
         internal static string lblAddFolders {
             get {
@@ -124,7 +124,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace files name spaces by underscores &quot;_&quot;.
+        ///   Looks up a localized string similar to Zaměnit mezeru v názvu za podtržítko &quot;_&quot;.
         /// </summary>
         internal static string lblAddSeparators {
             get {
@@ -133,7 +133,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ads:.
+        ///   Looks up a localized string similar to Reklamy:.
         /// </summary>
         internal static string lblAds {
             get {
@@ -142,7 +142,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio Device:.
+        ///   Looks up a localized string similar to Audio zařízení:.
         /// </summary>
         internal static string lblAudioDevice {
             get {
@@ -151,7 +151,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio quality:.
+        ///   Looks up a localized string similar to Audio kvalita:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -169,7 +169,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate.
+        ///   Looks up a localized string similar to Duplikát.
         /// </summary>
         internal static string lblDuplicate {
             get {
@@ -178,7 +178,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delay next recording if sound is detected.
+        ///   Looks up a localized string similar to Zpozdit další nahrávku, pokud je detekován zvuk.
         /// </summary>
         internal static string lblEndingSongDelay {
             get {
@@ -187,7 +187,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move extra title of the track to the subtitle tag.
+        ///   Looks up a localized string similar to Přesuňte další název stopy do značky titulků.
         /// </summary>
         internal static string lblExtraTitleToSubtitle {
             get {
@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio format:.
+        ///   Looks up a localized string similar to Audio formát:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Media Tags:.
+        ///   Looks up a localized string similar to Značky médií:.
         /// </summary>
         internal static string lblID3 {
             get {
@@ -214,7 +214,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language:.
+        ///   Looks up a localized string similar to Jazyk:.
         /// </summary>
         internal static string lblLanguage {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimal length:.
+        ///   Looks up a localized string similar to Minimální délka:.
         /// </summary>
         internal static string lblMinLength {
             get {
@@ -232,7 +232,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mute Ads.
+        ///   Looks up a localized string similar to Ztišit reklamy:.
         /// </summary>
         internal static string lblMuteAds {
             get {
@@ -241,7 +241,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add the counter number in front of all files name.
+        ///   Looks up a localized string similar to Přidejte číslo počitadla před název všech souborů.
         /// </summary>
         internal static string lblNumFiles {
             get {
@@ -250,7 +250,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace track number tag by the counter value.
+        ///   Looks up a localized string similar to Nahraďte značku čísla stopy hodnotou čítače.
         /// </summary>
         internal static string lblNumTracks {
             get {
@@ -259,7 +259,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path:.
+        ///   Looks up a localized string similar to Výstupní složka:.
         /// </summary>
         internal static string lblPath {
             get {
@@ -268,7 +268,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Including ads.
+        ///   Looks up a localized string similar to Včetně reklam.
         /// </summary>
         internal static string lblRecordAds {
             get {
@@ -277,7 +277,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorder:.
+        ///   Looks up a localized string similar to Rekordér:.
         /// </summary>
         internal static string lblRecorder {
             get {
@@ -286,7 +286,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record everything..
+        ///   Looks up a localized string similar to Zaznamenejte vše..
         /// </summary>
         internal static string lblRecordEverything {
             get {
@@ -295,7 +295,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the starting position of the counter.
+        ///   Looks up a localized string similar to Vyberte počáteční pozici počitadla.
         /// </summary>
         internal static string lblRecordingNum {
             get {
@@ -304,7 +304,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timer for the recording session.
+        ///   Looks up a localized string similar to Časovač nahrávání.
         /// </summary>
         internal static string lblRecordingTimer {
             get {
@@ -313,7 +313,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record already recorded tracks instead of skipping them..
+        ///   Looks up a localized string similar to Místo přeskakování zaznamenávejte již zaznamenané stopy..
         /// </summary>
         internal static string lblRecordOverRecordings {
             get {
@@ -331,7 +331,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spy:.
+        ///   Looks up a localized string similar to Nahrávat:.
         /// </summary>
         internal static string lblSpy {
             get {
@@ -340,7 +340,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ad.
+        ///   Looks up a localized string similar to Reklama.
         /// </summary>
         internal static string logAd {
             get {
@@ -349,7 +349,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing: {0} [&lt; {1}s].
+        ///   Looks up a localized string similar to Odebírání: {0} [&lt;{1} s].
         /// </summary>
         internal static string logDeleting {
             get {
@@ -358,7 +358,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error: {0}.
+        ///   Looks up a localized string similar to // Chyba: {0}.
         /// </summary>
         internal static string logException {
             get {
@@ -367,7 +367,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Counter: Max file sequence prefix of {0} reached.
+        ///   Looks up a localized string similar to // Počítadlo: Bylo dosaženo maximální předpony sekvence souborů {0}.
         /// </summary>
         internal static string logMaxFileSequenceReached {
             get {
@@ -376,7 +376,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error: DLL files missing - libmp3lame.32.dll and libmp3lame.64.dll.
+        ///   Looks up a localized string similar to // Error: Chybí DLL soubory - libmp3lame.32.dll a libmp3lame.64.dll.
         /// </summary>
         internal static string logMissingDlls {
             get {
@@ -385,7 +385,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Previous recording session logs.
+        ///   Looks up a localized string similar to // Předchozí protokoly relace nahrávání.
         /// </summary>
         internal static string logPreviousLogs {
             get {
@@ -394,7 +394,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorded: {0} in {1}.
+        ///   Looks up a localized string similar to Zaznamenáno: {0} v {1}.
         /// </summary>
         internal static string logRecorded {
             get {
@@ -403,7 +403,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recording: {0}.
+        ///   Looks up a localized string similar to Záznam: {0}.
         /// </summary>
         internal static string logRecording {
             get {
@@ -412,7 +412,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Recording of {0} was going to exceed in data, often caused by Spotify not responding after being in background for too long or your computer is in power-saving mode..
+        ///   Looks up a localized string similar to // Nahrávání dat {0} bude překročeno v datech, často způsobeno tím, že Spotify nereaguje, když je příliš dlouho na pozadí nebo je počítač v úsporném režimu..
         /// </summary>
         internal static string logRecordingDataExceeded {
             get {
@@ -421,7 +421,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Recording session timer done..
+        ///   Looks up a localized string similar to // Časovač nahrávání relace hotový..
         /// </summary>
         internal static string logRecordingTimerDone {
             get {
@@ -430,7 +430,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify isn&apos;t running, trying to launch it..
+        ///   Looks up a localized string similar to // Spotify nefunguje, snaží se jej spustit..
         /// </summary>
         internal static string logSpotifyConnecting {
             get {
@@ -439,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify is closed.
+        ///   Looks up a localized string similar to // Spotify je uzavřen.
         /// </summary>
         internal static string logSpotifyIsClosed {
             get {
@@ -448,7 +448,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify didn&apos;t connect to the local API, please try again..
+        ///   Looks up a localized string similar to // Spotify se nepřipojil k místnímu API, zkuste to prosím znovu..
         /// </summary>
         internal static string logSpotifyNotConnected {
             get {
@@ -457,7 +457,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spotify wasn&apos;t found or isn&apos;t installed..
+        ///   Looks up a localized string similar to // Spotify nebyl nalezen nebo není nainstalován..
         /// </summary>
         internal static string logSpotifyNotFound {
             get {
@@ -466,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spytify cannot record if it doesn&apos;t use the same audio endpoint device than Spotify. See the online F.A.Q. to know how to move Spotify towards another device..
+        ///   Looks up a localized string similar to // Spytify nemůže nahrávat, pokud nepoužívá stejné zvukové zařízení jako Spotify. Podívejte se na online F.A.Q. vědět, jak přesunout Spotify k jinému zařízení..
         /// </summary>
         internal static string logSpotifyPlayingOutsideOfSelectedAudioEndPoint {
             get {
@@ -475,7 +475,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Spying.
+        ///   Looks up a localized string similar to // Špionáž.
         /// </summary>
         internal static string logStarting {
             get {
@@ -484,7 +484,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // End.
+        ///   Looks up a localized string similar to // Konec.
         /// </summary>
         internal static string logStoping {
             get {
@@ -493,7 +493,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Waiting for the recording of the current audio track to end.
+        ///   Looks up a localized string similar to // Čekání, než se dokončí nahrávání této skladby.
         /// </summary>
         internal static string logStopRecordingWhenSongEnds {
             get {
@@ -502,7 +502,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skipping: {0} (recording already exists).
+        ///   Looks up a localized string similar to // Přeskočení: {0} (nahrávka už existuje).
         /// </summary>
         internal static string logTrackExists {
             get {
@@ -511,7 +511,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Error: Unknown exception: {0}.
+        ///   Looks up a localized string similar to // Error: Neznámá chyba: {0}.
         /// </summary>
         internal static string logUnknownException {
             get {
@@ -520,7 +520,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Warning: {0}-channels audio is not supported. The audio will be encoded to 2 (stereo)..
+        ///   Looks up a localized string similar to // Varování: Zvuk kanálu {0} není podporován. Zvuk bude kódován na 2 (stereo)..
         /// </summary>
         internal static string logUnsupportedNumberChannels {
             get {
@@ -529,7 +529,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Warning: Sample rate of {0}Hz is not supported. The audio will be encoded to 48000Hz..
+        ///   Looks up a localized string similar to // Varování: Vzorkovací frekvence {0} Hz není podporována. Zvuk bude kódován na 48 000 Hz..
         /// </summary>
         internal static string logUnsupportedRate {
             get {
@@ -538,7 +538,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you still want to leave?.
+        ///   Looks up a localized string similar to Opravdu chcete odejít?.
         /// </summary>
         internal static string msgBodyCantQuit {
             get {
@@ -547,7 +547,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to open the Audio Virtual Cable controller..
+        ///   Looks up a localized string similar to Nepodařilo se otevřít řadič Audio Virtual Cable..
         /// </summary>
         internal static string msgBodyDriverInstallationFailed {
             get {
@@ -556,7 +556,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lost connection to Spotify API. Make sure you authorized Spytify on the same Spotify account that is currently connected to Spotify-Desktop app to be able to get metadata of the current track. In the meantime Spytify will use LastFM API..
+        ///   Looks up a localized string similar to Ztráta připojení k Spotify API. Ujistěte se, že jste autorizovali Spytify na stejném účtu Spotify, který je aktuálně připojen k aplikaci Spotify-Desktop, abyste mohli získat metadata aktuální stopy. Mezitím Spytify použije LastFM API..
         /// </summary>
         internal static string msgBodyFailedToUseSpotifyAPI {
             get {
@@ -565,7 +565,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This output path does not exist, select another one..
+        ///   Looks up a localized string similar to Tato výstupní složka neexistuje, zkuste vybrat jinou..
         /// </summary>
         internal static string msgBodyPathNotFound {
             get {
@@ -574,7 +574,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the folder where you want to save the recorded audio files..
+        ///   Looks up a localized string similar to Vyberte složku, kam chcete uložit zaznamenané zvukové soubory..
         /// </summary>
         internal static string msgFolderDialog {
             get {
@@ -583,7 +583,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to open GitHub to view the newest Spytify release?.
+        ///   Looks up a localized string similar to Chcete otevřít GitHub a zobrazit nejnovější vydání Spytify?.
         /// </summary>
         internal static string msgNewVersionContent {
             get {
@@ -592,7 +592,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} is out!.
+        ///   Looks up a localized string similar to Verze {0} je venku!.
         /// </summary>
         internal static string msgNewVersionTitle {
             get {
@@ -601,7 +601,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spytify is spying.
+        ///   Looks up a localized string similar to Spytify špehuje.
         /// </summary>
         internal static string msgTitleCantQuit {
             get {
@@ -610,7 +610,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify API Failed.
+        ///   Looks up a localized string similar to Spotify API se nezdařilo.
         /// </summary>
         internal static string msgTitleFailedToUseSpotifyAPI {
             get {
@@ -619,7 +619,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path invalid.
+        ///   Looks up a localized string similar to Výstupní cesta je neplatná.
         /// </summary>
         internal static string msgTitlePathNotFound {
             get {
@@ -628,7 +628,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Settings.
+        ///   Looks up a localized string similar to Pokročilé nastavení.
         /// </summary>
         internal static string tabAdvanced {
             get {
@@ -637,7 +637,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spy.
+        ///   Looks up a localized string similar to Vyzvědač.
         /// </summary>
         internal static string tabRecord {
             get {
@@ -646,7 +646,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Nastavení.
         /// </summary>
         internal static string tabSettings {
             get {
@@ -655,7 +655,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear history.
+        ///   Looks up a localized string similar to Smazat historii.
         /// </summary>
         internal static string tipClear {
             get {
@@ -664,7 +664,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open output directory.
+        ///   Looks up a localized string similar to Otevřete výstupní adresář.
         /// </summary>
         internal static string tipDirectory {
             get {
@@ -673,7 +673,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donate to Spytify.
+        ///   Looks up a localized string similar to Darujte Spytify.
         /// </summary>
         internal static string tipDonate {
             get {
@@ -682,7 +682,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See the F.A.Q..
+        ///   Looks up a localized string similar to Podívejte se na F.A.Q..
         /// </summary>
         internal static string tipFAQ {
             get {
@@ -691,7 +691,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See how to configure and use Spotify API.
+        ///   Looks up a localized string similar to Podívejte se, jak konfigurovat a používat Spotify API.
         /// </summary>
         internal static string tipFAQSpotifyAPI {
             get {
@@ -700,7 +700,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Install Audio Virtual Cable.
+        ///   Looks up a localized string similar to Nainstalujte Audio Virtual Cable.
         /// </summary>
         internal static string tipInstallVirtualCableDriver {
             get {
@@ -709,7 +709,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CTRL affects the mask value.
+        ///   Looks up a localized string similar to CTRL ovlivňuje hodnotu masky.
         /// </summary>
         internal static string tipNumModifierHold {
             get {
@@ -718,7 +718,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Browse.
+        ///   Looks up a localized string similar to Prohlížet.
         /// </summary>
         internal static string tipPath {
             get {
@@ -727,7 +727,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New version available.
+        ///   Looks up a localized string similar to Nová verze je dostupná.
         /// </summary>
         internal static string tipRelease {
             get {
@@ -736,7 +736,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Spotify API credentials.
+        ///   Looks up a localized string similar to Spravujte pověření Spotify API.
         /// </summary>
         internal static string tipSpotifyAPICredentials {
             get {
@@ -745,7 +745,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify API Dashboard.
+        ///   Looks up a localized string similar to Dashboard Spotify API.
         /// </summary>
         internal static string tipSpotifyAPIDashboard {
             get {
@@ -754,7 +754,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start spying.
+        ///   Looks up a localized string similar to Začněte špehovat.
         /// </summary>
         internal static string tipStartSpying {
             get {
@@ -763,7 +763,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop spying.
+        ///   Looks up a localized string similar to Přestaň špehovat.
         /// </summary>
         internal static string tipStopSying {
             get {
@@ -772,7 +772,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uninstall Audio Virtual Cable.
+        ///   Looks up a localized string similar to Odinstalujte Audio Virtual Cable.
         /// </summary>
         internal static string tipUninstallVirtualCableDriver {
             get {
@@ -781,7 +781,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spotify API Credentials.
+        ///   Looks up a localized string similar to Pověření Spotify API.
         /// </summary>
         internal static string titleSpotifyAPICredentials {
             get {
@@ -790,7 +790,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paste the Client ID here.
+        ///   Looks up a localized string similar to Sem vložte Client ID.
         /// </summary>
         internal static string watermarkClientId {
             get {
@@ -799,7 +799,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paste the Client Secret here.
+        ///   Looks up a localized string similar to Sem vložte Client Secret.
         /// </summary>
         internal static string watermarkSecretId {
             get {
