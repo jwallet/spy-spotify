@@ -1,12 +1,11 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace EspionSpotify
 {
     internal static class Normalize
     {
-        internal static readonly char[] reservedSystemChars = { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
-
         public static string RemoveDiacritics(string text)
         {
             if (text == null) return string.Empty;
@@ -16,7 +15,7 @@ namespace EspionSpotify
 
             foreach (var c in normalizedString)
             {
-                if (!reservedSystemChars.Contains(c))
+                if (!Path.GetInvalidFileNameChars().Contains(c))
                 {
                     stringBuilder.Append(c);
                 }

@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Extensions;
+using EspionSpotify.Native;
 
 namespace EspionSpotify.Models
 {
@@ -28,13 +29,13 @@ namespace EspionSpotify.Models
         public override string ToString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return $@"{Path}\{_file}{GetAddedCount()}.{Extension}";
+            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         public string ToPendingFileString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return $@"{Path}\{_file}{GetAddedCount()}.{SPYTIFY}";
+            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{SPYTIFY}");
         }
 
         private string GetAddedCount()
