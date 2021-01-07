@@ -230,15 +230,44 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void BuildFileName_WithBadlyFormattedGroupPath_Throws()
+        internal void BuildFileName_WithUnknownTrackWithGroupPath_ReturnsFileNameWithoutFolder()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Artist = "123 Podcast";
+            _track.Title = null;
+
+            var expected = $@"{_path}\{_track.Artist}.mp3";
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            var fileName = _fileManager.GetOutputFile().ToString();
+            Assert.Equal(expected, fileName);
+        }
+
+        [Fact]
+        internal void BuildFileName_WithBadlyFormattedArtistGroupPath_Throws()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Title = null;
+            _track.Artist = "\\";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
             var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
             Assert.Equal("File name cannot be empty.", ex.Message);
+        }
+
+        [Fact]
+        internal void BuildFileName_WithBadlyFormattedTitleGroupPath_Throws()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Title = "?";
+            _track.Artist = null;
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
+            Assert.Equal("One or more directories has no name.", ex.Message);
         }
 
         [Fact]
