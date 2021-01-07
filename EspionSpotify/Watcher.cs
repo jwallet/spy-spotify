@@ -46,11 +46,11 @@ namespace EspionSpotify
         }
         public bool IsRecordUnknownActive
         {
-            get => !_userSettings.MuteAdsEnabled && _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknown || _userSettings.RecordAdsEnabled);
+            get => !_userSettings.MuteAdsEnabled && _userSettings.RecordEverythingEnabled && (_currentTrack.IsUnknownPlaying || _userSettings.RecordAdsEnabled);
         }
         public bool IsTypeAllowed
         {
-            get => _currentTrack.IsNormal || IsRecordUnknownActive;
+            get => _currentTrack.IsNormalPlaying || IsRecordUnknownActive;
         }
         public bool IsOldSong
         {
