@@ -54,6 +54,12 @@ namespace EspionSpotify.API
                 }
                 return;
             }
+            catch (XmlException ex)
+            {
+                // Ignore XML exception since it's out of our control
+                Console.WriteLine(ex.Message);
+                return;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
