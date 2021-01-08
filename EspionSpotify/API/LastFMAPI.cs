@@ -44,7 +44,10 @@ namespace EspionSpotify.API
                 var url = GetTrackInfo(encodedArtist, encodedTitle);
                 api.Load(url);
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.NameResolutionFailure)
+            catch (WebException ex) when (
+            ex.Status == WebExceptionStatus.NameResolutionFailure ||
+            ex.Status == WebExceptionStatus.ProxyNameResolutionFailure ||
+            ex.Status == WebExceptionStatus.RequestProhibitedByProxy)
             {
                 Console.WriteLine(ex.Message);
                 if (_loggedSilentExceptionOnce == false)
@@ -54,9 +57,16 @@ namespace EspionSpotify.API
                 }
                 return;
             }
+            catch (WebException ex)
+            {
+                // Silent other Web exception since it may be an issue on the user end.
+                Console.WriteLine(ex.Message);
+                FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                return;
+            }
             catch (XmlException ex)
             {
-                // Ignore XML exception since it's out of our control
+                // Ignore XML exception since it's out of our control.
                 Console.WriteLine(ex.Message);
                 return;
             }
