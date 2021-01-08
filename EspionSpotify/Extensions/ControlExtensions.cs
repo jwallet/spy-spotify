@@ -23,6 +23,7 @@ namespace EspionSpotify.Extensions
         {
             lock (control)
             {
+                if (control.IsDisposed) return;
                 if (control.IsInvokeRequired())
                 {
                     control.Invoke(setter);

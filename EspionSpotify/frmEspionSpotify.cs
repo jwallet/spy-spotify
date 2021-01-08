@@ -88,9 +88,6 @@ namespace EspionSpotify
         {
             tcMenu.SelectedIndex = Settings.Default.TabNo;
 
-            chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
-            chkRecordAds.Enabled = Settings.Default.RecordEverythingEnabled;
-
             rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
             tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
@@ -101,13 +98,19 @@ namespace EspionSpotify
             tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
             txtPath.Text = Settings.Default.Directory;
             tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
-            tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
             tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
-            chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
-            tgRecordEverything.Checked = Settings.Default.RecordEverythingEnabled;
-            chkRecordAds.Checked = Settings.Default.RecordAdsEnabled;
             folderBrowserDialog.SelectedPath = Settings.Default.Directory;
             txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
+            
+            tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
+            chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
+            chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
+            chkRecordDuplicateRecordings.Visible = Settings.Default.RecordOverRecordingsEnabled;
+            
+            tgRecordEverything.Checked = Settings.Default.RecordEverythingEnabled;
+            chkRecordAds.Enabled = Settings.Default.RecordEverythingEnabled;
+            chkRecordAds.Checked = Settings.Default.RecordAdsEnabled;
+            chkRecordAds.Visible = Settings.Default.RecordEverythingEnabled;
 
             SetSpotifyAPIOption();
 
@@ -122,7 +125,7 @@ namespace EspionSpotify
             Style = MetroColorStyle.Orange;
 #endif
 
-            SetLanguageDropDown();  // do it before setting the language
+            SetLanguageDropDown(); // do it before setting the language
             SetLanguage(); // creates Rm and trigger fields event which requires audioSession
 
             UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDeviceName);
@@ -392,7 +395,7 @@ namespace EspionSpotify
         {
             var text = string.Format(Rm.GetString(resource), args);
 
-            if (text == null) return "";
+            if (text == null || rtbLog.IsDisposed) return "";
 
             var timeStr = LogDate;
             var indexOfColon = text.IndexOf(": ");
@@ -606,6 +609,7 @@ namespace EspionSpotify
             if (Settings.Default.RecordEverythingEnabled == tgRecordEverything.Checked) return;
 
             chkRecordAds.Enabled = tgRecordEverything.Checked;
+            chkRecordAds.Visible = tgRecordEverything.Checked;
 
             _userSettings.RecordEverythingEnabled = tgRecordEverything.Checked;
             Settings.Default.RecordEverythingEnabled = tgRecordEverything.Checked;
@@ -697,6 +701,7 @@ namespace EspionSpotify
             if (Settings.Default.RecordOverRecordingsEnabled == tgRecordOverRecordings.Checked) return;
 
             chkRecordDuplicateRecordings.Enabled = tgRecordOverRecordings.Checked;
+            chkRecordDuplicateRecordings.Visible = tgRecordOverRecordings.Checked;
 
             Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
             Settings.Default.RecordOverRecordingsEnabled = tgRecordOverRecordings.Checked;
