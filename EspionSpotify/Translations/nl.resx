@@ -434,7 +434,7 @@
     <comment>interface**</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Mediatags:</value>
+    <value>ID3-tags:</value>
     <comment>interface**</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

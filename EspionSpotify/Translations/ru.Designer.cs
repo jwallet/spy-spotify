@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Медиа Теги:.
+        ///   Looks up a localized string similar to Теги ID3:.
         /// </summary>
         internal static string lblID3 {
             get {

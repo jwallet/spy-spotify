@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>メディアタグ：</value>
+    <value>ID3タグ:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

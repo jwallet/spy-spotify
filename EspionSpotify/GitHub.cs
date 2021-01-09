@@ -56,7 +56,7 @@ namespace EspionSpotify
                     var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
                     if (githubTagVersion <= assemblyVersion) return;
-                    if (Settings.Default.LastVersionPrompted.ToVersion() == githubTagVersion) return;
+                    if (Settings.Default.app_last_version_prompt.ToVersion() == githubTagVersion) return;
 
                     var dialogTitle = string.Format(FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionTitle), githubTagVersion);
                     var dialogMessage = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionContent);
@@ -79,7 +79,7 @@ namespace EspionSpotify
                         Process.Start(new ProcessStartInfo(release.html_url));
                     }
 
-                    Settings.Default.LastVersionPrompted = githubTagVersion.ToString();
+                    Settings.Default.app_last_version_prompt = githubTagVersion.ToString();
                     Settings.Default.Save();
                 }
             }

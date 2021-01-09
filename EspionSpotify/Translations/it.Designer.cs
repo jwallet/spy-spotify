@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formato audio:.
+        ///   Looks up a localized string similar to Formato Audio:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag multimediali:.
+        ///   Looks up a localized string similar to Tag ID3:.
         /// </summary>
         internal static string lblID3 {
             get {

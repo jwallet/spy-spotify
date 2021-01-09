@@ -123,6 +123,8 @@ namespace EspionSpotify
             this.lnkRelease = new MetroFramework.Controls.MetroLink();
             this.lnkDonate = new MetroFramework.Controls.MetroLink();
             this.lnkFAQ = new MetroFramework.Controls.MetroLink();
+            this.lblUpdateRecordingsID3Tags = new MetroFramework.Controls.MetroLabel();
+            this.tgUpdateRecordingsID3Tags = new MetroFramework.Controls.MetroToggle();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -1456,6 +1458,8 @@ namespace EspionSpotify
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel6.Controls.Add(this.tgUpdateRecordingsID3Tags, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.lblUpdateRecordingsID3Tags, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.tgExtraTitleToSubtitle, 1, 1);
             this.tableLayoutPanel6.Controls.Add(this.lblExtraTitleToSubtitle, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.lblNumTracks, 0, 0);
@@ -1463,7 +1467,8 @@ namespace EspionSpotify
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(121, 249);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 3;
+            this.tableLayoutPanel6.RowCount = 4;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
@@ -1596,6 +1601,34 @@ namespace EspionSpotify
             this.lnkFAQ.UseCustomBackColor = true;
             this.lnkFAQ.UseSelectable = true;
             this.lnkFAQ.Click += new System.EventHandler(this.LnkFAQ_Click);
+            // 
+            // lblUpdateRecordingsID3Tags
+            // 
+            this.lblUpdateRecordingsID3Tags.AutoSize = true;
+            this.lblUpdateRecordingsID3Tags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblUpdateRecordingsID3Tags.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblUpdateRecordingsID3Tags.Location = new System.Drawing.Point(3, 56);
+            this.lblUpdateRecordingsID3Tags.Name = "lblUpdateRecordingsID3Tags";
+            this.lblUpdateRecordingsID3Tags.Size = new System.Drawing.Size(468, 28);
+            this.lblUpdateRecordingsID3Tags.TabIndex = 52;
+            this.lblUpdateRecordingsID3Tags.Text = "LBL_UPDATE_RECORDINGS_ID3_TAGS";
+            this.lblUpdateRecordingsID3Tags.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblUpdateRecordingsID3Tags.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tgUpdateRecordingsID3Tags
+            // 
+            this.tgUpdateRecordingsID3Tags.AutoSize = true;
+            this.tgUpdateRecordingsID3Tags.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgUpdateRecordingsID3Tags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgUpdateRecordingsID3Tags.Location = new System.Drawing.Point(477, 59);
+            this.tgUpdateRecordingsID3Tags.Name = "tgUpdateRecordingsID3Tags";
+            this.tgUpdateRecordingsID3Tags.Size = new System.Drawing.Size(94, 22);
+            this.tgUpdateRecordingsID3Tags.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgUpdateRecordingsID3Tags.TabIndex = 53;
+            this.tgUpdateRecordingsID3Tags.Text = "Off";
+            this.tgUpdateRecordingsID3Tags.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgUpdateRecordingsID3Tags.UseSelectable = true;
+            this.tgUpdateRecordingsID3Tags.CheckedChanged += new System.EventHandler(this.TgUpdateRecordingsID3Tags_CheckedChanged);
             // 
             // FrmEspionSpotify
             // 
@@ -1757,6 +1790,8 @@ namespace EspionSpotify
         private MetroLabel lblExtraTitleToSubtitle;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private MetroCheckBox chkRecordAds;
+        private MetroToggle tgUpdateRecordingsID3Tags;
+        private MetroLabel lblUpdateRecordingsID3Tags;
     }
 }
 

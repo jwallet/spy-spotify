@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Медиа Теги:</value>
+    <value>Теги ID3:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

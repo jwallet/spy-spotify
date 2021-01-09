@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Medya Etiketleri:</value>
+    <value>ID3 Etiketleri:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

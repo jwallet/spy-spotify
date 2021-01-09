@@ -154,7 +154,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Qualidade de áudio:</value>
+    <value>Qualidade de Áudio:</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
-    <value>Formato de áudio:</value>
+    <value>Formato de Áudio:</value>
     <comment>interface</comment>
   </data>
   <data name="lblLanguage" xml:space="preserve">
@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Tags de mídia:</value>
+    <value>Tags ID3:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

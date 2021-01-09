@@ -151,7 +151,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Qualidade de áudio:.
+        ///   Looks up a localized string similar to Qualidade de Áudio:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formato de áudio:.
+        ///   Looks up a localized string similar to Formato de Áudio:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tags de mídia:.
+        ///   Looks up a localized string similar to Tags ID3:.
         /// </summary>
         internal static string lblID3 {
             get {

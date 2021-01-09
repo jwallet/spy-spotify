@@ -174,7 +174,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblMuteAds" xml:space="preserve">
-    <value>Ztišit reklamy:</value>
+    <value>Ztišit reklamy</value>
     <comment>interface</comment>
   </data>
   <data name="lblNumFiles" xml:space="preserve">
@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Značky médií:</value>
+    <value>ID3 tagy:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

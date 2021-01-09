@@ -987,5 +987,10 @@ namespace EspionSpotify
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"move-extra-title-to-subtitle?enabled={tgExtraTitleToSubtitle.GetPropertyThreadSafe(c => c.Checked)}"));
         }
+
+        private void TgUpdateRecordingsID3Tags_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

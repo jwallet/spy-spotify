@@ -154,7 +154,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblBitRate" xml:space="preserve">
-    <value>Audio quality:</value>
+    <value>Audio Quality:</value>
     <comment>interface</comment>
   </data>
   <data name="lblEndingSongDelay" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">
-    <value>Audio format:</value>
+    <value>Audio Format:</value>
     <comment>interface</comment>
   </data>
   <data name="lblLanguage" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblMinLength" xml:space="preserve">
-    <value>Minimal length:</value>
+    <value>Minimal Length:</value>
     <comment>interface</comment>
   </data>
   <data name="lblMuteAds" xml:space="preserve">
@@ -186,7 +186,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
-    <value>Output path:</value>
+    <value>Output Path:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecorder" xml:space="preserve">
@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Media Tags:</value>
+    <value>ID3 Tags:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">

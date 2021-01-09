@@ -75,7 +75,7 @@ namespace EspionSpotify
             _fileSystem = fileSystem;
             _recorder = recorder;
 
-            Settings.Default.Logs = string.Empty;
+            Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
         }
 

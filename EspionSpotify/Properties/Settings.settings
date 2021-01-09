@@ -2,79 +2,79 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EspionSpotify.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Directory" Type="System.String" Scope="User">
+    <Setting Name="settings_output_path" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Bitrate" Type="System.Int32" Scope="User">
+    <Setting Name="settings_media_bitrate_quality" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="MediaFormat" Type="System.Int32" Scope="User">
+    <Setting Name="settings_media_audio_format" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="MinimumRecordedLengthSeconds" Type="System.Int32" Scope="User">
+    <Setting Name="settings_media_minimum_recorded_length_in_seconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
-    <Setting Name="GroupByFoldersEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_file_group_media_in_folders_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="TrackTitleSeparatorEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_file_replace_space_by_underscore_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OrderNumberInfrontOfFileEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_file_counter_number_prefix_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OrderNumberInMediaTagEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_id3_counter_number_as_track_number_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Language" Type="System.Int32" Scope="User">
+    <Setting Name="settings_language" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="TabNo" Type="System.Int32" Scope="User">
+    <Setting Name="app_tab_number_selected" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="EndingSongDelayEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_watcher_delay_next_recording_until_silent_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="MuteAdsEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="settings_mute_ads_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="RecordEverythingEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_record_everything" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AnalyticsCID" Type="System.String" Scope="User">
+    <Setting Name="app_analytics_cid" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RecordOverRecordingsEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_record_over_recordings_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="LastVersionPrompted" Type="System.String" Scope="User">
+    <Setting Name="app_last_version_prompt" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Logs" Type="System.String" Scope="User">
+    <Setting Name="app_console_logs" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ExternalAPI" Type="System.Int32" Scope="User">
+    <Setting Name="app_selected_external_api_id" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="AudioEndPointDeviceID" Type="System.String" Scope="User">
+    <Setting Name="app_selected_audio_device_id" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RecordDuplicateRecordingsEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_record_over_recordings_and_duplicate_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="OrderNumberMask" Type="System.String" Scope="User">
+    <Setting Name="app_counter_number_mask" Type="System.String" Scope="User">
       <Value Profile="(Default)">000</Value>
     </Setting>
-    <Setting Name="SpotifyAPISecretId" Type="System.String" Scope="User">
+    <Setting Name="app_spotify_api_client_secret" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SpotifyAPIClientId" Type="System.String" Scope="User">
+    <Setting Name="app_spotify_api_client_id" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ExtraTitleToSubtitleEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_id3_extra_title_as_subtitle_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RecordAdsEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_record_everything_and_ads_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
