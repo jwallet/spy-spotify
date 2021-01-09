@@ -62,6 +62,17 @@ namespace EspionSpotify.AudioSessions
 
             AudioEndPointDeviceNames = AudioMMDevices
                 .EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)
+                .Where(x =>
+                {
+                    // weird fix to valid if audio device is available
+                    try { var _ = x.FriendlyName; }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                    return true;
+                })
                 .Select(x => new KeyValuePair<string, string>(x.ID, x.FriendlyName))
                 .ToDictionary(o => o.Key, o => o.Value);
 
