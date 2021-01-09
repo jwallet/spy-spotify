@@ -176,7 +176,7 @@ namespace EspionSpotify
             }
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
-            _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.File, length);
+            _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToFileString(), length);
 
             _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());

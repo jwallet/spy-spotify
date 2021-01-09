@@ -11,6 +11,7 @@ namespace EspionSpotify.Models
         private string _file;
         public string File { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
 
+        public string BasePath { get; set; }
         public string Path { get; set; }
         public int Count { get; private set; }
         public string Separator { get; set; }
@@ -36,6 +37,12 @@ namespace EspionSpotify.Models
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{SPYTIFY}");
+        }
+
+        public string ToFileString()
+        {
+            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
+            return FileManager.ConcatPaths(Path.Replace(BasePath, ".."), $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         private string GetAddedCount()

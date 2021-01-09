@@ -41,7 +41,8 @@ namespace EspionSpotify.Native
                 Path = ConcatPaths(_userSettings.OutputPath, GetFolderPath(_track, _userSettings)),
                 File = GenerateFileName(_track, _userSettings, _now),
                 Separator = _userSettings.TrackTitleSeparator,
-                Extension = GetMediaFormatExtension(_userSettings)
+                Extension = GetMediaFormatExtension(_userSettings),
+                BasePath = _userSettings.OutputPath
             };
 
             switch (_userSettings.RecordRecordingsStatus)
@@ -147,7 +148,7 @@ namespace EspionSpotify.Native
 
         private static string GetArtistDirectoryName(Track track, string trackTitleSeparator)
         {
-            var artistDir = Normalize.RemoveDiacritics(track.Artist);
+            var artistDir = Normalize.RemoveDiacritics(track.Artists);
             return GetCleanFileFolder(artistDir).Replace(" ", trackTitleSeparator);
         }
 
