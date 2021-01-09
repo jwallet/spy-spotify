@@ -152,7 +152,7 @@ namespace EspionSpotify.API
 
                 // fallback in case getting the playback did not work
                 ExternalAPI.Instance = _lastFmApi;
-                Settings.Default.ExternalAPI = (int)Enums.ExternalAPIType.LastFM;
+                Settings.Default.app_selected_external_api_id = (int)Enums.ExternalAPIType.LastFM;
                 Settings.Default.Save();
 
                 _ = Task.Run(() =>

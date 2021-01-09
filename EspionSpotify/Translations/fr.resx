@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Tags Média:</value>
+    <value>Tags ID3:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">
@@ -448,5 +448,9 @@
   <data name="logException" xml:space="preserve">
     <value>// Erreur: {0}</value>
     <comment>console</comment>
+  </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Remettre à jour les tags ID3 des pistes audio déjà enregistrées lors de leur lecture</value>
+    <comment>interface</comment>
   </data>
 </root>

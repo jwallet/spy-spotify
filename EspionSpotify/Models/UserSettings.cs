@@ -25,6 +25,7 @@ namespace EspionSpotify.Models
         public string RecordingTimer { get; set; }
         public string SpotifyAPIClientId { get; set; }
         public string SpotifyAPISecretId { get; set; }
+        public bool UpdateRecordingsID3TagsEnabled { get; set; }
         public string OrderNumberMask { get; set; } = "000";
         public int OrderNumberMax
         {

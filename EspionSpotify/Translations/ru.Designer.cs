@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Медиа Теги:.
+        ///   Looks up a localized string similar to Теги ID3:.
         /// </summary>
         internal static string lblID3 {
             get {
@@ -336,6 +336,15 @@ namespace EspionSpotify.Translations {
         internal static string lblSpy {
             get {
                 return ResourceManager.GetString("lblSpy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторно обновить уже записанные теги ID3 треков при их воспроизведении.
+        /// </summary>
+        internal static string lblUpdateRecordingsID3Tags {
+            get {
+                return ResourceManager.GetString("lblUpdateRecordingsID3Tags", resourceCulture);
             }
         }
         

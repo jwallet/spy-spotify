@@ -92,29 +92,29 @@ namespace EspionSpotify
 ```console
 {{SystemInfo}}
 ```
-".Replace("{{Logs}}", string.Join(@"\n\r", Settings.Default.Logs.Split(';'))).Replace("{{Settings}}", $@"**Output Directory**:   {Settings.Default.Directory}
-**Bitrate**:   {(LAMEPreset)Settings.Default.Bitrate}
-**Media Format**:   {(Enums.MediaFormat)Settings.Default.MediaFormat}
-**Min. Media Length**:   {Settings.Default.MinimumRecordedLengthSeconds}
-**Group Media in Folder**:   {Settings.Default.GroupByFoldersEnabled}
-**Track Title Separator Underscore**:   {Settings.Default.TrackTitleSeparatorEnabled}
-**Counter In File Name**:   {Settings.Default.OrderNumberInfrontOfFileEnabled}
-**Counter In Media Tag**:   {Settings.Default.OrderNumberInMediaTagEnabled}
-**Language**:   {(Enums.LanguageType)Settings.Default.Language}
-**Tab No**:   {Settings.Default.TabNo}
-**Delay When Track Ends**:   {Settings.Default.EndingSongDelayEnabled}
-**Mute Ads**:   {Settings.Default.MuteAdsEnabled}
-**Record Everything**:   {Settings.Default.RecordEverythingEnabled}
-**Analytics CID**:   {Settings.Default.AnalyticsCID}
-**Record Over Recordings**:   {Settings.Default.RecordOverRecordingsEnabled}
-**Last Version Prompted**:   {Settings.Default.LastVersionPrompted}
-**External API**:   {(Enums.ExternalAPIType)Settings.Default.ExternalAPI}
-**Audio Endpoint Device ID**:   {Settings.Default.AudioEndPointDeviceID}
-**Record Duplicate Recordings**:   {Settings.Default.RecordDuplicateRecordingsEnabled}
-**Counter Mask**:   {Settings.Default.OrderNumberMask}
-**Spotify API IDs**:   {!string.IsNullOrWhiteSpace(Settings.Default.SpotifyAPISecretId) && !string.IsNullOrWhiteSpace(Settings.Default.SpotifyAPIClientId)}
-**Extra Title To Subtitle**:   {Settings.Default.ExtraTitleToSubtitleEnabled}
-**Record Ads**:   {Settings.Default.RecordAdsEnabled}");
+".Replace("{{Logs}}", string.Join(@"\n\r", Settings.Default.app_console_logs.Split(';'))).Replace("{{Settings}}", $@"**Output Directory**:   {Settings.Default.settings_output_path}
+**Bitrate**:   {(LAMEPreset)Settings.Default.settings_media_bitrate_quality}
+**Media Format**:   {(Enums.MediaFormat)Settings.Default.settings_media_audio_format}
+**Min. Media Length**:   {Settings.Default.settings_media_minimum_recorded_length_in_seconds}
+**Group Media in Folder**:   {Settings.Default.advanced_file_group_media_in_folders_enabled}
+**Track Title Separator Underscore**:   {Settings.Default.advanced_file_replace_space_by_underscore_enabled}
+**Counter In File Name**:   {Settings.Default.advanced_file_counter_number_prefix_enabled}
+**Counter In Media Tag**:   {Settings.Default.advanced_id3_counter_number_as_track_number_enabled}
+**Language**:   {(Enums.LanguageType)Settings.Default.settings_language}
+**Tab No**:   {Settings.Default.app_tab_number_selected}
+**Delay When Track Ends**:   {Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled}
+**Mute Ads**:   {Settings.Default.settings_mute_ads_enabled}
+**Record Everything**:   {Settings.Default.advanced_record_everything}
+**Analytics CID**:   {Settings.Default.app_analytics_cid}
+**Record Over Recordings**:   {Settings.Default.advanced_record_over_recordings_enabled}
+**Last Version Prompted**:   {Settings.Default.app_last_version_prompt}
+**External API**:   {(Enums.ExternalAPIType)Settings.Default.app_selected_external_api_id}
+**Audio Endpoint Device ID**:   {Settings.Default.app_selected_audio_device_id}
+**Record Duplicate Recordings**:   {Settings.Default.advanced_record_over_recordings_and_duplicate_enabled}
+**Counter Mask**:   {Settings.Default.app_counter_number_mask}
+**Spotify API IDs**:   {!string.IsNullOrWhiteSpace(Settings.Default.app_spotify_api_client_secret) && !string.IsNullOrWhiteSpace(Settings.Default.app_spotify_api_client_id)}
+**Extra Title To Subtitle**:   {Settings.Default.advanced_id3_extra_title_as_subtitle_enabled}
+**Record Ads**:   {Settings.Default.advanced_record_everything_and_ads_enabled}");
             }
             catch { };
 

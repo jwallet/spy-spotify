@@ -7,9 +7,9 @@ namespace EspionSpotify.Extensions
     {
         internal static RecordRecordingsStatus GetRecordRecordingsStatus(this Settings settings)
         {
-            if (settings.RecordOverRecordingsEnabled)
+            if (settings.advanced_record_over_recordings_enabled)
             {
-                if (settings.RecordDuplicateRecordingsEnabled)
+                if (settings.advanced_record_over_recordings_and_duplicate_enabled)
                 {
                     return RecordRecordingsStatus.Duplicate;
                 }

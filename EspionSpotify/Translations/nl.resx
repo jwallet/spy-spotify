@@ -434,7 +434,7 @@
     <comment>interface**</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Mediatags:</value>
+    <value>ID3-Tags:</value>
     <comment>interface**</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">
@@ -448,5 +448,9 @@
   <data name="logException" xml:space="preserve">
     <value>// Fout: {0}</value>
     <comment>console</comment>
+  </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Werk reeds opgenomen track ID3-tags opnieuw bij wanneer ze worden afgespeeld</value>
+    <comment>interface</comment>
   </data>
 </root>

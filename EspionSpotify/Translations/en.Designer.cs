@@ -151,7 +151,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio quality:.
+        ///   Looks up a localized string similar to Audio Quality:.
         /// </summary>
         internal static string lblBitRate {
             get {
@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Audio format:.
+        ///   Looks up a localized string similar to Audio Format:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Media Tags:.
+        ///   Looks up a localized string similar to ID3 Tags:.
         /// </summary>
         internal static string lblID3 {
             get {
@@ -223,7 +223,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimal length:.
+        ///   Looks up a localized string similar to Minimal Length:.
         /// </summary>
         internal static string lblMinLength {
             get {
@@ -259,7 +259,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output path:.
+        ///   Looks up a localized string similar to Output Path:.
         /// </summary>
         internal static string lblPath {
             get {
@@ -336,6 +336,15 @@ namespace EspionSpotify.Translations {
         internal static string lblSpy {
             get {
                 return ResourceManager.GetString("lblSpy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-update already recorded track ID3 tags when they are played.
+        /// </summary>
+        internal static string lblUpdateRecordingsID3Tags {
+            get {
+                return ResourceManager.GetString("lblUpdateRecordingsID3Tags", resourceCulture);
             }
         }
         

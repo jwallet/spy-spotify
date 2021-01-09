@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>Media Tags:</value>
+    <value>ID3 etiquetas:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">
@@ -448,5 +448,9 @@
   <data name="logException" xml:space="preserve">
     <value>// Error: {0}</value>
     <comment>console</comment>
+  </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Vuelva a actualizar las etiquetas ID3 de pista ya grabadas cuando se reproduzcan</value>
+    <comment>interface</comment>
   </data>
 </root>

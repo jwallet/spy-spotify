@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Značky médií:.
+        ///   Looks up a localized string similar to ID3 tagy:.
         /// </summary>
         internal static string lblID3 {
             get {
@@ -232,7 +232,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ztišit reklamy:.
+        ///   Looks up a localized string similar to Ztišit reklamy.
         /// </summary>
         internal static string lblMuteAds {
             get {
@@ -336,6 +336,15 @@ namespace EspionSpotify.Translations {
         internal static string lblSpy {
             get {
                 return ResourceManager.GetString("lblSpy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Při přehrávání znovu aktualizujte již zaznamenané ID3 tagy skladeb.
+        /// </summary>
+        internal static string lblUpdateRecordingsID3Tags {
+            get {
+                return ResourceManager.GetString("lblUpdateRecordingsID3Tags", resourceCulture);
             }
         }
         

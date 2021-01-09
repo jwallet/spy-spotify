@@ -196,7 +196,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formato audio:.
+        ///   Looks up a localized string similar to Formato Audio:.
         /// </summary>
         internal static string lblFormat {
             get {
@@ -205,7 +205,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag multimediali:.
+        ///   Looks up a localized string similar to Tag ID3:.
         /// </summary>
         internal static string lblID3 {
             get {
@@ -336,6 +336,15 @@ namespace EspionSpotify.Translations {
         internal static string lblSpy {
             get {
                 return ResourceManager.GetString("lblSpy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aggiorna nuovamente i tag ID3 della traccia già registrata quando vengono riprodotti.
+        /// </summary>
+        internal static string lblUpdateRecordingsID3Tags {
+            get {
+                return ResourceManager.GetString("lblUpdateRecordingsID3Tags", resourceCulture);
             }
         }
         
