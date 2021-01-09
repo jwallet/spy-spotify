@@ -241,15 +241,27 @@ You will get a CD with songs ordered in the same order than the album or the one
 
 <p align="center"><img alt="Spotify API Dashboard - Edit App" src="./assets/images/faq_spotify_api_edit_app.png" /></p>
 
-<p>Add a <em>Redirect URI</em> with the value <strong>http://localhost:4002</strong>, click on <strong>Add</strong>, and on <strong>Save</strong> at the bottom.</p>
+<p>Add a <em>Redirect URI</em> :</p>
+
+<ul>
+  <li>By default, Spytify recommands <strong>http://localhost:4002</strong>, so you can use this one;</li>
+  <li>If port <code class="language-plaintext highlighter-rouge">4002</code> is not available on your computer, you can choose another one like <code class="language-plaintext highlighter-rouge">5000</code>;</li>
+  <li>If you have a proxy, enter your proxy URL instead of those mentionned above;</li>
+</ul>
+
+<p>Click on <strong>Add</strong>, and on <strong>Save</strong> at the bottom.</p>
 
 <p align="center"><img alt="Spotify API Dashboard - Set App" src="./assets/images/faq_spotify_api_dashboard.png" /></p>
 
-<p>On your app dashboard, copy your <em>Client ID</em> and <em>Client Secret</em> info to Spytify <em>Spotify API Credentials</em> setting form using the key 🔑 icon:</p>
+<p>Now, copy some information to Spytfiy to be able to connect Spotify API to Spytify.</p>
 
-<blockquote>
-  <p>Expand the <em>Show Client Secret</em> on the dashboard to reveal the key.</p>
-</blockquote>
+<p>Open Spytify settings, open <em>Spotify API Credentials</em> modal using the key 🔑 icon and copy those info from your Spotify App Dashboard :</p>
+
+<ul>
+  <li><em>Client ID</em></li>
+  <li><em>Client Secret</em> (expand the <em>Show Client Secret</em> on the dashboard to reveal the key.)</li>
+  <li><em>Redirect URI</em> (if you added an URI different than <code class="language-plaintext highlighter-rouge">http://locahost:4002</code>)</li>
+</ul>
 
 <p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
 </article>
