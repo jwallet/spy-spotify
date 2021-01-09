@@ -131,7 +131,7 @@ namespace EspionSpotify
             UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDeviceName);
             SetAudioEndPointDevicesDropDown(); // affects data source which requires Rm and audioSession
             UpdateAudioVirtualCableDriverImage();
-
+            
             _userSettings.AudioEndPointDeviceID = _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID;
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
