@@ -449,4 +449,8 @@
     <value>// Ошибка: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Повторно обновить уже записанные теги ID3 треков при их воспроизведении</value>
+    <comment>interface</comment>
+  </data>
 </root>

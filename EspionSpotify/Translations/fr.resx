@@ -449,4 +449,8 @@
     <value>// Erreur: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Remettre à jour les tags ID3 des pistes audio déjà enregistrées lors de leur lecture</value>
+    <comment>interface</comment>
+  </data>
 </root>

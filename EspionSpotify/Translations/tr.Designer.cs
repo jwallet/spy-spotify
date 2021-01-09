@@ -340,6 +340,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Önceden kaydedilmiş ID3 etiketlerini oynatıldıklarında yeniden güncelleyin.
+        /// </summary>
+        internal static string lblUpdateRecordingsID3Tags {
+            get {
+                return ResourceManager.GetString("lblUpdateRecordingsID3Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reklam.
         /// </summary>
         internal static string logAd {

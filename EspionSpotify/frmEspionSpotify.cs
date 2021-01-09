@@ -49,23 +49,23 @@ namespace EspionSpotify
             InitializeComponent();
             SuspendLayout();
 
-            _audioSession = new MainAudioSession(Settings.Default.AudioEndPointDeviceID);
+            _audioSession = new MainAudioSession(Settings.Default.app_selected_audio_device_id);
 
             _userSettings = new UserSettings();
 
-            if (string.IsNullOrEmpty(Settings.Default.Directory))
+            if (string.IsNullOrEmpty(Settings.Default.settings_output_path))
             {
-                Settings.Default.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+                Settings.Default.settings_output_path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 Settings.Default.Save();
             }
 
-            if (string.IsNullOrEmpty(Settings.Default.AnalyticsCID))
+            if (string.IsNullOrEmpty(Settings.Default.app_analytics_cid))
             {
-                Settings.Default.AnalyticsCID = Analytics.GenerateCID();
+                Settings.Default.app_analytics_cid = Analytics.GenerateCID();
                 Settings.Default.Save();
             }
 
-            _analytics = new Analytics(Settings.Default.AnalyticsCID, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            _analytics = new Analytics(Settings.Default.app_analytics_cid, Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             Instance = this;
             ResumeLayout();
@@ -86,36 +86,36 @@ namespace EspionSpotify
 
         public void Init()
         {
-            tcMenu.SelectedIndex = Settings.Default.TabNo;
+            tcMenu.SelectedIndex = Settings.Default.app_tab_number_selected;
 
-            rbMp3.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Mp3;
-            rbWav.Checked = Settings.Default.MediaFormat == (int)MediaFormat.Wav;
-            tbMinTime.Value = Settings.Default.MinimumRecordedLengthSeconds / 5;
-            tgEndingSongDelay.Checked = Settings.Default.EndingSongDelayEnabled;
-            tgAddSeparators.Checked = Settings.Default.TrackTitleSeparatorEnabled;
-            tgNumTracks.Checked = Settings.Default.OrderNumberInMediaTagEnabled;
-            tgNumFiles.Checked = Settings.Default.OrderNumberInfrontOfFileEnabled;
-            tgAddFolders.Checked = Settings.Default.GroupByFoldersEnabled;
-            txtPath.Text = Settings.Default.Directory;
-            tgMuteAds.Checked = Settings.Default.MuteAdsEnabled;
-            tgExtraTitleToSubtitle.Checked = Settings.Default.ExtraTitleToSubtitleEnabled;
-            folderBrowserDialog.SelectedPath = Settings.Default.Directory;
-            txtRecordingNum.Mask = Settings.Default.OrderNumberMask;
+            rbMp3.Checked = Settings.Default.settings_media_audio_format == (int)MediaFormat.Mp3;
+            rbWav.Checked = Settings.Default.settings_media_audio_format == (int)MediaFormat.Wav;
+            tbMinTime.Value = Settings.Default.settings_media_minimum_recorded_length_in_seconds / 5;
+            tgEndingSongDelay.Checked = Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
+            tgAddSeparators.Checked = Settings.Default.advanced_file_replace_space_by_underscore_enabled;
+            tgNumTracks.Checked = Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
+            tgNumFiles.Checked = Settings.Default.advanced_file_counter_number_prefix_enabled;
+            tgAddFolders.Checked = Settings.Default.advanced_file_group_media_in_folders_enabled;
+            txtPath.Text = Settings.Default.settings_output_path;
+            tgMuteAds.Checked = Settings.Default.settings_mute_ads_enabled;
+            tgExtraTitleToSubtitle.Checked = Settings.Default.advanced_id3_extra_title_as_subtitle_enabled;
+            folderBrowserDialog.SelectedPath = Settings.Default.settings_output_path;
+            txtRecordingNum.Mask = Settings.Default.app_counter_number_mask;
             
-            tgRecordOverRecordings.Checked = Settings.Default.RecordOverRecordingsEnabled;
-            chkRecordDuplicateRecordings.Enabled = Settings.Default.RecordOverRecordingsEnabled;
-            chkRecordDuplicateRecordings.Checked = Settings.Default.RecordDuplicateRecordingsEnabled;
-            chkRecordDuplicateRecordings.Visible = Settings.Default.RecordOverRecordingsEnabled;
+            tgRecordOverRecordings.Checked = Settings.Default.advanced_record_over_recordings_enabled;
+            chkRecordDuplicateRecordings.Enabled = Settings.Default.advanced_record_over_recordings_enabled;
+            chkRecordDuplicateRecordings.Checked = Settings.Default.advanced_record_over_recordings_and_duplicate_enabled;
+            chkRecordDuplicateRecordings.Visible = Settings.Default.advanced_record_over_recordings_enabled;
             
-            tgRecordEverything.Checked = Settings.Default.RecordEverythingEnabled;
-            chkRecordAds.Enabled = Settings.Default.RecordEverythingEnabled;
-            chkRecordAds.Checked = Settings.Default.RecordAdsEnabled;
-            chkRecordAds.Visible = Settings.Default.RecordEverythingEnabled;
+            tgRecordEverything.Checked = Settings.Default.advanced_record_everything;
+            chkRecordAds.Enabled = Settings.Default.advanced_record_everything;
+            chkRecordAds.Checked = Settings.Default.advanced_record_everything_and_ads_enabled;
+            chkRecordAds.Visible = Settings.Default.advanced_record_everything;
 
             SetSpotifyAPIOption();
 
-            rbLastFMAPI.Checked = Settings.Default.ExternalAPI == (int)ExternalAPIType.LastFM || !_userSettings.IsSpotifyAPISet;
-            rbSpotifyAPI.Checked = Settings.Default.ExternalAPI == (int)ExternalAPIType.Spotify && _userSettings.IsSpotifyAPISet;
+            rbLastFMAPI.Checked = Settings.Default.app_selected_external_api_id == (int)ExternalAPIType.LastFM || !_userSettings.IsSpotifyAPISet;
+            rbSpotifyAPI.Checked = Settings.Default.app_selected_external_api_id == (int)ExternalAPIType.Spotify && _userSettings.IsSpotifyAPISet;
             if (rbSpotifyAPI.Checked)
             {
                 SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
@@ -135,33 +135,33 @@ namespace EspionSpotify
             _userSettings.AudioEndPointDeviceID = _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID;
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
-            _userSettings.EndingTrackDelayEnabled = Settings.Default.EndingSongDelayEnabled;
-            _userSettings.GroupByFoldersEnabled = Settings.Default.GroupByFoldersEnabled;
-            _userSettings.MediaFormat = (MediaFormat)Settings.Default.MediaFormat;
-            _userSettings.MinimumRecordedLengthSeconds = Settings.Default.MinimumRecordedLengthSeconds;
-            _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.OrderNumberInfrontOfFileEnabled;
-            _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.OrderNumberInMediaTagEnabled;
-            _userSettings.OutputPath = FileManager.GetCleanPath(Settings.Default.Directory);
-            _userSettings.RecordEverythingEnabled = Settings.Default.RecordEverythingEnabled;
-            _userSettings.RecordAdsEnabled = Settings.Default.RecordAdsEnabled;
-            _userSettings.MuteAdsEnabled = Settings.Default.MuteAdsEnabled;
-            _userSettings.TrackTitleSeparator = Settings.Default.TrackTitleSeparatorEnabled ? "_" : " ";
-            _userSettings.OrderNumberMask = Settings.Default.OrderNumberMask;
-            _userSettings.ExtraTitleToSubtitleEnabled = Settings.Default.ExtraTitleToSubtitleEnabled;
+            _userSettings.EndingTrackDelayEnabled = Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
+            _userSettings.GroupByFoldersEnabled = Settings.Default.advanced_file_group_media_in_folders_enabled;
+            _userSettings.MediaFormat = (MediaFormat)Settings.Default.settings_media_audio_format;
+            _userSettings.MinimumRecordedLengthSeconds = Settings.Default.settings_media_minimum_recorded_length_in_seconds;
+            _userSettings.OrderNumberInfrontOfFileEnabled = Settings.Default.advanced_file_counter_number_prefix_enabled;
+            _userSettings.OrderNumberInMediaTagEnabled = Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
+            _userSettings.OutputPath = FileManager.GetCleanPath(Settings.Default.settings_output_path);
+            _userSettings.RecordEverythingEnabled = Settings.Default.advanced_record_everything;
+            _userSettings.RecordAdsEnabled = Settings.Default.advanced_record_everything_and_ads_enabled;
+            _userSettings.MuteAdsEnabled = Settings.Default.settings_mute_ads_enabled;
+            _userSettings.TrackTitleSeparator = Settings.Default.advanced_file_replace_space_by_underscore_enabled ? "_" : " ";
+            _userSettings.OrderNumberMask = Settings.Default.app_counter_number_mask;
+            _userSettings.ExtraTitleToSubtitleEnabled = Settings.Default.advanced_id3_extra_title_as_subtitle_enabled;
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(_userSettings.OrderNumberMask);
 
-            var _logs = Settings.Default.Logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            var _logs = Settings.Default.app_console_logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             WritePreviousLogsIntoConsole(_logs);
 
-            var lastVersionPrompted = Settings.Default.LastVersionPrompted.ToVersion();
+            var lastVersionPrompted = Settings.Default.app_last_version_prompt.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null && lastVersionPrompted > Assembly.GetExecutingAssembly().GetName().Version;
         }
 
         private void SetSpotifyAPIOption()
         {
-            _userSettings.SpotifyAPIClientId = Settings.Default.SpotifyAPIClientId?.Trim();
-            _userSettings.SpotifyAPISecretId = Settings.Default.SpotifyAPISecretId?.Trim();
+            _userSettings.SpotifyAPIClientId = Settings.Default.app_spotify_api_client_id?.Trim();
+            _userSettings.SpotifyAPISecretId = Settings.Default.app_spotify_api_client_secret?.Trim();
             rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
@@ -224,7 +224,7 @@ namespace EspionSpotify
 
         private void SetLanguageDropDown()
         {
-            var selectedId = Settings.Default.Language;
+            var selectedId = Settings.Default.settings_language;
 
             cbLanguage.DataSource = new BindingSource(Translations.Languages.dropdownListValues, null);
             cbLanguage.DisplayMember = "Value";
@@ -234,8 +234,8 @@ namespace EspionSpotify
 
         private void SetLanguage()
         {
-            var indexLanguage = Settings.Default.Language;
-            var indexBitRate = Settings.Default.Bitrate;
+            var indexLanguage = Settings.Default.settings_language;
+            var indexBitRate = Settings.Default.settings_media_bitrate_quality;
 
             var languageType = (LanguageType)indexLanguage;
 
@@ -271,6 +271,7 @@ namespace EspionSpotify
             lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
             lblExtraTitleToSubtitle.Text = Rm.GetString(I18nKeys.LblExtraTitleToSubtitle);
             lblID3.Text = Rm.GetString(I18nKeys.LblID3);
+            lblUpdateRecordingsID3Tags.Text = Rm.GetString(I18nKeys.LblUpdateRecordingsID3Tags);
 
             tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
             tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
@@ -442,7 +443,7 @@ namespace EspionSpotify
 
                 if (!string.IsNullOrEmpty(log))
                 {
-                    Settings.Default.Logs += $";{log}";
+                    Settings.Default.app_console_logs += $";{log}";
                     Settings.Default.Save();
                 }
             });
@@ -580,12 +581,12 @@ namespace EspionSpotify
         {
             var rb = sender as RadioButton;
             var mediaFormatIndex = (int)(rbMp3.Checked ? MediaFormat.Mp3 : MediaFormat.Wav);
-            if (Settings.Default.MediaFormat == mediaFormatIndex || !rb.Checked) return;
+            if (Settings.Default.settings_media_audio_format == mediaFormatIndex || !rb.Checked) return;
 
             var mediaFormat = rb?.Tag?.ToString().ToMediaFormat() ?? MediaFormat.Mp3;
             _userSettings.MediaFormat = mediaFormat;
             tlpAPI.Visible = mediaFormat == MediaFormat.Mp3;
-            Settings.Default.MediaFormat = mediaFormatIndex;
+            Settings.Default.settings_media_audio_format = mediaFormatIndex;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"media-format?type={mediaFormat.ToString()}"));
         }
@@ -595,24 +596,24 @@ namespace EspionSpotify
             var rb = sender as RadioButton;
             var mediaTagsAPI = rbLastFMAPI.Checked ? ExternalAPIType.LastFM : ExternalAPIType.Spotify;
 
-            if (Settings.Default.ExternalAPI == (int)mediaTagsAPI || !rb.Checked) return;
+            if (Settings.Default.app_selected_external_api_id == (int)mediaTagsAPI || !rb.Checked) return;
 
             var api = rb?.Tag?.ToString().ToMediaTagsAPI() ?? ExternalAPIType.LastFM;
             SetExternalAPI(api, _userSettings.IsSpotifyAPISet);
-            Settings.Default.ExternalAPI = (int)mediaTagsAPI;
+            Settings.Default.app_selected_external_api_id = (int)mediaTagsAPI;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"media-tags-api?type={api.ToString()}"));
         }
 
         private void TgRecordEverything_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordEverythingEnabled == tgRecordEverything.Checked) return;
+            if (Settings.Default.advanced_record_everything == tgRecordEverything.Checked) return;
 
             chkRecordAds.Enabled = tgRecordEverything.Checked;
             chkRecordAds.Visible = tgRecordEverything.Checked;
 
             _userSettings.RecordEverythingEnabled = tgRecordEverything.Checked;
-            Settings.Default.RecordEverythingEnabled = tgRecordEverything.Checked;
+            Settings.Default.advanced_record_everything = tgRecordEverything.Checked;
             Settings.Default.Save();
 
             if (tgRecordEverything.Checked)
@@ -626,10 +627,10 @@ namespace EspionSpotify
 
         private void ChkRecordAds_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordAdsEnabled == chkRecordAds.Checked) return;
+            if (Settings.Default.advanced_record_everything_and_ads_enabled == chkRecordAds.Checked) return;
 
             _userSettings.RecordAdsEnabled = chkRecordAds.Checked;
-            Settings.Default.RecordAdsEnabled = chkRecordAds.Checked;
+            Settings.Default.advanced_record_everything_and_ads_enabled = chkRecordAds.Checked;
             Settings.Default.Save();
 
             Task.Run(async () => await _analytics.LogAction(
@@ -638,73 +639,73 @@ namespace EspionSpotify
 
         private void TgMuteAds_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.MuteAdsEnabled == tgMuteAds.Checked) return;
+            if (Settings.Default.settings_mute_ads_enabled == tgMuteAds.Checked) return;
 
             _userSettings.MuteAdsEnabled = tgMuteAds.Checked;
-            Settings.Default.MuteAdsEnabled = tgMuteAds.Checked;
+            Settings.Default.settings_mute_ads_enabled = tgMuteAds.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"mute-ads?enabled={tgMuteAds.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgEndingSongDelay_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.EndingSongDelayEnabled == tgEndingSongDelay.Checked) return;
+            if (Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled == tgEndingSongDelay.Checked) return;
 
             _userSettings.EndingTrackDelayEnabled = tgEndingSongDelay.Checked;
-            Settings.Default.EndingSongDelayEnabled = tgEndingSongDelay.Checked;
+            Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled = tgEndingSongDelay.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"delay-on-ending-song?enabled={tgEndingSongDelay.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgAddFolders_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.GroupByFoldersEnabled == tgAddFolders.Checked) return;
+            if (Settings.Default.advanced_file_group_media_in_folders_enabled == tgAddFolders.Checked) return;
 
             _userSettings.GroupByFoldersEnabled = tgAddFolders.Checked;
-            Settings.Default.GroupByFoldersEnabled = tgAddFolders.Checked;
+            Settings.Default.advanced_file_group_media_in_folders_enabled = tgAddFolders.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"group-by-folders?enabled={tgAddFolders.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgAddSeparators_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.TrackTitleSeparatorEnabled == tgAddSeparators.Checked) return;
+            if (Settings.Default.advanced_file_replace_space_by_underscore_enabled == tgAddSeparators.Checked) return;
 
             _userSettings.TrackTitleSeparator = tgAddSeparators.Checked ? "_" : " ";
-            Settings.Default.TrackTitleSeparatorEnabled = tgAddSeparators.Checked;
+            Settings.Default.advanced_file_replace_space_by_underscore_enabled = tgAddSeparators.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"track-title-separator?enabled={tgAddSeparators.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgNumFiles_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.OrderNumberInfrontOfFileEnabled == tgNumFiles.Checked) return;
+            if (Settings.Default.advanced_file_counter_number_prefix_enabled == tgNumFiles.Checked) return;
 
             _userSettings.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
-            Settings.Default.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
+            Settings.Default.advanced_file_counter_number_prefix_enabled = tgNumFiles.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"order-number-in-front-of-files?enabled={tgNumFiles.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgNumTracks_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.OrderNumberInMediaTagEnabled == tgNumTracks.Checked) return;
+            if (Settings.Default.advanced_id3_counter_number_as_track_number_enabled == tgNumTracks.Checked) return;
 
             _userSettings.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
-            Settings.Default.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
+            Settings.Default.advanced_id3_counter_number_as_track_number_enabled = tgNumTracks.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"order-number-in-media-tags?enabled={tgNumTracks.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgRecordOverRecordings_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordOverRecordingsEnabled == tgRecordOverRecordings.Checked) return;
+            if (Settings.Default.advanced_record_over_recordings_enabled == tgRecordOverRecordings.Checked) return;
 
             chkRecordDuplicateRecordings.Enabled = tgRecordOverRecordings.Checked;
             chkRecordDuplicateRecordings.Visible = tgRecordOverRecordings.Checked;
 
-            Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
-            Settings.Default.RecordOverRecordingsEnabled = tgRecordOverRecordings.Checked;
+            Settings.Default.advanced_record_over_recordings_and_duplicate_enabled = chkRecordDuplicateRecordings.Checked;
+            Settings.Default.advanced_record_over_recordings_enabled = tgRecordOverRecordings.Checked;
             Settings.Default.Save();
 
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
@@ -714,9 +715,9 @@ namespace EspionSpotify
 
         private void ChkRecordDuplicateRecordings_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.RecordDuplicateRecordingsEnabled == chkRecordDuplicateRecordings.Checked) return;
+            if (Settings.Default.advanced_record_over_recordings_and_duplicate_enabled == chkRecordDuplicateRecordings.Checked) return;
 
-            Settings.Default.RecordDuplicateRecordingsEnabled = chkRecordDuplicateRecordings.Checked;
+            Settings.Default.advanced_record_over_recordings_and_duplicate_enabled = chkRecordDuplicateRecordings.Checked;
             Settings.Default.Save();
 
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
@@ -764,20 +765,20 @@ namespace EspionSpotify
         private void TxtPath_TextChanged(object sender, EventArgs e)
         {
             var path = FileManager.GetCleanPath(txtPath.Text);
-            if (Settings.Default.Directory == path) return;
+            if (Settings.Default.settings_output_path == path) return;
 
             _userSettings.OutputPath = path;
-            Settings.Default.Directory = path;
+            Settings.Default.settings_output_path = path;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"set-output-folder?path={path}"));
         }
 
         private void CbBitRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.Bitrate == cbBitRate.SelectedIndex) return;
+            if (Settings.Default.settings_media_bitrate_quality == cbBitRate.SelectedIndex) return;
 
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
-            Settings.Default.Bitrate = cbBitRate.SelectedIndex;
+            Settings.Default.settings_media_bitrate_quality = cbBitRate.SelectedIndex;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"bitrate?selected={cbBitRate.GetPropertyThreadSafe(c => c.SelectedValue)}"));
         }
@@ -786,12 +787,12 @@ namespace EspionSpotify
         {
             var selectedDeviceID = cbAudioDevices.SelectedItem.ToKeyValuePair<string, string>().Key;
 
-            if (selectedDeviceID == null || Settings.Default.AudioEndPointDeviceID == selectedDeviceID) return;
+            if (selectedDeviceID == null || Settings.Default.app_selected_audio_device_id == selectedDeviceID) return;
 
             _userSettings.AudioEndPointDeviceID = selectedDeviceID;
             _audioSession.AudioMMDevicesManager.RefreshSelectedDevice(selectedDeviceID);
             UpdateAudioEndPointFields(_audioSession.AudioDeviceVolume, _audioSession.AudioMMDevicesManager.AudioEndPointDeviceName);
-            Settings.Default.AudioEndPointDeviceID = selectedDeviceID;
+            Settings.Default.app_selected_audio_device_id = selectedDeviceID;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"audioEndPointDevice?selected={cbAudioDevices.GetPropertyThreadSafe(c => c.SelectedValue)}"));
         }
@@ -802,7 +803,7 @@ namespace EspionSpotify
             {
                 txtRecordingNum.Mask = txtRecordingNum.Mask.Substring(1);
                 _userSettings.OrderNumberMask = txtRecordingNum.Mask;
-                Settings.Default.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.app_counter_number_mask = txtRecordingNum.Mask;
                 Settings.Default.Save();
             }
             else if (_userSettings.InternalOrderNumber - 1 >= 0)
@@ -819,7 +820,7 @@ namespace EspionSpotify
             {
                 txtRecordingNum.Mask = $"{txtRecordingNum.Mask}0";
                 _userSettings.OrderNumberMask = txtRecordingNum.Mask;
-                Settings.Default.OrderNumberMask = txtRecordingNum.Mask;
+                Settings.Default.app_counter_number_mask = txtRecordingNum.Mask;
                 Settings.Default.Save();
             }
             else if (_userSettings.InternalOrderNumber + 1 <= _userSettings.OrderNumberMax)
@@ -848,9 +849,9 @@ namespace EspionSpotify
             var sec = (_userSettings.MinimumRecordedLengthSeconds % 60);
             lblMinTime.Text = min + @":" + sec.ToString("00");
 
-            if (Settings.Default.MinimumRecordedLengthSeconds == value) return;
+            if (Settings.Default.settings_media_minimum_recorded_length_in_seconds == value) return;
 
-            Settings.Default.MinimumRecordedLengthSeconds = value;
+            Settings.Default.settings_media_minimum_recorded_length_in_seconds = value;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"minimum-media-time?value={value}"));
         }
@@ -888,9 +889,9 @@ namespace EspionSpotify
 
         private void CbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbLanguage.SelectedIndex == Settings.Default.Language) return;
+            if (cbLanguage.SelectedIndex == Settings.Default.settings_language) return;
 
-            Settings.Default.Language = cbLanguage.SelectedIndex;
+            Settings.Default.settings_language = cbLanguage.SelectedIndex;
             Settings.Default.Save();
             SetLanguage();
             Task.Run(async () => await _analytics.LogAction($"language?selected={cbLanguage.GetPropertyThreadSafe(c => c.SelectedValue)}"));
@@ -898,9 +899,9 @@ namespace EspionSpotify
 
         private void TcMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.TabNo == tcMenu.SelectedIndex) return;
+            if (Settings.Default.app_tab_number_selected == tcMenu.SelectedIndex) return;
 
-            Settings.Default.TabNo = tcMenu.SelectedIndex;
+            Settings.Default.app_tab_number_selected = tcMenu.SelectedIndex;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"tab?selected={tcMenu.GetPropertyThreadSafe(c => c.SelectedTab.Text)}"));
         }
@@ -980,10 +981,10 @@ namespace EspionSpotify
 
         private void TgExtraTitleToSubtitle_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.ExtraTitleToSubtitleEnabled == tgExtraTitleToSubtitle.Checked) return;
+            if (Settings.Default.advanced_id3_extra_title_as_subtitle_enabled == tgExtraTitleToSubtitle.Checked) return;
 
             _userSettings.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
-            Settings.Default.ExtraTitleToSubtitleEnabled = tgExtraTitleToSubtitle.Checked;
+            Settings.Default.advanced_id3_extra_title_as_subtitle_enabled = tgExtraTitleToSubtitle.Checked;
             Settings.Default.Save();
             Task.Run(async () => await _analytics.LogAction($"move-extra-title-to-subtitle?enabled={tgExtraTitleToSubtitle.GetPropertyThreadSafe(c => c.Checked)}"));
         }

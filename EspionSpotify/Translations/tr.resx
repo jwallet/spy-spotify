@@ -449,4 +449,8 @@
     <value>// Hata: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Önceden kaydedilmiş ID3 etiketlerini oynatıldıklarında yeniden güncelleyin</value>
+    <comment>interface</comment>
+  </data>
 </root>

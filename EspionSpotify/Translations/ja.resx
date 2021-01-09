@@ -434,7 +434,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblID3" xml:space="preserve">
-    <value>ID3タグ:</value>
+    <value>ID3 タグ:</value>
     <comment>interface</comment>
   </data>
   <data name="lblRecordAds" xml:space="preserve">
@@ -448,5 +448,9 @@
   <data name="logException" xml:space="preserve">
     <value>// エラー: {0}</value>
     <comment>console</comment>
+  </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>再生時に録音済みのトラックID3タグを再更新</value>
+    <comment>interface</comment>
   </data>
 </root>

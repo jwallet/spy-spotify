@@ -93,14 +93,14 @@ namespace EspionSpotify
             while (Running)
             {
                 if (_cancellationTokenSource.IsCancellationRequested) return;
-                if (StopRecordingIfTrackCanBeSkipped()) return;
+                if (await StopRecordingIfTrackCanBeSkipped()) return;
                 await Task.Delay(50);
             }
 
             _waveIn.StopRecording();
         }
 
-        private bool StopRecordingIfTrackCanBeSkipped()
+        private async Task<bool> StopRecordingIfTrackCanBeSkipped()
         {
             if (_canBeSkippedValidated || !_track.MetaDataUpdated) return false;
 
@@ -108,6 +108,7 @@ namespace EspionSpotify
             if (IsSkipTrackActive)
             {
                 _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
+                await UpdateMediaTagsWhenSkippingTrack();
                 ForceStopRecording();
                 return true;
             }
@@ -180,7 +181,7 @@ namespace EspionSpotify
             _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
             _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
 
-            await UpdateOutputFileBasedOnMediaFormat();
+            await UpdateMediaTagsFileBasedOnMediaFormat();
 
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
@@ -215,7 +216,15 @@ namespace EspionSpotify
             }
         }
 
-        private async Task UpdateOutputFileBasedOnMediaFormat()
+        private async Task UpdateMediaTagsWhenSkippingTrack()
+        {
+            if (!_userSettings.UpdateRecordingsID3TagsEnabled) return;
+            
+            _currentOutputFile = _fileManager.GetOutputFile();
+            await UpdateMediaTagsFileBasedOnMediaFormat();
+        }
+
+        private async Task UpdateMediaTagsFileBasedOnMediaFormat()
         {
             switch (_userSettings.MediaFormat)
             {

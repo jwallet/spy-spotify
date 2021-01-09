@@ -449,4 +449,8 @@
     <value>// Erro: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Atualize novamente as tags ID3 das faixas já gravadas quando forem reproduzidas</value>
+    <comment>interface</comment>
+  </data>
 </root>

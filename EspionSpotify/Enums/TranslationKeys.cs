@@ -33,6 +33,7 @@
         lblRecordOverRecordings,
         lblSecretId,
         lblSpy,
+        lblUpdateRecordingsID3Tags,
         logAd,
         logDeleting,
         logException,

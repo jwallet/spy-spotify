@@ -449,4 +449,8 @@
     <value>// Chyba: {0}</value>
     <comment>console</comment>
   </data>
+  <data name="lblUpdateRecordingsID3Tags" xml:space="preserve">
+    <value>Při přehrávání znovu aktualizujte již zaznamenané ID3 tagy skladeb</value>
+    <comment>interface</comment>
+  </data>
 </root>

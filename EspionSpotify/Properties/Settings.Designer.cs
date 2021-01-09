@@ -145,7 +145,7 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool advanced_watcher_delay_next_recording_until_silent_enabled {
             get {
                 return ((bool)(this["advanced_watcher_delay_next_recording_until_silent_enabled"]));
@@ -253,7 +253,7 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool advanced_record_over_recordings_and_duplicate_enabled {
             get {
                 return ((bool)(this["advanced_record_over_recordings_and_duplicate_enabled"]));
@@ -320,6 +320,18 @@ namespace EspionSpotify.Properties {
             }
             set {
                 this["advanced_record_everything_and_ads_enabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advanced_id3_update_recordings_tags_enabled {
+            get {
+                return ((bool)(this["advanced_id3_update_recordings_tags_enabled"]));
+            }
+            set {
+                this["advanced_id3_update_recordings_tags_enabled"] = value;
             }
         }
     }

@@ -29,8 +29,8 @@ namespace EspionSpotify.Controls
 
             _analytics = analytics;
 
-            txtClientId.Text = Settings.Default.SpotifyAPIClientId?.Trim();
-            txtSecretId.Text = Settings.Default.SpotifyAPISecretId?.Trim();
+            txtClientId.Text = Settings.Default.app_spotify_api_client_id?.Trim();
+            txtSecretId.Text = Settings.Default.app_spotify_api_client_secret?.Trim();
 
             Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TitleSpotifyAPICredentials);
 
@@ -261,7 +261,7 @@ namespace EspionSpotify.Controls
             var value = ((MetroTextBox)sender).Text.Trim();
             if (!string.IsNullOrEmpty(value) && value.Length != OAUTH2_KEY_LENGTH) return;
 
-            Settings.Default.SpotifyAPIClientId = value;
+            Settings.Default.app_spotify_api_client_id = value;
             Settings.Default.Save();
         }
 
@@ -270,7 +270,7 @@ namespace EspionSpotify.Controls
             var value = ((MetroTextBox)sender).Text.Trim();
             if (!string.IsNullOrEmpty(value) && value.Length != OAUTH2_KEY_LENGTH) return;
 
-            Settings.Default.SpotifyAPISecretId = value;
+            Settings.Default.app_spotify_api_client_secret = value;
             Settings.Default.Save();
         }
 
