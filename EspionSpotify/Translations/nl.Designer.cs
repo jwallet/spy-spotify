@@ -322,6 +322,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Omleidings-URL:.
+        /// </summary>
+        internal static string lblRedirectURL {
+            get {
+                return ResourceManager.GetString("lblRedirectURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Secret:.
         /// </summary>
         internal static string lblSecretId {
@@ -804,6 +813,15 @@ namespace EspionSpotify.Translations {
         internal static string watermarkClientId {
             get {
                 return ResourceManager.GetString("watermarkClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plak hier uw omleidings-URL.
+        /// </summary>
+        internal static string watermarkRedirectURL {
+            get {
+                return ResourceManager.GetString("watermarkRedirectURL", resourceCulture);
             }
         }
         

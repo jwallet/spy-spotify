@@ -453,4 +453,12 @@
     <value>再生時に録音済みのトラックID3タグを再更新</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>リダイレクトURL:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>ここにリダイレクトURLを貼り付けます</value>
+    <comment>interface</comment>
+  </data>
 </root>

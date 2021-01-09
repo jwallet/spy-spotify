@@ -453,4 +453,12 @@
     <value>Werk reeds opgenomen track ID3-tags opnieuw bij wanneer ze worden afgespeeld</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>Omleidings-URL:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Plak hier uw omleidings-URL</value>
+    <comment>interface</comment>
+  </data>
 </root>

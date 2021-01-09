@@ -31,6 +31,7 @@
         lblRecordingNum,
         lblRecordingTimer,
         lblRecordOverRecordings,
+        lblRedirectURL,
         lblSecretId,
         lblSpy,
         lblUpdateRecordingsID3Tags,
@@ -85,6 +86,7 @@
         tipUninstallVirtualCableDriver,
         titleSpotifyAPICredentials,
         watermarkClientId,
-        watermarkSecretId
+        watermarkSecretId,
+        watermarkRedirectURL
     }
 }

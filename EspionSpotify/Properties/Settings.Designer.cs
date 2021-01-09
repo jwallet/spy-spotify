@@ -334,5 +334,17 @@ namespace EspionSpotify.Properties {
                 this["advanced_id3_update_recordings_tags_enabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:4002")]
+        public string app_spotify_api_redirect_url {
+            get {
+                return ((string)(this["app_spotify_api_redirect_url"]));
+            }
+            set {
+                this["app_spotify_api_redirect_url"] = value;
+            }
+        }
     }
 }

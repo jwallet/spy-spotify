@@ -453,4 +453,12 @@
     <value>Önceden kaydedilmiş ID3 etiketlerini oynatıldıklarında yeniden güncelleyin</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>Yönlendir URL:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Yönlendirme URL'nizi buraya yapıştırın</value>
+    <comment>interface</comment>
+  </data>
 </root>

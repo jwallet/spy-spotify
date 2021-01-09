@@ -453,4 +453,12 @@
     <value>Повторно обновить уже записанные теги ID3 треков при их воспроизведении</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL перенаправления:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Вставьте сюда URL переадресации</value>
+    <comment>interface</comment>
+  </data>
 </root>

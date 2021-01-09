@@ -162,6 +162,7 @@ namespace EspionSpotify
         {
             _userSettings.SpotifyAPIClientId = Settings.Default.app_spotify_api_client_id?.Trim();
             _userSettings.SpotifyAPISecretId = Settings.Default.app_spotify_api_client_secret?.Trim();
+            _userSettings.SpotifyAPIRedirectURL = Settings.Default.app_spotify_api_redirect_url?.Trim();
             rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
@@ -172,7 +173,10 @@ namespace EspionSpotify
                 case ExternalAPIType.Spotify:
                     if (isSpotifyAPISet)
                     {
-                        API.ExternalAPI.Instance = new API.SpotifyAPI(_userSettings.SpotifyAPIClientId, _userSettings.SpotifyAPISecretId);
+                        API.ExternalAPI.Instance = new API.SpotifyAPI(
+                            _userSettings.SpotifyAPIClientId,
+                            _userSettings.SpotifyAPISecretId,
+                            _userSettings.SpotifyAPIRedirectURL);
                     }
                     break;
                 case ExternalAPIType.LastFM:
@@ -974,6 +978,12 @@ namespace EspionSpotify
             if (result == DialogResult.No)
             {
                 rbLastFMAPI.Checked = true;
+            }
+            
+            if (result != DialogResult.Cancel)
+            {
+                var api = result == DialogResult.Yes ? ExternalAPIType.Spotify : ExternalAPIType.LastFM;
+                SetExternalAPI(api, _userSettings.IsSpotifyAPISet);
             }
 
             _frmSpotifyApiCredentials.Dispose();

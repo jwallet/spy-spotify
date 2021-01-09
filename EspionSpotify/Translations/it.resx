@@ -453,4 +453,12 @@
     <value>Aggiorna nuovamente i tag ID3 della traccia già registrata quando vengono riprodotti</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL di reindirizzamento:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Incolla qui il tuo URL di reindirizzamento</value>
+    <comment>interface</comment>
+  </data>
 </root>

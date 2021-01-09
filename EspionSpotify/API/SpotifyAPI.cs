@@ -26,6 +26,7 @@ namespace EspionSpotify.API
         private SpotifyWebAPI _api;
         private bool _connectionDialogOpened = false;
 
+        public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://localhost:4002";
         public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
 
         public bool IsAuthenticated { get => _token != null; }
@@ -34,7 +35,7 @@ namespace EspionSpotify.API
 
         public SpotifyAPI() { }
 
-        public SpotifyAPI(string clientId, string secretId, string redirectUrl = "http://localhost:4002")
+        public SpotifyAPI(string clientId, string secretId, string redirectUrl = SPOTIFY_API_DEFAULT_REDIRECT_URL)
         {
             _clientId = clientId;
             _secretId = secretId;

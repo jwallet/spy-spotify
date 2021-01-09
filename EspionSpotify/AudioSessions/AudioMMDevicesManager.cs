@@ -24,7 +24,7 @@ namespace EspionSpotify.AudioSessions
                 var deviceName = AudioEndPointDeviceNames.IncludesKey(AudioEndPointDeviceID)
                     ? AudioEndPointDeviceID
                     : DefaultAudioEndPointDeviceID;
-                return deviceName != null ? AudioMMDevices.GetDevice(deviceName) : null;
+                return deviceName != null && AudioMMDevices != null ? AudioMMDevices.GetDevice(deviceName) : null;
             }
         }
 
@@ -150,6 +150,7 @@ namespace EspionSpotify.AudioSessions
                 _defaultEndpointVolumeController.AudioEndpointVolume.OnVolumeNotification -= AudioEndpointVolume_OnVolumeNotification;
                 _defaultEndpointVolumeController.Dispose();
                 AudioMMDevices.Dispose();
+                AudioMMDevices = null;
             }
 
             _disposed = true;
