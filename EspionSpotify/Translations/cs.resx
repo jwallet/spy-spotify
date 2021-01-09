@@ -453,4 +453,12 @@
     <value>Při přehrávání znovu aktualizujte již zaznamenané ID3 tagy skladeb</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL přesměrování:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Sem vložte adresu URL přesměrování</value>
+    <comment>interface</comment>
+  </data>
 </root>

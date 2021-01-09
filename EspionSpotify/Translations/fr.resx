@@ -453,4 +453,12 @@
     <value>Remettre à jour les tags ID3 des pistes audio déjà enregistrées lors de leur lecture</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL de redirection:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Collez votre URL de redirection ici</value>
+    <comment>interface</comment>
+  </data>
 </root>

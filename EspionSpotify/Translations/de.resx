@@ -453,4 +453,12 @@
     <value>Aktualisieren Sie bereits aufgezeichnete Titel-ID3-Tags erneut, wenn sie abgespielt werden</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL umleiten:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Fügen Sie hier Ihre Weiterleitungs-URL ein</value>
+    <comment>interface</comment>
+  </data>
 </root>

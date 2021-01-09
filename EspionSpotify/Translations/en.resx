@@ -453,4 +453,12 @@
     <value>Re-update already recorded track ID3 tags when they are played</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>Redirect URL:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Paste your redirect URL here</value>
+    <comment>interface</comment>
+  </data>
 </root>

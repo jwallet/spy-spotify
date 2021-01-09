@@ -34,6 +34,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblRecordingTimer { get => TranslationKeys.lblRecordingTimer; }
         public static TranslationKeys LblRecordEverything { get => TranslationKeys.lblRecordEverything; }
         public static TranslationKeys LblRecordAds { get => TranslationKeys.lblRecordAds; }
+        public static TranslationKeys LblRedirectURL { get => TranslationKeys.lblRedirectURL; }
         public static TranslationKeys LblSecretId { get => TranslationKeys.lblSecretId; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
         public static TranslationKeys LblUpdateRecordingsID3Tags { get => TranslationKeys.lblUpdateRecordingsID3Tags; }
@@ -95,5 +96,6 @@ namespace EspionSpotify.Models
 
         public static TranslationKeys WatermarkClientId { get => TranslationKeys.watermarkClientId; }
         public static TranslationKeys WatermarkSecretId { get => TranslationKeys.watermarkSecretId; }
+        public static TranslationKeys WatermarkRedirectURL { get => TranslationKeys.watermarkRedirectURL; }
     }
 }

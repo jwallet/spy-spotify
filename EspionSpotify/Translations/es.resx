@@ -453,4 +453,12 @@
     <value>Vuelva a actualizar las etiquetas ID3 de pista ya grabadas cuando se reproduzcan</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>Redireccionar URL:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Pegue su URL de redireccionamiento aquí</value>
+    <comment>interface</comment>
+  </data>
 </root>

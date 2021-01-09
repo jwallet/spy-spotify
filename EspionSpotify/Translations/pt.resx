@@ -453,4 +453,12 @@
     <value>Atualize novamente as tags ID3 das faixas já gravadas quando forem reproduzidas</value>
     <comment>interface</comment>
   </data>
+  <data name="lblRedirectURL" xml:space="preserve">
+    <value>URL de redirecionamento:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="watermarkRedirectURL" xml:space="preserve">
+    <value>Cole o seu URL de redirecionamento aqui</value>
+    <comment>interface</comment>
+  </data>
 </root>

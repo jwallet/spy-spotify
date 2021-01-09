@@ -80,5 +80,8 @@
     <Setting Name="advanced_id3_update_recordings_tags_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="app_spotify_api_redirect_url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:4002</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
