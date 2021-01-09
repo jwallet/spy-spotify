@@ -49,6 +49,9 @@ namespace EspionSpotify
 
                     var body = Encoding.UTF8.GetString(content.ToArray());
                     var release = JsonConvert.DeserializeObject<Release>(body);
+
+                    if (release == null) return;
+
                     var githubTagVersion = release.tag_name.ToVersion();
 
                     if (githubTagVersion == null) return;
@@ -87,7 +90,6 @@ namespace EspionSpotify
             {
                 content.Dispose();
                 Console.WriteLine(ex.Message);
-                Program.ReportException(ex);
             }
         }
     }
