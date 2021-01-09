@@ -112,7 +112,7 @@ namespace EspionSpotify.Native
 
         public bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
         {
-            var pathWithFolder = userSettings.OutputPath + GetFolderPath(track, userSettings);
+            var pathWithFolder = ConcatPaths(userSettings.OutputPath, GetFolderPath(track, userSettings));
             var fileName = GenerateFileName(track, userSettings, _now);
             var filePath = ConcatPaths(pathWithFolder, $"{fileName}.{GetMediaFormatExtension(userSettings)}");
             return fileSystem.File.Exists(filePath);

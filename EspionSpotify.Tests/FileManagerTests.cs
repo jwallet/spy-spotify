@@ -333,17 +333,43 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void GetFolderPath_ReturnsArtistFolderPath()
+        internal void GetFolderPath_WithoutArtist_Throws()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Artist = null;
+
+            var exception = Assert.Throws<Exception>(() => FileManager.GetFolderPath(_track, _userSettings));
+
+            Assert.Equal("Artist / Album cannot be null.", exception.Message);
+        }
+
+        [Fact]
+        internal void GetFolderPath_OfUnknownTrack_GoesToOutputRoot()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            var track = new Track()
+            {
+                Artist = "Podcast",
+                Ad = true,
+            };
+
+            var folders = FileManager.GetFolderPath(track, _userSettings);
+
+            Assert.Null(folders);
+        }
+
+        [Fact]
+        internal void GetFolderPath_ReturnsArtistAlbumFolderPath()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _userSettings.TrackTitleSeparator = "_";
             _track.Artist = "Artist DJ";
             _track.Year = 2020;
 
-            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
+            var folders = FileManager.GetFolderPath(_track, _userSettings);
 
-            Assert.Equal($@"Artist_DJ\Single_(2020)", artistFolder);
-            Assert.Contains(_userSettings.TrackTitleSeparator, artistFolder);
+            Assert.Equal($@"Artist_DJ\Single_(2020)", folders);
+            Assert.Contains(_userSettings.TrackTitleSeparator, folders);
         }
 
         [Fact]
@@ -352,6 +378,33 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var result = _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
             Assert.False(result);
+        }
+
+        [Fact]
+        internal void IsPathFileNameExists_ReturnsFound()
+        {
+            var track = new Track()
+            {
+                Artist = "Artist",
+                Title = "Find Me",
+                Album = "Single",
+                Year = 2020,
+            };
+
+            _userSettings.MediaFormat = MediaFormat.Mp3;
+            _userSettings.GroupByFoldersEnabled = true;
+
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { $@"{_path}\Artist", new MockDirectoryData() },
+                { $@"{_path}\Artist\Single", new MockDirectoryData() },
+                { $@"{_path}\Artist\Single (2020)\Find Me.mp3", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+            });
+
+            _fileManager = new FileManager(_userSettings, track, _fileSystem, DateTime.Now);
+            
+            var result = _fileManager.IsPathFileNameExists(track, _userSettings, _fileSystem);
+            Assert.True(result);
         }
 
         [Fact]
