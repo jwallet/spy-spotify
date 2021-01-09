@@ -75,7 +75,7 @@ namespace EspionSpotify.API
                                 title = Constants.ADVERTISEMENT;
                                 break;
                             case TrackType.Track when playback.Item != null:
-                                title = string.Join(" - ", new[] { string.Join(", ", playback.Item.Artists.Select(x => x.Name)), playback.Item.Name });
+                                title = string.Join(" - ", new[] { playback.Item.Artists.Select(x => x.Name).First(), playback.Item.Name });
                                 break;
                             default:
                                 break;

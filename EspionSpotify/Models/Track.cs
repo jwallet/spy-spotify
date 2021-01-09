@@ -12,6 +12,8 @@ namespace EspionSpotify.Models
         private string _titleExtended = null;
         private string _apiTitleExtended = null;
 
+        public string Artists { get => string.Join(", ", AlbumArtists ?? Performers ?? new[] { Artist }); }
+
         public string Artist
         {
             get => _apiArtist ?? _artist;
@@ -154,8 +156,7 @@ namespace EspionSpotify.Models
 
             if (!string.IsNullOrEmpty(Artist) && !string.IsNullOrEmpty(Title))
             {
-                var artists = string.Join(", ", AlbumArtists ?? Performers ?? new[] { Artist });
-                song = $"{artists} - {Title}";
+                song = $"{Artists} - {Title}";
 
                 if (!string.IsNullOrEmpty(TitleExtended))
                 {
