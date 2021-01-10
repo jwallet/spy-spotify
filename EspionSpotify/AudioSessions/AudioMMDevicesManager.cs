@@ -30,7 +30,7 @@ namespace EspionSpotify.AudioSessions
 
         public bool? AudioEndPointDeviceMute { get => AudioEndPointDevice?.AudioEndpointVolume?.Mute; }
 
-        public string AudioEndPointDeviceName { get => AudioEndPointDevice?.FriendlyName; }
+        public string AudioEndPointDeviceName { get => AudioEndPointDevice?.GetFriendlyName(); }
 
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
@@ -38,8 +38,9 @@ namespace EspionSpotify.AudioSessions
 
         private MMDevice GetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
         {
+            if (AudioMMDevices == null) return null;
             if (!AudioMMDevices.HasDefaultAudioEndpoint(dataFlow, deviceRole)) return null;
-            return AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            return AudioMMDevices.GetDefaultAudioEndpointSafeException(DataFlow.Render, Role.Multimedia);
         }
         
         public void SetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
@@ -62,17 +63,7 @@ namespace EspionSpotify.AudioSessions
 
             AudioEndPointDeviceNames = AudioMMDevices
                 .EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)
-                .Where(x =>
-                {
-                    // weird fix to valid if audio device is available
-                    try { var _ = x.FriendlyName; }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        return false;
-                    }
-                    return true;
-                })
+                .Where(x => x.GetFriendlyName() != null)
                 .Select(x => new KeyValuePair<string, string>(x.ID, x.FriendlyName))
                 .ToDictionary(o => o.Key, o => o.Value);
 
@@ -94,6 +85,7 @@ namespace EspionSpotify.AudioSessions
 
         public void OnDefaultDeviceChanged(DataFlow dataFlow, Role deviceRole, string defaultDeviceId)
         {
+            if (AudioMMDevices == null) return;
             if (!AudioMMDevices.HasDefaultAudioEndpoint(dataFlow, deviceRole)) return;
             
             if (DefaultAudioEndPointDeviceID != null && _defaultEndpointVolumeController != null)
@@ -117,7 +109,7 @@ namespace EspionSpotify.AudioSessions
                     if (device.DataFlow != DataFlow.Render) return;
                     if (!AudioEndPointDeviceNames.IncludesKey(deviceId))
                     {
-                        AudioEndPointDeviceNames.Add(deviceId, device.FriendlyName);
+                        AudioEndPointDeviceNames.Add(deviceId, device.GetFriendlyName());
                     }
                     break;
                 default:

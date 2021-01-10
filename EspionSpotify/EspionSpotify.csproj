@@ -201,6 +201,7 @@
     <Compile Include="Extensions\ClassPropertyExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
+    <Compile Include="Extensions\NAudioExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
     <Compile Include="Extensions\SettingExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
