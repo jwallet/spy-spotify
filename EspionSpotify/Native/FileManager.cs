@@ -38,9 +38,10 @@ namespace EspionSpotify.Native
 
             var outputFile = new OutputFile
             {
-                Path = ConcatPaths(_userSettings.OutputPath, GetFolderPath(_track, _userSettings)),
+                FoldersPath = GetFolderPath(_track, _userSettings),
                 File = GenerateFileName(_track, _userSettings, _now),
                 Separator = _userSettings.TrackTitleSeparator,
+                TempPendingFile = _fileSystem.Path.GetTempFileName(),
                 Extension = GetMediaFormatExtension(_userSettings),
                 BasePath = _userSettings.OutputPath
             };

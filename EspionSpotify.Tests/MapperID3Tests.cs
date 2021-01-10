@@ -32,7 +32,7 @@ namespace EspionSpotify.Tests
             {
                 Extension = MediaFormat.Mp3.ToString(),
                 File = _track.ToString(),
-                Path = @"C:\path",
+                FoldersPath = @"C:\path",
                 Separator = "_",
             };
 

@@ -59,13 +59,29 @@ namespace EspionSpotify.Tests
         {
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.Equal(_path, outputFile.Path);
+            Assert.Equal(_path, outputFile.BasePath);
             Assert.Equal(_track.ToString(), outputFile.File);
             Assert.Equal(_userSettings.MediaFormat.ToString().ToLower(), outputFile.Extension);
             Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
 
             Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
             Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+        }
+
+        [Fact]
+        internal void GetOutputFile_Grouped_ReturnsFileName()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            var outputFile = _fileManager.GetOutputFile();
+
+            Assert.Equal(_path, outputFile.BasePath);
+            Assert.Equal(@"Artist\Single", outputFile.FoldersPath);
+            Assert.Equal(_track.ToTitleString(), outputFile.File);
+            Assert.Equal(_userSettings.MediaFormat.ToString().ToLower(), outputFile.Extension);
+            Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
+
+            Assert.Equal($@"{_path}\Artist\Single\Title - Live.spytify", outputFile.ToPendingFileString());
+            Assert.Equal($@"{_path}\Artist\Single\Title - Live.mp3", outputFile.ToString());
         }
 
         [Fact]
@@ -473,7 +489,7 @@ namespace EspionSpotify.Tests
 
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
@@ -663,7 +679,7 @@ namespace EspionSpotify.Tests
 
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
@@ -782,7 +798,7 @@ namespace EspionSpotify.Tests
         {
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator

@@ -139,6 +139,7 @@ namespace EspionSpotify.Spotify
 
         private void EventTimerStart()
         {
+            if (EventTimer == null) return;
             try
             {
                 EventTimer.Start();
@@ -151,6 +152,7 @@ namespace EspionSpotify.Spotify
 
         private void EventTimerEnabled(bool value)
         {
+            if (EventTimer == null) return;
             try
             {
                 EventTimer.Enabled = value;
@@ -202,6 +204,7 @@ namespace EspionSpotify.Spotify
                     EventTimer.Elapsed -= ElapsedEventTick;
 
                     EventTimer.Dispose();
+                    EventTimer = null;
                 }
 
                 if (SongTimer != null)
@@ -211,6 +214,7 @@ namespace EspionSpotify.Spotify
                     SongTimer.Elapsed -= ElapsedSongTick;
 
                     SongTimer.Dispose();
+                    SongTimer = null;
                 }
             }
 

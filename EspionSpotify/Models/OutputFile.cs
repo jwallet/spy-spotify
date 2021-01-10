@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Extensions;
 using EspionSpotify.Native;
+using System;
 
 namespace EspionSpotify.Models
 {
@@ -12,7 +13,8 @@ namespace EspionSpotify.Models
         public string File { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
 
         public string BasePath { get; set; }
-        public string Path { get; set; }
+        public string FoldersPath { get; set; }
+        public string TempPendingFile { get; set; }
         public int Count { get; private set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
@@ -30,19 +32,19 @@ namespace EspionSpotify.Models
         public override string ToString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{Extension}");
+            return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         public string ToPendingFileString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{SPYTIFY}");
+            return TempPendingFile;
         }
 
         public string ToFileString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path.Replace(BasePath, ".."), $"{_file}{GetAddedCount()}.{Extension}");
+            return FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         private string GetAddedCount()

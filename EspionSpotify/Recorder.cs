@@ -198,7 +198,8 @@ namespace EspionSpotify
                 using (var tempReader = new WaveFileReader(tempFileStream))
                 {
                     tempReader.Position = 0;
-                    // Cannot use with LameMP3FileWriter FileStream.Create(string, FileMode.Create, FileAccess.Write, FileShare.Read))
+                    // LameMP3FileWriter encodeds random bit rates when using shared files:
+                    // - _fileSystem.FileStream.Create(_currentOutputFile.ToPendingFileString(), FileMode.Create, FileAccess.Write, FileShare.Read)
                     using (var mediaFileStream = _fileSystem.File.Create(_currentOutputFile.ToPendingFileString()))
                     {
                         using (var mediaWriter = GetMediaFileWriter(mediaFileStream, _waveIn.WaveFormat))
