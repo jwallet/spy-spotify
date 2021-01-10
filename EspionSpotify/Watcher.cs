@@ -307,14 +307,17 @@ namespace EspionSpotify
                 MutesSpotifyAds(false);
                 _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
                 _audioSession.ClearSpotifyAudioSessionControls();
+            }
 
+            if (Spotify != null)
+            {
                 Spotify.ListenForEvents = false;
                 Spotify.OnPlayStateChange -= OnPlayStateChanged;
                 Spotify.OnTrackChange -= OnTrackChanged;
                 Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
                 Spotify.Dispose();
             }
-
+            
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(Constants.SPOTIFY);
             _form.UpdateIconSpotify(false);
@@ -389,6 +392,7 @@ namespace EspionSpotify
                     Spotify.OnTrackChange -= OnTrackChanged;
                     Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
                     Spotify.Dispose();
+                    Spotify = null;
                 }
 
                 _recorderTasks.ForEach(x =>
@@ -398,7 +402,11 @@ namespace EspionSpotify
                     x.Task.Dispose();
                 });
 
-                if (_recorder != null) _recorder.Dispose();
+                if (_recorder != null)
+                {
+                    _recorder.Dispose();
+                    _recorder = null;
+                }
             }
 
             _disposed = true;
