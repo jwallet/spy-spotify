@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const string SPYTIFY = "Spytify";
+
         public const string SPOTIFY = "Spotify";
         public const string SPOTIFYFREE = "Spotify Free";
         public const string ADVERTISEMENT = "Advertisement";

@@ -56,7 +56,7 @@ namespace EspionSpotify.Tests
         [InlineData(Constants.SPOTIFY, true)]
         [InlineData(Constants.SPOTIFYFREE, true)]
         [InlineData(Constants.ADVERTISEMENT, true)]
-        [InlineData("Spytify", false)]
+        [InlineData(Constants.SPYTIFY, false)]
         internal void StringIsNullOrInvalidSpotifyStatus_ReturnsExpectedString(string value, bool expected)
         {
             var actual = value.IsNullOrInvalidSpotifyStatus();

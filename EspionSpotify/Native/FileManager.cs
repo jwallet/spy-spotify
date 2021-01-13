@@ -41,7 +41,6 @@ namespace EspionSpotify.Native
                 FoldersPath = GetFolderPath(_track, _userSettings),
                 File = GenerateFileName(_track, _userSettings, _now),
                 Separator = _userSettings.TrackTitleSeparator,
-                TempPendingFile = _fileSystem.Path.GetTempFileName(),
                 Extension = GetMediaFormatExtension(_userSettings),
                 BasePath = _userSettings.OutputPath
             };
@@ -49,7 +48,7 @@ namespace EspionSpotify.Native
             switch (_userSettings.RecordRecordingsStatus)
             {
                 case Enums.RecordRecordingsStatus.Duplicate:
-                    while (_fileSystem.File.Exists(outputFile.ToString()))
+                    while (_fileSystem.File.Exists(outputFile.ToMediaFilePath()))
                     {
                         outputFile.Increment();
                     }

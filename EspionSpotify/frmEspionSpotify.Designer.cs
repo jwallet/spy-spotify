@@ -1691,7 +1691,7 @@ namespace EspionSpotify
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Style = MetroFramework.MetroColorStyle.Green;
-            this.Text = "Spytify";
+            this.Text = "SPYTIFY";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEspionSpotify_FormClosing);
             this.tcMenu.ResumeLayout(false);

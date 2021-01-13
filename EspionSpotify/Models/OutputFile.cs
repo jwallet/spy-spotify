@@ -6,7 +6,6 @@ namespace EspionSpotify.Models
 {
     public class OutputFile
     {
-        private const string SPYTIFY = "spytify";
         private const int FIRST_SONG_NAME_COUNT = 1;
 
         private string _file;
@@ -14,7 +13,6 @@ namespace EspionSpotify.Models
 
         public string BasePath { get; set; }
         public string FoldersPath { get; set; }
-        public string TempPendingFile { get; set; }
         public int Count { get; private set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
@@ -29,19 +27,19 @@ namespace EspionSpotify.Models
             Count++;
         }
 
-        public override string ToString()
+        public string ToMediaFilePath()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
-        public string ToPendingFileString()
+        public string ToSpytifyFilePath()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return TempPendingFile;
+            return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Constants.SPYTIFY.ToLower()}");
         }
 
-        public string ToFileString()
+        public override string ToString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
