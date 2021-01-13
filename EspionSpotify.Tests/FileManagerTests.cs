@@ -59,13 +59,29 @@ namespace EspionSpotify.Tests
         {
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.Equal(_path, outputFile.Path);
+            Assert.Equal(_path, outputFile.BasePath);
             Assert.Equal(_track.ToString(), outputFile.File);
             Assert.Equal(_userSettings.MediaFormat.ToString().ToLower(), outputFile.Extension);
             Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
 
-            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
-            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
+        }
+
+        [Fact]
+        internal void GetOutputFile_Grouped_ReturnsFileName()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            var outputFile = _fileManager.GetOutputFile();
+
+            Assert.Equal(_path, outputFile.BasePath);
+            Assert.Equal(@"Artist\Single", outputFile.FoldersPath);
+            Assert.Equal(_track.ToTitleString(), outputFile.File);
+            Assert.Equal(_userSettings.MediaFormat.ToString().ToLower(), outputFile.Extension);
+            Assert.Equal(_userSettings.TrackTitleSeparator, outputFile.Separator);
+
+            Assert.Equal($@"{_path}\Artist\Single\Title - Live.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist\Single\Title - Live.mp3", outputFile.ToMediaFilePath());
         }
 
         [Fact]
@@ -81,8 +97,8 @@ namespace EspionSpotify.Tests
 
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.Equal($@"{_path}\Artist - Title - Live 2.spytify", outputFile.ToPendingFileString());
-            Assert.Equal($@"{_path}\Artist - Title - Live 2.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live 2.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist - Title - Live 2.mp3", outputFile.ToMediaFilePath());
         }
 
         [Fact]
@@ -101,8 +117,8 @@ namespace EspionSpotify.Tests
 
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.Equal($@"{_path}\Artist - Title - Live 4.spytify", outputFile.ToPendingFileString());
-            Assert.Equal($@"{_path}\Artist - Title - Live 4.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live 4.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist - Title - Live 4.mp3", outputFile.ToMediaFilePath());
         }
 
         [Fact]
@@ -118,14 +134,14 @@ namespace EspionSpotify.Tests
 
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
-            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
         }
 
         [Fact]
         internal void BuildFileName_ReturnsFileName()
         {
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal($@"{_path}\Artist - Title - Live.mp3", fileName);
         }
@@ -136,7 +152,7 @@ namespace EspionSpotify.Tests
             _userSettings.OutputPath = _networkPath;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal($@"{_networkPath}\Artist - Title - Live.mp3", fileName);
         }
@@ -149,7 +165,7 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToMediaFilePath());
             Assert.Equal("Cannot recognize this type of track.", ex.Message);
         }
 
@@ -164,7 +180,7 @@ namespace EspionSpotify.Tests
             _userSettings.InternalOrderNumber = orderNumber;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
         }
@@ -181,7 +197,7 @@ namespace EspionSpotify.Tests
             _userSettings.InternalOrderNumber = orderNumber;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
         }
@@ -195,7 +211,7 @@ namespace EspionSpotify.Tests
             _userSettings.InternalOrderNumber = 100;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal($@"{_path}\Artist - Title - Live.mp3", fileName);
         }
@@ -208,7 +224,7 @@ namespace EspionSpotify.Tests
             var expected = $@"{_path}\Artist\Single\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
             Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
@@ -223,7 +239,7 @@ namespace EspionSpotify.Tests
             var expected = $@"{_networkPath}\Artist\Single\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
             Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
@@ -240,7 +256,7 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
             Assert.Equal(expected, fileName);
         }
 
@@ -253,7 +269,7 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToMediaFilePath());
             Assert.Equal("File name cannot be empty.", ex.Message);
         }
 
@@ -266,7 +282,7 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToString());
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToMediaFilePath());
             Assert.Equal("One or more directories has no name.", ex.Message);
         }
 
@@ -279,7 +295,7 @@ namespace EspionSpotify.Tests
             var expected = $@"{_path}\Artist\Untitled\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
             Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
@@ -295,7 +311,7 @@ namespace EspionSpotify.Tests
             var expected = $@"{_networkPath}\Artist\Untitled\Title - Live.mp3";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal(expected, fileName);
             Assert.True(_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(expected)));
@@ -307,7 +323,7 @@ namespace EspionSpotify.Tests
             _userSettings.MediaFormat = Enums.MediaFormat.Wav;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal($@"{_path}\Artist - Title - Live.wav", fileName);
         }
@@ -319,7 +335,7 @@ namespace EspionSpotify.Tests
             _userSettings.MediaFormat = Enums.MediaFormat.Wav;
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var fileName = _fileManager.GetOutputFile().ToString();
+            var fileName = _fileManager.GetOutputFile().ToMediaFilePath();
 
             Assert.Equal($@"{_networkPath}\Artist - Title - Live.wav", fileName);
         }
@@ -418,9 +434,9 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
-            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist - Title - Live.mp3"));
         }
 
@@ -437,9 +453,9 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
-            Assert.Equal($@"{_networkPath}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_networkPath}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
             Assert.True(_fileSystem.File.Exists($@"{_networkPath}\Artist - Title - Live.mp3"));
         }
 
@@ -455,9 +471,9 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
-            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist - Title - Live.mp3"));
         }
 
@@ -473,13 +489,13 @@ namespace EspionSpotify.Tests
 
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
             };
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString()));
+            var ex = Assert.Throws<Exception>(() => _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath()));
             Assert.Equal("Source / Destination file name cannot be null.", ex.Message);
 
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist - Title - Live.spytify"));
@@ -501,15 +517,15 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist\Album\Title.wav"));
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist\Album"));
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToMediaFilePath()));
         }
 
         [Fact]
@@ -531,14 +547,14 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist"));
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist\Single"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
-            Assert.True(_fileSystem.File.Exists(outputFile.ToString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToMediaFilePath()));
         }
 
         [Fact]
@@ -561,24 +577,24 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
             Assert.True(_fileSystem.Directory.Exists($@"{_networkPath}\Artist"));
             Assert.True(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
-            Assert.True(_fileSystem.File.Exists(outputFile.ToString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToMediaFilePath()));
         }
 
         [Fact]
         internal void RenameFile_CantMoveFileWhenNotFound()
         {
             var outputFile = _fileManager.GetOutputFile();
-            _fileManager.RenameFile(outputFile.ToPendingFileString(), outputFile.ToString());
+            _fileManager.RenameFile(outputFile.ToSpytifyFilePath(), outputFile.ToMediaFilePath());
 
-            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToPendingFileString());
-            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\Artist - Title - Live.spytify", outputFile.ToSpytifyFilePath());
+            Assert.Equal($@"{_path}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
             Assert.False(_fileSystem.File.Exists($@"{_path}\Artist - Title - Live.spytify"));
             Assert.False(_fileSystem.File.Exists($@"{_path}\Artist - Title - Live.mp3"));
         }
@@ -594,12 +610,12 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist - Title.wav"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -617,11 +633,11 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -642,11 +658,11 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -663,13 +679,13 @@ namespace EspionSpotify.Tests
 
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
             };
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.DeleteFile(outputFile.ToPendingFileString()));
+            var ex = Assert.Throws<Exception>(() => _fileManager.DeleteFile(outputFile.ToSpytifyFilePath()));
             Assert.Equal("File name cannot be null.", ex.Message);
         }
 
@@ -688,14 +704,14 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
             Assert.True(_fileSystem.File.Exists($@"{_path}\Artist\Album\Title.wav"));
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist\Album"));
             Assert.True(_fileSystem.Directory.Exists($@"{_path}\Artist"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -709,22 +725,17 @@ namespace EspionSpotify.Tests
 
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
-                { $@"{_path}\Artist", new MockDirectoryData() },
-                { $@"{_path}\Artist\Single", new MockDirectoryData() },
                 { $@"{_path}\Artist\Single\Delete_Me.spytify", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
-            Assert.False(_fileSystem.Directory.Exists($@"{_path}\Artist"));
-            Assert.False(_fileSystem.Directory.Exists($@"{_path}\Artist\Single"));
-            Assert.False(_fileSystem.Directory.Exists($@"{_path}\Artist\Single\Delete_Me.spytify"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -747,14 +758,14 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var outputFile = _fileManager.GetOutputFile();
 
-            Assert.True(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.True(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
 
-            _fileManager.DeleteFile(outputFile.ToPendingFileString());
+            _fileManager.DeleteFile(outputFile.ToSpytifyFilePath());
 
             Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist"));
             Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single"));
             Assert.False(_fileSystem.Directory.Exists($@"{_networkPath}\Artist\Single\Delete_Me.spytify"));
-            Assert.False(_fileSystem.File.Exists(outputFile.ToPendingFileString()));
+            Assert.False(_fileSystem.File.Exists(outputFile.ToSpytifyFilePath()));
         }
 
         [Fact]
@@ -782,7 +793,7 @@ namespace EspionSpotify.Tests
         {
             var outputFile = new OutputFile
             {
-                Path = _userSettings.OutputPath,
+                FoldersPath = _userSettings.OutputPath,
                 File = _track.ToString(),
                 Extension = _userSettings.MediaFormat.ToString().ToLower(),
                 Separator = _userSettings.TrackTitleSeparator
@@ -803,7 +814,7 @@ namespace EspionSpotify.Tests
             _fileManager.UpdateOutputFileWithLatestTrackInfo(outputFile, latestTrack, _userSettings);
 
             Assert.Equal("DJ - Title - Live", outputFile.File);
-            Assert.Equal($@"{_path}\DJ - Title - Live.mp3", outputFile.ToString());
+            Assert.Equal($@"{_path}\DJ - Title - Live.mp3", outputFile.ToMediaFilePath());
         }
     }
 }

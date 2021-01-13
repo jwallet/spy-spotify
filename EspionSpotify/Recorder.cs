@@ -171,15 +171,15 @@ namespace EspionSpotify
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
-                _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
+                _fileManager.DeleteFile(_currentOutputFile.ToSpytifyFilePath());
                 return;
             }
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
-            _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToFileString(), length);
+            _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);
 
             _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
-            _fileManager.RenameFile(_currentOutputFile.ToPendingFileString(), _currentOutputFile.ToString());
+            _fileManager.RenameFile(_currentOutputFile.ToSpytifyFilePath(), _currentOutputFile.ToMediaFilePath());
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
 
@@ -198,8 +198,7 @@ namespace EspionSpotify
                 using (var tempReader = new WaveFileReader(tempFileStream))
                 {
                     tempReader.Position = 0;
-                    // Cannot use with LameMP3FileWriter FileStream.Create(string, FileMode.Create, FileAccess.Write, FileShare.Read))
-                    using (var mediaFileStream = _fileSystem.File.Create(_currentOutputFile.ToPendingFileString()))
+                    using (var mediaFileStream = _fileSystem.FileStream.Create(_currentOutputFile.ToSpytifyFilePath(), FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
                         using (var mediaWriter = GetMediaFileWriter(mediaFileStream, _waveIn.WaveFormat))
                         {
@@ -227,11 +226,13 @@ namespace EspionSpotify
 
         private async Task UpdateMediaTagsFileBasedOnMediaFormat()
         {
+            if (!_fileSystem.File.Exists(_currentOutputFile.ToMediaFilePath())) return;
+
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
                     var mapper = new API.MapperID3(
-                        _currentOutputFile.ToString(),
+                        _currentOutputFile.ToMediaFilePath(),
                         _track,
                         _userSettings);
                     await mapper.SaveMediaTags();
@@ -421,7 +422,7 @@ namespace EspionSpotify
 
                 if (_currentOutputFile != null)
                 {
-                    _fileManager.DeleteFile(_currentOutputFile.ToPendingFileString());
+                    _fileManager.DeleteFile(_currentOutputFile.ToSpytifyFilePath());
                 }
             }
 

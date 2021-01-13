@@ -26,7 +26,7 @@ namespace EspionSpotify.Tests
 
             _processes = new IProcess[]
             {
-                new Process { Id = 1, MainWindowTitle = "Spytify", ProcessName = "Spytify"},
+                new Process { Id = 1, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY},
                 new Process { Id = 2, MainWindowTitle = "Facebook", ProcessName = "Firefox"},
                 new Process { Id = 3, MainWindowTitle = "", ProcessName = Constants.SPOTIFY}
         };

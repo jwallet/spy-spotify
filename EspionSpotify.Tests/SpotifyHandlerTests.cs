@@ -32,8 +32,8 @@ namespace EspionSpotify.Tests
             var spotifyHandler = new SpotifyHandler(spotifyProcessMock.Object);
             spotifyHandler.Dispose();
 
-            Assert.False(spotifyHandler.EventTimer.Enabled);
-            Assert.False(spotifyHandler.SongTimer.Enabled);
+            Assert.Null(spotifyHandler.EventTimer);
+            Assert.Null(spotifyHandler.SongTimer);
         }
 
         [Fact]

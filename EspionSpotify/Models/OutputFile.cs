@@ -1,18 +1,18 @@
 ﻿using EspionSpotify.Extensions;
 using EspionSpotify.Native;
+using System;
 
 namespace EspionSpotify.Models
 {
     public class OutputFile
     {
-        private const string SPYTIFY = "spytify";
         private const int FIRST_SONG_NAME_COUNT = 1;
 
         private string _file;
         public string File { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
 
         public string BasePath { get; set; }
-        public string Path { get; set; }
+        public string FoldersPath { get; set; }
         public int Count { get; private set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
@@ -27,22 +27,22 @@ namespace EspionSpotify.Models
             Count++;
         }
 
+        public string ToMediaFilePath()
+        {
+            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
+            return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
+        }
+
+        public string ToSpytifyFilePath()
+        {
+            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
+            return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Constants.SPYTIFY.ToLower()}");
+        }
+
         public override string ToString()
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{Extension}");
-        }
-
-        public string ToPendingFileString()
-        {
-            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path, $"{_file}{GetAddedCount()}.{SPYTIFY}");
-        }
-
-        public string ToFileString()
-        {
-            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(Path.Replace(BasePath, ".."), $"{_file}{GetAddedCount()}.{Extension}");
+            return FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         private string GetAddedCount()

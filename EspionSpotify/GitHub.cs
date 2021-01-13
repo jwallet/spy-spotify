@@ -18,7 +18,6 @@ namespace EspionSpotify
     internal static class GitHub
     {
         private const string API_LATEST_RELEASE_URL = "https://api.github.com/repos/jwallet/spy-spotify/releases/latest";
-        private const string SPYTIFY = "Spytify";
 
         public const string WEBSITE_FAQ_URL = "https://jwallet.github.io/spy-spotify/faq.html";
         public const string WEBSITE_FAQ_SPOTIFY_API_URL = "https://jwallet.github.io/spy-spotify/faq.html#media-tags-not-found";
@@ -32,7 +31,7 @@ namespace EspionSpotify
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Http.Get;
-            request.UserAgent = SPYTIFY;
+            request.UserAgent = Constants.SPYTIFY;
 
             var content = new MemoryStream();
 

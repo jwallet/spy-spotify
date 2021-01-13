@@ -49,6 +49,8 @@ namespace EspionSpotify
             InitializeComponent();
             SuspendLayout();
 
+            Text = Constants.SPYTIFY;
+
             _audioSession = new MainAudioSession(Settings.Default.app_selected_audio_device_id);
 
             _userSettings = new UserSettings();

@@ -38,7 +38,7 @@ namespace EspionSpotify.Native
 
             var outputFile = new OutputFile
             {
-                Path = ConcatPaths(_userSettings.OutputPath, GetFolderPath(_track, _userSettings)),
+                FoldersPath = GetFolderPath(_track, _userSettings),
                 File = GenerateFileName(_track, _userSettings, _now),
                 Separator = _userSettings.TrackTitleSeparator,
                 Extension = GetMediaFormatExtension(_userSettings),
@@ -48,7 +48,7 @@ namespace EspionSpotify.Native
             switch (_userSettings.RecordRecordingsStatus)
             {
                 case Enums.RecordRecordingsStatus.Duplicate:
-                    while (_fileSystem.File.Exists(outputFile.ToString()))
+                    while (_fileSystem.File.Exists(outputFile.ToMediaFilePath()))
                     {
                         outputFile.Increment();
                     }

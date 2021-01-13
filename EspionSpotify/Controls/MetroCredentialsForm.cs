@@ -39,7 +39,7 @@ namespace EspionSpotify.Controls
             _pastSpotifyAPISecretId = Settings.Default.app_spotify_api_client_secret?.Trim();
             _pastSpotifyAPIRedirectURL = Settings.Default.app_spotify_api_redirect_url?.Trim();
 
-            if (string.IsNullOrEmpty(txtRedirectURL.Text))
+            if (string.IsNullOrEmpty(_pastSpotifyAPIRedirectURL))
             {
                 _pastSpotifyAPIRedirectURL = API.SpotifyAPI.SPOTIFY_API_DEFAULT_REDIRECT_URL;
             }

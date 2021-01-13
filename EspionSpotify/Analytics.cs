@@ -54,8 +54,8 @@ namespace EspionSpotify
                 { "cid", cid }, // Client id
                 { "cm", cm }, // Campaign medium, App version
                 { "av", cm }, // App version
-                { "cn", "Spytify" }, // Campaign name
-                { "an", "Spytify" }, // App name
+                { "cn", Constants.SPYTIFY }, // Campaign name
+                { "an", Constants.SPYTIFY }, // App name
                 { "cs", WebUtility.UrlEncode(cs)}, // Campaign source, OS Version
                 { "ul", ul }, // User Language
                 { "sr", sr }, // Screen resolution
