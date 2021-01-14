@@ -28,7 +28,17 @@ namespace EspionSpotify.Native
             _now = now;
         }
 
-        internal string GetTempFile() => _fileSystem.Path.GetTempFileName();
+        internal string GetTempFile()
+        {
+            var tempFile = _fileSystem.Path.GetTempFileName();
+            var path = _fileSystem.Path.GetDirectoryName(tempFile);
+            var tempFileName = _fileSystem.Path.GetFileNameWithoutExtension(tempFile);
+            var extension = _fileSystem.Path.GetExtension(tempFile);
+
+            var fileName = string.Join(".", new string[] { tempFileName, Constants.SPYTIFY.ToLower() });
+
+            return ConcatPaths(path, $"{fileName}{extension}");
+        }
 
         internal static bool GoesAtRoot(bool GroupByFoldersEnabled, bool IsUnknown) => !GroupByFoldersEnabled || IsUnknown;
 
@@ -38,13 +48,13 @@ namespace EspionSpotify.Native
 
             var outputFile = new OutputFile
             {
+                BasePath = _userSettings.OutputPath,
                 FoldersPath = GetFolderPath(_track, _userSettings),
-                File = GenerateFileName(_track, _userSettings, _now),
+                MediaFile = GenerateFileName(_track, _userSettings, _now),
                 Separator = _userSettings.TrackTitleSeparator,
-                Extension = GetMediaFormatExtension(_userSettings),
-                BasePath = _userSettings.OutputPath
+                Extension = GetMediaFormatExtension(_userSettings)
             };
-
+            
             switch (_userSettings.RecordRecordingsStatus)
             {
                 case Enums.RecordRecordingsStatus.Duplicate:
@@ -60,7 +70,7 @@ namespace EspionSpotify.Native
 
         public OutputFile UpdateOutputFileWithLatestTrackInfo(OutputFile outputFile, Track track, UserSettings userSettings)
         {
-            outputFile.File = GenerateFileName(track, userSettings, _now);
+            outputFile.MediaFile = GenerateFileName(track, userSettings, _now);
             return outputFile;
         }
 

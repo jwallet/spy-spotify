@@ -19,7 +19,9 @@ namespace EspionSpotify
     public class Watcher : IWatcher, IDisposable
     {
         private bool _disposed = false;
-        private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY = 5;
+        private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS = 5;
+        private const int WATCHER_DELAY_MS = 500;
+        private const int PREVENT_SLEEP_EVENT_DELAY_MS = (WATCHER_DELAY_MS * 2) * 5 * 60;
 
         public static bool Running { get; internal set; }
         public static bool Ready { get; private set; } = true;
@@ -31,6 +33,7 @@ namespace EspionSpotify
         private bool _isPlaying;
         private Track _currentTrack;
         private bool _stopRecordingWhenSongEnds;
+        private int _preventSleepDelayEventMs;
         private readonly IFileSystem _fileSystem;
 
         private readonly IFrmEspionSpotify _form;
@@ -55,7 +58,7 @@ namespace EspionSpotify
         public bool IsOldSong
         {
             get => _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0
-                && _currentTrack.CurrentPosition > Math.Max(0, (_currentTrack.Length ?? 0) - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY);
+                && _currentTrack.CurrentPosition > Math.Max(0, (_currentTrack.Length ?? 0) - NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS);
         }
         public bool IsMaxOrderNumberAsFileExceeded
         {
@@ -74,6 +77,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _fileSystem = fileSystem;
             _recorder = recorder;
+            _preventSleepDelayEventMs = 0;
 
             Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
@@ -196,7 +200,6 @@ namespace EspionSpotify
             else if (SpotifyConnect.IsSpotifyRunning())
             {
                 await InitializeRecordingSession();
-                NativeMethods.PreventSleep();
 
                 while (Running)
                 {
@@ -217,7 +220,8 @@ namespace EspionSpotify
                         _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
                         ToggleStopRecordingDelayed = true;
                     }
-                    await Task.Delay(500);
+                    await Task.Delay(WATCHER_DELAY_MS);
+                    PreventSleepEvent();
                 }
 
                 DoIKeepLastSong();
@@ -323,6 +327,16 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(false);
             _form.UpdateRecordedTime(null);
             _form.StopRecording();
+        }
+
+        private void PreventSleepEvent()
+        {
+            _preventSleepDelayEventMs += WATCHER_DELAY_MS;
+
+            if (_preventSleepDelayEventMs % PREVENT_SLEEP_EVENT_DELAY_MS == 0)
+            {
+                NativeMethods.PreventSleep();
+            }
         }
 
         private void ManageRecorderTasks()

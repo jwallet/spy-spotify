@@ -9,7 +9,7 @@ namespace EspionSpotify.Models
         private const int FIRST_SONG_NAME_COUNT = 1;
 
         private string _file;
-        public string File { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
+        public string MediaFile { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
 
         public string BasePath { get; set; }
         public string FoldersPath { get; set; }
@@ -31,12 +31,6 @@ namespace EspionSpotify.Models
         {
             if (_file.IsNullOrInvalidSpotifyStatus()) return null;
             return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
-        }
-
-        public string ToSpytifyFilePath()
-        {
-            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
-            return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Constants.SPYTIFY.ToLower()}");
         }
 
         public override string ToString()
