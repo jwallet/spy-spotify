@@ -7,7 +7,7 @@ namespace EspionSpotify.Native
     {
         public static void PreventSleep()
         {
-            SetThreadExecutionState(ExecutionState.EsContinuous | ExecutionState.EsSystemRequired);
+            SetThreadExecutionState(ExecutionState.EsContinuous | ExecutionState.EsAwaymodeRequired | ExecutionState.EsSystemRequired);
         }
 
         public static void AllowSleep()
