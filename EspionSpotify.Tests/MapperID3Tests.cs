@@ -31,7 +31,7 @@ namespace EspionSpotify.Tests
             _currentFile = new OutputFile()
             {
                 Extension = MediaFormat.Mp3.ToString(),
-                File = _track.ToString(),
+                MediaFile = _track.ToString(),
                 FoldersPath = @"C:\path",
                 Separator = "_",
             };

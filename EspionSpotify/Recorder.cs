@@ -32,7 +32,8 @@ namespace EspionSpotify
         private OutputFile _currentOutputFile;
         private WasapiLoopbackCapture _waveIn;
         private Stream _tempWaveWriter;
-        private string _tempFile;
+        private string _tempOriginalFile;
+        private string _tempEncodeFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private bool _canBeSkippedValidated = false;
@@ -67,7 +68,7 @@ namespace EspionSpotify
             Running = true;
             await Task.Delay(50);
 
-            _tempFile = _fileManager.GetTempFile();
+            _tempOriginalFile = _fileManager.GetTempFile();
 
             _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             _waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -75,7 +76,7 @@ namespace EspionSpotify
 
             try
             {
-                _tempWaveWriter = new WaveFileWriter(_tempFile, _waveIn.WaveFormat);
+                _tempWaveWriter = new WaveFileWriter(_tempOriginalFile, _waveIn.WaveFormat);
             }
             catch (Exception ex)
             {
@@ -144,15 +145,15 @@ namespace EspionSpotify
             {
                 Running = false;
                 _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
-                _fileManager.DeleteFile(_tempFile);
+                _fileManager.DeleteFile(_tempOriginalFile);
                 if (_waveIn != null) _waveIn.Dispose();
                 return;
             }
 
             try
             {
-                _currentOutputFile = _fileManager.GetOutputFile();
-                await WriteTempWaveToMediaFile();
+                _tempEncodeFile = _fileManager.GetTempFile();
+                await WriteWaveFileToMediaFile();
             }
             catch (Exception ex)
             {
@@ -165,21 +166,23 @@ namespace EspionSpotify
             finally
             {
                 if (_waveIn != null) _waveIn.Dispose();
-                _fileManager.DeleteFile(_tempFile);
+                _fileManager.DeleteFile(_tempOriginalFile);
             }
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.File, _userSettings.MinimumRecordedLengthSeconds);
-                _fileManager.DeleteFile(_currentOutputFile.ToSpytifyFilePath());
+                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.MediaFile, _userSettings.MinimumRecordedLengthSeconds);
+                _fileManager.DeleteFile(_tempEncodeFile);
                 return;
             }
+
+            _currentOutputFile = _fileManager.GetOutputFile();
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);
 
             _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
-            _fileManager.RenameFile(_currentOutputFile.ToSpytifyFilePath(), _currentOutputFile.ToMediaFilePath());
+            _fileManager.RenameFile(_tempEncodeFile, _currentOutputFile.ToMediaFilePath());
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
 
@@ -189,16 +192,29 @@ namespace EspionSpotify
             Dispose();
         }
 
-        private async Task WriteTempWaveToMediaFile()
+        private async Task WriteWaveFileToMediaFile()
+        {
+            if (_userSettings.MediaFormat == MediaFormat.Wav)
+            {
+                // copy instead of moving to be able to keep using common code
+                _fileSystem.File.Copy(_tempOriginalFile, _tempEncodeFile);
+            }
+            else
+            {
+                await EncodeWaveFileToMediaFile();
+            }
+        }
+
+        private async Task EncodeWaveFileToMediaFile()
         {
             var restrictions = _waveIn.WaveFormat.GetMP3RestrictionCode();
-            using (var tempFileStream = _fileSystem.File.OpenRead(_tempFile))
+            using (var tempFileStream = _fileSystem.File.OpenRead(_tempOriginalFile))
             {
                 tempFileStream.Position = 0;
                 using (var tempReader = new WaveFileReader(tempFileStream))
                 {
                     tempReader.Position = 0;
-                    using (var mediaFileStream = _fileSystem.FileStream.Create(_currentOutputFile.ToSpytifyFilePath(), FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    using (var mediaFileStream = _fileSystem.FileStream.Create(_tempEncodeFile, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
                         using (var mediaWriter = GetMediaFileWriter(mediaFileStream, _waveIn.WaveFormat))
                         {
@@ -388,7 +404,7 @@ namespace EspionSpotify
             _tempWaveWriter.Close();
             _tempWaveWriter.Dispose();
 
-            _fileManager.DeleteFile(_tempFile);
+            _fileManager.DeleteFile(_tempOriginalFile);
         }
 
         public void Dispose()
@@ -418,11 +434,11 @@ namespace EspionSpotify
                     _tempWaveWriter.Dispose();
                 }
 
-                _fileManager.DeleteFile(_tempFile);
+                _fileManager.DeleteFile(_tempOriginalFile);
 
                 if (_currentOutputFile != null)
                 {
-                    _fileManager.DeleteFile(_currentOutputFile.ToSpytifyFilePath());
+                    _fileManager.DeleteFile(_tempEncodeFile);
                 }
             }
 
