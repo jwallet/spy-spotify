@@ -169,14 +169,14 @@ namespace EspionSpotify
                 _fileManager.DeleteFile(_tempOriginalFile);
             }
 
+            _currentOutputFile = _fileManager.GetOutputFile();
+
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.MediaFile, _userSettings.MinimumRecordedLengthSeconds);
+                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.ToString(), _userSettings.MinimumRecordedLengthSeconds);
                 _fileManager.DeleteFile(_tempEncodeFile);
                 return;
             }
-
-            _currentOutputFile = _fileManager.GetOutputFile();
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);

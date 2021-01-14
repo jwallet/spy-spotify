@@ -33,7 +33,6 @@ namespace EspionSpotify
         private bool _isPlaying;
         private Track _currentTrack;
         private bool _stopRecordingWhenSongEnds;
-        private int _preventSleepDelayEventMs;
         private readonly IFileSystem _fileSystem;
 
         private readonly IFrmEspionSpotify _form;
@@ -77,7 +76,6 @@ namespace EspionSpotify
             _currentTrack = track;
             _fileSystem = fileSystem;
             _recorder = recorder;
-            _preventSleepDelayEventMs = 0;
 
             Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
@@ -182,64 +180,64 @@ namespace EspionSpotify
 
             _form.WriteIntoConsole(I18nKeys.LogStarting);
 
+            NativeMethods.PreventSleep();
+
             await RunSpotifyConnect();
             var isAudioSessionNotFound = !await SetSpotifyAudioSessionAndWaitToStart();
             BindSpotifyEventHandlers();
             Ready = false;
 
-            if (!Recorder.TestFileWriter(_form, _audioSession, _userSettings))
+            if (Recorder.TestFileWriter(_form, _audioSession, _userSettings))
             {
-                EndRecordingSession();
-            }
-
-            if (isAudioSessionNotFound)
-            {
-                _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
-                Running = false;
-            }
-            else if (SpotifyConnect.IsSpotifyRunning())
-            {
-                await InitializeRecordingSession();
-
-                while (Running)
+                if (isAudioSessionNotFound)
                 {
-                    // Order is important
-                    if (!SpotifyConnect.IsSpotifyRunning())
-                    {
-                        _form.WriteIntoConsole(I18nKeys.LogSpotifyIsClosed);
-                        Running = false;
-                    }
-                    else if (ToggleStopRecordingDelayed)
-                    {
-                        ToggleStopRecordingDelayed = false;
-                        _stopRecordingWhenSongEnds = true;
-                        _form.WriteIntoConsole(I18nKeys.LogStopRecordingWhenSongEnds);
-                    }
-                    else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
-                    {
-                        _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
-                        ToggleStopRecordingDelayed = true;
-                    }
-                    await Task.Delay(WATCHER_DELAY_MS);
-                    PreventSleepEvent();
+                    _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
+                    Running = false;
                 }
+                else if (SpotifyConnect.IsSpotifyRunning())
+                {
+                    await InitializeRecordingSession();
 
-                DoIKeepLastSong();
-                StopLastRecorder();
-                NativeMethods.AllowSleep();
-            }
-            else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
-            {
-                _form.WriteIntoConsole(isAudioSessionNotFound ? I18nKeys.LogSpotifyIsClosed : I18nKeys.LogSpotifyNotConnected);
-            }
-            else
-            {
-                _form.WriteIntoConsole(I18nKeys.LogSpotifyNotFound);
+                    while (Running)
+                    {
+                        // Order is important
+                        if (!SpotifyConnect.IsSpotifyRunning())
+                        {
+                            _form.WriteIntoConsole(I18nKeys.LogSpotifyIsClosed);
+                            Running = false;
+                        }
+                        else if (ToggleStopRecordingDelayed)
+                        {
+                            ToggleStopRecordingDelayed = false;
+                            _stopRecordingWhenSongEnds = true;
+                            _form.WriteIntoConsole(I18nKeys.LogStopRecordingWhenSongEnds);
+                        }
+                        else if (!_stopRecordingWhenSongEnds && _userSettings.HasRecordingTimerEnabled && !_recordingTimer.Enabled)
+                        {
+                            _form.WriteIntoConsole(I18nKeys.LogRecordingTimerDone);
+                            ToggleStopRecordingDelayed = true;
+                        }
+                        await Task.Delay(WATCHER_DELAY_MS);
+                    }
+
+                    DoIKeepLastSong();
+                    StopLastRecorder();
+                }
+                else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
+                {
+                    _form.WriteIntoConsole(isAudioSessionNotFound ? I18nKeys.LogSpotifyIsClosed : I18nKeys.LogSpotifyNotConnected);
+                }
+                else
+                {
+                    _form.WriteIntoConsole(I18nKeys.LogSpotifyNotFound);
+                }
             }
 
             EndRecordingSession();
 
             _form.WriteIntoConsole(I18nKeys.LogStoping);
+
+            NativeMethods.AllowSleep();
         }
 
         private void RecordSpotify()
@@ -327,16 +325,6 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(false);
             _form.UpdateRecordedTime(null);
             _form.StopRecording();
-        }
-
-        private void PreventSleepEvent()
-        {
-            _preventSleepDelayEventMs += WATCHER_DELAY_MS;
-
-            if (_preventSleepDelayEventMs % PREVENT_SLEEP_EVENT_DELAY_MS == 0)
-            {
-                NativeMethods.PreventSleep();
-            }
         }
 
         private void ManageRecorderTasks()
