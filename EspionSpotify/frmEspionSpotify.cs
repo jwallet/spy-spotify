@@ -500,9 +500,9 @@ namespace EspionSpotify
             tlAdvanced.Enabled = true;
         }
 
-        private bool DirExists()
+        private bool IsOutputDirectoryNotFound()
         {
-            if (Directory.Exists(_userSettings.OutputPath)) return true;
+            if (Directory.Exists(_userSettings.OutputPath)) return false;
 
             MetroMessageBox.Show(this,
                 Rm.GetString(I18nKeys.MsgBodyPathNotFound),
@@ -510,14 +510,31 @@ namespace EspionSpotify
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
-            return false;
+            return true;
+        }
+
+        private bool IsOutputDirectoryPathTooLong()
+        {
+            throw new NotImplementedException();
+            if (FileManager.IsOutputPathTooLong(_userSettings.OutputPath)) return false;
+
+            MetroMessageBox.Show(this,
+                //Rm.GetString("Output path is already too long, choose another directory closer to root."),
+                Rm.GetString(I18nKeys.MsgBodyPathTooLong),
+                //Rm.GetString("Output path too long"),
+                Rm.GetString(I18nKeys.MsgTitlePathTooLong),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Question);
+
+            return true;
         }
 
         private void LnkSpy_Click(object sender, EventArgs e)
         {
             if (!Watcher.Running)
             {
-                if (!DirExists()) return;
+                if (IsOutputDirectoryNotFound()) return;
+                if (IsOutputDirectoryPathTooLong()) return;
 
                 tcMenu.SelectedIndex = 0;
                 StartRecording();
@@ -839,7 +856,7 @@ namespace EspionSpotify
 
         private void LnkDirectory_Click(object sender, EventArgs e)
         {
-            if (DirExists())
+            if (IsOutputDirectoryNotFound())
             {
                 System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
             }

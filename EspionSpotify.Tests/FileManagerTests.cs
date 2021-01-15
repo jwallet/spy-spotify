@@ -273,7 +273,7 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToMediaFilePath());
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile());
             Assert.Equal("File name cannot be empty.", ex.Message);
         }
 
@@ -282,12 +282,12 @@ namespace EspionSpotify.Tests
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Title = "?";
-            _track.Artist = null;
+            _track.Artist = "?";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile().ToMediaFilePath());
-            Assert.Equal("One or more directories has no name.", ex.Message);
+            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFile());
+            Assert.Equal("Artist / Album cannot be null.", ex.Message);
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void GetFolderPath_ReturnsNoArtistFolderPath()
         {
-            var artistFolder = FileManager.GetFolderPath(_track, _userSettings);
+            var (artistFolder, albumFolder) = FileManager.GetFolderPath(_track, _userSettings);
 
             Assert.Null(artistFolder);
         }
@@ -373,9 +373,10 @@ namespace EspionSpotify.Tests
                 Ad = true,
             };
 
-            var folders = FileManager.GetFolderPath(track, _userSettings);
+            var (artistFoder, albumFolder) = FileManager.GetFolderPath(track, _userSettings);
 
-            Assert.Null(folders);
+            Assert.Null(artistFoder);
+            Assert.Null(albumFolder);
         }
 
         [Fact]
@@ -386,7 +387,8 @@ namespace EspionSpotify.Tests
             _track.Artist = "Artist DJ";
             _track.Year = 2020;
 
-            var folders = FileManager.GetFolderPath(_track, _userSettings);
+            var (artistFoder, albumFolder) = FileManager.GetFolderPath(_track, _userSettings);
+            var folders = FileManager.ConcatPaths(artistFoder, albumFolder);
 
             Assert.Equal($@"Artist_DJ\Single_(2020)", folders);
             Assert.Contains(_userSettings.TrackTitleSeparator, folders);
@@ -398,6 +400,19 @@ namespace EspionSpotify.Tests
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
             var result = _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
             Assert.False(result);
+        }
+
+        [Fact]
+        internal void IsPathFileNameExists_WithBadlyFormattedArtistGroupPath_Throws()
+        {
+            _userSettings.GroupByFoldersEnabled = true;
+            _track.Title = null;
+            _track.Artist = "\\";
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+
+            var ex = Assert.Throws<Exception>(() => _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem));
+            Assert.Equal("File name cannot be empty.", ex.Message);
         }
 
         [Fact]
@@ -793,18 +808,69 @@ namespace EspionSpotify.Tests
             Assert.False(_fileSystem.File.Exists(tempFilePath));
         }
 
-        [Fact]
-        internal void UpdateOutputFileWithLatestTrackInfo_UpdateFile()
+        [Theory]
+        [InlineData(@" C:\path\ ", @"C:\path")]
+        [InlineData(@"C:\path\\", @"C:\path")]
+        [InlineData(@"\\pa<>|th", @"\\path")]
+        [InlineData(@"\\p?ath?", @"\\p?ath")] // trim removes ?, regex keep ? not invalid in path
+        [InlineData(@"\\PATH path\", @"\\PATH path")]
+        [InlineData(@"\\path\path\", @"\\path\path")]
+        internal void GetCleanPath_ReturnsPathCleaner(string value, string expected)
         {
-            var outputFile = new OutputFile
+            Assert.Equal(expected, FileManager.GetCleanPath(value));
+        }
+
+        [Theory]
+        [InlineData(@" Full Artist Name ", @"Full Artist Name")]
+        [InlineData(@" Full_Artist_Name ", @"Full_Artist_Name")]
+        [InlineData(@"Artist\Title", @"ArtistTitle")]
+        [InlineData(@"R?pertoire", @"Rpertoire")]
+        [InlineData(@"\\fold?<>|*://er", @"folder")]
+        [InlineData(@"\\répertoire\", @"répertoire")]
+        [InlineData(@"W!,.z1K-", @"W!,.z1K-")]
+        internal void GetCleanFileFolder_ReturnsFileFolderCleaned(string value, string expected)
+        {
+            Assert.Equal(expected, FileManager.GetCleanFileFolder(value, -1));
+        }
+
+        [Fact]
+        internal void ConcatPaths_ReturnsPath()
+        {
+            var paths = new[]
             {
-                FoldersPath = _userSettings.OutputPath,
-                MediaFile = _track.ToString(),
-                Extension = _userSettings.MediaFormat.ToString().ToLower(),
-                Separator = _userSettings.TrackTitleSeparator
+                @"C:\path",
+                "my folder",
+                "artist",
+                "album",
+                null,
+                ""
             };
 
-            var latestTrack = new Track
+            var expected = @"C:\path\my folder\artist\album";
+
+            Assert.Equal(expected, FileManager.ConcatPaths(paths));
+        }
+
+        [Fact]
+        internal void GetArtistDirectoryName_NoAPIResult_ReturnsDefaultArtistDirectory()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "Single",
+                Ad = false
+            };
+
+            Assert.Equal("Artist", FileManager.GetArtistDirectoryName(track, " ", -1));
+        }
+
+        [Fact]
+        internal void GetArtistDirectoryName_WithAlbumArtistsFromAPI_ReturnsAlbumArtistDirectory()
+        {
+            var track = new Track
             {
                 Title = "Title",
                 Artist = "Artist",
@@ -812,14 +878,178 @@ namespace EspionSpotify.Tests
                 TitleExtendedSeparatorType = TitleSeparatorType.Dash,
                 Album = "Single",
                 Ad = false,
-                AlbumArtists = new[] { "DJ" },
-                Performers = new[] { "Artist", "Featuring" },
+                AlbumArtists = new[] { "DJ", "Singer" },
+                Performers = new[] { "Lil", "Band" },
             };
 
-            _fileManager.UpdateOutputFileWithLatestTrackInfo(outputFile, latestTrack, _userSettings);
+            Assert.Equal("DJ, Singer", FileManager.GetArtistDirectoryName(track, " ", -1));
+        }
 
-            Assert.Equal("DJ - Title - Live", outputFile.MediaFile);
-            Assert.Equal($@"{PATH}\DJ - Title - Live.mp3", outputFile.ToMediaFilePath());
+        [Fact]
+        internal void GetArtistDirectoryName_WithPerformersFromAPI_ReturnsDefaultArtistAndPerformersDirectory()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "Single",
+                Ad = false,
+                AlbumArtists = new string[] { },
+                Performers = new[] { "Lil'", "Band" },
+            };
+
+            Assert.Equal("Artist, Lil', Band", FileManager.GetArtistDirectoryName(track, " ", -1));
+        }
+
+        [Fact]
+        internal void GetAlbumDirectoryName_WithNoAlbum_ReturnsUntitled()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = null,
+                Ad = false,
+                AlbumArtists = new string[] { },
+                Performers = new[] { "Lil", "Band" },
+            };
+
+            Assert.Equal("Untitled", FileManager.GetAlbumDirectoryName(track, " ", -1));
+        }
+
+        [Fact]
+        internal void GetAlbumDirectoryName_WithAlbum_ReturnsAlbum()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "Album",
+                Ad = false,
+                AlbumArtists = new string[] { },
+                Performers = new[] { "Lil", "Band" },
+            };
+
+            Assert.Equal("Album", FileManager.GetAlbumDirectoryName(track, " ", -1));
+        }
+
+        [Fact]
+        internal void GetAlbumDirectoryName_WithAlbumAndYear_ReturnsAlbumRelease()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "Artist",
+                TitleExtended = "Live",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "Album",
+                Year = 2000,
+                Ad = false,
+                AlbumArtists = new string[] { },
+                Performers = new[] { "Lil", "Band" },
+            };
+
+            Assert.Equal("Album (2000)", FileManager.GetAlbumDirectoryName(track, " ", -1));
+        }
+
+        [Fact]
+        internal void GetFolderMaxLength_WithOutputPathTooLong_ReturnsAvailableFileLength()
+        {
+            var userSettings = new UserSettings
+            {
+                GroupByFoldersEnabled = false,
+                TrackTitleSeparator = " ",
+                OutputPath = @"\\network\kali linux\root\home\my user\music\a kind of long directory name to store my recordings on my computer that should be way over the max allowed length for a directory name of 260 caracters on a windows system",
+            };
+
+            Assert.True(FileManager.IsOutputPathTooLong(userSettings.OutputPath));
+
+            var (length, pathShape) = FileManager.GetFolderMaxLength(userSettings);
+
+            Assert.Equal($@"{userSettings.OutputPath}\", pathShape);
+            Assert.Equal(42, length);
+        }
+
+        [Fact]
+        internal void GetFolderMaxLength_WithOutputPathTooLong_ReturnsSplitLengthPerFolders()
+        {
+            var userSettings = new UserSettings
+            {
+                GroupByFoldersEnabled = true,
+                TrackTitleSeparator = " ",
+                OutputPath = @"\\network\kali linux\root\home\my user\music\a kind of long directory name to store my recordings on my computer that should be way over the max allowed length for a directory name of 260 caracters on a windows system",
+            };
+
+            Assert.True(FileManager.IsOutputPathTooLong(userSettings.OutputPath));
+
+            var (length, pathShape) = FileManager.GetFolderMaxLength(userSettings);
+
+            Assert.Equal($@"{userSettings.OutputPath}\\\", pathShape);
+            Assert.Equal(13, length);
+        }
+
+
+        [Fact]
+        internal void GetFileMaxLength_TooLongInfoWhenGrouping_ReturnsFileNameLengthLeft()
+        {
+            var track = new Track
+            {
+                Title = "Title",
+                Artist = "A kind of long artist name that needs to be saved",
+                TitleExtended = "Track was recorded in that city during a festival",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "A kind of long album title that needs to be saved",
+                Year = 2000,
+                Ad = false,
+                AlbumArtists = new string[] { },
+                Performers = new[] { "Add this artist too", "Also add this one as well" },
+            };
+
+            var userSettings = new UserSettings
+            {
+                GroupByFoldersEnabled = true,
+                TrackTitleSeparator = " ",
+                OutputPath = @"\\network\kali linux\root\home\my user\music",
+            };
+
+            var (length, pathShape) = FileManager.GetFileMaxLength(track, userSettings);
+
+            Assert.Equal(@"\\network\kali linux\root\home\my user\music\A kind of long artist name that needs to be saved, Add this artist too, Also add this one as well\A kind of long album title that needs to be saved (2000)\", pathShape);
+            Assert.Equal(50, length);
+        }
+
+        [Fact]
+        internal void GetFileMaxLength_TooLongInfoNotGrouping_ReturnsFileNameLengthLeft()
+        {
+            var track = new Track
+            {
+                Title = "A kind of long track title that needs to be saved",
+                Artist = "A kind of long artist name that needs to be saved",
+                TitleExtended = "Track was recorded in that city during a festival",
+                TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                Album = "A kind of long album title that needs to be saved",
+                Year = 2000,
+                Ad = false,
+                AlbumArtists = new[] { "Add this artist", "Add this one as well" },
+            };
+
+            var userSettings = new UserSettings
+            {
+                GroupByFoldersEnabled = false,
+                TrackTitleSeparator = " ",
+                OutputPath = @"\\network\kali linux\root\home\my user\music",
+            };
+
+            var (length, pathShape) = FileManager.GetFileMaxLength(track, userSettings);
+
+            Assert.Equal(@"\\network\kali linux\root\home\my user\music\", pathShape);
+            Assert.Equal(205, length);
         }
     }
 }

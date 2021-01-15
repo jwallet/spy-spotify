@@ -65,12 +65,14 @@ namespace EspionSpotify.Models
         public static TranslationKeys MsgBodyCantQuit { get => TranslationKeys.msgBodyCantQuit; }
         public static TranslationKeys MsgBodyDriverInstallationFailed { get => TranslationKeys.msgBodyDriverInstallationFailed; }
         public static TranslationKeys MsgBodyPathNotFound { get => TranslationKeys.msgBodyPathNotFound; }
+        public static TranslationKeys MsgBodyPathTooLong { get => TranslationKeys.msgBodyPathTooLong; }
         public static TranslationKeys MsgBodyFailedToUseSpotifyAPI { get => TranslationKeys.msgBodyFailedToUseSpotifyAPI; }
         public static TranslationKeys MsgFolderDialog { get => TranslationKeys.msgFolderDialog; }
         public static TranslationKeys MsgNewVersionContent { get => TranslationKeys.msgNewVersionContent; }
         public static TranslationKeys MsgNewVersionTitle { get => TranslationKeys.msgNewVersionTitle; }
         public static TranslationKeys MsgTitleCantQuit { get => TranslationKeys.msgTitleCantQuit; }
         public static TranslationKeys MsgTitlePathNotFound { get => TranslationKeys.msgTitlePathNotFound; }
+        public static TranslationKeys MsgTitlePathTooLong { get => TranslationKeys.msgTitlePathTooLong; }
         public static TranslationKeys MsgTitleFailedToUseSpotifyAPI { get => TranslationKeys.msgTitleFailedToUseSpotifyAPI; }
 
         public static TranslationKeys TabAdvanced { get => TranslationKeys.tabAdvanced; }

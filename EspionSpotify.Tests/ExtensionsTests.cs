@@ -180,6 +180,19 @@ namespace EspionSpotify.Tests
             else if (revision == null) Assert.Equal(new Version(major, minor, (int)build), actual);
             else Assert.Equal(new Version(major, minor, (int)build, (int)revision), actual);
         }
+
+        [Theory]
+        [InlineData("", 10, 0)]
+        [InlineData("   ", 10, 3)]
+        [InlineData("This is above ten", 10, 10)]
+        [InlineData("This equal to twenty", 20, 20)]
+        [InlineData("This is under thirty", 30, 20)]
+        [InlineData("This has no max length", -1, 22)]
+        internal void StringToMaxLength_ReturnsRightLength(string value, int max, int expected)
+        {
+            var actual = value.ToMaxLength(max);
+            Assert.Equal(expected, actual.Length);
+        }
     }
 
     public class LinqExtensionsTest
