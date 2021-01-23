@@ -462,7 +462,7 @@
     <comment>interface</comment>
   </data>
   <data name="msgBodyPathTooLong" xml:space="preserve">
-    <value>Selected output path is too long, choose another directory.</value>
+    <value>Choose another directory, the selected output path is too long.</value>
     <comment>message</comment>
   </data>
   <data name="msgTitlePathTooLong" xml:space="preserve">

@@ -461,4 +461,12 @@
     <value>Pegue su URL de redireccionamiento aquí</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Elija otro directorio, la ruta de salida seleccionada es demasiado larga.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Ruta de salida demasiado larga</value>
+    <comment>message</comment>
+  </data>
 </root>

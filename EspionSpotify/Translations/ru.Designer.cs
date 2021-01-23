@@ -592,6 +592,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Выберите другой каталог, выбранный путь вывода слишком длинный..
+        /// </summary>
+        internal static string msgBodyPathTooLong {
+            get {
+                return ResourceManager.GetString("msgBodyPathTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Выберите папку, в которой вы хотите сохранить записанные аудиофайлы..
         /// </summary>
         internal static string msgFolderDialog {
@@ -642,6 +651,15 @@ namespace EspionSpotify.Translations {
         internal static string msgTitlePathNotFound {
             get {
                 return ResourceManager.GetString("msgTitlePathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выходной путь слишком длинный.
+        /// </summary>
+        internal static string msgTitlePathTooLong {
+            get {
+                return ResourceManager.GetString("msgTitlePathTooLong", resourceCulture);
             }
         }
         

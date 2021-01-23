@@ -461,4 +461,12 @@
     <value>ここにリダイレクトURLを貼り付けます</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>別のディレクトリを選択してください。選択した出力パスが長すぎます。</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>出力パスが長すぎます</value>
+    <comment>message</comment>
+  </data>
 </root>

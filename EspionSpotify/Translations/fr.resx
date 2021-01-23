@@ -461,4 +461,12 @@
     <value>Collez votre URL de redirection ici</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Choisissez un autre répertoire, le dossier de sauvegarde sélectionné est trop long.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Dossier de sauvegarde trop long</value>
+    <comment>message</comment>
+  </data>
 </root>

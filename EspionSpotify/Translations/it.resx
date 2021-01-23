@@ -461,4 +461,12 @@
     <value>Incolla qui il tuo URL di reindirizzamento</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Scegli un'altra directory, il percorso di output selezionato è troppo lungo.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Percorso di uscita troppo lungo</value>
+    <comment>message</comment>
+  </data>
 </root>

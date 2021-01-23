@@ -515,13 +515,10 @@ namespace EspionSpotify
 
         private bool IsOutputDirectoryPathTooLong()
         {
-            throw new NotImplementedException();
-            if (FileManager.IsOutputPathTooLong(_userSettings.OutputPath)) return false;
+            if (!FileManager.IsOutputPathTooLong(_userSettings.OutputPath)) return false;
 
             MetroMessageBox.Show(this,
-                //Rm.GetString("Output path is already too long, choose another directory closer to root."),
                 Rm.GetString(I18nKeys.MsgBodyPathTooLong),
-                //Rm.GetString("Output path too long"),
                 Rm.GetString(I18nKeys.MsgTitlePathTooLong),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
@@ -856,10 +853,9 @@ namespace EspionSpotify
 
         private void LnkDirectory_Click(object sender, EventArgs e)
         {
-            if (IsOutputDirectoryNotFound())
-            {
-                System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
-            }
+            if (IsOutputDirectoryNotFound()) return;
+            
+            System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
             Task.Run(async () => await _analytics.LogAction("open-output-folder"));
         }
 

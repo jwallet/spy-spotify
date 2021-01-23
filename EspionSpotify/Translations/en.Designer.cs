@@ -592,7 +592,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected output path is too long, choose another directory..
+        ///   Looks up a localized string similar to Choose another directory, the selected output path is too long..
         /// </summary>
         internal static string msgBodyPathTooLong {
             get {

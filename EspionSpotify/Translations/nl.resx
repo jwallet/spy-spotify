@@ -461,4 +461,12 @@
     <value>Plak hier uw omleidings-URL</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Kies een andere map, het geselecteerde uitvoerpad is te lang.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Uitvoerpad te lang</value>
+    <comment>message</comment>
+  </data>
 </root>
