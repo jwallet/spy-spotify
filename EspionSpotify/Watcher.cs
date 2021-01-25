@@ -94,6 +94,8 @@ namespace EspionSpotify
                 _form.UpdateNumUp();
             }
 
+            MutesSpotifyAds(_currentTrack.Ad);
+
             _form.UpdateIconSpotify(_isPlaying);
         }
 
