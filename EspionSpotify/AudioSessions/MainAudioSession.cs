@@ -232,6 +232,7 @@ namespace EspionSpotify.AudioSessions
             {
                 AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
                 AudioMMDevices.Dispose();
+                AudioMMDevices = null;
             }
 
             _disposed = true;
