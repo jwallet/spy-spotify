@@ -190,7 +190,7 @@ namespace EspionSpotify
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
 
-            ForceStopRecording();
+            EndRecording();
         }
         #endregion RecorderStopRecording
 
@@ -411,6 +411,11 @@ namespace EspionSpotify
             _form.UpdateIconSpotify(true, false);
             Running = false;
 
+            EndRecording();
+        }
+
+        private void EndRecording()
+        {
             WaveInDispose();
             TempWaveWriterDispose();
 
@@ -421,6 +426,7 @@ namespace EspionSpotify
                 _fileManager.DeleteFile(_tempEncodeFile);
             }
         }
+
         private void WaveInDispose()
         {
             if (_waveIn == null) return;
