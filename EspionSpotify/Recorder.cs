@@ -65,6 +65,7 @@ namespace EspionSpotify
             _cancellationTokenSource = cancellationTokenSource;
 
             if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
+            if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return;
 
             Running = true;
             await Task.Delay(50);
@@ -282,6 +283,8 @@ namespace EspionSpotify
         #region TestFileWriter
         public static bool TestFileWriter(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings settings)
         {
+            if (audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return false;
+
             var waveIn = new WasapiLoopbackCapture(audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             switch (settings.MediaFormat)
             {

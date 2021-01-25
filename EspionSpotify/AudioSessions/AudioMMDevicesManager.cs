@@ -23,7 +23,7 @@ namespace EspionSpotify.AudioSessions
 
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
-        public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice.AudioSessionManager.Sessions; }
+        public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice?.AudioSessionManager?.Sessions; }
 
         public MMDevice AudioEndPointDevice
         {
@@ -32,7 +32,7 @@ namespace EspionSpotify.AudioSessions
                 var deviceName = AudioEndPointDeviceNames.IncludesKey(AudioEndPointDeviceID)
                     ? AudioEndPointDeviceID
                     : DefaultAudioEndPointDeviceID;
-                return deviceName != null && AudioMMDevices != null ? AudioMMDevices.GetDevice(deviceName) : null;
+                return deviceName != null && AudioMMDevices != null ? AudioMMDevices.GetDeviceSafeException(deviceName, safe: true) : null;
             }
         }
 
@@ -41,7 +41,7 @@ namespace EspionSpotify.AudioSessions
         {
             if (AudioMMDevices == null) return null;
             if (!AudioMMDevices.HasDefaultAudioEndpoint(dataFlow, deviceRole)) return null;
-            return AudioMMDevices.GetDefaultAudioEndpointSafeException(DataFlow.Render, Role.Multimedia);
+            return AudioMMDevices.GetDefaultAudioEndpointSafeException(DataFlow.Render, Role.Multimedia, safe: !_disposed);
         }
 
         public void SetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
