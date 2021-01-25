@@ -39,7 +39,7 @@ namespace EspionSpotify.Extensions
         public static bool IsDisposed<TControl>(this TControl control)
             where TControl : Control
         {
-            return control.IsDisposed || control.Parent.IsDisposed || control.FindForm().IsDisposed;
+            return FrmEspionSpotify.Instance.IsDisposed || control.IsDisposed || control.Parent.IsDisposed;
         }
     }
 }

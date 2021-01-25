@@ -487,7 +487,7 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            if (tlSettings.IsDisposed() || tlAdvanced.IsDisposed())
+            if ((tlSettings.InvokeRequired || tlAdvanced.InvokeRequired))
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
@@ -496,6 +496,9 @@ namespace EspionSpotify
             Watcher.Running = false;
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
+
+            if (tlSettings.IsDisposed() || tlAdvanced.IsDisposed()) return;
+
             tlSettings.Enabled = true;
             tlAdvanced.Enabled = true;
         }
