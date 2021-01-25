@@ -70,6 +70,7 @@ namespace EspionSpotify.AudioSessions
             }
         }
 
+        #region AudioSession Spotify Playing
         public async Task<bool> IsSpotifyCurrentlyPlaying()
         {
             var samples = new List<double>();
@@ -93,7 +94,9 @@ namespace EspionSpotify.AudioSessions
 
             return samples.DefaultIfEmpty().Average() > 1.0;
         }
+        #endregion AudioSession Spotify Playing
 
+        #region AudioSession Spotify Muter
         public void SetSpotifyToMute(bool mute)
         {
             var spotifyAudioSessionControlsLocked = new List<AudioSessionControl>(SpotifyAudioSessionControls).AsReadOnly();
@@ -102,7 +105,9 @@ namespace EspionSpotify.AudioSessions
                 audioSession.SimpleAudioVolume.Mute = mute;
             }
         }
+        #endregion AudioSession Spotify Muter
 
+        #region AudioSession Wait Spotify
         public async Task<bool> WaitSpotifyAudioSessionToStart(bool running)
         {
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses(_processManager).Select(x => x.Id).ToList();
@@ -127,7 +132,9 @@ namespace EspionSpotify.AudioSessions
 
             return false;
         }
+        #endregion AudioSession Wait Spotify
 
+        #region AudioSession App Muter
         public void SetSpotifyVolumeToHighAndOthersToMute(bool mute)
         {
             var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
@@ -160,7 +167,9 @@ namespace EspionSpotify.AudioSessions
                 }
             }
         }
+        #endregion AudioSession App Muter
 
+        #region AudioSession Spotify outside of endpoint
         private async Task<bool> IsSpotifyPlayingOutsideDefaultAudioEndPoint(bool running)
         {
             int? spotifyAudioSessionProcessId = null;
@@ -204,6 +213,7 @@ namespace EspionSpotify.AudioSessions
 
             return true;
         }
+        #endregion AudioSession Spotify outside of endpoint
 
         private bool IsSpotifyAudioSessionControl(int processId) => _spotifyProcessesIds.Any(x => x == processId);
 

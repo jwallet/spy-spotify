@@ -400,8 +400,9 @@ namespace EspionSpotify
                 _recorderTasks.ForEach(x =>
                 {
                     x.Token.Cancel();
-                    x.Task.Wait();
-                    x.Task.Dispose();
+                    try { x.Task.Wait(); }
+                    catch { }
+                    finally { x.Task.Dispose(); }
                 });
 
                 if (_recorder != null)

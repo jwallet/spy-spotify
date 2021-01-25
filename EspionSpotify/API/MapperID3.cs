@@ -67,6 +67,7 @@ namespace EspionSpotify.API
             tags.Pictures = GetMediaPictureTag();
         }
 
+        #region MP3 Tags updater
         internal async Task SaveMediaTags()
         {
             using (var mp3 = TagLib.File.Create(CurrentFile))
@@ -79,6 +80,7 @@ namespace EspionSpotify.API
                 }
             }
         }
+        #endregion MP3 Tags updater
 
         private async Task FetchMediaPictures()
         {

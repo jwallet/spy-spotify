@@ -33,15 +33,17 @@ namespace EspionSpotify.API
 
         public async Task UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
 
+        #region LastFM Track updater
         private async Task UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
             var encodedArtist = PCLWebUtility.WebUtility.UrlEncode(track.Artist);
             var encodedTitle = PCLWebUtility.WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
 
+            var url = GetTrackInfo(encodedArtist, encodedTitle);
+
             try
             {
-                var url = GetTrackInfo(encodedArtist, encodedTitle);
                 api.Load(url);
             }
             catch (WebException ex) when (
@@ -49,13 +51,16 @@ namespace EspionSpotify.API
             ex.Status == WebExceptionStatus.ProxyNameResolutionFailure ||
             ex.Status == WebExceptionStatus.RequestProhibitedByProxy)
             {
-                Console.WriteLine(ex.Message);
-                if (_loggedSilentExceptionOnce == false)
+                if (!await ApiReload(api, url))
                 {
-                    FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
-                    _loggedSilentExceptionOnce = true;
+                    Console.WriteLine(ex.Message);
+                    if (_loggedSilentExceptionOnce == false)
+                    {
+                        FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                        _loggedSilentExceptionOnce = true;
+                    }
+                    return;
                 }
-                return;
             }
             catch (WebException ex)
             {
@@ -105,6 +110,25 @@ namespace EspionSpotify.API
             }
 
             track.MetaDataUpdated = true;
+        }
+        #endregion LastFM Track updater
+
+        private async Task<bool> ApiReload(XmlDocument api, string url)
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                try
+                {
+                    api.Load(url);
+                    return true;
+                }
+                catch
+                {
+                    await Task.Delay(1000);
+                }
+            }
+
+            return false;
         }
 
         public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)

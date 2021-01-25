@@ -125,6 +125,7 @@ namespace EspionSpotify.API
             }
         }
 
+        #region Spotify Track updater
         private async Task UpdateTrack(Track track, bool retry = false)
         {
             var api = await GetSpotifyWebAPI();
@@ -179,6 +180,7 @@ namespace EspionSpotify.API
 
             track.MetaDataUpdated = true;
         }
+        #endregion Spotify Track updater
 
         private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists) => (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
 
