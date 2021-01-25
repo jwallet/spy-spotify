@@ -487,7 +487,7 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            if (tlSettings.IsInvokeRequired() || tlAdvanced.IsInvokeRequired())
+            if (tlSettings.IsDisposed() || tlAdvanced.IsDisposed())
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
