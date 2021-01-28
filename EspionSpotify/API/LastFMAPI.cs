@@ -143,6 +143,11 @@ namespace EspionSpotify.API
             track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
         }
 
+        public void Reset()
+        {
+            _loggedSilentExceptionOnce = false;
+        }
+
         #region NotImplementedExternalAPI
         public bool IsAuthenticated { get => true; }
         public async Task Authenticate() => await Task.CompletedTask;

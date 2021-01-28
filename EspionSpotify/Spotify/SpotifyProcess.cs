@@ -67,7 +67,7 @@ namespace EspionSpotify
                     {
                         isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
                         var process = _processManager.GetProcessById(_spotifyProcessId.Value);
-                        mainWindowTitle = process.MainWindowTitle;
+                        mainWindowTitle = process?.MainWindowTitle ?? "";
                     }
                 }
                 catch (Exception ex) 

@@ -21,7 +21,6 @@ namespace EspionSpotify
         private bool _disposed = false;
         private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS = 5;
         private const int WATCHER_DELAY_MS = 500;
-        private const int PREVENT_SLEEP_EVENT_DELAY_MS = (WATCHER_DELAY_MS * 2) * 5 * 60;
 
         public static bool Running { get; internal set; }
         public static bool Ready { get; private set; } = true;
@@ -302,17 +301,18 @@ namespace EspionSpotify
             _recordingTimer.Enabled = true;
         }
 
-        private void EndRecordingSession()
+        private void ResetAudioSession()
         {
-            Ready = true;
-
             if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
                 _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
                 _audioSession.ClearSpotifyAudioSessionControls();
             }
+        }
 
+        private void ResetSpotifyHandler()
+        {
             if (Spotify != null)
             {
                 Spotify.ListenForEvents = false;
@@ -321,7 +321,15 @@ namespace EspionSpotify
                 Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
                 Spotify.Dispose();
             }
-            
+        }
+
+        private void EndRecordingSession()
+        {
+            Ready = true;
+
+            ResetAudioSession();
+            ResetSpotifyHandler();
+
             _form.UpdateStartButton();
             _form.UpdatePlayingTitle(Constants.SPOTIFY);
             _form.UpdateIconSpotify(false);
@@ -385,19 +393,8 @@ namespace EspionSpotify
                 DoIKeepLastSong();
                 NativeMethods.AllowSleep();
 
-                if (_audioSession != null)
-                {
-                    MutesSpotifyAds(false);
-                    _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
-                    _audioSession.ClearSpotifyAudioSessionControls();
-
-                    Spotify.ListenForEvents = false;
-                    Spotify.OnPlayStateChange -= OnPlayStateChanged;
-                    Spotify.OnTrackChange -= OnTrackChanged;
-                    Spotify.OnTrackTimeChange -= OnTrackTimeChanged;
-                    Spotify.Dispose();
-                    Spotify = null;
-                }
+                ResetAudioSession();
+                ResetSpotifyHandler();
 
                 _recorderTasks.ForEach(x =>
                 {

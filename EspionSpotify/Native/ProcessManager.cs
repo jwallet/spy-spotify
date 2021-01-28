@@ -1,5 +1,6 @@
-﻿using EspionSpotify.Native.Models;
-using System.Linq;
+﻿using System.Linq;
+using EspionSpotify.Native.Models;
+using NativeProcess = System.Diagnostics.Process;
 
 namespace EspionSpotify.Native
 {
@@ -7,7 +8,17 @@ namespace EspionSpotify.Native
     {
         public IProcess GetCurrentProcess()
         {
-            var process = System.Diagnostics.Process.GetCurrentProcess();
+            NativeProcess process;
+
+            try
+            {
+                process = NativeProcess.GetCurrentProcess();
+            }
+            catch
+            {
+                return null;
+            }
+
             return new Process
             {
                 Id = process.Id,
@@ -18,7 +29,17 @@ namespace EspionSpotify.Native
 
         public IProcess[] GetProcesses()
         {
-            var processes = System.Diagnostics.Process.GetProcesses();
+            NativeProcess[] processes;
+
+            try
+            {
+                processes = NativeProcess.GetProcesses();
+            }
+            catch
+            {
+                return new Process[] { };
+            }
+
             return processes.Select(x => new Process
             {
                 Id = x.Id,
@@ -29,7 +50,17 @@ namespace EspionSpotify.Native
 
         public IProcess[] GetProcessesByName(string processName)
         {
-            var processes = System.Diagnostics.Process.GetProcessesByName(processName);
+            NativeProcess[] processes;
+
+            try
+            {
+                processes = NativeProcess.GetProcessesByName(processName);
+            }
+            catch
+            {
+                return new Process[] { };
+            }
+
             return processes.Select(x => new Process
             {
                 Id = x.Id,
@@ -40,7 +71,17 @@ namespace EspionSpotify.Native
 
         public IProcess GetProcessById(int processId)
         {
-            var process = System.Diagnostics.Process.GetProcessById(processId);
+            NativeProcess process;
+            
+            try
+            {
+                process = NativeProcess.GetProcessById(processId);
+            }
+            catch
+            {
+                return null;
+            }
+
             return new Process
             {
                 Id = process.Id,
@@ -51,7 +92,17 @@ namespace EspionSpotify.Native
 
         public IProcess Start(string fileName)
         {
-            var process = System.Diagnostics.Process.Start(fileName);
+            NativeProcess process;
+
+            try
+            {
+                process = NativeProcess.Start(fileName);
+            }
+            catch
+            {
+                return null;
+            }
+
             return new Process
             {
                 Id = process.Id,

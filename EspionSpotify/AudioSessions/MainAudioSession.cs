@@ -40,7 +40,7 @@ namespace EspionSpotify.AudioSessions
         {
             _processManager = processManager;
 
-            _spytifyProcessId = _processManager.GetCurrentProcess().Id;
+            _spytifyProcessId = (int)_processManager.GetCurrentProcess()?.Id;
 
             AudioMMDevices = new MMDeviceEnumerator();
             AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
