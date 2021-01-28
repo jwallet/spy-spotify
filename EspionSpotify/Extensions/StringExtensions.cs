@@ -78,5 +78,11 @@ namespace EspionSpotify.Extensions
             if (string.IsNullOrWhiteSpace(input)) return input;
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
+
+        public static string ToMaxLength(this string input, int max = -1)
+        {
+            if (input.Length <= max || max == -1) return input;
+            return input.Substring(0, max);
+        }
     }
 }

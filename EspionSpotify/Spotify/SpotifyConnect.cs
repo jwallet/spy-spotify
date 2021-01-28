@@ -73,7 +73,11 @@ namespace EspionSpotify
 
         public static bool IsSpotifyRunning()
         {
-            return Process.GetProcessesByName(Constants.SPOTIFY).Length >= 1;
+            try
+            {
+                return Process.GetProcessesByName(Constants.SPOTIFY).Length >= 1;
+            }
+            catch { return false; }
         }
     }
 }

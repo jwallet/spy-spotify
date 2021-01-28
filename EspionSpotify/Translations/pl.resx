@@ -461,4 +461,12 @@
     <value>Wklej tutaj adres URL przekierowania</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Wybierz inny katalog, wybrana ścieżka wyjściowa jest za długa.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Zbyt długa ścieżka wyjściowa</value>
+    <comment>message</comment>
+  </data>
 </root>

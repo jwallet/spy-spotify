@@ -94,6 +94,8 @@ namespace EspionSpotify
                 _form.UpdateNumUp();
             }
 
+            MutesSpotifyAds(_currentTrack.Ad);
+
             _form.UpdateIconSpotify(_isPlaying);
         }
 
@@ -400,8 +402,9 @@ namespace EspionSpotify
                 _recorderTasks.ForEach(x =>
                 {
                     x.Token.Cancel();
-                    x.Task.Wait();
-                    x.Task.Dispose();
+                    try { x.Task.Wait(); }
+                    catch { }
+                    finally { x.Task.Dispose(); }
                 });
 
                 if (_recorder != null)

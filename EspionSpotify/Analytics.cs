@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify
 {
+    #region analytics
     public class Analytics
     {
         private const string ANALYTICS_URL = "https://www.google-analytics.com/collect";
@@ -67,12 +68,19 @@ namespace EspionSpotify
             };
 
             var content = new FormUrlEncodedContent(data);
-            var resp = await client.PostAsync(ANALYTICS_URL, content);
+            var success = false;
+            
+            try
+            {
+                var resp = await client.PostAsync(ANALYTICS_URL, content);
+                success = resp.IsSuccessStatusCode;
+            } catch { }
 
             LastAction = action;
             LastRequest = DateTime.Now;
 
-            return resp.IsSuccessStatusCode;
+            return success;
         }
     }
+    #endregion analytics
 }

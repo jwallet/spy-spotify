@@ -461,4 +461,12 @@
     <value>Fügen Sie hier Ihre Weiterleitungs-URL ein</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Wählen Sie ein anderes Verzeichnis, der ausgewählte Ausgabepfad ist zu lang.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Ausgabepfad zu lang</value>
+    <comment>message</comment>
+  </data>
 </root>

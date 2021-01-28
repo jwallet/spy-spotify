@@ -461,4 +461,12 @@
     <value>Вставьте сюда URL переадресации</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Выберите другой каталог, выбранный путь вывода слишком длинный.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Выходной путь слишком длинный</value>
+    <comment>message</comment>
+  </data>
 </root>

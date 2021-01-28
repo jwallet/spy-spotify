@@ -461,4 +461,12 @@
     <value>Yönlendirme URL'nizi buraya yapıştırın</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Başka bir dizin seçin, seçilen çıktı yolu çok uzun.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Çıkış yolu çok uzun</value>
+    <comment>message</comment>
+  </data>
 </root>

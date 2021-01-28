@@ -461,4 +461,12 @@
     <value>Paste your redirect URL here</value>
     <comment>interface</comment>
   </data>
+  <data name="msgBodyPathTooLong" xml:space="preserve">
+    <value>Choose another directory, the selected output path is too long.</value>
+    <comment>message</comment>
+  </data>
+  <data name="msgTitlePathTooLong" xml:space="preserve">
+    <value>Output path too long</value>
+    <comment>message</comment>
+  </data>
 </root>

@@ -59,11 +59,13 @@ namespace EspionSpotify
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
         }
 
+        #region RecorderStart
         public async Task Run(CancellationTokenSource cancellationTokenSource)
         {
             _cancellationTokenSource = cancellationTokenSource;
 
             if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
+            if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return;
 
             Running = true;
             await Task.Delay(50);
@@ -100,6 +102,7 @@ namespace EspionSpotify
 
             _waveIn.StopRecording();
         }
+        #endregion RecorderStart
 
         private async Task<bool> StopRecordingIfTrackCanBeSkipped()
         {
@@ -117,9 +120,11 @@ namespace EspionSpotify
             return false;
         }
 
+        #region RecorderWriteUpcomingData
         private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             if (_tempWaveWriter == null || !Running) return;
+
 
             if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
             {
@@ -131,7 +136,9 @@ namespace EspionSpotify
                 ForceStopRecording();
             }
         }
+        #endregion RecorderWriteUpcomingData
 
+        #region RecorderStopRecording
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
             if (_tempWaveWriter == null) return;
@@ -145,8 +152,7 @@ namespace EspionSpotify
             {
                 Running = false;
                 _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
-                _fileManager.DeleteFile(_tempOriginalFile);
-                if (_waveIn != null) _waveIn.Dispose();
+                ForceStopRecording();
                 return;
             }
 
@@ -161,13 +167,12 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
+                ForceStopRecording();
                 return;
             }
-            finally
-            {
-                if (_waveIn != null) _waveIn.Dispose();
-                _fileManager.DeleteFile(_tempOriginalFile);
-            }
+
+            _fileManager.DeleteFile(_tempOriginalFile);
+            if (_waveIn != null) _waveIn.Dispose();
 
             _currentOutputFile = _fileManager.GetOutputFile();
 
@@ -178,20 +183,30 @@ namespace EspionSpotify
                 return;
             }
 
+            try
+            {
+                _fileManager.RenameFile(_tempEncodeFile, _currentOutputFile.ToMediaFilePath());
+            }
+            catch (Exception ex)
+            {
+                Running = false;
+                _form.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
+                ForceStopRecording();
+                return;
+            }
+
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);
 
-            _fileManager.UpdateOutputFileWithLatestTrackInfo(_currentOutputFile, _track, _userSettings);
-            _fileManager.RenameFile(_tempEncodeFile, _currentOutputFile.ToMediaFilePath());
-
             await UpdateMediaTagsFileBasedOnMediaFormat();
 
-            _waveIn.DataAvailable -= WaveIn_DataAvailable;
-            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
-
-            Dispose();
+            EndRecording();
         }
+        #endregion RecorderStopRecording
 
+        #region RecorderEncode
         private async Task WriteWaveFileToMediaFile()
         {
             if (_userSettings.MediaFormat == MediaFormat.Wav)
@@ -231,7 +246,9 @@ namespace EspionSpotify
                 }
             }
         }
+        #endregion RecorderEncode
 
+        #region RecorderUpdateMp3MataData
         private async Task UpdateMediaTagsWhenSkippingTrack()
         {
             if (!_userSettings.UpdateRecordingsID3TagsEnabled) return;
@@ -257,7 +274,9 @@ namespace EspionSpotify
                     return;
             }
         }
+        #endregion RecorderUpdateMp3MataData
 
+        #region GetFileWriter
         public Stream GetMediaFileWriter(Stream stream, WaveFormat waveFormat)
         {
             switch (_userSettings.MediaFormat)
@@ -271,9 +290,13 @@ namespace EspionSpotify
                     throw new Exception("Failed to get FileWriter");
             }
         }
+        #endregion GetFileWriter
 
+        #region TestFileWriter
         public static bool TestFileWriter(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings settings)
         {
+            if (audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return false;
+
             var waveIn = new WasapiLoopbackCapture(audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             switch (settings.MediaFormat)
             {
@@ -308,7 +331,9 @@ namespace EspionSpotify
                     return false;
             }
         }
+        #endregion TestFileWriter
 
+        #region MP3ConverterReducer
         private static bool LogLameMP3FileWriterArgumentException(IFrmEspionSpotify form, ArgumentException ex, WaveFormat waveFormat)
         {
             var restrictions = waveFormat.GetMP3RestrictionCode();
@@ -390,21 +415,46 @@ namespace EspionSpotify
             }
             return stream;
         }
+        #endregion MP3ConverterReducer
 
+        #region DisposeRecorder
         private void ForceStopRecording()
         {
             _form.UpdateIconSpotify(true, false);
             Running = false;
 
+            EndRecording();
+        }
+
+        private void EndRecording()
+        {
+            WaveInDispose();
+            TempWaveWriterDispose();
+
+            _fileManager.DeleteFile(_tempOriginalFile);
+
+            if (_currentOutputFile != null)
+            {
+                _fileManager.DeleteFile(_tempEncodeFile);
+            }
+        }
+
+        private void WaveInDispose()
+        {
+            if (_waveIn == null) return;
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
             _waveIn.StopRecording();
             _waveIn.Dispose();
+            _waveIn = null;
+        }
 
+        private void TempWaveWriterDispose()
+        {
+            if (_tempWaveWriter == null) return;
             _tempWaveWriter.Close();
             _tempWaveWriter.Dispose();
-
-            _fileManager.DeleteFile(_tempOriginalFile);
+            _tempWaveWriter = null;
         }
 
         public void Dispose()
@@ -420,29 +470,11 @@ namespace EspionSpotify
 
             if (disposing)
             {
-                if (_waveIn != null)
-                {
-                    _waveIn.DataAvailable -= WaveIn_DataAvailable;
-                    _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
-                    _waveIn.StopRecording();
-                    _waveIn.Dispose();
-                }
-
-                if (_tempWaveWriter != null)
-                {
-                    _tempWaveWriter.Close();
-                    _tempWaveWriter.Dispose();
-                }
-
-                _fileManager.DeleteFile(_tempOriginalFile);
-
-                if (_currentOutputFile != null)
-                {
-                    _fileManager.DeleteFile(_tempEncodeFile);
-                }
+                ForceStopRecording();
             }
 
             _disposed = true;
         }
+        #endregion DisposeRecorder
     }
 }

@@ -487,7 +487,7 @@ namespace EspionSpotify
 
         public void StopRecording()
         {
-            if (tlSettings.IsInvokeRequired() || tlAdvanced.IsInvokeRequired())
+            if ((tlSettings.InvokeRequired || tlAdvanced.InvokeRequired))
             {
                 BeginInvoke(new Action(StopRecording));
                 return;
@@ -496,13 +496,16 @@ namespace EspionSpotify
             Watcher.Running = false;
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
+
+            if (tlSettings.IsDisposed() || tlAdvanced.IsDisposed()) return;
+
             tlSettings.Enabled = true;
             tlAdvanced.Enabled = true;
         }
 
-        private bool DirExists()
+        private bool IsOutputDirectoryNotFound()
         {
-            if (Directory.Exists(_userSettings.OutputPath)) return true;
+            if (Directory.Exists(_userSettings.OutputPath)) return false;
 
             MetroMessageBox.Show(this,
                 Rm.GetString(I18nKeys.MsgBodyPathNotFound),
@@ -510,14 +513,28 @@ namespace EspionSpotify
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
-            return false;
+            return true;
+        }
+
+        private bool IsOutputDirectoryPathTooLong()
+        {
+            if (!FileManager.IsOutputPathTooLong(_userSettings.OutputPath)) return false;
+
+            MetroMessageBox.Show(this,
+                Rm.GetString(I18nKeys.MsgBodyPathTooLong),
+                Rm.GetString(I18nKeys.MsgTitlePathTooLong),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Question);
+
+            return true;
         }
 
         private void LnkSpy_Click(object sender, EventArgs e)
         {
             if (!Watcher.Running)
             {
-                if (!DirExists()) return;
+                if (IsOutputDirectoryNotFound()) return;
+                if (IsOutputDirectoryPathTooLong()) return;
 
                 tcMenu.SelectedIndex = 0;
                 StartRecording();
@@ -839,10 +856,9 @@ namespace EspionSpotify
 
         private void LnkDirectory_Click(object sender, EventArgs e)
         {
-            if (DirExists())
-            {
-                System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
-            }
+            if (IsOutputDirectoryNotFound()) return;
+            
+            System.Diagnostics.Process.Start("explorer.exe", txtPath.Text);
             Task.Run(async () => await _analytics.LogAction("open-output-folder"));
         }
 

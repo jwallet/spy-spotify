@@ -1,5 +1,6 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Spotify;
+using System.Linq;
 
 namespace EspionSpotify.Models
 {
@@ -12,7 +13,14 @@ namespace EspionSpotify.Models
         private string _titleExtended = null;
         private string _apiTitleExtended = null;
 
-        public string Artists { get => string.Join(", ", AlbumArtists ?? Performers ?? new[] { Artist }); }
+        public string Artists
+        {
+            get
+            {
+                if (AlbumArtists != null && AlbumArtists.Length > 0) return string.Join(", ", AlbumArtists);
+                return string.Join(", ", (new[] { Artist }).Concat(Performers ?? new string[] { }).Distinct());
+            }
+        }
 
         public string Artist
         {
