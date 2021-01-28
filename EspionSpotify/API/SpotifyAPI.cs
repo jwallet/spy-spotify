@@ -50,8 +50,6 @@ namespace EspionSpotify.API
             }
         }
 
-        public async Task Authenticate() => await GetSpotifyWebAPI();
-
         public async Task<(string, bool)> GetCurrentPlayback()
         {
             var playing = false;
@@ -147,10 +145,7 @@ namespace EspionSpotify.API
 
                 // open spotify authentication page if user is disconnected
                 // user might be connected with a different account that the one that granted rights
-                if (!_connectionDialogOpened)
-                {
-                    OpenAuthenticationDialog();
-                }
+                OpenAuthenticationDialog();
 
                 // fallback in case getting the playback did not work
                 ExternalAPI.Instance = _lastFmApi;
@@ -200,6 +195,7 @@ namespace EspionSpotify.API
 
         private void OpenAuthenticationDialog()
         {
+            if (_connectionDialogOpened) return;
             _auth.ShowDialog = true;
             _auth.OpenBrowser();
             _connectionDialogOpened = true;
@@ -243,6 +239,14 @@ namespace EspionSpotify.API
 
             return _api;
         }
+
+        public async Task Authenticate() => await GetSpotifyWebAPI();
+
+        public void Reset()
+        {
+            _connectionDialogOpened = false;
+        }
+
 
         public void Dispose()
         {

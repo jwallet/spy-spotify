@@ -494,6 +494,7 @@ namespace EspionSpotify
             }
 
             Watcher.Running = false;
+            ExternalAPI.Instance.Reset();
             _toggleStopRecordingDelayed = false;
             timer1.Stop();
 

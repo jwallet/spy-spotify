@@ -9,6 +9,7 @@ namespace EspionSpotify.API
         ExternalAPIType GetTypeAPI { get; }
         bool IsAuthenticated { get; }
         Task Authenticate();
+        void Reset();
 
         Task UpdateTrack(Track track);
         Task<(string, bool)> GetCurrentPlayback();
