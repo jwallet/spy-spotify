@@ -55,12 +55,11 @@ namespace EspionSpotify.API
             var playing = false;
             string title = null;
 
-            var api = await GetSpotifyWebAPI();
+            await GetSpotifyWebAPI();
             
-            if (api != null)
+            if (_api != null)
             {
-                var playback = await api.GetPlaybackAsync();
-
+                var playback = await _api.GetPlaybackAsync();
                 if (playback != null && !playback.HasError())
                 {
                     playing = playback.IsPlaying;
@@ -126,10 +125,11 @@ namespace EspionSpotify.API
         #region Spotify Track updater
         private async Task UpdateTrack(Track track, bool retry = false)
         {
-            var api = await GetSpotifyWebAPI();
-            if (api == null) return;
+            await GetSpotifyWebAPI();
 
-            var playback = await api.GetPlaybackAsync();
+            if (_api == null) return;
+
+            var playback = await _api.GetPlaybackAsync();
             var hasNoPlayback = playback == null || playback.Item == null;
 
             if (!retry && hasNoPlayback)
@@ -141,7 +141,7 @@ namespace EspionSpotify.API
 
             if (hasNoPlayback || playback.HasError())
             {
-                api.Dispose();
+                _api.Dispose();
 
                 // open spotify authentication page if user is disconnected
                 // user might be connected with a different account that the one that granted rights
@@ -167,7 +167,7 @@ namespace EspionSpotify.API
 
             if (playback.Item.Album?.Id == null) return;
             
-            var album = await api.GetAlbumAsync(playback.Item.Album.Id);
+            var album = await _api.GetAlbumAsync(playback.Item.Album.Id);
 
             if (album.HasError()) return;
                 
@@ -201,12 +201,12 @@ namespace EspionSpotify.API
             _connectionDialogOpened = true;
         }
 
-        private async Task<SpotifyWebAPI> GetSpotifyWebAPI()
+        private async Task GetSpotifyWebAPI()
         {
             if (_token == null)
             {
                 OpenAuthenticationDialog();
-                return null;
+                return;
             }
 
             if (_token.IsExpired())
@@ -236,8 +236,6 @@ namespace EspionSpotify.API
                     _authorizationCodeAuth.Stop();
                 }
             }
-
-            return _api;
         }
 
         public async Task Authenticate() => await GetSpotifyWebAPI();
