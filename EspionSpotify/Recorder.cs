@@ -183,10 +183,22 @@ namespace EspionSpotify
                 return;
             }
 
+            try
+            {
+                _fileManager.RenameFile(_tempEncodeFile, _currentOutputFile.ToMediaFilePath());
+            }
+            catch (Exception ex)
+            {
+                Running = false;
+                _form.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                Console.WriteLine(ex.Message);
+                Program.ReportException(ex);
+                ForceStopRecording();
+                return;
+            }
+
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);
-
-            _fileManager.RenameFile(_tempEncodeFile, _currentOutputFile.ToMediaFilePath());
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
 

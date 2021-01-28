@@ -106,20 +106,22 @@ namespace EspionSpotify.Native
             {
                 throw new Exception($"Source / Destination file name cannot be null.");
             }
-            try
+
+            if (_fileSystem.File.Exists(source))
             {
-                if (_fileSystem.File.Exists(source))
+                try
                 {
                     if (_fileSystem.File.Exists(destination))
                     {
                         _fileSystem.File.Delete(destination);
                     }
-                    _fileSystem.File.Move(source, destination);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                _fileSystem.File.Move(source, destination);
             }
         }
 
