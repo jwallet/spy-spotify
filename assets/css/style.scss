@@ -99,6 +99,10 @@ a {
   @include small {
     flex-wrap: wrap;
   }
+
+  & .donor {
+    white-space: nowrap;
+  }
 }
 
 .btn {
