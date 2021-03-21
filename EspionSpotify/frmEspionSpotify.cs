@@ -100,6 +100,7 @@ namespace EspionSpotify
             tgAddFolders.Checked = Settings.Default.advanced_file_group_media_in_folders_enabled;
             txtPath.Text = Settings.Default.settings_output_path;
             tgMuteAds.Checked = Settings.Default.settings_mute_ads_enabled;
+            tgMinimizeToSystemTray.Checked = Settings.Default.settings_minimize_to_system_tray_enabled;
             tgExtraTitleToSubtitle.Checked = Settings.Default.advanced_id3_extra_title_as_subtitle_enabled;
             folderBrowserDialog.SelectedPath = Settings.Default.settings_output_path;
             txtRecordingNum.Mask = Settings.Default.app_counter_number_mask;
@@ -147,6 +148,7 @@ namespace EspionSpotify
             _userSettings.RecordEverythingEnabled = Settings.Default.advanced_record_everything;
             _userSettings.RecordAdsEnabled = Settings.Default.advanced_record_everything_and_ads_enabled;
             _userSettings.MuteAdsEnabled = Settings.Default.settings_mute_ads_enabled;
+            _userSettings.MinimizeToSystemTrayEnabled = Settings.Default.settings_minimize_to_system_tray_enabled;
             _userSettings.TrackTitleSeparator = Settings.Default.advanced_file_replace_space_by_underscore_enabled ? "_" : " ";
             _userSettings.OrderNumberMask = Settings.Default.app_counter_number_mask;
             _userSettings.ExtraTitleToSubtitleEnabled = Settings.Default.advanced_id3_extra_title_as_subtitle_enabled;
@@ -268,6 +270,8 @@ namespace EspionSpotify
             lblRecordingNum.Text = Rm.GetString(I18nKeys.LblRecordingNum);
             lblAds.Text = Rm.GetString(I18nKeys.LblAds);
             lblMuteAds.Text = Rm.GetString(I18nKeys.LblMuteAds);
+            lblSystemTray.Text = Rm.GetString(I18nKeys.LblSystemTray);
+            lblMinimizeToSystemTray.Text = Rm.GetString(I18nKeys.LblMinimizeToSystemTray);
             lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
             lblRecordEverything.Text = Rm.GetString(I18nKeys.LblRecordEverything);
@@ -1021,6 +1025,37 @@ namespace EspionSpotify
         private void TgUpdateRecordingsID3Tags_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            notifyIcon.Visible = false;
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void TgMinimizeToSystemTray_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.settings_minimize_to_system_tray_enabled == tgMinimizeToSystemTray.Checked) return;
+
+            _userSettings.MinimizeToSystemTrayEnabled = tgMinimizeToSystemTray.Checked;
+            Settings.Default.settings_minimize_to_system_tray_enabled = tgMinimizeToSystemTray.Checked;
+            Settings.Default.Save();
+            Task.Run(async () => await _analytics.LogAction($"mimimize-to-system-tray?enabled={tgMinimizeToSystemTray.GetPropertyThreadSafe(c => c.Checked)}"));
+        }
+
+        private void FrmEspionSpotify_Resize(object sender, EventArgs e)
+        {
+            if (!tgMinimizeToSystemTray.Checked) return;
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon.Visible = true;
+            }
+            else if (WindowState == FormWindowState.Normal)
+            {
+                notifyIcon.Visible = false;
+            }
         }
     }
 }
