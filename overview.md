@@ -13,7 +13,7 @@ Spytify records what Spotify outputs, which is a longer process than downloading
 
 However, Spytify ensures that all tracks will be the official released one, all sound volume normalized and with media tags and album cover. Playlist Downloaders get mostly all tracks from YouTube which means that they can't guarantee the choosen track will fit 100% the one in your playlist and they will all be the same quality.
 
-Spytify records the same quality that Spotify outputs (Spotify Free 160kbps, Spotify Premium 320kbps), so the recorded copy will be indistinguishable from Spotify’s one.
+Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/high-quality-streaming/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
 <figure>
     <figcaption>Listen to an mp3 sample at 120kbps:</figcaption>
@@ -44,4 +44,4 @@ Spytify runs on Windows only.
 - Microsoft Framework ([.NET 4.6.1](https://www.microsoft.com/en-ca/download/details.aspx?id=49981) or higher).
 - Spotify Desktop application.
 
-A **free Spotify account** will work, but Spotify restricts audio quality to 120 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
+A **free Spotify account** will work, but Spotify restricts audio quality to 160 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
