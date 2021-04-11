@@ -33,7 +33,7 @@ Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Sp
 | ----------------------------------------------------------------------------------------------------------------------------------- | :---------------------: | :----------------------------------------------------------------------------------------------------------------- |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_no_ad.png" />         |       **No Ads**        | Doesn't record ads and has an option to disable audio ads completely                                               |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_mute_apps.png" />     |  **Mutes Other Apps**   | Mutes any other applications while spying                                                                          |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /> | **Great Audio Quality** | Gets and records with the same great audio quality than Spotify                                                    |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /> | **Great Audio Quality** | Gets and records with the same great audio quality as Spotify                                                    |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_max_out.png" />       |  **Normalize volume**   | Max out the volume of your Spotify audio session to records all song at the same volume level delivered by Spotify |
 
 ## File features
