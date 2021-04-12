@@ -14,7 +14,7 @@ Do you enjoy Spytify? If so, use the donation form below to offer me:
 Top donations will be added to the donors list using the full name you provided, it doesn't need to be your real name. Don't forget to leave me a message/comment, I love reading those!
 
 <i style="font-size:80%">Transactions are handled by <a href="https://stripe.com/en-ca">Stripe online payments services</a>.  
-If you forgot to set your donation as anonymously before seding it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i>
+If you forgot to set your donation as anonymously before sending it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i>
 
 <article class="donate">
     <section style="display:flex;flex-direction:column;">
