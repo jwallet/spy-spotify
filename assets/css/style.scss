@@ -105,6 +105,40 @@ a {
   }
 }
 
+.crypto {
+  display: inline-flex;
+
+  svg {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+  &__btc {
+    background-color: rgb(255, 142, 0);
+  }
+  &__eth {
+    background-color: rgb(92, 124, 242);
+  }
+  &__xrp {
+    background-color: rgb(48, 48, 44);
+  }
+  &__xlm {
+    background-color: rgb(116, 47, 158);
+  }
+  &__bch {
+    background-color: rgb(124, 198, 57);
+  }
+  &__ltc {
+    background-color: rgb(164, 168, 169);
+  }
+  &__xmr {
+    background-color: rgb(224, 91, 0);
+  }
+}
+
 .btn {
   display: inline-block;
   font-weight: 600;
