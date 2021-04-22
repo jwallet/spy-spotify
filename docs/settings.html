@@ -241,7 +241,7 @@
             el.open = true;
             if (scroll) el.scrollIntoView({ behavior: 'smooth' });
           }
-        } else {
+        } else if (document.querySelector('details')) {
           document.querySelector('details').open = true;
         }
       }
