@@ -44,7 +44,7 @@ namespace EspionSpotify
 
         private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
 
-        public FrmEspionSpotify()
+        public FrmEspionSpotify(string[] args)
         {
             InitializeComponent();
             SuspendLayout();
@@ -54,6 +54,11 @@ namespace EspionSpotify
             _audioSession = new MainAudioSession(Settings.Default.app_selected_audio_device_id);
 
             _userSettings = new UserSettings();
+            if (args.Contains("upgradeSettings"))
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.Save();
+            }
 
             if (string.IsNullOrEmpty(Settings.Default.settings_output_path))
             {
@@ -931,7 +936,7 @@ namespace EspionSpotify
 
         private void LnkRelease_Click(object sender, EventArgs e)
         {
-            Process.Start(GitHub.REPO_LATEST_RELEASE_URL);
+            GitHub.UserUpdate();
         }
 
         private void TxtRecordingTimer_Leave(object sender, EventArgs e)
