@@ -13,7 +13,7 @@ Spytify relies on your audio device quality to record audio files. If your choos
 - Use a different computer/laptop if it has a better sound card.
 - Install Virtual Audio Cable that comes with Spytify and connect both apps with it.
 
-When encoding, `.mp3` has a limitation of 2 channels (stereo) and a sample rate of 44,000 Hz, compare to `.wav` that has less limations.
+When encoding, `.mp3` has a limitation of 2 channels (stereo) and a sample rate of 44,000 Hz, compare to `.wav` that has less limitations.
 
 You can increase the bitrate in Spytify settings, but if you have _Spotify Free_ it normally delivers music to `160kbps` and `320kbps` on Premium.
 
