@@ -26,9 +26,9 @@ namespace EspionSpotify
         public const string WEBSITE_DONATE_URL = "https://jwallet.github.io/spy-spotify/donate.html";
         public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
 
-        public static async Task<Release> GetVersionInformation()
+        public static async Task GetVersion()
         {
-            if (!Uri.TryCreate(API_LATEST_RELEASE_URL, UriKind.Absolute, out var uri)) return null;
+            if (!Uri.TryCreate(API_LATEST_RELEASE_URL, UriKind.Absolute, out var uri)) return;
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest)WebRequest.Create(uri);
@@ -36,12 +36,12 @@ namespace EspionSpotify
             request.UserAgent = Constants.SPYTIFY;
 
             var content = new MemoryStream();
-            Release release = null;
+
             try
             {
                 using (var response = (HttpWebResponse)await request.GetResponseAsync())
                 {
-                    if (response.StatusCode != HttpStatusCode.OK) return null;
+                    if (response.StatusCode != HttpStatusCode.OK) return;
 
                     using (var reader = response.GetResponseStream())
                     {
@@ -49,24 +49,7 @@ namespace EspionSpotify
                     }
 
                     var body = Encoding.UTF8.GetString(content.ToArray());
-                    release = JsonConvert.DeserializeObject<Release>(body);
-                }
-            }
-            catch (Exception ex)
-            {
-                content.Dispose();
-                Console.WriteLine(ex.Message);
-
-            }
-            return release;
-
-        }
-
-        public static async Task GetVersion()
-        {
-            try
-            {
-                var release = await GetVersionInformation();
+                    var release = JsonConvert.DeserializeObject<Release>(body);
 
                     if (release == null) return;
 
@@ -98,43 +81,22 @@ namespace EspionSpotify
 
                     if (dialogResult == DialogResult.OK)
                     {
-                        Update(release.assets_url);
+                        Update();
                     }
 
                     Settings.Default.app_last_version_prompt = githubTagVersion.ToString();
                     Settings.Default.Save();
                 }
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
         }
-        public static async void UserUpdate()
+        public static void Update()
         {
-            Release release = await GetVersionInformation();
-            Update(release.assets_url);
-        }
-        public static void Update(string apiurl)
-        {
-            HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(apiurl);
-            wr.Method = WebRequestMethods.Http.Get;
-            wr.UserAgent = Constants.SPYTIFY;
-            WebResponse ws = wr.GetResponse();
-            string json = new StreamReader(ws.GetResponseStream()).ReadToEnd();
-            json = json.Remove(0, 1);
-            json = json.Remove(json.Length - 1, 1);
-            string downlaodUrl = JObject.Parse(json)["browser_download_url"].ToString();
-            WebClient wc = new WebClient();
-            wc.DownloadFile(downlaodUrl, "update.zip");
-            Process p = new Process();
-            p.StartInfo = new ProcessStartInfo();
-            string execPath = Assembly.GetEntryAssembly().Location;
-            p.StartInfo.FileName = Application.StartupPath + "/Updater/Updater.exe";
-            p.StartInfo.Arguments = "\"" + @Application.StartupPath + "/\"";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.CreateNoWindow = false;
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            p.Start();
+            Process.Start(new ProcessStartInfo(Application.StartupPath + "/Updater/Updater.exe"));
             Application.Exit();
         }
     }

@@ -20,6 +20,7 @@ using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EspionSpotify.Native;
+using System.Configuration;
 
 namespace EspionSpotify
 {
@@ -44,7 +45,7 @@ namespace EspionSpotify
 
         private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
 
-        public FrmEspionSpotify(string[] args)
+        public FrmEspionSpotify()
         {
             InitializeComponent();
             SuspendLayout();
@@ -54,11 +55,20 @@ namespace EspionSpotify
             _audioSession = new MainAudioSession(Settings.Default.app_selected_audio_device_id);
 
             _userSettings = new UserSettings();
-            if (args.Contains("upgradeSettings"))
+            // Migrate Settings and remove old ones
+            Settings.Default.Upgrade();
+            Settings.Default.Save();
+            string path=Path.GetFullPath(Path.Combine(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath, @"..\..\"));
+            string[] settingPaths=System.IO.Directory.GetDirectories(path);
+            foreach (string settingPath in settingPaths)
             {
-                Settings.Default.Upgrade();
-                Settings.Default.Save();
+                DirectoryInfo info = new DirectoryInfo(settingPath);
+                if (info.Name != Application.ProductVersion)
+                {
+                    Directory.Delete(settingPath, true);
+                }
             }
+
 
             if (string.IsNullOrEmpty(Settings.Default.settings_output_path))
             {
@@ -936,7 +946,7 @@ namespace EspionSpotify
 
         private void LnkRelease_Click(object sender, EventArgs e)
         {
-            GitHub.UserUpdate();
+            GitHub.Update();
         }
 
         private void TxtRecordingTimer_Leave(object sender, EventArgs e)

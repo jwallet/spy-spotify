@@ -12,7 +12,7 @@ namespace EspionSpotify
     internal static class Program
     {
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
             // Add the event handler for handling UI thread exceptions to the event.
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
@@ -25,7 +25,7 @@ namespace EspionSpotify
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmEspionSpotify(args));
+            Application.Run(new FrmEspionSpotify());
         }
 
         // Handle the UI exceptions by showing a dialog box, and asking the user whether
