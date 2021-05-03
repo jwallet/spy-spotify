@@ -93,7 +93,7 @@ namespace EspionSpotify.Updater
                 Asset targetRelease = null;
                 foreach (Asset asset in release.assets)
                 {
-                    if (Regex.IsMatch(asset.name, @"v\.((?:\d+\.)*\d+?).zip$"))
+                    if (Regex.IsMatch(asset.name, @"^Spytify(-|\.)(v?)(\.)?\d+(\.\d+)?(\.\d+)?.zip$"))
                     {
                         targetRelease = asset;
                         break;
