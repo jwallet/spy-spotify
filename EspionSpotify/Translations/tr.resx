@@ -469,4 +469,12 @@
     <value>Çıkış yolu çok uzun</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Genel:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Sistem tepsisine küçült</value>
+    <comment>interface</comment>
+  </data>
 </root>

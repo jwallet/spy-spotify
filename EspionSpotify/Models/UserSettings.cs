@@ -16,6 +16,7 @@ namespace EspionSpotify.Models
         public bool OrderNumberInfrontOfFileEnabled { get; set; }
         public bool EndingTrackDelayEnabled { get; set; }
         public bool MuteAdsEnabled { get; set; }
+        public bool MinimizeToSystemTrayEnabled { get; set; }
         public bool RecordEverythingEnabled { get; set; }
         public bool RecordAdsEnabled { get; set; }
         public bool ExtraTitleToSubtitleEnabled { get; set; }

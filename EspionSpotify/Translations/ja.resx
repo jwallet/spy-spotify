@@ -469,4 +469,12 @@
     <value>出力パスが長すぎます</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>一般の:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>システムトレイに最小化</value>
+    <comment>interface</comment>
+  </data>
 </root>

@@ -469,4 +469,12 @@
     <value>Ausgabepfad zu lang</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Allgemeine:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>In die Taskleiste minimieren</value>
+    <comment>interface</comment>
+  </data>
 </root>
