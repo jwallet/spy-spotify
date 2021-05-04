@@ -25,7 +25,7 @@ Spytify records what Spotify outputs, which is a longer process than downloading
 
 However, Spytify ensures that all tracks will be the official released one, all sound volume normalized and with media tags and album cover. Playlist Downloaders get mostly all tracks from YouTube which means that they can’t guarantee the choosen track will fit 100% the one in your playlist and they will all be the same quality.
 
-Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/using_spotify/system_settings/high-quality-streaming/)), so the recorded copy will be indistinguishable from Spotify’s one.
+Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/audio-quality/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
 ## App features
 
@@ -33,7 +33,7 @@ Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Sp
 | ----------------------------------------------------------------------------------------------------------------------------------- | :---------------------: | :----------------------------------------------------------------------------------------------------------------- |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_no_ad.png" />         |       **No Ads**        | Doesn't record ads and has an option to disable audio ads completely                                               |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_mute_apps.png" />     |  **Mutes Other Apps**   | Mutes any other applications while spying                                                                          |
-| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /> | **Great Audio Quality** | Gets and records with the same great audio quality than Spotify                                                    |
+| <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_audio_quality.png" /> | **Great Audio Quality** | Gets and records with the same great audio quality as Spotify                                                      |
 | <img alt="features" src="https://raw.githubusercontent.com/jwallet/spy-spotify/gh-pages/assets/images/feature_max_out.png" />       |  **Normalize volume**   | Max out the volume of your Spotify audio session to records all song at the same volume level delivered by Spotify |
 
 ## File features
@@ -54,7 +54,7 @@ Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Sp
 
 ## Need a feature quicker?
 
-Spytify is supported by _IssueHunt_. [![Issuehunt](https://jwallet.github.io/spy-spotify/assets/images/isohunt_badge.svg)](https://issuehunt.io/r/jwallet/spy-spotify) 💰 
+Spytify is supported by _IssueHunt_. [![Issuehunt](https://jwallet.github.io/spy-spotify/assets/images/isohunt_badge.svg)](https://issuehunt.io/r/jwallet/spy-spotify) 💰
 
 That means you can have your issue (feature/improvement) prioritized, just open an [feature request](https://github.com/jwallet/spy-spotify/issues/new/choose) on this repository and go to our IssueHunt page and fund [your issue](https://issuehunt.io/r/jwallet/spy-spotify?tab=idle) to promote it. When the bounty will be interesting enough for someone to work on it, he will then submit a Pull Request with his code on this repo and link it to the IssueHunt page. Once the code is approved by the repo owner (it should not break the app architecture or basic purpose, it should not make it harder to maintain either), it will then be merged, and the bounty will be rewarded to the PR author if the requested feature was covered by the PR otherwise the funders can be refunded or we will wait for another PR. See a past example [here](https://issuehunt.io/r/jwallet/spy-spotify/issues/282)
 
