@@ -470,11 +470,11 @@
     <comment>message</comment>
   </data>
   <data name="lblMinimizeToSystemTray" xml:space="preserve">
-    <value>Minimize to system tray</value>
+    <value>Minimize Spytify to system tray</value>
     <comment>interface</comment>
   </data>
-  <data name="lblSystemTray" xml:space="preserve">
-    <value>System Tray:</value>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>General:</value>
     <comment>interface</comment>
   </data>
 </root>

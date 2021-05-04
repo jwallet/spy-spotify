@@ -469,6 +469,10 @@
     <value>Выходной путь слишком длинный</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Основная:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblMinimizeToSystemTray" xml:space="preserve">
     <value>Минимизировать в системный трей</value>
     <comment>interface</comment>

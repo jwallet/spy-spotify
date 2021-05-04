@@ -270,7 +270,7 @@ namespace EspionSpotify
             lblRecordingNum.Text = Rm.GetString(I18nKeys.LblRecordingNum);
             lblAds.Text = Rm.GetString(I18nKeys.LblAds);
             lblMuteAds.Text = Rm.GetString(I18nKeys.LblMuteAds);
-            lblSystemTray.Text = Rm.GetString(I18nKeys.LblSystemTray);
+            lblGeneral.Text = Rm.GetString(I18nKeys.LblGeneral);
             lblMinimizeToSystemTray.Text = Rm.GetString(I18nKeys.LblMinimizeToSystemTray);
             lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);

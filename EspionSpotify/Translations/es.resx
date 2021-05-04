@@ -469,6 +469,10 @@
     <value>Ruta de salida demasiado larga</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>General:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblMinimizeToSystemTray" xml:space="preserve">
     <value>Minimizar a la bandeja del sistema</value>
     <comment>interface</comment>

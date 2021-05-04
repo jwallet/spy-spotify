@@ -469,6 +469,10 @@
     <value>Caminho de saída muito longo</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Gerais:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblMinimizeToSystemTray" xml:space="preserve">
     <value>Minimize para a bandeja do sistema</value>
     <comment>interface</comment>

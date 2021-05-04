@@ -205,6 +205,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Obecná:.
+        /// </summary>
+        internal static string lblGeneral {
+            get {
+                return ResourceManager.GetString("lblGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID3 tagy:.
         /// </summary>
         internal static string lblID3 {
@@ -223,7 +232,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimalizovat na systémovou lištu.
+        ///   Looks up a localized string similar to Minimalizovat Spytify na systémovou lištu.
         /// </summary>
         internal static string lblMinimizeToSystemTray {
             get {

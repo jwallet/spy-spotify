@@ -469,6 +469,10 @@
     <value>Percorso di uscita troppo lungo</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Generale:</value>
+    <comment>interface</comment>
+  </data>
   <data name="lblMinimizeToSystemTray" xml:space="preserve">
     <value>Riduci a icona nella barra delle applicazioni</value>
     <comment>interface</comment>
