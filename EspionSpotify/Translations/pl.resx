@@ -469,4 +469,8 @@
     <value>Zbyt długa ścieżka wyjściowa</value>
     <comment>message</comment>
   </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Zminimalizuj do zasobnika systemowego</value>
+    <comment>interface</comment>
+  </data>
 </root>

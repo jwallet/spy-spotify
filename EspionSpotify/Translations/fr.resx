@@ -469,4 +469,8 @@
     <value>Dossier de sauvegarde trop long</value>
     <comment>message</comment>
   </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Réduire dans la barre des tâches</value>
+    <comment>interface</comment>
+  </data>
 </root>

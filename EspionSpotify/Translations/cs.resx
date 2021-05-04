@@ -469,4 +469,8 @@
     <value>Výstupní cesta je příliš dlouhá</value>
     <comment>message</comment>
   </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Minimalizovat na systémovou lištu</value>
+    <comment>interface</comment>
+  </data>
 </root>
