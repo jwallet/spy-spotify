@@ -346,5 +346,17 @@ namespace EspionSpotify.Properties {
                 this["app_spotify_api_redirect_url"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool settings_minimize_to_system_tray_enabled {
+            get {
+                return ((bool)(this["settings_minimize_to_system_tray_enabled"]));
+            }
+            set {
+                this["settings_minimize_to_system_tray_enabled"] = value;
+            }
+        }
     }
 }

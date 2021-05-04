@@ -205,6 +205,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General:.
+        /// </summary>
+        internal static string lblGeneral {
+            get {
+                return ResourceManager.GetString("lblGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID3 etiquetas:.
         /// </summary>
         internal static string lblID3 {
@@ -219,6 +228,15 @@ namespace EspionSpotify.Translations {
         internal static string lblLanguage {
             get {
                 return ResourceManager.GetString("lblLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimizar a la bandeja del sistema.
+        /// </summary>
+        internal static string lblMinimizeToSystemTray {
+            get {
+                return ResourceManager.GetString("lblMinimizeToSystemTray", resourceCulture);
             }
         }
         

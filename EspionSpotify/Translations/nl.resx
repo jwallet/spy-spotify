@@ -469,4 +469,12 @@
     <value>Uitvoerpad te lang</value>
     <comment>message</comment>
   </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>Algemene:</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Minimaliseren naar het systeemvak</value>
+    <comment>interface</comment>
+  </data>
 </root>

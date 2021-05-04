@@ -23,6 +23,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblFormat { get => TranslationKeys.lblFormat; }
         public static TranslationKeys LblID3 { get => TranslationKeys.lblID3; }
         public static TranslationKeys LblLanguage { get => TranslationKeys.lblLanguage; }
+        public static TranslationKeys LblMinimizeToSystemTray { get => TranslationKeys.lblMinimizeToSystemTray; }
         public static TranslationKeys LblMinLength { get => TranslationKeys.lblMinLength; }
         public static TranslationKeys LblMuteAds { get => TranslationKeys.lblMuteAds; }
         public static TranslationKeys LblNumFiles { get => TranslationKeys.lblNumFiles; }
@@ -37,6 +38,7 @@ namespace EspionSpotify.Models
         public static TranslationKeys LblRedirectURL { get => TranslationKeys.lblRedirectURL; }
         public static TranslationKeys LblSecretId { get => TranslationKeys.lblSecretId; }
         public static TranslationKeys LblSpy { get => TranslationKeys.lblSpy; }
+        public static TranslationKeys LblGeneral { get => TranslationKeys.lblGeneral; }
         public static TranslationKeys LblUpdateRecordingsID3Tags { get => TranslationKeys.lblUpdateRecordingsID3Tags; }
 
         public static TranslationKeys LogAd { get => TranslationKeys.logAd; }

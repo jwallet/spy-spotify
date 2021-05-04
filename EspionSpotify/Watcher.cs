@@ -256,6 +256,7 @@ namespace EspionSpotify
 
             _recorder = new Recorder(_form, _audioSession, _userSettings, _currentTrack, _fileSystem);
             var token = new CancellationTokenSource();
+         
             _recorderTasks.Add(new RecorderTask() { Task = Task.Run(() => _recorder.Run(token)), Token = token });
 
             _form.UpdateIconSpotify(_isPlaying, true);

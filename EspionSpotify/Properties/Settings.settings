@@ -83,5 +83,8 @@
     <Setting Name="app_spotify_api_redirect_url" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:4002</Value>
     </Setting>
+    <Setting Name="settings_minimize_to_system_tray_enabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

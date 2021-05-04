@@ -469,4 +469,12 @@
     <value>Output path too long</value>
     <comment>message</comment>
   </data>
+  <data name="lblMinimizeToSystemTray" xml:space="preserve">
+    <value>Minimize Spytify to system tray</value>
+    <comment>interface</comment>
+  </data>
+  <data name="lblGeneral" xml:space="preserve">
+    <value>General:</value>
+    <comment>interface</comment>
+  </data>
 </root>
