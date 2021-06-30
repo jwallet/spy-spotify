@@ -12,6 +12,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace EspionSpotify
 {
@@ -69,6 +71,7 @@ namespace EspionSpotify
                         dialogMessage = $"{releaseBodySplitted.Take(4).Aggregate((current, next) => $"{current}\n{next}")}\r\n{dialogMessage}";
                     }
 
+
                     var dialogResult = MetroFramework.MetroMessageBox.Show(
                         FrmEspionSpotify.Instance,
                         dialogMessage,
@@ -78,7 +81,7 @@ namespace EspionSpotify
 
                     if (dialogResult == DialogResult.OK)
                     {
-                        Process.Start(new ProcessStartInfo(release.html_url));
+                        Update();
                     }
 
                     Settings.Default.app_last_version_prompt = githubTagVersion.ToString();
@@ -87,9 +90,14 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                content.Dispose();
                 Console.WriteLine(ex.Message);
             }
+
+        }
+        public static void Update()
+        {
+            Process.Start(new ProcessStartInfo(Application.StartupPath + "/Updater/Updater.exe"));
+            Application.Exit();
         }
     }
 }
