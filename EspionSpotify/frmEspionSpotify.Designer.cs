@@ -54,9 +54,6 @@ namespace EspionSpotify
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.tlSettingsWrapper = new System.Windows.Forms.TableLayoutPanel();
             this.tlSettings = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblMinimizeToSystemTray = new MetroFramework.Controls.MetroLabel();
-            this.tgMinimizeToSystemTray = new MetroFramework.Controls.MetroToggle();
             this.lblLanguage = new MetroFramework.Controls.MetroLabel();
             this.lblBitRate = new MetroFramework.Controls.MetroLabel();
             this.lblPath = new MetroFramework.Controls.MetroLabel();
@@ -89,6 +86,9 @@ namespace EspionSpotify
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.tlAdvancedWrapper = new System.Windows.Forms.TableLayoutPanel();
             this.tlAdvanced = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblMinimizeToSystemTray = new MetroFramework.Controls.MetroLabel();
+            this.tgMinimizeToSystemTray = new MetroFramework.Controls.MetroToggle();
             this.lblSpy = new MetroFramework.Controls.MetroLabel();
             this.lblRecorder = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
@@ -124,6 +124,7 @@ namespace EspionSpotify
             this.lblExtraTitleToSubtitle = new MetroFramework.Controls.MetroLabel();
             this.lblNumTracks = new MetroFramework.Controls.MetroLabel();
             this.tgNumTracks = new MetroFramework.Controls.MetroToggle();
+            this.lblGeneral = new MetroFramework.Controls.MetroLabel();
             this.lnkSpy = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -131,7 +132,6 @@ namespace EspionSpotify
             this.lnkDonate = new MetroFramework.Controls.MetroLink();
             this.lnkFAQ = new MetroFramework.Controls.MetroLink();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.lblGeneral = new MetroFramework.Controls.MetroLabel();
             this.tcMenu.SuspendLayout();
             this.tabRecord.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -142,7 +142,6 @@ namespace EspionSpotify
             this.tabSettings.SuspendLayout();
             this.tlSettingsWrapper.SuspendLayout();
             this.tlSettings.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -153,6 +152,7 @@ namespace EspionSpotify
             this.tabAdvanced.SuspendLayout();
             this.tlAdvancedWrapper.SuspendLayout();
             this.tlAdvanced.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel15.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
@@ -514,50 +514,6 @@ namespace EspionSpotify
             this.tlSettings.Size = new System.Drawing.Size(710, 266);
             this.tlSettings.TabIndex = 1;
             // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.ColumnCount = 2;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel16.Controls.Add(this.lblMinimizeToSystemTray, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.tgMinimizeToSystemTray, 1, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(121, 3);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(569, 29);
-            this.tableLayoutPanel16.TabIndex = 51;
-            // 
-            // lblMinimizeToSystemTray
-            // 
-            this.lblMinimizeToSystemTray.AutoSize = true;
-            this.lblMinimizeToSystemTray.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMinimizeToSystemTray.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblMinimizeToSystemTray.Location = new System.Drawing.Point(3, 0);
-            this.lblMinimizeToSystemTray.Name = "lblMinimizeToSystemTray";
-            this.lblMinimizeToSystemTray.Size = new System.Drawing.Size(463, 29);
-            this.lblMinimizeToSystemTray.TabIndex = 43;
-            this.lblMinimizeToSystemTray.Text = "LBL_MIMIMIZE_SPYTIFY_TO_SYSTEM_TRAY";
-            this.lblMinimizeToSystemTray.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblMinimizeToSystemTray.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // tgMinimizeToSystemTray
-            // 
-            this.tgMinimizeToSystemTray.AutoSize = true;
-            this.tgMinimizeToSystemTray.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tgMinimizeToSystemTray.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tgMinimizeToSystemTray.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgMinimizeToSystemTray.Location = new System.Drawing.Point(472, 3);
-            this.tgMinimizeToSystemTray.Name = "tgMinimizeToSystemTray";
-            this.tgMinimizeToSystemTray.Size = new System.Drawing.Size(94, 23);
-            this.tgMinimizeToSystemTray.Style = MetroFramework.MetroColorStyle.Green;
-            this.tgMinimizeToSystemTray.TabIndex = 44;
-            this.tgMinimizeToSystemTray.Text = "Off";
-            this.tgMinimizeToSystemTray.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tgMinimizeToSystemTray.UseSelectable = true;
-            this.tgMinimizeToSystemTray.CheckedChanged += new System.EventHandler(this.TgMinimizeToSystemTray_CheckedChanged);
-            // 
             // lblLanguage
             // 
             this.lblLanguage.AutoSize = true;
@@ -637,7 +593,7 @@ namespace EspionSpotify
             // 
             // 
             this.txtPath.CustomButton.Image = null;
-            this.txtPath.CustomButton.Location = new System.Drawing.Point(478, 1);
+            this.txtPath.CustomButton.Location = new System.Drawing.Point(495, 1);
             this.txtPath.CustomButton.Name = "";
             this.txtPath.CustomButton.Size = new System.Drawing.Size(27, 27);
             this.txtPath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -1102,6 +1058,50 @@ namespace EspionSpotify
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlAdvanced.Size = new System.Drawing.Size(693, 397);
             this.tlAdvanced.TabIndex = 1;
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 2;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel16.Controls.Add(this.lblMinimizeToSystemTray, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.tgMinimizeToSystemTray, 1, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(121, 3);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 1;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(569, 29);
+            this.tableLayoutPanel16.TabIndex = 51;
+            // 
+            // lblMinimizeToSystemTray
+            // 
+            this.lblMinimizeToSystemTray.AutoSize = true;
+            this.lblMinimizeToSystemTray.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMinimizeToSystemTray.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblMinimizeToSystemTray.Location = new System.Drawing.Point(3, 0);
+            this.lblMinimizeToSystemTray.Name = "lblMinimizeToSystemTray";
+            this.lblMinimizeToSystemTray.Size = new System.Drawing.Size(463, 29);
+            this.lblMinimizeToSystemTray.TabIndex = 43;
+            this.lblMinimizeToSystemTray.Text = "LBL_MIMIMIZE_SPYTIFY_TO_SYSTEM_TRAY";
+            this.lblMinimizeToSystemTray.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMinimizeToSystemTray.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tgMinimizeToSystemTray
+            // 
+            this.tgMinimizeToSystemTray.AutoSize = true;
+            this.tgMinimizeToSystemTray.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tgMinimizeToSystemTray.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgMinimizeToSystemTray.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgMinimizeToSystemTray.Location = new System.Drawing.Point(472, 3);
+            this.tgMinimizeToSystemTray.Name = "tgMinimizeToSystemTray";
+            this.tgMinimizeToSystemTray.Size = new System.Drawing.Size(94, 23);
+            this.tgMinimizeToSystemTray.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgMinimizeToSystemTray.TabIndex = 44;
+            this.tgMinimizeToSystemTray.Text = "Off";
+            this.tgMinimizeToSystemTray.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgMinimizeToSystemTray.UseSelectable = true;
+            this.tgMinimizeToSystemTray.CheckedChanged += new System.EventHandler(this.TgMinimizeToSystemTray_CheckedChanged);
             // 
             // lblSpy
             // 
@@ -1652,6 +1652,19 @@ namespace EspionSpotify
             this.tgNumTracks.CheckedChanged += new System.EventHandler(this.TgNumTracks_CheckedChanged);
             this.tgNumTracks.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
+            // lblGeneral
+            // 
+            this.lblGeneral.AutoSize = true;
+            this.lblGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblGeneral.Location = new System.Drawing.Point(3, 6);
+            this.lblGeneral.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblGeneral.Name = "lblGeneral";
+            this.lblGeneral.Size = new System.Drawing.Size(102, 29);
+            this.lblGeneral.TabIndex = 10;
+            this.lblGeneral.Text = "LBL_GENERAL";
+            this.lblGeneral.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblGeneral.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // lnkSpy
             // 
             this.lnkSpy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1728,19 +1741,6 @@ namespace EspionSpotify
             this.notifyIcon.Text = "Spytify";
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 
-            // lblGeneral
-            // 
-            this.lblGeneral.AutoSize = true;
-            this.lblGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblGeneral.Location = new System.Drawing.Point(3, 6);
-            this.lblGeneral.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblGeneral.Name = "lblGeneral";
-            this.lblGeneral.Size = new System.Drawing.Size(102, 29);
-            this.lblGeneral.TabIndex = 10;
-            this.lblGeneral.Text = "LBL_GENERAL";
-            this.lblGeneral.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblGeneral.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // FrmEspionSpotify
             // 
             this.AcceptButton = this.lnkSpy;
@@ -1782,8 +1782,6 @@ namespace EspionSpotify
             this.tlSettingsWrapper.PerformLayout();
             this.tlSettings.ResumeLayout(false);
             this.tlSettings.PerformLayout();
-            this.tableLayoutPanel16.ResumeLayout(false);
-            this.tableLayoutPanel16.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
@@ -1800,6 +1798,8 @@ namespace EspionSpotify
             this.tlAdvancedWrapper.PerformLayout();
             this.tlAdvanced.ResumeLayout(false);
             this.tlAdvanced.PerformLayout();
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel15.ResumeLayout(false);

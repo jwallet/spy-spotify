@@ -324,6 +324,7 @@
     <Compile Include="AudioSessions\MainAudioSession.cs" />
     <Compile Include="IWatcher.cs" />
     <Compile Include="Translations\Languages.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="Watcher.cs" />
     <EmbeddedResource Include="Controls\MetroCredentialsForm.resx">
       <DependentUpon>MetroCredentialsForm.cs</DependentUpon>

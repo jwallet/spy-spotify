@@ -71,7 +71,6 @@ namespace EspionSpotify
                         dialogMessage = $"{releaseBodySplitted.Take(4).Aggregate((current, next) => $"{current}\n{next}")}\r\n{dialogMessage}";
                     }
 
-
                     var dialogResult = MetroFramework.MetroMessageBox.Show(
                         FrmEspionSpotify.Instance,
                         dialogMessage,
