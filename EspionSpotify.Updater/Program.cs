@@ -10,7 +10,6 @@ namespace EspionSpotify.Updater
             t.SetApartmentState(ApartmentState.STA);
             t.IsBackground = true;
             t.Start();
-            t.Join();
         }
 
         internal static void Run()
