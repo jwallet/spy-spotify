@@ -27,7 +27,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\EspionSpotify\bin\Release\Updater\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,11 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GitHub\Asset.cs" />
-    <Compile Include="GitHub\Release.cs" />
-    <Compile Include="GitHub\User.cs" />
+    <Compile Include="Models\GitHub\Asset.cs" />
+    <Compile Include="Models\GitHub\Release.cs" />
+    <Compile Include="Models\GitHub\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater.cs" />
+    <Compile Include="Utilities\AssemblyInfo.cs" />
+    <Compile Include="Utilities\CustomExceptions.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\GitHub.cs" />
+    <Compile Include="Utilities\Web.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

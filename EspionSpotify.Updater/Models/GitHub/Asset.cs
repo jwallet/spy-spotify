@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EspionSpotify.Updater.GitHub
+namespace EspionSpotify.Updater.Models.GitHub
 {
     [Serializable]
     internal class Asset

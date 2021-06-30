@@ -53,22 +53,9 @@ namespace EspionSpotify
             Text = Constants.SPYTIFY;
 
             _audioSession = new MainAudioSession(Settings.Default.app_selected_audio_device_id);
-
             _userSettings = new UserSettings();
-            // Migrate Settings and remove old ones
-            Settings.Default.Upgrade();
-            Settings.Default.Save();
-            string path=Path.GetFullPath(Path.Combine(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath, @"..\..\"));
-            string[] settingPaths=System.IO.Directory.GetDirectories(path);
-            foreach (string settingPath in settingPaths)
-            {
-                DirectoryInfo info = new DirectoryInfo(settingPath);
-                if (info.Name != Application.ProductVersion)
-                {
-                    Directory.Delete(settingPath, true);
-                }
-            }
 
+            Updater.UpgradeSettings();
 
             if (string.IsNullOrEmpty(Settings.Default.settings_output_path))
             {

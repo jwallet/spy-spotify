@@ -12,6 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EspionSpotify.Updater", "EspionSpotify.Updater\EspionSpotify.Updater.csproj", "{F20370C5-7613-452E-8FCD-06F7F5703C35}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A02571B8-7CE5-4865-84F0-87613F895204} = {A02571B8-7CE5-4865-84F0-87613F895204}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
