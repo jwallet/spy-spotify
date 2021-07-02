@@ -471,6 +471,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="RESET_APP_SETTINGS.BAT">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\record.gif" />
     <None Include="Resources\volup.gif" />
     <None Include="Resources\volmute.gif" />
