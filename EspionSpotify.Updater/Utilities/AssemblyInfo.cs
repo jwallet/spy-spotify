@@ -9,10 +9,11 @@ namespace EspionSpotify.Updater.Utilities
         internal static bool IsNewerVersionThanCurrent(string name)
         {
             var m = Regex.Match(name, @"((?:\d+\.)*\d+?)");
+            var version = m.Groups[m.Groups.Count - 1];
 
-            if (m.Groups[1].Success)
+            if (version.Success)
             {
-                var availableVersion = new Version(m.Groups[1].Value);
+                var availableVersion = new Version(version.Value);
                 Version currentVersion;
                 try
                 {
