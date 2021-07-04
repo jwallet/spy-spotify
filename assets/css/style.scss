@@ -6,6 +6,7 @@
 @import "normalize";
 @import "variables";
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+@import url("https://fonts.googleapis.com/css?family=Architects+Daughter");
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {
@@ -33,7 +34,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 92%;
   line-height: 1.5;
   color: $body-text-color;
 }
@@ -314,21 +315,45 @@ a {
   h4,
   h5,
   h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    text-indent: 4px;
     font-weight: normal;
     color: $section-headings-color;
+    font-style: italic;
+    &::before {
+      font-family: "Architects Daughter", "Helvetica Neue", Helvetica, Arial,
+        serif;
+      padding-right: 0.3em;
+      margin-left: -1.5em;
+    }
   }
 
-  h1,
+  h1 {
+    font-size: 170%;
+    &::before {
+      content: "/";
+    }
+  }
   h2 {
-    border-left: 0.8rem double $section-headings-color;
-    padding-left: 0.9rem;
+    font-size: 155%;
+    &::before {
+      content: "//";
+    }
   }
-
   h3 {
-    border-left: 0.3rem solid $section-headings-color;
-    padding-left: 1rem;
+    font-size: 120%;
+    &::before {
+      content: "///";
+    }
+  }
+  h4 {
+    font-size: 100%;
+    &::before {
+      content: "////";
+    }
+  }
+  h5,
+  h6 {
+    font-size: 95%;
   }
 
   p {

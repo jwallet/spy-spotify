@@ -127,6 +127,8 @@ If so, you can support this project from one of these ways:
 
 ## Comments
 
+<section style="max-height:50vh;overflow-y:auto;">
+
 {% for comment in site.data.comments %}
 
 <blockquote>{{comment.quote}}
@@ -134,3 +136,5 @@ If so, you can support this project from one of these ways:
 </blockquote>
 
 {% endfor %}
+
+</section>
