@@ -20,6 +20,10 @@ However, Spytify ensures that all tracks will be the official released one, all 
 
 Spytify records the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/audio-quality/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
+### [How to install it?](#how-to-install-it)
+
+Follow the steps shown in the F.A.Q section : [_How to install Spytify?_](https://jwallet.github.io/spy-spotify/faq.html#install-spytify)
+
 ### [How to use it?](#how-to-use-it)
 
 A standard use is to start a recording session using your favorite playlist and let it record overnight, so you avoid waiting for it to end, because Spytify does not download but records. You will then get all your songs automatically split into separate tracks without ads and with metadata.
