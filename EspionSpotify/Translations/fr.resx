@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Regrouper les pistes audio dans leur propre dossier</value>
+    <value>Regrouper les pistes audio par album</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
