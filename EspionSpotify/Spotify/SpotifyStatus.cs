@@ -4,18 +4,17 @@ using EspionSpotify.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.Extensions;
 
 namespace EspionSpotify.Spotify
 {
     public class SpotifyStatus : ISpotifyStatus
     {
-        public static string[] SpotifyTitles = new[] { Constants.SPOTIFY.ToLowerInvariant(), Constants.SPOTIFYFREE.ToLowerInvariant() };
-
         public Track CurrentTrack { get; set; }
 
         public static bool WindowTitleIsSpotify(string title)
         {
-            return SpotifyTitles.Contains(title?.ToLowerInvariant());
+            return title.IsNullOrSpotifyIdleState();
         }
 
         public static bool WindowTitleIsAd(string title)
