@@ -121,10 +121,10 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int settings_language {
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
+        public string settings_language {
             get {
-                return ((int)(this["settings_language"]));
+                return ((string)(this["settings_language"]));
             }
             set {
                 this["settings_language"] = value;

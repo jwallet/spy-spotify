@@ -31,6 +31,11 @@ namespace EspionSpotify.Extensions
             return value.ToEnum<ExternalAPIType>(ignoreCase: true);
         }
 
+        public static LanguageType? ToLanguageType(this string value)
+        {
+            return value.ToEnum<LanguageType>(ignoreCase: true);
+        }
+
         public static int? ToNullableInt(this string value)
         {
             if (int.TryParse(value, out int i)) return i;
