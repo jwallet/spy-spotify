@@ -2,6 +2,7 @@
 layout: page
 hash: media-tags-not-found
 title: "How to use Spotify API to get better (more accurate) media metadata and album cover?"
+order: 60
 namespace: faq
 ---
 

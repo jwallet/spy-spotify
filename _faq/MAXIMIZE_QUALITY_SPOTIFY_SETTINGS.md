@@ -1,6 +1,7 @@
 ---
 layout: page
 hash: maximize-quality-spotify-settings
+order: 90
 title: How can I maximize the audio quality of my recordings?
 namespace: faq
 ---

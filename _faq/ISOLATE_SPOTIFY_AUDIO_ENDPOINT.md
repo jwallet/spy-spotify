@@ -1,6 +1,7 @@
 ---
 layout: page
 hash: isolate-spotify-audio-endpoint
+order: 74
 title: How to isolate Spotify and Spytify to a different audio endpoint device to eliminate noise?
 namespace: faq
 ---

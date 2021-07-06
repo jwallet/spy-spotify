@@ -3,7 +3,8 @@ layout: page
 title: F.A.Q.
 ---
 
-{% for question in site.faq %}
+{% assign quesitons = site.faq | sort: 'order' | reverse %}
+{% for question in quesitons %}
 
 <section id="{{ question.hash }}">
     <details class="faq">

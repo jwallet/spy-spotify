@@ -1,6 +1,7 @@
 ---
 layout: page
 hash: install-better-audio-endpoint-device
+order: 75
 title: Which audio endpoint device should I use for best recording quality? (Virtual Audio Cable)
 namespace: faq
 ---
