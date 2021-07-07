@@ -7,8 +7,8 @@ namespace EspionSpotify.Tests
     public class SpotifyStatusTests
     {
         [Theory]
-        [InlineData(null, false)]
-        [InlineData("", false)]
+        [InlineData(null, true)]
+        [InlineData("", true)]
         [InlineData("Artist Name - Song Title", false)]
         [InlineData(Constants.ADVERTISEMENT, false)]
         [InlineData(Constants.SPOTIFY, true)]
