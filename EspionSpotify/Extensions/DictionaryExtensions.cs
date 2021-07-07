@@ -24,6 +24,7 @@ namespace EspionSpotify.Extensions
         public static KeyValuePair<TKey, TValue> ToKeyValuePair<TKey, TValue>(this object obj)
         {
             var json = JsonConvert.SerializeObject(obj ?? new object() { });
+            if (!json.StartsWith("{") && !json.EndsWith("}")) return new KeyValuePair<TKey, TValue>();
             var pair = JsonConvert.DeserializeObject<KeyValuePair<TKey, TValue>>(json);
             return pair;
         }

@@ -26,8 +26,8 @@
     <Setting Name="advanced_id3_counter_number_as_track_number_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="settings_language" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="settings_language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en</Value>
     </Setting>
     <Setting Name="app_tab_number_selected" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>

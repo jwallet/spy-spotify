@@ -234,20 +234,19 @@ namespace EspionSpotify
 
         private void SetLanguageDropDown()
         {
-            var selectedId = Settings.Default.settings_language;
+            var value = Settings.Default.settings_language;
 
             cbLanguage.DataSource = new BindingSource(Translations.Languages.dropdownListValues, null);
             cbLanguage.DisplayMember = "Value";
             cbLanguage.ValueMember = "Key";
-            cbLanguage.SelectedIndex = selectedId;
+            cbLanguage.SelectedItem = Translations.Languages.GetDropdownListItemFromLanguageType(value.ToLanguageType());
         }
 
         private void SetLanguage()
         {
-            var indexLanguage = Settings.Default.settings_language;
+            var language = Settings.Default.settings_language;
             var indexBitRate = Settings.Default.settings_media_bitrate_quality;
-
-            var languageType = (LanguageType)indexLanguage;
+            var languageType = language.ToLanguageType() ?? LanguageType.en;
 
             var rmLanguage = Translations.Languages.GetResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
@@ -310,8 +309,6 @@ namespace EspionSpotify
             cbBitRate.ValueMember = "Key";
 
             cbBitRate.SelectedIndex = indexBitRate;
-
-            cbLanguage.SelectedIndex = indexLanguage;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -916,11 +913,12 @@ namespace EspionSpotify
             ctrl.Focus();
         }
 
-        private void CbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbLanguage_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cbLanguage.SelectedIndex == Settings.Default.settings_language) return;
+            var language = cbLanguage.SelectedItem.ToKeyValuePair<LanguageType, string>().Key.ToString();
+            if (language == Settings.Default.settings_language) return;
 
-            Settings.Default.settings_language = cbLanguage.SelectedIndex;
+            Settings.Default.settings_language = language;
             Settings.Default.Save();
             SetLanguage();
             Task.Run(async () => await _analytics.LogAction($"language?selected={cbLanguage.GetPropertyThreadSafe(c => c.SelectedValue)}"));

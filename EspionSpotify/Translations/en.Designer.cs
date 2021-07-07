@@ -115,7 +115,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group tracks inside their own folder.
+        ///   Looks up a localized string similar to Group tracks by album.
         /// </summary>
         internal static string lblAddFolders {
             get {
