@@ -29,13 +29,13 @@ namespace EspionSpotify.Models
 
         public string ToMediaFilePath()
         {
-            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
+            if (_file.IsNullOrAdOrSpotifyIdleState()) return null;
             return FileManager.ConcatPaths(BasePath, FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         public override string ToString()
         {
-            if (_file.IsNullOrInvalidSpotifyStatus()) return null;
+            if (_file.IsNullOrAdOrSpotifyIdleState()) return null;
             return FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 

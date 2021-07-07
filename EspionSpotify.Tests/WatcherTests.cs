@@ -74,6 +74,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData(Constants.SPOTIFY)]
         [InlineData(Constants.SPOTIFYFREE)]
+        [InlineData(Constants.SPOTIFYPREMIUM)]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyInactive(string title)
         {
             var userSettings = new UserSettings { RecordEverythingEnabled = true };
@@ -90,6 +91,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData(Constants.SPOTIFY)]
         [InlineData(Constants.SPOTIFYFREE)]
+        [InlineData(Constants.SPOTIFYPREMIUM)]
         [InlineData(Constants.ADVERTISEMENT)]
         internal void IsRecordUnknownActive_FalsyWhenSpotifyAdPlaying(string title)
         {

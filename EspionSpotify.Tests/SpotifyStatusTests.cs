@@ -7,12 +7,13 @@ namespace EspionSpotify.Tests
     public class SpotifyStatusTests
     {
         [Theory]
-        [InlineData(null, false)]
-        [InlineData("", false)]
+        [InlineData(null, true)]
+        [InlineData("", true)]
         [InlineData("Artist Name - Song Title", false)]
         [InlineData(Constants.ADVERTISEMENT, false)]
         [InlineData(Constants.SPOTIFY, true)]
         [InlineData(Constants.SPOTIFYFREE, true)]
+        [InlineData(Constants.SPOTIFYPREMIUM, true)]
         [InlineData("SPOTIFY", true)]
         [InlineData("spotify", true)]
         internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)

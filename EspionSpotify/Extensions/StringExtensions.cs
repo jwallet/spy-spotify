@@ -47,10 +47,19 @@ namespace EspionSpotify.Extensions
             return path?.Trim()?.TrimEnd(Path.GetInvalidFileNameChars());
         }
 
-        public static bool IsNullOrInvalidSpotifyStatus(this string value)
+        public static bool IsNullOrAdOrSpotifyIdleState(this string value)
         {
-            return string.IsNullOrWhiteSpace(value)
-                || new[] { Constants.SPOTIFY, Constants.SPOTIFYFREE, Constants.ADVERTISEMENT }.Contains(value);
+            return IsNullOrSpotifyIdleState(value)
+                || Constants.ADVERTISEMENT.ToLowerInvariant() == value.ToLowerInvariant();
+        }
+
+        public static bool IsNullOrSpotifyIdleState(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value) || new[] {
+                Constants.SPOTIFY.ToLowerInvariant(),
+                Constants.SPOTIFYFREE.ToLowerInvariant(),
+                Constants.SPOTIFYPREMIUM.ToLowerInvariant()
+            }.Contains(value.ToLowerInvariant());
         }
 
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct

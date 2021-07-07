@@ -98,6 +98,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData(Constants.SPOTIFY)]
         [InlineData(Constants.SPOTIFYFREE)]
+        [InlineData(Constants.SPOTIFYPREMIUM)]
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingInIdle_ReturnsAdPlaying(string title)
         {
             var windowTitle = title.Capitalize();

@@ -259,7 +259,7 @@ namespace EspionSpotify.Native
             fileName = GetCleanFileFolder(fileName, maxLength: FileManager.MAX_PATH_LENGTH);
 
             if (string.IsNullOrWhiteSpace(fileName)) throw new Exception("File name cannot be empty.");
-            if (new[] { Constants.SPOTIFY, Constants.SPOTIFYFREE }.Contains(fileName)) throw new Exception($"File name cannot be {Constants.SPOTIFY}.");
+            if (fileName.IsNullOrSpotifyIdleState()) throw new Exception($"File name cannot be a {Constants.SPOTIFY} idle state.");
 
             var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
             return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator ?? " "); ;
