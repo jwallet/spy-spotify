@@ -397,10 +397,6 @@
     <value>Błąd API Spotify</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Nagranie {0} miało przekroczyć ilość danych, często z powodu braku odpowiedzi Spotify po zbyt długim przebywaniu w tle lub w trybie oszczędzania energii.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

@@ -397,10 +397,6 @@
     <value>Spotify API Falhou</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// A gravação de {0} estava ultrapassando os dados, geralmente devido ao Spotify não responder após ficar em segundo plano por muito tempo ou o computador estar no modo de economia de energia.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

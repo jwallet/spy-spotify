@@ -448,15 +448,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // De opname van {0} zou de hoeveelheid gegevens overschrijden, vaak veroorzaakt doordat Spotify niet reageerde na te lang op de achtergrond te hebben gewerkt of omdat uw computer zich in de energiebesparende modus bevindt..
-        /// </summary>
-        internal static string logRecordingDataExceeded {
-            get {
-                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Timer voor de opnamesessie is voorbij..
         /// </summary>
         internal static string logRecordingTimerDone {
