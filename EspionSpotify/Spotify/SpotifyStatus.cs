@@ -12,11 +12,6 @@ namespace EspionSpotify.Spotify
     {
         public Track CurrentTrack { get; set; }
 
-        public static bool WindowTitleIsSpotify(string title)
-        {
-            return title.IsNullOrSpotifyIdleState();
-        }
-
         public static bool WindowTitleIsAd(string title)
         {
             return title?.ToLowerInvariant() == Constants.ADVERTISEMENT.ToLowerInvariant();

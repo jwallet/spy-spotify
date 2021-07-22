@@ -37,6 +37,7 @@ namespace EspionSpotify
         private readonly IFileSystem _fileSystem;
         private bool _canBeSkippedValidated = false;
         private CancellationTokenSource _cancellationTokenSource;
+        private bool _dataStillAvailable = false;
 
         public bool IsSkipTrackActive
         {
@@ -99,6 +100,11 @@ namespace EspionSpotify
                 await Task.Delay(50);
             }
 
+            while (_dataStillAvailable)
+            {
+                await Task.Delay(50);
+            }
+
             _waveIn.StopRecording();
         }
         #endregion RecorderStart
@@ -124,7 +130,9 @@ namespace EspionSpotify
         {
             if (_tempWaveWriter == null || !Running) return;
 
+            _dataStillAvailable = true;
             await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+            _dataStillAvailable = false;
         }
         #endregion RecorderWriteUpcomingData
 
@@ -258,7 +266,7 @@ namespace EspionSpotify
                         _currentOutputFile.ToMediaFilePath(),
                         _track,
                         _userSettings);
-                    await mapper.SaveMediaTags();
+                    await Task.Run(mapper.SaveMediaTags);
                     return;
                 default:
                     return;

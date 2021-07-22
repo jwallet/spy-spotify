@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Models;
+﻿using EspionSpotify.Extensions;
+using EspionSpotify.Models;
 using EspionSpotify.Spotify;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace EspionSpotify.Tests
         [InlineData("spotify", true)]
         internal void SpotifyStatusWindowTitleIsSpotify_ReturnsWhenItMatches(string value, bool expected)
         {
-            var actual = SpotifyStatus.WindowTitleIsSpotify(value);
+            var actual = value.IsNullOrSpotifyIdleState();
 
             Assert.Equal(expected, actual);
         }

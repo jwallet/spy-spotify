@@ -55,7 +55,12 @@ namespace EspionSpotify.Extensions
 
         public static bool IsNullOrSpotifyIdleState(this string value)
         {
-            return string.IsNullOrWhiteSpace(value) || new[] {
+            return string.IsNullOrWhiteSpace(value) || value.IsSpotifyIdleState();
+        }
+
+        public static bool IsSpotifyIdleState(this string value)
+        {
+            return new[] {
                 Constants.SPOTIFY.ToLowerInvariant(),
                 Constants.SPOTIFYFREE.ToLowerInvariant(),
                 Constants.SPOTIFYPREMIUM.ToLowerInvariant()

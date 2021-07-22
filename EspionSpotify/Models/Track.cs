@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Spotify;
 using System.Linq;
 
@@ -101,11 +102,7 @@ namespace EspionSpotify.Models
 
         public bool IsUnknown
         {
-            get =>
-                !string.IsNullOrEmpty(Artist)
-                && string.IsNullOrEmpty(Title)
-                && !SpotifyStatus.WindowTitleIsAd(Artist)
-                && !SpotifyStatus.WindowTitleIsSpotify(Artist);
+            get => string.IsNullOrEmpty(Title) && !Artist.IsNullOrAdOrSpotifyIdleState();
         }
         public bool IsUnknownPlaying => IsUnknown && Playing;
 
