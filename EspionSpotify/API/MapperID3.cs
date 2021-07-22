@@ -1,5 +1,6 @@
-﻿using EspionSpotify.Enums;
+using EspionSpotify.Enums;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace EspionSpotify.API
         public Track Track { get; set; }
 
         private readonly IFileSystem _fileSystem;
+
 
         private bool IsMovingExtraTitleToSubtitle
         {
@@ -70,6 +72,7 @@ namespace EspionSpotify.API
         #region MP3 Tags updater
         internal async Task SaveMediaTags()
         {
+            await Task.Delay(1000);
             using (var mp3 = TagLib.File.Create(CurrentFile))
             {
                 await MapTags(mp3.Tag);

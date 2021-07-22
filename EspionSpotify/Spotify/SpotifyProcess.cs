@@ -1,4 +1,4 @@
-﻿using EspionSpotify.AudioSessions;
+using EspionSpotify.AudioSessions;
 using EspionSpotify.API;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.Extensions;
 
 namespace EspionSpotify
 {
     public class SpotifyProcess : ISpotifyProcess
     {
-        private readonly int? _spotifyProcessId;
+        private int? _spotifyProcessId;
         private readonly IMainAudioSession _audioSession;
         private readonly IProcessManager _processManager;
 
@@ -31,7 +32,7 @@ namespace EspionSpotify
         public async Task<ISpotifyStatus> GetSpotifyStatus()
         {
             var (processTitle, isSpotifyAudioPlaying) = await GetSpotifyTitle();
-            var isWindowTitledSpotify = SpotifyStatus.WindowTitleIsSpotify(processTitle);
+            var isWindowTitledSpotify = processTitle.IsNullOrSpotifyIdleState();
 
             if (string.IsNullOrWhiteSpace(processTitle))
             {
@@ -85,7 +86,7 @@ namespace EspionSpotify
 
             foreach (var process in processManager.GetProcesses())
             {
-                if (SpotifyStatus.WindowTitleIsSpotify(process.ProcessName))
+                if (process.ProcessName.IsSpotifyIdleState())
                 {
                     spotifyProcesses.Add(process);
                 }

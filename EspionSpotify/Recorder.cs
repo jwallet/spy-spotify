@@ -20,7 +20,6 @@ namespace EspionSpotify
 
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
-        public const long WAV_MAX_SIZE_BYTES = 4000000000;
 
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
@@ -38,6 +37,7 @@ namespace EspionSpotify
         private readonly IFileSystem _fileSystem;
         private bool _canBeSkippedValidated = false;
         private CancellationTokenSource _cancellationTokenSource;
+        private bool _dataStillAvailable = false;
 
         public bool IsSkipTrackActive
         {
@@ -100,6 +100,11 @@ namespace EspionSpotify
                 await Task.Delay(50);
             }
 
+            while (_dataStillAvailable)
+            {
+                await Task.Delay(50);
+            }
+
             _waveIn.StopRecording();
         }
         #endregion RecorderStart
@@ -125,16 +130,9 @@ namespace EspionSpotify
         {
             if (_tempWaveWriter == null || !Running) return;
 
-
-            if (_tempWaveWriter.Length < WAV_MAX_SIZE_BYTES / 2)
-            {
-                await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
-            }
-            else
-            {
-                _form.WriteIntoConsole(I18nKeys.LogRecordingDataExceeded, _track.ToString());
-                ForceStopRecording();
-            }
+            _dataStillAvailable = true;
+            await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+            _dataStillAvailable = false;
         }
         #endregion RecorderWriteUpcomingData
 
@@ -268,7 +266,7 @@ namespace EspionSpotify
                         _currentOutputFile.ToMediaFilePath(),
                         _track,
                         _userSettings);
-                    await mapper.SaveMediaTags();
+                    await Task.Run(mapper.SaveMediaTags);
                     return;
                 default:
                     return;

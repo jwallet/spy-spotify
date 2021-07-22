@@ -140,7 +140,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = !IsRecordUnknownActive && _currentTrack.Ad && !SpotifyStatus.WindowTitleIsSpotify(_currentTrack.ToString()) ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
+            var adTitle = !IsRecordUnknownActive && _currentTrack.Ad && !_currentTrack.ToString().IsSpotifyIdleState() ? $"{_form.Rm?.GetString(I18nKeys.LogAd) ?? "Ad"}: " : "";
             _form.UpdatePlayingTitle($"{adTitle}{_currentTrack.ToString()}");
 
             MutesSpotifyAds(_currentTrack.Ad);

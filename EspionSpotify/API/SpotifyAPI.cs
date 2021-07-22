@@ -189,6 +189,7 @@ namespace EspionSpotify.API
             {
                 _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
                 _refreshToken = _token.RefreshToken;
+                _connectionDialogOpened = false;
             }
             catch { }
         }
