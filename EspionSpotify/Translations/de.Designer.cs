@@ -448,15 +448,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Die Aufzeichnung von {0} würde die Datenmenge überschreiten, was häufig darauf zurückzuführen ist, dass Spotify nicht reagiert, nachdem es zu lange im Hintergrund war oder sich Ihr Computer im Energiesparmodus befindet..
-        /// </summary>
-        internal static string logRecordingDataExceeded {
-            get {
-                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Der Timer der Aufnahmesitzung ist abgelaufen..
         /// </summary>
         internal static string logRecordingTimerDone {

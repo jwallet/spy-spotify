@@ -397,10 +397,6 @@
     <value>Spotify API is mislukt</value>
     <comment>message**</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// De opname van {0} zou de hoeveelheid gegevens overschrijden, vaak veroorzaakt doordat Spotify niet reageerde na te lang op de achtergrond te hebben gewerkt of omdat uw computer zich in de energiebesparende modus bevindt.</value>
-    <comment>console**</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

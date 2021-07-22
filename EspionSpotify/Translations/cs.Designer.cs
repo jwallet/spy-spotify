@@ -448,15 +448,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Nahrávání dat {0} bude překročeno v datech, často způsobeno tím, že Spotify nereaguje, když je příliš dlouho na pozadí nebo je počítač v úsporném režimu..
-        /// </summary>
-        internal static string logRecordingDataExceeded {
-            get {
-                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Časovač nahrávání relace hotový..
         /// </summary>
         internal static string logRecordingTimerDone {
