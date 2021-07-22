@@ -397,10 +397,6 @@
     <value>Ошибка Spotify API</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Запись {0} должна была превысить объем данных, часто из-за того, что Spotify не отвечал после слишком длительного нахождения в фоновом режиме или ваш компьютер находится в режиме энергосбережения.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

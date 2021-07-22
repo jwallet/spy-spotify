@@ -448,15 +448,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // {0} の記録がデータで超過する予定でした。これは、バックグラウンドで長時間使用した後、Spotifyが応答しないか、コンピューターが省電力モードになっていることが原因であることがよくあります。.
-        /// </summary>
-        internal static string logRecordingDataExceeded {
-            get {
-                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // 録音セッションタイマーが完了しました。.
         /// </summary>
         internal static string logRecordingTimerDone {

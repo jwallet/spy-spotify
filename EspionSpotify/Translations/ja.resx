@@ -397,10 +397,6 @@
     <value>Spotify API が失敗しました</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// {0} の記録がデータで超過する予定でした。これは、バックグラウンドで長時間使用した後、Spotifyが応答しないか、コンピューターが省電力モードになっていることが原因であることがよくあります。</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

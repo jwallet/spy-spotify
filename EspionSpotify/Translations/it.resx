@@ -397,10 +397,6 @@
     <value>Spotify API non riuscito</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// La registrazione di {0} stava per superare i dati, spesso a causa della mancata risposta di Spotify dopo essere rimasto in background troppo a lungo o il computer è in modalità di risparmio energetico.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

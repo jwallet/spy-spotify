@@ -397,10 +397,6 @@
     <value>Spotify API Başarısız</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// {0} kaydı, veriyi aşacaktı, bu genellikle Spotify'ın arka planda çok uzun süre kaldıktan sonra yanıt vermemesinden veya bilgisayarınızın güç tasarrufu modunda kalmasından kaynaklanıyordu.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>

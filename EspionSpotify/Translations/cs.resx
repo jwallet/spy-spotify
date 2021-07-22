@@ -397,10 +397,6 @@
     <value>Spotify API se nezdařilo</value>
     <comment>message</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Nahrávání dat {0} bude překročeno v datech, často způsobeno tím, že Spotify nereaguje, když je příliš dlouho na pozadí nebo je počítač v úsporném režimu.</value>
-    <comment>console</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client ID:</value>
     <comment>interface --</comment>
