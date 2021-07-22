@@ -49,7 +49,6 @@ namespace EspionSpotify.Models
         public static TranslationKeys LogPreviousLogs { get => TranslationKeys.logPreviousLogs; }
         public static TranslationKeys LogRecorded { get => TranslationKeys.logRecorded; }
         public static TranslationKeys LogRecording { get => TranslationKeys.logRecording; }
-        public static TranslationKeys LogRecordingDataExceeded { get => TranslationKeys.logRecordingDataExceeded; }
         public static TranslationKeys LogRecordingTimerDone { get => TranslationKeys.logRecordingTimerDone; }
         public static TranslationKeys LogSpotifyConnecting { get => TranslationKeys.logSpotifyConnecting; }
         public static TranslationKeys LogSpotifyIsClosed { get => TranslationKeys.logSpotifyIsClosed; }
