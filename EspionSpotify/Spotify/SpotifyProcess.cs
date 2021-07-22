@@ -76,6 +76,10 @@ namespace EspionSpotify
                     Console.WriteLine(ex.Message);
                 }
             }
+            else
+            {
+                _spotifyProcessId = GetSpotifyProcesses(_processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+            }
 
             return (mainWindowTitle, isSpotifyAudioPlaying);
         }
