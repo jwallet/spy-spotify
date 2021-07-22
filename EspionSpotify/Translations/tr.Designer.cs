@@ -448,15 +448,6 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // {0} kaydı, veriyi aşacaktı, bu genellikle Spotify&apos;ın arka planda çok uzun süre kaldıktan sonra yanıt vermemesinden veya bilgisayarınızın güç tasarrufu modunda kalmasından kaynaklanıyordu..
-        /// </summary>
-        internal static string logRecordingDataExceeded {
-            get {
-                return ResourceManager.GetString("logRecordingDataExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Kayıt işlemi zamanlayıcısı sona erdi..
         /// </summary>
         internal static string logRecordingTimerDone {

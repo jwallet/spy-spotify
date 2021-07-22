@@ -397,10 +397,6 @@
     <value>Spotify API ist fehlgeschlagen</value>
     <comment>message**</comment>
   </data>
-  <data name="logRecordingDataExceeded" xml:space="preserve">
-    <value>// Die Aufzeichnung von {0} würde die Datenmenge überschreiten, was häufig darauf zurückzuführen ist, dass Spotify nicht reagiert, nachdem es zu lange im Hintergrund war oder sich Ihr Computer im Energiesparmodus befindet.</value>
-    <comment>console**</comment>
-  </data>
   <data name="lblClientId" xml:space="preserve">
     <value>Client-ID:</value>
     <comment>interface --</comment>
