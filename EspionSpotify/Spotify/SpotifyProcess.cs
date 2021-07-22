@@ -13,7 +13,7 @@ namespace EspionSpotify
 {
     public class SpotifyProcess : ISpotifyProcess
     {
-        private readonly int? _spotifyProcessId;
+        private int? _spotifyProcessId;
         private readonly IMainAudioSession _audioSession;
         private readonly IProcessManager _processManager;
 
@@ -74,6 +74,10 @@ namespace EspionSpotify
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+            else
+            {
+                _spotifyProcessId = GetSpotifyProcesses(_processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
             }
 
             return (mainWindowTitle, isSpotifyAudioPlaying);
