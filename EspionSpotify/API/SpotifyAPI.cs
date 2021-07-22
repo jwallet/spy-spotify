@@ -4,8 +4,6 @@ using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +16,13 @@ namespace EspionSpotify.API
         private bool _disposed = false;
         private readonly string _clientId;
         private readonly string _secretId;
-        private Token _token;
-        private AuthorizationCodeAuth _authorizationCodeAuth;
+        private AuthorizationCodeTokenResponse _token;
+        private SpotifyClientConfig _config;
         private readonly LastFMAPI _lastFmApi;
-        private readonly AuthorizationCodeAuth _auth;
+        private readonly EmbedIOAuthServer _server;
+        private string _accessToken;
         private string _refreshToken;
-        private SpotifyWebAPI _api;
+        private SpotifyClient _spotify;
         private bool _connectionDialogOpened = false;
 
         public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://localhost:4002";
@@ -43,10 +42,12 @@ namespace EspionSpotify.API
 
             if (!string.IsNullOrEmpty(_clientId) && !string.IsNullOrEmpty(_secretId))
             {
-                _auth = new AuthorizationCodeAuth(_clientId, _secretId, redirectUrl, redirectUrl,
-                    Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
-                _auth.AuthReceived += AuthOnAuthReceived;
-                _auth.Start();
+                _config = SpotifyClientConfig.CreateDefault();
+                var uri = new Uri(redirectUrl);
+                _server = new EmbedIOAuthServer(uri, uri.Port);
+                _server.AuthorizationCodeReceived += AuthOnAuthReceived;
+                _server.ErrorReceived += OnErrorReceived;
+                Task.Run(StartServer);
             }
         }
 
@@ -57,9 +58,9 @@ namespace EspionSpotify.API
 
             await GetSpotifyWebAPI();
             
-            if (_api != null)
+            if (_spotify != null)
             {
-                var playback = await _api.GetPlaybackAsync();
+                var playback = await _spotify.GetPlaybackAsync();
                 if (playback != null && !playback.HasError())
                 {
                     playing = playback.IsPlaying;
@@ -179,25 +180,46 @@ namespace EspionSpotify.API
 
         private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists) => (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
 
-        private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
+        private async Task StartServer()
         {
-            _authorizationCodeAuth = (AuthorizationCodeAuth)sender;
-
-            _authorizationCodeAuth.Stop();
-
-            try
+            await _server.Start();
+            var loginRequest = new LoginRequest(_server.BaseUri, _clientId, LoginRequest.ResponseType.Code)
             {
-                _token = await _authorizationCodeAuth.ExchangeCode(payload.Code);
-                _refreshToken = _token.RefreshToken;
-            }
-            catch { }
+                Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
+            };
+            BrowserUtil.Open(loginRequest.ToUri());
+        }
+
+        private async Task AuthOnAuthReceived(object sender, AuthorizationCodeResponse response)
+        {
+            await _server.Stop();
+            var token = await new OAuthClient(_config).RequestToken(new AuthorizationCodeTokenRequest(
+              _clientId, _secretId, response.Code, _server.BaseUri
+            ));
+
+            _refreshToken = token.RefreshToken;
+
+            var config = SpotifyClientConfig
+              .CreateDefault()
+              .WithAuthenticator(new AuthorizationCodeAuthenticator(_clientId, _secretId, token));
+
+            _spotify = new SpotifyClient(config);
+        }
+
+        private async Task OnErrorReceived(object sender, string error, string state)
+        {
+            Console.WriteLine($"// Aborting Spotify API authorization, error received: {error}");
+            await _server.Stop();
         }
 
         private void OpenAuthenticationDialog()
         {
             if (_connectionDialogOpened) return;
-            _auth.ShowDialog = true;
-            _auth.OpenBrowser();
+            var request = new LoginRequest(_server.BaseUri, _clientId, LoginRequest.ResponseType.Code)
+            {
+                Scope = new List<string> { Scopes.UserReadEmail }
+            };
+            BrowserUtil.Open(request.ToUri());
             _connectionDialogOpened = true;
         }
 
@@ -209,31 +231,29 @@ namespace EspionSpotify.API
                 return;
             }
 
-            if (_token.IsExpired())
+            if (_token.IsExpired)
             {
                 try
                 {
-                    _api.Dispose();
-                    _api = null;
-                    _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken ?? _refreshToken);
+                    var token = await new OAuthClient().RequestToken(
+                      new AuthorizationCodeRefreshRequest(_clientId, _secretId, _refreshToken)
+                    );
+                    _token.ExpiresIn = token.ExpiresIn;
+                    _token.CreatedAt = token.CreatedAt;
+                    _token.AccessToken = token.AccessToken;
+                    _spotify = new SpotifyClient(_token.AccessToken);
                 }
                 catch { }
             }
 
-            if (_api == null)
+            if (_spotify == null)
             {
                 try
                 {
-                    _api = new SpotifyWebAPI
-                    {
-                        AccessToken = _token.AccessToken,
-                        TokenType = _token.TokenType
-                    };
+                    _spotify = new SpotifyClient(_token.AccessToken);
                 }
                 catch (Exception)
                 {
-                    _api = null;
-                    _authorizationCodeAuth.Stop();
                 }
             }
         }
@@ -259,7 +279,7 @@ namespace EspionSpotify.API
 
             if (disposing)
             {
-                if (_api != null) _api.Dispose();
+                if (_server != null) _server.Dispose();
             }
 
             _disposed = true;
