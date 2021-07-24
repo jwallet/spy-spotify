@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
@@ -59,7 +60,7 @@ namespace EspionSpotify.API
             
             if (_api != null)
             {
-                var playback = await _api.GetPlaybackAsync();
+                var playback = await _api.GetPlaybackWithoutExceptionAsync();
                 if (playback != null && !playback.HasError())
                 {
                     playing = playback.IsPlaying;
@@ -129,7 +130,7 @@ namespace EspionSpotify.API
 
             if (_api == null) return;
 
-            var playback = await _api.GetPlaybackAsync();
+             var playback = await _api.GetPlaybackWithoutExceptionAsync();
             var hasNoPlayback = playback == null || playback.Item == null;
 
             if (!retry && hasNoPlayback)
@@ -167,7 +168,7 @@ namespace EspionSpotify.API
 
             if (playback.Item.Album?.Id == null) return;
             
-            var album = await _api.GetAlbumAsync(playback.Item.Album.Id);
+            var album = await _api.GetAlbumWithoutExceptionAsync(playback.Item.Album.Id);
 
             if (album.HasError()) return;
                 
