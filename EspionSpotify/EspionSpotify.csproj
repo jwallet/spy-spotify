@@ -204,6 +204,7 @@
     <Compile Include="Extensions\NAudioExtensions.cs" />
     <Compile Include="Extensions\ResourceManagerExtensions.cs" />
     <Compile Include="Extensions\SettingExtensions.cs" />
+    <Compile Include="Extensions\SpotifyWebAPIExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Events\PlayStateEventArgs.cs" />
     <Compile Include="Events\TrackChangeEventArgs.cs" />
