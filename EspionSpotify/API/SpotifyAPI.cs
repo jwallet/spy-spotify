@@ -223,7 +223,7 @@ namespace EspionSpotify.API
             {
                 try
                 {
-                    _api.Dispose();
+                    if (_api != null) _api.Dispose();
                     _api = null;
                     _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken ?? _refreshToken);
                 }
