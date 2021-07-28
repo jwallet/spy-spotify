@@ -57,19 +57,9 @@ namespace EspionSpotify
             {
                 try
                 {
-                    if (ExternalAPI.Instance.GetTypeAPI == Enums.ExternalAPIType.Spotify && ExternalAPI.Instance.IsAuthenticated)
-                    {
-                        var (title, isPlaying) = await ExternalAPI.Instance.GetCurrentPlayback();
-                        mainWindowTitle = title;
-                        isSpotifyAudioPlaying = isPlaying;
-                    }
-                    // always fallback if it was not properly set by spotify api
-                    if (mainWindowTitle == null)
-                    {
-                        isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
-                        var process = _processManager.GetProcessById(_spotifyProcessId.Value);
-                        mainWindowTitle = process?.MainWindowTitle ?? "";
-                    }
+                    isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
+                    var process = _processManager.GetProcessById(_spotifyProcessId.Value);
+                    mainWindowTitle = process?.MainWindowTitle ?? "";
                 }
                 catch (Exception ex) 
                 {

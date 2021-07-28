@@ -9,6 +9,7 @@ using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,6 +52,7 @@ namespace EspionSpotify.API
             }
         }
 
+        [Obsolete("It triggers too many web requests, ~ 60k per day")]
         public async Task<(string, bool)> GetCurrentPlayback()
         {
             var playing = false;
@@ -130,23 +132,29 @@ namespace EspionSpotify.API
 
             if (_api == null) return;
 
-             var playback = await _api.GetPlaybackWithoutExceptionAsync();
+            var playback = await _api.GetPlaybackWithoutExceptionAsync();
             var hasNoPlayback = playback == null || playback.Item == null;
 
             if (!retry && hasNoPlayback)
             {
                 await Task.Delay(3000);
                 await UpdateTrack(track, retry: true);
+                if (track.MetaDataUpdated)
+                {
+                    retry = false;
+                }
+                else
+                {
+                    // open spotify authentication page if user is disconnected
+                    // user might be connected with a different account that the one that granted rights
+                    OpenAuthenticationDialog();
+                }
                 return;
             }
 
             if (hasNoPlayback || playback.HasError())
             {
                 _api.Dispose();
-
-                // open spotify authentication page if user is disconnected
-                // user might be connected with a different account that the one that granted rights
-                OpenAuthenticationDialog();
 
                 // fallback in case getting the playback did not work
                 ExternalAPI.Instance = _lastFmApi;

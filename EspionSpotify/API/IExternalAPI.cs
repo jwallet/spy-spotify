@@ -12,6 +12,5 @@ namespace EspionSpotify.API
         void Reset();
 
         Task UpdateTrack(Track track);
-        Task<(string, bool)> GetCurrentPlayback();
     }
 }
