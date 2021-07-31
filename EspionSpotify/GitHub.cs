@@ -51,15 +51,12 @@ namespace EspionSpotify
                     var body = Encoding.UTF8.GetString(content.ToArray());
                     var release = JsonConvert.DeserializeObject<Release>(body);
 
-                    if (release == null) return;
+                    if (release == null || release.prerelease || release.draft) return;
 
                     var githubTagVersion = release.tag_name.ToVersion();
-
-                    if (githubTagVersion == null) return;
-
                     var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-                    if (githubTagVersion <= assemblyVersion) return;
+                    if (githubTagVersion == null || githubTagVersion <= assemblyVersion) return;
                     if (Settings.Default.app_last_version_prompt.ToVersion() == githubTagVersion) return;
 
                     var dialogTitle = string.Format(FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionTitle), githubTagVersion);
