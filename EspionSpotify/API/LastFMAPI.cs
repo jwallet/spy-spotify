@@ -152,8 +152,6 @@ namespace EspionSpotify.API
         public bool IsAuthenticated { get => true; }
         public async Task Authenticate() => await Task.CompletedTask;
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<(string, bool)> GetCurrentPlayback() => throw new NotImplementedException();
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         #endregion
     }
 }

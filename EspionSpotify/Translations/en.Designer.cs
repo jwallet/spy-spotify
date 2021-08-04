@@ -583,7 +583,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lost connection to Spotify API. Make sure you authorized Spytify on the same Spotify account that is currently connected to Spotify-Desktop app to be able to get metadata of the current track. In the meantime Spytify will use LastFM API..
+        ///   Looks up a localized string similar to Lost connection to Spotify API. Make sure you authorized Spytify on the same Spotify account that is currently connected to Spotify-Desktop app to be able to get metadata of the current track. Also, double check your Spotify Client_ID and Client_Secret entered. In the meantime Spytify will use LastFM API..
         /// </summary>
         internal static string msgBodyFailedToUseSpotifyAPI {
             get {
