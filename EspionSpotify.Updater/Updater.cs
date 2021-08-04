@@ -11,7 +11,7 @@ namespace EspionSpotify.Updater
 {
     internal class Updater
     {
-        internal const string UPDATER_DIRECTORY = "updater";
+        internal const string UPDATER_DIRECTORY = "Updater";
         internal const string UPDATER_TMP_DIRECTORY = "tmp_updater";
         internal const string APP = "spytify.exe";
         internal static string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory + @"..\";
