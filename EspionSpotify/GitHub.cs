@@ -65,7 +65,7 @@ namespace EspionSpotify
                     if (!string.IsNullOrEmpty(release.body))
                     {
                         var releaseBodySplitted = release.body.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                        dialogMessage = $"{releaseBodySplitted.Take(4).Aggregate((current, next) => $"{current}\n{next}")}\r\n{dialogMessage}";
+                        dialogMessage = $"{releaseBodySplitted.TakeWhile(x => x.StartsWith("- ")).Take(5).Aggregate((current, next) => $"{current}\n{next}")}\r\n\r\n{dialogMessage}";
                     }
 
                     var dialogResult = MetroFramework.MetroMessageBox.Show(
@@ -73,7 +73,8 @@ namespace EspionSpotify
                         dialogMessage,
                         dialogTitle,
                         MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Question);
+                        MessageBoxIcon.Question,
+                        260);
 
                     if (dialogResult == DialogResult.OK)
                     {

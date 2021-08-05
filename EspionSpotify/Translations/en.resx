@@ -254,7 +254,7 @@
     <comment>message</comment>
   </data>
   <data name="msgNewVersionContent" xml:space="preserve">
-    <value>Do you want to open GitHub to view the newest Spytify release?</value>
+    <value>Do you want to update to the newest Spytify release?</value>
     <comment>message</comment>
   </data>
   <data name="msgNewVersionTitle" xml:space="preserve">

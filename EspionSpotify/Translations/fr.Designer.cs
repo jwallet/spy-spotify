@@ -619,7 +619,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voulez-vous ouvrir GitHub pour voir la dernière version de Spytify?.
+        ///   Looks up a localized string similar to Voulez-vous mettre à jour à la dernière version de Spytify?.
         /// </summary>
         internal static string msgNewVersionContent {
             get {
