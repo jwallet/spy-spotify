@@ -110,7 +110,7 @@ namespace EspionSpotify.Native
 
             if (!_fileSystem.File.Exists(source))
             {
-                throw new SourceFileNotFoundException($"Recorded file not found: {source}");
+                throw new SourceFileNotFoundException($"Source file was not found: {source}");
             }
 
             try
@@ -131,7 +131,7 @@ namespace EspionSpotify.Native
             }
             else
             {
-                throw new DestinationPathNotFoundException($"Output path was not found: {_fileSystem.Path.GetDirectoryName(destination)}");
+                throw new DestinationPathNotFoundException($"Destination path was not found: {_fileSystem.Path.GetDirectoryName(destination)}");
             }
         }
 
