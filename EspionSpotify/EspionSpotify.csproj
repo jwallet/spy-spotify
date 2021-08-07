@@ -225,6 +225,11 @@
     <Compile Include="Native\ProcessManager.cs" />
     <Compile Include="Translations\en.Designer.cs" />
     <Compile Include="Translations\I18nKeys.cs" />
+    <Compile Include="Translations\en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>en.resx</DependentUpon>
+    </Compile>
     <Compile Include="Translations\fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -278,7 +283,11 @@
     <EmbeddedResource Include="Controls\MetroCredentialsForm.resx">
       <DependentUpon>MetroCredentialsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translations\en.resx" />
+    <EmbeddedResource Include="Translations\en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translations\fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
