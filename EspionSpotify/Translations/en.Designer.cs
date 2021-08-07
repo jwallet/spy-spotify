@@ -421,6 +421,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // The output does not exist anymore.
+        /// </summary>
+        internal static string logOutputPathNotFound {
+            get {
+                return ResourceManager.GetString("logOutputPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Previous recording session logs.
         /// </summary>
         internal static string logPreviousLogs {
@@ -435,6 +444,15 @@ namespace EspionSpotify.Translations {
         internal static string logRecorded {
             get {
                 return ResourceManager.GetString("logRecorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // The recorded file was lost in the process.
+        /// </summary>
+        internal static string logRecordedFileNotFound {
+            get {
+                return ResourceManager.GetString("logRecordedFileNotFound", resourceCulture);
             }
         }
         

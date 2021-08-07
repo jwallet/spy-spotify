@@ -1,5 +1,6 @@
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
+using EspionSpotify.Exceptions;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
@@ -139,7 +140,11 @@ namespace EspionSpotify
         #region RecorderStopRecording
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_tempWaveWriter == null) return;
+            if (_tempWaveWriter == null || !Watcher.Running)
+            {
+                ForceStopRecording();
+                return;
+            }
 
             await _tempWaveWriter.FlushAsync();
             var isTempWaveEmpty = _tempWaveWriter.Length == 0;
@@ -148,7 +153,6 @@ namespace EspionSpotify
 
             if (isTempWaveEmpty)
             {
-                Running = false;
                 _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
                 ForceStopRecording();
                 return;
@@ -161,7 +165,6 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                Running = false;
                 _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
@@ -187,11 +190,22 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                Running = false;
-                _form.WriteIntoConsole(I18nKeys.LogException, ex.Message);
                 Console.WriteLine(ex.Message);
-                Program.ReportException(ex);
                 ForceStopRecording();
+                if (ex is SourceFileNotFoundException)
+                {
+                    _form.WriteIntoConsole(I18nKeys.LogRecordedFileNotFound);
+                }
+                else if (ex is DestinationPathNotFoundException)
+                {
+                    _form.WriteIntoConsole(I18nKeys.LogOutputPathNotFound);
+                    Watcher.Running = false;
+                }
+                else
+                {
+                    _form.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                    Program.ReportException(ex);
+                }
                 return;
             }
 

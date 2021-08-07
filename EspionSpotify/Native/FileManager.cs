@@ -1,4 +1,5 @@
-﻿using EspionSpotify.Extensions;
+﻿using EspionSpotify.Exceptions;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using System;
 using System.Collections.Generic;
@@ -107,22 +108,36 @@ namespace EspionSpotify.Native
                 throw new Exception($"Source / Destination file name cannot be null.");
             }
 
-            if (_fileSystem.File.Exists(source))
+            if (!_fileSystem.File.Exists(source))
             {
-                try
-                {
-                    if (_fileSystem.File.Exists(destination))
-                    {
-                        _fileSystem.File.Delete(destination);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                throw new SourceFileNotFoundException($"Recorded file not found: {source}");
+            }
 
+            try
+            {
+                if (_fileSystem.File.Exists(destination))
+                {
+                    _fileSystem.File.Delete(destination);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            if (_fileSystem.Directory.Exists(_fileSystem.Path.GetDirectoryName(destination)))
+            {
                 _fileSystem.File.Move(source, destination);
             }
+            else
+            {
+                throw new DestinationPathNotFoundException($"Output path was not found: {_fileSystem.Path.GetDirectoryName(destination)}");
+            }
+        }
+
+        private Exception FilePathNotFoundException()
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsPathFileNameExists(Track track, UserSettings userSettings, IFileSystem fileSystem)
