@@ -140,7 +140,7 @@ namespace EspionSpotify
         #region RecorderStopRecording
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_tempWaveWriter == null || !Watcher.Running)
+            if (_tempWaveWriter == null)
             {
                 ForceStopRecording();
                 return;
@@ -456,7 +456,6 @@ namespace EspionSpotify
             if (_waveIn == null) return;
             _waveIn.DataAvailable -= WaveIn_DataAvailable;
             _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
-            _waveIn.StopRecording();
             _waveIn.Dispose();
             _waveIn = null;
         }
