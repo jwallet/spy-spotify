@@ -11,6 +11,6 @@ namespace EspionSpotify.API
         Task Authenticate();
         void Reset();
 
-        Task UpdateTrack(Track track);
+        Task<bool> UpdateTrack(Track track);
     }
 }

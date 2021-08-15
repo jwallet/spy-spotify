@@ -28,7 +28,7 @@ namespace EspionSpotify.Spotify
             _ = Task.Run(async () =>
             {
                 await Task.Delay(1000);
-                await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
+                CurrentTrack.MetaDataUpdated = await ExternalAPI.Instance.UpdateTrack(CurrentTrack);
             });
 
             return CurrentTrack;
