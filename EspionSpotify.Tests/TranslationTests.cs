@@ -10,18 +10,8 @@ namespace EspionSpotify.Tests
 {
     public class TranslationTests
     {
-        private readonly Type _cs;
-        private readonly Type _de;
         private readonly Type _en;
-        private readonly Type _es;
         private readonly Type _fr;
-        private readonly Type _it;
-        private readonly Type _ja;
-        private readonly Type _nl;
-        private readonly Type _pl;
-        private readonly Type _pt;
-        private readonly Type _ru;
-        private readonly Type _tr;
         private static ResourceManager RM;
         private readonly int _keysCount;
 

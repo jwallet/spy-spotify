@@ -1,6 +1,5 @@
 ﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
-using PCLWebUtility;
 using System;
 using System.Linq;
 using System.Net;
@@ -8,26 +7,26 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using EspionSpotify.Translations;
 
 namespace EspionSpotify.API
 {
     public class LastFMAPI : ILastFMAPI, IExternalAPI
     {
         private const string API_TRACK_URI = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
-        private readonly Random _random;
-        private readonly string _selectedApiKey = "";
-        private bool _loggedSilentExceptionOnce = false;
+        private readonly string _selectedApiKey;
+        private bool _loggedSilentExceptionOnce;
 
         public string[] ApiKeys { get; }
 
         public LastFMAPI()
         {
             ApiKeys = new[] { "c117eb33c9d44d34734dfdcafa7a162d", "01a049d30c4e17c1586707acf5d0fb17", "82eb5ead8c6ece5c162b461615495b18" };
-            _random = new Random();
-            _selectedApiKey = ApiKeys[_random.Next(ApiKeys.Length)];
+            var random = new Random();
+            _selectedApiKey = ApiKeys[random.Next(ApiKeys.Length)];
         }
 
-        public ExternalAPIType GetTypeAPI { get => ExternalAPIType.LastFM; }
+        public ExternalAPIType GetTypeAPI => ExternalAPIType.LastFM;
 
         public string GetTrackInfo(string artist, string title) => $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
@@ -56,7 +55,7 @@ namespace EspionSpotify.API
                     Console.WriteLine(ex.Message);
                     if (_loggedSilentExceptionOnce == false)
                     {
-                        FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                        FrmEspionSpotify.Instance.WriteIntoConsole(I18NKeys.LogException, ex.Message);
                         _loggedSilentExceptionOnce = true;
                     }
                     return false;
@@ -66,7 +65,7 @@ namespace EspionSpotify.API
             {
                 // Silent other Web exception since it may be an issue on the user end.
                 Console.WriteLine(ex.Message);
-                FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                FrmEspionSpotify.Instance.WriteIntoConsole(I18NKeys.LogException, ex.Message);
                 return false;
             }
             catch (XmlException ex)
@@ -88,14 +87,15 @@ namespace EspionSpotify.API
 
             var serializer = new XmlSerializer(typeof(LastFMNode));
             var xmlNode = apiReturn.SelectSingleNode("/lfm");
+            if (xmlNode == null) return false;
 
             var node = serializer.Deserialize(new XmlNodeReader(xmlNode)) as LastFMNode;
 
-            if (node.Status != Enums.LastFMNodeStatus.ok) return false;
+            if (node == null || node.Status != LastFMNodeStatus.ok || node.Track == null) return false;
 
             var trackExtra = node.Track;
 
-            if (trackExtra != null && trackExtra.Album != null)
+            if (trackExtra?.Album != null)
             {
                 MapLastFMTrackToTrack(track, trackExtra);
             }
@@ -148,7 +148,7 @@ namespace EspionSpotify.API
         }
 
         #region NotImplementedExternalAPI
-        public bool IsAuthenticated { get => true; }
+        public bool IsAuthenticated => true;
         public async Task Authenticate() => await Task.CompletedTask;
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         #endregion

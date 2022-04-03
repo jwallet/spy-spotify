@@ -37,7 +37,7 @@ namespace EspionSpotify.Native
             }
             catch
             {
-                return new Process[] { };
+                return new IProcess[] { };
             }
 
             return processes.Select(x => new Process
@@ -45,7 +45,7 @@ namespace EspionSpotify.Native
                 Id = x.Id,
                 MainWindowTitle = x.MainWindowTitle,
                 ProcessName = x.ProcessName
-            }).ToArray();
+            }).ToArray<IProcess>();
         }
 
         public IProcess[] GetProcessesByName(string processName)
@@ -58,7 +58,7 @@ namespace EspionSpotify.Native
             }
             catch
             {
-                return new Process[] { };
+                return new IProcess[] { };
             }
 
             return processes.Select(x => new Process
@@ -66,7 +66,7 @@ namespace EspionSpotify.Native
                 Id = x.Id,
                 MainWindowTitle = x.MainWindowTitle,
                 ProcessName = x.ProcessName
-            }).ToArray();
+            }).ToArray<IProcess>();
         }
 
         public IProcess GetProcessById(int processId)
@@ -102,6 +102,8 @@ namespace EspionSpotify.Native
             {
                 return null;
             }
+
+            if (process == null) return null;
 
             return new Process
             {

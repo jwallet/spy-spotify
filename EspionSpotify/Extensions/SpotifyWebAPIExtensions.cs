@@ -17,7 +17,11 @@ namespace EspionSpotify.Extensions
             {
                 playback = await api.GetPlaybackAsync();
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
+
             return playback;
         }
 
@@ -28,7 +32,11 @@ namespace EspionSpotify.Extensions
             {
                 album = await api.GetAlbumAsync(id);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
+
             return album;
         }
     }

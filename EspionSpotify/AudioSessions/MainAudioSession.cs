@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.Spotify;
 
 namespace EspionSpotify.AudioSessions
 {
-    public class MainAudioSession : IMainAudioSession, IDisposable
+    public sealed class MainAudioSession : IMainAudioSession, IDisposable
     {
         private const int SLEEP_VALUE = 50;
         private const int NUMBER_OF_SAMPLES = 3;
@@ -16,16 +17,14 @@ namespace EspionSpotify.AudioSessions
         private bool _disposed = false;
 
         private readonly IProcessManager _processManager;
-        private readonly int _spytifyProcessId;
+        private readonly int? _spytifyProcessId;
         private ICollection<int> _spotifyProcessesIds;
 
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public AudioMMDevicesManager AudioMMDevicesManager { get; private set; }
-        public int AudioDeviceVolume { get => (int)((AudioMMDevicesManager.AudioEndPointDevice?.AudioEndpointVolume?.MasterVolumeLevelScalar ?? 0f) * 100); }
-        public bool IsAudioEndPointDeviceIndexAvailable
-        {
-            get => AudioMMDevicesManager.AudioEndPointDeviceNames.IncludesKey(AudioMMDevicesManager.AudioEndPointDeviceID);
-        }
+        public int AudioDeviceVolume => (int)((AudioMMDevicesManager.AudioEndPointDevice?.AudioEndpointVolume?.MasterVolumeLevelScalar ?? 0f) * 100);
+
+        public bool IsAudioEndPointDeviceIndexAvailable => AudioMMDevicesManager.AudioEndPointDeviceNames.IncludesKey(AudioMMDevicesManager.AudioEndPointDeviceID);
 
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; } = new List<AudioSessionControl>();
         public void ClearSpotifyAudioSessionControls() => SpotifyAudioSessionControls = new List<AudioSessionControl>();
@@ -36,11 +35,11 @@ namespace EspionSpotify.AudioSessions
             this(audioEndPointDevice, processManager: new ProcessManager())
         { }
 
-        public MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager)
+        private MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager)
         {
             _processManager = processManager;
 
-            _spytifyProcessId = (int)_processManager.GetCurrentProcess()?.Id;
+            _spytifyProcessId = _processManager.GetCurrentProcess()?.Id;
 
             AudioMMDevices = new MMDeviceEnumerator();
             AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
@@ -51,9 +50,9 @@ namespace EspionSpotify.AudioSessions
         public void SetAudioDeviceVolume(int volume)
         {
             if (AudioMMDevicesManager.AudioEndPointDevice == null) return;
-            if (AudioMMDevicesManager.volumeNotificationEmitted)
+            if (AudioMMDevicesManager.VolumeNotificationEmitted)
             {
-                AudioMMDevicesManager.volumeNotificationEmitted = false;
+                AudioMMDevicesManager.VolumeNotificationEmitted = false;
                 return;
             }
             if (float.TryParse(volume.ToString(), out var fNewVolume))
@@ -224,7 +223,7 @@ namespace EspionSpotify.AudioSessions
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 

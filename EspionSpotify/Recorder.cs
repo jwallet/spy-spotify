@@ -12,12 +12,13 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EspionSpotify.Translations;
 
 namespace EspionSpotify
 {
-    public class Recorder : IRecorder, IDisposable
+    public sealed class Recorder : IRecorder, IDisposable
     {
-        private bool _disposed = false;
+        private bool _disposed;
 
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
@@ -36,15 +37,13 @@ namespace EspionSpotify
         private string _tempEncodeFile;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
-        private bool _canBeSkippedValidated = false;
+        private bool _canBeSkippedValidated;
         private CancellationTokenSource _cancellationTokenSource;
-        private bool _dataStillAvailable = false;
+        private bool _dataStillAvailable;
 
-        public bool IsSkipTrackActive
-        {
-            get => _userSettings.RecordRecordingsStatus == Enums.RecordRecordingsStatus.Skip
-                && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
-        }
+        public bool IsSkipTrackActive =>
+            _userSettings.RecordRecordingsStatus == RecordRecordingsStatus.Skip
+            && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
 
         public Recorder() { }
 
@@ -84,7 +83,7 @@ namespace EspionSpotify
             catch (Exception ex)
             {
                 ForceStopRecording();
-                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                _form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
                 return;
@@ -92,7 +91,7 @@ namespace EspionSpotify
 
             await Task.Delay(50);
             _waveIn.StartRecording();
-            _form.WriteIntoConsole(I18nKeys.LogRecording, _track.ToString());
+            _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
 
             while (Running)
             {
@@ -117,7 +116,7 @@ namespace EspionSpotify
             _canBeSkippedValidated = true;
             if (IsSkipTrackActive)
             {
-                _form.WriteIntoConsole(I18nKeys.LogTrackExists, _track.ToString());
+                _form.WriteIntoConsole(I18NKeys.LogTrackExists, _track.ToString());
                 await UpdateMediaTagsWhenSkippingTrack();
                 ForceStopRecording();
                 return true;
@@ -158,7 +157,7 @@ namespace EspionSpotify
 
             if (isTempWaveEmpty)
             {
-                _form.WriteIntoConsole(I18nKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
+                _form.WriteIntoConsole(I18NKeys.LogSpotifyPlayingOutsideOfSelectedAudioEndPoint);
                 ForceStopRecording();
                 return;
             }
@@ -170,7 +169,7 @@ namespace EspionSpotify
             }
             catch (Exception ex)
             {
-                _form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                _form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
                 ForceStopRecording();
@@ -184,7 +183,7 @@ namespace EspionSpotify
 
             if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
             {
-                _form.WriteIntoConsole(I18nKeys.LogDeleting, _currentOutputFile.ToString(), _userSettings.MinimumRecordedLengthSeconds);
+                _form.WriteIntoConsole(I18NKeys.LogDeleting, _currentOutputFile.ToString(), _userSettings.MinimumRecordedLengthSeconds);
                 _fileManager.DeleteFile(_tempEncodeFile);
                 return;
             }
@@ -199,23 +198,23 @@ namespace EspionSpotify
                 ForceStopRecording();
                 if (ex is SourceFileNotFoundException)
                 {
-                    _form.WriteIntoConsole(I18nKeys.LogRecordedFileNotFound);
+                    _form.WriteIntoConsole(I18NKeys.LogRecordedFileNotFound);
                 }
                 else if (ex is DestinationPathNotFoundException)
                 {
-                    _form.WriteIntoConsole(I18nKeys.LogOutputPathNotFound);
+                    _form.WriteIntoConsole(I18NKeys.LogOutputPathNotFound);
                     Watcher.Running = false;
                 }
                 else
                 {
-                    _form.WriteIntoConsole(I18nKeys.LogException, ex.Message);
+                    _form.WriteIntoConsole(I18NKeys.LogException, ex.Message);
                     Program.ReportException(ex);
                 }
                 return;
             }
 
             var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
-            _form.WriteIntoConsole(I18nKeys.LogRecorded, _currentOutputFile.ToString(), length);
+            _form.WriteIntoConsole(I18NKeys.LogRecorded, _currentOutputFile.ToString(), length);
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
 
@@ -320,7 +319,7 @@ namespace EspionSpotify
                 case MediaFormat.Mp3:
                     try
                     {
-                        using (var writer = new LameMP3FileWriter(new MemoryStream(), waveIn.WaveFormat, settings.Bitrate)) return true;
+                        using (new LameMP3FileWriter(new MemoryStream(), waveIn.WaveFormat, settings.Bitrate)) return true;
                     }
                     catch (ArgumentException ex)
                     {
@@ -334,12 +333,12 @@ namespace EspionSpotify
                 case MediaFormat.Wav:
                     try
                     {
-                        using (var writer = new WaveFileWriter(new MemoryStream(), waveIn.WaveFormat)) return true;
+                        using (new WaveFileWriter(new MemoryStream(), waveIn.WaveFormat)) return true;
                     }
                     catch (Exception ex)
                     {
-                        form.UpdateIconSpotify(true, false);
-                        form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                        form.UpdateIconSpotify(true, isRecording: false);
+                        form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
                         Console.WriteLine(ex.Message);
                         Program.ReportException(ex);
                         return false;
@@ -353,22 +352,22 @@ namespace EspionSpotify
         #region MP3ConverterReducer
         private static bool LogLameMP3FileWriterArgumentException(IFrmEspionSpotify form, ArgumentException ex, WaveFormat waveFormat)
         {
-            var restrictions = waveFormat.GetMP3RestrictionCode();
+            var restrictions = waveFormat.GetMP3RestrictionCode().ToList();
             if (restrictions.Any())
             {
                 if (restrictions.Contains(WaveFormatMP3Restriction.Channel))
                 {
-                    form.WriteIntoConsole(I18nKeys.LogUnsupportedNumberChannels, waveFormat.Channels);
+                    form.WriteIntoConsole(I18NKeys.LogUnsupportedNumberChannels, waveFormat.Channels);
                 }
                 if (restrictions.Contains(WaveFormatMP3Restriction.SampleRate))
                 {
-                    form.WriteIntoConsole(I18nKeys.LogUnsupportedRate, waveFormat.SampleRate);
+                    form.WriteIntoConsole(I18NKeys.LogUnsupportedRate, waveFormat.SampleRate);
                 }
                 return true;
             }
 
             form.UpdateIconSpotify(true, false);
-            form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+            form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
             return false;
         }
 
@@ -376,12 +375,12 @@ namespace EspionSpotify
         {
             if (ex.Message.Contains("Unable to load DLL"))
             {
-                form.WriteIntoConsole(I18nKeys.LogMissingDlls);
+                form.WriteIntoConsole(I18NKeys.LogMissingDlls);
             }
             else
             {
                 Program.ReportException(ex);
-                form.WriteIntoConsole(I18nKeys.LogUnknownException, ex.Message);
+                form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
             }
 
             form.UpdateIconSpotify(true, false);
@@ -397,7 +396,7 @@ namespace EspionSpotify
 
         private IWaveProvider GetWaveProviderMP3ChannelReducer(IWaveProvider stream)
         {
-            var waveProvider = new MultiplexingWaveProvider(new IWaveProvider[] { stream }, MP3_MAX_NUMBER_CHANNELS);
+            var waveProvider = new MultiplexingWaveProvider(new[] { stream }, MP3_MAX_NUMBER_CHANNELS);
             waveProvider.ConnectInputToOutput(0, 0);
             waveProvider.ConnectInputToOutput(1, 1);
             return waveProvider;
@@ -421,7 +420,7 @@ namespace EspionSpotify
 
         private IWaveProvider GetMp3WaveProvider(IWaveProvider stream, WaveFormat waveFormat)
         {
-            var restrictions = waveFormat.GetMP3RestrictionCode();
+            var restrictions = waveFormat.GetMP3RestrictionCode().ToList();
             if (restrictions.Contains(WaveFormatMP3Restriction.Channel))
             {
                 stream = GetWaveProviderMP3ChannelReducer(stream);
@@ -480,7 +479,7 @@ namespace EspionSpotify
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 

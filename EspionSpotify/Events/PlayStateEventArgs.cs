@@ -7,6 +7,6 @@ namespace EspionSpotify.Events
     /// </summary>
     public class PlayStateEventArgs
     {
-        public Boolean Playing { get; set; }
+        public bool Playing { get; set; }
     }
 }

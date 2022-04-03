@@ -12,8 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+using EspionSpotify.Translations;
 
 namespace EspionSpotify
 {
@@ -24,7 +23,7 @@ namespace EspionSpotify
         public const string WEBSITE_FAQ_URL = "https://jwallet.github.io/spy-spotify/faq.html";
         public const string WEBSITE_FAQ_SPOTIFY_API_URL = "https://jwallet.github.io/spy-spotify/faq.html#media-tags-not-found";
         public const string WEBSITE_DONATE_URL = "https://jwallet.github.io/spy-spotify/donate.html";
-        public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
+        // public const string REPO_LATEST_RELEASE_URL = "https://github.com/jwallet/spy-spotify/releases/latest";
 
         public static async Task GetVersion()
         {
@@ -45,7 +44,7 @@ namespace EspionSpotify
 
                     using (var reader = response.GetResponseStream())
                     {
-                        await reader.CopyToAsync(content);
+                        if (reader != null) await reader.CopyToAsync(content);
                     }
 
                     var body = Encoding.UTF8.GetString(content.ToArray());
@@ -59,13 +58,14 @@ namespace EspionSpotify
                     if (githubTagVersion == null || githubTagVersion <= assemblyVersion) return;
                     if (Settings.Default.app_last_version_prompt.ToVersion() == githubTagVersion) return;
 
-                    var dialogTitle = string.Format(FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionTitle), githubTagVersion);
-                    var dialogMessage = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.MsgNewVersionContent);
+                    var dialogTitle = string.Format(FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.MsgNewVersionTitle), githubTagVersion);
+                    var dialogMessage = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.MsgNewVersionContent);
 
                     if (!string.IsNullOrEmpty(release.body))
                     {
-                        var releaseBodySplitted = release.body.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                        dialogMessage = $"{releaseBodySplitted.TakeWhile(x => x.StartsWith("- ")).Take(5).Aggregate((current, next) => $"{current}\n{next}")}\r\n\r\n{dialogMessage}";
+                        var releaseBodySplit =
+                            release.body.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None);
+                        dialogMessage = $"{releaseBodySplit.TakeWhile(x => x.StartsWith("- ")).Take(5).Aggregate((current, next) => $"{current}\n{next}")}\r\n\r\n{dialogMessage}";
                     }
 
                     var dialogResult = MetroFramework.MetroMessageBox.Show(

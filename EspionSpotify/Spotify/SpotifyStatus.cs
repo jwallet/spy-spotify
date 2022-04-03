@@ -4,7 +4,6 @@ using EspionSpotify.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using EspionSpotify.Extensions;
 
 namespace EspionSpotify.Spotify
 {
@@ -36,9 +35,9 @@ namespace EspionSpotify.Spotify
 
         public SpotifyStatus(SpotifyWindowInfo spotifyWindowInfo)
         {
-            var tags = SpotifyStatus.GetDashTags(spotifyWindowInfo.WindowTitle, 2);
-            var longTitlePart = SpotifyStatus.GetTitleTag(tags, 2);
-            var (titleTags, separatorType) = SpotifyStatus.GetTitleTags(longTitlePart ?? "", 2);
+            var tags = SpotifyStatus.GetDashTags(spotifyWindowInfo.WindowTitle, maxSize: 2);
+            var longTitlePart = SpotifyStatus.GetTitleTag(tags, maxValue: 2);
+            var (titleTags, separatorType) = SpotifyStatus.GetTitleTags(longTitlePart ?? "", maxSize: 2);
 
             var isPlaying = spotifyWindowInfo.IsPlaying;
             var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd || tags.First() == Constants.SPOTIFY;
@@ -47,9 +46,9 @@ namespace EspionSpotify.Spotify
             {
                 Ad = isAd && isPlaying,
                 Playing = isPlaying,
-                Artist = GetTitleTag(tags, 1),
-                Title = GetTitleTag(titleTags, 1),
-                TitleExtended = GetTitleTag(titleTags, 2),
+                Artist = GetTitleTag(tags, maxValue:1),
+                Title = GetTitleTag(titleTags, maxValue:1),
+                TitleExtended = GetTitleTag(titleTags, maxValue:2),
                 TitleExtendedSeparatorType = separatorType,
             };
         }

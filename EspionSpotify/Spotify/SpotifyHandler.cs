@@ -8,13 +8,13 @@ using Timer = System.Timers.Timer;
 
 namespace EspionSpotify.Spotify
 {
-    public class SpotifyHandler : ISpotifyHandler, IDisposable
+    public sealed class SpotifyHandler : ISpotifyHandler, IDisposable
     {
         private bool _disposed = false;
         private bool _processingEvents = false;
 
-        public const int EVENT_TIMER_INTERVAL = 70;
-        public const int SONG_TIMER_INTERVAL = 1000;
+        private const int EVENT_TIMER_INTERVAL = 70;
+        private const int SONG_TIMER_INTERVAL = 1000;
 
         public Timer EventTimer { get; private set; }
         public Timer SongTimer { get; private set; }
@@ -24,10 +24,7 @@ namespace EspionSpotify.Spotify
         private bool _listenForEvents;
         public bool ListenForEvents
         {
-            get
-            {
-                return _listenForEvents;
-            }
+            get => _listenForEvents;
             set
             {
                 _listenForEvents = value;
@@ -189,7 +186,7 @@ namespace EspionSpotify.Spotify
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 

@@ -1,24 +1,20 @@
 ﻿using EspionSpotify.Properties;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EspionSpotify
 {
-    internal class Updater
+    internal static class Updater
     {
-        internal const string UPDATER_DIRECTORY = "Updater";
-        internal const string UPDATER_TMP_DIRECTORY = "tmp_updater";
-        internal static string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        private const string UPDATER_DIRECTORY = "Updater";
+        private const string UPDATER_TMP_DIRECTORY = "tmp_updater";
+        private static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-        internal static string UpdaterExtractedTempDirectoryPath = $"{ProjectDirectory}{UPDATER_TMP_DIRECTORY}";
-        internal static string UpdaterExtractedContentDirectoryPath = $@"{UpdaterExtractedTempDirectoryPath}\{UPDATER_DIRECTORY}";
-        internal static string UpdaterDirectoryPath = $"{ProjectDirectory}{UPDATER_DIRECTORY}";
+        private static readonly string UpdaterExtractedTempDirectoryPath = $"{ProjectDirectory}{UPDATER_TMP_DIRECTORY}";
+        private static readonly string UpdaterExtractedContentDirectoryPath = $@"{UpdaterExtractedTempDirectoryPath}\{UPDATER_DIRECTORY}";
+        private static readonly string UpdaterDirectoryPath = $"{ProjectDirectory}{UPDATER_DIRECTORY}";
 
         internal static void UpgradeSettings()
         {
@@ -26,7 +22,7 @@ namespace EspionSpotify
             Settings.Default.Upgrade();
             Settings.Default.Save();
             UpdateDirectoryContent();
-            // DeleteOlderUserSettings();
+            DeleteOlderUserSettings();
         }
         private static void UpdateDirectoryContent()
         {
@@ -36,7 +32,10 @@ namespace EspionSpotify
                 Directory.Move(UpdaterExtractedContentDirectoryPath, UpdaterDirectoryPath);
                 Directory.Delete(UpdaterExtractedTempDirectoryPath);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
         }
 
         private static void DeleteOlderUserSettings()

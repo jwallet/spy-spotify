@@ -7,15 +7,15 @@ namespace EspionSpotify.Drivers
 {
     public class AudioVirtualCableDriver
     {
-        const string DriverName = "VB-Audio Virtual Cable";
+        const string DRIVER_NAME = "VB-Audio Virtual Cable";
 
-        public static string Path { get => $@"{Environment.CurrentDirectory}\Drivers\VBCABLE_Setup{(Environment.Is64BitOperatingSystem ? "_x64" : "")}.exe"; }
+        private static string Path => $@"{Environment.CurrentDirectory}\Drivers\VBCABLE_Setup{(Environment.Is64BitOperatingSystem ? "_x64" : "")}.exe";
 
-        public static bool IsFound { get => System.IO.File.Exists(Path); }
+        public static bool IsFound => System.IO.File.Exists(Path);
 
         public static bool ExistsInAudioEndPointDevices(IDictionary<string, string> audioEndPointDeviceNames)
         {
-            return audioEndPointDeviceNames.Any(x => x.Value.Contains(DriverName));
+            return audioEndPointDeviceNames.Any(x => x.Value.Contains(DRIVER_NAME));
         }
 
         public static bool SetupDriver()

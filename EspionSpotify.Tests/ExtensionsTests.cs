@@ -4,6 +4,7 @@ using EspionSpotify.Models;
 using NAudio.Wave;
 using System;
 using System.Resources;
+using EspionSpotify.Translations;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -20,7 +21,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void GetString_ReturnsExpectedTranslatedSpyString()
         {
-            Assert.Equal("Spy", _rm.GetString(I18nKeys.TabRecord));
+            Assert.Equal("Spy", _rm.GetString(I18NKeys.TabRecord));
         }
     }
 

@@ -11,10 +11,10 @@ namespace EspionSpotify.API
 {
     public class MapperID3
     {
-        private bool _extraTitleToSubtitleEnabled;
-        public string CurrentFile { get; set; }
-        public int? Count { get; set; }
-        public bool OrderNumberInMediaTagEnabled { get; set; }
+        private readonly bool _extraTitleToSubtitleEnabled;
+        private string CurrentFile { get; set; }
+        private int? Count { get; set; }
+        private bool OrderNumberInMediaTagEnabled { get; set; }
         public Track Track { get; set; }
 
         private readonly IFileSystem _fileSystem;
@@ -108,7 +108,7 @@ namespace EspionSpotify.API
                 GetAlbumCoverToPicture(Track.ArtLarge),
                 GetAlbumCoverToPicture(Track.ArtMedium),
                 GetAlbumCoverToPicture(Track.ArtSmall)
-            }).Where(x => x != null);
+            }).Where(x => x != null).ToList();
 
             return pictures.Any() ? new[] { pictures.First() } : null;
         }

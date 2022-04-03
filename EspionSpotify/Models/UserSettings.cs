@@ -29,47 +29,24 @@ namespace EspionSpotify.Models
         public string SpotifyAPIRedirectURL { get; set; }
         public bool UpdateRecordingsID3TagsEnabled { get; set; }
         public string OrderNumberMask { get; set; } = "000";
-        public int OrderNumberMax
-        {
-            get
-            {
-                return Convert.ToInt32(OrderNumberMask.Replace('0', '9').ToString());
-            }
-        }
+        public int OrderNumberMax => Convert.ToInt32(OrderNumberMask.Replace('0', '9').ToString());
 
-        public bool HasRecordingTimerEnabled
-        {
-            get => !string.IsNullOrEmpty(RecordingTimer) && RecordingTimer.Length == 6 && RecordingTimer != "000000";
-        }
+        public bool HasRecordingTimerEnabled => !string.IsNullOrEmpty(RecordingTimer) && RecordingTimer.Length == 6 && RecordingTimer != "000000";
 
-        public double RecordingTimerMilliseconds
-        {
-            get => HasRecordingTimerEnabled
+        public double RecordingTimerMilliseconds =>
+            HasRecordingTimerEnabled
                 ? new TimeSpan(
                     int.Parse(RecordingTimer.Substring(0, 2)),
                     int.Parse(RecordingTimer.Substring(2, 2)),
                     int.Parse(RecordingTimer.Substring(4, 2))).TotalMilliseconds
                 : 0.0;
-        }
 
-        public bool HasOrderNumberEnabled
-        {
-            get => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled;
-        }
+        public bool HasOrderNumberEnabled => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled;
 
-        public int? OrderNumberAsTag
-        {
-            get => OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
-        }
+        public int? OrderNumberAsTag => OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
 
-        public int? OrderNumberAsFile
-        {
-            get => OrderNumberInfrontOfFileEnabled ? (int?)Math.Min(InternalOrderNumber, OrderNumberMax) : null;
-        }
+        public int? OrderNumberAsFile => OrderNumberInfrontOfFileEnabled ? (int?)Math.Min(InternalOrderNumber, OrderNumberMax) : null;
 
-        public bool IsSpotifyAPISet
-        {
-            get => !string.IsNullOrWhiteSpace(SpotifyAPIClientId) && !string.IsNullOrWhiteSpace(SpotifyAPISecretId);
-        }
+        public bool IsSpotifyAPISet => !string.IsNullOrWhiteSpace(SpotifyAPIClientId) && !string.IsNullOrWhiteSpace(SpotifyAPISecretId);
     }
 }

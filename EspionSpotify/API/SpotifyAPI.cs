@@ -9,43 +9,38 @@ using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EspionSpotify.API
 {
-    public class SpotifyAPI : ISpotifyAPI, IExternalAPI, IDisposable
+    public sealed class SpotifyAPI : ISpotifyAPI, IExternalAPI, IDisposable
     {
-        private bool _disposed = false;
-        private readonly string _clientId;
-        private readonly string _secretId;
+        private bool _disposed;
         private Token _token;
         private AuthorizationCodeAuth _authorizationCodeAuth;
         private readonly LastFMAPI _lastFmApi;
         private readonly AuthorizationCodeAuth _auth;
         private string _refreshToken;
         private SpotifyWebAPI _api;
-        private bool _connectionDialogOpened = false;
+        private bool _connectionDialogOpened;
 
         public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://localhost:4002";
         public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
 
-        public bool IsAuthenticated { get => _token != null; }
+        public bool IsAuthenticated => _token != null;
 
-        public ExternalAPIType GetTypeAPI { get => ExternalAPIType.Spotify; }
+        public ExternalAPIType GetTypeAPI => ExternalAPIType.Spotify;
 
         public SpotifyAPI() { }
 
         public SpotifyAPI(string clientId, string secretId, string redirectUrl = SPOTIFY_API_DEFAULT_REDIRECT_URL)
         {
-            _clientId = clientId;
-            _secretId = secretId;
             _lastFmApi = new LastFMAPI();
 
-            if (!string.IsNullOrEmpty(_clientId) && !string.IsNullOrEmpty(_secretId))
+            if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(secretId))
             {
-                _auth = new AuthorizationCodeAuth(_clientId, _secretId, redirectUrl, redirectUrl,
+                _auth = new AuthorizationCodeAuth(clientId, secretId, redirectUrl, redirectUrl,
                     Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
                 _auth.AuthReceived += AuthOnAuthReceived;
                 _auth.Start();
@@ -92,11 +87,11 @@ namespace EspionSpotify.API
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
             var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
-            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, 2);
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, maxSize: 2);
 
-            track.SetArtistFromAPI(performers.FirstOrDefault());
-            track.SetTitleFromAPI(SpotifyStatus.GetTitleTag(titleParts, 1));
-            track.SetTitleExtendedFromAPI(SpotifyStatus.GetTitleTag(titleParts, 2), separatorType);
+            track.SetArtistFromApi(performers.FirstOrDefault());
+            track.SetTitleFromApi(SpotifyStatus.GetTitleTag(titleParts, 1));
+            track.SetTitleExtendedFromApi(SpotifyStatus.GetTitleTag(titleParts, 2), separatorType);
 
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
@@ -141,14 +136,11 @@ namespace EspionSpotify.API
                 var res = await UpdateTrack(track, retry: true);
                 if (track.MetaDataUpdated == true)
                 {
-                    retry = false;
+                    return false;
                 }
-                else
-                {
-                    // open spotify authentication page if user is disconnected
-                    // user might be connected with a different account that the one that granted rights
-                    OpenAuthenticationDialog();
-                }
+                // open spotify authentication page if user is disconnected
+                // user might be connected with a different account that the one that granted rights
+                OpenAuthenticationDialog(refresh: true);
                 return res;
             }
 
@@ -158,12 +150,12 @@ namespace EspionSpotify.API
 
                 // fallback in case getting the playback did not work
                 ExternalAPI.Instance = _lastFmApi;
-                Settings.Default.app_selected_external_api_id = (int)Enums.ExternalAPIType.LastFM;
+                Settings.Default.app_selected_external_api_id = (int)ExternalAPIType.LastFM;
                 Settings.Default.Save();
 
                 _ = Task.Run(() =>
                 {
-                    FrmEspionSpotify.Instance.UpdateExternalAPIToggle(Enums.ExternalAPIType.LastFM);
+                    FrmEspionSpotify.Instance.UpdateExternalAPIToggle(ExternalAPIType.LastFM);
                     FrmEspionSpotify.Instance.ShowFailedToUseSpotifyAPIMessage();
                 });
 
@@ -198,12 +190,23 @@ namespace EspionSpotify.API
                 _refreshToken = _token.RefreshToken;
                 _connectionDialogOpened = false;
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
         }
 
-        private void OpenAuthenticationDialog()
+        private void OpenAuthenticationDialog(bool refresh = false)
         {
             if (_connectionDialogOpened) return;
+
+            if (refresh)
+            {
+                _auth.Stop();
+                _token = null;
+                _auth.Start();
+            }
+
             _auth.ShowDialog = true;
             _auth.OpenBrowser();
             _connectionDialogOpened = true;
@@ -225,7 +228,10 @@ namespace EspionSpotify.API
                     _api = null;
                     _token = await _authorizationCodeAuth.RefreshToken(_token.RefreshToken ?? _refreshToken);
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
 
             if (_api == null)
@@ -261,7 +267,7 @@ namespace EspionSpotify.API
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 

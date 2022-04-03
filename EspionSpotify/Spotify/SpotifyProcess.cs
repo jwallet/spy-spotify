@@ -1,16 +1,14 @@
-using EspionSpotify.AudioSessions;
-using EspionSpotify.API;
-using EspionSpotify.Models;
-using EspionSpotify.Native;
-using EspionSpotify.Native.Models;
-using EspionSpotify.Spotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.AudioSessions;
 using EspionSpotify.Extensions;
+using EspionSpotify.Models;
+using EspionSpotify.Native;
+using EspionSpotify.Native.Models;
 
-namespace EspionSpotify
+namespace EspionSpotify.Spotify
 {
     public class SpotifyProcess : ISpotifyProcess
     {

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EspionSpotify.Translations;
 
 namespace EspionSpotify.Controls
 {
@@ -48,18 +49,18 @@ namespace EspionSpotify.Controls
             txtSecretId.Text = _pastSpotifyAPISecretId;
             txtRedirectURL.Text = _pastSpotifyAPIRedirectURL;
 
-            Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TitleSpotifyAPICredentials);
+            Text = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TitleSpotifyAPICredentials);
 
-            lblClientId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblClientId);
-            lblSecretId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblSecretId);
-            lblRedirectURL.Text = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.LblRedirectURL);
+            lblClientId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.LblClientId);
+            lblSecretId.Text = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.LblSecretId);
+            lblRedirectURL.Text = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.LblRedirectURL);
 
-            txtClientId.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.WatermarkClientId);
-            txtSecretId.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.WatermarkSecretId);
-            txtRedirectURL.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.WatermarkRedirectURL);
+            txtClientId.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.WatermarkClientId);
+            txtSecretId.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.WatermarkSecretId);
+            txtRedirectURL.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.WatermarkRedirectURL);
 
-            tip.SetToolTip(lnkFAQSpotifyAPI, FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TipFAQSpotifyAPI));
-            tip.SetToolTip(lnkSpotifyAPIDashboard, FrmEspionSpotify.Instance.Rm.GetString(I18nKeys.TipSpotifyAPIDashboard));
+            tip.SetToolTip(lnkFAQSpotifyAPI, FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TipFAQSpotifyAPI));
+            tip.SetToolTip(lnkSpotifyAPIDashboard, FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TipSpotifyAPIDashboard));
         }
 
         #region Components

@@ -12,8 +12,8 @@ namespace EspionSpotify.Native
 {
     public class FileManager
     {
-        public const int MAX_PATH_LENGTH = 260;
-        public const int MIN_PATH_LEFT_LENGTH = 100;
+        private const int MAX_PATH_LENGTH = 260;
+        private const int MIN_PATH_LEFT_LENGTH = 100;
 
         private const int FILE_COUNTER_AND_EXTENSION_LENGTH = 10;
 
@@ -46,7 +46,7 @@ namespace EspionSpotify.Native
             return ConcatPaths(path, $"{fileName}{extension}");
         }
 
-        internal static bool GoesAtRoot(bool GroupByFoldersEnabled, bool IsUnknown) => !GroupByFoldersEnabled || IsUnknown;
+        private static bool GoesAtRoot(bool groupByFoldersEnabled, bool isUnknown) => !groupByFoldersEnabled || isUnknown;
 
         public OutputFile GetOutputFile()
         {
@@ -195,16 +195,16 @@ namespace EspionSpotify.Native
         {
             if (userSettings.GroupByFoldersEnabled)
             {
-                const int NUMBER_OF_SUB_PATHS_TO_CREATE = 3; // contains artist, album, title
-                var pathShape = string.Join(@"\", new[] { userSettings.OutputPath }.Concat(new string[NUMBER_OF_SUB_PATHS_TO_CREATE]));
-                var maxLengthPerFolder = (MAX_PATH_LENGTH - pathShape.Length) / NUMBER_OF_SUB_PATHS_TO_CREATE;
+                const int numberOfSubPathsToCreate = 3; // contains artist, album, title
+                var pathShape = string.Join(@"\", new[] { userSettings.OutputPath }.Concat(new string[numberOfSubPathsToCreate]));
+                var maxLengthPerFolder = (MAX_PATH_LENGTH - pathShape.Length) / numberOfSubPathsToCreate;
                 return (maxLengthPerFolder, pathShape);
             }
             else
             {
 
-                const int NUMBER_OF_SUB_PATHS_TO_CREATE = 1; // contains title
-                var pathShape = string.Join(@"\", new[] { userSettings.OutputPath }.Concat(new string[NUMBER_OF_SUB_PATHS_TO_CREATE]));
+                const int numberOfSubPathsToCreate = 1; // contains title
+                var pathShape = string.Join(@"\", new[] { userSettings.OutputPath }.Concat(new string[numberOfSubPathsToCreate]));
                 var maxLengthPerFolder = (MAX_PATH_LENGTH - pathShape.Length) / 1;
                 return (maxLengthPerFolder, pathShape);
             }
@@ -242,7 +242,7 @@ namespace EspionSpotify.Native
 
         private void CreateDirectory(string outputPath, params string[] directories)
         {
-            if (directories.Any(x => string.IsNullOrWhiteSpace(x)))
+            if (directories.Any(string.IsNullOrWhiteSpace))
             {
                 throw new Exception("One or more directories has no name.");
             }
@@ -268,7 +268,7 @@ namespace EspionSpotify.Native
 
             if (track.Ad && !track.IsUnknownPlaying)
             {
-                fileName = $"{Constants.ADVERTISEMENT} {now.ToString("yyyyMMddHHmmss")}";
+                fileName = $"{Constants.ADVERTISEMENT} {now:yyyyMMddHHmmss}";
             }
             
             fileName = GetCleanFileFolder(fileName, maxLength: FileManager.MAX_PATH_LENGTH);
@@ -277,7 +277,7 @@ namespace EspionSpotify.Native
             if (fileName.IsNullOrSpotifyIdleState()) throw new Exception($"File name cannot be a {Constants.SPOTIFY} idle state.");
 
             var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ") : null;
-            return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator ?? " "); ;
+            return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator ?? " ");
         }
 
         private void DeleteFileFolder(string currentFile)

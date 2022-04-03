@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EspionSpotify.Native;
 using System.Configuration;
+using EspionSpotify.Translations;
 
 namespace EspionSpotify
 {
@@ -34,16 +35,16 @@ namespace EspionSpotify
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
 
         private readonly TranslationKeys[] _recorderStatusTranslationKeys = new[] {
-                I18nKeys.LogRecording,
-                I18nKeys.LogRecorded,
-                I18nKeys.LogDeleting,
-                I18nKeys.LogTrackExists,
+                I18NKeys.LogRecording,
+                I18NKeys.LogRecorded,
+                I18NKeys.LogDeleting,
+                I18NKeys.LogTrackExists,
             };
 
         public ResourceManager Rm { get; private set; }
         public static FrmEspionSpotify Instance { get; private set; }
 
-        private string LogDate { get => $@"[{DateTime.Now:HH:mm:ss}] "; }
+        private string LogDate => $@"[{DateTime.Now:HH:mm:ss}] ";
 
         public FrmEspionSpotify()
         {
@@ -65,7 +66,7 @@ namespace EspionSpotify
 
             if (string.IsNullOrEmpty(Settings.Default.app_analytics_cid))
             {
-                Settings.Default.app_analytics_cid = Analytics.GenerateCID();
+                Settings.Default.app_analytics_cid = Analytics.GenerateCid();
                 Settings.Default.Save();
             }
 
@@ -236,7 +237,7 @@ namespace EspionSpotify
         {
             var value = Settings.Default.settings_language;
 
-            cbLanguage.DataSource = new BindingSource(Translations.Languages.dropdownListValues, null);
+            cbLanguage.DataSource = new BindingSource(Translations.Languages.DropdownListValues, null);
             cbLanguage.DisplayMember = "Value";
             cbLanguage.ValueMember = "Key";
             cbLanguage.SelectedItem = Translations.Languages.GetDropdownListItemFromLanguageType(value.ToLanguageType());
@@ -251,57 +252,57 @@ namespace EspionSpotify
             var rmLanguage = Translations.Languages.GetResourcesManagerLanguageType(languageType);
             Rm = new ResourceManager(rmLanguage ?? typeof(Translations.en));
 
-            tabRecord.Text = Rm.GetString(I18nKeys.TabRecord);
-            tabSettings.Text = Rm.GetString(I18nKeys.TabSettings);
-            tabAdvanced.Text = Rm.GetString(I18nKeys.TabAdvanced);
+            tabRecord.Text = Rm.GetString(I18NKeys.TabRecord);
+            tabSettings.Text = Rm.GetString(I18NKeys.TabSettings);
+            tabAdvanced.Text = Rm.GetString(I18NKeys.TabAdvanced);
 
-            folderBrowserDialog.Description = Rm.GetString(I18nKeys.MsgFolderDialog);
+            folderBrowserDialog.Description = Rm.GetString(I18NKeys.MsgFolderDialog);
 
-            lblPath.Text = Rm.GetString(I18nKeys.LblPath);
-            lblAudioDevice.Text = Rm.GetString(I18nKeys.LblAudioDevice);
-            lblBitRate.Text = Rm.GetString(I18nKeys.LblBitRate);
-            lblFormat.Text = Rm.GetString(I18nKeys.LblFormat);
-            lblMinLength.Text = Rm.GetString(I18nKeys.LblMinLength);
-            lblLanguage.Text = Rm.GetString(I18nKeys.LblLanguage);
-            lblAddFolders.Text = Rm.GetString(I18nKeys.LblAddFolders);
-            lblAddSeparators.Text = Rm.GetString(I18nKeys.LblAddSeparators);
-            lblNumFiles.Text = Rm.GetString(I18nKeys.LblNumFiles);
-            lblNumTracks.Text = Rm.GetString(I18nKeys.LblNumTracks);
-            lblEndingSongDelay.Text = Rm.GetString(I18nKeys.LblEndingSongDelay);
-            lblRecordingNum.Text = Rm.GetString(I18nKeys.LblRecordingNum);
-            lblAds.Text = Rm.GetString(I18nKeys.LblAds);
-            lblMuteAds.Text = Rm.GetString(I18nKeys.LblMuteAds);
-            lblGeneral.Text = Rm.GetString(I18nKeys.LblGeneral);
-            lblMinimizeToSystemTray.Text = Rm.GetString(I18nKeys.LblMinimizeToSystemTray);
-            lblSpy.Text = Rm.GetString(I18nKeys.LblSpy);
-            lblRecorder.Text = Rm.GetString(I18nKeys.LblRecorder);
-            lblRecordEverything.Text = Rm.GetString(I18nKeys.LblRecordEverything);
-            chkRecordAds.Text = Rm.GetString(I18nKeys.LblRecordAds);
-            lblRecordOverRecordings.Text = Rm.GetString(I18nKeys.LblRecordOverRecordings);
-            chkRecordDuplicateRecordings.Text = Rm.GetString(I18nKeys.LblDuplicate);
-            lblRecordingTimer.Text = Rm.GetString(I18nKeys.LblRecordingTimer);
-            lblExtraTitleToSubtitle.Text = Rm.GetString(I18nKeys.LblExtraTitleToSubtitle);
-            lblID3.Text = Rm.GetString(I18nKeys.LblID3);
-            lblUpdateRecordingsID3Tags.Text = Rm.GetString(I18nKeys.LblUpdateRecordingsID3Tags);
+            lblPath.Text = Rm.GetString(I18NKeys.LblPath);
+            lblAudioDevice.Text = Rm.GetString(I18NKeys.LblAudioDevice);
+            lblBitRate.Text = Rm.GetString(I18NKeys.LblBitRate);
+            lblFormat.Text = Rm.GetString(I18NKeys.LblFormat);
+            lblMinLength.Text = Rm.GetString(I18NKeys.LblMinLength);
+            lblLanguage.Text = Rm.GetString(I18NKeys.LblLanguage);
+            lblAddFolders.Text = Rm.GetString(I18NKeys.LblAddFolders);
+            lblAddSeparators.Text = Rm.GetString(I18NKeys.LblAddSeparators);
+            lblNumFiles.Text = Rm.GetString(I18NKeys.LblNumFiles);
+            lblNumTracks.Text = Rm.GetString(I18NKeys.LblNumTracks);
+            lblEndingSongDelay.Text = Rm.GetString(I18NKeys.LblEndingSongDelay);
+            lblRecordingNum.Text = Rm.GetString(I18NKeys.LblRecordingNum);
+            lblAds.Text = Rm.GetString(I18NKeys.LblAds);
+            lblMuteAds.Text = Rm.GetString(I18NKeys.LblMuteAds);
+            lblGeneral.Text = Rm.GetString(I18NKeys.LblGeneral);
+            lblMinimizeToSystemTray.Text = Rm.GetString(I18NKeys.LblMinimizeToSystemTray);
+            lblSpy.Text = Rm.GetString(I18NKeys.LblSpy);
+            lblRecorder.Text = Rm.GetString(I18NKeys.LblRecorder);
+            lblRecordEverything.Text = Rm.GetString(I18NKeys.LblRecordEverything);
+            chkRecordAds.Text = Rm.GetString(I18NKeys.LblRecordAds);
+            lblRecordOverRecordings.Text = Rm.GetString(I18NKeys.LblRecordOverRecordings);
+            chkRecordDuplicateRecordings.Text = Rm.GetString(I18NKeys.LblDuplicate);
+            lblRecordingTimer.Text = Rm.GetString(I18NKeys.LblRecordingTimer);
+            lblExtraTitleToSubtitle.Text = Rm.GetString(I18NKeys.LblExtraTitleToSubtitle);
+            lblID3.Text = Rm.GetString(I18NKeys.LblID3);
+            lblUpdateRecordingsID3Tags.Text = Rm.GetString(I18NKeys.LblUpdateRecordingsID3Tags);
 
-            tip.SetToolTip(lnkClear, Rm.GetString(I18nKeys.TipClear));
-            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
-            tip.SetToolTip(lnkDirectory, Rm.GetString(I18nKeys.TipDirectory));
-            tip.SetToolTip(lnkPath, Rm.GetString(I18nKeys.TipPath));
-            tip.SetToolTip(lnkAudioVirtualCable, Rm.GetString(I18nKeys.TipInstallVirtualCableDriver));
-            tip.SetToolTip(lnkRelease, Rm.GetString(I18nKeys.TipRelease));
-            tip.SetToolTip(lnkDonate, Rm.GetString(I18nKeys.TipDonate));
-            tip.SetToolTip(lnkFAQ, Rm.GetString(I18nKeys.TipFAQ));
-            tip.SetToolTip(lnkNumPlus, Rm.GetString(I18nKeys.TipNumModifierHold));
-            tip.SetToolTip(lnkNumMinus, Rm.GetString(I18nKeys.TipNumModifierHold));
-            tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18nKeys.TipSpotifyAPICredentials));
+            tip.SetToolTip(lnkClear, Rm.GetString(I18NKeys.TipClear));
+            tip.SetToolTip(lnkSpy, Rm.GetString(I18NKeys.TipStartSpying));
+            tip.SetToolTip(lnkDirectory, Rm.GetString(I18NKeys.TipDirectory));
+            tip.SetToolTip(lnkPath, Rm.GetString(I18NKeys.TipPath));
+            tip.SetToolTip(lnkAudioVirtualCable, Rm.GetString(I18NKeys.TipInstallVirtualCableDriver));
+            tip.SetToolTip(lnkRelease, Rm.GetString(I18NKeys.TipRelease));
+            tip.SetToolTip(lnkDonate, Rm.GetString(I18NKeys.TipDonate));
+            tip.SetToolTip(lnkFAQ, Rm.GetString(I18NKeys.TipFAQ));
+            tip.SetToolTip(lnkNumPlus, Rm.GetString(I18NKeys.TipNumModifierHold));
+            tip.SetToolTip(lnkNumMinus, Rm.GetString(I18NKeys.TipNumModifierHold));
+            tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18NKeys.TipSpotifyAPICredentials));
 
             var bitrates = new Dictionary<LAMEPreset, string>
             {
-                {LAMEPreset.ABR_128, Rm.GetString(I18nKeys.CbOptBitRate128)},
-                {LAMEPreset.ABR_160, string.Format(Rm.GetString(I18nKeys.CbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(I18nKeys.CbOptBitRate160))},
-                {LAMEPreset.ABR_256, Rm.GetString(I18nKeys.CbOptBitRate256)},
-                {LAMEPreset.ABR_320, string.Format(Rm.GetString(I18nKeys.CbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(I18nKeys.CbOptBitRate320))}
+                {LAMEPreset.ABR_128, Rm.GetString(I18NKeys.CbOptBitRate128)},
+                {LAMEPreset.ABR_160, string.Format(Rm.GetString(I18NKeys.CbOptBitRateSpotifyFree) ?? "{0}", Rm.GetString(I18NKeys.CbOptBitRate160))},
+                {LAMEPreset.ABR_256, Rm.GetString(I18NKeys.CbOptBitRate256)},
+                {LAMEPreset.ABR_320, string.Format(Rm.GetString(I18NKeys.CbOptBitRateSpotifyPremium) ?? "{0}", Rm.GetString(I18NKeys.CbOptBitRate320))}
             };
 
             cbBitRate.DataSource = new BindingSource(bitrates, null);
@@ -346,7 +347,7 @@ namespace EspionSpotify
         {
             lnkSpy.SetPropertyThreadSafe(() =>
             {
-                tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStartSpying));
+                tip.SetToolTip(lnkSpy, Rm.GetString(I18NKeys.TipStartSpying));
                 lnkSpy.Image = Resources.on;
                 lnkSpy.Focus();
             });
@@ -395,8 +396,8 @@ namespace EspionSpotify
         public void ShowFailedToUseSpotifyAPIMessage()
         {
             MetroMessageBox.Show(Instance,
-               Rm.GetString(I18nKeys.MsgBodyFailedToUseSpotifyAPI),
-               Rm.GetString(I18nKeys.MsgTitleFailedToUseSpotifyAPI),
+               Rm.GetString(I18NKeys.MsgBodyFailedToUseSpotifyAPI),
+               Rm.GetString(I18NKeys.MsgTitleFailedToUseSpotifyAPI),
                MessageBoxButtons.OK,
                MessageBoxIcon.Question);
         }
@@ -420,7 +421,7 @@ namespace EspionSpotify
                 // set message type
                 rtbLog.AppendText(type);
                 rtbLog.Select(rtbLog.TextLength - type.Length, type.Length + 1);
-                rtbLog.SelectionColor = resource.Equals(I18nKeys.LogRecording)
+                rtbLog.SelectionColor = resource.Equals(I18NKeys.LogRecording)
                     ? rtbLog.SelectionColor.SpotifyPrimaryText()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
                 rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Bold);
@@ -428,7 +429,7 @@ namespace EspionSpotify
                 // set message msg
                 rtbLog.AppendText(msg + Environment.NewLine);
                 rtbLog.Select(rtbLog.TextLength - msg.Length, msg.Length);
-                rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(I18nKeys.LogDeleting)
+                rtbLog.SelectionColor = rtbLog.SelectionColor = resource.Equals(I18NKeys.LogDeleting)
                     ? rtbLog.SelectionColor.SpotifySecondaryTextAlternate()
                     : rtbLog.SelectionColor.SpotifySecondaryText();
                 rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
@@ -467,7 +468,7 @@ namespace EspionSpotify
                 rtbLog.AppendText(log + Environment.NewLine);
             }
 
-            rtbLog.AppendText(LogDate + Rm.GetString(I18nKeys.LogPreviousLogs) + Environment.NewLine + Environment.NewLine);
+            rtbLog.AppendText(LogDate + Rm.GetString(I18NKeys.LogPreviousLogs) + Environment.NewLine + Environment.NewLine);
 
             rtbLog.Select(0, rtbLog.TextLength);
             rtbLog.SelectionFont = GetDefaultSelectionFont(FontStyle.Regular);
@@ -482,7 +483,7 @@ namespace EspionSpotify
 
             Task.Run(_watcher.Run);
 
-            tip.SetToolTip(lnkSpy, Rm.GetString(I18nKeys.TipStopSying));
+            tip.SetToolTip(lnkSpy, Rm.GetString(I18NKeys.TipStopSying));
             tlSettings.Enabled = false;
             tlAdvanced.Enabled = false;
             timer1.Start();
@@ -512,8 +513,8 @@ namespace EspionSpotify
             if (Directory.Exists(_userSettings.OutputPath)) return false;
 
             MetroMessageBox.Show(this,
-                Rm.GetString(I18nKeys.MsgBodyPathNotFound),
-                Rm.GetString(I18nKeys.MsgTitlePathNotFound),
+                Rm.GetString(I18NKeys.MsgBodyPathNotFound),
+                Rm.GetString(I18NKeys.MsgTitlePathNotFound),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -525,8 +526,8 @@ namespace EspionSpotify
             if (!FileManager.IsOutputPathTooLong(_userSettings.OutputPath)) return false;
 
             MetroMessageBox.Show(this,
-                Rm.GetString(I18nKeys.MsgBodyPathTooLong),
-                Rm.GetString(I18nKeys.MsgTitlePathTooLong),
+                Rm.GetString(I18NKeys.MsgBodyPathTooLong),
+                Rm.GetString(I18NKeys.MsgTitlePathTooLong),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Question);
 
@@ -582,7 +583,7 @@ namespace EspionSpotify
             var isDriverInstalled = AudioVirtualCableDriver.ExistsInAudioEndPointDevices(_audioSession.AudioMMDevicesManager.AudioEndPointDeviceNames);
             var bmp = isDriverInstalled ? Resources.remove_device : Resources.add_device;
             UpdateLinkImage(lnkAudioVirtualCable, bmp);
-            var msgTooltip = isDriverInstalled ? I18nKeys.TipUninstallVirtualCableDriver : I18nKeys.TipInstallVirtualCableDriver;
+            var msgTooltip = isDriverInstalled ? I18NKeys.TipUninstallVirtualCableDriver : I18NKeys.TipInstallVirtualCableDriver;
             tip.SetToolTip(lnkAudioVirtualCable, Rm.GetString(msgTooltip));
             return isDriverInstalled;
         }
@@ -757,8 +758,8 @@ namespace EspionSpotify
             if (Watcher.Ready || !Watcher.Running) return;
 
             if (MetroMessageBox.Show(this,
-                    Rm.GetString(I18nKeys.MsgBodyCantQuit),
-                    Rm.GetString(I18nKeys.MsgTitleCantQuit),
+                    Rm.GetString(I18NKeys.MsgBodyCantQuit),
+                    Rm.GetString(I18NKeys.MsgTitleCantQuit),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes)
             {
@@ -955,7 +956,7 @@ namespace EspionSpotify
             if (!AudioVirtualCableDriver.SetupDriver())
             {
                 MetroMessageBox.Show(this,
-                    Rm.GetString(I18nKeys.MsgBodyDriverInstallationFailed),
+                    Rm.GetString(I18NKeys.MsgBodyDriverInstallationFailed),
                     "Audio Virtual Driver",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Question);

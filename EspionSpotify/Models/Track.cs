@@ -1,18 +1,17 @@
-﻿using EspionSpotify.Enums;
+﻿using System.Linq;
+using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
-using EspionSpotify.Spotify;
-using System.Linq;
 
 namespace EspionSpotify.Models
 {
     public class Track
     {
-        private string _artist = null;
-        private string _apiArtist = null;
-        private string _title = null;
-        private string _apiTitle = null;
-        private string _titleExtended = null;
-        private string _apiTitleExtended = null;
+        private string _artist;
+        private string _apiArtist;
+        private string _title;
+        private string _apiTitle;
+        private string _titleExtended;
+        private string _apiTitleExtended;
 
         public string Artists
         {
@@ -41,21 +40,21 @@ namespace EspionSpotify.Models
 
         public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.None;
 
-        public void SetArtistFromAPI(string value)
+        public void SetArtistFromApi(string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
                 _apiArtist = value;
             }
         }
-        public void SetTitleFromAPI(string value)
+        public void SetTitleFromApi(string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
                 _apiTitle = value;
             }
         }
-        public void SetTitleExtendedFromAPI(string value, TitleSeparatorType separatorType)
+        public void SetTitleExtendedFromApi(string value, TitleSeparatorType separatorType)
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
@@ -91,19 +90,14 @@ namespace EspionSpotify.Models
         public byte[] ArtMedium { get; set; }
         public byte[] ArtSmall { get; set; }
 
-        public bool IsNormal
-        {
-            get =>
-                !string.IsNullOrEmpty(Artist)
-                && !string.IsNullOrEmpty(Title)
-                && !Ad;
-        }
+        private bool IsNormal =>
+            !string.IsNullOrEmpty(Artist)
+            && !string.IsNullOrEmpty(Title)
+            && !Ad;
+
         public bool IsNormalPlaying => IsNormal && Playing;
 
-        public bool IsUnknown
-        {
-            get => string.IsNullOrEmpty(Title) && !Artist.IsNullOrAdOrSpotifyIdleState();
-        }
+        public bool IsUnknown => string.IsNullOrEmpty(Title) && !Artist.IsNullOrAdOrSpotifyIdleState();
         public bool IsUnknownPlaying => IsUnknown && Playing;
 
         public Track() { }

@@ -6,24 +6,24 @@ using EspionSpotify.Extensions;
 
 namespace EspionSpotify.AudioSessions
 {
-    public class AudioMMDevicesManager : NAudio.CoreAudioApi.Interfaces.IMMNotificationClient, IDisposable
+    public sealed class AudioMMDevicesManager : NAudio.CoreAudioApi.Interfaces.IMMNotificationClient, IDisposable
     {
         private bool _disposed = false;
         private MMDevice _defaultEndpointVolumeController;
 
-        internal bool volumeNotificationEmitted = false;
+        internal bool VolumeNotificationEmitted = false;
 
         public MMDeviceEnumerator AudioMMDevices { get; private set; }
         public string AudioEndPointDeviceID { get; private set; }
         public string DefaultAudioEndPointDeviceID { get; private set; }
 
-        public bool? AudioEndPointDeviceMute { get => AudioEndPointDevice?.AudioEndpointVolume?.Mute; }
+        public bool? AudioEndPointDeviceMute => AudioEndPointDevice?.AudioEndpointVolume?.Mute;
 
-        public string AudioEndPointDeviceName { get => AudioEndPointDevice?.GetFriendlyName(); }
+        public string AudioEndPointDeviceName => AudioEndPointDevice?.GetFriendlyName();
 
         public IDictionary<string, string> AudioEndPointDeviceNames { get; private set; }
 
-        public SessionCollection GetAudioEndPointDeviceSessions { get => AudioEndPointDevice?.AudioSessionManager?.Sessions; }
+        public SessionCollection GetAudioEndPointDeviceSessions => AudioEndPointDevice?.AudioSessionManager?.Sessions;
 
         public MMDevice AudioEndPointDevice
         {
@@ -44,7 +44,7 @@ namespace EspionSpotify.AudioSessions
             return AudioMMDevices.GetDefaultAudioEndpointSafeException(DataFlow.Render, Role.Multimedia, safe: !_disposed);
         }
 
-        public void SetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
+        private void SetDefaultAudioEndpoint(DataFlow dataFlow, Role deviceRole)
         {
             _defaultEndpointVolumeController = GetDefaultAudioEndpoint(dataFlow, deviceRole);
 
@@ -82,7 +82,7 @@ namespace EspionSpotify.AudioSessions
             if (AudioEndPointDeviceID != DefaultAudioEndPointDeviceID) return;
             var volume = (int)(data.MasterVolume * 100);
             FrmEspionSpotify.Instance.SetSoundVolume(volume);
-            volumeNotificationEmitted = true;
+            VolumeNotificationEmitted = true;
         }
 
         public void OnDefaultDeviceChanged(DataFlow dataFlow, Role deviceRole, string defaultDeviceId)
@@ -114,6 +114,10 @@ namespace EspionSpotify.AudioSessions
                         AudioEndPointDeviceNames.Add(deviceId, device.GetFriendlyName());
                     }
                     break;
+                case DeviceState.Disabled:
+                case DeviceState.NotPresent:
+                case DeviceState.Unplugged:
+                case DeviceState.All:
                 default:
                     if (AudioEndPointDeviceNames.IncludesKey(deviceId))
                     {
@@ -145,7 +149,7 @@ namespace EspionSpotify.AudioSessions
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed)
                 return;

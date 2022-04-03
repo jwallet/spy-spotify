@@ -13,7 +13,7 @@ namespace EspionSpotify.Models
 
         public string BasePath { get; set; }
         public string FoldersPath { get; set; }
-        public int Count { get; private set; }
+        private int Count { get; set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
 
@@ -35,8 +35,9 @@ namespace EspionSpotify.Models
 
         public override string ToString()
         {
-            if (_file.IsNullOrAdOrSpotifyIdleState()) return null;
-            return FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
+            return _file.IsNullOrAdOrSpotifyIdleState()
+                ? string.Empty
+                : FileManager.ConcatPaths("..", FoldersPath, $"{_file}{GetAddedCount()}.{Extension}");
         }
 
         private string GetAddedCount()

@@ -2,11 +2,12 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace EspionSpotify
+namespace EspionSpotify.Spotify
 {
-    public class SpotifyConnect
+    public static class SpotifyConnect
     {
         private static readonly TimeSpan RunSpotifyInterval = TimeSpan.FromSeconds(3);
 
@@ -23,7 +24,7 @@ namespace EspionSpotify
                 @"Microsoft\WindowsApps\Spotify.exe")
         };
 
-        public async static Task Run(IFileSystem fileSystem)
+        public static async Task Run(IFileSystem fileSystem)
         {
             if (!IsSpotifyInstalled(fileSystem))
             {
@@ -63,12 +64,7 @@ namespace EspionSpotify
 
         public static bool IsSpotifyInstalled(IFileSystem fileSystem)
         {
-            foreach (var path in SpotifyPossiblePaths)
-            {
-                if (!fileSystem.File.Exists(path)) continue;
-                return true;
-            }
-            return false;
+            return SpotifyPossiblePaths.Any(path => fileSystem.File.Exists(path));
         }
 
         public static bool IsSpotifyRunning()
