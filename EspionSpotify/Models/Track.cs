@@ -6,19 +6,56 @@ namespace EspionSpotify.Models
 {
     public class Track
     {
-        private string _artist;
         private string _apiArtist;
-        private string _title;
         private string _apiTitle;
-        private string _titleExtended;
         private string _apiTitleExtended;
+        private string _artist;
+        private string _title;
+        private string _titleExtended;
+
+        public Track()
+        {
+        }
+
+        public Track(Track track)
+        {
+            Artist = track.Artist;
+            Title = track.Title;
+            Ad = track.Ad;
+            Playing = track.Playing;
+
+            TitleExtended = track.TitleExtended;
+            TitleExtendedSeparatorType = track.TitleExtendedSeparatorType;
+
+            Album = track.Album;
+            Genres = track.Genres;
+            AlbumPosition = track.AlbumPosition;
+
+            CurrentPosition = track.CurrentPosition;
+            Length = track.Length;
+
+            Performers = track.Performers;
+            Disc = track.Disc;
+            AlbumArtists = track.AlbumArtists;
+            Year = track.Year;
+
+            ArtExtraLargeUrl = track.ArtExtraLargeUrl;
+            ArtLargeUrl = track.ArtLargeUrl;
+            ArtMediumUrl = track.ArtMediumUrl;
+            ArtSmallUrl = track.ArtSmallUrl;
+
+            ArtExtraLarge = track.ArtExtraLarge;
+            ArtLarge = track.ArtLarge;
+            ArtMedium = track.ArtMedium;
+            ArtSmall = track.ArtSmall;
+        }
 
         public string Artists
         {
             get
             {
                 if (AlbumArtists != null && AlbumArtists.Length > 0) return string.Join(", ", AlbumArtists);
-                return string.Join(", ", (new[] { Artist }).Concat(Performers ?? new string[] { }).Distinct());
+                return string.Join(", ", new[] {Artist}.Concat(Performers ?? new string[] { }).Distinct());
             }
         }
 
@@ -27,11 +64,13 @@ namespace EspionSpotify.Models
             get => _apiArtist ?? _artist;
             set => _artist = string.IsNullOrEmpty(value) ? null : value;
         }
+
         public string Title
         {
             get => _apiTitle ?? _title;
             set => _title = string.IsNullOrEmpty(value) ? null : value;
         }
+
         public string TitleExtended
         {
             get => _apiTitleExtended ?? _titleExtended;
@@ -39,29 +78,6 @@ namespace EspionSpotify.Models
         }
 
         public TitleSeparatorType TitleExtendedSeparatorType { get; set; } = TitleSeparatorType.None;
-
-        public void SetArtistFromApi(string value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _apiArtist = value;
-            }
-        }
-        public void SetTitleFromApi(string value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _apiTitle = value;
-            }
-        }
-        public void SetTitleExtendedFromApi(string value, TitleSeparatorType separatorType)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _apiTitleExtended = value;
-                TitleExtendedSeparatorType = separatorType;
-            }
-        }
 
         public bool Ad { get; set; }
         public bool Playing { get; set; }
@@ -100,39 +116,23 @@ namespace EspionSpotify.Models
         public bool IsUnknown => string.IsNullOrEmpty(Title) && !Artist.IsNullOrAdOrSpotifyIdleState();
         public bool IsUnknownPlaying => IsUnknown && Playing;
 
-        public Track() { }
-
-        public Track(Track track)
+        public void SetArtistFromApi(string value)
         {
-            Artist = track.Artist;
-            Title = track.Title;
-            Ad = track.Ad;
-            Playing = track.Playing;
+            if (!string.IsNullOrWhiteSpace(value)) _apiArtist = value;
+        }
 
-            TitleExtended = track.TitleExtended;
-            TitleExtendedSeparatorType = track.TitleExtendedSeparatorType;
+        public void SetTitleFromApi(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value)) _apiTitle = value;
+        }
 
-            Album = track.Album;
-            Genres = track.Genres;
-            AlbumPosition = track.AlbumPosition;
-
-            CurrentPosition = track.CurrentPosition;
-            Length = track.Length;
-
-            Performers = track.Performers;
-            Disc = track.Disc;
-            AlbumArtists = track.AlbumArtists;
-            Year = track.Year;
-
-            ArtExtraLargeUrl = track.ArtExtraLargeUrl;
-            ArtLargeUrl = track.ArtLargeUrl;
-            ArtMediumUrl = track.ArtMediumUrl;
-            ArtSmallUrl = track.ArtSmallUrl;
-
-            ArtExtraLarge = track.ArtExtraLarge;
-            ArtLarge = track.ArtLarge;
-            ArtMedium = track.ArtMedium;
-            ArtSmall = track.ArtSmall;
+        public void SetTitleExtendedFromApi(string value, TitleSeparatorType separatorType)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _apiTitleExtended = value;
+                TitleExtendedSeparatorType = separatorType;
+            }
         }
 
         private string GetTitleExtended()
@@ -157,10 +157,7 @@ namespace EspionSpotify.Models
             {
                 song = $"{Artists} - {Title}";
 
-                if (!string.IsNullOrEmpty(TitleExtended))
-                {
-                    song += GetTitleExtended();
-                }
+                if (!string.IsNullOrEmpty(TitleExtended)) song += GetTitleExtended();
             }
             else if (!string.IsNullOrEmpty(Artist))
             {
@@ -172,12 +169,9 @@ namespace EspionSpotify.Models
 
         public string ToTitleString()
         {
-            var song = (IsUnknownPlaying ? Artist : Title);
+            var song = IsUnknownPlaying ? Artist : Title;
 
-            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(TitleExtended))
-            {
-                song += GetTitleExtended();
-            }
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(TitleExtended)) song += GetTitleExtended();
 
             return song ?? "";
         }
@@ -186,11 +180,11 @@ namespace EspionSpotify.Models
         {
             if (obj == null || obj.GetType() != typeof(Track)) return false;
 
-            var otherTrack = (Track)obj;
+            var otherTrack = (Track) obj;
             return otherTrack.Artist == Artist
-                && otherTrack.Title == Title
-                && otherTrack.TitleExtended == TitleExtended
-                && otherTrack.Ad == Ad;
+                   && otherTrack.Title == Title
+                   && otherTrack.TitleExtended == TitleExtended
+                   && otherTrack.Ad == Ad;
         }
 
         public override int GetHashCode()
@@ -198,7 +192,7 @@ namespace EspionSpotify.Models
             unchecked
             {
                 return ((Artist != string.Empty ? Artist.GetHashCode() : 0) * 397)
-                    ^ (Title != string.Empty ? Title.GetHashCode() : 0);
+                       ^ (Title != string.Empty ? Title.GetHashCode() : 0);
             }
         }
     }

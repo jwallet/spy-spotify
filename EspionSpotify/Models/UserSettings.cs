@@ -1,6 +1,6 @@
-﻿using EspionSpotify.Enums;
+﻿using System;
+using EspionSpotify.Enums;
 using NAudio.Lame;
-using System;
 
 namespace EspionSpotify.Models
 {
@@ -29,9 +29,10 @@ namespace EspionSpotify.Models
         public string SpotifyAPIRedirectURL { get; set; }
         public bool UpdateRecordingsID3TagsEnabled { get; set; }
         public string OrderNumberMask { get; set; } = "000";
-        public int OrderNumberMax => Convert.ToInt32(OrderNumberMask.Replace('0', '9').ToString());
+        public int OrderNumberMax => Convert.ToInt32(OrderNumberMask.Replace('0', '9'));
 
-        public bool HasRecordingTimerEnabled => !string.IsNullOrEmpty(RecordingTimer) && RecordingTimer.Length == 6 && RecordingTimer != "000000";
+        public bool HasRecordingTimerEnabled => !string.IsNullOrEmpty(RecordingTimer) && RecordingTimer.Length == 6 &&
+                                                RecordingTimer != "000000";
 
         public double RecordingTimerMilliseconds =>
             HasRecordingTimerEnabled
@@ -43,10 +44,13 @@ namespace EspionSpotify.Models
 
         public bool HasOrderNumberEnabled => OrderNumberInfrontOfFileEnabled || OrderNumberInMediaTagEnabled;
 
-        public int? OrderNumberAsTag => OrderNumberInMediaTagEnabled ? (int?)InternalOrderNumber : null;
+        public int? OrderNumberAsTag => OrderNumberInMediaTagEnabled ? (int?) InternalOrderNumber : null;
 
-        public int? OrderNumberAsFile => OrderNumberInfrontOfFileEnabled ? (int?)Math.Min(InternalOrderNumber, OrderNumberMax) : null;
+        public int? OrderNumberAsFile => OrderNumberInfrontOfFileEnabled
+            ? (int?) Math.Min(InternalOrderNumber, OrderNumberMax)
+            : null;
 
-        public bool IsSpotifyAPISet => !string.IsNullOrWhiteSpace(SpotifyAPIClientId) && !string.IsNullOrWhiteSpace(SpotifyAPISecretId);
+        public bool IsSpotifyAPISet => !string.IsNullOrWhiteSpace(SpotifyAPIClientId) &&
+                                       !string.IsNullOrWhiteSpace(SpotifyAPISecretId);
     }
 }

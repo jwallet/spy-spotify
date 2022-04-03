@@ -1,10 +1,6 @@
-﻿using SpotifyAPI.Web;
+﻿using System.Threading.Tasks;
+using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.Extensions
 {

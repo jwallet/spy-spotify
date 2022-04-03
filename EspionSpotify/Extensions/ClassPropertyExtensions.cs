@@ -10,15 +10,14 @@
             var childProperties = target.GetType().GetProperties();
 
             foreach (var parentProperty in parentProperties)
+            foreach (var childProperty in childProperties)
             {
-                foreach (var childProperty in childProperties)
+                if (!childProperty.CanWrite || !parentProperty.CanRead) break;
+                if (parentProperty.Name == childProperty.Name &&
+                    parentProperty.PropertyType == childProperty.PropertyType)
                 {
-                    if (!childProperty.CanWrite || !parentProperty.CanRead) break;
-                    if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType)
-                    {
-                        childProperty.SetValue(target, parentProperty.GetValue(source));
-                        break;
-                    }
+                    childProperty.SetValue(target, parentProperty.GetValue(source));
+                    break;
                 }
             }
         }

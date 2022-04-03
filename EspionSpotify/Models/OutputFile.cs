@@ -1,6 +1,5 @@
 ﻿using EspionSpotify.Extensions;
 using EspionSpotify.Native;
-using System;
 
 namespace EspionSpotify.Models
 {
@@ -9,18 +8,23 @@ namespace EspionSpotify.Models
         private const int FIRST_SONG_NAME_COUNT = 1;
 
         private string _file;
-        public string MediaFile { get => _file; set => _file = Normalize.RemoveDiacritics(value); }
+
+        public OutputFile()
+        {
+            Count = FIRST_SONG_NAME_COUNT;
+        }
+
+        public string MediaFile
+        {
+            get => _file;
+            set => _file = Normalize.RemoveDiacritics(value);
+        }
 
         public string BasePath { get; set; }
         public string FoldersPath { get; set; }
         private int Count { get; set; }
         public string Separator { get; set; }
         public string Extension { get; set; }
-
-        public OutputFile()
-        {
-            Count = FIRST_SONG_NAME_COUNT;
-        }
 
         internal void Increment()
         {

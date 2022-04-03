@@ -1,34 +1,37 @@
-﻿using EspionSpotify.Extensions;
-using EspionSpotify.Models;
-using EspionSpotify.Properties;
-using MetroFramework.Controls;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EspionSpotify.Extensions;
+using EspionSpotify.Properties;
 using EspionSpotify.Translations;
+using MetroFramework;
+using MetroFramework.Components;
+using MetroFramework.Controls;
+using MetroFramework.Forms;
 
 namespace EspionSpotify.Controls
 {
-    public class FrmSpotifyAPICredentials : MetroFramework.Forms.MetroForm
+    public class FrmSpotifyAPICredentials : MetroForm
     {
-        private TableLayoutPanel tableLayoutPanel2;
-        private MetroLabel lblClientId;
-        private MetroTextBox txtSecretId;
-        private MetroLabel lblSecretId;
-        private MetroTextBox txtClientId;
-        private MetroLink lnkFAQSpotifyAPI;
+        private const int OAUTH2_KEY_LENGTH = 32;
+        private readonly Analytics _analytics;
 
         private readonly string _pastSpotifyAPIClientId;
-        private readonly string _pastSpotifyAPISecretId;
         private readonly string _pastSpotifyAPIRedirectURL;
-
-        private const int OAUTH2_KEY_LENGTH = 32;
-        private MetroFramework.Components.MetroToolTip tip;
-        private MetroLink lnkSpotifyAPIDashboard;
+        private readonly string _pastSpotifyAPISecretId;
+        private MetroLabel lblClientId;
         private MetroLabel lblRedirectURL;
+        private MetroLabel lblSecretId;
+        private MetroLink lnkFAQSpotifyAPI;
+        private MetroLink lnkSpotifyAPIDashboard;
+        private TableLayoutPanel tableLayoutPanel2;
+        private MetroToolTip tip;
+        private MetroTextBox txtClientId;
         private MetroTextBox txtRedirectURL;
-        private readonly Analytics _analytics;
+        private MetroTextBox txtSecretId;
 
         public FrmSpotifyAPICredentials(Analytics analytics)
         {
@@ -41,9 +44,7 @@ namespace EspionSpotify.Controls
             _pastSpotifyAPIRedirectURL = Settings.Default.app_spotify_api_redirect_url?.Trim();
 
             if (string.IsNullOrEmpty(_pastSpotifyAPIRedirectURL))
-            {
                 _pastSpotifyAPIRedirectURL = API.SpotifyAPI.SPOTIFY_API_DEFAULT_REDIRECT_URL;
-            }
 
             txtClientId.Text = _pastSpotifyAPIClientId;
             txtSecretId.Text = _pastSpotifyAPISecretId;
@@ -60,279 +61,281 @@ namespace EspionSpotify.Controls
             txtRedirectURL.WaterMark = FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.WatermarkRedirectURL);
 
             tip.SetToolTip(lnkFAQSpotifyAPI, FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TipFAQSpotifyAPI));
-            tip.SetToolTip(lnkSpotifyAPIDashboard, FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TipSpotifyAPIDashboard));
+            tip.SetToolTip(lnkSpotifyAPIDashboard,
+                FrmEspionSpotify.Instance.Rm.GetString(I18NKeys.TipSpotifyAPIDashboard));
         }
 
         #region Components
+
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSpotifyAPICredentials));
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtRedirectURL = new MetroFramework.Controls.MetroTextBox();
-            this.txtClientId = new MetroFramework.Controls.MetroTextBox();
-            this.txtSecretId = new MetroFramework.Controls.MetroTextBox();
-            this.lblClientId = new MetroFramework.Controls.MetroLabel();
-            this.lblSecretId = new MetroFramework.Controls.MetroLabel();
-            this.lblRedirectURL = new MetroFramework.Controls.MetroLabel();
-            this.lnkFAQSpotifyAPI = new MetroFramework.Controls.MetroLink();
-            this.tip = new MetroFramework.Components.MetroToolTip();
-            this.lnkSpotifyAPIDashboard = new MetroFramework.Controls.MetroLink();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.SuspendLayout();
+            var resources = new ComponentResourceManager(typeof(FrmSpotifyAPICredentials));
+            tableLayoutPanel2 = new TableLayoutPanel();
+            txtRedirectURL = new MetroTextBox();
+            txtClientId = new MetroTextBox();
+            txtSecretId = new MetroTextBox();
+            lblClientId = new MetroLabel();
+            lblSecretId = new MetroLabel();
+            lblRedirectURL = new MetroLabel();
+            lnkFAQSpotifyAPI = new MetroLink();
+            tip = new MetroToolTip();
+            lnkSpotifyAPIDashboard = new MetroLink();
+            tableLayoutPanel2.SuspendLayout();
+            SuspendLayout();
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.txtRedirectURL, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.txtClientId, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.txtSecretId, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblClientId, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblSecretId, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblRedirectURL, 0, 2);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(10, 60);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(400, 122);
-            this.tableLayoutPanel2.TabIndex = 0;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(txtRedirectURL, 1, 2);
+            tableLayoutPanel2.Controls.Add(txtClientId, 1, 0);
+            tableLayoutPanel2.Controls.Add(txtSecretId, 1, 1);
+            tableLayoutPanel2.Controls.Add(lblClientId, 0, 0);
+            tableLayoutPanel2.Controls.Add(lblSecretId, 0, 1);
+            tableLayoutPanel2.Controls.Add(lblRedirectURL, 0, 2);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(10, 60);
+            tableLayoutPanel2.Margin = new Padding(0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.Padding = new Padding(0, 10, 0, 0);
+            tableLayoutPanel2.RowCount = 4;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(400, 122);
+            tableLayoutPanel2.TabIndex = 0;
             // 
             // txtRedirectURL
             // 
-            this.txtRedirectURL.BackColor = System.Drawing.Color.Black;
+            txtRedirectURL.BackColor = Color.Black;
             // 
             // 
             // 
-            this.txtRedirectURL.CustomButton.Image = null;
-            this.txtRedirectURL.CustomButton.Location = new System.Drawing.Point(238, 1);
-            this.txtRedirectURL.CustomButton.Name = "";
-            this.txtRedirectURL.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.txtRedirectURL.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtRedirectURL.CustomButton.TabIndex = 1;
-            this.txtRedirectURL.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtRedirectURL.CustomButton.UseSelectable = true;
-            this.txtRedirectURL.CustomButton.Visible = false;
-            this.txtRedirectURL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtRedirectURL.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtRedirectURL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txtRedirectURL.Lines = new string[0];
-            this.txtRedirectURL.Location = new System.Drawing.Point(131, 83);
-            this.txtRedirectURL.MaxLength = 32;
-            this.txtRedirectURL.Name = "txtRedirectURL";
-            this.txtRedirectURL.PasswordChar = '\0';
-            this.txtRedirectURL.PromptText = "PASTE_REDIRECT_URL_HERE";
-            this.txtRedirectURL.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtRedirectURL.SelectedText = "";
-            this.txtRedirectURL.SelectionLength = 0;
-            this.txtRedirectURL.SelectionStart = 0;
-            this.txtRedirectURL.ShortcutsEnabled = true;
-            this.txtRedirectURL.Size = new System.Drawing.Size(266, 29);
-            this.txtRedirectURL.Style = MetroFramework.MetroColorStyle.Green;
-            this.txtRedirectURL.TabIndex = 40;
-            this.txtRedirectURL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtRedirectURL.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.txtRedirectURL.UseCustomBackColor = true;
-            this.txtRedirectURL.UseSelectable = true;
-            this.txtRedirectURL.WaterMark = "PASTE_REDIRECT_URL_HERE";
-            this.txtRedirectURL.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtRedirectURL.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRedirectURL.TextChanged += new System.EventHandler(this.TxtRedirectURL_TextChanged);
+            txtRedirectURL.CustomButton.Image = null;
+            txtRedirectURL.CustomButton.Location = new Point(238, 1);
+            txtRedirectURL.CustomButton.Name = "";
+            txtRedirectURL.CustomButton.Size = new Size(27, 27);
+            txtRedirectURL.CustomButton.Style = MetroColorStyle.Blue;
+            txtRedirectURL.CustomButton.TabIndex = 1;
+            txtRedirectURL.CustomButton.Theme = MetroThemeStyle.Light;
+            txtRedirectURL.CustomButton.UseSelectable = true;
+            txtRedirectURL.CustomButton.Visible = false;
+            txtRedirectURL.Dock = DockStyle.Fill;
+            txtRedirectURL.FontSize = MetroTextBoxSize.Medium;
+            txtRedirectURL.ForeColor = Color.FromArgb(224, 224, 224);
+            txtRedirectURL.Lines = new string[0];
+            txtRedirectURL.Location = new Point(131, 83);
+            txtRedirectURL.MaxLength = 32;
+            txtRedirectURL.Name = "txtRedirectURL";
+            txtRedirectURL.PasswordChar = '\0';
+            txtRedirectURL.PromptText = "PASTE_REDIRECT_URL_HERE";
+            txtRedirectURL.ScrollBars = ScrollBars.None;
+            txtRedirectURL.SelectedText = "";
+            txtRedirectURL.SelectionLength = 0;
+            txtRedirectURL.SelectionStart = 0;
+            txtRedirectURL.ShortcutsEnabled = true;
+            txtRedirectURL.Size = new Size(266, 29);
+            txtRedirectURL.Style = MetroColorStyle.Green;
+            txtRedirectURL.TabIndex = 40;
+            txtRedirectURL.TextAlign = HorizontalAlignment.Center;
+            txtRedirectURL.Theme = MetroThemeStyle.Dark;
+            txtRedirectURL.UseCustomBackColor = true;
+            txtRedirectURL.UseSelectable = true;
+            txtRedirectURL.WaterMark = "PASTE_REDIRECT_URL_HERE";
+            txtRedirectURL.WaterMarkColor = Color.FromArgb(109, 109, 109);
+            txtRedirectURL.WaterMarkFont = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtRedirectURL.TextChanged += TxtRedirectURL_TextChanged;
             // 
             // txtClientId
             // 
-            this.txtClientId.BackColor = System.Drawing.Color.Black;
+            txtClientId.BackColor = Color.Black;
             // 
             // 
             // 
-            this.txtClientId.CustomButton.Image = null;
-            this.txtClientId.CustomButton.Location = new System.Drawing.Point(238, 1);
-            this.txtClientId.CustomButton.Name = "";
-            this.txtClientId.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.txtClientId.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtClientId.CustomButton.TabIndex = 1;
-            this.txtClientId.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtClientId.CustomButton.UseSelectable = true;
-            this.txtClientId.CustomButton.Visible = false;
-            this.txtClientId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtClientId.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtClientId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txtClientId.Lines = new string[0];
-            this.txtClientId.Location = new System.Drawing.Point(131, 13);
-            this.txtClientId.MaxLength = 32;
-            this.txtClientId.Name = "txtClientId";
-            this.txtClientId.PasswordChar = '\0';
-            this.txtClientId.PromptText = "PASTE_KEY_ID_HERE";
-            this.txtClientId.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtClientId.SelectedText = "";
-            this.txtClientId.SelectionLength = 0;
-            this.txtClientId.SelectionStart = 0;
-            this.txtClientId.ShortcutsEnabled = true;
-            this.txtClientId.Size = new System.Drawing.Size(266, 29);
-            this.txtClientId.Style = MetroFramework.MetroColorStyle.Green;
-            this.txtClientId.TabIndex = 35;
-            this.txtClientId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtClientId.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.txtClientId.UseCustomBackColor = true;
-            this.txtClientId.UseSelectable = true;
-            this.txtClientId.WaterMark = "PASTE_KEY_ID_HERE";
-            this.txtClientId.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtClientId.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtClientId.TextChanged += new System.EventHandler(this.TxtClientId_TextChanged);
+            txtClientId.CustomButton.Image = null;
+            txtClientId.CustomButton.Location = new Point(238, 1);
+            txtClientId.CustomButton.Name = "";
+            txtClientId.CustomButton.Size = new Size(27, 27);
+            txtClientId.CustomButton.Style = MetroColorStyle.Blue;
+            txtClientId.CustomButton.TabIndex = 1;
+            txtClientId.CustomButton.Theme = MetroThemeStyle.Light;
+            txtClientId.CustomButton.UseSelectable = true;
+            txtClientId.CustomButton.Visible = false;
+            txtClientId.Dock = DockStyle.Fill;
+            txtClientId.FontSize = MetroTextBoxSize.Medium;
+            txtClientId.ForeColor = Color.FromArgb(224, 224, 224);
+            txtClientId.Lines = new string[0];
+            txtClientId.Location = new Point(131, 13);
+            txtClientId.MaxLength = 32;
+            txtClientId.Name = "txtClientId";
+            txtClientId.PasswordChar = '\0';
+            txtClientId.PromptText = "PASTE_KEY_ID_HERE";
+            txtClientId.ScrollBars = ScrollBars.None;
+            txtClientId.SelectedText = "";
+            txtClientId.SelectionLength = 0;
+            txtClientId.SelectionStart = 0;
+            txtClientId.ShortcutsEnabled = true;
+            txtClientId.Size = new Size(266, 29);
+            txtClientId.Style = MetroColorStyle.Green;
+            txtClientId.TabIndex = 35;
+            txtClientId.TextAlign = HorizontalAlignment.Center;
+            txtClientId.Theme = MetroThemeStyle.Dark;
+            txtClientId.UseCustomBackColor = true;
+            txtClientId.UseSelectable = true;
+            txtClientId.WaterMark = "PASTE_KEY_ID_HERE";
+            txtClientId.WaterMarkColor = Color.FromArgb(109, 109, 109);
+            txtClientId.WaterMarkFont = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtClientId.TextChanged += TxtClientId_TextChanged;
             // 
             // txtSecretId
             // 
-            this.txtSecretId.BackColor = System.Drawing.Color.Black;
+            txtSecretId.BackColor = Color.Black;
             // 
             // 
             // 
-            this.txtSecretId.CustomButton.Image = null;
-            this.txtSecretId.CustomButton.Location = new System.Drawing.Point(238, 1);
-            this.txtSecretId.CustomButton.Name = "";
-            this.txtSecretId.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.txtSecretId.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtSecretId.CustomButton.TabIndex = 1;
-            this.txtSecretId.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtSecretId.CustomButton.UseSelectable = true;
-            this.txtSecretId.CustomButton.Visible = false;
-            this.txtSecretId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSecretId.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtSecretId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txtSecretId.Lines = new string[0];
-            this.txtSecretId.Location = new System.Drawing.Point(131, 48);
-            this.txtSecretId.MaxLength = 32;
-            this.txtSecretId.Name = "txtSecretId";
-            this.txtSecretId.PasswordChar = '\0';
-            this.txtSecretId.PromptText = "PASTE_KEY_ID_HERE";
-            this.txtSecretId.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtSecretId.SelectedText = "";
-            this.txtSecretId.SelectionLength = 0;
-            this.txtSecretId.SelectionStart = 0;
-            this.txtSecretId.ShortcutsEnabled = true;
-            this.txtSecretId.Size = new System.Drawing.Size(266, 29);
-            this.txtSecretId.Style = MetroFramework.MetroColorStyle.Green;
-            this.txtSecretId.TabIndex = 36;
-            this.txtSecretId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtSecretId.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.txtSecretId.UseCustomBackColor = true;
-            this.txtSecretId.UseSelectable = true;
-            this.txtSecretId.WaterMark = "PASTE_KEY_ID_HERE";
-            this.txtSecretId.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtSecretId.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSecretId.TextChanged += new System.EventHandler(this.TxtSecretId_TextChanged);
+            txtSecretId.CustomButton.Image = null;
+            txtSecretId.CustomButton.Location = new Point(238, 1);
+            txtSecretId.CustomButton.Name = "";
+            txtSecretId.CustomButton.Size = new Size(27, 27);
+            txtSecretId.CustomButton.Style = MetroColorStyle.Blue;
+            txtSecretId.CustomButton.TabIndex = 1;
+            txtSecretId.CustomButton.Theme = MetroThemeStyle.Light;
+            txtSecretId.CustomButton.UseSelectable = true;
+            txtSecretId.CustomButton.Visible = false;
+            txtSecretId.Dock = DockStyle.Fill;
+            txtSecretId.FontSize = MetroTextBoxSize.Medium;
+            txtSecretId.ForeColor = Color.FromArgb(224, 224, 224);
+            txtSecretId.Lines = new string[0];
+            txtSecretId.Location = new Point(131, 48);
+            txtSecretId.MaxLength = 32;
+            txtSecretId.Name = "txtSecretId";
+            txtSecretId.PasswordChar = '\0';
+            txtSecretId.PromptText = "PASTE_KEY_ID_HERE";
+            txtSecretId.ScrollBars = ScrollBars.None;
+            txtSecretId.SelectedText = "";
+            txtSecretId.SelectionLength = 0;
+            txtSecretId.SelectionStart = 0;
+            txtSecretId.ShortcutsEnabled = true;
+            txtSecretId.Size = new Size(266, 29);
+            txtSecretId.Style = MetroColorStyle.Green;
+            txtSecretId.TabIndex = 36;
+            txtSecretId.TextAlign = HorizontalAlignment.Center;
+            txtSecretId.Theme = MetroThemeStyle.Dark;
+            txtSecretId.UseCustomBackColor = true;
+            txtSecretId.UseSelectable = true;
+            txtSecretId.WaterMark = "PASTE_KEY_ID_HERE";
+            txtSecretId.WaterMarkColor = Color.FromArgb(109, 109, 109);
+            txtSecretId.WaterMarkFont = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtSecretId.TextChanged += TxtSecretId_TextChanged;
             // 
             // lblClientId
             // 
-            this.lblClientId.AutoSize = true;
-            this.lblClientId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblClientId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblClientId.Location = new System.Drawing.Point(3, 10);
-            this.lblClientId.Name = "lblClientId";
-            this.lblClientId.Size = new System.Drawing.Size(122, 35);
-            this.lblClientId.TabIndex = 37;
-            this.lblClientId.Text = "LBL_CLIENT_ID";
-            this.lblClientId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblClientId.Theme = MetroFramework.MetroThemeStyle.Dark;
+            lblClientId.AutoSize = true;
+            lblClientId.Dock = DockStyle.Fill;
+            lblClientId.ForeColor = Color.FromArgb(224, 224, 224);
+            lblClientId.Location = new Point(3, 10);
+            lblClientId.Name = "lblClientId";
+            lblClientId.Size = new Size(122, 35);
+            lblClientId.TabIndex = 37;
+            lblClientId.Text = "LBL_CLIENT_ID";
+            lblClientId.TextAlign = ContentAlignment.MiddleRight;
+            lblClientId.Theme = MetroThemeStyle.Dark;
             // 
             // lblSecretId
             // 
-            this.lblSecretId.AutoSize = true;
-            this.lblSecretId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSecretId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblSecretId.Location = new System.Drawing.Point(3, 45);
-            this.lblSecretId.Name = "lblSecretId";
-            this.lblSecretId.Size = new System.Drawing.Size(122, 35);
-            this.lblSecretId.TabIndex = 38;
-            this.lblSecretId.Text = "LBL_SECRET_ID";
-            this.lblSecretId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblSecretId.Theme = MetroFramework.MetroThemeStyle.Dark;
+            lblSecretId.AutoSize = true;
+            lblSecretId.Dock = DockStyle.Fill;
+            lblSecretId.ForeColor = Color.FromArgb(224, 224, 224);
+            lblSecretId.Location = new Point(3, 45);
+            lblSecretId.Name = "lblSecretId";
+            lblSecretId.Size = new Size(122, 35);
+            lblSecretId.TabIndex = 38;
+            lblSecretId.Text = "LBL_SECRET_ID";
+            lblSecretId.TextAlign = ContentAlignment.MiddleRight;
+            lblSecretId.Theme = MetroThemeStyle.Dark;
             // 
             // lblRedirectURL
             // 
-            this.lblRedirectURL.AutoSize = true;
-            this.lblRedirectURL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblRedirectURL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblRedirectURL.Location = new System.Drawing.Point(3, 80);
-            this.lblRedirectURL.Name = "lblRedirectURL";
-            this.lblRedirectURL.Size = new System.Drawing.Size(122, 35);
-            this.lblRedirectURL.TabIndex = 39;
-            this.lblRedirectURL.Text = "LBL_REDIRECT_URL";
-            this.lblRedirectURL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblRedirectURL.Theme = MetroFramework.MetroThemeStyle.Dark;
+            lblRedirectURL.AutoSize = true;
+            lblRedirectURL.Dock = DockStyle.Fill;
+            lblRedirectURL.ForeColor = Color.FromArgb(224, 224, 224);
+            lblRedirectURL.Location = new Point(3, 80);
+            lblRedirectURL.Name = "lblRedirectURL";
+            lblRedirectURL.Size = new Size(122, 35);
+            lblRedirectURL.TabIndex = 39;
+            lblRedirectURL.Text = "LBL_REDIRECT_URL";
+            lblRedirectURL.TextAlign = ContentAlignment.MiddleRight;
+            lblRedirectURL.Theme = MetroThemeStyle.Dark;
             // 
             // lnkFAQSpotifyAPI
             // 
-            this.lnkFAQSpotifyAPI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkFAQSpotifyAPI.Image = global::EspionSpotify.Properties.Resources.faq;
-            this.lnkFAQSpotifyAPI.ImageSize = 12;
-            this.lnkFAQSpotifyAPI.Location = new System.Drawing.Point(369, 5);
-            this.lnkFAQSpotifyAPI.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkFAQSpotifyAPI.Name = "lnkFAQSpotifyAPI";
-            this.lnkFAQSpotifyAPI.Size = new System.Drawing.Size(18, 18);
-            this.lnkFAQSpotifyAPI.TabIndex = 44;
-            this.lnkFAQSpotifyAPI.UseCustomBackColor = true;
-            this.lnkFAQSpotifyAPI.UseSelectable = true;
-            this.lnkFAQSpotifyAPI.Click += new System.EventHandler(this.LnkFAQSpotifyAPI_Click);
+            lnkFAQSpotifyAPI.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lnkFAQSpotifyAPI.Image = Resources.faq;
+            lnkFAQSpotifyAPI.ImageSize = 12;
+            lnkFAQSpotifyAPI.Location = new Point(369, 5);
+            lnkFAQSpotifyAPI.Margin = new Padding(0);
+            lnkFAQSpotifyAPI.Name = "lnkFAQSpotifyAPI";
+            lnkFAQSpotifyAPI.Size = new Size(18, 18);
+            lnkFAQSpotifyAPI.TabIndex = 44;
+            lnkFAQSpotifyAPI.UseCustomBackColor = true;
+            lnkFAQSpotifyAPI.UseSelectable = true;
+            lnkFAQSpotifyAPI.Click += LnkFAQSpotifyAPI_Click;
             // 
             // tip
             // 
-            this.tip.Style = MetroFramework.MetroColorStyle.Default;
-            this.tip.StyleManager = null;
-            this.tip.Theme = MetroFramework.MetroThemeStyle.Light;
+            tip.Style = MetroColorStyle.Default;
+            tip.StyleManager = null;
+            tip.Theme = MetroThemeStyle.Light;
             // 
             // lnkSpotifyAPIDashboard
             // 
-            this.lnkSpotifyAPIDashboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkSpotifyAPIDashboard.Image = global::EspionSpotify.Properties.Resources.spotify;
-            this.lnkSpotifyAPIDashboard.ImageSize = 14;
-            this.lnkSpotifyAPIDashboard.Location = new System.Drawing.Point(344, 5);
-            this.lnkSpotifyAPIDashboard.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkSpotifyAPIDashboard.Name = "lnkSpotifyAPIDashboard";
-            this.lnkSpotifyAPIDashboard.Size = new System.Drawing.Size(18, 18);
-            this.lnkSpotifyAPIDashboard.TabIndex = 45;
-            this.lnkSpotifyAPIDashboard.UseCustomBackColor = true;
-            this.lnkSpotifyAPIDashboard.UseSelectable = true;
-            this.lnkSpotifyAPIDashboard.Click += new System.EventHandler(this.LnkSpotifyAPIDashboard_Click);
+            lnkSpotifyAPIDashboard.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lnkSpotifyAPIDashboard.Image = Resources.spotify;
+            lnkSpotifyAPIDashboard.ImageSize = 14;
+            lnkSpotifyAPIDashboard.Location = new Point(344, 5);
+            lnkSpotifyAPIDashboard.Margin = new Padding(0);
+            lnkSpotifyAPIDashboard.Name = "lnkSpotifyAPIDashboard";
+            lnkSpotifyAPIDashboard.Size = new Size(18, 18);
+            lnkSpotifyAPIDashboard.TabIndex = 45;
+            lnkSpotifyAPIDashboard.UseCustomBackColor = true;
+            lnkSpotifyAPIDashboard.UseSelectable = true;
+            lnkSpotifyAPIDashboard.Click += LnkSpotifyAPIDashboard_Click;
             // 
             // FrmSpotifyAPICredentials
             // 
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
-            this.ClientSize = new System.Drawing.Size(420, 202);
-            this.Controls.Add(this.lnkSpotifyAPIDashboard);
-            this.Controls.Add(this.lnkFAQSpotifyAPI);
-            this.Controls.Add(this.tableLayoutPanel2);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Movable = false;
-            this.Name = "FrmSpotifyAPICredentials";
-            this.Padding = new System.Windows.Forms.Padding(10, 60, 10, 20);
-            this.Resizable = false;
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Style = MetroFramework.MetroColorStyle.Green;
-            this.Text = "SPOTIFY_API_CREDENTIALS";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSpotifyAPICredentials_FormClosing);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.ResumeLayout(false);
-
+            BackgroundImageLayout = ImageLayout.None;
+            BorderStyle = MetroFormBorderStyle.FixedSingle;
+            ClientSize = new Size(420, 202);
+            Controls.Add(lnkSpotifyAPIDashboard);
+            Controls.Add(lnkFAQSpotifyAPI);
+            Controls.Add(tableLayoutPanel2);
+            Icon = (Icon) resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Movable = false;
+            Name = "FrmSpotifyAPICredentials";
+            Padding = new Padding(10, 60, 10, 20);
+            Resizable = false;
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterParent;
+            Style = MetroColorStyle.Green;
+            Text = "SPOTIFY_API_CREDENTIALS";
+            Theme = MetroThemeStyle.Dark;
+            FormClosing += FrmSpotifyAPICredentials_FormClosing;
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            ResumeLayout(false);
         }
+
         #endregion Components
 
         private void TxtClientId_TextChanged(object sender, EventArgs e)
         {
-            var value = ((MetroTextBox)sender).Text.Trim();
+            var value = ((MetroTextBox) sender).Text.Trim();
             if (!string.IsNullOrEmpty(value) && value.Length != OAUTH2_KEY_LENGTH) return;
 
             Settings.Default.app_spotify_api_client_id = value;
@@ -341,7 +344,7 @@ namespace EspionSpotify.Controls
 
         private void TxtSecretId_TextChanged(object sender, EventArgs e)
         {
-            var value = ((MetroTextBox)sender).Text.Trim();
+            var value = ((MetroTextBox) sender).Text.Trim();
             if (!string.IsNullOrEmpty(value) && value.Length != OAUTH2_KEY_LENGTH) return;
 
             Settings.Default.app_spotify_api_client_secret = value;
@@ -350,7 +353,8 @@ namespace EspionSpotify.Controls
 
         private void FrmSpotifyAPICredentials_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var haveIds = !string.IsNullOrEmpty(this.txtClientId.Text.Trim()) && !string.IsNullOrEmpty(txtSecretId.Text.Trim());
+            var haveIds = !string.IsNullOrEmpty(txtClientId.Text.Trim()) &&
+                          !string.IsNullOrEmpty(txtSecretId.Text.Trim());
 
             var redirectURL = string.IsNullOrWhiteSpace(txtRedirectURL.Text)
                 ? API.SpotifyAPI.SPOTIFY_API_DEFAULT_REDIRECT_URL
@@ -362,36 +366,37 @@ namespace EspionSpotify.Controls
 
             var allValuesSame = sameClientId && sameSecretId && sameRedirectURL;
 
-            if (allValuesSame) this.DialogResult = DialogResult.Cancel;
-            else if (haveIds) this.DialogResult = DialogResult.Yes;
-            else this.DialogResult = DialogResult.No;
+            if (allValuesSame) DialogResult = DialogResult.Cancel;
+            else if (haveIds) DialogResult = DialogResult.Yes;
+            else DialogResult = DialogResult.No;
         }
 
         private void LnkFAQSpotifyAPI_Click(object sender, EventArgs e)
         {
             Process.Start(GitHub.WEBSITE_FAQ_SPOTIFY_API_URL);
-            Task.Run(async () => await _analytics.LogAction($"faq-spotify-api"));
+            Task.Run(async () => await _analytics.LogAction("faq-spotify-api"));
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Escape)
             {
-                this.Close();
+                Close();
                 return true;
             }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void LnkSpotifyAPIDashboard_Click(object sender, EventArgs e)
         {
             Process.Start(API.SpotifyAPI.SPOTIFY_API_DASHBOARD_URL);
-            Task.Run(async () => await _analytics.LogAction($"spotify-api-dashboard"));
+            Task.Run(async () => await _analytics.LogAction("spotify-api-dashboard"));
         }
 
         private void TxtRedirectURL_TextChanged(object sender, EventArgs e)
         {
-            var value = ((MetroTextBox)sender).Text.Trim();
+            var value = ((MetroTextBox) sender).Text.Trim();
 
             Settings.Default.app_spotify_api_redirect_url = string.IsNullOrEmpty(value)
                 ? API.SpotifyAPI.SPOTIFY_API_DEFAULT_REDIRECT_URL

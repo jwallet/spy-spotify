@@ -72,7 +72,7 @@ namespace EspionSpotify.Native
         public IProcess GetProcessById(int processId)
         {
             NativeProcess process;
-            
+
             try
             {
                 process = NativeProcess.GetProcessById(processId);

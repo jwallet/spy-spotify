@@ -8,28 +8,20 @@ namespace EspionSpotify.Extensions
     {
         public static double Median(this IEnumerable<double> source)
         {
-            if (!source.Any())
-            {
-                throw new InvalidOperationException("Cannot compute median for an empty set.");
-            }
+            if (!source.Any()) throw new InvalidOperationException("Cannot compute median for an empty set.");
 
             var sortedList = from number in source orderby number select number;
 
-            int itemIndex = (int)sortedList.Count() / 2;
+            var itemIndex = sortedList.Count() / 2;
 
             if (sortedList.Count() % 2 == 0)
-            {
                 return (sortedList.ElementAt(itemIndex) + sortedList.ElementAt(itemIndex - 1)) / 2;
-            }
-            else
-            {
-                return sortedList.ElementAt(itemIndex);
-            }
+            return sortedList.ElementAt(itemIndex);
         }
 
         public static double Median(this IEnumerable<int> source)
         {
-            return (from num in source select (double)num).Median();
+            return (from num in source select (double) num).Median();
         }
 
         public static double Median<T>(this IEnumerable<T> numbers, Func<T, double> selector)

@@ -24,10 +24,7 @@ namespace EspionSpotify.Updater.Utilities
                     return true;
                 }
 
-                if (availableVersion > currentVersion)
-                {
-                    return true;
-                }
+                if (availableVersion > currentVersion) return true;
 
                 return false;
             }

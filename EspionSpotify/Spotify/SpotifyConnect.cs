@@ -19,17 +19,13 @@ namespace EspionSpotify.Spotify
                 @"spotify\spotify.exe"),
             Path.Combine(
                 Environment.GetFolderPath(
-                    Environment.SpecialFolder.
-                        LocalApplicationData),
+                    Environment.SpecialFolder.LocalApplicationData),
                 @"Microsoft\WindowsApps\Spotify.exe")
         };
 
         public static async Task Run(IFileSystem fileSystem)
         {
-            if (!IsSpotifyInstalled(fileSystem))
-            {
-                return;
-            }
+            if (!IsSpotifyInstalled(fileSystem)) return;
 
             for (var tries = 5; tries > 0; tries--)
             {
@@ -42,7 +38,6 @@ namespace EspionSpotify.Spotify
         private static bool RunSpotify(IFileSystem fileSystem)
         {
             if (!IsSpotifyRunning())
-            {
                 try
                 {
                     foreach (var path in SpotifyPossiblePaths)
@@ -57,7 +52,6 @@ namespace EspionSpotify.Spotify
                     Console.WriteLine(ex.Message);
                     return false;
                 }
-            }
 
             return IsSpotifyRunning();
         }
@@ -73,7 +67,10 @@ namespace EspionSpotify.Spotify
             {
                 return Process.GetProcessesByName(Constants.SPOTIFY).Length >= 1;
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

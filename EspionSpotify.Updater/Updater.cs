@@ -1,11 +1,11 @@
-﻿using EspionSpotify.Updater.Models.GitHub;
-using EspionSpotify.Updater.Utilities;
-using Ionic.Zip;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.Updater.Models.GitHub;
+using EspionSpotify.Updater.Utilities;
+using Ionic.Zip;
 
 namespace EspionSpotify.Updater
 {
@@ -18,10 +18,10 @@ namespace EspionSpotify.Updater
         internal static string UpdaterTempFullPath = $"{ProjectDirectory}{UPDATER_TMP_DIRECTORY}";
         internal static string AppFullPath = $"{ProjectDirectory}{APP}";
 
-        internal async static Task ProcessUpdateAsync()
+        internal static async Task ProcessUpdateAsync()
         {
             DeleteTempFiles();
-            
+
             try
             {
                 var releases = await GitHub.GetReleases();
@@ -52,8 +52,8 @@ namespace EspionSpotify.Updater
                 Environment.Exit(0);
             }
         }
-   
-        internal async static Task<string> DownloadUpdateAsync(Release release)
+
+        internal static async Task<string> DownloadUpdateAsync(Release release)
         {
             try
             {
@@ -62,13 +62,14 @@ namespace EspionSpotify.Updater
             }
             catch (ReleaseAssetNotFoundException ex)
             {
-                Console.WriteLine($"Something went wrong during the download. Make sure it was not blocked by your Antivirus Software.");
+                Console.WriteLine(
+                    "Something went wrong during the download. Make sure it was not blocked by your Antivirus Software.");
                 Console.WriteLine("Error Message: {0}", ex.Message);
                 throw ex;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Something went wrong during the download.");
+                Console.WriteLine("Something went wrong during the download.");
                 Console.WriteLine("Error Message: {0}", ex.Message);
                 throw ex;
             }
@@ -83,21 +84,15 @@ namespace EspionSpotify.Updater
                 Console.WriteLine("Extracting...");
 
                 foreach (var entry in zip.ToList())
-                {
                     if (Path.GetDirectoryName(entry.FileName).Equals(UPDATER_DIRECTORY))
-                    {
                         entry.Extract(UpdaterTempFullPath, ExtractExistingFileAction.OverwriteSilently);
-                    }
                     else
-                    {
                         entry.Extract(ProjectDirectory, ExtractExistingFileAction.OverwriteSilently);
-                    }
-                }
-
             }
             catch (UnauthorizedAccessException ex)
             {
-                Console.WriteLine("An error occurred while extracting. Make sure Spytify is not running or Antivirus Software is interferring.");
+                Console.WriteLine(
+                    "An error occurred while extracting. Make sure Spytify is not running or Antivirus Software is interferring.");
                 Console.WriteLine("You can extract the file manually at: {0}", fileName);
                 Console.WriteLine("Error Message: {0}", ex.Message);
                 throw ex;
@@ -111,10 +106,7 @@ namespace EspionSpotify.Updater
             finally
             {
                 DeleteTempFiles();
-                if (zip != null)
-                {
-                    zip.Dispose();
-                }
+                if (zip != null) zip.Dispose();
             }
         }
 
@@ -126,16 +118,16 @@ namespace EspionSpotify.Updater
 
         private static void DeleteTempFiles()
         {
-            foreach (string filename in Directory
-                .EnumerateFiles(ProjectDirectory, "*.*", SearchOption.AllDirectories)
-                .Where(s => new[] { ".tmp", ".pendingoverwrite"}.Any(ext => s.ToLower().EndsWith(ext))))
-            {
+            foreach (var filename in Directory
+                         .EnumerateFiles(ProjectDirectory, "*.*", SearchOption.AllDirectories)
+                         .Where(s => new[] {".tmp", ".pendingoverwrite"}.Any(ext => s.ToLower().EndsWith(ext))))
                 try
                 {
                     File.Delete(filename);
                 }
-                catch { }
-            }
+                catch
+                {
+                }
         }
     }
 }

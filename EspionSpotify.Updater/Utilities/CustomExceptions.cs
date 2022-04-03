@@ -1,7 +1,8 @@
-﻿namespace EspionSpotify.Updater.Utilities
+﻿using System;
+
+namespace EspionSpotify.Updater.Utilities
 {
-    internal class ReleaseAssetNotFoundException : System.ApplicationException
+    internal class ReleaseAssetNotFoundException : ApplicationException
     {
-        internal ReleaseAssetNotFoundException() {}
     }
 }

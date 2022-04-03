@@ -3,7 +3,7 @@
 namespace EspionSpotify.Events
 {
     /// <summary>
-    /// Event gets triggered, when the Track is changed
+    ///     Event gets triggered, when the Track is changed
     /// </summary>
     public class TrackChangeEventArgs
     {

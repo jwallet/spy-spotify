@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace EspionSpotify.Drivers
 {
     public class AudioVirtualCableDriver
     {
-        const string DRIVER_NAME = "VB-Audio Virtual Cable";
+        private const string DRIVER_NAME = "VB-Audio Virtual Cable";
 
-        private static string Path => $@"{Environment.CurrentDirectory}\Drivers\VBCABLE_Setup{(Environment.Is64BitOperatingSystem ? "_x64" : "")}.exe";
+        private static string Path =>
+            $@"{Environment.CurrentDirectory}\Drivers\VBCABLE_Setup{(Environment.Is64BitOperatingSystem ? "_x64" : "")}.exe";
 
-        public static bool IsFound => System.IO.File.Exists(Path);
+        public static bool IsFound => File.Exists(Path);
 
         public static bool ExistsInAudioEndPointDevices(IDictionary<string, string> audioEndPointDeviceNames)
         {
@@ -22,16 +24,16 @@ namespace EspionSpotify.Drivers
         {
             try
             {
-                var psi = new ProcessStartInfo()
+                var psi = new ProcessStartInfo
                 {
                     CreateNoWindow = false,
                     UseShellExecute = true,
                     Verb = "runas",
-                    FileName = Path,
+                    FileName = Path
                 };
                 var process = new Process
                 {
-                    StartInfo = psi,
+                    StartInfo = psi
                 };
                 process.Start();
                 process.WaitForExit();
@@ -40,6 +42,7 @@ namespace EspionSpotify.Drivers
             {
                 return false;
             }
+
             return true;
         }
     }

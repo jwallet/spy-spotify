@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace EspionSpotify.Events
+﻿namespace EspionSpotify.Events
 {
     /// <summary>
-    /// Event gets triggered, when the Playin-state is changed (e.g Play --> Pause)
+    ///     Event gets triggered, when the Playin-state is changed (e.g Play --> Pause)
     /// </summary>
     public class PlayStateEventArgs
     {

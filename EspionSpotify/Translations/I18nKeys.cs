@@ -56,7 +56,10 @@ namespace EspionSpotify.Translations
         public static TranslationKeys LogSpotifyIsClosed => TranslationKeys.logSpotifyIsClosed;
         public static TranslationKeys LogSpotifyNotConnected => TranslationKeys.logSpotifyNotConnected;
         public static TranslationKeys LogSpotifyNotFound => TranslationKeys.logSpotifyNotFound;
-        public static TranslationKeys LogSpotifyPlayingOutsideOfSelectedAudioEndPoint => TranslationKeys.logSpotifyPlayingOutsideOfSelectedAudioEndPoint;
+
+        public static TranslationKeys LogSpotifyPlayingOutsideOfSelectedAudioEndPoint =>
+            TranslationKeys.logSpotifyPlayingOutsideOfSelectedAudioEndPoint;
+
         public static TranslationKeys LogStarting => TranslationKeys.logStarting;
         public static TranslationKeys LogStoping => TranslationKeys.logStoping;
         public static TranslationKeys LogStopRecordingWhenSongEnds => TranslationKeys.logStopRecordingWhenSongEnds;
@@ -66,7 +69,10 @@ namespace EspionSpotify.Translations
         public static TranslationKeys LogUnsupportedRate => TranslationKeys.logUnsupportedRate;
 
         public static TranslationKeys MsgBodyCantQuit => TranslationKeys.msgBodyCantQuit;
-        public static TranslationKeys MsgBodyDriverInstallationFailed => TranslationKeys.msgBodyDriverInstallationFailed;
+
+        public static TranslationKeys MsgBodyDriverInstallationFailed =>
+            TranslationKeys.msgBodyDriverInstallationFailed;
+
         public static TranslationKeys MsgBodyPathNotFound => TranslationKeys.msgBodyPathNotFound;
         public static TranslationKeys MsgBodyPathTooLong => TranslationKeys.msgBodyPathTooLong;
         public static TranslationKeys MsgBodyFailedToUseSpotifyAPI => TranslationKeys.msgBodyFailedToUseSpotifyAPI;

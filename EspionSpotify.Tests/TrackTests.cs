@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using EspionSpotify.Enums;
 using EspionSpotify.Models;
-using EspionSpotify.Enums;
+using Xunit;
 
 namespace EspionSpotify.Tests
 {
@@ -41,9 +41,10 @@ namespace EspionSpotify.Tests
         [InlineData(null, null, false, true, false)]
         [InlineData("A", "B", true, true, false)]
         [InlineData("A", "B", false, false, false)]
-        internal void IsNormal_ReturnsExpectedNormalResults(string artist, string title, bool ad, bool playing, bool expected)
+        internal void IsNormal_ReturnsExpectedNormalResults(string artist, string title, bool ad, bool playing,
+            bool expected)
         {
-            var track = new Track() { Artist = artist, Title = title, Ad = ad, Playing = playing };
+            var track = new Track {Artist = artist, Title = title, Ad = ad, Playing = playing};
 
             Assert.Equal(expected, track.IsNormalPlaying);
         }
@@ -65,7 +66,7 @@ namespace EspionSpotify.Tests
             {
                 Album = "Album",
                 AlbumPosition = 1,
-                ArtExtraLargeUrl = "http://logo.png",
+                ArtExtraLargeUrl = "http://logo.png"
             };
 
             Assert.Equal(initialTrack.ToString(), track.ToString());
@@ -76,9 +77,9 @@ namespace EspionSpotify.Tests
 
         [Fact]
         internal void ToTitleString_ReturnsTitleAndExtendedTitle()
-        { 
+        {
             Assert.Equal("", new Track().ToTitleString());
-            
+
             Assert.Equal(
                 "Title",
                 new Track
@@ -86,7 +87,7 @@ namespace EspionSpotify.Tests
                     Title = "Title",
                     Artist = "Artist",
                     TitleExtended = "Must Not Return",
-                    TitleExtendedSeparatorType = TitleSeparatorType.None,
+                    TitleExtendedSeparatorType = TitleSeparatorType.None
                 }.ToTitleString());
 
             Assert.Equal(
@@ -96,7 +97,7 @@ namespace EspionSpotify.Tests
                     Title = "Title",
                     Artist = "Artist",
                     TitleExtended = "Remastered",
-                    TitleExtendedSeparatorType = TitleSeparatorType.Dash,
+                    TitleExtendedSeparatorType = TitleSeparatorType.Dash
                 }.ToTitleString());
 
             Assert.Equal(
@@ -124,21 +125,21 @@ namespace EspionSpotify.Tests
         internal void TrackEquals_ReturnsAsExpected()
         {
             var trackEmpty = new Track();
-            var trackDetailled = new Track()
+            var trackDetailled = new Track
             {
                 Title = "Title",
                 Artist = "Artist",
                 TitleExtended = "",
-                Ad = false,
+                Ad = false
             };
 
             Assert.True(trackEmpty.Equals(trackEmpty));
             Assert.True(trackEmpty.Equals(new Track()));
-            Assert.True(trackDetailled.Equals(new Track { Title = "Title", Artist = "Artist" }));
+            Assert.True(trackDetailled.Equals(new Track {Title = "Title", Artist = "Artist"}));
 
             Assert.False(trackEmpty.Equals(null));
             Assert.False(trackEmpty.Equals(new OutputFile()));
-            Assert.False(trackEmpty.Equals(new Track() { Title = "Title" }));
+            Assert.False(trackEmpty.Equals(new Track {Title = "Title"}));
         }
     }
 }

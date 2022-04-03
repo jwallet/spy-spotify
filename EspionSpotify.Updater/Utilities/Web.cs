@@ -9,9 +9,10 @@ namespace EspionSpotify.Updater.Utilities
 {
     internal class Web
     {
-        internal const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
-        
-        internal async static Task<string> DownloadFileAsync(string url, string tag)
+        internal const string USER_AGENT =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
+
+        internal static async Task<string> DownloadFileAsync(string url, string tag)
         {
             var uri = new Uri(url);
             Console.WriteLine("Downloading update {0}...", tag);
@@ -35,47 +36,41 @@ namespace EspionSpotify.Updater.Utilities
             {
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
                 Console.WriteLine("{0} % completed ({1} of {2} Mo.)",
-                              e.ProgressPercentage,
-                              e.BytesReceived.ToMo(),
-                              e.TotalBytesToReceive.ToMo());
+                    e.ProgressPercentage,
+                    e.BytesReceived.ToMo(),
+                    e.TotalBytesToReceive.ToMo());
             }
         }
 
         internal static void WebClient_DonwloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Cancelled)
-            {
-                Console.WriteLine("File download cancelled.");
-            }
+            if (e.Cancelled) Console.WriteLine("File download cancelled.");
 
-            if (e.Error != null)
-            {
-                Console.WriteLine(e.Error.ToString());
-            }
+            if (e.Error != null) Console.WriteLine(e.Error.ToString());
         }
 
-        internal async static Task<string> SendWebRequestAndGetContentAsync(string address)
+        internal static async Task<string> SendWebRequestAndGetContentAsync(string address)
         {
-            string result = string.Empty;
+            var result = string.Empty;
             var content = new MemoryStream();
             var myHttpWebRequest = SetHttpWebRequest(address);
             myHttpWebRequest.Method = WebRequestMethods.Http.Get;
 
             try
             {
-                using (var myHttpWebResponse = (HttpWebResponse)await myHttpWebRequest.GetResponseAsync())
+                using (var myHttpWebResponse = (HttpWebResponse) await myHttpWebRequest.GetResponseAsync())
                 {
                     if (myHttpWebResponse.StatusCode == HttpStatusCode.OK)
-                    {
                         using (var reader = myHttpWebResponse.GetResponseStream())
                         {
                             await reader.CopyToAsync(content);
                             result = Encoding.UTF8.GetString(content.ToArray());
                         }
-                    }
                 }
             }
-            catch { }
+            catch
+            {
+            }
             finally
             {
                 content.Dispose();
@@ -88,13 +83,10 @@ namespace EspionSpotify.Updater.Utilities
         {
             Uri uriGitHub;
 
-            if (!Uri.TryCreate(address, UriKind.Absolute, result: out uriGitHub))
-            {
-                return null;
-            }
+            if (!Uri.TryCreate(address, UriKind.Absolute, out uriGitHub)) return null;
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var request = (HttpWebRequest)WebRequest.Create(uriGitHub);
+            var request = (HttpWebRequest) WebRequest.Create(uriGitHub);
             request.Method = WebRequestMethods.Http.Get;
             request.UserAgent = "Spytify";
 

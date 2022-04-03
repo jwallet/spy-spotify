@@ -12,19 +12,21 @@ namespace EspionSpotify.Spotify
 {
     public class SpotifyProcess : ISpotifyProcess
     {
-        private int? _spotifyProcessId;
         private readonly IMainAudioSession _audioSession;
         private readonly IProcessManager _processManager;
+        private int? _spotifyProcessId;
 
         internal SpotifyProcess(IMainAudioSession audioSession) :
-            this(audioSession, processManager: new ProcessManager())
-        { }
+            this(audioSession, new ProcessManager())
+        {
+        }
 
         public SpotifyProcess(IMainAudioSession audioSession, IProcessManager processManager)
         {
             _processManager = processManager;
             _audioSession = audioSession;
-            _spotifyProcessId = GetSpotifyProcesses(_processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+            _spotifyProcessId = GetSpotifyProcesses(_processManager)
+                .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
         }
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
@@ -32,10 +34,7 @@ namespace EspionSpotify.Spotify
             var (processTitle, isSpotifyAudioPlaying) = await GetSpotifyTitle();
             var isWindowTitledSpotify = processTitle.IsNullOrSpotifyIdleState();
 
-            if (string.IsNullOrWhiteSpace(processTitle))
-            {
-                return null;
-            }
+            if (string.IsNullOrWhiteSpace(processTitle)) return null;
 
             var spotifyWindowInfo = new SpotifyWindowInfo
             {
@@ -50,24 +49,21 @@ namespace EspionSpotify.Spotify
         {
             string mainWindowTitle = null;
             var isSpotifyAudioPlaying = false;
-            
+
             if (_spotifyProcessId.HasValue)
-            {
                 try
                 {
                     isSpotifyAudioPlaying = await _audioSession.IsSpotifyCurrentlyPlaying();
                     var process = _processManager.GetProcessById(_spotifyProcessId.Value);
                     mainWindowTitle = process?.MainWindowTitle ?? "";
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-            }
             else
-            {
-                _spotifyProcessId = GetSpotifyProcesses(_processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
-            }
+                _spotifyProcessId = GetSpotifyProcesses(_processManager)
+                    .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
 
             return (mainWindowTitle, isSpotifyAudioPlaying);
         }
@@ -77,12 +73,8 @@ namespace EspionSpotify.Spotify
             var spotifyProcesses = new List<IProcess>();
 
             foreach (var process in processManager.GetProcesses())
-            {
                 if (process.ProcessName.IsSpotifyIdleState())
-                {
                     spotifyProcesses.Add(process);
-                }
-            }
 
             return spotifyProcesses;
         }

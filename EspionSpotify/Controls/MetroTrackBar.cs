@@ -6,7 +6,6 @@ namespace EspionSpotify.Controls
     {
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            return;
         }
     }
 }

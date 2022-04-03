@@ -1,38 +1,27 @@
-using EspionSpotify.Enums;
-using EspionSpotify.Models;
-using EspionSpotify.Native;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using EspionSpotify.Enums;
+using EspionSpotify.Models;
+using TagLib;
+using File = TagLib.File;
+using Tag = TagLib.Tag;
 
 namespace EspionSpotify.API
 {
     public class MapperID3
     {
         private readonly bool _extraTitleToSubtitleEnabled;
-        private string CurrentFile { get; set; }
-        private int? Count { get; set; }
-        private bool OrderNumberInMediaTagEnabled { get; set; }
-        public Track Track { get; set; }
 
         private readonly IFileSystem _fileSystem;
 
-
-        private bool IsMovingExtraTitleToSubtitle
-        {
-            get
-            {
-                var separatorType = Track.TitleExtendedSeparatorType;
-                return separatorType == TitleSeparatorType.Dash
-                    || (_extraTitleToSubtitleEnabled && separatorType == TitleSeparatorType.Parenthesis);
-            }
-        }
-
         internal MapperID3(string currentFile, Track track, UserSettings userSettings) :
-            this(fileSystem: new FileSystem(), currentFile, track, userSettings)
-        { }
+            this(new FileSystem(), currentFile, track, userSettings)
+        {
+        }
 
         public MapperID3(IFileSystem fileSystem, string currentFile, Track track, UserSettings userSettings)
         {
@@ -44,25 +33,38 @@ namespace EspionSpotify.API
             _extraTitleToSubtitleEnabled = userSettings.ExtraTitleToSubtitleEnabled;
         }
 
-        public async Task MapTags(TagLib.Tag tags)
+        private string CurrentFile { get; }
+        private int? Count { get; }
+        private bool OrderNumberInMediaTagEnabled { get; }
+        public Track Track { get; set; }
+
+
+        private bool IsMovingExtraTitleToSubtitle
+        {
+            get
+            {
+                var separatorType = Track.TitleExtendedSeparatorType;
+                return separatorType == TitleSeparatorType.Dash
+                       || _extraTitleToSubtitleEnabled && separatorType == TitleSeparatorType.Parenthesis;
+            }
+        }
+
+        public async Task MapTags(Tag tags)
         {
             var trackNumber = GetTrackNumber();
-            if (trackNumber.HasValue)
-            {
-                tags.Track = (uint)trackNumber.Value;
-            }
+            if (trackNumber.HasValue) tags.Track = (uint) trackNumber.Value;
 
             tags.Title = IsMovingExtraTitleToSubtitle ? Track.Title : Track.ToTitleString();
             tags.Subtitle = IsMovingExtraTitleToSubtitle ? Track.TitleExtended : null;
 
-            tags.AlbumArtists = Track.AlbumArtists ?? new[] { Track.Artist };
-            tags.Performers = Track.Performers ?? new[] { Track.Artist };
+            tags.AlbumArtists = Track.AlbumArtists ?? new[] {Track.Artist};
+            tags.Performers = Track.Performers ?? new[] {Track.Artist};
 
             tags.Album = Track.Album;
             tags.Genres = Track.Genres;
 
-            tags.Disc = (uint)(Track.Disc ?? 0);
-            tags.Year = (uint)(Track.Year ?? 0);
+            tags.Disc = (uint) (Track.Disc ?? 0);
+            tags.Year = (uint) (Track.Year ?? 0);
 
             await FetchMediaPictures();
 
@@ -70,19 +72,18 @@ namespace EspionSpotify.API
         }
 
         #region MP3 Tags updater
+
         internal async Task SaveMediaTags()
         {
             await Task.Delay(1000);
-            using (var mp3 = TagLib.File.Create(CurrentFile))
+            using (var mp3 = File.Create(CurrentFile))
             {
                 await MapTags(mp3.Tag);
 
-                if (_fileSystem.File.Exists(CurrentFile))
-                {
-                    mp3.Save();
-                }
+                if (_fileSystem.File.Exists(CurrentFile)) mp3.Save();
             }
         }
+
         #endregion MP3 Tags updater
 
         private async Task FetchMediaPictures()
@@ -100,37 +101,34 @@ namespace EspionSpotify.API
             Track.ArtSmall = await taskGetArtS;
         }
 
-        private TagLib.IPicture[] GetMediaPictureTag()
+        private IPicture[] GetMediaPictureTag()
         {
-            var pictures = (new TagLib.IPicture[4]
+            var pictures = new IPicture[4]
             {
                 GetAlbumCoverToPicture(Track.ArtExtraLarge),
                 GetAlbumCoverToPicture(Track.ArtLarge),
                 GetAlbumCoverToPicture(Track.ArtMedium),
                 GetAlbumCoverToPicture(Track.ArtSmall)
-            }).Where(x => x != null).ToList();
+            }.Where(x => x != null).ToList();
 
-            return pictures.Any() ? new[] { pictures.First() } : null;
+            return pictures.Any() ? new[] {pictures.First()} : null;
         }
 
         private int? GetTrackNumber()
         {
-            if (OrderNumberInMediaTagEnabled && Count.HasValue)
-            {
-                return Count.Value;
-            }
+            if (OrderNumberInMediaTagEnabled && Count.HasValue) return Count.Value;
 
             return Track.AlbumPosition;
         }
 
-        private static TagLib.Picture GetAlbumCoverToPicture(byte[] data)
+        private static Picture GetAlbumCoverToPicture(byte[] data)
         {
             if (data == null) return null;
 
-            return new TagLib.Picture
+            return new Picture
             {
-                Type = TagLib.PictureType.FrontCover,
-                MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
+                Type = PictureType.FrontCover,
+                MimeType = MediaTypeNames.Image.Jpeg,
                 Data = data
             };
         }
@@ -145,10 +143,7 @@ namespace EspionSpotify.API
                 using (var response = await request.GetResponseAsync())
                 {
                     var stream = response.GetResponseStream();
-                    if (stream == null)
-                    {
-                        return null;
-                    }
+                    if (stream == null) return null;
                     using (var reader = new BinaryReader(stream))
                     {
                         using (var memory = new MemoryStream())

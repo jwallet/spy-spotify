@@ -1,5 +1,5 @@
-﻿using EspionSpotify.Spotify;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using EspionSpotify.Spotify;
 
 namespace EspionSpotify
 {

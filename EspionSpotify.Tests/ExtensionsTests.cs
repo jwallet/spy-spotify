@@ -1,10 +1,9 @@
-﻿using EspionSpotify.Enums;
-using EspionSpotify.Extensions;
-using EspionSpotify.Models;
-using NAudio.Wave;
-using System;
+﻿using System;
 using System.Resources;
+using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Translations;
+using NAudio.Wave;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -15,7 +14,7 @@ namespace EspionSpotify.Tests
 
         public ResourceManagerTests()
         {
-            _rm = new ResourceManager(Translations.Languages.GetResourcesManagerLanguageType(LanguageType.en));
+            _rm = new ResourceManager(Languages.GetResourcesManagerLanguageType(LanguageType.en));
         }
 
         [Fact]
@@ -84,7 +83,7 @@ namespace EspionSpotify.Tests
         [Theory]
         [InlineData(null, null)]
         [InlineData("", null)]
-        [InlineData("success",null)]
+        [InlineData("success", null)]
         [InlineData("failed", LastFMNodeStatus.failed)]
         [InlineData("FAILED", LastFMNodeStatus.failed)]
         [InlineData("Ok", LastFMNodeStatus.ok)]
@@ -175,12 +174,13 @@ namespace EspionSpotify.Tests
         [InlineData("1.0.10", 1, 0, 10)]
         [InlineData("1.2.3.4", 1, 2, 3, 4)]
         [InlineData("v1.2.3.4", 1, 2, 3, 4)]
-        internal void StringToVersion_ReturnsVersion(string value, int major, int minor, int? build = null, int? revision = null)
+        internal void StringToVersion_ReturnsVersion(string value, int major, int minor, int? build = null,
+            int? revision = null)
         {
             var actual = value.ToVersion();
             if (build == null) Assert.Equal(new Version(major, minor), actual);
-            else if (revision == null) Assert.Equal(new Version(major, minor, (int)build), actual);
-            else Assert.Equal(new Version(major, minor, (int)build, (int)revision), actual);
+            else if (revision == null) Assert.Equal(new Version(major, minor, (int) build), actual);
+            else Assert.Equal(new Version(major, minor, (int) build, (int) revision), actual);
         }
 
         [Theory]
@@ -202,7 +202,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void EmptyArrayDecimalMedian_ReturnsMedianDecimal()
         {
-            var value = new double[] {};
+            var value = new double[] { };
 
             Assert.Throws<InvalidOperationException>(() => value.Median());
         }
@@ -210,7 +210,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void PeerArrayDecimalMedian_ReturnsMedianDecimal()
         {
-            var value = new double[] { 2.8, 1.4, 1.1, 0.8, -0.4, 1.1, 2.4, 7.77 };
+            var value = new[] {2.8, 1.4, 1.1, 0.8, -0.4, 1.1, 2.4, 7.77};
             var expected = 1.25;
 
             var actual = value.Median();
@@ -221,7 +221,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void OddArrayDecimalMedian_ReturnsMedianDecimal()
         {
-            var value = new double[] { 5.5, 0.9, 1.1, 0.8, -0.4, 1.11, 0.004, 2.4, 7.77 };
+            var value = new[] {5.5, 0.9, 1.1, 0.8, -0.4, 1.11, 0.004, 2.4, 7.77};
             var expected = 1.1;
 
             var actual = value.Median();
@@ -232,7 +232,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void ArrayIntMedian_ReturnsMedianDecimal()
         {
-            var value = new int[] { 5, 3, 6, 0, -1, 1, 0, 2, 7 };
+            var value = new[] {5, 3, 6, 0, -1, 1, 0, 2, 7};
             var expected = 2;
 
             var actual = value.Median();
@@ -243,10 +243,11 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void LinqArrayDoubleMedian_ReturnsMedianDecimal()
         {
-            var value = new LinqArrayDouble[] {
-                new LinqArrayDouble { value = 5.5 },
-                new LinqArrayDouble { value = 0.9 },
-                new LinqArrayDouble { value = 1.6 }
+            var value = new[]
+            {
+                new LinqArrayDouble {value = 5.5},
+                new LinqArrayDouble {value = 0.9},
+                new LinqArrayDouble {value = 1.6}
             };
             var expected = 1.6;
 
@@ -284,13 +285,15 @@ namespace EspionSpotify.Tests
         {
             var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(96000, 6);
 
-            Assert.Equal(new[] { WaveFormatMP3Restriction.Channel, WaveFormatMP3Restriction.SampleRate }, waveFormat.GetMP3RestrictionCode());
+            Assert.Equal(new[] {WaveFormatMP3Restriction.Channel, WaveFormatMP3Restriction.SampleRate},
+                waveFormat.GetMP3RestrictionCode());
         }
 
         [Fact]
         internal void WaveFormatRestriction_ReturnsNoCodeUnderIEEE()
         {
-            var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(Recorder.MP3_MAX_SAMPLE_RATE, Recorder.MP3_MAX_NUMBER_CHANNELS);
+            var waveFormat =
+                WaveFormat.CreateIeeeFloatWaveFormat(Recorder.MP3_MAX_SAMPLE_RATE, Recorder.MP3_MAX_NUMBER_CHANNELS);
 
             Assert.Empty(waveFormat.GetMP3RestrictionCode());
         }
