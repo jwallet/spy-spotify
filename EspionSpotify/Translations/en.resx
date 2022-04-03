@@ -473,4 +473,12 @@
     <value>General:</value>
     <comment>interface</comment>
   </data>
+  <data name="logOutputPathNotFound" xml:space="preserve">
+    <value>// Error: The output does not exist anymore</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecordedFileNotFound" xml:space="preserve">
+    <value>// Error: The recorded file was lost in the process</value>
+    <comment>console</comment>
+  </data>
 </root>

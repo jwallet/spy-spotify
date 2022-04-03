@@ -196,6 +196,8 @@
     <Compile Include="Enums\TitleSeparatorType.cs" />
     <Compile Include="Enums\TranslationKeys.cs" />
     <Compile Include="Enums\WaveFormatMP3Restriction.cs" />
+    <Compile Include="Exceptions\SourceFileNotFoundException.cs" />
+    <Compile Include="Exceptions\DestinationPathNotFoundException.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\ClassPropertyExtensions.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Models\RecorderTask.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\ProcessManager.cs" />
+    <Compile Include="Translations\en.Designer.cs" />
     <Compile Include="Translations\I18nKeys.cs" />
     <Compile Include="Translations\en.Designer.cs">
       <AutoGen>True</AutoGen>

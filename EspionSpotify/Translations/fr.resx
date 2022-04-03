@@ -473,4 +473,12 @@
     <value>Réduire dans la barre des tâches</value>
     <comment>interface</comment>
   </data>
+  <data name="logOutputPathNotFound" xml:space="preserve">
+    <value>// Erreur: Le dossier de sauvegarde n'existe plus</value>
+    <comment>console</comment>
+  </data>
+  <data name="logRecordedFileNotFound" xml:space="preserve">
+    <value>// Erreur: Le fichier d'enregistrement a été perdu durant la procédure</value>
+    <comment>console</comment>
+  </data>
 </root>
