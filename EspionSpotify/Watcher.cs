@@ -363,7 +363,7 @@ namespace EspionSpotify
 
         private void StopLastRecorder()
         {
-            if (_recorder == null) return;
+            if (_recorder == null || !_recorder.Running) return;
 
             _recorder.Running = false;
             _recorder.CountSeconds = CountSeconds;

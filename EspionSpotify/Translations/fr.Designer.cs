@@ -421,6 +421,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // Erreur: Le dossier de sauvegarde n&apos;existe plus.
+        /// </summary>
+        internal static string logOutputPathNotFound {
+            get {
+                return ResourceManager.GetString("logOutputPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Le registre de la session d&apos;enregistrement précédente.
         /// </summary>
         internal static string logPreviousLogs {
@@ -435,6 +444,15 @@ namespace EspionSpotify.Translations {
         internal static string logRecorded {
             get {
                 return ResourceManager.GetString("logRecorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Erreur: Le fichier d&apos;enregistrement a été perdu durant la procédure.
+        /// </summary>
+        internal static string logRecordedFileNotFound {
+            get {
+                return ResourceManager.GetString("logRecordedFileNotFound", resourceCulture);
             }
         }
         

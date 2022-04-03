@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.Enums;
+using EspionSpotify.Exceptions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using NAudio.Lame;
@@ -522,10 +523,8 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void RenameFile_RenamesNothingWhenGroupByFoldersEnabledAndTrackNotFound()
+        internal void RenameFile_WhenSourceFileNoLongerExists_Throws()
         {
-            _userSettings.GroupByFoldersEnabled = true;
-
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { $@"{PATH}\Artist", new MockDirectoryData() },
@@ -538,13 +537,32 @@ namespace EspionSpotify.Tests
 
             Assert.False(_fileSystem.File.Exists(_tempFileFullPath));
 
-            _fileManager.RenameFile(_tempFileFullPath, outputFile.ToMediaFilePath());
+            Assert.Throws<SourceFileNotFoundException>(() => _fileManager.RenameFile(_tempFileFullPath, outputFile.ToMediaFilePath()));
 
             Assert.True(_fileSystem.File.Exists($@"{PATH}\Artist\Album\Title.wav"));
             Assert.True(_fileSystem.Directory.Exists($@"{PATH}\Artist\Album"));
             Assert.True(_fileSystem.Directory.Exists($@"{PATH}\Artist"));
             Assert.False(_fileSystem.File.Exists(_tempFileFullPath));
             Assert.False(_fileSystem.File.Exists(outputFile.ToMediaFilePath()));
+        }
+
+        [Fact]
+        internal void RenameFile_WhenDestinationPathNoLongerExists_Throws()
+        {
+            var outputPath = $@"{PATH}\subfolder";
+            _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { $@"{PATH}\{TEMPORARY_FILE}", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+            });
+
+            _userSettings.OutputPath = outputPath;
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+            var outputFile = _fileManager.GetOutputFile();
+
+            Assert.True(_fileSystem.File.Exists(_tempFileFullPath));
+            Assert.False(_fileSystem.Directory.Exists(outputPath));
+
+            Assert.Throws<DestinationPathNotFoundException>(() => _fileManager.RenameFile(_tempFileFullPath, outputFile.ToMediaFilePath()));
         }
 
         [Fact]
@@ -603,17 +621,6 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void RenameFile_CantMoveFileWhenNotFound()
-        {
-            var outputFile = _fileManager.GetOutputFile();
-            _fileManager.RenameFile(_tempFileFullPath, outputFile.ToMediaFilePath());
-
-            Assert.Equal($@"{PATH}\Artist - Title - Live.mp3", outputFile.ToMediaFilePath());
-            Assert.False(_fileSystem.File.Exists(_tempFileFullPath));
-            Assert.False(_fileSystem.File.Exists($@"{PATH}\Artist - Title - Live.mp3"));
-        }
-
-        [Fact]
         internal void DeleteFile_DeletesNoFileAndTrackNotFound()
         {
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
@@ -622,7 +629,6 @@ namespace EspionSpotify.Tests
             });
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
-            var outputFile = _fileManager.GetOutputFile();
 
             Assert.False(_fileSystem.File.Exists(_tempFileFullPath));
 

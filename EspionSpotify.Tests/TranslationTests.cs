@@ -27,18 +27,8 @@ namespace EspionSpotify.Tests
 
         public TranslationTests()
         {
-            _cs = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.cs);
-            _de = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.de);
             _en = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.en);
-            _es = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.es);
             _fr = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.fr);
-            _it = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.it);
-            _ja = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.ja);
-            _nl = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.nl);
-            _pl = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.pl);
-            _pt = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.pt);
-            _ru = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.ru);
-            _tr = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.tr);
 
             _keysCount = Enum.GetNames(typeof(Enums.TranslationKeys)).Count();
         }
@@ -46,18 +36,8 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void TranslationSetup_ShouldBeReady()
         {
-            Assert.NotNull(_cs);
-            Assert.NotNull(_de);
             Assert.NotNull(_en);
-            Assert.NotNull(_es);
             Assert.NotNull(_fr);
-            Assert.NotNull(_it);
-            Assert.NotNull(_ja);
-            Assert.NotNull(_nl);
-            Assert.NotNull(_pl);
-            Assert.NotNull(_pt);
-            Assert.NotNull(_ru);
-            Assert.NotNull(_tr);
         }
 
         private void ShouldGetTranslations(ResourceManager RM)
@@ -77,75 +57,15 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void Czech_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_cs));
-        }
-
-        [Fact]
-        internal void German_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_de));
-        }
-
-        [Fact]
         internal void English_ShouldGetTranslations()
         {
             ShouldGetTranslations(new ResourceManager(_en));
         }
 
         [Fact]
-        internal void Spanish_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_es));
-        }
-
-        [Fact]
         internal void French_ShouldGetTranslations()
         {
             ShouldGetTranslations(new ResourceManager(_fr));
-        }
-
-        [Fact]
-        internal void Italian_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_it));
-        }
-
-        [Fact]
-        internal void Japan_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_ja));
-        }
-
-        [Fact]
-        internal void Dutch_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_nl));
-        }
-
-        [Fact]
-        internal void Polish_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_pl));
-        }
-
-        [Fact]
-        internal void Portuguese_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_pt));
-        }
-
-        [Fact]
-        internal void Russian_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_ru));
-        }
-
-        [Fact]
-        internal void Turkish_ShouldGetTranslations()
-        {
-            ShouldGetTranslations(new ResourceManager(_tr));
         }
 
         [Fact]
