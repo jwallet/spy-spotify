@@ -87,7 +87,7 @@ namespace EspionSpotify.API
             return (title, playing);
         }
 
-        public async Task UpdateTrack(Track track) => await UpdateTrack(track, retry: false);
+        public async Task<bool> UpdateTrack(Track track) => await UpdateTrack(track, retry: false);
 
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
@@ -126,11 +126,11 @@ namespace EspionSpotify.API
         }
 
         #region Spotify Track updater
-        private async Task UpdateTrack(Track track, bool retry = false)
+        private async Task<bool> UpdateTrack(Track track, bool retry = false)
         {
             await GetSpotifyWebAPI();
 
-            if (_api == null) return;
+            if (_api == null) return false;
 
             var playback = await _api.GetPlaybackWithoutExceptionAsync();
             var hasNoPlayback = playback == null || playback.Item == null;
@@ -138,8 +138,8 @@ namespace EspionSpotify.API
             if (!retry && hasNoPlayback)
             {
                 await Task.Delay(3000);
-                await UpdateTrack(track, retry: true);
-                if (track.MetaDataUpdated)
+                var res = await UpdateTrack(track, retry: true);
+                if (track.MetaDataUpdated == true)
                 {
                     retry = false;
                 }
@@ -149,7 +149,7 @@ namespace EspionSpotify.API
                     // user might be connected with a different account that the one that granted rights
                     OpenAuthenticationDialog();
                 }
-                return;
+                return res;
             }
 
             if (hasNoPlayback || playback.HasError())
@@ -167,22 +167,20 @@ namespace EspionSpotify.API
                     FrmEspionSpotify.Instance.ShowFailedToUseSpotifyAPIMessage();
                 });
 
-                await _lastFmApi.UpdateTrack(track);
-
-                return;
+                return await _lastFmApi.UpdateTrack(track);
             }
 
             MapSpotifyTrackToTrack(track, playback.Item);
 
-            if (playback.Item.Album?.Id == null) return;
+            if (playback.Item.Album?.Id == null) return false;
             
             var album = await _api.GetAlbumWithoutExceptionAsync(playback.Item.Album.Id);
 
-            if (album.HasError()) return;
+            if (album.HasError()) return false;
                 
             MapSpotifyAlbumToTrack(track, album);
 
-            track.MetaDataUpdated = true;
+            return true;
         }
         #endregion Spotify Track updater
 

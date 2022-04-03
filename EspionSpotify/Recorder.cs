@@ -68,11 +68,11 @@ namespace EspionSpotify
             if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return;
 
             Running = true;
-            await Task.Delay(50);
 
             _tempOriginalFile = _fileManager.GetTempFile();
 
             _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
+            _waveIn.ShareMode = NAudio.CoreAudioApi.AudioClientShareMode.Shared;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
             _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
@@ -89,7 +89,7 @@ namespace EspionSpotify
                 return;
             }
 
-            _waveIn.ShareMode = NAudio.CoreAudioApi.AudioClientShareMode.Shared;
+            await Task.Delay(50);
             _waveIn.StartRecording();
             _form.WriteIntoConsole(I18nKeys.LogRecording, _track.ToString());
 
@@ -97,12 +97,12 @@ namespace EspionSpotify
             {
                 if (_cancellationTokenSource.IsCancellationRequested) return;
                 if (await StopRecordingIfTrackCanBeSkipped()) return;
-                await Task.Delay(50);
+                await Task.Delay(100);
             }
 
             while (_dataStillAvailable)
             {
-                await Task.Delay(50);
+                await Task.Delay(100);
             }
 
             _waveIn.StopRecording();
@@ -111,7 +111,7 @@ namespace EspionSpotify
 
         private async Task<bool> StopRecordingIfTrackCanBeSkipped()
         {
-            if (_canBeSkippedValidated || !_track.MetaDataUpdated) return false;
+            if (_canBeSkippedValidated || _track.MetaDataUpdated != true) return false;
 
             _canBeSkippedValidated = true;
             if (IsSkipTrackActive)
@@ -139,7 +139,16 @@ namespace EspionSpotify
         #region RecorderStopRecording
         private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
         {
-            if (_tempWaveWriter == null) return;
+            while (_track.MetaDataUpdated == null)
+            {
+                await Task.Delay(100);
+            }
+            var skipped = !_canBeSkippedValidated && await StopRecordingIfTrackCanBeSkipped();
+            if (_tempWaveWriter == null || skipped)
+            {
+                ForceStopRecording();
+                return;
+            }
 
             await _tempWaveWriter.FlushAsync();
             var isTempWaveEmpty = _tempWaveWriter.Length == 0;

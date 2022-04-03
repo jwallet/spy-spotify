@@ -67,7 +67,7 @@ namespace EspionSpotify.Models
         public bool Ad { get; set; }
         public bool Playing { get; set; }
 
-        public bool MetaDataUpdated { get; set; }
+        public bool? MetaDataUpdated { get; set; }
 
         public string Album { get; set; }
         public string[] Genres { get; set; }
