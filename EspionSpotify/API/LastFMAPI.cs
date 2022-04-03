@@ -31,10 +31,10 @@ namespace EspionSpotify.API
 
         public string GetTrackInfo(string artist, string title) => $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
 
-        public async Task UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
+        public async Task<bool> UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
 
         #region LastFM Track updater
-        private async Task UpdateTrack(Track track, string forceQueryTitle = null)
+        private async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
             var encodedArtist = PCLWebUtility.WebUtility.UrlEncode(track.Artist);
@@ -59,7 +59,7 @@ namespace EspionSpotify.API
                         FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
                         _loggedSilentExceptionOnce = true;
                     }
-                    return;
+                    return false;
                 }
             }
             catch (WebException ex)
@@ -67,31 +67,31 @@ namespace EspionSpotify.API
                 // Silent other Web exception since it may be an issue on the user end.
                 Console.WriteLine(ex.Message);
                 FrmEspionSpotify.Instance.WriteIntoConsole(I18nKeys.LogException, ex.Message);
-                return;
+                return false;
             }
             catch (XmlException ex)
             {
                 // Ignore XML exception since it's out of our control.
                 Console.WriteLine(ex.Message);
-                return;
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
-                return;
+                return false;
             }
 
             var apiReturn = api.DocumentElement;
 
-            if (apiReturn == null) return;
+            if (apiReturn == null) return false;
 
             var serializer = new XmlSerializer(typeof(LastFMNode));
             var xmlNode = apiReturn.SelectSingleNode("/lfm");
 
             var node = serializer.Deserialize(new XmlNodeReader(xmlNode)) as LastFMNode;
 
-            if (node.Status != Enums.LastFMNodeStatus.ok) return;
+            if (node.Status != Enums.LastFMNodeStatus.ok) return false;
 
             var trackExtra = node.Track;
 
@@ -104,12 +104,11 @@ namespace EspionSpotify.API
                 var simplifiedTitle = Regex.Replace(track.Title, @" \(.*?\)| \- .*", "");
                 if (simplifiedTitle != forceQueryTitle)
                 {
-                    await UpdateTrack(track, simplifiedTitle);
-                    return;
+                    return await UpdateTrack(track, simplifiedTitle);
                 }
             }
 
-            track.MetaDataUpdated = true;
+            return true;
         }
         #endregion LastFM Track updater
 
