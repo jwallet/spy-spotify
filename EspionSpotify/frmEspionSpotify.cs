@@ -188,7 +188,7 @@ namespace EspionSpotify
             tbVolumeWin.SetPropertyThreadSafe(() => tbVolumeWin.Value = volume);
         }
 
-        public void Init()
+        private void Init()
         {
             tcMenu.SelectedIndex = Settings.Default.app_tab_number_selected;
 
@@ -263,9 +263,9 @@ namespace EspionSpotify
 
             txtRecordingNum.Text = _userSettings.InternalOrderNumber.ToString(_userSettings.OrderNumberMask);
 
-            var _logs = Settings.Default.app_console_logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x))
+            var logs = Settings.Default.app_console_logs.Split(';').Where(x => !string.IsNullOrWhiteSpace(x))
                 .ToArray();
-            WritePreviousLogsIntoConsole(_logs);
+            WritePreviousLogsIntoConsole(logs);
 
             var lastVersionPrompted = Settings.Default.app_last_version_prompt.ToVersion();
             lnkRelease.Visible = lastVersionPrompted != null &&
@@ -802,8 +802,6 @@ namespace EspionSpotify
                 return;
             }
 
-            ;
-
             Watcher.Running = false;
             _watcher.Dispose();
             _audioSession.Dispose();
@@ -885,7 +883,7 @@ namespace EspionSpotify
         {
             if (ModifierKeys == Keys.Control && txtRecordingNum.Mask.Length < 6)
             {
-                txtRecordingNum.Mask = $"{txtRecordingNum.Mask}0";
+                txtRecordingNum.Mask = $"{txtRecordingNum.Mask ?? "000"}0";
                 _userSettings.OrderNumberMask = txtRecordingNum.Mask;
                 Settings.Default.app_counter_number_mask = txtRecordingNum.Mask;
                 Settings.Default.Save();

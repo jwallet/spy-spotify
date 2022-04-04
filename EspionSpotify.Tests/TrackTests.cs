@@ -125,7 +125,7 @@ namespace EspionSpotify.Tests
         internal void TrackEquals_ReturnsAsExpected()
         {
             var trackEmpty = new Track();
-            var trackDetailled = new Track
+            var trackDetailed = new Track
             {
                 Title = "Title",
                 Artist = "Artist",
@@ -133,9 +133,8 @@ namespace EspionSpotify.Tests
                 Ad = false
             };
 
-            Assert.True(trackEmpty.Equals(trackEmpty));
             Assert.True(trackEmpty.Equals(new Track()));
-            Assert.True(trackDetailled.Equals(new Track {Title = "Title", Artist = "Artist"}));
+            Assert.True(trackDetailed.Equals(new Track {Title = "Title", Artist = "Artist"}));
 
             Assert.False(trackEmpty.Equals(null));
             Assert.False(trackEmpty.Equals(new OutputFile()));

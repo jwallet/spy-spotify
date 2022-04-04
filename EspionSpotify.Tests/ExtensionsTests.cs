@@ -211,7 +211,7 @@ namespace EspionSpotify.Tests
         internal void PeerArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new[] {2.8, 1.4, 1.1, 0.8, -0.4, 1.1, 2.4, 7.77};
-            var expected = 1.25;
+            const double expected = 1.25;
 
             var actual = value.Median();
 
@@ -222,7 +222,7 @@ namespace EspionSpotify.Tests
         internal void OddArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new[] {5.5, 0.9, 1.1, 0.8, -0.4, 1.11, 0.004, 2.4, 7.77};
-            var expected = 1.1;
+            const double expected = 1.1;
 
             var actual = value.Median();
 
@@ -233,7 +233,7 @@ namespace EspionSpotify.Tests
         internal void ArrayIntMedian_ReturnsMedianDecimal()
         {
             var value = new[] {5, 3, 6, 0, -1, 1, 0, 2, 7};
-            var expected = 2;
+            const int expected = 2;
 
             var actual = value.Median();
 
@@ -249,14 +249,14 @@ namespace EspionSpotify.Tests
                 new LinqArrayDouble {value = 0.9},
                 new LinqArrayDouble {value = 1.6}
             };
-            var expected = 1.6;
+            const double expected = 1.6;
 
             var actual = value.Median(x => x.value);
 
             Assert.Equal(expected, actual);
         }
 
-        internal class LinqArrayDouble
+        private class LinqArrayDouble
         {
             internal double value { get; set; }
         }

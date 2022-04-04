@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EspionSpotify.Drivers
 {
-    public class AudioVirtualCableDriver
+    public static class AudioVirtualCableDriver
     {
         private const string DRIVER_NAME = "VB-Audio Virtual Cable";
 

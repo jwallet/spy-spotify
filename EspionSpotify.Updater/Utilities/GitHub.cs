@@ -40,8 +40,7 @@ namespace EspionSpotify.Updater.Utilities
         internal static Asset GetZipAssetFromRelease(Release release)
         {
             var asset = release.assets
-                .Where(a => Regex.IsMatch(a.name, @"^Spytify(-|\.)(v?)(\.)?\d+(\.\d+)?(\.\d+)?.zip$"))
-                .FirstOrDefault();
+                .FirstOrDefault(a => Regex.IsMatch(a.name, @"^Spytify(-|\.)(v?)(\.)?\d+(\.\d+)?(\.\d+)?.zip$"));
 
             if (asset == null)
             {

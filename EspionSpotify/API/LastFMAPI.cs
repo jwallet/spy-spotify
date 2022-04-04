@@ -1,13 +1,14 @@
-﻿using EspionSpotify.Enums;
-using EspionSpotify.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using EspionSpotify.Translations;
+using WebUtility = PCLWebUtility.WebUtility;
 
 namespace EspionSpotify.API
 {
@@ -17,27 +18,55 @@ namespace EspionSpotify.API
         private readonly string _selectedApiKey;
         private bool _loggedSilentExceptionOnce;
 
-        public string[] ApiKeys { get; }
-
         public LastFMAPI()
         {
-            ApiKeys = new[] { "c117eb33c9d44d34734dfdcafa7a162d", "01a049d30c4e17c1586707acf5d0fb17", "82eb5ead8c6ece5c162b461615495b18" };
+            ApiKeys = new[]
+            {
+                "c117eb33c9d44d34734dfdcafa7a162d", "01a049d30c4e17c1586707acf5d0fb17",
+                "82eb5ead8c6ece5c162b461615495b18"
+            };
             var random = new Random();
             _selectedApiKey = ApiKeys[random.Next(ApiKeys.Length)];
         }
 
         public ExternalAPIType GetTypeAPI => ExternalAPIType.LastFM;
 
-        public string GetTrackInfo(string artist, string title) => $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
+        public async Task<bool> UpdateTrack(Track track)
+        {
+            return await UpdateTrack(track, null);
+        }
 
-        public async Task<bool> UpdateTrack(Track track) => await UpdateTrack(track, forceQueryTitle: null);
+        public void Reset()
+        {
+            _loggedSilentExceptionOnce = false;
+        }
+
+        public string[] ApiKeys { get; }
+
+        public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
+        {
+            track.Album = trackExtra.Album?.AlbumTitle;
+            track.AlbumPosition = trackExtra.Album?.TrackPosition;
+            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
+            track.Length = trackExtra.Duration.HasValue ? trackExtra.Duration / 1000 : null;
+            track.ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl;
+            track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
+            track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
+            track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
+        }
+
+        private string GetTrackInfo(string artist, string title)
+        {
+            return $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
+        }
 
         #region LastFM Track updater
+
         private async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
         {
             var api = new XmlDocument();
-            var encodedArtist = PCLWebUtility.WebUtility.UrlEncode(track.Artist);
-            var encodedTitle = PCLWebUtility.WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
+            var encodedArtist = WebUtility.UrlEncode(track.Artist);
+            var encodedTitle = WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
 
             var url = GetTrackInfo(encodedArtist, encodedTitle);
 
@@ -46,9 +75,9 @@ namespace EspionSpotify.API
                 api.Load(url);
             }
             catch (WebException ex) when (
-            ex.Status == WebExceptionStatus.NameResolutionFailure ||
-            ex.Status == WebExceptionStatus.ProxyNameResolutionFailure ||
-            ex.Status == WebExceptionStatus.RequestProhibitedByProxy)
+                ex.Status == WebExceptionStatus.NameResolutionFailure ||
+                ex.Status == WebExceptionStatus.ProxyNameResolutionFailure ||
+                ex.Status == WebExceptionStatus.RequestProhibitedByProxy)
             {
                 if (!await ApiReload(api, url))
                 {
@@ -58,6 +87,7 @@ namespace EspionSpotify.API
                         FrmEspionSpotify.Instance.WriteIntoConsole(I18NKeys.LogException, ex.Message);
                         _loggedSilentExceptionOnce = true;
                     }
+
                     return false;
                 }
             }
@@ -102,20 +132,17 @@ namespace EspionSpotify.API
             else
             {
                 var simplifiedTitle = Regex.Replace(track.Title, @" \(.*?\)| \- .*", "");
-                if (simplifiedTitle != forceQueryTitle)
-                {
-                    return await UpdateTrack(track, simplifiedTitle);
-                }
+                if (simplifiedTitle != forceQueryTitle) return await UpdateTrack(track, simplifiedTitle);
             }
 
             return true;
         }
+
         #endregion LastFM Track updater
 
         private async Task<bool> ApiReload(XmlDocument api, string url)
         {
             for (var i = 0; i < 3; i++)
-            {
                 try
                 {
                     api.Load(url);
@@ -125,32 +152,19 @@ namespace EspionSpotify.API
                 {
                     await Task.Delay(1000);
                 }
-            }
 
             return false;
         }
 
-        public void MapLastFMTrackToTrack(Track track, LastFMTrack trackExtra)
-        {
-            track.Album = trackExtra.Album?.AlbumTitle;
-            track.AlbumPosition = trackExtra.Album?.TrackPosition;
-            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
-            track.Length = trackExtra.Duration.HasValue ? trackExtra.Duration / 1000 : null;
-            track.ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl;
-            track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
-            track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
-            track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
-        }
-
-        public void Reset()
-        {
-            _loggedSilentExceptionOnce = false;
-        }
-
         #region NotImplementedExternalAPI
+
         public bool IsAuthenticated => true;
-        public async Task Authenticate() => await Task.CompletedTask;
+        public async Task Authenticate()
+        {
+            await Task.CompletedTask;
+        }
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
         #endregion
     }
 }

@@ -22,8 +22,8 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task TestAPIKeys_ReturnsOk()
         {
-            var artist = "artist";
-            var title = "title";
+            const string artist = "artist";
+            const string title = "title";
             foreach (var key in _lastFMAPI.ApiKeys)
             {
                 var request =
@@ -83,7 +83,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
+        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailedTrack()
         {
             var trackExtra = new LastFMTrack
             {

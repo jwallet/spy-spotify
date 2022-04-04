@@ -36,7 +36,7 @@ namespace EspionSpotify.API
         private string CurrentFile { get; }
         private int? Count { get; }
         private bool OrderNumberInMediaTagEnabled { get; }
-        public Track Track { get; set; }
+        public Track Track { get; }
 
 
         private bool IsMovingExtraTitleToSubtitle

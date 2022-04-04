@@ -53,7 +53,7 @@ namespace EspionSpotify.Native
             return !groupByFoldersEnabled || isUnknown;
         }
 
-        public OutputFile GetOutputFile()
+        public OutputFile GetOutputFileAndInitDirectories()
         {
             var (artistDirectory, albumDirectory) = GetFolderPath(_track, _userSettings);
             CreateDirectories(_userSettings, artistDirectory, albumDirectory);

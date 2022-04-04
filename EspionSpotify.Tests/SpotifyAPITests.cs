@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EspionSpotify.API;
 using EspionSpotify.Enums;
 using EspionSpotify.Models;
@@ -22,9 +23,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapSpotifyEmptyTrackToTrack_ReturnsExpectedTrack()
         {
-            var fulltrack = new FullTrack();
+            var fullTrack = new FullTrack();
 
-            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fullTrack);
 
             Assert.NotNull(_track.Title);
             Assert.Equal(0, _track.AlbumPosition);
@@ -102,12 +103,12 @@ namespace EspionSpotify.Tests
             string apiTitle,
             TitleSeparatorType expectedSeparator, string expectedTitle, string expectedTitleExtended)
         {
-            var fulltrack = new FullTrack
+            var fullTrack = new FullTrack
             {
                 Name = apiTitle
             };
 
-            _spotifyAPI.MapSpotifyTrackToTrack(_track, fulltrack);
+            _spotifyAPI.MapSpotifyTrackToTrack(_track, fullTrack);
 
             Assert.Equal(expectedSeparator, _track.TitleExtendedSeparatorType);
             Assert.Equal(expectedTitle, _track.Title);
@@ -127,9 +128,9 @@ namespace EspionSpotify.Tests
 
             _spotifyAPI.MapSpotifyAlbumToTrack(_track, fullAlbum);
 
-            Assert.Equal(new string[0], _track.AlbumArtists);
+            Assert.Equal(Array.Empty<string>(), _track.AlbumArtists);
             Assert.Equal("", _track.Album);
-            Assert.Equal(new string[0], _track.Genres);
+            Assert.Equal(Array.Empty<string>(), _track.Genres);
             Assert.Null(_track.Year);
             Assert.Null(_track.ArtExtraLargeUrl);
             Assert.Null(_track.ArtLargeUrl);

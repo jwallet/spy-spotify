@@ -94,7 +94,6 @@ namespace EspionSpotify.Tests
             Assert.Equal(new Track(), spotifyHandler.Track);
 
             await spotifyHandler.TriggerEvents();
-            ;
 
             // updated track
             Assert.Equal(spotifyPaused, spotifyHandler.Track);

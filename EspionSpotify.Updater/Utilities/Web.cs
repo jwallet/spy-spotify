@@ -22,7 +22,7 @@ namespace EspionSpotify.Updater.Utilities
             using (var wc = new WebClient())
             {
                 wc.DownloadProgressChanged += WebClient_DownloadProgressChanged;
-                wc.DownloadFileCompleted += WebClient_DonwloadFileCompleted;
+                wc.DownloadFileCompleted += WebClient_DownloadFileCompleted;
 
                 await wc.DownloadFileTaskAsync(uri, fileName);
             }
@@ -42,7 +42,7 @@ namespace EspionSpotify.Updater.Utilities
             }
         }
 
-        internal static void WebClient_DonwloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        internal static void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Cancelled) Console.WriteLine("File download cancelled.");
 
@@ -70,6 +70,7 @@ namespace EspionSpotify.Updater.Utilities
             }
             catch
             {
+                // ignored
             }
             finally
             {
@@ -81,9 +82,7 @@ namespace EspionSpotify.Updater.Utilities
 
         private static HttpWebRequest SetHttpWebRequest(string address)
         {
-            Uri uriGitHub;
-
-            if (!Uri.TryCreate(address, UriKind.Absolute, out uriGitHub)) return null;
+            if (!Uri.TryCreate(address, UriKind.Absolute, out var uriGitHub)) return null;
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var request = (HttpWebRequest) WebRequest.Create(uriGitHub);

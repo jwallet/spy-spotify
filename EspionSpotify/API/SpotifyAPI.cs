@@ -1,4 +1,8 @@
-﻿using EspionSpotify.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Properties;
@@ -7,32 +11,25 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.API
 {
     public sealed class SpotifyAPI : ISpotifyAPI, IExternalAPI, IDisposable
     {
-        private bool _disposed;
-        private Token _token;
-        private AuthorizationCodeAuth _authorizationCodeAuth;
-        private readonly LastFMAPI _lastFmApi;
-        private readonly AuthorizationCodeAuth _auth;
-        private string _refreshToken;
-        private SpotifyWebAPI _api;
-        private bool _connectionDialogOpened;
-
         public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://localhost:4002";
         public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
+        private readonly AuthorizationCodeAuth _auth;
+        private readonly LastFMAPI _lastFmApi;
+        private SpotifyWebAPI _api;
+        private AuthorizationCodeAuth _authorizationCodeAuth;
+        private bool _connectionDialogOpened;
+        private bool _disposed;
+        private string _refreshToken;
+        private Token _token;
 
-        public bool IsAuthenticated => _token != null;
-
-        public ExternalAPIType GetTypeAPI => ExternalAPIType.Spotify;
-
-        public SpotifyAPI() { }
+        public SpotifyAPI()
+        {
+        }
 
         public SpotifyAPI(string clientId, string secretId, string redirectUrl = SPOTIFY_API_DEFAULT_REDIRECT_URL)
         {
@@ -41,53 +38,44 @@ namespace EspionSpotify.API
             if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(secretId))
             {
                 _auth = new AuthorizationCodeAuth(clientId, secretId, redirectUrl, redirectUrl,
-                    Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
+                    Scope.Streaming | Scope.PlaylistReadCollaborative | Scope.UserReadCurrentlyPlaying |
+                    Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState);
                 _auth.AuthReceived += AuthOnAuthReceived;
                 _auth.Start();
             }
         }
 
-        [Obsolete("It triggers too many web requests, ~ 60k per day")]
-        public async Task<(string, bool)> GetCurrentPlayback()
+
+        public void Dispose()
         {
-            var playing = false;
-            string title = null;
+            Dispose(true);
 
-            await GetSpotifyWebAPI();
-            
-            if (_api != null)
-            {
-                var playback = await _api.GetPlaybackWithoutExceptionAsync();
-                if (playback != null && !playback.HasError())
-                {
-                    playing = playback.IsPlaying;
-
-                    if (playing)
-                    {
-                        switch (playback.CurrentlyPlayingType)
-                        {
-                            case TrackType.Ad:
-                                title = Constants.ADVERTISEMENT;
-                                break;
-                            case TrackType.Track when playback.Item != null:
-                                title = string.Join(" - ", new[] { playback.Item.Artists.Select(x => x.Name).First(), playback.Item.Name });
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-
-            return (title, playing);
+            GC.SuppressFinalize(this);
         }
 
-        public async Task<bool> UpdateTrack(Track track) => await UpdateTrack(track, retry: false);
+        public bool IsAuthenticated => _token != null;
+
+        public ExternalAPIType GetTypeAPI => ExternalAPIType.Spotify;
+
+        public async Task<bool> UpdateTrack(Track track)
+        {
+            return await UpdateTrack(track, false);
+        }
+
+        public async Task Authenticate()
+        {
+            await GetSpotifyWebAPI();
+        }
+
+        public void Reset()
+        {
+            _connectionDialogOpened = false;
+        }
 
         public void MapSpotifyTrackToTrack(Track track, FullTrack spotifyTrack)
         {
             var performers = GetAlbumArtistFromSimpleArtistList(spotifyTrack.Artists);
-            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, maxSize: 2);
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, 2);
 
             track.SetArtistFromApi(performers.FirstOrDefault());
             track.SetTitleFromApi(SpotifyStatus.GetTitleTag(titleParts, 1));
@@ -104,10 +92,7 @@ namespace EspionSpotify.API
             track.Album = spotifyAlbum.Name;
             track.Genres = spotifyAlbum.Genres.ToArray();
 
-            if (DateTime.TryParse(spotifyAlbum.ReleaseDate ?? "", out var date))
-            {
-                track.Year = date.Year;
-            }
+            if (DateTime.TryParse(spotifyAlbum.ReleaseDate ?? "", out var date)) track.Year = date.Year;
 
             if (spotifyAlbum.Images?.Count > 0)
             {
@@ -120,7 +105,40 @@ namespace EspionSpotify.API
             }
         }
 
+        [Obsolete("It triggers too many web requests, ~ 60k per day")]
+        public async Task<(string, bool)> GetCurrentPlayback()
+        {
+            var playing = false;
+            string title = null;
+
+            await GetSpotifyWebAPI();
+
+            if (_api != null)
+            {
+                var playback = await _api.GetPlaybackWithoutExceptionAsync();
+                if (playback != null && !playback.HasError())
+                {
+                    playing = playback.IsPlaying;
+
+                    if (playing)
+                        switch (playback.CurrentlyPlayingType)
+                        {
+                            case TrackType.Ad:
+                                title = Constants.ADVERTISEMENT;
+                                break;
+                            case TrackType.Track when playback.Item != null:
+                                title = string.Join(" - ", playback.Item.Artists.Select(x => x.Name).First(),
+                                    playback.Item.Name);
+                                break;
+                        }
+                }
+            }
+
+            return (title, playing);
+        }
+
         #region Spotify Track updater
+
         private async Task<bool> UpdateTrack(Track track, bool retry = false)
         {
             await GetSpotifyWebAPI();
@@ -133,14 +151,13 @@ namespace EspionSpotify.API
             if (!retry && hasNoPlayback)
             {
                 await Task.Delay(3000);
-                var res = await UpdateTrack(track, retry: true);
-                if (track.MetaDataUpdated == true)
+                var res = await UpdateTrack(track, true);
+                if (track.MetaDataUpdated != true)
                 {
-                    return false;
+                    // open spotify authentication page if user is disconnected
+                    // user might be connected with a different account that the one that granted rights
+                    OpenAuthenticationDialog(true);           
                 }
-                // open spotify authentication page if user is disconnected
-                // user might be connected with a different account that the one that granted rights
-                OpenAuthenticationDialog(refresh: true);
                 return res;
             }
 
@@ -150,7 +167,7 @@ namespace EspionSpotify.API
 
                 // fallback in case getting the playback did not work
                 ExternalAPI.Instance = _lastFmApi;
-                Settings.Default.app_selected_external_api_id = (int)ExternalAPIType.LastFM;
+                Settings.Default.app_selected_external_api_id = (int) ExternalAPIType.LastFM;
                 Settings.Default.Save();
 
                 _ = Task.Run(() =>
@@ -165,22 +182,26 @@ namespace EspionSpotify.API
             MapSpotifyTrackToTrack(track, playback.Item);
 
             if (playback.Item.Album?.Id == null) return false;
-            
+
             var album = await _api.GetAlbumWithoutExceptionAsync(playback.Item.Album.Id);
 
             if (album.HasError()) return false;
-                
+
             MapSpotifyAlbumToTrack(track, album);
 
             return true;
         }
+
         #endregion Spotify Track updater
 
-        private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists) => (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
+        private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists)
+        {
+            return (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
+        }
 
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
-            _authorizationCodeAuth = (AuthorizationCodeAuth)sender;
+            _authorizationCodeAuth = (AuthorizationCodeAuth) sender;
 
             _authorizationCodeAuth.Stop();
 
@@ -221,7 +242,6 @@ namespace EspionSpotify.API
             }
 
             if (_token.IsExpired())
-            {
                 try
                 {
                     if (_api != null) _api.Dispose();
@@ -232,10 +252,8 @@ namespace EspionSpotify.API
                 {
                     // ignored
                 }
-            }
 
             if (_api == null)
-            {
                 try
                 {
                     _api = new SpotifyWebAPI
@@ -249,22 +267,6 @@ namespace EspionSpotify.API
                     _api = null;
                     _authorizationCodeAuth.Stop();
                 }
-            }
-        }
-
-        public async Task Authenticate() => await GetSpotifyWebAPI();
-
-        public void Reset()
-        {
-            _connectionDialogOpened = false;
-        }
-
-
-        public void Dispose()
-        {
-            Dispose(true);
-
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool disposing)
@@ -272,9 +274,8 @@ namespace EspionSpotify.API
             if (_disposed) return;
 
             if (disposing)
-            {
-                if (_api != null) _api.Dispose();
-            }
+                if (_api != null)
+                    _api.Dispose();
 
             _disposed = true;
         }

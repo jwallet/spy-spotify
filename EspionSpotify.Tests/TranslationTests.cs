@@ -22,7 +22,7 @@ namespace EspionSpotify.Tests
             _en = Languages.GetResourcesManagerLanguageType(LanguageType.en);
             _fr = Languages.GetResourcesManagerLanguageType(LanguageType.fr);
 
-            _keysCount = Enum.GetNames(typeof(TranslationKeys)).Count();
+            _keysCount = Enum.GetNames(typeof(TranslationKeys)).Length;
         }
 
         [Fact]
