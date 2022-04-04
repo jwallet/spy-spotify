@@ -1,44 +1,44 @@
-﻿using EspionSpotify.Enums;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Extensions
 {
     public static class StringExtensions
     {
-        private static readonly Regex _regexVersion = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
-        private static readonly Regex _regexTag = new Regex(@"[^\d+\.]");
+        private static readonly Regex RegexVersion = new Regex(@"(\d+\.)(\d+\.)?(\d+\.)?(\*|\d+)");
+        private static readonly Regex RegexTag = new Regex(@"[^\d+\.]");
 
         public static AlbumCoverSize? ToAlbumCoverSize(this string value)
         {
-            return value.ToEnum<AlbumCoverSize>(ignoreCase: true);
+            return value.ToEnum<AlbumCoverSize>(true);
         }
 
         public static LastFMNodeStatus? ToLastFMNodeStatus(this string value)
         {
-            return value.ToEnum<LastFMNodeStatus>(ignoreCase: true);
+            return value.ToEnum<LastFMNodeStatus>(true);
         }
 
         public static MediaFormat? ToMediaFormat(this string value)
         {
-            return value.ToEnum<MediaFormat>(ignoreCase: true);
+            return value.ToEnum<MediaFormat>(true);
         }
 
         public static ExternalAPIType? ToMediaTagsAPI(this string value)
         {
-            return value.ToEnum<ExternalAPIType>(ignoreCase: true);
+            return value.ToEnum<ExternalAPIType>(true);
         }
 
         public static LanguageType? ToLanguageType(this string value)
         {
-            return value.ToEnum<LanguageType>(ignoreCase: true);
+            return value.ToEnum<LanguageType>(true);
         }
 
         public static int? ToNullableInt(this string value)
         {
-            if (int.TryParse(value, out int i)) return i;
+            if (int.TryParse(value, out var i)) return i;
             return null;
         }
 
@@ -50,7 +50,7 @@ namespace EspionSpotify.Extensions
         public static bool IsNullOrAdOrSpotifyIdleState(this string value)
         {
             return IsNullOrSpotifyIdleState(value)
-                || Constants.ADVERTISEMENT.ToLowerInvariant() == value.ToLowerInvariant();
+                   || Constants.ADVERTISEMENT.ToLowerInvariant() == value.ToLowerInvariant();
         }
 
         public static bool IsNullOrSpotifyIdleState(this string value)
@@ -60,7 +60,8 @@ namespace EspionSpotify.Extensions
 
         public static bool IsSpotifyIdleState(this string value)
         {
-            return new[] {
+            return new[]
+            {
                 Constants.SPOTIFY.ToLowerInvariant(),
                 Constants.SPOTIFYFREE.ToLowerInvariant(),
                 Constants.SPOTIFYPREMIUM.ToLowerInvariant()
@@ -70,24 +71,22 @@ namespace EspionSpotify.Extensions
         public static T? ToEnum<T>(this string value, bool ignoreCase) where T : struct
         {
             var types = typeof(T);
-            if (string.IsNullOrEmpty(value) || !Enum.GetNames(types).Any(x => x.ToLowerInvariant() == value.ToLowerInvariant()))
-            {
-                return null;
-            }
+            if (string.IsNullOrEmpty(value) ||
+                Enum.GetNames(types).All(x => x.ToLowerInvariant() != value.ToLowerInvariant())) return null;
 
-            return (T)Enum.Parse(types, value, ignoreCase);
+            return (T) Enum.Parse(types, value, ignoreCase);
         }
 
         public static string ToVersionAsString(this string tag)
         {
-            return string.IsNullOrEmpty(tag) ? string.Empty : _regexTag.Replace(tag, string.Empty);
+            return string.IsNullOrEmpty(tag) ? string.Empty : RegexTag.Replace(tag, string.Empty);
         }
 
         public static Version ToVersion(this string value)
         {
             var versionString = value.ToVersionAsString();
 
-            if (string.IsNullOrEmpty(versionString) || !_regexVersion.IsMatch(versionString)) return null;
+            if (string.IsNullOrEmpty(versionString) || !RegexVersion.IsMatch(versionString)) return null;
 
             return new Version(versionString);
         }

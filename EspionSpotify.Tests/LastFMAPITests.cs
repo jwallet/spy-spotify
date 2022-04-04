@@ -1,13 +1,9 @@
-﻿using EspionSpotify.Enums;
-using EspionSpotify.Extensions;
-using EspionSpotify.API;
-using EspionSpotify.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using EspionSpotify.API;
+using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -20,17 +16,19 @@ namespace EspionSpotify.Tests
         public LastFMAPITests()
         {
             _lastFMAPI = new LastFMAPI();
-            _track = new Track() { Artist = "Artist", Title = "Title" };
+            _track = new Track {Artist = "Artist", Title = "Title"};
         }
 
         [Fact]
         internal async Task TestAPIKeys_ReturnsOk()
         {
-            var artist = "artist";
-            var title = "title";
-            foreach(var key in _lastFMAPI.ApiKeys)
+            const string artist = "artist";
+            const string title = "title";
+            foreach (var key in _lastFMAPI.ApiKeys)
             {
-                var request = WebRequest.Create($"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={key}&artist={artist}&track={title}");
+                var request =
+                    WebRequest.Create(
+                        $"http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={key}&artist={artist}&track={title}");
                 using (var response = await request.GetResponseAsync())
                 {
                     var httpResponse = response as HttpWebResponse;
@@ -55,10 +53,10 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapLastFMAPITrackToTrack_OverwritesSpytifyTrack()
         {
-            var trackExtra = new LastFMTrack()
+            var trackExtra = new LastFMTrack
             {
                 Name = "Do not want updated Title from this api",
-                Artist = new Artist { Name = "Do not want updated Artist from this api" },
+                Artist = new Artist {Name = "Do not want updated Artist from this api"}
             };
 
             _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
@@ -72,10 +70,10 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapLastFMAPITrackToTrack_KeepSpytifyTrackIfEmpty()
         {
-            var trackExtra = new LastFMTrack()
+            var trackExtra = new LastFMTrack
             {
                 Name = "",
-                Artist = new Artist { Name = "" },
+                Artist = new Artist {Name = ""}
             };
 
             _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
@@ -85,33 +83,34 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailledTrack()
+        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailedTrack()
         {
-            var trackExtra = new LastFMTrack()
+            var trackExtra = new LastFMTrack
             {
                 Name = "Do not want updated Title from this api",
-                Artist = new Artist { Name = "Do not want updated Artist from this api" },
-                Album = new Album()
+                Artist = new Artist {Name = "Do not want updated Artist from this api"},
+                Album = new Album
                 {
                     Title = "Album Title",
                     Position = "5",
-                    Image = new List<Image>() {
-                        new Image() { Size = AlbumCoverSize.extralarge.ToString(), Url = "http://xlarge-cover-url.local" },
-                        new Image() { Size = AlbumCoverSize.large.ToString(), Url = "http://large-cover-url.local" },
-                        new Image() { Size = AlbumCoverSize.medium.ToString(), Url = "http://medium-cover-url.local" },
-                        new Image() { Size = AlbumCoverSize.small.ToString(), Url = "http://small-cover-url.local" },
-                    }
-                },
-                Toptags = new Toptags()
-                {
-                    Tag = new List<Tag>()
+                    Image = new List<Image>
                     {
-                        new Tag() { Name = "Reggae", Url = "http://reggae-tag.local" },
-                        new Tag() { Name = "Rock", Url = "http://rock-tag.local" },
-                        new Tag() { Name = "Jazz", Url = "http://jazz-tag.local" },
+                        new Image {Size = AlbumCoverSize.extralarge.ToString(), Url = "http://xlarge-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.large.ToString(), Url = "http://large-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.medium.ToString(), Url = "http://medium-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.small.ToString(), Url = "http://small-cover-url.local"}
                     }
                 },
-                Duration = 1337000,
+                Toptags = new Toptags
+                {
+                    Tag = new List<Tag>
+                    {
+                        new Tag {Name = "Reggae", Url = "http://reggae-tag.local"},
+                        new Tag {Name = "Rock", Url = "http://rock-tag.local"},
+                        new Tag {Name = "Jazz", Url = "http://jazz-tag.local"}
+                    }
+                },
+                Duration = 1337000
             };
 
             _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
@@ -120,7 +119,7 @@ namespace EspionSpotify.Tests
             Assert.NotEqual(trackExtra.Artist.Name, _track.Artist);
             Assert.Equal(trackExtra.Album.Title, _track.Album);
             Assert.Equal(5, _track.AlbumPosition);
-            Assert.Equal(new[] { "Reggae", "Rock", "Jazz" }, _track.Genres);
+            Assert.Equal(new[] {"Reggae", "Rock", "Jazz"}, _track.Genres);
             Assert.Equal(1337, _track.Length);
             Assert.Equal("http://xlarge-cover-url.local", _track.ArtExtraLargeUrl);
             Assert.Equal("http://large-cover-url.local", _track.ArtLargeUrl);
@@ -131,34 +130,36 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void MapLastFMAPTrackToTrack_ReturnsExpectedMissingInfoTrack()
         {
-            var track = new Track() {
+            var track = new Track
+            {
                 Artist = "Artist",
                 Title = "Title",
                 TitleExtended = "Live",
                 TitleExtendedSeparatorType = TitleSeparatorType.Dash
             };
 
-            var trackExtra = new LastFMTrack()
+            var trackExtra = new LastFMTrack
             {
                 Artist = new Artist(),
-                Album = new Album()
+                Album = new Album
                 {
-                    Image = new List<Image>() {
-                        null,
-                        null,
-                        null,
-                        null,
-                    }
-                },
-                Toptags = new Toptags()
-                {
-                    Tag = new List<Tag>()
+                    Image = new List<Image>
                     {
                         null,
                         null,
                         null,
+                        null
                     }
                 },
+                Toptags = new Toptags
+                {
+                    Tag = new List<Tag>
+                    {
+                        null,
+                        null,
+                        null
+                    }
+                }
             };
 
             _lastFMAPI.MapLastFMTrackToTrack(track, trackExtra);

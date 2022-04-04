@@ -14,12 +14,8 @@ namespace EspionSpotify
             var stringBuilder = new StringBuilder();
 
             foreach (var c in normalizedString)
-            {
                 if (!Path.GetInvalidFileNameChars().Contains(c))
-                {
                     stringBuilder.Append(c);
-                }
-            }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }

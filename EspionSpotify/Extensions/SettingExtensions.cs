@@ -10,11 +10,10 @@ namespace EspionSpotify.Extensions
             if (settings.advanced_record_over_recordings_enabled)
             {
                 if (settings.advanced_record_over_recordings_and_duplicate_enabled)
-                {
                     return RecordRecordingsStatus.Duplicate;
-                }
                 return RecordRecordingsStatus.Overwrite;
             }
+
             return RecordRecordingsStatus.Skip;
         }
     }

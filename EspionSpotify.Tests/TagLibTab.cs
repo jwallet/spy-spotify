@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TagLib;
 
 namespace EspionSpotify.Tests
 {
-    public class TagLibTab : TagLib.Tag
+    public class TagLibTab : Tag
     {
-        public TagLibTab() { }
-
-        public override TagLib.TagTypes TagTypes { get; }
+        public override TagTypes TagTypes { get; }
 
         public override uint Track { get; set; }
 
@@ -25,8 +19,10 @@ namespace EspionSpotify.Tests
         public override uint Year { get; set; }
         public override uint Disc { get; set; }
 
-        public override TagLib.IPicture[] Pictures { get; set; }
+        public override IPicture[] Pictures { get; set; }
 
-        public override void Clear() { }
+        public override void Clear()
+        {
+        }
     }
 }

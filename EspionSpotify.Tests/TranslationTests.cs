@@ -3,34 +3,26 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
+using EspionSpotify.Translations;
 using Xunit;
 
 namespace EspionSpotify.Tests
 {
     public class TranslationTests
     {
-        private readonly Type _cs;
-        private readonly Type _de;
-        private readonly Type _en;
-        private readonly Type _es;
-        private readonly Type _fr;
-        private readonly Type _it;
-        private readonly Type _ja;
-        private readonly Type _nl;
-        private readonly Type _pl;
-        private readonly Type _pt;
-        private readonly Type _ru;
-        private readonly Type _tr;
         private static ResourceManager RM;
+        private readonly Type _en;
+        private readonly Type _fr;
         private readonly int _keysCount;
 
         public TranslationTests()
         {
-            _en = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.en);
-            _fr = Translations.Languages.GetResourcesManagerLanguageType(Enums.LanguageType.fr);
+            _en = Languages.GetResourcesManagerLanguageType(LanguageType.en);
+            _fr = Languages.GetResourcesManagerLanguageType(LanguageType.fr);
 
-            _keysCount = Enum.GetNames(typeof(Enums.TranslationKeys)).Count();
+            _keysCount = Enum.GetNames(typeof(TranslationKeys)).Length;
         }
 
         [Fact]
@@ -48,8 +40,8 @@ namespace EspionSpotify.Tests
             foreach (DictionaryEntry o in resourceSet)
             {
                 count++;
-                var actual = (string)o.Key;
-                var expected = actual.ToEnum<Enums.TranslationKeys>(ignoreCase: false)?.ToString();
+                var actual = (string) o.Key;
+                var expected = actual.ToEnum<TranslationKeys>(false)?.ToString();
                 Assert.Equal(expected, actual);
             }
 
@@ -71,8 +63,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void Unsupported_ShouldNotGetTranslations()
         {
-            RM = new ResourceManager(typeof(Translations.Languages));
-            Assert.Throws<MissingManifestResourceException>(() => RM.GetResourceSet(CultureInfo.InvariantCulture, true, true));
+            RM = new ResourceManager(typeof(Languages));
+            Assert.Throws<MissingManifestResourceException>(() =>
+                RM.GetResourceSet(CultureInfo.InvariantCulture, true, true));
         }
     }
 }

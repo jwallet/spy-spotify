@@ -7,7 +7,7 @@ namespace EspionSpotify.Controls
     {
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            ((HandledMouseEventArgs)e).Handled = true;
+            ((HandledMouseEventArgs) e).Handled = true;
         }
 
         protected override void OnSelectedIndexChanged(EventArgs e)

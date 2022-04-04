@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EspionSpotify.Extensions
 {
@@ -16,14 +13,14 @@ namespace EspionSpotify.Extensions
 
         public static IDictionary<string, TValue> ToDictionary<TValue>(this object obj)
         {
-            var json = JsonConvert.SerializeObject(obj ?? new object() { });
+            var json = JsonConvert.SerializeObject(obj ?? new object());
             var dictionary = JsonConvert.DeserializeObject<Dictionary<string, TValue>>(json);
             return dictionary;
         }
 
         public static KeyValuePair<TKey, TValue> ToKeyValuePair<TKey, TValue>(this object obj)
         {
-            var json = JsonConvert.SerializeObject(obj ?? new object() { });
+            var json = JsonConvert.SerializeObject(obj ?? new object());
             if (!json.StartsWith("{") && !json.EndsWith("}")) return new KeyValuePair<TKey, TValue>();
             var pair = JsonConvert.DeserializeObject<KeyValuePair<TKey, TValue>>(json);
             return pair;

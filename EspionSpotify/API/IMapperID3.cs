@@ -1,5 +1,5 @@
-﻿using EspionSpotify.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using EspionSpotify.Models;
 
 namespace EspionSpotify.API
 {

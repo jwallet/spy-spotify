@@ -1,5 +1,5 @@
-﻿using EspionSpotify.Enums;
-using System.Resources;
+﻿using System.Resources;
+using EspionSpotify.Enums;
 
 namespace EspionSpotify.Extensions
 {

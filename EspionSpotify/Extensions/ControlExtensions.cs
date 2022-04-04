@@ -5,34 +5,26 @@ namespace EspionSpotify.Extensions
 {
     public static class ControlExtensions
     {
-        public static TResult GetPropertyThreadSafe<TControl, TResult>(this TControl control, Func<TControl, TResult> getter)
+        public static TResult GetPropertyThreadSafe<TControl, TResult>(this TControl control,
+            Func<TControl, TResult> getter)
             where TControl : Control
         {
             if (control.IsDisposed()) return default;
             if (control.InvokeRequired)
-            {
-                return (TResult)control.Invoke(getter, control);
-            }
-            else
-            {
-                return getter(control);
-            }
+                return (TResult) control.Invoke(getter, control);
+            return getter(control);
         }
 
         public static void SetPropertyThreadSafe<TControl>(this TControl control, MethodInvoker setter)
-           where TControl : Control
+            where TControl : Control
         {
             lock (control)
             {
                 if (control.IsDisposed()) return;
                 if (control.InvokeRequired)
-                {
                     control.Invoke(setter);
-                }
                 else
-                {
                     setter();
-                }
             }
         }
 

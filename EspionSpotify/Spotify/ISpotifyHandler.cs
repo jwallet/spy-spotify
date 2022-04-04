@@ -1,8 +1,8 @@
-﻿using EspionSpotify.Events;
-using EspionSpotify.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Timers;
+using EspionSpotify.Events;
+using EspionSpotify.Models;
 
 namespace EspionSpotify.Spotify
 {

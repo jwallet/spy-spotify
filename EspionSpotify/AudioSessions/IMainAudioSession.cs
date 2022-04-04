@@ -1,6 +1,6 @@
-﻿using NAudio.CoreAudioApi;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using NAudio.CoreAudioApi;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -9,11 +9,13 @@ namespace EspionSpotify.AudioSessions
         MMDeviceEnumerator AudioMMDevices { get; }
         AudioMMDevicesManager AudioMMDevicesManager { get; }
 
+        void SetSpotifyProcesses();
+        void RouteSpotifyAudioSessions(bool reset = false);
         ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
-        void ClearSpotifyAudioSessionControls();
 
         int AudioDeviceVolume { get; }
         bool IsAudioEndPointDeviceIndexAvailable { get; }
+        void ClearSpotifyAudioSessionControls();
 
         void SetAudioDeviceVolume(int volume);
 
