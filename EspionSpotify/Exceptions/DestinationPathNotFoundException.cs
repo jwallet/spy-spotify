@@ -2,7 +2,7 @@
 
 namespace EspionSpotify.Exceptions
 {
-    public class DestinationPathNotFoundException: Exception
+    public class DestinationPathNotFoundException : Exception
     {
         public DestinationPathNotFoundException()
         {

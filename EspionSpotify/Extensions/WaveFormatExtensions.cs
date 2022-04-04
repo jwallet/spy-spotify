@@ -1,6 +1,6 @@
-﻿using EspionSpotify.Enums;
+﻿using System.Collections.Generic;
+using EspionSpotify.Enums;
 using NAudio.Wave;
-using System.Collections.Generic;
 
 namespace EspionSpotify.Extensions
 {
@@ -10,13 +10,9 @@ namespace EspionSpotify.Extensions
         {
             var restrictions = new List<WaveFormatMP3Restriction>();
             if (waveFormat.Channels > Recorder.MP3_MAX_NUMBER_CHANNELS)
-            {
                 restrictions.Add(WaveFormatMP3Restriction.Channel);
-            }
             if (waveFormat.SampleRate > Recorder.MP3_MAX_SAMPLE_RATE)
-            {
                 restrictions.Add(WaveFormatMP3Restriction.SampleRate);
-            }
 
             return restrictions;
         }

@@ -1,27 +1,27 @@
-﻿using EspionSpotify.Updater.Models.GitHub;
-using EspionSpotify.Updater.Utilities;
-using Ionic.Zip;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using EspionSpotify.Updater.Models.GitHub;
+using EspionSpotify.Updater.Utilities;
+using Ionic.Zip;
 
 namespace EspionSpotify.Updater
 {
-    internal class Updater
+    internal static class Updater
     {
-        internal const string UPDATER_DIRECTORY = "Updater";
-        internal const string UPDATER_TMP_DIRECTORY = "tmp_updater";
-        internal const string APP = "spytify.exe";
-        internal static string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory + @"..\";
-        internal static string UpdaterTempFullPath = $"{ProjectDirectory}{UPDATER_TMP_DIRECTORY}";
-        internal static string AppFullPath = $"{ProjectDirectory}{APP}";
+        private const string UPDATER_DIRECTORY = "Updater";
+        private const string UPDATER_TMP_DIRECTORY = "tmp_updater";
+        private const string APP = "spytify.exe";
+        internal static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory + @"..\";
+        private static readonly string UpdaterTempFullPath = $"{ProjectDirectory}{UPDATER_TMP_DIRECTORY}";
+        internal static readonly string AppFullPath = $"{ProjectDirectory}{APP}";
 
-        internal async static Task ProcessUpdateAsync()
+        internal static async Task ProcessUpdateAsync()
         {
             DeleteTempFiles();
-            
+
             try
             {
                 var releases = await GitHub.GetReleases();
@@ -52,8 +52,8 @@ namespace EspionSpotify.Updater
                 Environment.Exit(0);
             }
         }
-   
-        internal async static Task<string> DownloadUpdateAsync(Release release)
+
+        private static async Task<string> DownloadUpdateAsync(Release release)
         {
             try
             {
@@ -62,19 +62,20 @@ namespace EspionSpotify.Updater
             }
             catch (ReleaseAssetNotFoundException ex)
             {
-                Console.WriteLine($"Something went wrong during the download. Make sure it was not blocked by your Antivirus Software.");
+                Console.WriteLine(
+                    "Something went wrong during the download. Make sure it was not blocked by your Antivirus Software.");
                 Console.WriteLine("Error Message: {0}", ex.Message);
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Something went wrong during the download.");
+                Console.WriteLine("Something went wrong during the download.");
                 Console.WriteLine("Error Message: {0}", ex.Message);
-                throw ex;
+                throw;
             }
         }
 
-        internal static void ExtractDownloadedAsset(string fileName)
+        private static void ExtractDownloadedAsset(string fileName)
         {
             ZipFile zip = null;
             try
@@ -83,38 +84,29 @@ namespace EspionSpotify.Updater
                 Console.WriteLine("Extracting...");
 
                 foreach (var entry in zip.ToList())
-                {
-                    if (Path.GetDirectoryName(entry.FileName).Equals(UPDATER_DIRECTORY))
-                    {
-                        entry.Extract(UpdaterTempFullPath, ExtractExistingFileAction.OverwriteSilently);
-                    }
-                    else
-                    {
-                        entry.Extract(ProjectDirectory, ExtractExistingFileAction.OverwriteSilently);
-                    }
-                }
-
+                    entry.Extract(
+                        (Path.GetDirectoryName(entry.FileName) ?? "").Equals(UPDATER_DIRECTORY)
+                            ? UpdaterTempFullPath
+                            : ProjectDirectory, ExtractExistingFileAction.OverwriteSilently);
             }
             catch (UnauthorizedAccessException ex)
             {
-                Console.WriteLine("An error occurred while extracting. Make sure Spytify is not running or Antivirus Software is interferring.");
+                Console.WriteLine(
+                    "An error occurred while extracting. Make sure Spytify is not running or Antivirus Software is interfering.");
                 Console.WriteLine("You can extract the file manually at: {0}", fileName);
                 Console.WriteLine("Error Message: {0}", ex.Message);
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred while extracting");
                 Console.WriteLine("Error Message: {0}", ex.Message);
-                throw ex;
+                throw;
             }
             finally
             {
                 DeleteTempFiles();
-                if (zip != null)
-                {
-                    zip.Dispose();
-                }
+                zip?.Dispose();
             }
         }
 
@@ -126,16 +118,17 @@ namespace EspionSpotify.Updater
 
         private static void DeleteTempFiles()
         {
-            foreach (string filename in Directory
-                .EnumerateFiles(ProjectDirectory, "*.*", SearchOption.AllDirectories)
-                .Where(s => new[] { ".tmp", ".pendingoverwrite"}.Any(ext => s.ToLower().EndsWith(ext))))
-            {
+            foreach (var filename in Directory
+                         .EnumerateFiles(ProjectDirectory, "*.*", SearchOption.AllDirectories)
+                         .Where(s => new[] {".tmp", ".pending-overwrite"}.Any(ext => s.ToLower().EndsWith(ext))))
                 try
                 {
                     File.Delete(filename);
                 }
-                catch { }
-            }
+                catch
+                {
+                    // ignored
+                }
         }
     }
 }

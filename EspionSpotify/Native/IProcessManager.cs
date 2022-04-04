@@ -1,4 +1,4 @@
-﻿using IProcess = EspionSpotify.Native.Models.IProcess;
+﻿using EspionSpotify.Native.Models;
 
 namespace EspionSpotify.Native
 {

@@ -1,6 +1,6 @@
-﻿using EspionSpotify.Enums;
+﻿using System.Threading.Tasks;
+using EspionSpotify.Enums;
 using EspionSpotify.Models;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.API
 {

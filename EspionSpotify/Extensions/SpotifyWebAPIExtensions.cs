@@ -1,10 +1,6 @@
-﻿using SpotifyAPI.Web;
+﻿using System.Threading.Tasks;
+using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EspionSpotify.Extensions
 {
@@ -17,7 +13,11 @@ namespace EspionSpotify.Extensions
             {
                 playback = await api.GetPlaybackAsync();
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
+
             return playback;
         }
 
@@ -28,7 +28,11 @@ namespace EspionSpotify.Extensions
             {
                 album = await api.GetAlbumAsync(id);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
+
             return album;
         }
     }

@@ -3,6 +3,6 @@
     public enum LanguageType
     {
         en = 0,
-        fr, // French
+        fr // French
     }
 }

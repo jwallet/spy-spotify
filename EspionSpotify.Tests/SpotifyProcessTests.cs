@@ -1,13 +1,12 @@
-﻿using EspionSpotify.AudioSessions;
-using EspionSpotify.Extensions;
+﻿using System.Threading.Tasks;
 using EspionSpotify.API;
+using EspionSpotify.AudioSessions;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Native.Models;
 using EspionSpotify.Spotify;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -16,7 +15,6 @@ namespace EspionSpotify.Tests
     {
         private readonly Mock<IMainAudioSession> _mainAudioSessionMock;
         private readonly Mock<IProcessManager> _processManagerMock;
-        private readonly IProcess[] _processes;
 
         public SpotifyProcessTests()
         {
@@ -24,18 +22,18 @@ namespace EspionSpotify.Tests
             apiMock.Setup(x => x.UpdateTrack(It.IsAny<Track>()));
             ExternalAPI.Instance = apiMock.Object;
 
-            _processes = new IProcess[]
+            var processes = new IProcess[]
             {
-                new Process { Id = 1, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY},
-                new Process { Id = 2, MainWindowTitle = "Facebook", ProcessName = "Firefox"},
-                new Process { Id = 3, MainWindowTitle = "", ProcessName = Constants.SPOTIFY}
-        };
+                new Process {Id = 1, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY},
+                new Process {Id = 2, MainWindowTitle = "Facebook", ProcessName = "Firefox"},
+                new Process {Id = 3, MainWindowTitle = "", ProcessName = Constants.SPOTIFY}
+            };
 
             _mainAudioSessionMock = new Mock<IMainAudioSession>();
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(false);
 
             _processManagerMock = new Mock<IProcessManager>();
-            _processManagerMock.Setup(x => x.GetProcesses()).Returns(_processes);
+            _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
             _processManagerMock.Setup(x => x.GetProcessById(It.IsAny<int>())).Returns(new Mock<IProcess>().Object);
         }
 
@@ -59,9 +57,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task GetSpotifyStatus_WithWrongSpotifyProcess_ReturnsNull()
         {
-            var spotify = new Process { Id = 4, MainWindowTitle = " ", ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
-            
+            var spotify = new Process {Id = 4, MainWindowTitle = " ", ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
+
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
             _processManagerMock.Setup(x => x.GetProcessById(It.IsAny<int>())).Returns(spotify);
             var spotifyProcess = new SpotifyProcess(_mainAudioSessionMock.Object, _processManagerMock.Object);
@@ -74,9 +72,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task GetSpotifyStatus_WithIdleSpotifyProcess_ReturnsNotPlaying()
         {
-            var windowTitle = Constants.SPOTIFY;
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            const string windowTitle = Constants.SPOTIFY;
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
             _processManagerMock.Setup(x => x.GetProcessById(It.IsAny<int>())).Returns(spotify);
@@ -86,7 +84,7 @@ namespace EspionSpotify.Tests
 
             Assert.IsType<SpotifyStatus>(spotifyStatus);
             var track = Assert.IsType<Track>(spotifyStatus.CurrentTrack);
-            
+
             Assert.Equal(windowTitle, track.Artist);
             Assert.Equal(windowTitle, track.ToString());
             Assert.Empty(track.ToTitleString());
@@ -102,8 +100,8 @@ namespace EspionSpotify.Tests
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingInIdle_ReturnsAdPlaying(string title)
         {
             var windowTitle = title.Capitalize();
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -124,9 +122,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task GetSpotifyStatus_WithSpotifyProcessNoSoundOnAds_ReturnsAdPlaying()
         {
-            var windowTitle = Constants.ADVERTISEMENT;
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            const string windowTitle = Constants.ADVERTISEMENT;
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
             _processManagerMock.Setup(x => x.GetProcessById(It.IsAny<int>())).Returns(spotify);
@@ -145,11 +143,11 @@ namespace EspionSpotify.Tests
 
         [Theory]
         [InlineData("#123 Podcast")]
-        [InlineData("Message of Gouvernement")]
+        [InlineData("Message of Government")]
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingUnknown_ReturnsAdPlaying(string windowTitle)
         {
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -176,8 +174,8 @@ namespace EspionSpotify.Tests
         [InlineData("#123 - Podcast")]
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingNormalType_ReturnsTrackPlaying(string windowTitle)
         {
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -200,9 +198,9 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task GetSpotifyStatus_WithSpotifyProcessNoAudioNormalType_ReturnsTrackPlaying()
         {
-            var windowTitle = "Artist - Title";
-            var spotify = new Process { Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY };
-            var processes = new[] { spotify };
+            const string windowTitle = "Artist - Title";
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
             _processManagerMock.Setup(x => x.GetProcessById(It.IsAny<int>())).Returns(spotify);

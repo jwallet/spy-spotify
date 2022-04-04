@@ -6,7 +6,7 @@ namespace EspionSpotify.Updater
     {
         internal static void Main()
         {
-            Thread t = new Thread(Run);
+            var t = new Thread(Run);
             t.SetApartmentState(ApartmentState.STA);
             t.IsBackground = true;
             t.Start();
@@ -17,6 +17,5 @@ namespace EspionSpotify.Updater
         {
             Updater.ProcessUpdateAsync().GetAwaiter().GetResult();
         }
-        
     }
 }
