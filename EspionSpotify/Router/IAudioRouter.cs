@@ -18,5 +18,10 @@
         /// <param name="deviceId">The device id.</param>
         /// <param name="processId">The process to update.</param>
         void SetDefaultEndPoint(string deviceId, int processId);
+
+        /// <summary>
+        /// Resets the default audio devices previously set.
+        /// </summary>
+        void ResetDefaultEndpoints();
     }
 }

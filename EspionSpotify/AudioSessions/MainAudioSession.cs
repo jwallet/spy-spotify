@@ -20,7 +20,6 @@ namespace EspionSpotify.AudioSessions
 
         private readonly int? _spytifyProcessId;
         private int? _spotifyAudioSessionProcessId;
-
         
         private bool _disposed;
         private ICollection<int> _spotifyProcessesIds = new List<int>();
@@ -71,12 +70,16 @@ namespace EspionSpotify.AudioSessions
 
         public void RouteSpotifyAudioSessions(bool reset = false)
         {
+            if (reset)
+            {
+                _audioRouter.ResetDefaultEndpoints();
+                return;
+            }
+            
             foreach (var spotifyProcessesId in _spotifyProcessesIds)
             {
                 _audioRouter.SetDefaultEndPoint(
-                    reset 
-                        ? AudioMMDevicesManager.DefaultAudioEndPointDeviceID
-                        : AudioMMDevicesManager.AudioEndPointDeviceID,
+                    AudioMMDevicesManager.AudioEndPointDeviceID,
                     spotifyProcessesId);
             }
 
