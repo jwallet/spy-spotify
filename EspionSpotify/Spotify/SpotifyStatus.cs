@@ -16,11 +16,11 @@ namespace EspionSpotify.Spotify
             var (titleTags, separatorType) = GetTitleTags(longTitlePart ?? "", 2);
 
             var isPlaying = spotifyWindowInfo.IsPlaying;
-            var isAd = tags.Length < 2 || spotifyWindowInfo.IsTitledAd || tags.First() == Constants.SPOTIFY;
+            var isLookingLikeAnAd = tags.Length < 2 || tags.First() == Constants.SPOTIFY;
 
             CurrentTrack = new Track
             {
-                Ad = isAd && isPlaying,
+                Ad = spotifyWindowInfo.IsTitledAd || (isLookingLikeAnAd && isPlaying),
                 Playing = isPlaying,
                 Artist = GetTitleTag(tags, 1),
                 Title = GetTitleTag(titleTags, 1),

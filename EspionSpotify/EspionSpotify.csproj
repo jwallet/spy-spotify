@@ -185,6 +185,7 @@
     <Compile Include="Router\IAudioPolicyConfigFactoryDownlevel.cs" />
     <Compile Include="Router\IAudioRouter.cs" />
     <Compile Include="AudioSessions\AudioMMDevicesManager.cs" />
+    <Compile Include="AudioSessions\AudioThrottler.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\MetroCredentialsForm.cs">
       <SubType>Form</SubType>
