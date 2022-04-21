@@ -99,5 +99,19 @@ namespace EspionSpotify.Router
 
             return null;
         }
+
+        public void ResetDefaultEndpoints()
+        {
+            try
+            {
+                EnsurePolicyConfig();
+
+                _sharedPolicyConfig.ClearAllPersistedApplicationDefaultEndpoints();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex}");
+            }
+        }
     }
 }
