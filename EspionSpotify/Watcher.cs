@@ -11,8 +11,10 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Properties;
+using EspionSpotify.Router;
 using EspionSpotify.Spotify;
 using EspionSpotify.Translations;
+using NAudio.CoreAudioApi;
 using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
@@ -49,7 +51,7 @@ namespace EspionSpotify
             _currentTrack = track;
             _fileSystem = fileSystem;
             _recorder = recorder;
-
+            
             Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
         }
@@ -231,6 +233,8 @@ namespace EspionSpotify
 
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
+            _audioSession.SetSpotifyProcesses();
+            _audioSession.RouteSpotifyAudioSessions();
             return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
@@ -304,8 +308,9 @@ namespace EspionSpotify
             if (_audioSession != null)
             {
                 MutesSpotifyAds(false);
-                _audioSession.SetSpotifyVolumeToHighAndOthersToMute(false);
+                _audioSession.SetSpotifyVolumeToHighAndOthersToMute(mute: false);
                 _audioSession.ClearSpotifyAudioSessionControls();
+                _audioSession.RouteSpotifyAudioSessions(reset: true);
             }
         }
 

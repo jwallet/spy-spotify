@@ -35,7 +35,7 @@ namespace EspionSpotify.AudioSessions
         public bool? AudioEndPointDeviceMute => AudioEndPointDevice?.AudioEndpointVolume?.Mute;
 
         public string AudioEndPointDeviceName => AudioEndPointDevice?.GetFriendlyName();
-
+        
         public IDictionary<string, string> AudioEndPointDeviceNames { get; }
 
         public SessionCollection GetAudioEndPointDeviceSessions => AudioEndPointDevice?.AudioSessionManager?.Sessions;
