@@ -1,4 +1,4 @@
-﻿namespace EspionSpotify.Native
+﻿namespace EspionSpotify.Native.Models
 {
     public enum HRESULT: uint
     {

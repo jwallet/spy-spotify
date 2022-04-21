@@ -4,7 +4,7 @@ using EspionSpotify.Extensions;
 
 namespace EspionSpotify.Router.Helpers
 {
-    public class AudioPolicyConfigFactory
+    public static class AudioPolicyConfigFactory
     {
         public static IAudioPolicyConfigFactory Create()
         {

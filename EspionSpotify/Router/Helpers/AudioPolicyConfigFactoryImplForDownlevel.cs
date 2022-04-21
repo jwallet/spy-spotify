@@ -1,5 +1,6 @@
 ﻿using System;
 using EspionSpotify.Native;
+using EspionSpotify.Native.Models;
 using NAudio.CoreAudioApi;
 
 namespace EspionSpotify.Router.Helpers

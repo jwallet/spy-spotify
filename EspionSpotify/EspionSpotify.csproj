@@ -176,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analytics.cs" />
+    <Compile Include="Native\Models\HRESULT.cs" />
     <Compile Include="Router\AudioRouter.cs" />
     <Compile Include="Router\Helpers\AudioPolicyConfigFactory.cs" />
     <Compile Include="Router\Helpers\AudioPolicyConfigFactoryImplFor21H2.cs" />
@@ -224,7 +225,6 @@
     <Compile Include="Events\TrackTimeChangeEventArgs.cs" />
     <Compile Include="Extensions\WaveFormatExtensions.cs" />
     <Compile Include="Native\Combase.cs" />
-    <Compile Include="Native\HRESULT.cs" />
     <Compile Include="Native\Models\Process.cs" />
     <Compile Include="Native\FileManager.cs" />
     <Compile Include="IFrmEspionSpotify.cs" />
