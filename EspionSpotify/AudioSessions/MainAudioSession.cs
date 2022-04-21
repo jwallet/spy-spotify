@@ -147,25 +147,9 @@ namespace EspionSpotify.AudioSessions
 
         public async Task<bool> WaitSpotifyAudioSessionToStart(bool running)
         {
-           
             if (_spotifyProcessesIds.Count == 0) return false;
-            
-            if (await IsSpotifyPlayingOutsideDefaultAudioEndPoint(running)) return false;
 
-            var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
-            lock (sessionAudioEndPointDeviceLocked)
-            {
-                for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
-                {
-                    var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
-                    var currentProcessId = (int) currentAudioSessionControl.GetProcessID;
-                    if (!IsSpotifyAudioSessionControl(currentProcessId)) continue;
-
-                    return true;
-                }
-            }
-
-            return false;
+            return await IsSpotifyPlayingOutsideDefaultAudioEndPoint(running);
         }
 
         #endregion AudioSession Wait Spotify
@@ -216,18 +200,20 @@ namespace EspionSpotify.AudioSessions
         {
             await SetSpotifyAudioSessionsAndProcessId(running);
             
-            var sessionAudioSelectedEndPointDevice = GetSessionsAudioEndPointDevice;
-
-            for (var i = 0; i < sessionAudioSelectedEndPointDevice.Count; i++)
+            var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
+            lock (sessionAudioEndPointDeviceLocked)
             {
-                var currentAudioSessionControl = sessionAudioSelectedEndPointDevice[i];
-                var currentProcessId = (int) currentAudioSessionControl.GetProcessID;
-                if (currentProcessId != _spotifyAudioSessionProcessId) continue;
+                for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
+                {
+                    var currentAudioSessionControl = sessionAudioEndPointDeviceLocked[i];
+                    var currentProcessId = (int) currentAudioSessionControl.GetProcessID;
+                    if (!IsSpotifyAudioSessionControl(currentProcessId)) continue;
 
-                return false;
+                    return true;
+                }
             }
 
-            return true;
+            return false;
         }
         
         private async Task SetSpotifyAudioSessionsAndProcessId(bool running)
