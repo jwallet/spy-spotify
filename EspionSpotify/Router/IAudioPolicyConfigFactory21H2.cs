@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using EspionSpotify.Native;
+using EspionSpotify.Native.Models;
 using NAudio.CoreAudioApi;
 
 namespace EspionSpotify.Router
