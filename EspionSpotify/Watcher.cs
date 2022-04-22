@@ -336,7 +336,7 @@ namespace EspionSpotify
                 MutesSpotifyAds(false);
                 _audioSession.SetSpotifyVolumeToHighAndOthersToMute(mute: false);
                 _audioSession.ClearSpotifyAudioSessionControls();
-                _audioSession.RouteSpotifyAudioSessions(reset: true);
+                _audioSession.UnrouteSpotifyAudioSessions();
             }
             
             _audioThrottler.Running = false;

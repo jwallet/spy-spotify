@@ -176,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analytics.cs" />
+    <Compile Include="AudioSessions\AudioLoopback.cs" />
     <Compile Include="Native\Models\HRESULT.cs" />
     <Compile Include="Router\AudioRouter.cs" />
     <Compile Include="Router\Helpers\AudioPolicyConfigFactory.cs" />
