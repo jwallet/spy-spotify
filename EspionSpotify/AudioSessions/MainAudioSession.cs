@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.Extensions;
 using EspionSpotify.Native;
@@ -16,28 +17,33 @@ namespace EspionSpotify.AudioSessions
         private const int NUMBER_OF_SAMPLES = 3;
 
         private readonly IProcessManager _processManager;
-        private readonly IAudioRouter _audioRouter; 
+        private readonly IAudioRouter _audioRouter;
+        private readonly AudioLoopback _audioLoopback;
 
         private readonly int? _spytifyProcessId;
         private int? _spotifyAudioSessionProcessId;
         
         private bool _disposed;
+        private CancellationTokenSource _cancellationTokenSource;
         private ICollection<int> _spotifyProcessesIds = new List<int>();
         
-        internal MainAudioSession(string audioEndPointDevice) :
-            this(audioEndPointDevice, new ProcessManager())
+        internal MainAudioSession(string audioEndPointDeviceID) :
+            this(audioEndPointDeviceID, new ProcessManager(), new AudioRouter(DataFlow.Render))
         {
         }
 
-        private MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager)
+        private MainAudioSession(string audioEndPointDeviceID, IProcessManager processManager, IAudioRouter audioRouter)
         {
             _processManager = processManager;
             _spytifyProcessId = _processManager.GetCurrentProcess()?.Id;
             
-            _audioRouter = new AudioRouter(DataFlow.Render);
+            _audioRouter = audioRouter;
             
             AudioMMDevices = new MMDeviceEnumerator();
             AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
+
+            _audioLoopback = new AudioLoopback(AudioMMDevicesManager.AudioEndPointDevice,
+                AudioMMDevicesManager.AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia));
 
             AudioMMDevices.RegisterEndpointNotificationCallback(AudioMMDevicesManager);
         }
@@ -68,14 +74,8 @@ namespace EspionSpotify.AudioSessions
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses(_processManager).Select(x => x.Id).ToList();
         }
 
-        public void RouteSpotifyAudioSessions(bool reset = false)
+        public void RouteSpotifyAudioSessions()
         {
-            if (reset)
-            {
-                _audioRouter.ResetDefaultEndpoints();
-                return;
-            }
-            
             foreach (var spotifyProcessesId in _spotifyProcessesIds)
             {
                 _audioRouter.SetDefaultEndPoint(
@@ -83,6 +83,13 @@ namespace EspionSpotify.AudioSessions
                     spotifyProcessesId);
             }
 
+            Task.Run(() => _audioLoopback.Run(_cancellationTokenSource));
+        }
+
+        public void UnrouteSpotifyAudioSessions()
+        {
+            _audioRouter.ResetDefaultEndpoints();
+            _audioLoopback.Running = false;
         }
 
         public void SetAudioDeviceVolume(int volume)
@@ -273,6 +280,8 @@ namespace EspionSpotify.AudioSessions
                 AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
                 AudioMMDevices.Dispose();
                 AudioMMDevices = null;
+                _audioLoopback.Dispose();
+                _cancellationTokenSource.Cancel();
             }
 
             _disposed = true;
