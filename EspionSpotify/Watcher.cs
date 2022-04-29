@@ -11,10 +11,8 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Properties;
-using EspionSpotify.Router;
 using EspionSpotify.Spotify;
 using EspionSpotify.Translations;
-using NAudio.CoreAudioApi;
 using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
@@ -28,7 +26,7 @@ namespace EspionSpotify
         private readonly IFileSystem _fileSystem;
 
         private readonly IFrmEspionSpotify _form;
-        private readonly List<RecorderTask> _recorderTasks = new List<RecorderTask>();
+        private readonly List<RecorderTask> _recorderTasks;
         private readonly UserSettings _userSettings;
         private Track _currentTrack;
         private bool _disposed;
@@ -36,23 +34,24 @@ namespace EspionSpotify
 
         private Timer _recordingTimer;
         private bool _stopRecordingWhenSongEnds;
-        private readonly CancellationTokenSource _watcherCancellationToken;
+        private readonly CancellationTokenSource _cancellationToken;
 
         internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings) :
-            this(form, audioSession, userSettings, new Track(), new FileSystem())
+            this(form, audioSession, userSettings, new Track(), new FileSystem(), new List<RecorderTask>())
         {
         }
 
         public Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track,
-            IFileSystem fileSystem)
+            IFileSystem fileSystem, List<RecorderTask> recorderTasks)
         {
             _form = form;
             _audioSession = audioSession;
             _userSettings = userSettings;
             _currentTrack = track;
             _fileSystem = fileSystem;
+            _recorderTasks = recorderTasks;
             
-            _watcherCancellationToken = new CancellationTokenSource();
+            _cancellationToken = new CancellationTokenSource();
             
             Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
@@ -276,7 +275,6 @@ namespace EspionSpotify
 
             var recorder = new Recorder(
                 form: _form, 
-                audioSession: _audioSession,
                 audioThrottler: _audioThrottler,
                 userSettings: _userSettings,
                 track: ref _currentTrack,
@@ -284,9 +282,9 @@ namespace EspionSpotify
 
             _recorderTasks.Add(new RecorderTask
             {
-                Task = Task.Run(() => recorder.Run(_watcherCancellationToken), _watcherCancellationToken.Token),
+                Task = Task.Run(() => recorder.Run(_cancellationToken), _cancellationToken.Token),
                 Recorder = recorder,
-                Token = _watcherCancellationToken
+                Token = _cancellationToken
             });
 
             _form.UpdateIconSpotify(_isPlaying, true);
@@ -309,9 +307,11 @@ namespace EspionSpotify
             }
 
             Spotify.ListenForEvents = true;
-            
+
             _audioThrottler = new AudioThrottler(_audioSession);
-            Task.Run(() => _audioThrottler.Run(_watcherCancellationToken), _watcherCancellationToken.Token);
+#pragma warning disable CS4014
+            Task.Run(() => _audioThrottler.Run(_cancellationToken), _cancellationToken.Token);
+#pragma warning restore CS4014
 
             if (_userSettings.HasRecordingTimerEnabled) await Task.Run(EnableRecordingTimer);
         }

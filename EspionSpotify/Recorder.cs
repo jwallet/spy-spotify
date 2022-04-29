@@ -21,30 +21,28 @@ namespace EspionSpotify
     {
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
-        private readonly IMainAudioSession _audioSession;
+        
+        private readonly bool _initiated;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private readonly IFrmEspionSpotify _form;
         private readonly Track _track;
-        private readonly AudioThrottler _audioThrottler;
+        private readonly IAudioThrottler _audioThrottler;
         private readonly UserSettings _userSettings;
+
+        private bool _disposed;
+        private string _tempEncodeFile;
+        private string _tempOriginalFile;
         private bool _canBeSkippedValidated;
         private CancellationTokenSource _cancellationTokenSource;
         private OutputFile _currentOutputFile;
-        private bool _disposed;
-        private bool _initiated;
-        private string _tempEncodeFile;
-        private string _tempOriginalFile;
         private Stream _tempWaveWriter;
 
-        public Recorder()
-        {
-        }
+        public Recorder() { }
 
         public Recorder(
             IFrmEspionSpotify form,
-            IMainAudioSession audioSession,
-            AudioThrottler audioThrottler,
+            IAudioThrottler audioThrottler,
             UserSettings userSettings,
             ref Track track,
             IFileSystem fileSystem)
@@ -53,7 +51,6 @@ namespace EspionSpotify
             userSettings.CopyAllTo(_userSettings);
 
             _form = form;
-            _audioSession = audioSession;
             _audioThrottler = audioThrottler;
             _fileSystem = fileSystem;
             _track = track;
@@ -75,8 +72,6 @@ namespace EspionSpotify
 
         private bool Init()
         {
-            if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return false;
-
             _tempOriginalFile = _fileManager.GetTempFile();
 
             try
@@ -106,7 +101,6 @@ namespace EspionSpotify
             _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
             Running = true;
             
-            await _audioThrottler.DataAvailable(AudioThrottler.BUFFER_THROTTLE_MS);
             await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
             while (Running)
@@ -142,9 +136,9 @@ namespace EspionSpotify
 
         private async Task RecordAvailableData(SilenceAnalyzer analyzer)
         {
-            if (_tempWaveWriter == null || !Running) return;
-
-            var audio = await _audioThrottler.Dequeue(analyzer);
+            if (_tempWaveWriter == null) return;
+            
+            var audio = _audioThrottler.Read(analyzer);
             if (audio != null)
             {
                 await Task.Run(async () => await _tempWaveWriter.WriteAsync(
