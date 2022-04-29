@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.Models;
 using EspionSpotify.AudioSessions;
+using EspionSpotify.Enums;
 using NAudio.CoreAudioApi;
 using NAudio.Utils;
 using NAudio.Wave;
@@ -207,19 +208,5 @@ namespace EspionSpotify.AudioSessions
         }
 
         #endregion DisposeRecorder
-    }
-
-    public class AudioWaveBuffer
-    {
-        public byte[] Buffer;
-        public int BytesRecordedCount;
-        public bool WithSilence;
-    }
-
-    public enum SilenceAnalyzer
-    {  
-        None,
-        TrimEnd,
-        TrimStart,
     }
 }

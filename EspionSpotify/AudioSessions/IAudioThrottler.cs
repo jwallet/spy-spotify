@@ -1,5 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using EspionSpotify.Enums;
+using EspionSpotify.Models;
 using NAudio.Wave;
 
 namespace EspionSpotify.AudioSessions
