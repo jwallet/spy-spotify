@@ -1,5 +1,5 @@
 ---
-name: Conversation thread to be post in Discussions
+name: Conversation thread
 about: Create a new conversation thread or ask a question to be moved in Discussions section.
 title: ''
 labels: "question \U0001F4AC"
