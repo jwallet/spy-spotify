@@ -4,6 +4,7 @@
     {
         int MaxLength { get; }
         int Count { get; }
+        int ReadPosition { get; }
 
         int Write(byte[] data, int offset, int count);
         int Read(out byte[] data, int offset, int count);

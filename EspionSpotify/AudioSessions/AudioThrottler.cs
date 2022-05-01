@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.Models;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using NAudio.CoreAudioApi;
 using NAudio.Utils;
 using NAudio.Wave;
@@ -15,26 +17,46 @@ namespace EspionSpotify.AudioSessions
     public sealed class AudioThrottler: IAudioThrottler, IDisposable
     {
         private bool _disposed;
-        private const int DETECTED_SILENCE_MS = 500;
+        private const int DETECTED_SILENCE_MS = 100;
         private readonly object _lockObject;
-        private bool _dequeuing = false;
+        private bool _dequeuing;
         
-        private const int BUFFER_TOTAL_SIZE_IN_SECOND = 10;
-        private const int BUFFER_THROTTLE_IN_SECOND = 5;
+        private const int BUFFER_TOTAL_SIZE_IN_SECOND = 4;
         
         private readonly IMainAudioSession _audioSession;
 
         private CancellationTokenSource _cancellationTokenSource;
         private WasapiLoopbackCapture _waveIn;
-        private AudioCircularBuffer _buffer;
-        
-        private int BufferReadOffset => _waveIn.WaveFormat.AverageBytesPerSecond * BUFFER_THROTTLE_IN_SECOND;
+        private IAudioCircularBuffer _buffer;
+
+        private int BufferReadOffset => (int)(_waveIn.WaveFormat.AverageBytesPerSecond * (BUFFER_TOTAL_SIZE_IN_SECOND / 4.0));
         private int BufferMaxLength => _waveIn.WaveFormat.AverageBytesPerSecond * BUFFER_TOTAL_SIZE_IN_SECOND;
-        private int SilenceAverageByteLength =>
-            (DETECTED_SILENCE_MS / 1_000) * _waveIn.WaveFormat.AverageBytesPerSecond;
+        private int SilenceAverageByteLength => (int)(DETECTED_SILENCE_MS / 1_000.0 * _waveIn.WaveFormat.AverageBytesPerSecond);
         
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
+
+        public bool BufferIsHalfFull
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return _buffer.Count > (int)(BufferMaxLength / 2.0);
+                }
+            }
+        }
+
+        public bool BufferIsReady
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return _buffer.Count > BufferReadOffset;
+                }
+            }
+        }
 
         public AudioThrottler(IMainAudioSession audioSession)
         {
@@ -53,7 +75,7 @@ namespace EspionSpotify.AudioSessions
             _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
             _waveIn.ShareMode = AudioClientShareMode.Shared;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
-            
+
             await Task.Delay(50);
             _waveIn.StartRecording();
 
@@ -68,22 +90,23 @@ namespace EspionSpotify.AudioSessions
 
         public AudioWaveBuffer Read(SilenceAnalyzer silence = SilenceAnalyzer.None)
         {
-            if (_dequeuing) return null;
+            // if (_dequeuing) return null;
             
-            _dequeuing = true;
             AudioWaveBuffer result = null;
+            // _dequeuing = true;
 
+            
             switch (silence)
             {
                 case SilenceAnalyzer.TrimStart:
                 {
                     lock (_lockObject)
                     {
-                        var readPeek = _buffer.Peek(out var dataPeek, 0, BufferReadOffset);
-                        var read = BufferPositionWithoutSilence(dataPeek, readPeek);
-                        if (read != 0)
+                        var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.MaxLength);
+                        var readPosition = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: true);
+                        if (readPosition > 0)
                         {
-                            _buffer.Advance(read);
+                            _buffer.Advance(readPosition);
                         }
                     }
 
@@ -93,8 +116,9 @@ namespace EspionSpotify.AudioSessions
                 {
                     lock (_lockObject)
                     {
-                        var read = _buffer.Read(out var data, 0,
-                            _buffer.Count);
+                        var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.Count);
+                        var validRead = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: false);
+                        var read = _buffer.Read(out var data, 0, validRead);
                         if (read > 0)
                         {
                             result = ToAudioWaveBuffer(data, read);
@@ -121,25 +145,38 @@ namespace EspionSpotify.AudioSessions
                     break;
                 }
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(silence), silence, @"Cannot cast to Silence Analyzer. Not supported.");
+                {
+                    throw new ArgumentOutOfRangeException(nameof(silence), silence,
+                        @"Cannot cast to Silence Analyzer. Not supported.");
+                }
             }
 
-            _dequeuing = false;
+            // _dequeuing = false;
             return result;
+        }
+
+        public async Task WaitBufferReady()
+        {
+            var timeout = BUFFER_TOTAL_SIZE_IN_SECOND;
+            var pace = 100;
+            while (!BufferIsHalfFull || timeout == 0)
+            {
+                timeout -= pace;
+                await Task.Delay(pace);
+            }
         }
 
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             if (!Running) return;
 
-            if (_buffer == null)
-            {
-                _buffer = new AudioCircularBuffer(BufferMaxLength);
-
-            }
-                
             lock (_lockObject)
             {
+                if (_buffer == null)
+                {
+                    _buffer = new AudioCircularBuffer(BufferMaxLength);
+                }
+                
                 _buffer.Write(e.Buffer, 0, e.BytesRecorded);
             }
         }
@@ -150,41 +187,58 @@ namespace EspionSpotify.AudioSessions
             {
                 Buffer = data,
                 BytesRecordedCount = read,
-                WithSilence = WithSilence(data, read)
+                // WithSilence = WithSilence(data, read)
             };
         }
         
-        private bool WithSilence(byte[] buffer, int count)
-        {
-            var received = new byte[count];
-            Array.Copy(buffer, 0, received, 0, count);
-            return received.TakeWhile(x => x == 0).Count() > SilenceAverageByteLength;
-        }
+        // private bool WithSilence(byte[] buffer, int count)
+        // {
+        //     var received = new byte[count];
+        //     Array.Copy(buffer, 0, received, 0, count);
+        //     return received.TakeWhile(x => x == 0).Count() > SilenceAverageByteLength;
+        // }
 
-        private int BufferPositionWithoutSilence(byte[] buffer, int count)
+        private int BufferPositionWithoutSilence(byte[] buffer, int count, bool recursive = false)
         {
-            var received = new byte[count];
-            Array.Copy(buffer, 0, received, 0, count);
+            var received = new short[count / 2];
+            Buffer.BlockCopy(buffer, 0, received, 0, count);
             
             var consecutiveZero = 0;
-            var firstAtPosition = 0;
-            
-            for (var i = 0; i < received.Length && consecutiveZero < SilenceAverageByteLength; i++)
+            var atPosition = 0;
+            var atPositionsTimes = new Dictionary<int, int>();
+
+            int? indexSetPreviously = null;
+            for (var i = 0; i < received.Length; i ++)
             {
-                if (received[i] == 0)
+                if (received[i] < 130 && received[i] > -130) // silent byte ~Math.abs(130) = -48dB ?
                 {
-                    if (consecutiveZero == 0)
+                    if (indexSetPreviously == null && !atPositionsTimes.ContainsKey(i))
                     {
-                        firstAtPosition = i;
+                        atPositionsTimes.Add(i, 0);
+                        indexSetPreviously = i;
                     }
-                    consecutiveZero++;
+
+                    atPositionsTimes.TryGetValue(indexSetPreviously ?? i, out var currentCount);
+                    atPositionsTimes[indexSetPreviously ?? i] = currentCount + 1;
                 }
-                else consecutiveZero = 0;
+                else
+                {
+                    indexSetPreviously = null;
+                }
             }
 
-            return firstAtPosition != 0 ? firstAtPosition : 0;
-        }
+            var atMedianPositions = atPositionsTimes
+                .Where((x) => x.Value >= SilenceAverageByteLength)
+                .Select(x => (x.Key * 2) + ((int)(x.Value / 2.0) * 2)) // pos + median
+                .ToList();
 
+            if (atMedianPositions.Any())
+            {
+                return recursive ? atMedianPositions.Last() : atMedianPositions.First();
+            }
+
+            return BufferReadOffset;
+        }
 
         #region Dispose
         public void Dispose()

@@ -100,7 +100,8 @@ namespace EspionSpotify
 
             _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
             Running = true;
-            
+
+            await _audioThrottler.WaitBufferReady();
             await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
             while (Running)
@@ -111,6 +112,7 @@ namespace EspionSpotify
             }
 
             await RecordAvailableData(SilenceAnalyzer.TrimEnd);
+
             await RecordingStopped();
         }
 
@@ -139,18 +141,12 @@ namespace EspionSpotify
             if (_tempWaveWriter == null) return;
             
             var audio = _audioThrottler.Read(analyzer);
-            if (audio != null)
-            {
-                await Task.Run(async () => await _tempWaveWriter.WriteAsync(
-                    audio.Buffer, 
-                    0, 
-                    audio.BytesRecordedCount));
-                if (audio.WithSilence && analyzer == SilenceAnalyzer.TrimEnd)
-                {
-                    Running = false;
-                }
-            }
-           
+            if (audio == null) return;
+            
+            await Task.Run(async () => await _tempWaveWriter.WriteAsync(
+                audio.Buffer, 
+                0, 
+                audio.BytesRecordedCount));
         }
 
         #endregion RecorderWriteUpcomingData

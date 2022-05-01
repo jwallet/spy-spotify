@@ -42,6 +42,7 @@ namespace EspionSpotify
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
         private bool _toggleStopRecordingDelayed;
         private Watcher _watcher;
+        private bool _watching;
 
         public FrmEspionSpotify()
         {
@@ -181,6 +182,7 @@ namespace EspionSpotify
 
             tlSettings.Enabled = true;
             tlAdvanced.Enabled = true;
+            _watching = false;
         }
 
         public void SetSoundVolume(int volume)
@@ -516,6 +518,8 @@ namespace EspionSpotify
 
         private void StartRecording()
         {
+            if (_watching) return;
+            _watching = true;
             _watcher = new Watcher(this, _audioSession, _userSettings);
 
             Task.Run(_watcher.Run);
