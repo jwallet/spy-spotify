@@ -21,7 +21,7 @@ namespace EspionSpotify.AudioSessions
         private readonly object _lockObject;
         private bool _dequeuing;
         
-        private const int BUFFER_TOTAL_SIZE_IN_SECOND = 2;
+        private const int BUFFER_TOTAL_SIZE_IN_SECOND = 4;
         
         private readonly IMainAudioSession _audioSession;
 
