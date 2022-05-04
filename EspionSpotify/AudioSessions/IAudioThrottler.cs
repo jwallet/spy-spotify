@@ -14,7 +14,7 @@ namespace EspionSpotify.AudioSessions
         bool BufferIsReady { get; }
 
         Task Run(CancellationTokenSource cancellationTokenSource);
-        AudioWaveBuffer Read(SilenceAnalyzer silence = SilenceAnalyzer.None);
+        Task<AudioWaveBuffer> Read(SilenceAnalyzer silence = SilenceAnalyzer.None);
         Task WaitBufferReady();
         void Dispose();
     }
