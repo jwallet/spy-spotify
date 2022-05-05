@@ -184,7 +184,6 @@ namespace EspionSpotify.Spotify
                 if (EventTimer != null)
                 {
                     EventTimer.Stop();
-                    EventTimer.Enabled = false;
                     EventTimer.Elapsed -= ElapsedEventTick;
 
                     EventTimer.Dispose();
@@ -194,7 +193,6 @@ namespace EspionSpotify.Spotify
                 if (SongTimer != null)
                 {
                     SongTimer.Stop();
-                    SongTimer.Enabled = false;
                     SongTimer.Elapsed -= ElapsedSongTick;
 
                     SongTimer.Dispose();
