@@ -206,7 +206,7 @@
     <comment>interface</comment>
   </data>
   <data name="logAd" xml:space="preserve">
-    <value>Annonce</value>
+    <value>// Annonce</value>
     <comment>console</comment>
   </data>
   <data name="logDeleting" xml:space="preserve">
@@ -480,5 +480,8 @@
   <data name="logRecordedFileNotFound" xml:space="preserve">
     <value>// Erreur: Le fichier d'enregistrement a été perdu durant la procédure</value>
     <comment>console</comment>
+  </data>
+  <data name="lblAd" xml:space="preserve">
+    <value>Annonce</value>
   </data>
 </root>

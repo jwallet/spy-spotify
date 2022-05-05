@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.API;
 using EspionSpotify.AudioSessions;
+using EspionSpotify.Enums;
 using EspionSpotify.Events;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
@@ -221,12 +222,18 @@ namespace EspionSpotify
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
 
-            var adTitle = !IsRecordUnknownActive && _currentTrack.Ad && !_currentTrack.ToString().IsSpotifyIdleState()
-                ? $"{_form.Rm?.GetString(I18NKeys.LogAd) ?? "Ad"}: "
+            var isAd = !IsRecordUnknownActive && _currentTrack.Ad && !_currentTrack.ToString().IsSpotifyIdleState();
+            var adTitle = isAd
+                ? $"{_form.Rm?.GetString(I18NKeys.LblAd) ?? "Ad"}: "
                 : "";
             _form.UpdatePlayingTitle($"{adTitle}{_currentTrack}");
 
-            MutesSpotifyAds(_currentTrack.Ad);
+            MutesSpotifyAds(isAd);
+
+            if (isAd)
+            {
+                _form.WriteIntoConsole(I18NKeys.LogAd);
+            }
 
             return true;
         }
