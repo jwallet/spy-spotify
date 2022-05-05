@@ -13,6 +13,7 @@ namespace EspionSpotify.Translations
 
         public static TranslationKeys LblAddFolders => TranslationKeys.lblAddFolders;
         public static TranslationKeys LblAddSeparators => TranslationKeys.lblAddSeparators;
+        public static TranslationKeys LblAd => TranslationKeys.lblAd;
         public static TranslationKeys LblAds => TranslationKeys.lblAds;
         public static TranslationKeys LblAudioDevice => TranslationKeys.lblAudioDevice;
         public static TranslationKeys LblBitRate => TranslationKeys.lblBitRate;

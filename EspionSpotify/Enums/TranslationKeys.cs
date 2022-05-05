@@ -10,6 +10,7 @@
         cbOptBitRateSpotifyPremium,
         lblAddFolders,
         lblAddSeparators,
+        lblAd,
         lblAds,
         lblAudioDevice,
         lblBitRate,

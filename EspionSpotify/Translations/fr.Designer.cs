@@ -115,6 +115,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Annonce.
+        /// </summary>
+        internal static string lblAd {
+            get {
+                return ResourceManager.GetString("lblAd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regrouper les pistes audio par album.
         /// </summary>
         internal static string lblAddFolders {
@@ -376,7 +385,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annonce.
+        ///   Looks up a localized string similar to // Annonce.
         /// </summary>
         internal static string logAd {
             get {
