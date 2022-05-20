@@ -38,6 +38,7 @@ namespace EspionSpotify.AudioSessions
             _spytifyProcessId = _processManager.GetCurrentProcess()?.Id;
             
             _audioRouter = audioRouter;
+            _cancellationTokenSource = new CancellationTokenSource();
             
             AudioMMDevices = new MMDeviceEnumerator();
             AudioMMDevicesManager = new AudioMMDevicesManager(AudioMMDevices, audioEndPointDeviceID);
@@ -170,6 +171,7 @@ namespace EspionSpotify.AudioSessions
         {
             var sessionAudioEndPointDeviceLocked = GetSessionsAudioEndPointDevice;
 
+            if (sessionAudioEndPointDeviceLocked == null) return;
             lock (sessionAudioEndPointDeviceLocked)
             {
                 for (var i = 0; i < sessionAudioEndPointDeviceLocked.Count; i++)
@@ -277,6 +279,7 @@ namespace EspionSpotify.AudioSessions
 
             if (disposing)
             {
+                SetSpotifyVolumeToHighAndOthersToMute(false);
                 AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
                 AudioMMDevices.Dispose();
                 AudioMMDevices = null;
