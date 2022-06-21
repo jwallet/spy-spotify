@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using TagLib;
 using File = TagLib.File;
@@ -17,7 +18,8 @@ namespace EspionSpotify.API
         private readonly bool _extraTitleToSubtitleEnabled;
 
         private readonly IFileSystem _fileSystem;
-
+        private readonly UserSettings _userSettings;
+        
         internal MapperID3(string currentFile, Track track, UserSettings userSettings) :
             this(new FileSystem(), currentFile, track, userSettings)
         {
@@ -25,12 +27,15 @@ namespace EspionSpotify.API
 
         public MapperID3(IFileSystem fileSystem, string currentFile, Track track, UserSettings userSettings)
         {
+            _userSettings = new UserSettings();
+            userSettings.CopyAllTo(_userSettings);
+            
             _fileSystem = fileSystem;
             CurrentFile = currentFile;
             Track = track;
-            OrderNumberInMediaTagEnabled = userSettings.OrderNumberInMediaTagEnabled;
-            Count = userSettings.OrderNumberAsTag;
-            _extraTitleToSubtitleEnabled = userSettings.ExtraTitleToSubtitleEnabled;
+            OrderNumberInMediaTagEnabled = _userSettings.OrderNumberInMediaTagEnabled;
+            Count = _userSettings.OrderNumberAsTag;
+            _extraTitleToSubtitleEnabled = _userSettings.ExtraTitleToSubtitleEnabled;
         }
 
         private string CurrentFile { get; }
@@ -44,8 +49,7 @@ namespace EspionSpotify.API
             get
             {
                 var separatorType = Track.TitleExtendedSeparatorType;
-                return separatorType == TitleSeparatorType.Dash
-                       || _extraTitleToSubtitleEnabled && separatorType == TitleSeparatorType.Parenthesis;
+                return _extraTitleToSubtitleEnabled && separatorType != TitleSeparatorType.None;
             }
         }
 
