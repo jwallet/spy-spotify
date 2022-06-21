@@ -209,7 +209,6 @@ namespace EspionSpotify.AudioSessions
         {
             var received = new byte[count];
             Array.Copy(buffer, 0, received, 0, count);
-
             var atPositionList = new List<int>();
             
             var bouncePerSample = (int) (SilenceAverageShortLength / 2.0);
@@ -220,7 +219,7 @@ namespace EspionSpotify.AudioSessions
                 Array.Copy(received, i, sample, 0, readCount);
 
                 var average = sample.Average(x => x);
-                if (average == 0) continue;
+                if (average > 0) continue;
 
                 atPositionList.Add(i);
                 if (!recursive) break;
