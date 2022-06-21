@@ -2,6 +2,6 @@
 {
     public static class ExternalAPI
     {
-        public static IExternalAPI Instance { get; set; } = new LastFMAPI();
+        public static IExternalAPI Instance { get; set; } = new NoneAPI();
     }
 }
