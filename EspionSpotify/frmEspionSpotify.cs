@@ -196,6 +196,7 @@ namespace EspionSpotify
 
             rbMp3.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Wav;
+            tlpAPI.Visible = Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3;
             tbMinTime.Value = Settings.Default.settings_media_minimum_recorded_length_in_seconds / 5;
             tgEndingSongDelay.Checked = Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
             tgAddSeparators.Checked = Settings.Default.advanced_file_replace_space_by_underscore_enabled;
@@ -226,7 +227,8 @@ namespace EspionSpotify
                                   !_userSettings.IsSpotifyAPISet;
             rbSpotifyAPI.Checked = Settings.Default.app_selected_external_api_id == (int) ExternalAPIType.Spotify &&
                                    _userSettings.IsSpotifyAPISet;
-            if (rbSpotifyAPI.Checked) SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
+
+            ReloadExternalAPI();
 
 #if DEBUG
             Style = MetroColorStyle.Orange;
@@ -282,7 +284,26 @@ namespace EspionSpotify
             rbSpotifyAPI.Enabled = _userSettings.IsSpotifyAPISet;
         }
 
-        private void SetExternalAPI(ExternalAPIType api, bool isSpotifyAPISet)
+        private void ReloadExternalAPI()
+        {
+            if (Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3)
+            {
+                if (_userSettings.IsSpotifyAPISet &&
+                    Settings.Default.app_selected_external_api_id == (int) ExternalAPIType.Spotify)
+                {
+                    SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
+                    return;
+                }
+                
+                SetExternalAPI(ExternalAPIType.LastFM);
+                return;
+         
+            }
+            
+            SetExternalAPI(ExternalAPIType.None);
+        }
+
+        private void SetExternalAPI(ExternalAPIType api, bool isSpotifyAPISet = false)
         {
             switch (api)
             {
@@ -294,8 +315,10 @@ namespace EspionSpotify
                             _userSettings.SpotifyAPIRedirectURL);
                     break;
                 case ExternalAPIType.LastFM:
-                default:
                     ExternalAPI.Instance = new LastFMAPI();
+                    break;
+                default:
+                    ExternalAPI.Instance = new NoneAPI();
                     break;
             }
         }
@@ -639,6 +662,8 @@ namespace EspionSpotify
             tlpAPI.Visible = mediaFormat == MediaFormat.Mp3;
             Settings.Default.settings_media_audio_format = mediaFormatIndex;
             Settings.Default.Save();
+            ReloadExternalAPI();
+            
             Task.Run(async () => await _analytics.LogAction($"media-format?type={mediaFormat.ToString()}"));
         }
 

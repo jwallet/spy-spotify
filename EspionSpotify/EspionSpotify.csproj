@@ -176,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analytics.cs" />
+    <Compile Include="API\NoneAPI.cs" />
     <Compile Include="AudioSessions\AudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\AudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
