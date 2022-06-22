@@ -196,7 +196,6 @@ namespace EspionSpotify
 
             rbMp3.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Wav;
-            tlpAPI.Visible = Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3;
             tbMinTime.Value = Settings.Default.settings_media_minimum_recorded_length_in_seconds / 5;
             tgEndingSongDelay.Checked = Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
             tgAddSeparators.Checked = Settings.Default.advanced_file_replace_space_by_underscore_enabled;
@@ -286,21 +285,14 @@ namespace EspionSpotify
 
         private void ReloadExternalAPI()
         {
-            if (Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3)
+            if (_userSettings.IsSpotifyAPISet &&
+                Settings.Default.app_selected_external_api_id == (int) ExternalAPIType.Spotify)
             {
-                if (_userSettings.IsSpotifyAPISet &&
-                    Settings.Default.app_selected_external_api_id == (int) ExternalAPIType.Spotify)
-                {
-                    SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
-                    return;
-                }
-                
-                SetExternalAPI(ExternalAPIType.LastFM);
+                SetExternalAPI(ExternalAPIType.Spotify, _userSettings.IsSpotifyAPISet);
                 return;
-         
             }
             
-            SetExternalAPI(ExternalAPIType.None);
+            SetExternalAPI(ExternalAPIType.LastFM);
         }
 
         private void SetExternalAPI(ExternalAPIType api, bool isSpotifyAPISet = false)
@@ -659,7 +651,6 @@ namespace EspionSpotify
 
             var mediaFormat = rb?.Tag?.ToString().ToMediaFormat() ?? MediaFormat.Mp3;
             _userSettings.MediaFormat = mediaFormat;
-            tlpAPI.Visible = mediaFormat == MediaFormat.Mp3;
             Settings.Default.settings_media_audio_format = mediaFormatIndex;
             Settings.Default.Save();
             ReloadExternalAPI();
