@@ -102,7 +102,7 @@ namespace EspionSpotify
             Running = true;
 
             // await _audioThrottler.WaitBufferReady();
-            await RecordAvailableData(SilenceAnalyzer.TrimStart);
+            // await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
             while (Running)
             {
@@ -111,7 +111,7 @@ namespace EspionSpotify
                 await RecordAvailableData(SilenceAnalyzer.None);
             }
 
-            await RecordAvailableData(SilenceAnalyzer.TrimEnd);
+            // await RecordAvailableData(SilenceAnalyzer.TrimEnd);
 
             await RecordingStopped();
         }

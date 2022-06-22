@@ -19,7 +19,6 @@ namespace EspionSpotify.AudioSessions
         private bool _disposed;
         private const int DETECTED_SILENCE_MS = 500;
         private readonly object _lockObject;
-        private bool _dequeuing;
         
         private const int BUFFER_TOTAL_SIZE_IN_SECOND = 4;
         
@@ -91,10 +90,7 @@ namespace EspionSpotify.AudioSessions
 
         public async Task<AudioWaveBuffer> Read(SilenceAnalyzer silence = SilenceAnalyzer.None)
         {
-            // if (_dequeuing) return null;
-            
             AudioWaveBuffer result = null;
-            // _dequeuing = true;
 
             await WaitBufferReady();
             
@@ -158,7 +154,6 @@ namespace EspionSpotify.AudioSessions
                 }
             }
 
-            // _dequeuing = false;
             return result;
         }
 

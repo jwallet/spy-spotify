@@ -80,9 +80,10 @@ namespace EspionSpotify
 
         public bool RecorderUpAndRunning => _recorderTasks.Any(x => 
             !x.Task.IsCompleted && 
-            x.Recorder.Track.Equals(_currentTrack) && 
             x.Recorder != null && 
-            x.Recorder.Running);
+            x.Recorder.Running &&
+            x.Recorder.Track.Equals(_currentTrack)
+        );
 
         public bool IsTypeAllowed => _currentTrack.IsNormalPlaying || IsRecordUnknownActive;
 
