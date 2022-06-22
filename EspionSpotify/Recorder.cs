@@ -43,7 +43,6 @@ namespace EspionSpotify
             _track = new Track();
         }
 
-
         internal Recorder(
             IFrmEspionSpotify form,
             IAudioThrottler audioThrottler,
@@ -373,6 +372,7 @@ namespace EspionSpotify
             switch (_userSettings.MediaFormat)
             {
                 case MediaFormat.Mp3:
+                case MediaFormat.Wav:
                     var mapper = new MapperID3(
                         _currentOutputFile.ToMediaFilePath(),
                         _track,
