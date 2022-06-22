@@ -241,13 +241,14 @@ namespace EspionSpotify
 
         private async Task RunSpotifyConnect()
         {
-            if (!SpotifyConnect.IsSpotifyInstalled(_fileSystem)) return;
-
-            if (!SpotifyConnect.IsSpotifyRunning())
+            if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
             {
-                _form.WriteIntoConsole(I18NKeys.LogSpotifyConnecting);
-                await SpotifyConnect.Run(_fileSystem);
-            }
+                if (!SpotifyConnect.IsSpotifyRunning())
+                {
+                    _form.WriteIntoConsole(I18NKeys.LogSpotifyConnecting);
+                    await SpotifyConnect.Run(_fileSystem);
+                }
+            };
 
             Running = true;
         }
