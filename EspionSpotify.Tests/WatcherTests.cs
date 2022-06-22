@@ -65,7 +65,7 @@ namespace EspionSpotify.Tests
                 {
                     new RecorderTask()
                     {
-                        Task = Task.Run(() => true),
+                        Task = Task.CompletedTask,
                         Recorder = new Recorder(),
                         Token = new CancellationTokenSource()
                     }
@@ -77,24 +77,18 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void RecorderUpAndRunning_TruthyWhenRecorderRunning()
         {
-            var track = new Track() {Artist = "Artist", Title = "Title", Ad = false};
             var watcher = new Watcher(
                 _form,
                 _audioSession,
                 _userSettings,
-                track,
+                new Track(),
                 _fileSystem,
                 new List<RecorderTask>()
                 {
                     new RecorderTask()
                     {
                         Task = Task.Delay(1000),
-                        Recorder = new Recorder(
-                            _form,
-                            _audioThrottler,
-                            _userSettings,
-                            ref track,
-                            _fileSystem)
+                        Recorder = new Recorder()
                         {
                             Running = true,
                         },

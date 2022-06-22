@@ -38,7 +38,10 @@ namespace EspionSpotify
         private OutputFile _currentOutputFile;
         private Stream _tempWaveWriter;
 
-        public Recorder() { }
+        public Recorder()
+        {
+            _track = new Track();
+        }
 
         public Recorder(
             IFrmEspionSpotify form,

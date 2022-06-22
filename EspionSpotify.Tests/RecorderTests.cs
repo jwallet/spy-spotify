@@ -23,9 +23,12 @@ namespace EspionSpotify.Tests
         public RecorderTests()
         {
             _formMock = new Mock<IFrmEspionSpotify>().Object;
-            _audioThrottler = new Mock<IAudioThrottler>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
+            
+            var audioThrottlerMock = new Mock<IAudioThrottler>();
+            audioThrottlerMock.Setup(x => x.WaveFormat).Returns(new WaveFormat());
+            _audioThrottler = audioThrottlerMock.Object;
         }
 
         [Fact]
