@@ -13,14 +13,17 @@ namespace EspionSpotify.Spotify
 
         private static readonly string[] SpotifyPossiblePaths =
         {
-            Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.ApplicationData),
-                @"\Roaming\Spotify\Spotify.exe"),
+            // app store
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData),
                 @"Microsoft\WindowsApps\Spotify.exe"),
+            // installer
+            Path.Combine(
+                Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData),
+                @"\Roaming\Spotify\Spotify.exe"),
+            // custom install
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ProgramFiles),
