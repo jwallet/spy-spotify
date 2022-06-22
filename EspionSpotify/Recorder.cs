@@ -43,12 +43,21 @@ namespace EspionSpotify
             _track = new Track();
         }
 
+
+        internal Recorder(
+            IFrmEspionSpotify form,
+            IAudioThrottler audioThrottler,
+            UserSettings userSettings,
+            ref Track track,
+            IFileSystem fileSystem) : this(form, audioThrottler, userSettings, ref track, fileSystem, init: true) { }
+
         public Recorder(
             IFrmEspionSpotify form,
             IAudioThrottler audioThrottler,
             UserSettings userSettings,
             ref Track track,
-            IFileSystem fileSystem)
+            IFileSystem fileSystem,
+            bool init)
         {
             _userSettings = new UserSettings();
             userSettings.CopyAllTo(_userSettings);
@@ -59,7 +68,7 @@ namespace EspionSpotify
             _track = track;
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
 
-            _initiated = Init();
+            _initiated = init && Init();
         }
 
         public Track Track => _track;

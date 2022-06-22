@@ -18,7 +18,6 @@ namespace EspionSpotify.Tests
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
         private readonly IFileSystem _fileSystem;
-        private readonly IAudioThrottler _audioThrottler;
 
         public WatcherTests()
         {
@@ -26,10 +25,6 @@ namespace EspionSpotify.Tests
             _audioSession = new Mock<IMainAudioSession>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
-            
-            var audioThrottlerMock = new Mock<IAudioThrottler>();
-            audioThrottlerMock.Setup(x => x.WaveFormat).Returns(new WaveFormat());
-            _audioThrottler = audioThrottlerMock.Object;
         }
 
         [Fact]

@@ -48,7 +48,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettings,
                 ref track,
-                _fileSystem);
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackNotFound.IsSkipTrackActive);
         }
@@ -74,7 +75,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettingsCanDuplicate,
                 ref track,
-                _fileSystem);
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
         }
@@ -100,7 +102,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettingsCanDuplicate,
                 ref track,
-                _fileSystem);
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
         }
@@ -121,7 +124,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettings,
                 ref track,
-                _fileSystem);
+                _fileSystem,
+                init: false);
 
             Assert.True(watcherTrackFound.IsSkipTrackActive);
         }
@@ -137,7 +141,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettings,
                 ref track,
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<WaveFileWriter>(result);
         }
@@ -153,7 +158,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettings,
                 ref track,
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<LameMP3FileWriter>(result);
         }
@@ -170,7 +176,8 @@ namespace EspionSpotify.Tests
                 _audioThrottler,
                 userSettings,
                 ref track,
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
 
             Assert.Equal("Failed to get FileWriter", exception.Message);
         }
