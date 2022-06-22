@@ -1056,7 +1056,10 @@ namespace EspionSpotify
 
             SetSpotifyAPIOption();
 
-            if (result == DialogResult.No) rbLastFMAPI.Checked = true;
+            if (result == DialogResult.No)
+            {
+                rbLastFMAPI.Checked = true;
+            }
 
             if (result != DialogResult.Cancel)
             {

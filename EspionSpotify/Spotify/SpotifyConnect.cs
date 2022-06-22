@@ -22,7 +22,7 @@ namespace EspionSpotify.Spotify
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData),
-                @"\Roaming\Spotify\Spotify.exe"),
+                @"\Spotify\Spotify.exe"),
             // custom install
             Path.Combine(
                 Environment.GetFolderPath(
