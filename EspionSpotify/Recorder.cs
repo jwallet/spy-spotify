@@ -12,7 +12,6 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Translations;
-using NAudio.CoreAudioApi;
 using NAudio.Lame;
 using NAudio.Wave;
 
@@ -22,39 +21,57 @@ namespace EspionSpotify
     {
         public const int MP3_MAX_NUMBER_CHANNELS = 2;
         public const int MP3_MAX_SAMPLE_RATE = 48000;
-        private readonly IMainAudioSession _audioSession;
+        
+        private readonly bool _initiated;
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private readonly IFrmEspionSpotify _form;
         private readonly Track _track;
-
+        private readonly IAudioThrottler _audioThrottler;
         private readonly UserSettings _userSettings;
-        private bool _canBeSkippedValidated;
-        private CancellationTokenSource _cancellationTokenSource;
-        private OutputFile _currentOutputFile;
-        private bool _dataStillAvailable;
+
         private bool _disposed;
         private string _tempEncodeFile;
         private string _tempOriginalFile;
+        private bool _canBeSkippedValidated;
+        private CancellationTokenSource _cancellationTokenSource;
+        private OutputFile _currentOutputFile;
         private Stream _tempWaveWriter;
-        private WasapiLoopbackCapture _waveIn;
 
         public Recorder()
         {
+            _track = new Track();
         }
 
-        public Recorder(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track,
-            IFileSystem fileSystem)
+
+        internal Recorder(
+            IFrmEspionSpotify form,
+            IAudioThrottler audioThrottler,
+            UserSettings userSettings,
+            ref Track track,
+            IFileSystem fileSystem) : this(form, audioThrottler, userSettings, ref track, fileSystem, init: true) { }
+
+        public Recorder(
+            IFrmEspionSpotify form,
+            IAudioThrottler audioThrottler,
+            UserSettings userSettings,
+            ref Track track,
+            IFileSystem fileSystem,
+            bool init)
         {
             _userSettings = new UserSettings();
             userSettings.CopyAllTo(_userSettings);
 
             _form = form;
-            _audioSession = audioSession;
+            _audioThrottler = audioThrottler;
             _fileSystem = fileSystem;
             _track = track;
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
+
+            _initiated = init && Init();
         }
+
+        public Track Track => _track;
 
         public bool IsSkipTrackActive =>
             _userSettings.RecordRecordingsStatus == RecordRecordingsStatus.Skip
@@ -62,28 +79,16 @@ namespace EspionSpotify
 
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
+        
+        private WaveFormat WaveFormat => _audioThrottler.WaveFormat;
 
-        #region RecorderStart
-
-        public async Task Run(CancellationTokenSource cancellationTokenSource)
+        private bool Init()
         {
-            _cancellationTokenSource = cancellationTokenSource;
-
-            if (_userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
-            if (_audioSession.AudioMMDevicesManager.AudioEndPointDevice == null) return;
-
-            Running = true;
-
             _tempOriginalFile = _fileManager.GetTempFile();
-
-            _waveIn = new WasapiLoopbackCapture(_audioSession.AudioMMDevicesManager.AudioEndPointDevice);
-            _waveIn.ShareMode = AudioClientShareMode.Shared;
-            _waveIn.DataAvailable += WaveIn_DataAvailable;
-            _waveIn.RecordingStopped += WaveIn_RecordingStopped;
 
             try
             {
-                _tempWaveWriter = new WaveFileWriter(_tempOriginalFile, _waveIn.WaveFormat);
+                _tempWaveWriter = new WaveFileWriter(_tempOriginalFile, WaveFormat);
             }
             catch (Exception ex)
             {
@@ -91,23 +96,36 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18NKeys.LogUnknownException, ex.Message);
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
-                return;
+                return false;
             }
 
-            await Task.Delay(50);
-            _waveIn.StartRecording();
-            _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
+            return true;
+        }
 
+        #region RecorderStart
+
+        public async Task Run(CancellationTokenSource cancellationTokenSource)
+        {
+            _cancellationTokenSource = cancellationTokenSource;
+
+            if (!_initiated || _userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
+
+            _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
+            Running = true;
+
+            // await _audioThrottler.WaitBufferReady();
+            // await RecordAvailableData(SilenceAnalyzer.TrimStart);
+            
             while (Running)
             {
                 if (_cancellationTokenSource.IsCancellationRequested) return;
                 if (await StopRecordingIfTrackCanBeSkipped()) return;
-                await Task.Delay(100);
+                await RecordAvailableData(SilenceAnalyzer.None);
             }
 
-            while (_dataStillAvailable) await Task.Delay(100);
+            // await RecordAvailableData(SilenceAnalyzer.TrimEnd);
 
-            _waveIn.StopRecording();
+            await RecordingStopped();
         }
 
         #endregion RecorderStart
@@ -130,20 +148,26 @@ namespace EspionSpotify
 
         #region RecorderWriteUpcomingData
 
-        private async void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        private async Task RecordAvailableData(SilenceAnalyzer analyzer)
         {
-            if (_tempWaveWriter == null || !Running) return;
-
-            _dataStillAvailable = true;
-            await _tempWaveWriter.WriteAsync(e.Buffer, 0, e.BytesRecorded);
-            _dataStillAvailable = false;
+            if (_tempWaveWriter == null) return;
+            
+            var audio = await _audioThrottler.Read(analyzer);
+            if (audio == null) return;
+            
+            await Task.Run(async () =>
+            {
+                await _tempWaveWriter.WriteAsync(
+                    audio.Buffer,
+                    0,
+                    audio.BytesRecordedCount);
+            });
         }
 
         #endregion RecorderWriteUpcomingData
 
         #region RecorderStopRecording
-
-        private async void WaveIn_RecordingStopped(object sender, StoppedEventArgs e)
+        private async Task RecordingStopped()
         {
             while (_track.MetaDataUpdated == null) await Task.Delay(100);
             var skipped = !_canBeSkippedValidated && await StopRecordingIfTrackCanBeSkipped();
@@ -180,7 +204,6 @@ namespace EspionSpotify
             }
 
             _fileManager.DeleteFile(_tempOriginalFile);
-            if (_waveIn != null) _waveIn.Dispose();
 
             _currentOutputFile = _fileManager.GetOutputFileAndInitDirectories();
 
@@ -308,7 +331,7 @@ namespace EspionSpotify
 
         private async Task EncodeWaveFileToMediaFile()
         {
-            var restrictions = _waveIn.WaveFormat.GetMP3RestrictionCode();
+            var restrictions = WaveFormat.GetMP3RestrictionCode();
             using (var tempFileStream = _fileSystem.File.OpenRead(_tempOriginalFile))
             {
                 tempFileStream.Position = 0;
@@ -318,11 +341,11 @@ namespace EspionSpotify
                     using (var mediaFileStream = _fileSystem.FileStream.Create(_tempEncodeFile, FileMode.Create,
                                FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
-                        using (var mediaWriter = GetMediaFileWriter(mediaFileStream, _waveIn.WaveFormat))
+                        using (var mediaWriter = GetMediaFileWriter(mediaFileStream, WaveFormat))
                         {
                             if (_userSettings.MediaFormat == MediaFormat.Mp3 && restrictions.Any())
                                 await WriteWaveProviderReducerToMP3FileWriter(mediaWriter,
-                                    GetMp3WaveProvider(tempReader, _waveIn.WaveFormat));
+                                    GetMp3WaveProvider(tempReader, WaveFormat));
                             else
                                 await tempReader.CopyToAsync(mediaWriter, 81920, _cancellationTokenSource.Token);
                         }
@@ -421,8 +444,8 @@ namespace EspionSpotify
 
         private async Task WriteWaveProviderReducerToMP3FileWriter(Stream mediaWriter, IWaveProvider stream)
         {
-            var mp3WaveFormat = GetWaveFormatMP3Supported(_waveIn.WaveFormat);
-            var data = new byte[mp3WaveFormat.Channels * mp3WaveFormat.SampleRate * _waveIn.WaveFormat.Channels];
+            var mp3WaveFormat = GetWaveFormatMP3Supported(WaveFormat);
+            var data = new byte[mp3WaveFormat.Channels * mp3WaveFormat.SampleRate * WaveFormat.Channels];
             int bytesRead;
             while ((bytesRead = stream.Read(data, 0, data.Length)) > 0)
                 await mediaWriter.WriteAsync(data, 0, bytesRead, _cancellationTokenSource.Token);
@@ -452,21 +475,11 @@ namespace EspionSpotify
 
         private void EndRecording()
         {
-            WaveInDispose();
             TempWaveWriterDispose();
 
             _fileManager.DeleteFile(_tempOriginalFile);
 
             if (_currentOutputFile != null) _fileManager.DeleteFile(_tempEncodeFile);
-        }
-
-        private void WaveInDispose()
-        {
-            if (_waveIn == null) return;
-            _waveIn.DataAvailable -= WaveIn_DataAvailable;
-            _waveIn.RecordingStopped -= WaveIn_RecordingStopped;
-            _waveIn.Dispose();
-            _waveIn = null;
         }
 
         private void TempWaveWriterDispose()

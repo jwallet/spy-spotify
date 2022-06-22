@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
+using System.Threading;
+using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Models;
 using Moq;
+using NAudio.Wave;
+using SpotifyAPI.Web.Models;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -11,13 +15,13 @@ namespace EspionSpotify.Tests
     public class WatcherTests
     {
         private readonly IMainAudioSession _audioSession;
-        private readonly IFrmEspionSpotify _formMock;
+        private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
         private readonly IFileSystem _fileSystem;
 
         public WatcherTests()
         {
-            _formMock = new Mock<IFrmEspionSpotify>().Object;
+            _form = new Mock<IFrmEspionSpotify>().Object;
             _audioSession = new Mock<IMainAudioSession>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
@@ -33,11 +37,12 @@ namespace EspionSpotify.Tests
         internal void RecorderUpAndRunning_FalsyWhenNoRecorder()
         {
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 _userSettings,
                 new Track(),
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.False(watcher.RecorderUpAndRunning);
         }
@@ -45,14 +50,21 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void RecorderUpAndRunning_FalsyWhenRecorderNotRunning()
         {
-            var recorder = new Recorder();
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 _userSettings,
                 new Track(),
                 _fileSystem,
-                recorder);
+                new List<RecorderTask>()
+                {
+                    new RecorderTask()
+                    {
+                        Task = Task.CompletedTask,
+                        Recorder = new Recorder(),
+                        Token = new CancellationTokenSource()
+                    }
+                });
 
             Assert.False(watcher.RecorderUpAndRunning);
         }
@@ -60,14 +72,24 @@ namespace EspionSpotify.Tests
         [Fact]
         internal void RecorderUpAndRunning_TruthyWhenRecorderRunning()
         {
-            var recorder = new Recorder {Running = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 _userSettings,
                 new Track(),
                 _fileSystem,
-                recorder);
+                new List<RecorderTask>()
+                {
+                    new RecorderTask()
+                    {
+                        Task = Task.Delay(1000),
+                        Recorder = new Recorder()
+                        {
+                            Running = true,
+                        },
+                        Token = new CancellationTokenSource()
+                    }
+                });
 
             Assert.True(watcher.RecorderUpAndRunning);
         }
@@ -80,11 +102,13 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = false, Artist = title},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
+                
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -98,11 +122,12 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = true, Artist = title},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -112,11 +137,12 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = false};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = true, Artist = "Podcast"},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -126,11 +152,12 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = true, Artist = "Podcast", Ad = false},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.True(watcher.IsRecordUnknownActive);
         }
@@ -140,11 +167,12 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = true, Artist = "Podcast", Ad = true},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.True(watcher.IsRecordUnknownActive);
         }
@@ -154,11 +182,12 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings {RecordEverythingEnabled = true};
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 userSettings,
                 new Track {Playing = true, Artist = "#3", Title = "Podcast"},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
         }
@@ -182,7 +211,13 @@ namespace EspionSpotify.Tests
             }
 
             _userSettings.RecordEverythingEnabled = recordUnknownTrackTypeEnabled;
-            var watcher = new Watcher(_formMock, _audioSession, _userSettings, track, _fileSystem);
+            var watcher = new Watcher(
+                _form,
+                _audioSession,
+                _userSettings,
+                track,
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.Equal(expected, watcher.IsTypeAllowed);
         }
@@ -201,7 +236,13 @@ namespace EspionSpotify.Tests
         {
             _userSettings.EndingTrackDelayEnabled = endingTrackDelayEnabled;
             var track = new Track {CurrentPosition = trackCurrentPosition, Length = trackLength};
-            var watcher = new Watcher(_formMock, _audioSession, _userSettings, track, _fileSystem);
+            var watcher = new Watcher(
+                _form,
+                _audioSession,
+                _userSettings,
+                track,
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.Equal(expected, watcher.IsOldSong);
         }
@@ -210,11 +251,12 @@ namespace EspionSpotify.Tests
         internal void IsNewTrack_ReturnsExpectedResults()
         {
             var watcher = new Watcher(
-                _formMock,
+                _form,
                 _audioSession,
                 _userSettings,
                 new Track {Artist = Constants.SPOTIFYFREE},
-                _fileSystem);
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.False(watcher.IsNewTrack(null));
             Assert.False(watcher.IsNewTrack(new Track()));
@@ -234,7 +276,13 @@ namespace EspionSpotify.Tests
             _userSettings.OrderNumberInMediaTagEnabled = true;
             _userSettings.OrderNumberMask = "0000";
             _userSettings.InternalOrderNumber = orderNumber;
-            var watcher = new Watcher(_formMock, _audioSession, _userSettings, new Track(), _fileSystem);
+            var watcher = new Watcher(
+                _form,
+                _audioSession,
+                _userSettings,
+                new Track(),
+                _fileSystem,
+                new List<RecorderTask>());
 
             Assert.Equal(expected, watcher.IsMaxOrderNumberAsFileExceeded);
         }

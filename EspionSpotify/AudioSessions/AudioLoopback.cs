@@ -6,10 +6,12 @@ using NAudio.Wave;
 
 namespace EspionSpotify.AudioSessions
 {
-    public class AudioLoopback: IDisposable
+    public class AudioLoopback: IAudioLoopback, IDisposable
     {
         private readonly bool _canDo = false;
         private bool _isDisposed = false;
+        
+        private const int BUFFER_TOTAL_SIZE_MS = 10_000;
         
         private readonly BufferedWaveProvider _bufferedWaveProvider;
         private readonly WasapiLoopbackCapture _waveIn;
@@ -25,8 +27,12 @@ namespace EspionSpotify.AudioSessions
             
             _waveIn = new WasapiLoopbackCapture(currentEndpointDevice);
             _waveIn.DataAvailable += OnDataAvailable;
-            
-            _bufferedWaveProvider = new BufferedWaveProvider(_waveIn.WaveFormat);
+
+            _bufferedWaveProvider = new BufferedWaveProvider(_waveIn.WaveFormat)
+            {
+                DiscardOnBufferOverflow = true,
+                BufferDuration = TimeSpan.FromMilliseconds(BUFFER_TOTAL_SIZE_MS)
+            };
 
             _waveOut = new WaveOut();
         }
@@ -40,7 +46,9 @@ namespace EspionSpotify.AudioSessions
 
             _waveIn.StartRecording();
             _waveOut.Init(_bufferedWaveProvider);
-            _waveOut.Play();
+            
+            // TODO: Stop duplicate playback with user settings
+            // _waveOut.Play();
             
             while (Running)
             {

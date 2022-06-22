@@ -177,7 +177,13 @@
   <ItemGroup>
     <Compile Include="Analytics.cs" />
     <Compile Include="API\NoneAPI.cs" />
+    <Compile Include="AudioSessions\AudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\AudioLoopback.cs" />
+    <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
+    <Compile Include="AudioSessions\IAudioLoopback.cs" />
+    <Compile Include="AudioSessions\IAudioThrottler.cs" />
+    <Compile Include="Enums\SilenceAnalyzer.cs" />
+    <Compile Include="Models\AudioWaveBuffer.cs" />
     <Compile Include="Native\Models\HRESULT.cs" />
     <Compile Include="Router\AudioRouter.cs" />
     <Compile Include="Router\Helpers\AudioPolicyConfigFactory.cs" />
@@ -188,6 +194,7 @@
     <Compile Include="Router\IAudioPolicyConfigFactoryDownlevel.cs" />
     <Compile Include="Router\IAudioRouter.cs" />
     <Compile Include="AudioSessions\AudioMMDevicesManager.cs" />
+    <Compile Include="AudioSessions\AudioThrottler.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\MetroCredentialsForm.cs">
       <SubType>Form</SubType>

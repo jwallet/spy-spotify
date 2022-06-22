@@ -15,7 +15,7 @@ namespace EspionSpotify.Tests
 {
     public class RecorderTests
     {
-        private readonly IMainAudioSession _audioSession;
+        private readonly IAudioThrottler _audioThrottler;
         private readonly IFrmEspionSpotify _formMock;
         private readonly UserSettings _userSettings;
         private IFileSystem _fileSystem;
@@ -23,9 +23,12 @@ namespace EspionSpotify.Tests
         public RecorderTests()
         {
             _formMock = new Mock<IFrmEspionSpotify>().Object;
-            _audioSession = new Mock<IMainAudioSession>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
+            
+            var audioThrottlerMock = new Mock<IAudioThrottler>();
+            audioThrottlerMock.Setup(x => x.WaveFormat).Returns(new WaveFormat());
+            _audioThrottler = audioThrottlerMock.Object;
         }
 
         [Fact]
@@ -38,12 +41,15 @@ namespace EspionSpotify.Tests
                 TrackTitleSeparator = "_",
                 MediaFormat = MediaFormat.Mp3
             };
+            var track = new Track {Artist = "Artist", Title = "Title"};
+            
             var watcherTrackNotFound = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettings,
-                new Track {Artist = "Artist", Title = "Title"},
-                _fileSystem);
+                ref track,
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackNotFound.IsSkipTrackActive);
         }
@@ -62,12 +68,15 @@ namespace EspionSpotify.Tests
             {
                 {@"C:\path\Artist_-_Dont_Overwrite_Me.mp3", new MockFileData(new byte[] {0x12, 0x34, 0x56, 0xd2})}
             });
+            var track = new Track {Artist = "Artist", Title = "Dont Overwrite Me"};
+            
             var watcherTrackFoundCanDuplicate = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettingsCanDuplicate,
-                new Track {Artist = "Artist", Title = "Dont Overwrite Me"},
-                _fileSystem);
+                ref track,
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
         }
@@ -86,12 +95,15 @@ namespace EspionSpotify.Tests
             {
                 {@"C:\path\Artist_-_Dont_Overwrite_Me.mp3", new MockFileData(new byte[] {0x12, 0x34, 0x56, 0xd2})}
             });
+            var track = new Track {Artist = "Artist", Title = "Dont Overwrite Me"};
+            
             var watcherTrackFoundCanDuplicate = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettingsCanDuplicate,
-                new Track {Artist = "Artist", Title = "Dont Overwrite Me"},
-                _fileSystem);
+                ref track,
+                _fileSystem,
+                init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
         }
@@ -105,12 +117,15 @@ namespace EspionSpotify.Tests
             });
             var userSettings = new UserSettings
                 {OutputPath = @"C:\path", TrackTitleSeparator = "_", MediaFormat = MediaFormat.Mp3};
+            var track = new Track {Artist = "Artist", Title = "Existing Track", Playing = true};
+            
             var watcherTrackFound = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettings,
-                new Track {Artist = "Artist", Title = "Existing Track", Playing = true},
-                _fileSystem);
+                ref track,
+                _fileSystem,
+                init: false);
 
             Assert.True(watcherTrackFound.IsSkipTrackActive);
         }
@@ -119,13 +134,15 @@ namespace EspionSpotify.Tests
         internal void GetMediaFileWriter_WithWavFormat_ReturnsWaveFileWriter()
         {
             var userSettings = new UserSettings {MediaFormat = MediaFormat.Wav};
+            var track = new Track();
 
             var result = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettings,
-                new Track(),
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+                ref track,
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<WaveFileWriter>(result);
         }
@@ -134,13 +151,15 @@ namespace EspionSpotify.Tests
         internal void GetMediaFileWriter_WithMp3Format_ReturnsLameMP3FileWriter()
         {
             var userSettings = new UserSettings {MediaFormat = MediaFormat.Mp3, Bitrate = LAMEPreset.ABR_160};
-
+            var track = new Track();
+            
             var result = new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettings,
-                new Track(),
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
+                ref track,
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<LameMP3FileWriter>(result);
         }
@@ -150,13 +169,15 @@ namespace EspionSpotify.Tests
         {
             var userSettings = new UserSettings
                 {MediaFormat = (MediaFormat) short.MinValue, Bitrate = LAMEPreset.ABR_160};
-
+            var track = new Track();
+            
             var exception = Assert.Throws<Exception>(() => new Recorder(
                 _formMock,
-                _audioSession,
+                _audioThrottler,
                 userSettings,
-                new Track(),
-                _fileSystem).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
+                ref track,
+                _fileSystem,
+                init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
 
             Assert.Equal("Failed to get FileWriter", exception.Message);
         }
