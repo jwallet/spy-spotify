@@ -100,12 +100,15 @@ namespace EspionSpotify.AudioSessions
                 {
                     lock (_lockObject)
                     {
-                        var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.Count);
-                        var readPosition = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: true);
-                        if (readPosition > 0)
-                        {
-                            _buffer.Advance(readPosition);
-                        }
+                        // temporary push
+                        _buffer.Advance(_buffer.Count);
+
+                        // var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.Count);
+                        // var readPosition = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: true);
+                        // if (readPosition > 0)
+                        // {
+                        //     _buffer.Advance(readPosition);
+                        // }
                         var read = _buffer.Read(out var data, 0, _waveIn.WaveFormat.AverageBytesPerSecond);
                         if (read > 0)
                         {
@@ -119,9 +122,10 @@ namespace EspionSpotify.AudioSessions
                 {
                     lock (_lockObject)
                     {
-                        var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.Count);
-                        var validRead = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: false);
-                        var read = _buffer.Read(out var data, 0, validRead);
+                        // var readPeek = _buffer.Peek(out var dataPeek, 0, _buffer.Count);
+                        // var validRead = BufferPositionWithoutSilence(dataPeek, readPeek, recursive: false);
+                        // var read = _buffer.Read(out var data, 0, validRead);
+                        var read = _buffer.Read(out var data, 0, _buffer.Count);
                         if (read > 0)
                         {
                             result = ToAudioWaveBuffer(data, read);
@@ -134,16 +138,15 @@ namespace EspionSpotify.AudioSessions
                 {
                     lock (_lockObject)
                     {
-                        // if (_buffer.Count >= BufferReadOffset)
-                        // {
+                        if (_buffer.Count >= BufferReadOffset)
+                        {
                             var read = _buffer.Read(out var data, 0,
-                            _buffer.Count);
-                            // _waveIn.WaveFormat.AverageBytesPerSecond);
+                            _waveIn.WaveFormat.AverageBytesPerSecond);
                             if (read > 0)
                             {
                                 result = ToAudioWaveBuffer(data, read);
                             }
-                        // }
+                        }
                     }
 
                     break;
