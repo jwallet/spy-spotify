@@ -7,13 +7,25 @@ title: Donate
 
 Do you enjoy Spytify?
 
-If so, you can support this project from one of these ways:
+ <p>
+    You can use the donation form below to offer me:</p>
+    <ul>
+        <li>A coffee ☕ to keep me awake during those long nights of coding.</li>
+        <li>A beer 🍺 to celebrate a new Spytify version that came out.</li>
+        <li>More beers 🍻, to let me know that you love Spytify and you want me to keep working hard on it.</li>
+    </ul>
+    <p>Top donations will be added to the donors list using the full name you provided, it doesn't need to be your real name. Don't forget to leave me a message/comment, I love reading those!</p>
+    <p><i style="font-size:80%">Transactions are handled by <a href="https://stripe.com/en-ca">Stripe online payments services</a>.  
+    If you forgot to set your donation as anonymously before sending it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i>
+</p>
 
-- via credit card (can choose to be anonymous or not and leave a comment)
-- via cryptocurrency (will be anonymous)
-- via PayPal (can leave a comment: if you want to stay anonymous, write it in the note)
+<!-- If so, you can support this project from one of these ways: -->
 
-<section id="credit">
+<!-- - via credit card (can choose to be anonymous or not and leave a comment) -->
+<!-- - via cryptocurrency (will be anonymous) -->
+<!-- - via PayPal (can leave a comment: if you want to stay anonymous, write it in the note) -->
+
+<!-- <section id="credit">
     <details class="faq">
         <summary class="faq_title">
             <h3>
@@ -35,9 +47,9 @@ If so, you can support this project from one of these ways:
             If you forgot to set your donation as anonymously before sending it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i></p>
         </article>
     </details>
-</section>
+</section> -->
 
-<section id="crypto">
+<!-- <section id="crypto">
     <details class="faq">
         <summary class="faq_title">
             <h3>
@@ -70,9 +82,9 @@ If so, you can support this project from one of these ways:
             <blockquote>Thanks a lot for your donation and for your support to this project!</blockquote>
         </article>
     </details>
-</section>
+</section> -->
 
-<section id="paypal">
+<!-- <section id="paypal">
     <details class="faq">
         <summary class="faq_title">
             <h3>
@@ -87,7 +99,7 @@ If so, you can support this project from one of these ways:
             <p><span class="crypto"><svg version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" style="enable-background:new 0 0 512 512;" xml:space="preserve"><path style="fill:#002987;" d="M428.876,132.28c0.867-7.045,1.32-14.218,1.32-21.497C430.196,49.6,380.597,0,319.413,0H134.271  c-11.646,0-21.589,8.41-23.521,19.894l-68.22,405.475c-2.448,14.55,8.768,27.809,23.521,27.809h67.711  c11.646,0,21.776-8.404,23.707-19.889c0,0,0.113-0.673,0.317-1.885h0.001l-9.436,56.086C146.195,500.313,156.08,512,169.083,512  h59.237c10.265,0,19.029-7.413,20.731-17.535l16.829-100.02c2.901-17.242,17.828-29.867,35.311-29.867h15.562  c84.53,0,153.054-68.525,153.054-153.054C469.807,178.815,453.639,149.902,428.876,132.28z"></path><path style="fill:#0085CC;" d="M428.876,132.28c-10.594,86.179-84.044,152.91-173.086,152.91h-51.665  c-11.661,0-21.732,7.767-24.891,18.749l-30.882,183.549C146.195,500.312,156.08,512,169.083,512h59.237  c10.265,0,19.029-7.413,20.731-17.535l16.829-100.02c2.901-17.242,17.828-29.867,35.311-29.867h15.562  c84.53,0,153.054-68.525,153.054-153.054l0,0C469.807,178.815,453.639,149.902,428.876,132.28z"></path><path style="fill:#00186A;" d="M204.125,285.19h51.665c89.043,0,162.493-66.731,173.086-152.909  c-15.888-11.306-35.304-17.978-56.29-17.978h-134.85c-15.353,0-28.462,11.087-31.01,26.227l-27.493,163.408  C182.392,292.956,192.464,285.19,204.125,285.19z"></path></svg><a href="https://www.paypal.com/paypalme/spyspotify">Buy me a beer</a> 🍺</span></p>
         </article>
     </details>
-</section>
+</section> -->
 
 <article class="donate">
     <section style="display:flex;flex-direction:column;">
