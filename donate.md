@@ -7,7 +7,7 @@ title: Donate
 
 Do you enjoy Spytify?
 
- <p>
+<p>
     <p>You can use the donation form below to offer me:</p>
     <ul>
         <li>A coffee ☕ to keep me awake during those long nights of coding.</li>
@@ -16,7 +16,7 @@ Do you enjoy Spytify?
     </ul>
     <p>Top donations will be added to the donors list using the full name you provided, it doesn't need to be your real name. Don't forget to leave me a message/comment, I love reading those!</p>
     <p><i style="font-size:80%">Transactions are handled by <a href="https://stripe.com/en-ca">Stripe online payments services</a>.  
-    If you forgot to set your donation as anonymously before sending it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i>
+    If you forgot to set your donation as anonymously before sending it, please <a href="https://www.github.com/jwallet/">email me</a> and I will remove your name from this page.</i></p>
 </p>
 
 <!-- If so, you can support this project from one of these ways: -->
