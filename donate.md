@@ -8,7 +8,7 @@ title: Donate
 Do you enjoy Spytify?
 
  <p>
-    You can use the donation form below to offer me:</p>
+    <p>You can use the donation form below to offer me:</p>
     <ul>
         <li>A coffee ☕ to keep me awake during those long nights of coding.</li>
         <li>A beer 🍺 to celebrate a new Spytify version that came out.</li>
