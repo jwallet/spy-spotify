@@ -1,12 +1,12 @@
-start Windows Docker
+1. start Windows Docker
 
-run command:
+2. run command:
 
 ```
 powershell >
-docker run --rm --label=jekyll --volume=D:\dev\spy-spotify-web\:/srv/jekyll -it -p 4000:4000 jekyll/jekyll jekyll serve --trace --force_polling -w
+docker pull jekyll/jekyll:3.8
+docker build . -t jekyll/jekyll:3.8
+docker run --rm --label=jekyll --volume=D:\dev\spy-spotify\:/srv/jekyll -it -p 4000:4000 jekyll/jekyll:3.9.2 jekyll serve --trace --force_polling -w
 ```
 
-copy paste the `_site` directory to root
-
-visit `http://localhost:4000/spy-spotify/overview.html`
+3. visit `http://localhost:4000/spy-spotify/overview.html`

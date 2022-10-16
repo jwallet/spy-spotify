@@ -49,7 +49,7 @@
 <ul>
   <li><a href="https://github.com/jwallet/spy-spotify/releases/latest">Download</a> Spytify-v.<em>X</em>.<em>Y</em>.<em>Z</em>.zip in the assets section of the latest release.</li>
   <li>Extract all the content of the zip file.</li>
-  <li>Find <code class="language-plaintext highlighter-rouge">Spytify.exe</code> and run it.</li>
+  <li>Find <code class="highlighter-rouge">Spytify.exe</code> and run it.</li>
   <li>If a pop-up appears, it’s a warning that comes from Windows Defender because Spytify is not registered to Microsoft Store. They prompt that message to protect you and your PC against malwares and/or unknown publisher. Spytify is an unknown publisher because I decide not to make profit out of it, I provide it for free, I’m not a company, so I have no good reason to pay Microsoft to get a developper license and remove that warning. You just have to trust me or trust the code (available on GitHub). So to open the app, click on <em>More Info</em> then on <em>Run anyway</em> and the app should appear.</li>
 </ul>
 
@@ -72,7 +72,7 @@
                 How can I maximize the audio quality of my recordings?
             </h3>
         </summary>
-        <article class="faq_content"><p>Spytify relies on your audio device quality to record audio files. If your choosen audio endpoint device in Spytify produces bad <code class="language-plaintext highlighter-rouge">.mp3</code> quality, I suggest you :</p>
+        <article class="faq_content"><p>Spytify relies on your audio device quality to record audio files. If your choosen audio endpoint device in Spytify produces bad <code class="highlighter-rouge">.mp3</code> quality, I suggest you :</p>
 
 <ul>
   <li>Use another device like the your main PC sound board.</li>
@@ -82,9 +82,9 @@
   <li>Install Virtual Audio Cable that comes with Spytify and connect both apps with it.</li>
 </ul>
 
-<p>When encoding, <code class="language-plaintext highlighter-rouge">.mp3</code> has a limitation of 2 channels (stereo) and a sample rate of 44,000 Hz, compare to <code class="language-plaintext highlighter-rouge">.wav</code> that has less limitations.</p>
+<p>When encoding, <code class="highlighter-rouge">.mp3</code> has a limitation of 2 channels (stereo) and a sample rate of 44,000 Hz, compare to <code class="highlighter-rouge">.wav</code> that has less limitations.</p>
 
-<p>You can increase the bitrate in Spytify settings, but if you have <em>Spotify Free</em> it normally delivers music to <code class="language-plaintext highlighter-rouge">160kbps</code> and <code class="language-plaintext highlighter-rouge">320kbps</code> on Premium.</p>
+<p>You can increase the bitrate in Spytify settings, but if you have <em>Spotify Free</em> it normally delivers music to <code class="highlighter-rouge">160kbps</code> and <code class="highlighter-rouge">320kbps</code> on Premium.</p>
 
 <p align="center"><img alt="Spytify audio settings" src="./assets/images/faq_audio_profile.png" /></p>
 
@@ -135,7 +135,7 @@
 <blockquote>
   <p>Virtual devices don’t have to do the big round-trip to render sound to you through a physical device, they can bypass that and keep the original audio quality much longer when sending it to different endpoints.</p>
 
-  <p>Below is the difference of using a <strong>normal/low</strong> end audio device versus a <strong>decent/high</strong> end audio device versus a <strong>virtual</strong> device, all recorded at <code class="language-plaintext highlighter-rouge">2CH 24bits 44kHz @160kpbs</code> using a <em>Michael Bubble</em> xmas song.</p>
+  <p>Below is the difference of using a <strong>normal/low</strong> end audio device versus a <strong>decent/high</strong> end audio device versus a <strong>virtual</strong> device, all recorded at <code class="highlighter-rouge">2CH 24bits 44kHz @160kpbs</code> using a <em>Michael Bubble</em> xmas song.</p>
 </blockquote>
 
 <figure>
@@ -218,9 +218,9 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
         </summary>
         <article class="faq_content"><p><a href="#install-better-audio-endpoint-device">Virtual Audio Device</a> are a good way to isolate apps together and get better recordings quality. However, by default, the apps you set on this device cannot be heard once you move them to this device, even if you change your default audio device for this one.</p>
 
-<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can set the Windows option <code class="language-plaintext highlighter-rouge">Listen to this device</code> in the device properties.</p>
+<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can set the Windows option <code class="highlighter-rouge">Listen to this device</code> in the device properties.</p>
 
-<p>Right click on the Audio 🔉 icon in the taskbar and select <strong>Open Sound settings</strong>, go down to the <em>Sound</em> section and select <strong>Sound Control Panel</strong>. In the <em>Recording</em> tab, select the <strong>CABLE Output</strong> device, then click on <strong>Properties</strong>. In the Device properties window, under <em>Listen</em> tab, check the option <code class="language-plaintext highlighter-rouge">Listen to this device</code>.</p>
+<p>Right click on the Audio 🔉 icon in the taskbar and select <strong>Open Sound settings</strong>, go down to the <em>Sound</em> section and select <strong>Sound Control Panel</strong>. In the <em>Recording</em> tab, select the <strong>CABLE Output</strong> device, then click on <strong>Properties</strong>. In the Device properties window, under <em>Listen</em> tab, check the option <code class="highlighter-rouge">Listen to this device</code>.</p>
 
 <p>If you <a href="#isolate-spotify-audio-endpoint">isolated Spotify and Spytify properly on the virutal audio device</a>, you can leave <strong>Default Playback Device</strong> selected for the <em>Playback through this device</em> option, otherwise if your default playback is somehow a different one than your headset/speaker, select it in the dropdown list. If the selected playback device is always the same one, you could leave Spytify and Spotify on the virtual cable as long as you want to be able to record great quality at anytime and still listen to your music.</p>
 
@@ -255,7 +255,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 
 <ul>
   <li>By default, Spytify recommands <strong>http://localhost:4002</strong>, so you can use this one;</li>
-  <li>If port <code class="language-plaintext highlighter-rouge">4002</code> is not available on your computer, you can choose another one like <code class="language-plaintext highlighter-rouge">5000</code>;</li>
+  <li>If port <code class="highlighter-rouge">4002</code> is not available on your computer, you can choose another one like <code class="highlighter-rouge">5000</code>;</li>
   <li>If you have a proxy, enter your proxy URL instead of those mentionned above;</li>
 </ul>
 
@@ -270,7 +270,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
 <ul>
   <li><em>Client ID</em></li>
   <li><em>Client Secret</em> (expand the <em>Show Client Secret</em> on the dashboard to reveal the key.)</li>
-  <li><em>Redirect URI</em> (if you added an URI different than <code class="language-plaintext highlighter-rouge">http://locahost:4002</code>)</li>
+  <li><em>Redirect URI</em> (if you added an URI different than <code class="highlighter-rouge">http://locahost:4002</code>)</li>
 </ul>
 
 <p align="center"><img alt="Set Spotify API credentials in app" src="./assets/images/faq_spotify_credentials.png" /></p>
@@ -343,7 +343,7 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
                 How to keep the same order than the recorded playlist on my recordings?
             </h3>
         </summary>
-        <article class="faq_content"><p>The recording order number option <code class="language-plaintext highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename.
+        <article class="faq_content"><p>The recording order number option <code class="highlighter-rouge">017_Artist_-_Title.mp3</code> is useful if you want to burn songs to CDs and that your MP3 player, like those in cars, orders songs by filename.
 You will get a CD with songs ordered in the same order than the album or the one shown by Spotify. If it’s a playlist, order it first on Spotify before recording it.</p>
 
 <p align="center"><img alt="Recording order number option" src="./assets/images/recording_number.png" /></p>
