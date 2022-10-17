@@ -37,7 +37,7 @@ namespace EspionSpotify
             I18NKeys.LogDeleting,
             I18NKeys.LogTrackExists
         };
-
+        
         private readonly UserSettings _userSettings;
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
         private bool _toggleStopRecordingDelayed;
@@ -368,7 +368,6 @@ namespace EspionSpotify
         private void SetLanguage()
         {
             var language = Settings.Default.settings_language;
-            var indexBitRate = Settings.Default.settings_media_bitrate_quality;
             var languageType = language.ToLanguageType() ?? LanguageType.en;
 
             var rmLanguage = Languages.GetResourcesManagerLanguageType(languageType);
@@ -419,6 +418,13 @@ namespace EspionSpotify
             tip.SetToolTip(lnkNumMinus, Rm.GetString(I18NKeys.TipNumModifierHold));
             tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18NKeys.TipSpotifyAPICredentials));
 
+            SetBitrateOptions();
+        }
+
+        private void SetBitrateOptions()
+        {
+            var indexBitRate = Settings.Default.settings_media_bitrate_quality;
+
             var bitrates = new Dictionary<LAMEPreset, string>
             {
                 {LAMEPreset.ABR_128, Rm.GetString(I18NKeys.CbOptBitRate128)},
@@ -435,11 +441,30 @@ namespace EspionSpotify
                 }
             };
 
+            var isCustomBitrate = indexBitRate > bitrates.Count;
+            var isValidPreset = Enum.IsDefined(typeof(LAMEPreset), indexBitRate);
+
+            if (isCustomBitrate && isValidPreset)
+            {
+                var preset = (LAMEPreset) indexBitRate;
+                if (!bitrates.ContainsKey(preset))
+                {
+                    bitrates.Add(preset, preset.ToString());
+                }
+            }
+
             cbBitRate.DataSource = new BindingSource(bitrates, null);
             cbBitRate.DisplayMember = "Value";
             cbBitRate.ValueMember = "Key";
 
-            cbBitRate.SelectedIndex = indexBitRate;
+            if (isCustomBitrate)
+            {
+                cbBitRate.SelectedIndex = bitrates.Count - 1;
+            }
+            else if (indexBitRate < bitrates.Count)
+            {
+                cbBitRate.SelectedIndex = indexBitRate;
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -855,7 +880,8 @@ namespace EspionSpotify
 
         private void CbBitRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.settings_media_bitrate_quality == cbBitRate.SelectedIndex) return;
+            var savedBitrate = Settings.Default.settings_media_bitrate_quality;
+            if (savedBitrate == cbBitRate.SelectedIndex || savedBitrate > cbBitRate.DataBindings.Count) return;
 
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
             Settings.Default.settings_media_bitrate_quality = cbBitRate.SelectedIndex;
