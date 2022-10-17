@@ -10,7 +10,6 @@ namespace EspionSpotify
 
         bool RecorderUpAndRunning { get; }
         bool IsTypeAllowed { get; }
-        bool IsOldSong { get; }
 
         Task Run();
     }

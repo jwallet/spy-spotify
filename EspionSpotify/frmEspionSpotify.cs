@@ -197,7 +197,7 @@ namespace EspionSpotify
             rbMp3.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Mp3;
             rbWav.Checked = Settings.Default.settings_media_audio_format == (int) MediaFormat.Wav;
             tbMinTime.Value = Settings.Default.settings_media_minimum_recorded_length_in_seconds / 5;
-            tgEndingSongDelay.Checked = Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
+            tgListenToSpotifyPlayback.Checked = Settings.Default.advanced_watcher_listen_to_spotify_playback_enabled;
             tgAddSeparators.Checked = Settings.Default.advanced_file_replace_space_by_underscore_enabled;
             tgNumTracks.Checked = Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
             tgNumFiles.Checked = Settings.Default.advanced_file_counter_number_prefix_enabled;
@@ -244,8 +244,8 @@ namespace EspionSpotify
             _userSettings.AudioEndPointDeviceID = _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID;
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
             _userSettings.RecordRecordingsStatus = Settings.Default.GetRecordRecordingsStatus();
-            _userSettings.EndingTrackDelayEnabled =
-                Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled;
+            _userSettings.ListenToSpotifyPlaybackEnabled =
+                Settings.Default.advanced_watcher_listen_to_spotify_playback_enabled;
             _userSettings.GroupByFoldersEnabled = Settings.Default.advanced_file_group_media_in_folders_enabled;
             _userSettings.MediaFormat = (MediaFormat) Settings.Default.settings_media_audio_format;
             _userSettings.MinimumRecordedLengthSeconds =
@@ -390,7 +390,7 @@ namespace EspionSpotify
             lblAddSeparators.Text = Rm.GetString(I18NKeys.LblAddSeparators);
             lblNumFiles.Text = Rm.GetString(I18NKeys.LblNumFiles);
             lblNumTracks.Text = Rm.GetString(I18NKeys.LblNumTracks);
-            lblEndingSongDelay.Text = Rm.GetString(I18NKeys.LblEndingSongDelay);
+            lblListenToSpotifyPlayback.Text = Rm.GetString(I18NKeys.LblListenToSpotifyPlayback);
             lblRecordingNum.Text = Rm.GetString(I18NKeys.LblRecordingNum);
             lblAds.Text = Rm.GetString(I18NKeys.LblAds);
             lblMuteAds.Text = Rm.GetString(I18NKeys.LblMuteAds);
@@ -712,17 +712,17 @@ namespace EspionSpotify
                 await _analytics.LogAction($"mute-ads?enabled={tgMuteAds.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
-        private void TgEndingSongDelay_CheckedChanged(object sender, EventArgs e)
+        private void TgListenToSpotifyPlayback_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled ==
-                tgEndingSongDelay.Checked) return;
+            if (Settings.Default.advanced_watcher_listen_to_spotify_playback_enabled ==
+                tgListenToSpotifyPlayback.Checked) return;
 
-            _userSettings.EndingTrackDelayEnabled = tgEndingSongDelay.Checked;
-            Settings.Default.advanced_watcher_delay_next_recording_until_silent_enabled = tgEndingSongDelay.Checked;
+            _userSettings.ListenToSpotifyPlaybackEnabled = tgListenToSpotifyPlayback.Checked;
+            Settings.Default.advanced_watcher_listen_to_spotify_playback_enabled = tgListenToSpotifyPlayback.Checked;
             Settings.Default.Save();
             Task.Run(async () =>
                 await _analytics.LogAction(
-                    $"delay-on-ending-song?enabled={tgEndingSongDelay.GetPropertyThreadSafe(c => c.Checked)}"));
+                    $"listen-to-spotify-playback?enabled={tgListenToSpotifyPlayback.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgAddFolders_CheckedChanged(object sender, EventArgs e)

@@ -222,31 +222,6 @@ namespace EspionSpotify.Tests
             Assert.Equal(expected, watcher.IsTypeAllowed);
         }
 
-        [Theory]
-        [InlineData(true, 1, 1, true)]
-        [InlineData(true, 70, 60, true)]
-        [InlineData(true, 60, 60, true)]
-        [InlineData(true, 56, 60, true)]
-        [InlineData(true, 1, 60, false)]
-        [InlineData(false, 1, 60, false)]
-        [InlineData(true, 1, 0, false)]
-        [InlineData(true, 0, 5, false)]
-        internal void IsOldSong_ReturnsExpectedResults(bool endingTrackDelayEnabled, int trackCurrentPosition,
-            int trackLength, bool expected)
-        {
-            _userSettings.EndingTrackDelayEnabled = endingTrackDelayEnabled;
-            var track = new Track {CurrentPosition = trackCurrentPosition, Length = trackLength};
-            var watcher = new Watcher(
-                _form,
-                _audioSession,
-                _userSettings,
-                track,
-                _fileSystem,
-                new List<RecorderTask>());
-
-            Assert.Equal(expected, watcher.IsOldSong);
-        }
-
         [Fact]
         internal void IsNewTrack_ReturnsExpectedResults()
         {

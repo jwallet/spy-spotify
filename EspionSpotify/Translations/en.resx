@@ -157,8 +157,8 @@
     <value>Audio Quality:</value>
     <comment>interface</comment>
   </data>
-  <data name="lblEndingSongDelay" xml:space="preserve">
-    <value>Delay next recording if sound is detected</value>
+  <data name="lblListenToSpotifyPlayback" xml:space="preserve">
+    <value>Always listen to Spotify current playback on the default audio device</value>
     <comment>interface</comment>
   </data>
   <data name="lblFormat" xml:space="preserve">

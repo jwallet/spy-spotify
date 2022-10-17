@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EspionSpotify.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -32,7 +32,7 @@
     <Setting Name="app_tab_number_selected" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="advanced_watcher_delay_next_recording_until_silent_enabled" Type="System.Boolean" Scope="User">
+    <Setting Name="advanced_watcher_listen_to_spotify_playback_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="settings_mute_ads_enabled" Type="System.Boolean" Scope="User">
@@ -88,3 +88,4 @@
     </Setting>
   </Settings>
 </SettingsFile>
+
