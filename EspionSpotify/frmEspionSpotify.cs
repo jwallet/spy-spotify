@@ -37,7 +37,6 @@ namespace EspionSpotify
             I18NKeys.LogDeleting,
             I18NKeys.LogTrackExists
         };
-        
         private readonly UserSettings _userSettings;
         private FrmSpotifyAPICredentials _frmSpotifyApiCredentials;
         private bool _toggleStopRecordingDelayed;
