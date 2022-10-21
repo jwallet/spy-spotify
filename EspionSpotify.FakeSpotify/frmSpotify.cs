@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using MetroFramework.Forms;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
 namespace EspionSpotify.FakeSpotify
 {
-    public sealed partial class FrmSpotify : MetroForm
+    public sealed partial class FrmSpotify : Form
     {
         private int _lastPlayedIndice;
         private bool _isPlaying;
@@ -72,6 +74,11 @@ namespace EspionSpotify.FakeSpotify
             var title = fromList ? this.lstPlaylist.Items[_lastPlayedIndice].Text: this.txtWindowTitle.Text;
             this.txtWindowTitle.Text = title;
             
+            ChangeWindowTitle(title);
+        }
+
+        private void ChangeWindowTitle(string title)
+        {
             var t = new Thread(() =>
             {
                 Thread.Sleep(tbDelayTitle.Value);
@@ -109,13 +116,9 @@ namespace EspionSpotify.FakeSpotify
 
         private void txtWindowTitle_Leave(object sender, EventArgs e)
         {
-            var t = new Thread(() =>
-            {
-                Thread.Sleep(tbDelayTitle.Value);
-                _isPlaying = !IsWindowTitledSpotify;
-                this.Text = this.txtWindowTitle.Text;
-            });
-            t.Start();
+            _isPlaying = !IsWindowTitledSpotify;
+
+            ChangeWindowTitle(this.txtWindowTitle.Text);
         }
 
         private WaveOut CreateWave()

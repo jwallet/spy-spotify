@@ -36,11 +36,12 @@ namespace EspionSpotify.FakeSpotify
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Artist - Track - Live In Town");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Artist - Track (feat. DJ)");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Advertisement");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSpotify));
             this.tbVolume = new MetroFramework.Controls.MetroTrackBar();
             this.btnPlayback = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.chkLockWindowTitleToPlaybackState = new MetroFramework.Controls.MetroCheckBox();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.lblWindowTitle = new MetroFramework.Controls.MetroLabel();
             this.txtWindowTitle = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.lstPlaylist = new MetroFramework.Controls.MetroListView();
@@ -79,7 +80,7 @@ namespace EspionSpotify.FakeSpotify
             this.tbVolume.Style = MetroFramework.MetroColorStyle.Green;
             this.tbVolume.TabIndex = 2;
             this.tbVolume.Text = "Volume";
-            this.tbVolume.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbVolume.Theme = MetroFramework.MetroThemeStyle.Light;
             this.tbVolume.Value = 100;
             this.tbVolume.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbVolume_Scroll);
             // 
@@ -92,7 +93,7 @@ namespace EspionSpotify.FakeSpotify
             this.btnPlayback.Style = MetroFramework.MetroColorStyle.Green;
             this.btnPlayback.TabIndex = 3;
             this.btnPlayback.Text = "Play";
-            this.btnPlayback.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btnPlayback.Theme = MetroFramework.MetroThemeStyle.Light;
             this.btnPlayback.UseSelectable = true;
             this.btnPlayback.Click += new System.EventHandler(this.btnPlayback_Click);
             // 
@@ -108,7 +109,7 @@ namespace EspionSpotify.FakeSpotify
             this.metroLabel1.Style = MetroFramework.MetroColorStyle.Green;
             this.metroLabel1.TabIndex = 4;
             this.metroLabel1.Text = "Volume";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // chkLockWindowTitleToPlaybackState
             // 
@@ -123,22 +124,22 @@ namespace EspionSpotify.FakeSpotify
             this.chkLockWindowTitleToPlaybackState.Style = MetroFramework.MetroColorStyle.Green;
             this.chkLockWindowTitleToPlaybackState.TabIndex = 5;
             this.chkLockWindowTitleToPlaybackState.Text = "Lock Window Title To Playback State";
-            this.chkLockWindowTitleToPlaybackState.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.chkLockWindowTitleToPlaybackState.Theme = MetroFramework.MetroThemeStyle.Light;
             this.chkLockWindowTitleToPlaybackState.UseSelectable = true;
             this.chkLockWindowTitleToPlaybackState.CheckedChanged += new System.EventHandler(this.chkLockWindowTitleToPlaybackState_CheckedChanged);
             // 
-            // metroLabel2
+            // lblWindowTitle
             // 
-            this.metroLabel2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel2.ForeColor = System.Drawing.Color.Coral;
-            this.metroLabel2.Location = new System.Drawing.Point(3, 7);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(374, 23);
-            this.metroLabel2.Style = MetroFramework.MetroColorStyle.Green;
-            this.metroLabel2.TabIndex = 6;
-            this.metroLabel2.Text = "Window Title";
-            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblWindowTitle.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblWindowTitle.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.lblWindowTitle.ForeColor = System.Drawing.Color.Coral;
+            this.lblWindowTitle.Location = new System.Drawing.Point(3, 7);
+            this.lblWindowTitle.Name = "lblWindowTitle";
+            this.lblWindowTitle.Size = new System.Drawing.Size(374, 23);
+            this.lblWindowTitle.Style = MetroFramework.MetroColorStyle.Green;
+            this.lblWindowTitle.TabIndex = 6;
+            this.lblWindowTitle.Text = "Window Title";
+            this.lblWindowTitle.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // txtWindowTitle
             // 
@@ -172,7 +173,7 @@ namespace EspionSpotify.FakeSpotify
             this.txtWindowTitle.Style = MetroFramework.MetroColorStyle.Green;
             this.txtWindowTitle.TabIndex = 7;
             this.txtWindowTitle.Text = "Spotify";
-            this.txtWindowTitle.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.txtWindowTitle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.txtWindowTitle.UseSelectable = true;
             this.txtWindowTitle.WaterMarkColor = System.Drawing.Color.FromArgb(((int) (((byte) (109)))), ((int) (((byte) (109)))), ((int) (((byte) (109)))));
             this.txtWindowTitle.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -188,7 +189,7 @@ namespace EspionSpotify.FakeSpotify
             this.metroLabel3.Style = MetroFramework.MetroColorStyle.Green;
             this.metroLabel3.TabIndex = 8;
             this.metroLabel3.Text = "Playlist";
-            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // lstPlaylist
             // 
@@ -210,7 +211,7 @@ namespace EspionSpotify.FakeSpotify
             this.lstPlaylist.Size = new System.Drawing.Size(365, 148);
             this.lstPlaylist.Style = MetroFramework.MetroColorStyle.Green;
             this.lstPlaylist.TabIndex = 9;
-            this.lstPlaylist.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lstPlaylist.Theme = MetroFramework.MetroThemeStyle.Light;
             this.lstPlaylist.UseCompatibleStateImageBehavior = false;
             this.lstPlaylist.UseSelectable = true;
             this.lstPlaylist.View = System.Windows.Forms.View.List;
@@ -227,7 +228,7 @@ namespace EspionSpotify.FakeSpotify
             this.btnDeleteInPlaylist.Style = MetroFramework.MetroColorStyle.Green;
             this.btnDeleteInPlaylist.TabIndex = 10;
             this.btnDeleteInPlaylist.Text = "Delete";
-            this.btnDeleteInPlaylist.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btnDeleteInPlaylist.Theme = MetroFramework.MetroThemeStyle.Light;
             this.btnDeleteInPlaylist.UseSelectable = true;
             this.btnDeleteInPlaylist.Click += new System.EventHandler(this.btnDeleteInPlaylist_Click);
             // 
@@ -260,7 +261,7 @@ namespace EspionSpotify.FakeSpotify
             this.txtAddToPlaylist.Size = new System.Drawing.Size(290, 23);
             this.txtAddToPlaylist.Style = MetroFramework.MetroColorStyle.Green;
             this.txtAddToPlaylist.TabIndex = 11;
-            this.txtAddToPlaylist.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.txtAddToPlaylist.Theme = MetroFramework.MetroThemeStyle.Light;
             this.txtAddToPlaylist.UseSelectable = true;
             this.txtAddToPlaylist.WaterMarkColor = System.Drawing.Color.FromArgb(((int) (((byte) (109)))), ((int) (((byte) (109)))), ((int) (((byte) (109)))));
             this.txtAddToPlaylist.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -276,7 +277,7 @@ namespace EspionSpotify.FakeSpotify
             this.btnAddToPlaylist.Style = MetroFramework.MetroColorStyle.Green;
             this.btnAddToPlaylist.TabIndex = 12;
             this.btnAddToPlaylist.Text = "Add";
-            this.btnAddToPlaylist.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btnAddToPlaylist.Theme = MetroFramework.MetroThemeStyle.Light;
             this.btnAddToPlaylist.UseSelectable = true;
             this.btnAddToPlaylist.Click += new System.EventHandler(this.btnAddToPlaylist_Click);
             // 
@@ -289,7 +290,7 @@ namespace EspionSpotify.FakeSpotify
             this.btnNextTrack.Style = MetroFramework.MetroColorStyle.Green;
             this.btnNextTrack.TabIndex = 13;
             this.btnNextTrack.Text = "Next Track";
-            this.btnNextTrack.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btnNextTrack.Theme = MetroFramework.MetroThemeStyle.Light;
             this.btnNextTrack.UseSelectable = true;
             this.btnNextTrack.Click += new System.EventHandler(this.btnNextTrack_Click);
             // 
@@ -305,7 +306,7 @@ namespace EspionSpotify.FakeSpotify
             this.metroLabel4.Style = MetroFramework.MetroColorStyle.Green;
             this.metroLabel4.TabIndex = 14;
             this.metroLabel4.Text = "Delay Title";
-            this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // tbDelayTitle
             // 
@@ -320,7 +321,7 @@ namespace EspionSpotify.FakeSpotify
             this.tbDelayTitle.Style = MetroFramework.MetroColorStyle.Green;
             this.tbDelayTitle.TabIndex = 15;
             this.tbDelayTitle.Text = "Delay";
-            this.tbDelayTitle.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tbDelayTitle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.tbDelayTitle.Value = 0;
             this.tbDelayTitle.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbDelayTitle_Scroll);
             // 
@@ -336,7 +337,7 @@ namespace EspionSpotify.FakeSpotify
             this.lblDelayTitle.TabIndex = 16;
             this.lblDelayTitle.Text = "0ms";
             this.lblDelayTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblDelayTitle.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblDelayTitle.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // tableLayoutPanel1
             // 
@@ -350,7 +351,7 @@ namespace EspionSpotify.FakeSpotify
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(772, 243);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(772, 259);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // tableLayoutPanel2
@@ -368,7 +369,7 @@ namespace EspionSpotify.FakeSpotify
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(380, 237);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(380, 253);
             this.tableLayoutPanel2.TabIndex = 18;
             // 
             // tableLayoutPanel3
@@ -405,7 +406,7 @@ namespace EspionSpotify.FakeSpotify
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.metroLabel2, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.lblWindowTitle, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.txtWindowTitle, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 0, 2);
             this.tableLayoutPanel5.Controls.Add(this.chkLockWindowTitleToPlaybackState, 0, 3);
@@ -422,7 +423,7 @@ namespace EspionSpotify.FakeSpotify
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(380, 237);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(380, 253);
             this.tableLayoutPanel5.TabIndex = 19;
             // 
             // tableLayoutPanel6
@@ -476,14 +477,13 @@ namespace EspionSpotify.FakeSpotify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(812, 293);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(812, 309);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.DisplayHeader = false;
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "FrmSpotify";
             this.Padding = new System.Windows.Forms.Padding(20, 30, 20, 20);
-            this.Style = MetroFramework.MetroColorStyle.Green;
             this.Text = "Spotify";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -523,7 +523,7 @@ namespace EspionSpotify.FakeSpotify
         private MetroFramework.Controls.MetroTextBox txtAddToPlaylist;
         private MetroFramework.Controls.MetroButton btnAddToPlaylist;
 
-        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroLabel lblWindowTitle;
         private MetroFramework.Controls.MetroTextBox txtWindowTitle;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroListView lstPlaylist;
