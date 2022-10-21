@@ -63,14 +63,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ControlExtensions.cs" />
         <Compile Include="frmSpotify.cs">
             <SubType>Form</SubType>
         </Compile>
         <Compile Include="frmSpotify.Designer.cs">
             <DependentUpon>frmSpotify.cs</DependentUpon>
         </Compile>
-        <Compile Include="NativeMethods.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <EmbeddedResource Include="frmSpotify.resx">

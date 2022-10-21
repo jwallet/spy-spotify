@@ -216,6 +216,7 @@ namespace EspionSpotify.FakeSpotify
             this.lstPlaylist.UseSelectable = true;
             this.lstPlaylist.View = System.Windows.Forms.View.List;
             this.lstPlaylist.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstPlaylist_ItemSelectionChanged);
+            this.lstPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstPlaylist_MouseDoubleClick);
             // 
             // btnDeleteInPlaylist
             // 

@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using MetroFramework.Forms;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
@@ -161,6 +152,17 @@ namespace EspionSpotify.FakeSpotify
         private void tbVolume_Scroll(object sender, ScrollEventArgs e)
         {
             _waveOut.Volume = this.tbVolume.Value/ 100.0f;
+        }
+
+        private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            _lastPlayedIndice = this.lstPlaylist.SelectedIndices[0];
+            ChangeTitle(fromList: true);
+            
+            if (chkLockWindowTitleToPlaybackState.Checked)
+            {
+                ValidPlayback();
+            }
         }
     }
 }
