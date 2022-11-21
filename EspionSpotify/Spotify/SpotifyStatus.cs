@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EspionSpotify.API;
 using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 
 namespace EspionSpotify.Spotify
@@ -16,11 +17,11 @@ namespace EspionSpotify.Spotify
             var (titleTags, separatorType) = GetTitleTags(longTitlePart ?? "", 2);
 
             var isPlaying = spotifyWindowInfo.IsPlaying;
-            var isLookingLikeAnAd = tags.Length < 2 || tags.First() == Constants.SPOTIFY;
+            var isLookingLikeAnAd = tags.Length < 2;
 
             CurrentTrack = new Track
             {
-                Ad = spotifyWindowInfo.IsTitledAd || (isLookingLikeAnAd && isPlaying),
+                Ad = spotifyWindowInfo.WindowTitle.IsSpotifyPlayingAnAd() || (isLookingLikeAnAd && isPlaying),
                 Playing = isPlaying,
                 Artist = GetTitleTag(tags, 1),
                 Title = GetTitleTag(titleTags, 1),
@@ -46,11 +47,6 @@ namespace EspionSpotify.Spotify
             });
 
             return CurrentTrack;
-        }
-
-        public static bool WindowTitleIsAd(string title)
-        {
-            return title?.ToLowerInvariant() == Constants.ADVERTISEMENT.ToLowerInvariant();
         }
 
         public static string[] GetDashTags(string title, int maxSize = 3)
