@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EspionSpotify.Enums;
 using EspionSpotify.Extensions;
@@ -139,18 +140,20 @@ namespace EspionSpotify.API
 
         #region Spotify Track updater
 
-        private async Task<bool> UpdateTrack(Track track, bool retry = false)
+        private async Task<bool> UpdateTrack(Track track, bool retryDone = false)
         {
             await GetSpotifyWebAPI();
 
             if (_api == null) return false;
 
+            await Task.Delay(100);
+
             var playback = await _api.GetPlaybackWithoutExceptionAsync();
             var hasNoPlayback = playback == null || playback.Item == null;
 
-            if (!retry && hasNoPlayback)
+            if (!retryDone && hasNoPlayback)
             {
-                await Task.Delay(3000);
+                await Task.Delay(1000);
                 var res = await UpdateTrack(track, true);
                 if (track.MetaDataUpdated != true)
                 {
@@ -179,6 +182,15 @@ namespace EspionSpotify.API
                 return await _lastFmApi.UpdateTrack(track);
             }
 
+            // prevent changing track metadata with invalid ones (unknown track)
+            if (!IsPlaybackTrackDetectedTrack(track, playback.Item))
+            {
+                if (retryDone) return false;
+                
+                await Task.Delay(1000);
+                return await UpdateTrack(track, retryDone: true);
+            }
+
             MapSpotifyTrackToTrack(track, playback.Item);
 
             if (playback.Item.Album?.Id == null) return false;
@@ -197,6 +209,12 @@ namespace EspionSpotify.API
         private string[] GetAlbumArtistFromSimpleArtistList(List<SimpleArtist> artists)
         {
             return (artists ?? new List<SimpleArtist>()).Select(a => a.Name).ToArray();
+        }
+
+        private bool IsPlaybackTrackDetectedTrack(Track track, FullTrack spotifyTrack)
+        {
+            var (titleParts, separatorType) = SpotifyStatus.GetTitleTags(spotifyTrack.Name, 2);
+            return titleParts.FirstOrDefault() == track.Title;
         }
 
         private async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
