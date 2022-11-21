@@ -75,7 +75,7 @@ namespace EspionSpotify.AudioSessions
             _spotifyProcessesIds = SpotifyProcess.GetSpotifyProcesses(_processManager).Select(x => x.Id).ToList();
         }
 
-        public void RouteSpotifyAudioSessions()
+        public void RouteSpotifyAudioSessions(bool canRedirectPlayback)
         {
             foreach (var spotifyProcessesId in _spotifyProcessesIds)
             {
@@ -84,7 +84,10 @@ namespace EspionSpotify.AudioSessions
                     spotifyProcessesId);
             }
 
-            Task.Run(() => _audioLoopback.Run(_cancellationTokenSource));
+            if (canRedirectPlayback)
+            {
+                Task.Run(() => _audioLoopback.Run(_cancellationTokenSource));
+            }
         }
 
         public void UnrouteSpotifyAudioSessions()

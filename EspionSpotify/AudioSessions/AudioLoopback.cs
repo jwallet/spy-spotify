@@ -47,8 +47,7 @@ namespace EspionSpotify.AudioSessions
             _waveIn.StartRecording();
             _waveOut.Init(_bufferedWaveProvider);
             
-            // TODO: Stop duplicate playback with user settings
-            // _waveOut.Play();
+            _waveOut.Play();
             
             while (Running)
             {

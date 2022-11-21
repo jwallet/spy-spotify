@@ -10,7 +10,7 @@ namespace EspionSpotify.AudioSessions
         AudioMMDevicesManager AudioMMDevicesManager { get; }
 
         void SetSpotifyProcesses();
-        void RouteSpotifyAudioSessions();
+        void RouteSpotifyAudioSessions(bool canRedirectPlayback);
         void UnrouteSpotifyAudioSessions();
         ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; }
 

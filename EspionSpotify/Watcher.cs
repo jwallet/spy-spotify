@@ -20,7 +20,6 @@ namespace EspionSpotify
 {
     public sealed class Watcher : IWatcher, IDisposable
     {
-        private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS = 5;
         private const int WATCHER_DELAY_MS = 500;
         private readonly IMainAudioSession _audioSession;
         private AudioThrottler _audioThrottler;
@@ -86,12 +85,6 @@ namespace EspionSpotify
         );
 
         public bool IsTypeAllowed => _currentTrack.IsNormalPlaying || IsRecordUnknownActive;
-
-        public bool IsOldSong =>
-            _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0
-                                                  && _currentTrack.CurrentPosition > Math.Max(0,
-                                                      (_currentTrack.Length ?? 0) -
-                                                      NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS);
 
         public async Task Run()
         {
@@ -184,12 +177,6 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            // do not add "is current track an ad" validation, audio is already muted
-            if (RecorderUpAndRunning && IsOldSong)
-            {
-               // _audioSession.SleepWhileTheSongEnds();
-            }
-
             if (!IsNewTrack(e.NewTrack)) return;
 
             StopLastRecorder();
@@ -271,7 +258,7 @@ namespace EspionSpotify
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _audioSession.SetSpotifyProcesses();
-            _audioSession.RouteSpotifyAudioSessions();
+            _audioSession.RouteSpotifyAudioSessions(canRedirectPlayback: _userSettings.ListenToSpotifyPlaybackEnabled);
             return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
