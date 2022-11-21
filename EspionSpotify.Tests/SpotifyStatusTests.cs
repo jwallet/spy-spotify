@@ -24,17 +24,6 @@ namespace EspionSpotify.Tests
             Assert.Equal(expected, actual);
         }
 
-        [Theory]
-        [InlineData(Constants.SPOTIFY, false)]
-        [InlineData("Ad", false)]
-        [InlineData(Constants.ADVERTISEMENT, true)]
-        internal void SpotifyStatusWindowTitleIsAd_ReturnsWhenItMatches(string value, bool expected)
-        {
-            var actual = SpotifyStatus.WindowTitleIsAd(value);
-
-            Assert.Equal(expected, actual);
-        }
-
         [Fact]
         internal void SpotifyStatusSpotifyStandingBy_ReturnsExpectingTrack()
         {
