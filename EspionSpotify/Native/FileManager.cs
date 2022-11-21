@@ -141,10 +141,7 @@ namespace EspionSpotify.Native
 
             var artistDir = GetArtistDirectoryName(track, userSettings.TrackTitleSeparator, maxLength);
             var albumDir = GetAlbumDirectoryName(track, userSettings.TrackTitleSeparator, maxLength);
-
-            if (string.IsNullOrEmpty(artistDir) || string.IsNullOrEmpty(albumDir))
-                throw new Exception("Artist / Album cannot be null.");
-
+            
             return (artistDir, albumDir);
         }
 
@@ -156,8 +153,10 @@ namespace EspionSpotify.Native
 
         public static string GetCleanFileFolder(string name, int maxLength)
         {
-            return Regex.Replace(name.TrimEndPath(), $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()))}]",
+            var dir = Regex.Replace(name.TrimEndPath(), $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()))}]",
                 string.Empty).ToMaxLength(maxLength);
+            // If the original value contains only Windows reserved chars it will return "INVALID" folder name
+            return string.IsNullOrWhiteSpace(dir) ? "INVALID" : dir;
         }
 
         public static string ConcatPaths(params string[] paths)
@@ -233,8 +232,6 @@ namespace EspionSpotify.Native
 
         private void CreateDirectory(string outputPath, params string[] directories)
         {
-            if (directories.Any(string.IsNullOrWhiteSpace)) throw new Exception("One or more directories has no name.");
-
             var path = ConcatPaths(new[] {outputPath}.Concat(directories).ToArray());
             if (_fileSystem.Directory.Exists(path)) return;
             _fileSystem.Directory.CreateDirectory(path);

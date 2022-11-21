@@ -263,16 +263,17 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void BuildFileName_WithBadlyFormattedArtistGroupPath_Throws()
+        internal void BuildFileName_WithBadlyFormattedArtistGroupPath_DoesNotThrow()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Title = null;
             _track.Artist = "\\";
+            _track.Album = "/?";
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFileAndInitDirectories());
-            Assert.Equal("File name cannot be empty.", ex.Message);
+            var actual = _fileManager.GetOutputFileAndInitDirectories();
+            Assert.Equal($@"{PATH}\INVALID.mp3", actual.ToMediaFilePath());
         }
 
         [Fact]
@@ -284,8 +285,8 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() => _fileManager.GetOutputFileAndInitDirectories());
-            Assert.Equal("Artist / Album cannot be null.", ex.Message);
+            var actual = _fileManager.GetOutputFileAndInitDirectories();
+            Assert.Equal($@"{PATH}\INVALID\Single\- Live.mp3", actual.ToMediaFilePath());
         }
 
         [Fact]
@@ -351,14 +352,13 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void GetFolderPath_WithoutArtist_Throws()
+        internal void GetFolderPath_WithoutArtist_DoesNotThrows()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Artist = null;
 
-            var exception = Assert.Throws<Exception>(() => FileManager.GetFolderPath(_track, _userSettings));
-
-            Assert.Equal("Artist / Album cannot be null.", exception.Message);
+            var (artistFolder, albumFolder) = FileManager.GetFolderPath(_track, _userSettings);
+            Assert.Equal("INVALID", artistFolder);
         }
 
         [Fact]
@@ -401,7 +401,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void IsPathFileNameExists_WithBadlyFormattedArtistGroupPath_Throws()
+        internal void IsPathFileNameExists_WithBadlyFormattedArtistGroupPath_ReturnsFalse()
         {
             _userSettings.GroupByFoldersEnabled = true;
             _track.Title = null;
@@ -409,9 +409,8 @@ namespace EspionSpotify.Tests
 
             _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
 
-            var ex = Assert.Throws<Exception>(() =>
-                _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem));
-            Assert.Equal("File name cannot be empty.", ex.Message);
+            var actual = _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
+            Assert.False(actual);
         }
 
         [Fact]
