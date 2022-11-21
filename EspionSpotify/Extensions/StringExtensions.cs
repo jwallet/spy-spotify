@@ -49,8 +49,12 @@ namespace EspionSpotify.Extensions
 
         public static bool IsNullOrAdOrSpotifyIdleState(this string value)
         {
-            return IsNullOrSpotifyIdleState(value)
-                   || Constants.ADVERTISEMENT.ToLowerInvariant() == value.ToLowerInvariant();
+            return IsNullOrSpotifyIdleState(value) || IsSpotifyPlayingAnAd(value);
+        }
+
+        public static bool IsSpotifyPlayingAnAd(this string value)
+        {
+            return  Constants.ADVERTISEMENT.ToLowerInvariant() == value.ToLowerInvariant();
         }
 
         public static bool IsNullOrSpotifyIdleState(this string value)

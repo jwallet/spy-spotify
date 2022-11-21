@@ -21,7 +21,7 @@ namespace EspionSpotify.Spotify
 
             CurrentTrack = new Track
             {
-                Ad = spotifyWindowInfo.WindowTitle.IsNullOrAdOrSpotifyIdleState() || (isLookingLikeAnAd && isPlaying),
+                Ad = spotifyWindowInfo.WindowTitle.IsSpotifyPlayingAnAd() || (isLookingLikeAnAd && isPlaying),
                 Playing = isPlaying,
                 Artist = GetTitleTag(tags, 1),
                 Title = GetTitleTag(titleTags, 1),
