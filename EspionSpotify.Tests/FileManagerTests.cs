@@ -36,7 +36,7 @@ namespace EspionSpotify.Tests
                 TrackTitleSeparator = " ",
                 OrderNumberInMediaTagEnabled = false,
                 OrderNumberInfrontOfFileEnabled = false,
-                EndingTrackDelayEnabled = true,
+                ListenToSpotifyPlaybackEnabled = true,
                 MuteAdsEnabled = true,
                 RecordEverythingEnabled = false,
                 InternalOrderNumber = 1

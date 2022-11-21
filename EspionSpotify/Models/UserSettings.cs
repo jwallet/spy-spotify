@@ -14,7 +14,7 @@ namespace EspionSpotify.Models
         public string TrackTitleSeparator { get; set; } = " ";
         public bool OrderNumberInMediaTagEnabled { get; set; }
         public bool OrderNumberInfrontOfFileEnabled { get; set; }
-        public bool EndingTrackDelayEnabled { get; set; }
+        public bool ListenToSpotifyPlaybackEnabled { get; set; }
         public bool MuteAdsEnabled { get; set; }
         public bool MinimizeToSystemTrayEnabled { get; set; }
         public bool RecordEverythingEnabled { get; set; }

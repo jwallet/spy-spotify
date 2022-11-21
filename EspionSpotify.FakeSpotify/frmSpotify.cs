@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -57,6 +57,26 @@ namespace EspionSpotify.FakeSpotify
             if (chkLockWindowTitleToPlaybackState.Checked)
             {
                 ValidPlayback();
+                var t = new Thread( () =>
+                {
+                    var vol = _waveOut.Volume;
+                    while (_waveOut.Volume > 0.001)
+                    {
+                        _waveOut.Volume = _waveOut.Volume / 2;
+                        Thread.Sleep(10);
+                    }
+                    _waveOut.Volume = 0.0f;
+                    Thread.Sleep(100);
+                    _waveOut.Volume = 0.0001f;
+                    while (_waveOut.Volume < vol)
+                    {
+                        _waveOut.Volume = _waveOut.Volume * 2;
+                        Thread.Sleep(5);
+                    }
+      
+                    _waveOut.Volume = vol;
+                });
+                t.Start();
             }
         }
 
@@ -110,15 +130,20 @@ namespace EspionSpotify.FakeSpotify
             _isPlaying = !IsWindowTitledSpotify;
 
             ChangeWindowTitle(this.txtWindowTitle.Text);
+            
+            if (chkLockWindowTitleToPlaybackState.Checked)
+            {
+                ValidPlayback();
+            }
         }
 
         private WaveOut CreateWave()
         {
             var signalGenerator = new SignalGenerator();
             signalGenerator.Type = SignalGeneratorType.Sweep;
-            signalGenerator.Frequency = 50;
-            signalGenerator.FrequencyEnd = 5000;
-            signalGenerator.SweepLengthSecs = 3;
+            signalGenerator.Frequency = 400;
+            signalGenerator.FrequencyEnd = 500;
+            signalGenerator.SweepLengthSecs = 2;
 
             var waveOut = new WaveOut();
             waveOut.DeviceNumber = 0;

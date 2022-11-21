@@ -93,8 +93,8 @@ namespace EspionSpotify
             this.lblRecorder = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tgRecordEverything = new MetroFramework.Controls.MetroToggle();
-            this.lblEndingSongDelay = new MetroFramework.Controls.MetroLabel();
-            this.tgEndingSongDelay = new MetroFramework.Controls.MetroToggle();
+            this.lblListenToSpotifyPlayback = new MetroFramework.Controls.MetroLabel();
+            this.tgListenToSpotifyPlayback = new MetroFramework.Controls.MetroToggle();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.chkRecordAds = new MetroFramework.Controls.MetroCheckBox();
             this.lblRecordEverything = new MetroFramework.Controls.MetroLabel();
@@ -177,7 +177,7 @@ namespace EspionSpotify
             this.tcMenu.ItemSize = new System.Drawing.Size(100, 34);
             this.tcMenu.Location = new System.Drawing.Point(20, 70);
             this.tcMenu.Name = "tcMenu";
-            this.tcMenu.SelectedIndex = 1;
+            this.tcMenu.SelectedIndex = 2;
             this.tcMenu.Size = new System.Drawing.Size(740, 330);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
@@ -1136,8 +1136,8 @@ namespace EspionSpotify
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel11.Controls.Add(this.tgRecordEverything, 1, 1);
-            this.tableLayoutPanel11.Controls.Add(this.lblEndingSongDelay, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.tgEndingSongDelay, 1, 0);
+            this.tableLayoutPanel11.Controls.Add(this.lblListenToSpotifyPlayback, 0, 0);
+            this.tableLayoutPanel11.Controls.Add(this.tgListenToSpotifyPlayback, 1, 0);
             this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel15, 0, 1);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(121, 212);
@@ -1162,33 +1162,33 @@ namespace EspionSpotify
             this.tgRecordEverything.UseSelectable = true;
             this.tgRecordEverything.CheckedChanged += new System.EventHandler(this.TgRecordEverything_CheckedChanged);
             // 
-            // lblEndingSongDelay
+            // lblListenToSpotifyPlayback
             // 
-            this.lblEndingSongDelay.AutoSize = true;
-            this.lblEndingSongDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEndingSongDelay.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblEndingSongDelay.Location = new System.Drawing.Point(3, 0);
-            this.lblEndingSongDelay.Name = "lblEndingSongDelay";
-            this.lblEndingSongDelay.Size = new System.Drawing.Size(463, 28);
-            this.lblEndingSongDelay.TabIndex = 48;
-            this.lblEndingSongDelay.Text = "LBL_ENDING_SONG_DELAY";
-            this.lblEndingSongDelay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblEndingSongDelay.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblListenToSpotifyPlayback.AutoSize = true;
+            this.lblListenToSpotifyPlayback.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblListenToSpotifyPlayback.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblListenToSpotifyPlayback.Location = new System.Drawing.Point(3, 0);
+            this.lblListenToSpotifyPlayback.Name = "lblListenToSpotifyPlayback";
+            this.lblListenToSpotifyPlayback.Size = new System.Drawing.Size(463, 28);
+            this.lblListenToSpotifyPlayback.TabIndex = 48;
+            this.lblListenToSpotifyPlayback.Text = "LBL_LISTEN_TO_SPOTIFY_PLAYBACK";
+            this.lblListenToSpotifyPlayback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblListenToSpotifyPlayback.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // tgEndingSongDelay
+            // tgListenToSpotifyPlayback
             // 
-            this.tgEndingSongDelay.AutoSize = true;
-            this.tgEndingSongDelay.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tgEndingSongDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgEndingSongDelay.Location = new System.Drawing.Point(472, 3);
-            this.tgEndingSongDelay.Name = "tgEndingSongDelay";
-            this.tgEndingSongDelay.Size = new System.Drawing.Size(94, 22);
-            this.tgEndingSongDelay.Style = MetroFramework.MetroColorStyle.Green;
-            this.tgEndingSongDelay.TabIndex = 0;
-            this.tgEndingSongDelay.Text = "Off";
-            this.tgEndingSongDelay.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tgEndingSongDelay.UseSelectable = true;
-            this.tgEndingSongDelay.CheckedChanged += new System.EventHandler(this.TgEndingSongDelay_CheckedChanged);
+            this.tgListenToSpotifyPlayback.AutoSize = true;
+            this.tgListenToSpotifyPlayback.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgListenToSpotifyPlayback.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgListenToSpotifyPlayback.Location = new System.Drawing.Point(472, 3);
+            this.tgListenToSpotifyPlayback.Name = "tgListenToSpotifyPlayback";
+            this.tgListenToSpotifyPlayback.Size = new System.Drawing.Size(94, 22);
+            this.tgListenToSpotifyPlayback.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgListenToSpotifyPlayback.TabIndex = 0;
+            this.tgListenToSpotifyPlayback.Text = "Off";
+            this.tgListenToSpotifyPlayback.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgListenToSpotifyPlayback.UseSelectable = true;
+            this.tgListenToSpotifyPlayback.CheckedChanged += new System.EventHandler(this.TgListenToSpotifyPlayback_CheckedChanged);
             // 
             // tableLayoutPanel15
             // 
@@ -1850,8 +1850,8 @@ namespace EspionSpotify
         private MetroLabel lblAds;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Timer timer1;
-        private MetroFramework.Controls.MetroToggle tgEndingSongDelay;
-        private MetroFramework.Controls.MetroLabel lblEndingSongDelay;
+        private MetroFramework.Controls.MetroToggle tgListenToSpotifyPlayback;
+        private MetroFramework.Controls.MetroLabel lblListenToSpotifyPlayback;
         private MetroLabel lblRecordEverything;
         private MetroFramework.Controls.MetroToggle tgRecordEverything;
         private System.Windows.Forms.TabPage tabAdvanced;

@@ -20,7 +20,6 @@ namespace EspionSpotify
 {
     public sealed class Watcher : IWatcher, IDisposable
     {
-        private const int NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS = 5;
         private const int WATCHER_DELAY_MS = 500;
         private readonly IMainAudioSession _audioSession;
         private AudioThrottler _audioThrottler;
@@ -87,12 +86,6 @@ namespace EspionSpotify
 
         public bool IsTypeAllowed => _currentTrack.IsNormalPlaying || IsRecordUnknownActive;
 
-        public bool IsOldSong =>
-            _userSettings.EndingTrackDelayEnabled && _currentTrack.Length > 0
-                                                  && _currentTrack.CurrentPosition > Math.Max(0,
-                                                      (_currentTrack.Length ?? 0) -
-                                                      NEXT_SONG_EVENT_MAX_ESTIMATED_DELAY_SECS);
-
         public async Task Run()
         {
             if (Running) return;
@@ -143,6 +136,7 @@ namespace EspionSpotify
 
                     DoIKeepLastSong();
                     StopLastRecorder();
+                    _form.UpdateIconSpotify(_isPlaying);
                 }
                 else if (SpotifyConnect.IsSpotifyInstalled(_fileSystem))
                 {
@@ -183,31 +177,52 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            // do not add "is current track an ad" validation, audio is already muted
-            if (RecorderUpAndRunning && IsOldSong)
-            {
-               // _audioSession.SleepWhileTheSongEnds();
-            }
-
             if (!IsNewTrack(e.NewTrack)) return;
 
-            DoIKeepLastSong();
             StopLastRecorder();
 
+            var canRecord = _isPlaying && !RecorderUpAndRunning && IsTypeAllowed && !IsMaxOrderNumberAsFileExceeded;
+            if (canRecord)
+            {
+                RecordSpotify();
+            }
+            
+            DoIKeepLastSong();
+
+            if (!canRecord)
+            {
+                _form.UpdateIconSpotify(_isPlaying);
+            }
+            
             if (IsMaxOrderNumberAsFileExceeded)
             {
                 _form.WriteIntoConsole(I18NKeys.LogMaxFileSequenceReached, _userSettings.OrderNumberMax);
             }
 
-            if (!_isPlaying || RecorderUpAndRunning || !IsTypeAllowed || IsMaxOrderNumberAsFileExceeded) return;
-
-            RecordSpotify();
+            UpdateInterfaceOnNewTrack();
         }
 
         private void OnTrackTimeChanged(object sender, TrackTimeChangeEventArgs e)
         {
             _currentTrack.CurrentPosition = e.TrackTime;
             _form.UpdateRecordedTime(RecorderUpAndRunning ? (int?) e.TrackTime : null);
+        }
+
+        private void UpdateInterfaceOnNewTrack()
+        {
+            var isAd = !IsRecordUnknownActive && _currentTrack.Ad && !_currentTrack.ToString().IsSpotifyIdleState();
+            var adTitle = isAd
+                ? $"{_form.Rm?.GetString(I18NKeys.LblAd) ?? "Ad"}: "
+                : "";
+            _form.UpdatePlayingTitle($"{adTitle}{_currentTrack}");
+
+            // will mute even if the window title is "Spotify"
+            MutesSpotifyAds(isAd || _currentTrack.ToString().IsNullOrAdOrSpotifyIdleState());
+
+            if (isAd)
+            {
+                _form.WriteIntoConsole(I18NKeys.LogAd);
+            }
         }
 
         public bool IsNewTrack(Track track)
@@ -222,19 +237,6 @@ namespace EspionSpotify
 
             _currentTrack = track;
             _isPlaying = _currentTrack.Playing;
-
-            var isAd = !IsRecordUnknownActive && _currentTrack.Ad && !_currentTrack.ToString().IsSpotifyIdleState();
-            var adTitle = isAd
-                ? $"{_form.Rm?.GetString(I18NKeys.LblAd) ?? "Ad"}: "
-                : "";
-            _form.UpdatePlayingTitle($"{adTitle}{_currentTrack}");
-
-            MutesSpotifyAds(isAd);
-
-            if (isAd)
-            {
-                _form.WriteIntoConsole(I18NKeys.LogAd);
-            }
 
             return true;
         }
@@ -256,7 +258,7 @@ namespace EspionSpotify
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _audioSession.SetSpotifyProcesses();
-            _audioSession.RouteSpotifyAudioSessions();
+            _audioSession.RouteSpotifyAudioSessions(canRedirectPlayback: _userSettings.ListenToSpotifyPlaybackEnabled);
             return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
@@ -295,7 +297,7 @@ namespace EspionSpotify
                 Recorder = recorder,
                 Token = _cancellationToken
             });
-
+            
             _form.UpdateIconSpotify(_isPlaying, true);
         }
 
@@ -401,13 +403,12 @@ namespace EspionSpotify
                 recorder.Running = false;
                 recorder.CountSeconds = CountSeconds;
             }
-            
-            _form.UpdateIconSpotify(_isPlaying);
         }
 
         private void MutesSpotifyAds(bool value)
         {
-            if (_userSettings.MuteAdsEnabled) _audioSession.SetSpotifyToMute(value);
+            // run all apps to prevent video ads to run on a different audio session.
+            if (_userSettings.MuteAdsEnabled) _audioSession.SetSpotifyVolumeToHighAndOthersToMute(value);
         }
 
         private void Dispose(bool disposing)

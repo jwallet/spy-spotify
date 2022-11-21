@@ -81,7 +81,7 @@ namespace EspionSpotify.FakeSpotify
             this.tbVolume.TabIndex = 2;
             this.tbVolume.Text = "Volume";
             this.tbVolume.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.tbVolume.Value = 100;
+            this.tbVolume.Value = 5;
             this.tbVolume.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbVolume_Scroll);
             // 
             // btnPlayback
