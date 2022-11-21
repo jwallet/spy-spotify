@@ -54,7 +54,9 @@
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
-  <PropertyGroup />
+  <PropertyGroup>
+    <langversion>latest</langversion>
+  </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
     <ManifestCertificateThumbprint>1C2A9634A6AEADD711250AEE35CFFF0CF4514E9A</ManifestCertificateThumbprint>
@@ -245,7 +247,6 @@
     <Compile Include="Models\RecorderTask.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\ProcessManager.cs" />
-    <Compile Include="Translations\en.Designer.cs" />
     <Compile Include="Translations\I18nKeys.cs" />
     <Compile Include="Translations\en.Designer.cs">
       <AutoGen>True</AutoGen>
