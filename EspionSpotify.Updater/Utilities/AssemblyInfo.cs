@@ -8,8 +8,8 @@ namespace EspionSpotify.Updater.Utilities
     {
         internal static bool IsNewerVersionThanCurrent(string name)
         {
-            var m = Regex.Match(name, @"((?:\d+\.)*\d+?)");
-            var version = m.Groups[m.Groups.Count - 1];
+            var m = Regex.Match(name, @"^(\d+\.)?(\d+\.)?(\*|\d+\.)?(\*|\d+)$");
+            var version = m.Groups[0];
 
             if (version.Success)
             {
