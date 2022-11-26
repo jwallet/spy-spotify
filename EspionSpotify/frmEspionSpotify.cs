@@ -215,6 +215,7 @@ namespace EspionSpotify
             chkRecordDuplicateRecordings.Visible = Settings.Default.advanced_record_over_recordings_enabled;
 
             tgRecordEverything.Checked = Settings.Default.advanced_record_everything;
+            tgForceSpotifyToSkip.Checked = Settings.Default.advanced_watcher_force_spotify_to_skip;
             chkRecordAds.Enabled = Settings.Default.advanced_record_everything;
             chkRecordAds.Checked = Settings.Default.advanced_record_everything_and_ads_enabled;
             chkRecordAds.Visible = Settings.Default.advanced_record_everything;
@@ -254,6 +255,7 @@ namespace EspionSpotify
             _userSettings.OrderNumberInMediaTagEnabled =
                 Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
             _userSettings.OutputPath = FileManager.GetCleanPath(Settings.Default.settings_output_path);
+            _userSettings.ForceSpotifyToSkipEnabled = Settings.Default.advanced_watcher_force_spotify_to_skip;
             _userSettings.RecordEverythingEnabled = Settings.Default.advanced_record_everything;
             _userSettings.RecordAdsEnabled = Settings.Default.advanced_record_everything_and_ads_enabled;
             _userSettings.MuteAdsEnabled = Settings.Default.settings_mute_ads_enabled;

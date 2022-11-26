@@ -44,7 +44,8 @@ namespace EspionSpotify.Native
             {
                 Id = x.Id,
                 MainWindowTitle = x.MainWindowTitle,
-                ProcessName = x.ProcessName
+                ProcessName = x.ProcessName,
+                MainWindowHandle = x.MainWindowHandle
             }).ToArray<IProcess>();
         }
 
