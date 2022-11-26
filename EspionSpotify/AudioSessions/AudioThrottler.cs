@@ -76,6 +76,9 @@ namespace EspionSpotify.AudioSessions
             _waveIn.ShareMode = AudioClientShareMode.Shared;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
 
+            var silencer = CreateSilencer();
+            silencer.Play();
+
             await Task.Delay(50);
             _waveIn.StartRecording();
 
@@ -85,7 +88,19 @@ namespace EspionSpotify.AudioSessions
                 await Task.Delay(100);
             }
 
+            silencer.Stop();
+            silencer.Dispose();
+            
             _waveIn.StopRecording();
+        }
+
+        private WaveOutEvent CreateSilencer()
+        {
+
+            var silenceProvider = new SilenceProvider(_waveIn.WaveFormat).ToSampleProvider();
+            var wo = new WaveOutEvent();
+            wo.Init(silenceProvider);
+            return wo;
         }
 
         public async Task<AudioWaveBuffer> Read(SilenceAnalyzer silence = SilenceAnalyzer.None)
@@ -182,7 +197,7 @@ namespace EspionSpotify.AudioSessions
                 {
                     _buffer = new AudioCircularBuffer(BufferMaxLength);
                 }
-                
+
                 _buffer.Write(e.Buffer, 0, e.BytesRecorded);
             }
         }
