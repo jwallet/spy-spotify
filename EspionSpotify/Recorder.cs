@@ -11,6 +11,7 @@ using EspionSpotify.Exceptions;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
+using EspionSpotify.Spotify;
 using EspionSpotify.Translations;
 using NAudio.Lame;
 using NAudio.Wave;
@@ -139,6 +140,12 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18NKeys.LogTrackExists, _track.ToString());
                 await UpdateMediaTagsWhenSkippingTrack();
                 ForceStopRecording();
+                var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler();
+                if (spotifyHandler.HasValue)
+                {
+                    NativeMethods.SendKeyPessNextMedia(spotifyHandler.Value);
+                }
+                
                 return true;
             }
 

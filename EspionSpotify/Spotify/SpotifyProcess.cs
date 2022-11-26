@@ -7,6 +7,7 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Native.Models;
+using Process = System.Diagnostics.Process;
 
 namespace EspionSpotify.Spotify
 {
@@ -25,8 +26,7 @@ namespace EspionSpotify.Spotify
         {
             _processManager = processManager;
             _audioSession = audioSession;
-            _spotifyProcessId = GetSpotifyProcesses(_processManager)
-                .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+            _spotifyProcessId = GetMainSpotifyProcess(_processManager)?.Id;
         }
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
@@ -62,8 +62,7 @@ namespace EspionSpotify.Spotify
                     Console.WriteLine(ex.Message);
                 }
             else
-                _spotifyProcessId = GetSpotifyProcesses(_processManager)
-                    .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+                _spotifyProcessId = GetMainSpotifyProcess(_processManager)?.Id;
 
             return (mainWindowTitle, isSpotifyAudioPlaying);
         }
@@ -77,6 +76,17 @@ namespace EspionSpotify.Spotify
                     spotifyProcesses.Add(process);
 
             return spotifyProcesses;
+        }
+
+        private static IProcess GetMainSpotifyProcess(IProcessManager processManager)
+        {
+            return GetSpotifyProcesses(processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle));
+        }
+
+        public static IntPtr? GetMainSpotifyHandler()
+        {
+            return Process.GetProcesses()
+                .FirstOrDefault(x => x.ProcessName.IsSpotifyIdleState() && !string.IsNullOrEmpty(x.MainWindowTitle))?.MainWindowHandle;
         }
     }
 }
