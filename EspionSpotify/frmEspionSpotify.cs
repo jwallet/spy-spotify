@@ -286,6 +286,16 @@ namespace EspionSpotify
 
         private void ReloadExternalAPI()
         {
+            if (Settings.Default.settings_media_audio_format == (int) MediaFormat.Wav)
+            {
+                SetExternalAPI(ExternalAPIType.None);
+                tlpAPI.Visible = false;
+                lblAPI.Visible = false;
+                return;
+            }
+
+            tlpAPI.Visible = true;
+            lblAPI.Visible = true;
             if (_userSettings.IsSpotifyAPISet &&
                 Settings.Default.app_selected_external_api_id == (int) ExternalAPIType.Spotify)
             {
@@ -420,10 +430,26 @@ namespace EspionSpotify
             tip.SetToolTip(lnkNumMinus, Rm.GetString(I18NKeys.TipNumModifierHold));
             tip.SetToolTip(lnkSpotifyCredentials, Rm.GetString(I18NKeys.TipSpotifyAPICredentials));
 
-            SetBitrateOptions();
+            ReloadBitrateOptions();
         }
 
-        private void SetBitrateOptions()
+        private void ReloadBitrateOptions()
+        {
+            switch ((MediaFormat)Settings.Default.settings_media_audio_format)
+            {
+                case MediaFormat.Mp3:
+                    SetLamePresetBitrateOptions();
+                    cbBitRate.Visible = true;
+                    lblBitRate.Visible = true;
+                    break;
+                default:
+                    cbBitRate.Visible = false;
+                    lblBitRate.Visible = false;
+                    break;
+            }
+        }
+
+        private void SetLamePresetBitrateOptions()
         {
             var indexBitRate = Settings.Default.settings_media_bitrate_quality;
 
@@ -681,6 +707,7 @@ namespace EspionSpotify
             Settings.Default.settings_media_audio_format = mediaFormatIndex;
             Settings.Default.Save();
             ReloadExternalAPI();
+            ReloadBitrateOptions();
             
             Task.Run(async () => await _analytics.LogAction($"media-format?type={mediaFormat.ToString()}"));
         }
