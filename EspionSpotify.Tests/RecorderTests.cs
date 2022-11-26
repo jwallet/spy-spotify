@@ -6,6 +6,7 @@ using System.IO.Abstractions.TestingHelpers;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Enums;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using Moq;
 using NAudio.Lame;
 using NAudio.Wave;
@@ -19,12 +20,15 @@ namespace EspionSpotify.Tests
         private readonly IFrmEspionSpotify _formMock;
         private readonly UserSettings _userSettings;
         private IFileSystem _fileSystem;
+        private IProcessManager _processManagerMock;
 
         public RecorderTests()
         {
             _formMock = new Mock<IFrmEspionSpotify>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
+            _processManagerMock = new Mock<IProcessManager>().Object;
+            
             
             var audioThrottlerMock = new Mock<IAudioThrottler>();
             audioThrottlerMock.Setup(x => x.WaveFormat).Returns(new WaveFormat());
@@ -49,6 +53,7 @@ namespace EspionSpotify.Tests
                 userSettings,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false);
 
             Assert.False(watcherTrackNotFound.IsSkipTrackActive);
@@ -76,6 +81,7 @@ namespace EspionSpotify.Tests
                 userSettingsCanDuplicate,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
@@ -103,6 +109,7 @@ namespace EspionSpotify.Tests
                 userSettingsCanDuplicate,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false);
 
             Assert.False(watcherTrackFoundCanDuplicate.IsSkipTrackActive);
@@ -125,6 +132,7 @@ namespace EspionSpotify.Tests
                 userSettings,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false);
 
             Assert.True(watcherTrackFound.IsSkipTrackActive);
@@ -142,6 +150,7 @@ namespace EspionSpotify.Tests
                 userSettings,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<WaveFileWriter>(result);
@@ -159,6 +168,7 @@ namespace EspionSpotify.Tests
                 userSettings,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat());
 
             Assert.IsType<LameMP3FileWriter>(result);
@@ -177,6 +187,7 @@ namespace EspionSpotify.Tests
                 userSettings,
                 ref track,
                 _fileSystem,
+                _processManagerMock,
                 init: false).GetMediaFileWriter(new MemoryStream(), new WaveFormat()));
 
             Assert.Equal("Failed to get FileWriter", exception.Message);

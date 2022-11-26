@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EspionSpotify.API;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Extensions;
@@ -24,7 +25,7 @@ namespace EspionSpotify.Tests
 
             var processes = new IProcess[]
             {
-                new Process {Id = 1, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY},
+                new Process {Id = 1, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY, MainWindowHandle = new IntPtr(0x1012)},
                 new Process {Id = 2, MainWindowTitle = "Facebook", ProcessName = "Firefox"},
                 new Process {Id = 3, MainWindowTitle = "", ProcessName = Constants.SPOTIFY}
             };
@@ -57,7 +58,7 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async Task GetSpotifyStatus_WithWrongSpotifyProcess_ReturnsNull()
         {
-            var spotify = new Process {Id = 4, MainWindowTitle = " ", ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = " ", ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -73,7 +74,7 @@ namespace EspionSpotify.Tests
         internal async Task GetSpotifyStatus_WithIdleSpotifyProcess_ReturnsNotPlaying()
         {
             const string windowTitle = Constants.SPOTIFY;
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -100,7 +101,7 @@ namespace EspionSpotify.Tests
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingInIdle_ReturnsAdPlaying(string title)
         {
             var windowTitle = title.Capitalize();
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
@@ -123,7 +124,7 @@ namespace EspionSpotify.Tests
         internal async Task GetSpotifyStatus_WithSpotifyProcessNoSoundOnAds_ReturnsAdPlaying()
         {
             const string windowTitle = Constants.ADVERTISEMENT;
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -146,7 +147,7 @@ namespace EspionSpotify.Tests
         [InlineData("Message of Government")]
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingUnknown_ReturnsAdPlaying(string windowTitle)
         {
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
@@ -174,7 +175,7 @@ namespace EspionSpotify.Tests
         [InlineData("#123 - Podcast")]
         internal async Task GetSpotifyStatus_WithSpotifyProcessPlayingNormalType_ReturnsTrackPlaying(string windowTitle)
         {
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010) };
             IProcess[] processes = {spotify};
 
             _mainAudioSessionMock.Setup(x => x.IsSpotifyCurrentlyPlaying()).ReturnsAsync(true);
@@ -199,7 +200,7 @@ namespace EspionSpotify.Tests
         internal async Task GetSpotifyStatus_WithSpotifyProcessNoAudioNormalType_ReturnsTrackPlaying()
         {
             const string windowTitle = "Artist - Title";
-            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY};
+            var spotify = new Process {Id = 4, MainWindowTitle = windowTitle, ProcessName = Constants.SPOTIFY, MainWindowHandle = new IntPtr(0x1010)};
             IProcess[] processes = {spotify};
 
             _processManagerMock.Setup(x => x.GetProcesses()).Returns(processes);
@@ -217,6 +218,20 @@ namespace EspionSpotify.Tests
             Assert.False(track.Ad);
             Assert.True(track.IsNormalPlaying);
             Assert.False(track.IsUnknownPlaying);
+        }
+
+        [Fact]
+        internal void GetSpotifyMainWindowHandle_ReturnsHandle()
+        {
+            var mainWindowHandle = new IntPtr(0x1010);
+            var spotify1 = new Process {Id = 4, MainWindowTitle = "Artist - Title", ProcessName = Constants.SPOTIFYFREE, MainWindowHandle = mainWindowHandle};
+            var spotify2 = new Process {Id = 4, MainWindowTitle = "", ProcessName = Constants.SPOTIFY, MainWindowHandle = mainWindowHandle};
+            var spytify = new Process {Id = 4, MainWindowTitle = Constants.SPYTIFY, ProcessName = Constants.SPYTIFY, MainWindowHandle = new IntPtr(0x1012)};
+
+            _processManagerMock.Setup(x => x.GetProcesses()).Returns(new[] { spotify1, spotify2, spytify });
+            var actual = SpotifyProcess.GetMainSpotifyHandler(_processManagerMock.Object);
+            
+            Assert.Equal(expected: mainWindowHandle, actual);
         }
     }
 }
