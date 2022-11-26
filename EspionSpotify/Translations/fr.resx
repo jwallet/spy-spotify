@@ -484,4 +484,7 @@
   <data name="lblAd" xml:space="preserve">
     <value>Annonce</value>
   </data>
+  <data name="lblForceSpotifyToSkip" xml:space="preserve">
+    <value>Force Spotify à sauter les pistes déjà enregistrées</value>
+  </data>
 </root>

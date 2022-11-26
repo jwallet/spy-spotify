@@ -69,24 +69,18 @@ namespace EspionSpotify.Spotify
 
         internal static ICollection<IProcess> GetSpotifyProcesses(IProcessManager processManager)
         {
-            var spotifyProcesses = new List<IProcess>();
-
-            foreach (var process in processManager.GetProcesses())
-                if (process.ProcessName.IsSpotifyIdleState())
-                    spotifyProcesses.Add(process);
-
-            return spotifyProcesses;
+            return processManager.GetProcesses().Where(x => x.ProcessName.IsSpotifyIdleState()).ToList();
         }
 
         private static IProcess GetMainSpotifyProcess(IProcessManager processManager)
         {
-            return GetSpotifyProcesses(processManager).FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle));
+            return processManager.GetProcesses()
+                .FirstOrDefault(x => x.ProcessName.IsSpotifyIdleState() && !string.IsNullOrEmpty(x.MainWindowTitle));
         }
 
-        public static IntPtr? GetMainSpotifyHandler()
+        public static IntPtr? GetMainSpotifyHandler(IProcessManager processManager)
         {
-            return Process.GetProcesses()
-                .FirstOrDefault(x => x.ProcessName.IsSpotifyIdleState() && !string.IsNullOrEmpty(x.MainWindowTitle))?.MainWindowHandle;
+            return GetMainSpotifyProcess(processManager)?.MainWindowHandle;
         }
     }
 }

@@ -196,6 +196,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force Spotify à sauter les pistes déjà enregistrées.
+        /// </summary>
+        internal static string lblForceSpotifyToSkip {
+            get {
+                return ResourceManager.GetString("lblForceSpotifyToSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format audio:.
         /// </summary>
         internal static string lblFormat {

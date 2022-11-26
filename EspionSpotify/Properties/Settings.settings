@@ -86,6 +86,9 @@
     <Setting Name="settings_minimize_to_system_tray_enabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="advanced_watcher_force_spotify_to_skip" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
 

@@ -358,5 +358,17 @@ namespace EspionSpotify.Properties {
                 this["settings_minimize_to_system_tray_enabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advanced_watcher_force_spotify_to_skip {
+            get {
+                return ((bool)(this["advanced_watcher_force_spotify_to_skip"]));
+            }
+            set {
+                this["advanced_watcher_force_spotify_to_skip"] = value;
+            }
+        }
     }
 }

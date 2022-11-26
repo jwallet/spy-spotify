@@ -38,6 +38,7 @@ namespace EspionSpotify
         private CancellationTokenSource _cancellationTokenSource;
         private OutputFile _currentOutputFile;
         private Stream _tempWaveWriter;
+        private IProcessManager _processManager;
 
         public Recorder()
         {
@@ -49,7 +50,7 @@ namespace EspionSpotify
             IAudioThrottler audioThrottler,
             UserSettings userSettings,
             ref Track track,
-            IFileSystem fileSystem) : this(form, audioThrottler, userSettings, ref track, fileSystem, init: true) { }
+            IFileSystem fileSystem) : this(form, audioThrottler, userSettings, ref track, fileSystem, new ProcessManager(), init: true) { }
 
         public Recorder(
             IFrmEspionSpotify form,
@@ -57,6 +58,7 @@ namespace EspionSpotify
             UserSettings userSettings,
             ref Track track,
             IFileSystem fileSystem,
+            IProcessManager processManager,
             bool init)
         {
             _userSettings = new UserSettings();
@@ -67,6 +69,7 @@ namespace EspionSpotify
             _fileSystem = fileSystem;
             _track = track;
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
+            _processManager = processManager;
 
             _initiated = init && Init();
         }
@@ -140,10 +143,13 @@ namespace EspionSpotify
                 _form.WriteIntoConsole(I18NKeys.LogTrackExists, _track.ToString());
                 await UpdateMediaTagsWhenSkippingTrack();
                 ForceStopRecording();
-                var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler();
-                if (spotifyHandler.HasValue)
+                if (_userSettings.ForceSpotifyToSkipEnabled)
                 {
-                    NativeMethods.SendKeyPessNextMedia(spotifyHandler.Value);
+                    var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler(_processManager);
+                    if (spotifyHandler.HasValue)
+                    {
+                        NativeMethods.SendKeyPessNextMedia(spotifyHandler.Value);
+                    }
                 }
                 
                 return true;

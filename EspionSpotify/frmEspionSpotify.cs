@@ -397,6 +397,7 @@ namespace EspionSpotify
             lblSpy.Text = Rm.GetString(I18NKeys.LblSpy);
             lblRecorder.Text = Rm.GetString(I18NKeys.LblRecorder);
             lblRecordEverything.Text = Rm.GetString(I18NKeys.LblRecordEverything);
+            lblForceSpotifyToSkip.Text = Rm.GetString(I18NKeys.LblForceSpotifyToSkip);
             chkRecordAds.Text = Rm.GetString(I18NKeys.LblRecordAds);
             lblRecordOverRecordings.Text = Rm.GetString(I18NKeys.LblRecordOverRecordings);
             chkRecordDuplicateRecordings.Text = Rm.GetString(I18NKeys.LblDuplicate);
@@ -1142,6 +1143,18 @@ namespace EspionSpotify
             {
                 notifyIcon.Visible = false;
             }
+        }
+
+        private void tgForceSpotifyToSkip_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.advanced_watcher_force_spotify_to_skip == tgForceSpotifyToSkip.Checked) return;
+
+            _userSettings.ForceSpotifyToSkipEnabled = tgForceSpotifyToSkip.Checked;
+            Settings.Default.advanced_watcher_force_spotify_to_skip = tgForceSpotifyToSkip.Checked;
+            Settings.Default.Save();
+            Task.Run(async () =>
+                await _analytics.LogAction(
+                    $"force-spotify-to-skip?enabled={tgForceSpotifyToSkip.GetPropertyThreadSafe(c => c.Checked)}"));
         }
     }
 }

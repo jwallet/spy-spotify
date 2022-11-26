@@ -98,6 +98,8 @@ namespace EspionSpotify
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.chkRecordAds = new MetroFramework.Controls.MetroCheckBox();
             this.lblRecordEverything = new MetroFramework.Controls.MetroLabel();
+            this.lblForceSpotifyToSkip = new MetroFramework.Controls.MetroLabel();
+            this.tgForceSpotifyToSkip = new MetroFramework.Controls.MetroToggle();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.lblRecordingNum = new MetroFramework.Controls.MetroLabel();
             this.tgAddSeparators = new MetroFramework.Controls.MetroToggle();
@@ -1056,7 +1058,7 @@ namespace EspionSpotify
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlAdvanced.Size = new System.Drawing.Size(693, 397);
+            this.tlAdvanced.Size = new System.Drawing.Size(693, 425);
             this.tlAdvanced.TabIndex = 1;
             // 
             // tableLayoutPanel16
@@ -1110,7 +1112,7 @@ namespace EspionSpotify
             this.lblSpy.Location = new System.Drawing.Point(3, 215);
             this.lblSpy.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblSpy.Name = "lblSpy";
-            this.lblSpy.Size = new System.Drawing.Size(102, 56);
+            this.lblSpy.Size = new System.Drawing.Size(102, 84);
             this.lblSpy.TabIndex = 0;
             this.lblSpy.Text = "LBL_SPY";
             this.lblSpy.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -1135,24 +1137,27 @@ namespace EspionSpotify
             this.tableLayoutPanel11.ColumnCount = 2;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel11.Controls.Add(this.tgRecordEverything, 1, 1);
+            this.tableLayoutPanel11.Controls.Add(this.tgRecordEverything, 1, 2);
             this.tableLayoutPanel11.Controls.Add(this.lblListenToSpotifyPlayback, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.tgListenToSpotifyPlayback, 1, 0);
-            this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel15, 0, 1);
+            this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel15, 0, 2);
+            this.tableLayoutPanel11.Controls.Add(this.lblForceSpotifyToSkip, 0, 1);
+            this.tableLayoutPanel11.Controls.Add(this.tgForceSpotifyToSkip, 1, 1);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(121, 212);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-            this.tableLayoutPanel11.RowCount = 2;
+            this.tableLayoutPanel11.RowCount = 3;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(569, 56);
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(569, 84);
             this.tableLayoutPanel11.TabIndex = 6;
             // 
             // tgRecordEverything
             // 
             this.tgRecordEverything.AutoSize = true;
             this.tgRecordEverything.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgRecordEverything.Location = new System.Drawing.Point(472, 31);
+            this.tgRecordEverything.Location = new System.Drawing.Point(472, 59);
             this.tgRecordEverything.Name = "tgRecordEverything";
             this.tgRecordEverything.Size = new System.Drawing.Size(94, 22);
             this.tgRecordEverything.Style = MetroFramework.MetroColorStyle.Green;
@@ -1168,8 +1173,9 @@ namespace EspionSpotify
             this.lblListenToSpotifyPlayback.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblListenToSpotifyPlayback.FontSize = MetroFramework.MetroLabelSize.Small;
             this.lblListenToSpotifyPlayback.Location = new System.Drawing.Point(3, 0);
+            this.lblListenToSpotifyPlayback.Margin = new System.Windows.Forms.Padding(3, 0, 15, 0);
             this.lblListenToSpotifyPlayback.Name = "lblListenToSpotifyPlayback";
-            this.lblListenToSpotifyPlayback.Size = new System.Drawing.Size(463, 28);
+            this.lblListenToSpotifyPlayback.Size = new System.Drawing.Size(451, 28);
             this.lblListenToSpotifyPlayback.TabIndex = 48;
             this.lblListenToSpotifyPlayback.Text = "LBL_LISTEN_TO_SPOTIFY_PLAYBACK";
             this.lblListenToSpotifyPlayback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1199,7 +1205,7 @@ namespace EspionSpotify
             this.tableLayoutPanel15.Controls.Add(this.chkRecordAds, 1, 0);
             this.tableLayoutPanel15.Controls.Add(this.lblRecordEverything, 0, 0);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 56);
             this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 1;
@@ -1235,6 +1241,35 @@ namespace EspionSpotify
             this.lblRecordEverything.Text = "LBL_RECORD_EVERYTHING";
             this.lblRecordEverything.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblRecordEverything.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // lblForceSpotifyToSkip
+            // 
+            this.lblForceSpotifyToSkip.AutoSize = true;
+            this.lblForceSpotifyToSkip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblForceSpotifyToSkip.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblForceSpotifyToSkip.Location = new System.Drawing.Point(3, 28);
+            this.lblForceSpotifyToSkip.Margin = new System.Windows.Forms.Padding(3, 0, 15, 0);
+            this.lblForceSpotifyToSkip.Name = "lblForceSpotifyToSkip";
+            this.lblForceSpotifyToSkip.Size = new System.Drawing.Size(451, 28);
+            this.lblForceSpotifyToSkip.TabIndex = 48;
+            this.lblForceSpotifyToSkip.Text = "LBL_FORCE_SPOTIFY_TO_SKIP";
+            this.lblForceSpotifyToSkip.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblForceSpotifyToSkip.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tgForceSpotifyToSkip
+            // 
+            this.tgForceSpotifyToSkip.AutoSize = true;
+            this.tgForceSpotifyToSkip.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgForceSpotifyToSkip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgForceSpotifyToSkip.Location = new System.Drawing.Point(472, 31);
+            this.tgForceSpotifyToSkip.Name = "tgForceSpotifyToSkip";
+            this.tgForceSpotifyToSkip.Size = new System.Drawing.Size(94, 22);
+            this.tgForceSpotifyToSkip.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgForceSpotifyToSkip.TabIndex = 0;
+            this.tgForceSpotifyToSkip.Text = "Off";
+            this.tgForceSpotifyToSkip.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgForceSpotifyToSkip.UseSelectable = true;
+            this.tgForceSpotifyToSkip.CheckedChanged += new System.EventHandler(this.tgForceSpotifyToSkip_CheckedChanged);
             // 
             // tableLayoutPanel14
             // 
@@ -1534,7 +1569,7 @@ namespace EspionSpotify
             // 
             this.lblID3.AutoSize = true;
             this.lblID3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblID3.Location = new System.Drawing.Point(3, 277);
+            this.lblID3.Location = new System.Drawing.Point(3, 305);
             this.lblID3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblID3.Name = "lblID3";
             this.lblID3.Size = new System.Drawing.Size(102, 100);
@@ -1555,7 +1590,7 @@ namespace EspionSpotify
             this.tableLayoutPanel6.Controls.Add(this.lblNumTracks, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tgNumTracks, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(121, 274);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(121, 302);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 4;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -1813,6 +1848,10 @@ namespace EspionSpotify
             this.ResumeLayout(false);
         }
 
+        private MetroFramework.Controls.MetroToggle tgForceSpotifyToSkip;
+
+        private MetroFramework.Controls.MetroLabel lblForceSpotifyToSkip;
+
         #endregion
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
@@ -1856,7 +1895,7 @@ namespace EspionSpotify
         private MetroFramework.Controls.MetroToggle tgRecordEverything;
         private System.Windows.Forms.TabPage tabAdvanced;
         private System.Windows.Forms.TableLayoutPanel tlAdvanced;
-        private MetroLabel lblSpy;
+        private MetroFramework.Controls.MetroLabel lblSpy;
         private MetroLabel lblRecorder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private MetroLabel lblMuteAds;
@@ -1899,7 +1938,7 @@ namespace EspionSpotify
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private MetroCheckBox chkRecordDuplicateRecordings;
         private MetroLink lnkSpotifyCredentials;
-        private MetroLabel lblID3;
+        private MetroFramework.Controls.MetroLabel lblID3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private MetroFramework.Controls.MetroToggle tgExtraTitleToSubtitle;
         private MetroFramework.Controls.MetroLabel lblExtraTitleToSubtitle;
