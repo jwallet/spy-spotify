@@ -7,6 +7,7 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Native.Models;
+using Process = System.Diagnostics.Process;
 
 namespace EspionSpotify.Spotify
 {
@@ -25,8 +26,7 @@ namespace EspionSpotify.Spotify
         {
             _processManager = processManager;
             _audioSession = audioSession;
-            _spotifyProcessId = GetSpotifyProcesses(_processManager)
-                .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+            _spotifyProcessId = GetMainSpotifyProcess(_processManager)?.Id;
         }
 
         public async Task<ISpotifyStatus> GetSpotifyStatus()
@@ -62,21 +62,25 @@ namespace EspionSpotify.Spotify
                     Console.WriteLine(ex.Message);
                 }
             else
-                _spotifyProcessId = GetSpotifyProcesses(_processManager)
-                    .FirstOrDefault(x => !string.IsNullOrEmpty(x.MainWindowTitle))?.Id;
+                _spotifyProcessId = GetMainSpotifyProcess(_processManager)?.Id;
 
             return (mainWindowTitle, isSpotifyAudioPlaying);
         }
 
         internal static ICollection<IProcess> GetSpotifyProcesses(IProcessManager processManager)
         {
-            var spotifyProcesses = new List<IProcess>();
+            return processManager.GetProcesses().Where(x => x.ProcessName.IsSpotifyIdleState()).ToList();
+        }
 
-            foreach (var process in processManager.GetProcesses())
-                if (process.ProcessName.IsSpotifyIdleState())
-                    spotifyProcesses.Add(process);
+        private static IProcess GetMainSpotifyProcess(IProcessManager processManager)
+        {
+            return processManager.GetProcesses()
+                .FirstOrDefault(x => x.ProcessName.IsSpotifyIdleState() && !string.IsNullOrEmpty(x.MainWindowTitle));
+        }
 
-            return spotifyProcesses;
+        public static IntPtr? GetMainSpotifyHandler(IProcessManager processManager)
+        {
+            return GetMainSpotifyProcess(processManager)?.MainWindowHandle;
         }
     }
 }

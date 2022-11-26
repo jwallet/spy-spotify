@@ -115,6 +115,15 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ad.
+        /// </summary>
+        internal static string lblAd {
+            get {
+                return ResourceManager.GetString("lblAd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group tracks by album.
         /// </summary>
         internal static string lblAddFolders {
@@ -178,20 +187,20 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delay next recording if sound is detected.
-        /// </summary>
-        internal static string lblEndingSongDelay {
-            get {
-                return ResourceManager.GetString("lblEndingSongDelay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Move extra title of the track to the subtitle tag.
         /// </summary>
         internal static string lblExtraTitleToSubtitle {
             get {
                 return ResourceManager.GetString("lblExtraTitleToSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force Spotify to skip already recorded track.
+        /// </summary>
+        internal static string lblForceSpotifyToSkip {
+            get {
+                return ResourceManager.GetString("lblForceSpotifyToSkip", resourceCulture);
             }
         }
         
@@ -228,6 +237,15 @@ namespace EspionSpotify.Translations {
         internal static string lblLanguage {
             get {
                 return ResourceManager.GetString("lblLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always listen to Spotify current playback on the default audio device.
+        /// </summary>
+        internal static string lblListenToSpotifyPlayback {
+            get {
+                return ResourceManager.GetString("lblListenToSpotifyPlayback", resourceCulture);
             }
         }
         
@@ -376,7 +394,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ad.
+        ///   Looks up a localized string similar to // Advertisement.
         /// </summary>
         internal static string logAd {
             get {
@@ -421,7 +439,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // The output does not exist anymore.
+        ///   Looks up a localized string similar to // Error: The output does not exist anymore.
         /// </summary>
         internal static string logOutputPathNotFound {
             get {
@@ -448,7 +466,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // The recorded file was lost in the process.
+        ///   Looks up a localized string similar to // Error: The recorded file was lost in the process.
         /// </summary>
         internal static string logRecordedFileNotFound {
             get {

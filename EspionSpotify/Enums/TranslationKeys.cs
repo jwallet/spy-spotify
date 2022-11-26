@@ -17,6 +17,7 @@
         lblClientId,
         lblDuplicate,
         lblExtraTitleToSubtitle,
+        lblForceSpotifyToSkip,
         lblFormat,
         lblGeneral,
         lblID3,

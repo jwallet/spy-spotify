@@ -20,6 +20,7 @@ namespace EspionSpotify.Translations
         public static TranslationKeys LblClientId => TranslationKeys.lblClientId;
         public static TranslationKeys LblDuplicate => TranslationKeys.lblDuplicate;
         public static TranslationKeys LblExtraTitleToSubtitle => TranslationKeys.lblExtraTitleToSubtitle;
+        public static TranslationKeys LblForceSpotifyToSkip => TranslationKeys.lblForceSpotifyToSkip;
         public static TranslationKeys LblFormat => TranslationKeys.lblFormat;
         public static TranslationKeys LblID3 => TranslationKeys.lblID3;
         public static TranslationKeys LblLanguage => TranslationKeys.lblLanguage;
