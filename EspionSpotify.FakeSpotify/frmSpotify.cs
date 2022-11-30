@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
@@ -46,6 +47,11 @@ namespace EspionSpotify.FakeSpotify
 
         private void btnNextTrack_Click(object sender, EventArgs e)
         {
+            NextTrack();
+        }
+
+        private async Task NextTrack()
+        {
             _lastPlayedIndice += 1;
             if (_lastPlayedIndice >= this.lstPlaylist.Items.Count)
             {
@@ -56,27 +62,41 @@ namespace EspionSpotify.FakeSpotify
             
             if (chkLockWindowTitleToPlaybackState.Checked)
             {
-                ValidPlayback();
-                var t = new Thread( () =>
+       
+
+                var vol = _waveOut.Volume;
+
+                var rand = new Random();
+                var div = rand.Next(1, 1000);
+
+                await Task.Run(() =>
                 {
-                    var vol = _waveOut.Volume;
                     while (_waveOut.Volume > 0.001)
                     {
                         _waveOut.Volume = _waveOut.Volume / 2;
-                        Thread.Sleep(10);
+                        Thread.Sleep(100 / div);
                     }
+
                     _waveOut.Volume = 0.0f;
-                    Thread.Sleep(100);
+                });
+                
+                Thread.Sleep(1000 / div);
+                
+                _waveOut.Dispose();
+                _waveOut = CreateWave();
+                ValidPlayback();
+                
+                await Task.Run(() => 
+                {
                     _waveOut.Volume = 0.0001f;
                     while (_waveOut.Volume < vol)
                     {
                         _waveOut.Volume = _waveOut.Volume * 2;
-                        Thread.Sleep(5);
+                        Thread.Sleep(100 / div);
                     }
       
                     _waveOut.Volume = vol;
                 });
-                t.Start();
             }
         }
 
@@ -139,8 +159,10 @@ namespace EspionSpotify.FakeSpotify
 
         private WaveOut CreateWave()
         {
+            var rand = new Random();
+            var type = rand.Next(0, 6);
             var signalGenerator = new SignalGenerator();
-            signalGenerator.Type = SignalGeneratorType.Sweep;
+            signalGenerator.Type =  (SignalGeneratorType) type;
             signalGenerator.Frequency = 400;
             signalGenerator.FrequencyEnd = 500;
             signalGenerator.SweepLengthSecs = 2;
