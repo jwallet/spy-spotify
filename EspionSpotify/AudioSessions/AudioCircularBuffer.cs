@@ -44,6 +44,20 @@ namespace EspionSpotify.AudioSessions
         }
         
         /// <summary>
+        /// Write position of the circular buffer
+        /// </summary>
+        public int WritePosition
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return _writePosition;
+                }
+            }
+        }
+        
+        /// <summary>
         /// Create a new circular buffer
         /// </summary>
         /// <param name="size">Max buffer size in bytes</param>

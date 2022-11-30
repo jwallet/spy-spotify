@@ -133,6 +133,28 @@ namespace EspionSpotify
 
         #endregion RecorderStart
 
+        #region RecorderWriteUpcomingData
+
+        private async Task RecordAvailableData(SilenceAnalyzer analyzer)
+        {
+            if (_tempWaveWriter == null) return;
+            
+            var audio = await _audioThrottler.Read(analyzer);
+            if (audio == null) return;
+            
+            await Task.Run(async () =>
+            {
+                await _tempWaveWriter.WriteAsync(
+                    audio.Buffer,
+                    0,
+                    audio.BytesRecordedCount);
+            });
+        }
+
+        #endregion RecorderWriteUpcomingData
+
+        #region RecorderStopRecording
+        
         private async Task<bool> StopRecordingIfTrackCanBeSkipped()
         {
             if (_canBeSkippedValidated || _track.MetaDataUpdated != true) return false;
@@ -157,28 +179,7 @@ namespace EspionSpotify
 
             return false;
         }
-
-        #region RecorderWriteUpcomingData
-
-        private async Task RecordAvailableData(SilenceAnalyzer analyzer)
-        {
-            if (_tempWaveWriter == null) return;
-            
-            var audio = await _audioThrottler.Read(analyzer);
-            if (audio == null) return;
-            
-            await Task.Run(async () =>
-            {
-                await _tempWaveWriter.WriteAsync(
-                    audio.Buffer,
-                    0,
-                    audio.BytesRecordedCount);
-            });
-        }
-
-        #endregion RecorderWriteUpcomingData
-
-        #region RecorderStopRecording
+        
         private async Task RecordingStopped()
         {
             while (_track.MetaDataUpdated == null) await Task.Delay(100);
