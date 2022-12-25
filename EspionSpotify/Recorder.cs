@@ -182,7 +182,7 @@ namespace EspionSpotify
         
         private async Task RecordingStopped()
         {
-            while (_track.MetaDataUpdated == null) await Task.Delay(100);
+            while (_track.MetaDataUpdated == null && _track.IsNormal) await Task.Delay(100);
             var skipped = !_canBeSkippedValidated && await StopRecordingIfTrackCanBeSkipped();
             if (_tempWaveWriter == null || skipped)
             {
