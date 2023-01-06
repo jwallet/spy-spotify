@@ -47,7 +47,7 @@ namespace EspionSpotify.FakeSpotify
 
         private void btnNextTrack_Click(object sender, EventArgs e)
         {
-            NextTrack();
+            NextTrack().RunSynchronously();
         }
 
         private async Task NextTrack()

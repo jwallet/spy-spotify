@@ -223,8 +223,8 @@ namespace EspionSpotify.Tests
         }
         
         [Theory]
-        [InlineData(0, @"\\path\home\Artist\Album\Title_-_Live.mp3")]
-        [InlineData(1, @"\\path\home\Artist\Album\01_Title_-_Live.mp3")]
+        [InlineData(0, @"\\path\home\Artist\Single\Title_-_Live.mp3")]
+        [InlineData(1, @"\\path\home\Artist\Single\01_Title_-_Live.mp3")]
         internal void BuildFileName_ReturnsUnixFileNameAlbumTrackNumberedAndGrouped(int albumTrackNumber, string expected)
         {
             _userSettings.AlbumTrackNumberInfrontOfFileEnabled = true;
@@ -240,8 +240,8 @@ namespace EspionSpotify.Tests
         }
         
         [Theory]
-        [InlineData(1, 0, @"\\path\home\Artist\Album\001_Title_-_Live.mp3")]
-        [InlineData(1, 1, @"\\path\home\Artist\Album\001_01_Title_-_Live.mp3")]
+        [InlineData(1, 0, @"\\path\home\Artist\Single\001_Title_-_Live.mp3")]
+        [InlineData(1, 1, @"\\path\home\Artist\Single\001_01_Title_-_Live.mp3")]
         internal void BuildFileName_ReturnsUnixFileNameOrderNumberedAndAlbumTrackNumbered(int orderNumber, int albumTrackNumber, string expected)
         {
             _userSettings.AlbumTrackNumberInfrontOfFileEnabled = true;
