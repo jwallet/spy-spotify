@@ -22,6 +22,7 @@ using MetroFramework;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
 using NAudio.Lame;
+using Unosquare.Swan;
 
 namespace EspionSpotify
 {
@@ -925,7 +926,7 @@ namespace EspionSpotify
         private void CbBitRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             var savedBitrate = Settings.Default.settings_media_bitrate_quality;
-            if (savedBitrate == cbBitRate.SelectedIndex || savedBitrate > cbBitRate.DataBindings.Count) return;
+            if (savedBitrate == cbBitRate.SelectedIndex || savedBitrate > cbBitRate.Items.Count) return;
 
             _userSettings.Bitrate = cbBitRate.SelectedItem.ToKeyValuePair<LAMEPreset, string>().Key;
             Settings.Default.settings_media_bitrate_quality = cbBitRate.SelectedIndex;
