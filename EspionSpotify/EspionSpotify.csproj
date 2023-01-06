@@ -186,6 +186,7 @@
     <Compile Include="AudioSessions\IAudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioThrottler.cs" />
     <Compile Include="Enums\SilenceAnalyzer.cs" />
+    <Compile Include="Extensions\JsonObjectExtensions.cs" />
     <Compile Include="Models\AudioWaveBuffer.cs" />
     <Compile Include="Native\Models\HRESULT.cs" />
     <Compile Include="Router\AudioRouter.cs" />
