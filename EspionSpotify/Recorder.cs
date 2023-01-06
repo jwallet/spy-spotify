@@ -83,7 +83,7 @@ namespace EspionSpotify
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
 
-        private bool TrackIsFetchingMetadata => _track.MetaDataUpdated == null && !_userSettings.RecordEverythingEnabled;
+        private bool TrackIsFetchingMetadata => _track.MetaDataUpdated == null && !_userSettings.RecordEverythingEnabled && _userSettings.MediaFormat == MediaFormat.Mp3;
 
         private WaveFormat WaveFormat => _audioThrottler.WaveFormat;
 
