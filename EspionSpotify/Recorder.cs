@@ -82,7 +82,9 @@ namespace EspionSpotify
 
         public int CountSeconds { get; set; }
         public bool Running { get; set; }
-        
+
+        private bool TrackIsFetchingMetadata => _track.MetaDataUpdated == null && !_userSettings.RecordEverythingEnabled;
+
         private WaveFormat WaveFormat => _audioThrottler.WaveFormat;
 
         private bool Init()
@@ -157,7 +159,7 @@ namespace EspionSpotify
         
         private async Task<bool> StopRecordingIfTrackCanBeSkipped()
         {
-            if (_canBeSkippedValidated || _track.MetaDataUpdated != true) return false;
+            if (_canBeSkippedValidated || TrackIsFetchingMetadata) return false;
 
             _canBeSkippedValidated = true;
             if (IsSkipTrackActive)
@@ -182,7 +184,7 @@ namespace EspionSpotify
         
         private async Task RecordingStopped()
         {
-            while (_track.MetaDataUpdated == null) await Task.Delay(100);
+            while (TrackIsFetchingMetadata) await Task.Delay(100);
             var skipped = !_canBeSkippedValidated && await StopRecordingIfTrackCanBeSkipped();
             if (_tempWaveWriter == null || skipped)
             {
