@@ -370,5 +370,17 @@ namespace EspionSpotify.Properties {
                 this["advanced_watcher_force_spotify_to_skip"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advanced_file_album_track_number_prefix_enabled {
+            get {
+                return ((bool)(this["advanced_file_album_track_number_prefix_enabled"]));
+            }
+            set {
+                this["advanced_file_album_track_number_prefix_enabled"] = value;
+            }
+        }
     }
 }

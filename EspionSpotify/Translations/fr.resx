@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Regrouper les pistes audio par album</value>
+    <value>Créer des répertoires en regroupant les pistes audio par artiste et album</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
@@ -177,11 +177,11 @@
     <value>Couper le son des publicités</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumFiles" xml:space="preserve">
+  <data name="lblCounterToFilePrefix" xml:space="preserve">
     <value>Inscrire au début du nom des fichiers enregistrés la valeur du compteur</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumTracks" xml:space="preserve">
+  <data name="lblCounterToMediaTag" xml:space="preserve">
     <value>Remplacer le tag numéro de position cd (album track) par la valeur du compteur</value>
     <comment>interface</comment>
   </data>
@@ -486,5 +486,8 @@
   </data>
   <data name="lblForceSpotifyToSkip" xml:space="preserve">
     <value>Force Spotify à sauter les pistes déjà enregistrées</value>
+  </data>
+  <data name="lblAlbumTrackNumberToFilePrefix" xml:space="preserve">
+    <value>Inscrire au début du nom des fichiers enregistrés le numéro de position cd (album track)</value>
   </data>
 </root>

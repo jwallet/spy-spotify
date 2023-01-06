@@ -1882,6 +1882,8 @@ namespace EspionSpotify
 
         private MetroFramework.Controls.MetroToggle tgAlbumTrackNumberToFilePrefix;
 
+        private MetroFramework.Controls.MetroLabel lblAlbumTrackNumberToFilePrefix;
+
         private MetroFramework.Controls.MetroToggle tgForceSpotifyToSkip;
         private MetroFramework.Controls.MetroLabel lblAPI;
         private MetroFramework.Controls.MetroLabel lblForceSpotifyToSkip;
@@ -1929,7 +1931,7 @@ namespace EspionSpotify
         private System.Windows.Forms.TabPage tabAdvanced;
         private System.Windows.Forms.TableLayoutPanel tlAdvanced;
         private MetroFramework.Controls.MetroLabel lblSpy;
-        private MetroLabel lblRecorder;
+        private MetroFramework.Controls.MetroLabel lblRecorder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private MetroFramework.Controls.MetroLabel lblMuteAds;
         private MetroFramework.Controls.MetroToggle tgMuteAds;
@@ -1941,16 +1943,16 @@ namespace EspionSpotify
         private MetroFramework.Controls.MetroLabel lblRecordingNum;
         private MetroFramework.Controls.MetroToggle tgAddSeparators;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private MetroLink lnkNumPlus;
+        private MetroFramework.Controls.MetroLink lnkNumPlus;
         private MetroLink lnkNumMinus;
-        private MetroFramework.Controls.MetroToggle tgNumFiles;
+        private MetroFramework.Controls.MetroToggle tgCounterToFilePrefix;
         private MetroFramework.Controls.MetroLabel lblAddSeparators;
-        private MetroFramework.Controls.MetroToggle tgNumTracks;
+        private MetroFramework.Controls.MetroToggle tgCounterToMediaTag;
         private MetroFramework.Controls.MetroToggle tgAddFolders;
-        private MetroFramework.Controls.MetroLabel lblNumFiles;
+        private MetroFramework.Controls.MetroLabel lblCounterToFilePrefix;
         private MetroFramework.Controls.MetroLabel lblAddFolders;
-        private MetroFramework.Controls.MetroLabel lblNumTracks;
-        private MetroLabel lblRecordOverRecordings;
+        private MetroFramework.Controls.MetroLabel lblCounterToMediaTag;
+        private MetroFramework.Controls.MetroLabel lblRecordOverRecordings;
         private MetroFramework.Controls.MetroToggle tgRecordOverRecordings;
         private MetroFramework.Controls.MetroLabel lblRecordingTimer;
         private System.Windows.Forms.MaskedTextBox txtRecordingTimer;
@@ -1969,9 +1971,9 @@ namespace EspionSpotify
         private MetroLink lnkDonate;
         private MetroLink lnkFAQ;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private MetroCheckBox chkRecordDuplicateRecordings;
+        private MetroFramework.Controls.MetroCheckBox chkRecordDuplicateRecordings;
         private MetroLink lnkSpotifyCredentials;
-        private MetroLabel lblID3;
+        private MetroFramework.Controls.MetroLabel lblID3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private MetroFramework.Controls.MetroToggle tgExtraTitleToSubtitle;
         private MetroFramework.Controls.MetroLabel lblExtraTitleToSubtitle;

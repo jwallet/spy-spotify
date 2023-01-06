@@ -124,7 +124,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group tracks by album.
+        ///   Looks up a localized string similar to Create directories by grouping tracks by artist and album.
         /// </summary>
         internal static string lblAddFolders {
             get {
@@ -147,6 +147,15 @@ namespace EspionSpotify.Translations {
         internal static string lblAds {
             get {
                 return ResourceManager.GetString("lblAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add the album track number in front of all files name.
+        /// </summary>
+        internal static string lblAlbumTrackNumberToFilePrefix {
+            get {
+                return ResourceManager.GetString("lblAlbumTrackNumberToFilePrefix", resourceCulture);
             }
         }
         
@@ -174,6 +183,24 @@ namespace EspionSpotify.Translations {
         internal static string lblClientId {
             get {
                 return ResourceManager.GetString("lblClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add the counter number in front of all files name.
+        /// </summary>
+        internal static string lblCounterToFilePrefix {
+            get {
+                return ResourceManager.GetString("lblCounterToFilePrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace the album position (track number) metadata tag by the counter value.
+        /// </summary>
+        internal static string lblCounterToMediaTag {
+            get {
+                return ResourceManager.GetString("lblCounterToMediaTag", resourceCulture);
             }
         }
         
@@ -273,24 +300,6 @@ namespace EspionSpotify.Translations {
         internal static string lblMuteAds {
             get {
                 return ResourceManager.GetString("lblMuteAds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add the counter number in front of all files name.
-        /// </summary>
-        internal static string lblNumFiles {
-            get {
-                return ResourceManager.GetString("lblNumFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace track number tag by the counter value.
-        /// </summary>
-        internal static string lblNumTracks {
-            get {
-                return ResourceManager.GetString("lblNumTracks", resourceCulture);
             }
         }
         

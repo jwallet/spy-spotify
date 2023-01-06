@@ -142,7 +142,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblAddFolders" xml:space="preserve">
-    <value>Group tracks by album</value>
+    <value>Create directories by grouping tracks by artist and album</value>
     <comment>interface</comment>
   </data>
   <data name="lblAddSeparators" xml:space="preserve">
@@ -177,12 +177,12 @@
     <value>Mute Ads</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumFiles" xml:space="preserve">
+  <data name="lblCounterToFilePrefix" xml:space="preserve">
     <value>Add the counter number in front of all files name</value>
     <comment>interface</comment>
   </data>
-  <data name="lblNumTracks" xml:space="preserve">
-    <value>Replace track number tag by the counter value</value>
+  <data name="lblCounterToMediaTag" xml:space="preserve">
+    <value>Replace the album position (track number) metadata tag by the counter value</value>
     <comment>interface</comment>
   </data>
   <data name="lblPath" xml:space="preserve">
@@ -486,5 +486,8 @@
   </data>
   <data name="lblForceSpotifyToSkip" xml:space="preserve">
     <value>Force Spotify to skip already recorded track</value>
+  </data>
+  <data name="lblAlbumTrackNumberToFilePrefix" xml:space="preserve">
+    <value>Add the album track number in front of all files name</value>
   </data>
 </root>
