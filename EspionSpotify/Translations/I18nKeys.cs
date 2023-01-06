@@ -28,8 +28,11 @@ namespace EspionSpotify.Translations
         public static TranslationKeys LblMinimizeToSystemTray => TranslationKeys.lblMinimizeToSystemTray;
         public static TranslationKeys LblMinLength => TranslationKeys.lblMinLength;
         public static TranslationKeys LblMuteAds => TranslationKeys.lblMuteAds;
-        public static TranslationKeys LblNumFiles => TranslationKeys.lblNumFiles;
-        public static TranslationKeys LblNumTracks => TranslationKeys.lblNumTracks;
+        public static TranslationKeys LblCounterToFilePrefix => TranslationKeys.lblCounterToFilePrefix;
+        public static TranslationKeys LblCounterToMediaTag => TranslationKeys.lblCounterToMediaTag;
+
+        public static TranslationKeys LblAlbumTrackNumberToFilePrefix =>
+            TranslationKeys.lblAlbumTrackNumberToFilePrefix;
         public static TranslationKeys LblPath => TranslationKeys.lblPath;
         public static TranslationKeys LblRecordOverRecordings => TranslationKeys.lblRecordOverRecordings;
         public static TranslationKeys LblRecorder => TranslationKeys.lblRecorder;

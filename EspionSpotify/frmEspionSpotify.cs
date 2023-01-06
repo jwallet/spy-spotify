@@ -198,8 +198,8 @@ namespace EspionSpotify
             tbMinTime.Value = Settings.Default.settings_media_minimum_recorded_length_in_seconds / 5;
             tgListenToSpotifyPlayback.Checked = Settings.Default.advanced_watcher_listen_to_spotify_playback_enabled;
             tgAddSeparators.Checked = Settings.Default.advanced_file_replace_space_by_underscore_enabled;
-            tgNumTracks.Checked = Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
-            tgNumFiles.Checked = Settings.Default.advanced_file_counter_number_prefix_enabled;
+            tgCounterToMediaTag.Checked = Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
+            tgCounterToFilePrefix.Checked = Settings.Default.advanced_file_counter_number_prefix_enabled;
             tgAddFolders.Checked = Settings.Default.advanced_file_group_media_in_folders_enabled;
             txtPath.Text = Settings.Default.settings_output_path;
             tgMuteAds.Checked = Settings.Default.settings_mute_ads_enabled;
@@ -252,6 +252,8 @@ namespace EspionSpotify
                 Settings.Default.settings_media_minimum_recorded_length_in_seconds;
             _userSettings.OrderNumberInfrontOfFileEnabled =
                 Settings.Default.advanced_file_counter_number_prefix_enabled;
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled =
+                Settings.Default.advanced_file_album_track_number_prefix_enabled;
             _userSettings.OrderNumberInMediaTagEnabled =
                 Settings.Default.advanced_id3_counter_number_as_track_number_enabled;
             _userSettings.OutputPath = FileManager.GetCleanPath(Settings.Default.settings_output_path);
@@ -398,8 +400,9 @@ namespace EspionSpotify
             lblLanguage.Text = Rm.GetString(I18NKeys.LblLanguage);
             lblAddFolders.Text = Rm.GetString(I18NKeys.LblAddFolders);
             lblAddSeparators.Text = Rm.GetString(I18NKeys.LblAddSeparators);
-            lblNumFiles.Text = Rm.GetString(I18NKeys.LblNumFiles);
-            lblNumTracks.Text = Rm.GetString(I18NKeys.LblNumTracks);
+            lblCounterToFilePrefix.Text = Rm.GetString(I18NKeys.LblCounterToFilePrefix);
+            lblCounterToMediaTag.Text = Rm.GetString(I18NKeys.LblCounterToMediaTag);
+            lblAlbumTrackNumberToFilePrefix.Text = Rm.GetString(I18NKeys.LblAlbumTrackNumberToFilePrefix);
             lblListenToSpotifyPlayback.Text = Rm.GetString(I18NKeys.LblListenToSpotifyPlayback);
             lblRecordingNum.Text = Rm.GetString(I18NKeys.LblRecordingNum);
             lblAds.Text = Rm.GetString(I18NKeys.LblAds);
@@ -802,29 +805,41 @@ namespace EspionSpotify
                 await _analytics.LogAction(
                     $"track-title-separator?enabled={tgAddSeparators.GetPropertyThreadSafe(c => c.Checked)}"));
         }
-
-        private void TgNumFiles_CheckedChanged(object sender, EventArgs e)
+        
+        private void TgAlbumTrackNumberToFilePrefix_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.advanced_file_counter_number_prefix_enabled == tgNumFiles.Checked) return;
+            if (Settings.Default.advanced_file_album_track_number_prefix_enabled == tgAlbumTrackNumberToFilePrefix.Checked) return;
 
-            _userSettings.OrderNumberInfrontOfFileEnabled = tgNumFiles.Checked;
-            Settings.Default.advanced_file_counter_number_prefix_enabled = tgNumFiles.Checked;
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled = tgAlbumTrackNumberToFilePrefix.Checked;
+            Settings.Default.advanced_file_album_track_number_prefix_enabled = tgAlbumTrackNumberToFilePrefix.Checked;
             Settings.Default.Save();
             Task.Run(async () =>
                 await _analytics.LogAction(
-                    $"order-number-in-front-of-files?enabled={tgNumFiles.GetPropertyThreadSafe(c => c.Checked)}"));
+                    $"album-track-number-in-front-of-files?enabled={tgAlbumTrackNumberToFilePrefix.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
-        private void TgNumTracks_CheckedChanged(object sender, EventArgs e)
+        private void TgCounterToFilePrefix_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.advanced_id3_counter_number_as_track_number_enabled == tgNumTracks.Checked) return;
+            if (Settings.Default.advanced_file_counter_number_prefix_enabled == tgCounterToFilePrefix.Checked) return;
 
-            _userSettings.OrderNumberInMediaTagEnabled = tgNumTracks.Checked;
-            Settings.Default.advanced_id3_counter_number_as_track_number_enabled = tgNumTracks.Checked;
+            _userSettings.OrderNumberInfrontOfFileEnabled = tgCounterToFilePrefix.Checked;
+            Settings.Default.advanced_file_counter_number_prefix_enabled = tgCounterToFilePrefix.Checked;
             Settings.Default.Save();
             Task.Run(async () =>
                 await _analytics.LogAction(
-                    $"order-number-in-media-tags?enabled={tgNumTracks.GetPropertyThreadSafe(c => c.Checked)}"));
+                    $"order-number-in-front-of-files?enabled={tgCounterToFilePrefix.GetPropertyThreadSafe(c => c.Checked)}"));
+        }
+
+        private void TgCounterToMediaTag_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.advanced_id3_counter_number_as_track_number_enabled == tgCounterToMediaTag.Checked) return;
+
+            _userSettings.OrderNumberInMediaTagEnabled = tgCounterToMediaTag.Checked;
+            Settings.Default.advanced_id3_counter_number_as_track_number_enabled = tgCounterToMediaTag.Checked;
+            Settings.Default.Save();
+            Task.Run(async () =>
+                await _analytics.LogAction(
+                    $"order-number-in-media-tags?enabled={tgCounterToMediaTag.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
         private void TgRecordOverRecordings_CheckedChanged(object sender, EventArgs e)

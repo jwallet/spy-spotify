@@ -36,6 +36,7 @@ namespace EspionSpotify.Tests
                 TrackTitleSeparator = " ",
                 OrderNumberInMediaTagEnabled = false,
                 OrderNumberInfrontOfFileEnabled = false,
+                AlbumTrackNumberInfrontOfFileEnabled = false,
                 ListenToSpotifyPlaybackEnabled = true,
                 MuteAdsEnabled = true,
                 RecordEverythingEnabled = false,
@@ -204,10 +205,64 @@ namespace EspionSpotify.Tests
             Assert.Equal(expected, fileName);
         }
 
+        [Theory]
+        [InlineData(0, @"\\path\home\Artist_-_Title_-_Live.mp3")]
+        [InlineData(1, @"\\path\home\01_Artist_-_Title_-_Live.mp3")]
+        internal void BuildFileName_ReturnsUnixFileNameAlbumTrackNumbered(int albumTrackNumber, string expected)
+        {
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled = true;
+            _userSettings.GroupByFoldersEnabled = false;
+            _userSettings.TrackTitleSeparator = "_";
+            _userSettings.OutputPath = NETWORK_PATH;
+            _track.AlbumPosition = albumTrackNumber;
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+            var fileName = _fileManager.GetOutputFileAndInitDirectories().ToMediaFilePath();
+            
+            Assert.Equal(expected, fileName);
+        }
+        
+        [Theory]
+        [InlineData(0, @"\\path\home\Artist\Single\Title_-_Live.mp3")]
+        [InlineData(1, @"\\path\home\Artist\Single\01_Title_-_Live.mp3")]
+        internal void BuildFileName_ReturnsUnixFileNameAlbumTrackNumberedAndGrouped(int albumTrackNumber, string expected)
+        {
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled = true;
+            _userSettings.GroupByFoldersEnabled = true;
+            _userSettings.TrackTitleSeparator = "_";
+            _userSettings.OutputPath = NETWORK_PATH;
+            _track.AlbumPosition = albumTrackNumber;
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+            var fileName = _fileManager.GetOutputFileAndInitDirectories().ToMediaFilePath();
+            
+            Assert.Equal(expected, fileName);
+        }
+        
+        [Theory]
+        [InlineData(1, 0, @"\\path\home\Artist\Single\001_Title_-_Live.mp3")]
+        [InlineData(1, 1, @"\\path\home\Artist\Single\001_01_Title_-_Live.mp3")]
+        internal void BuildFileName_ReturnsUnixFileNameOrderNumberedAndAlbumTrackNumbered(int orderNumber, int albumTrackNumber, string expected)
+        {
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled = true;
+            _userSettings.OrderNumberInfrontOfFileEnabled = true;
+            _userSettings.GroupByFoldersEnabled = true;
+            _userSettings.TrackTitleSeparator = "_";
+            _userSettings.OutputPath = NETWORK_PATH;
+            _userSettings.InternalOrderNumber = orderNumber;
+            _track.AlbumPosition = albumTrackNumber;
+
+            _fileManager = new FileManager(_userSettings, _track, _fileSystem, DateTime.Now);
+            var fileName = _fileManager.GetOutputFileAndInitDirectories().ToMediaFilePath();
+            
+            Assert.Equal(expected, fileName);
+        }
+
         [Fact]
         internal void BuildFileName_ReturnsFileNameWhenOrderNumberedIsDisabled()
         {
             _userSettings.OrderNumberInfrontOfFileEnabled = false;
+            _userSettings.AlbumTrackNumberInfrontOfFileEnabled = false;
 
             _userSettings.OrderNumberInMediaTagEnabled = true;
             _userSettings.InternalOrderNumber = 100;
