@@ -198,7 +198,7 @@
     <comment>interface</comment>
   </data>
   <data name="lblRecordEverything" xml:space="preserve">
-    <value>Enregistrer tout.</value>
+    <value>Enregistrer tout (comme les podcasts).</value>
     <comment>interface</comment>
   </data>
   <data name="lblSpy" xml:space="preserve">

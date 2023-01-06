@@ -107,10 +107,10 @@ namespace EspionSpotify
             this.lnkNumPlus = new MetroFramework.Controls.MetroLink();
             this.lnkNumMinus = new MetroFramework.Controls.MetroLink();
             this.txtRecordingNum = new System.Windows.Forms.MaskedTextBox();
-            this.tgNumFiles = new MetroFramework.Controls.MetroToggle();
+            this.tgCounterToFilePrefix = new MetroFramework.Controls.MetroToggle();
             this.lblAddSeparators = new MetroFramework.Controls.MetroLabel();
             this.tgAddFolders = new MetroFramework.Controls.MetroToggle();
-            this.lblNumFiles = new MetroFramework.Controls.MetroLabel();
+            this.lblCounterToFilePrefix = new MetroFramework.Controls.MetroLabel();
             this.lblAddFolders = new MetroFramework.Controls.MetroLabel();
             this.tgRecordOverRecordings = new MetroFramework.Controls.MetroToggle();
             this.lblRecordingTimer = new MetroFramework.Controls.MetroLabel();
@@ -118,14 +118,16 @@ namespace EspionSpotify
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.lblRecordOverRecordings = new MetroFramework.Controls.MetroLabel();
             this.chkRecordDuplicateRecordings = new MetroFramework.Controls.MetroCheckBox();
+            this.lblAlbumTrackNumberToFilePrefix = new MetroFramework.Controls.MetroLabel();
+            this.tgAlbumTrackNumberToFilePrefix = new MetroFramework.Controls.MetroToggle();
             this.lblID3 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tgUpdateRecordingsID3Tags = new MetroFramework.Controls.MetroToggle();
             this.lblUpdateRecordingsID3Tags = new MetroFramework.Controls.MetroLabel();
             this.tgExtraTitleToSubtitle = new MetroFramework.Controls.MetroToggle();
             this.lblExtraTitleToSubtitle = new MetroFramework.Controls.MetroLabel();
-            this.lblNumTracks = new MetroFramework.Controls.MetroLabel();
-            this.tgNumTracks = new MetroFramework.Controls.MetroToggle();
+            this.lblCounterToMediaTag = new MetroFramework.Controls.MetroLabel();
+            this.tgCounterToMediaTag = new MetroFramework.Controls.MetroToggle();
             this.lblGeneral = new MetroFramework.Controls.MetroLabel();
             this.lnkSpy = new MetroFramework.Controls.MetroLink();
             this.tip = new MetroFramework.Components.MetroToolTip();
@@ -178,7 +180,7 @@ namespace EspionSpotify
             this.tcMenu.ItemSize = new System.Drawing.Size(100, 34);
             this.tcMenu.Location = new System.Drawing.Point(20, 70);
             this.tcMenu.Name = "tcMenu";
-            this.tcMenu.SelectedIndex = 1;
+            this.tcMenu.SelectedIndex = 2;
             this.tcMenu.Size = new System.Drawing.Size(740, 349);
             this.tcMenu.Style = MetroFramework.MetroColorStyle.Green;
             this.tcMenu.TabIndex = 30;
@@ -1057,7 +1059,7 @@ namespace EspionSpotify
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlAdvanced.Size = new System.Drawing.Size(693, 425);
+            this.tlAdvanced.Size = new System.Drawing.Size(693, 453);
             this.tlAdvanced.TabIndex = 1;
             // 
             // tableLayoutPanel16
@@ -1108,7 +1110,7 @@ namespace EspionSpotify
             // 
             this.lblSpy.AutoSize = true;
             this.lblSpy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSpy.Location = new System.Drawing.Point(3, 215);
+            this.lblSpy.Location = new System.Drawing.Point(3, 243);
             this.lblSpy.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblSpy.Name = "lblSpy";
             this.lblSpy.Size = new System.Drawing.Size(102, 84);
@@ -1124,7 +1126,7 @@ namespace EspionSpotify
             this.lblRecorder.Location = new System.Drawing.Point(3, 41);
             this.lblRecorder.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblRecorder.Name = "lblRecorder";
-            this.lblRecorder.Size = new System.Drawing.Size(102, 168);
+            this.lblRecorder.Size = new System.Drawing.Size(102, 196);
             this.lblRecorder.TabIndex = 1;
             this.lblRecorder.Text = "LBL_RECORDER";
             this.lblRecorder.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -1143,7 +1145,7 @@ namespace EspionSpotify
             this.tableLayoutPanel11.Controls.Add(this.lblForceSpotifyToSkip, 0, 1);
             this.tableLayoutPanel11.Controls.Add(this.tgForceSpotifyToSkip, 1, 1);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(121, 212);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(121, 240);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 3;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -1277,21 +1279,24 @@ namespace EspionSpotify
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel14.Controls.Add(this.lblRecordingNum, 0, 1);
-            this.tableLayoutPanel14.Controls.Add(this.tgAddSeparators, 1, 4);
+            this.tableLayoutPanel14.Controls.Add(this.tgAddSeparators, 1, 5);
             this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel7, 1, 1);
-            this.tableLayoutPanel14.Controls.Add(this.tgNumFiles, 1, 2);
-            this.tableLayoutPanel14.Controls.Add(this.lblAddSeparators, 0, 4);
-            this.tableLayoutPanel14.Controls.Add(this.tgAddFolders, 1, 3);
-            this.tableLayoutPanel14.Controls.Add(this.lblNumFiles, 0, 2);
-            this.tableLayoutPanel14.Controls.Add(this.lblAddFolders, 0, 3);
-            this.tableLayoutPanel14.Controls.Add(this.tgRecordOverRecordings, 1, 5);
+            this.tableLayoutPanel14.Controls.Add(this.tgCounterToFilePrefix, 1, 2);
+            this.tableLayoutPanel14.Controls.Add(this.lblAddSeparators, 0, 5);
+            this.tableLayoutPanel14.Controls.Add(this.tgAddFolders, 1, 4);
+            this.tableLayoutPanel14.Controls.Add(this.lblCounterToFilePrefix, 0, 2);
+            this.tableLayoutPanel14.Controls.Add(this.lblAddFolders, 0, 4);
+            this.tableLayoutPanel14.Controls.Add(this.tgRecordOverRecordings, 1, 6);
             this.tableLayoutPanel14.Controls.Add(this.lblRecordingTimer, 0, 0);
             this.tableLayoutPanel14.Controls.Add(this.txtRecordingTimer, 1, 0);
-            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel2, 0, 5);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel2, 0, 6);
+            this.tableLayoutPanel14.Controls.Add(this.lblAlbumTrackNumberToFilePrefix, 0, 3);
+            this.tableLayoutPanel14.Controls.Add(this.tgAlbumTrackNumberToFilePrefix, 1, 3);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(121, 38);
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 6;
+            this.tableLayoutPanel14.RowCount = 7;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -1299,7 +1304,7 @@ namespace EspionSpotify
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(569, 168);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(569, 196);
             this.tableLayoutPanel14.TabIndex = 7;
             // 
             // lblRecordingNum
@@ -1320,7 +1325,7 @@ namespace EspionSpotify
             this.tgAddSeparators.AutoSize = true;
             this.tgAddSeparators.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tgAddSeparators.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgAddSeparators.Location = new System.Drawing.Point(472, 115);
+            this.tgAddSeparators.Location = new System.Drawing.Point(472, 143);
             this.tgAddSeparators.Name = "tgAddSeparators";
             this.tgAddSeparators.Size = new System.Drawing.Size(94, 22);
             this.tgAddSeparators.Style = MetroFramework.MetroColorStyle.Green;
@@ -1401,28 +1406,28 @@ namespace EspionSpotify
             this.txtRecordingNum.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt;
             this.txtRecordingNum.Leave += new System.EventHandler(this.TxtRecordingNum_Leave);
             // 
-            // tgNumFiles
+            // tgCounterToFilePrefix
             // 
-            this.tgNumFiles.AutoSize = true;
-            this.tgNumFiles.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tgNumFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgNumFiles.Location = new System.Drawing.Point(472, 59);
-            this.tgNumFiles.Name = "tgNumFiles";
-            this.tgNumFiles.Size = new System.Drawing.Size(94, 22);
-            this.tgNumFiles.Style = MetroFramework.MetroColorStyle.Green;
-            this.tgNumFiles.TabIndex = 47;
-            this.tgNumFiles.Text = "Off";
-            this.tgNumFiles.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tgNumFiles.UseSelectable = true;
-            this.tgNumFiles.CheckedChanged += new System.EventHandler(this.TgNumFiles_CheckedChanged);
-            this.tgNumFiles.MouseHover += new System.EventHandler(this.Focus_Hover);
+            this.tgCounterToFilePrefix.AutoSize = true;
+            this.tgCounterToFilePrefix.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgCounterToFilePrefix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgCounterToFilePrefix.Location = new System.Drawing.Point(472, 59);
+            this.tgCounterToFilePrefix.Name = "tgCounterToFilePrefix";
+            this.tgCounterToFilePrefix.Size = new System.Drawing.Size(94, 22);
+            this.tgCounterToFilePrefix.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgCounterToFilePrefix.TabIndex = 47;
+            this.tgCounterToFilePrefix.Text = "Off";
+            this.tgCounterToFilePrefix.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgCounterToFilePrefix.UseSelectable = true;
+            this.tgCounterToFilePrefix.CheckedChanged += new System.EventHandler(this.TgCounterToFilePrefix_CheckedChanged);
+            this.tgCounterToFilePrefix.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // lblAddSeparators
             // 
             this.lblAddSeparators.AutoSize = true;
             this.lblAddSeparators.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAddSeparators.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblAddSeparators.Location = new System.Drawing.Point(3, 112);
+            this.lblAddSeparators.Location = new System.Drawing.Point(3, 140);
             this.lblAddSeparators.Name = "lblAddSeparators";
             this.lblAddSeparators.Size = new System.Drawing.Size(463, 28);
             this.lblAddSeparators.TabIndex = 44;
@@ -1435,7 +1440,7 @@ namespace EspionSpotify
             this.tgAddFolders.AutoSize = true;
             this.tgAddFolders.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tgAddFolders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgAddFolders.Location = new System.Drawing.Point(472, 87);
+            this.tgAddFolders.Location = new System.Drawing.Point(472, 115);
             this.tgAddFolders.Name = "tgAddFolders";
             this.tgAddFolders.Size = new System.Drawing.Size(94, 22);
             this.tgAddFolders.Style = MetroFramework.MetroColorStyle.Green;
@@ -1446,25 +1451,25 @@ namespace EspionSpotify
             this.tgAddFolders.CheckedChanged += new System.EventHandler(this.TgAddFolders_CheckedChanged);
             this.tgAddFolders.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
-            // lblNumFiles
+            // lblCounterToFilePrefix
             // 
-            this.lblNumFiles.AutoSize = true;
-            this.lblNumFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNumFiles.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblNumFiles.Location = new System.Drawing.Point(3, 56);
-            this.lblNumFiles.Name = "lblNumFiles";
-            this.lblNumFiles.Size = new System.Drawing.Size(463, 28);
-            this.lblNumFiles.TabIndex = 46;
-            this.lblNumFiles.Text = "LBL_ADD_NUMBERS_TO_FILES";
-            this.lblNumFiles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblNumFiles.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblCounterToFilePrefix.AutoSize = true;
+            this.lblCounterToFilePrefix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCounterToFilePrefix.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblCounterToFilePrefix.Location = new System.Drawing.Point(3, 56);
+            this.lblCounterToFilePrefix.Name = "lblCounterToFilePrefix";
+            this.lblCounterToFilePrefix.Size = new System.Drawing.Size(463, 28);
+            this.lblCounterToFilePrefix.TabIndex = 46;
+            this.lblCounterToFilePrefix.Text = "LBL_ADD_NUMBERS_TO_FILES";
+            this.lblCounterToFilePrefix.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCounterToFilePrefix.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // lblAddFolders
             // 
             this.lblAddFolders.AutoSize = true;
             this.lblAddFolders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAddFolders.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblAddFolders.Location = new System.Drawing.Point(3, 84);
+            this.lblAddFolders.Location = new System.Drawing.Point(3, 112);
             this.lblAddFolders.Name = "lblAddFolders";
             this.lblAddFolders.Size = new System.Drawing.Size(463, 28);
             this.lblAddFolders.TabIndex = 42;
@@ -1477,7 +1482,7 @@ namespace EspionSpotify
             this.tgRecordOverRecordings.AutoSize = true;
             this.tgRecordOverRecordings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tgRecordOverRecordings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgRecordOverRecordings.Location = new System.Drawing.Point(472, 143);
+            this.tgRecordOverRecordings.Location = new System.Drawing.Point(472, 171);
             this.tgRecordOverRecordings.Name = "tgRecordOverRecordings";
             this.tgRecordOverRecordings.Size = new System.Drawing.Size(94, 22);
             this.tgRecordOverRecordings.Style = MetroFramework.MetroColorStyle.Green;
@@ -1527,7 +1532,7 @@ namespace EspionSpotify
             this.tableLayoutPanel2.Controls.Add(this.lblRecordOverRecordings, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.chkRecordDuplicateRecordings, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 140);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 168);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -1564,11 +1569,40 @@ namespace EspionSpotify
             this.chkRecordDuplicateRecordings.UseSelectable = true;
             this.chkRecordDuplicateRecordings.CheckedChanged += new System.EventHandler(this.ChkRecordDuplicateRecordings_CheckedChanged);
             // 
+            // lblAlbumTrackNumberToFilePrefix
+            // 
+            this.lblAlbumTrackNumberToFilePrefix.AutoSize = true;
+            this.lblAlbumTrackNumberToFilePrefix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblAlbumTrackNumberToFilePrefix.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblAlbumTrackNumberToFilePrefix.Location = new System.Drawing.Point(3, 84);
+            this.lblAlbumTrackNumberToFilePrefix.Name = "lblAlbumTrackNumberToFilePrefix";
+            this.lblAlbumTrackNumberToFilePrefix.Size = new System.Drawing.Size(463, 28);
+            this.lblAlbumTrackNumberToFilePrefix.TabIndex = 46;
+            this.lblAlbumTrackNumberToFilePrefix.Text = "LBL_ADD_ALBUM_POS_TO_FILES";
+            this.lblAlbumTrackNumberToFilePrefix.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAlbumTrackNumberToFilePrefix.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tgAlbumTrackNumberToFilePrefix
+            // 
+            this.tgAlbumTrackNumberToFilePrefix.AutoSize = true;
+            this.tgAlbumTrackNumberToFilePrefix.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgAlbumTrackNumberToFilePrefix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgAlbumTrackNumberToFilePrefix.Location = new System.Drawing.Point(472, 87);
+            this.tgAlbumTrackNumberToFilePrefix.Name = "tgAlbumTrackNumberToFilePrefix";
+            this.tgAlbumTrackNumberToFilePrefix.Size = new System.Drawing.Size(94, 22);
+            this.tgAlbumTrackNumberToFilePrefix.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgAlbumTrackNumberToFilePrefix.TabIndex = 47;
+            this.tgAlbumTrackNumberToFilePrefix.Text = "Off";
+            this.tgAlbumTrackNumberToFilePrefix.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgAlbumTrackNumberToFilePrefix.UseSelectable = true;
+            this.tgAlbumTrackNumberToFilePrefix.CheckedChanged += new System.EventHandler(this.TgAlbumTrackNumberToFilePrefix_CheckedChanged);
+            this.tgAlbumTrackNumberToFilePrefix.MouseHover += new System.EventHandler(this.Focus_Hover);
+            // 
             // lblID3
             // 
             this.lblID3.AutoSize = true;
             this.lblID3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblID3.Location = new System.Drawing.Point(3, 305);
+            this.lblID3.Location = new System.Drawing.Point(3, 333);
             this.lblID3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblID3.Name = "lblID3";
             this.lblID3.Size = new System.Drawing.Size(102, 100);
@@ -1586,10 +1620,10 @@ namespace EspionSpotify
             this.tableLayoutPanel6.Controls.Add(this.lblUpdateRecordingsID3Tags, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.tgExtraTitleToSubtitle, 1, 1);
             this.tableLayoutPanel6.Controls.Add(this.lblExtraTitleToSubtitle, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.lblNumTracks, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.tgNumTracks, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.lblCounterToMediaTag, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.tgCounterToMediaTag, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(121, 302);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(121, 330);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 4;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -1655,34 +1689,34 @@ namespace EspionSpotify
             this.lblExtraTitleToSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblExtraTitleToSubtitle.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // lblNumTracks
+            // lblCounterToMediaTag
             // 
-            this.lblNumTracks.AutoSize = true;
-            this.lblNumTracks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNumTracks.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblNumTracks.Location = new System.Drawing.Point(3, 0);
-            this.lblNumTracks.Name = "lblNumTracks";
-            this.lblNumTracks.Size = new System.Drawing.Size(463, 28);
-            this.lblNumTracks.TabIndex = 48;
-            this.lblNumTracks.Text = "LBL_ADD_NUMBERS_AS_TRACK";
-            this.lblNumTracks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblNumTracks.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lblCounterToMediaTag.AutoSize = true;
+            this.lblCounterToMediaTag.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCounterToMediaTag.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.lblCounterToMediaTag.Location = new System.Drawing.Point(3, 0);
+            this.lblCounterToMediaTag.Name = "lblCounterToMediaTag";
+            this.lblCounterToMediaTag.Size = new System.Drawing.Size(463, 28);
+            this.lblCounterToMediaTag.TabIndex = 48;
+            this.lblCounterToMediaTag.Text = "LBL_ADD_NUMBERS_AS_TRACK";
+            this.lblCounterToMediaTag.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCounterToMediaTag.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // tgNumTracks
+            // tgCounterToMediaTag
             // 
-            this.tgNumTracks.AutoSize = true;
-            this.tgNumTracks.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tgNumTracks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tgNumTracks.Location = new System.Drawing.Point(472, 3);
-            this.tgNumTracks.Name = "tgNumTracks";
-            this.tgNumTracks.Size = new System.Drawing.Size(94, 22);
-            this.tgNumTracks.Style = MetroFramework.MetroColorStyle.Green;
-            this.tgNumTracks.TabIndex = 49;
-            this.tgNumTracks.Text = "Off";
-            this.tgNumTracks.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tgNumTracks.UseSelectable = true;
-            this.tgNumTracks.CheckedChanged += new System.EventHandler(this.TgNumTracks_CheckedChanged);
-            this.tgNumTracks.MouseHover += new System.EventHandler(this.Focus_Hover);
+            this.tgCounterToMediaTag.AutoSize = true;
+            this.tgCounterToMediaTag.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tgCounterToMediaTag.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgCounterToMediaTag.Location = new System.Drawing.Point(472, 3);
+            this.tgCounterToMediaTag.Name = "tgCounterToMediaTag";
+            this.tgCounterToMediaTag.Size = new System.Drawing.Size(94, 22);
+            this.tgCounterToMediaTag.Style = MetroFramework.MetroColorStyle.Green;
+            this.tgCounterToMediaTag.TabIndex = 49;
+            this.tgCounterToMediaTag.Text = "Off";
+            this.tgCounterToMediaTag.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tgCounterToMediaTag.UseSelectable = true;
+            this.tgCounterToMediaTag.CheckedChanged += new System.EventHandler(this.TgCounterToMediaTag_CheckedChanged);
+            this.tgCounterToMediaTag.MouseHover += new System.EventHandler(this.Focus_Hover);
             // 
             // lblGeneral
             // 
@@ -1845,6 +1879,8 @@ namespace EspionSpotify
             this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
         }
+
+        private MetroFramework.Controls.MetroToggle tgAlbumTrackNumberToFilePrefix;
 
         private MetroFramework.Controls.MetroToggle tgForceSpotifyToSkip;
         private MetroFramework.Controls.MetroLabel lblAPI;

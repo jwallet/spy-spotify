@@ -322,7 +322,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistrer tout..
+        ///   Looks up a localized string similar to Enregistrer tout (comme les podcasts)..
         /// </summary>
         internal static string lblRecordEverything {
             get {
