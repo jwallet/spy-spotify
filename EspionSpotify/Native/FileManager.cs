@@ -259,10 +259,16 @@ namespace EspionSpotify.Native
             if (fileName.IsNullOrSpotifyIdleState())
                 throw new Exception($"File name cannot be a {Constants.SPOTIFY} idle state.");
 
-            var trackNumber = userSettings.OrderNumberInfrontOfFileEnabled
+            var counterNumber = userSettings.OrderNumberInfrontOfFileEnabled
                 ? (userSettings.OrderNumberAsFile ?? 0).ToString($"{userSettings.OrderNumberMask} ")
                 : null;
-            return Regex.Replace($"{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator ?? " ");
+
+            var albumPosition = track.AlbumPosition ?? 0;
+            var trackNumber = userSettings.AlbumTrackNumberInfrontOfFileEnabled && albumPosition != 0
+                ? albumPosition.ToString("00 ")
+                : null;
+
+            return Regex.Replace($"{counterNumber}{trackNumber}{fileName}", @"\s", userSettings.TrackTitleSeparator ?? " ");
         }
 
         private void DeleteFileFolder(string currentFile)
