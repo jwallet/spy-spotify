@@ -185,13 +185,13 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
                 How to isolate Spotify and Spytify to a different audio endpoint device to eliminate noise?
             </h3>
         </summary>
-        <article class="faq_content"><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and use the Windows 10 setting to move Spotify to the same audio endpoint.</p>
+        <article class="faq_content"><p>By using the Spytify setting <strong>Audio Device</strong>, you can move Spytify to a different audio endpoint and Spytify will route Spotify as well to this device.</p>
 
 <blockquote>
   <p>If you need a better audio endpoint because your sound card has issue with volume control while recording or encodes bad mp3 qualities, you can install a virtual device (like <a href="#install-better-audio-endpoint-device">Virtual Audio Cable that comes with Spytify</a>) to have recordings closer to the original Spotify quality.</p>
 </blockquote>
 
-<p>So, to move both apps to a different endpoint:</p>
+<p>If the Spytify fails to route Spotify to your audio device, you can move it manually like so:</p>
 
 <ul>
   <li>Press Windows key and type <strong>Sound mixer options</strong>, you should land on the setting page titled <em>App volume and device preferences</em>.</li>
@@ -218,11 +218,18 @@ Go to Settings, at the far right of <strong>Audio Device</strong>, click on the 
         </summary>
         <article class="faq_content"><p><a href="#install-better-audio-endpoint-device">Virtual Audio Device</a> are a good way to isolate apps together and get better recordings quality. However, by default, the apps you set on this device cannot be heard once you move them to this device, even if you change your default audio device for this one.</p>
 
-<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can set the Windows option <code class="language-plaintext highlighter-rouge">Listen to this device</code> in the device properties.</p>
+<p>To be able to still listen to Spotify when you are recording with Spytify with a Virtual Audio Cable device. You can do one of the following:</p>
+
+<ul>
+  <li>use the Spytify advanced setting <strong>Always listen to Spotify current playback on the default audio device</strong></li>
+  <li>set the Windows option <code class="language-plaintext highlighter-rouge">Listen to this device</code> in the device properties.</li>
+</ul>
+
+<hr />
+
+<h4 id="windows-option-listen-to-this-device-option">Windows option: Listen to this device option</h4>
 
 <p>Right click on the Audio 🔉 icon in the taskbar and select <strong>Open Sound settings</strong>, go down to the <em>Sound</em> section and select <strong>Sound Control Panel</strong>. In the <em>Recording</em> tab, select the <strong>CABLE Output</strong> device, then click on <strong>Properties</strong>. In the Device properties window, under <em>Listen</em> tab, check the option <code class="language-plaintext highlighter-rouge">Listen to this device</code>.</p>
-
-<p>If you <a href="#isolate-spotify-audio-endpoint">isolated Spotify and Spytify properly on the virutal audio device</a>, you can leave <strong>Default Playback Device</strong> selected for the <em>Playback through this device</em> option, otherwise if your default playback is somehow a different one than your headset/speaker, select it in the dropdown list. If the selected playback device is always the same one, you could leave Spytify and Spotify on the virtual cable as long as you want to be able to record great quality at anytime and still listen to your music.</p>
 
 <p>Click <strong>Apply</strong> and you should now hear it (and it won’t record YouTube or other background noise).</p>
 
