@@ -1,6 +1,6 @@
 ---
 name: Conversation thread
-about: Create a new conversation thread or ask a question to be moved in Discussions section.
+about: Create a new conversation thread that will be moved to the Discussions section.
 title: ''
 labels: "question \U0001F4AC"
 assignees: ''
