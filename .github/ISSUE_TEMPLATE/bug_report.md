@@ -7,14 +7,13 @@ assignees: ''
 
 ---
 
-**What is the bug ?**
 <!--
-Steps to reproduce the behavior or describe the expected behavior
+Add the steps to reproduce the behavior or describe the expected behavior below
 -->
 
 **Track used**
 <!--
-Spotify track/playlist url from : https://open.spotify.com/
+Add the Spotify track/playlist url from : https://open.spotify.com/
 -->
 
 **Screenshots**
