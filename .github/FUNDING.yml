@@ -10,4 +10,4 @@ liberapay: # Replace with a single Liberapay username
 issuehunt: jwallet
 otechie: # Replace with a single Otechie username
 lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
-custom: ['jwallet.github.io/spy-spotify/donate.html']
+custom: ['jwallet.github.io/spy-spotify/donate']
