@@ -64,6 +64,6 @@ A **free Spotify account** will work and its recommanded.,, but Spotify restrict
 
 ## Support Spytify
 
-😃 If you like Spytify, you can help me out for a [couple of beers](https://jwallet.github.io/spy-spotify/donate.html) 🍺.
+😃 If you like Spytify, you can help me out for a [couple of beers](https://jwallet.github.io/spy-spotify/donate.html) 🍺 or give it a star ⭐ 
 
 ## [Download](https://github.com/jwallet/spy-spotify/releases)
