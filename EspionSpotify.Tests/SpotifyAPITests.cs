@@ -132,10 +132,7 @@ namespace EspionSpotify.Tests
             Assert.Equal("", _track.Album);
             Assert.Equal(Array.Empty<string>(), _track.Genres);
             Assert.Null(_track.Year);
-            Assert.Null(_track.ArtExtraLargeUrl);
-            Assert.Null(_track.ArtLargeUrl);
-            Assert.Null(_track.ArtMediumUrl);
-            Assert.Null(_track.ArtSmallUrl);
+            Assert.Null(_track.AlbumArtUrl);
         }
 
         [Fact]
@@ -160,10 +157,7 @@ namespace EspionSpotify.Tests
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] {"Reggae", "Rock", "Jazz"}, _track.Genres);
             Assert.Equal(2010, _track.Year);
-            Assert.Null(_track.ArtExtraLargeUrl);
-            Assert.Null(_track.ArtLargeUrl);
-            Assert.Null(_track.ArtMediumUrl);
-            Assert.Null(_track.ArtSmallUrl);
+            Assert.Null(_track.AlbumArtUrl);
         }
 
         [Fact]
@@ -192,7 +186,13 @@ namespace EspionSpotify.Tests
                         Height = 256,
                         Width = 256,
                         Url = "http://256x256.img"
-                    }
+                    },
+                    new Image
+                    {
+                    Height = 512,
+                    Width = 512,
+                    Url = "http://512x512.img"
+                },
                 }
             };
 
@@ -202,10 +202,7 @@ namespace EspionSpotify.Tests
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] {"Reggae", "Rock", "Jazz"}, _track.Genres);
             Assert.Equal(2010, _track.Year);
-            Assert.Equal("http://256x256.img", _track.ArtExtraLargeUrl);
-            Assert.Equal("http://64x64.img", _track.ArtLargeUrl);
-            Assert.Null(_track.ArtMediumUrl);
-            Assert.Null(_track.ArtSmallUrl);
+            Assert.Equal("http://256x256.img", _track.AlbumArtUrl);
         }
 
         [Fact]
@@ -255,9 +252,9 @@ namespace EspionSpotify.Tests
                     },
                     new Image
                     {
-                        Height = 256,
-                        Width = 256,
-                        Url = "http://256x256.img"
+                        Height = 300,
+                        Width = 300,
+                        Url = "http://300x300.img"
                     }
                 }
             };
@@ -268,10 +265,7 @@ namespace EspionSpotify.Tests
             Assert.Equal("Album Name", _track.Album);
             Assert.Equal(new[] {"Reggae", "Rock", "Jazz"}, _track.Genres);
             Assert.Equal(2010, _track.Year);
-            Assert.Equal("http://512x512.img", _track.ArtExtraLargeUrl);
-            Assert.Equal("http://256x256.img", _track.ArtLargeUrl);
-            Assert.Equal("http://128x128.img", _track.ArtMediumUrl);
-            Assert.Equal("http://64x64.img", _track.ArtSmallUrl);
+            Assert.Equal("http://300x300.img", _track.AlbumArtUrl);
         }
     }
 }

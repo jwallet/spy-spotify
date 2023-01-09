@@ -97,12 +97,12 @@ namespace EspionSpotify.API
 
             if (spotifyAlbum.Images?.Count > 0)
             {
-                var sorted = spotifyAlbum.Images.OrderByDescending(i => i.Width).ToList();
-
-                if (sorted.Count > 0) track.ArtExtraLargeUrl = sorted[0].Url;
-                if (sorted.Count > 1) track.ArtLargeUrl = sorted[1].Url;
-                if (sorted.Count > 2) track.ArtMediumUrl = sorted[2].Url;
-                if (sorted.Count > 3) track.ArtSmallUrl = sorted[3].Url;
+                track.AlbumArtUrl = spotifyAlbum.Images
+                    .OrderByDescending(i => i.Width)
+                    .Where(i => i.Width <= 300)
+                    .Select(i => i.Url)
+                    .ToArray()
+                    .FirstOrDefault();
             }
         }
 

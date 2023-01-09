@@ -628,7 +628,7 @@ namespace EspionSpotify.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connexion perdue avec Spotify API. Soyez certain d&apos;autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Aussi, revalidez le Client_ID et Client_Secret saisis. Entre temps Spytify utilisera LastFM API..
+        ///   Looks up a localized string similar to Connexion perdue avec Spotify API. Soyez certain d&apos;autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Aussi, validez que l&apos;appareil actif en ce moment est bien votre PC et revalidez les Client_ID et Client_Secret saisis dans Spytify. Entre temps Spytify utilisera LastFM API..
         /// </summary>
         internal static string msgBodyFailedToUseSpotifyAPI {
             get {
