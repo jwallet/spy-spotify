@@ -20,7 +20,7 @@ However, Spytify ensures that all tracks will be the official released one, all 
 
 Spytify encodes to the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/audio-quality/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
-**Spytify is meant to be used with a Spotify free account**, even better a fresh new one (Spotify may monitor your account activites).
+**Spytify is meant to be used with a Spotify free account**, even better a fresh new one (Spotify may monitor your account activities).
 
 ### [How to install it?](#how-to-install-it)
 
