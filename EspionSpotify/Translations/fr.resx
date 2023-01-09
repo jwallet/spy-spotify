@@ -390,7 +390,7 @@
     <comment>interface</comment>
   </data>
   <data name="msgBodyFailedToUseSpotifyAPI" xml:space="preserve">
-    <value>Connexion perdue avec Spotify API. Soyez certain d'autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Aussi, revalidez le Client_ID et Client_Secret saisis. Entre temps Spytify utilisera LastFM API.</value>
+    <value>Connexion perdue avec Spotify API. Soyez certain d'autoriser Spytify sur le même compte Spotify présentement connecté à Spotify-Desktop pour être capable de récupérer les métadonnées de la piste courante. Aussi, validez que l'appareil actif en ce moment est bien votre PC et revalidez les Client_ID et Client_Secret saisis dans Spytify. Entre temps Spytify utilisera LastFM API.</value>
     <comment>message</comment>
   </data>
   <data name="msgTitleFailedToUseSpotifyAPI" xml:space="preserve">

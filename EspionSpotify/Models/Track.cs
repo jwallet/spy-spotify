@@ -39,15 +39,8 @@ namespace EspionSpotify.Models
             AlbumArtists = track.AlbumArtists;
             Year = track.Year;
 
-            ArtExtraLargeUrl = track.ArtExtraLargeUrl;
-            ArtLargeUrl = track.ArtLargeUrl;
-            ArtMediumUrl = track.ArtMediumUrl;
-            ArtSmallUrl = track.ArtSmallUrl;
-
-            ArtExtraLarge = track.ArtExtraLarge;
-            ArtLarge = track.ArtLarge;
-            ArtMedium = track.ArtMedium;
-            ArtSmall = track.ArtSmall;
+            AlbumArtUrl = track.AlbumArtUrl;
+            AlbumArtImage = track.AlbumArtImage;
         }
 
         public string Artists
@@ -96,15 +89,9 @@ namespace EspionSpotify.Models
         public string[] AlbumArtists { get; set; }
         public int? Year { get; set; }
 
-        public string ArtExtraLargeUrl { get; set; }
-        public string ArtLargeUrl { get; set; }
-        public string ArtMediumUrl { get; set; }
-        public string ArtSmallUrl { get; set; }
-
-        public byte[] ArtExtraLarge { get; set; }
-        public byte[] ArtLarge { get; set; }
-        public byte[] ArtMedium { get; set; }
-        public byte[] ArtSmall { get; set; }
+        public string AlbumArtUrl { get; set; }
+        
+        public byte[] AlbumArtImage { get; set; }
 
         private bool IsNormal =>
             !string.IsNullOrEmpty(Artist)

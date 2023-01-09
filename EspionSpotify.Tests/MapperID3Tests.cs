@@ -13,8 +13,7 @@ namespace EspionSpotify.Tests
 {
     public class MapperID3Tests
     {
-        private const string ART_LINK1 = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo-en.png";
-        private const string ART_LINK2 = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo-fr.png";
+        private const string ART_LINK = "https://raw.githubusercontent.com/jwallet/spy-spotify/master/psd/logo-en.png";
         private readonly OutputFile _currentFile;
         private readonly IFileSystem _fileSystem;
         private readonly Track _track;
@@ -137,9 +136,7 @@ namespace EspionSpotify.Tests
                 Genres = new[] {"Hotel", "India", "Juliet"},
                 Disc = 1,
                 Year = 2020,
-                ArtLargeUrl = "www.google.com",
-                ArtMediumUrl = ART_LINK1,
-                ArtSmallUrl = ART_LINK2
+                AlbumArtUrl = ART_LINK,
             };
 
             var userSettings = new UserSettings {OrderNumberInMediaTagEnabled = false};
@@ -163,7 +160,7 @@ namespace EspionSpotify.Tests
             Assert.Equal((uint) track.Year, tags.Year);
 
             Assert.Single(tags.Pictures);
-            Assert.Equal(track.ArtMedium.Length, tags.Pictures[0].Data.Count);
+            Assert.Equal(track.AlbumArtImage.Length, tags.Pictures[0].Data.Count);
             Assert.Equal(PictureType.FrontCover, tags.Pictures[0].Type);
         }
     }

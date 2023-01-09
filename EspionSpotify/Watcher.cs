@@ -98,7 +98,7 @@ namespace EspionSpotify
             var isAudioSessionNotFound = !await SetSpotifyAudioSessionAndWaitToStart();
             BindSpotifyEventHandlers();
             Ready = false;
-
+            
             if (Recorder.TestFileWriter(_form, _audioSession, _userSettings))
             {
                 if (isAudioSessionNotFound)
