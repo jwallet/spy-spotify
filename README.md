@@ -20,7 +20,7 @@ However, Spytify ensures that all tracks will be the official released one, all 
 
 Spytify encodes to the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/audio-quality/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
-**Spytify is meant to be used with a Spotify free account**, even better a fresh new one.
+**Spytify is meant to be used with a Spotify free account**, even better a fresh new one (Spotify may monitor your account activities).
 
 ### [How to install it?](#how-to-install-it)
 
@@ -59,7 +59,7 @@ Spytify runs on Windows only.
 - Microsoft Framework ([.NET 4.6.1](https://www.microsoft.com/en-ca/download/details.aspx?id=49981) or higher).
 - Spotify Desktop application.
 
-A **free Spotify account** will work and its recommanded.,, but Spotify restricts audio quality to 160 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
+A **free Spotify account** will work and its recommanded since Spotify may monitor your account, so go create a new one! However, Spotify restricts audio quality to 160 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
 
 
 ## Support Spytify
