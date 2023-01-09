@@ -146,9 +146,6 @@ namespace EspionSpotify.API
 
             if (_api == null) return false;
 
-            var devices = _api.GetDevices();
-            
-            
             await Task.Delay(100);
 
             var playback = await _api.GetPlaybackWithoutExceptionAsync();
