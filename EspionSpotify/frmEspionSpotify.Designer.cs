@@ -1523,6 +1523,7 @@ namespace EspionSpotify
             this.tgCounterToFilePrefix.AutoSize = true;
             this.tgCounterToFilePrefix.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tgCounterToFilePrefix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgCounterToFilePrefix.FontSize = MetroFramework.MetroLinkSize.Medium;
             this.tgCounterToFilePrefix.Location = new System.Drawing.Point(469, 59);
             this.tgCounterToFilePrefix.Name = "tgCounterToFilePrefix";
             this.tgCounterToFilePrefix.Size = new System.Drawing.Size(94, 22);
