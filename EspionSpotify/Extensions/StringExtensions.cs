@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -29,6 +30,13 @@ namespace EspionSpotify.Extensions
         public static ExternalAPIType? ToMediaTagsAPI(this string value)
         {
             return value.ToEnum<ExternalAPIType>(true);
+        }
+
+        public static IEnumerable<string> ToPerformers(this string value)
+        {
+            var match = new Regex(@"\((with |feat\. )(?<performers>.*)\)").Match(value);
+            var performers = match.Groups["performers"].ToString().Replace(" & ", ", ");
+            return Regex.Split(performers, @", ").AsEnumerable();
         }
 
         public static LanguageType? ToLanguageType(this string value)

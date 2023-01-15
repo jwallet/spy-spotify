@@ -70,9 +70,9 @@ namespace EspionSpotify.API
             tags.Disc = (uint) (Track.Disc ?? 0);
             tags.Year = (uint) (Track.Year ?? 0);
 
-            await FetchMediaPictures();
-
-            tags.Pictures = GetMediaPictureTag();
+            await FetchMediaPicture();
+            var albumArtCover = GetAlbumCoverToPicture(Track.AlbumArtImage);
+            tags.Pictures = albumArtCover != null ? new IPicture[] { albumArtCover } : null;
         }
 
         #region MP3 Tags updater
@@ -90,32 +90,10 @@ namespace EspionSpotify.API
 
         #endregion MP3 Tags updater
 
-        private async Task FetchMediaPictures()
+        private async Task FetchMediaPicture()
         {
-            var taskGetArtXL = GetAlbumCover(Track.ArtExtraLargeUrl);
-            var taskGetArtL = GetAlbumCover(Track.ArtLargeUrl);
-            var taskGetArtM = GetAlbumCover(Track.ArtMediumUrl);
-            var taskGetArtS = GetAlbumCover(Track.ArtSmallUrl);
-
-            await Task.WhenAll(taskGetArtXL, taskGetArtL, taskGetArtM, taskGetArtS);
-
-            Track.ArtExtraLarge = await taskGetArtXL;
-            Track.ArtLarge = await taskGetArtL;
-            Track.ArtMedium = await taskGetArtM;
-            Track.ArtSmall = await taskGetArtS;
-        }
-
-        private IPicture[] GetMediaPictureTag()
-        {
-            var pictures = new IPicture[4]
-            {
-                GetAlbumCoverToPicture(Track.ArtExtraLarge),
-                GetAlbumCoverToPicture(Track.ArtLarge),
-                GetAlbumCoverToPicture(Track.ArtMedium),
-                GetAlbumCoverToPicture(Track.ArtSmall)
-            }.Where(x => x != null).ToList();
-
-            return pictures.Any() ? new[] {pictures.First()} : null;
+            var image = await GetAlbumCover(Track.AlbumArtUrl);
+            Track.AlbumArtImage = image;
         }
 
         private int? GetTrackNumber()

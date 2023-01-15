@@ -16,7 +16,7 @@ namespace EspionSpotify.Tests
         public LastFMAPITests()
         {
             _lastFMAPI = new LastFMAPI();
-            _track = new Track {Artist = "Artist", Title = "Title"};
+            _track = new Track {Artist = "Artist", Title = "Title", TitleExtended = "with DJ", TitleExtendedSeparatorType = TitleSeparatorType.Parenthesis};
         }
 
         [Fact]
@@ -95,7 +95,6 @@ namespace EspionSpotify.Tests
                     Position = "5",
                     Image = new List<Image>
                     {
-                        new Image {Size = AlbumCoverSize.extralarge.ToString(), Url = "http://xlarge-cover-url.local"},
                         new Image {Size = AlbumCoverSize.large.ToString(), Url = "http://large-cover-url.local"},
                         new Image {Size = AlbumCoverSize.medium.ToString(), Url = "http://medium-cover-url.local"},
                         new Image {Size = AlbumCoverSize.small.ToString(), Url = "http://small-cover-url.local"}
@@ -119,12 +118,38 @@ namespace EspionSpotify.Tests
             Assert.NotEqual(trackExtra.Artist.Name, _track.Artist);
             Assert.Equal(trackExtra.Album.Title, _track.Album);
             Assert.Equal(5, _track.AlbumPosition);
-            Assert.Equal(new[] {"Reggae", "Rock", "Jazz"}, _track.Genres);
+            Assert.Empty(_track.Genres);
             Assert.Equal(1337, _track.Length);
-            Assert.Equal("http://xlarge-cover-url.local", _track.ArtExtraLargeUrl);
-            Assert.Equal("http://large-cover-url.local", _track.ArtLargeUrl);
-            Assert.Equal("http://medium-cover-url.local", _track.ArtMediumUrl);
-            Assert.Equal("http://small-cover-url.local", _track.ArtSmallUrl);
+            Assert.Equal("http://large-cover-url.local", _track.AlbumArtUrl);
+            Assert.Equal(new[] { "Artist", "DJ" }, _track.Performers);
+        }
+        
+        [Fact]
+        internal void MapLastFMAPITrackToTrack_ReturnsExpectedDetailedTrackWithExpectedCover300()
+        {
+            var trackExtra = new LastFMTrack
+            {
+                Name = "Do not want updated Title from this api",
+                Artist = new Artist {Name = "Do not want updated Artist from this api"},
+                Album = new Album
+                {
+                    Title = "Album Title",
+                    Position = "5",
+                    Image = new List<Image>
+                    {
+                        new Image {Size = AlbumCoverSize.extralarge.ToString(), Url = "http://512x512/xlarge-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.large.ToString(), Url = "http://300s/large-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.medium.ToString(), Url = "http://96s/medium-cover-url.local"},
+                        new Image {Size = AlbumCoverSize.small.ToString(), Url = "http://64s/small-cover-url.local"}
+                    }
+                },
+                Toptags = new Toptags(),
+                Duration = 1337000
+            };
+
+            _lastFMAPI.MapLastFMTrackToTrack(_track, trackExtra);
+
+            Assert.Equal("http://300s/large-cover-url.local", _track.AlbumArtUrl);
         }
 
         [Fact]
@@ -172,10 +197,7 @@ namespace EspionSpotify.Tests
             Assert.Null(track.AlbumPosition);
             Assert.Equal(new string[] { }, track.Genres);
             Assert.Null(track.Length);
-            Assert.Null(track.ArtExtraLargeUrl);
-            Assert.Null(track.ArtLargeUrl);
-            Assert.Null(track.ArtMediumUrl);
-            Assert.Null(track.ArtSmallUrl);
+            Assert.Null(track.AlbumArtUrl);
         }
     }
 }

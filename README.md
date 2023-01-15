@@ -20,7 +20,7 @@ However, Spytify ensures that all tracks will be the official released one, all 
 
 Spytify encodes to the same quality that Spotify outputs ([Spotify Free 160kbps, Spotify Premium 320kbps](https://support.spotify.com/us/article/audio-quality/)), so the recorded copy will be indistinguishable from Spotify’s one.
 
-**Spytify is meant to be used with a Spotify free account**, even better a fresh new one.
+**Spytify is meant to be used with a Spotify free account**, even better a fresh new one (Spotify may monitor your account activities).
 
 ### [How to install it?](#how-to-install-it)
 
@@ -50,6 +50,9 @@ Saves all recordings under the same path:
   
 Automatically adds metadata from Last.fm (or [Spotify API](https://jwallet.github.io/spy-spotify/faq.html#media-tags-not-found)) to .mp3 file:
 
+- Last.FM : Spytify won't need to be connected to Spotify. It's safer than Spotify API, however the metadata won't be as accurate as the official API.
+- Spotify API: You need to create your own [Spotify API keys](https://jwallet.github.io/spy-spotify/faq.html#media-tags-not-found) and set it in Spytify. Doing this gives better metadata results, however because you are connected to Spotify API, it's easier for them to know that you linked an app that fetches album cover. So you might get a warning from them using this API, but since Spytify does not download directly from Spotify (using the Connect API to receive OGG files which requires Premium), you have less chance to have your account suspended. Anyway, just to be sure, create a new one.
+
 <p align="center"><img alt="Recorded songs with album cover and media tags in Windows Explorer" src="https://jwallet.github.io/spy-spotify/assets/images/saved_songs_list.png" /></p>
 
 ### [Requirements](#requirements)
@@ -59,7 +62,7 @@ Spytify runs on Windows only.
 - Microsoft Framework ([.NET 4.6.1](https://www.microsoft.com/en-ca/download/details.aspx?id=49981) or higher).
 - Spotify Desktop application.
 
-A **free Spotify account** will work and its recommanded.,, but Spotify restricts audio quality to 160 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
+A **free Spotify account** will work and its recommanded since Spotify may monitor your account, so go create a new one! However, Spotify restricts audio quality to 160 kbps. Having a Premium Spotify subscription will enable recording of up to 320 kbps audio.
 
 
 ## Support Spytify

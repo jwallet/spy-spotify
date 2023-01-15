@@ -66,12 +66,12 @@ namespace EspionSpotify.Tests
             {
                 Album = "Album",
                 AlbumPosition = 1,
-                ArtExtraLargeUrl = "http://logo.png"
+                AlbumArtUrl = "http://logo.png"
             };
 
             Assert.Equal(initialTrack.ToString(), track.ToString());
             Assert.NotEqual(initialTrack.Album, track.Album);
-            Assert.NotEqual(initialTrack.ArtExtraLargeUrl, track.ArtExtraLargeUrl);
+            Assert.NotEqual(initialTrack.AlbumArtUrl, track.AlbumArtUrl);
             Assert.NotEqual(track, new Track());
         }
 

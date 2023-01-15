@@ -59,6 +59,16 @@ namespace EspionSpotify.Models
         public string LargeCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.large)?.Url;
         public string MediumCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.medium)?.Url;
         public string SmallCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.small)?.Url;
+
+        public void FromSingleAlbum(LastFMAlbum album)
+        {
+            Image = album.Image;
+            Title = album.Name;
+            Position = "1";
+            Artist = album.Artist;
+            Mbid = album.Mbid;
+            Url = album.Url;
+        }
     }
 
     [XmlRoot(ElementName = "tag")]
@@ -102,6 +112,39 @@ namespace EspionSpotify.Models
         [XmlElement(ElementName = "album")] public Album Album { get; set; }
 
         [XmlElement(ElementName = "toptags")] public Toptags Toptags { get; set; }
+        
+        [XmlElement(ElementName = "image")] public List<Image> Image { get; set; }
+    }
+
+    [XmlRoot(ElementName = "album")]
+    public class LastFMAlbum
+    {
+        [XmlElement(ElementName = "name")]
+        // album title
+        public string Name { get; set; }
+        
+        [XmlElement(ElementName = "artist")]
+        public string Artist { get; set; }
+        
+        [XmlElement(ElementName = "url")] public string Url { get; set; }
+        
+        [XmlElement(ElementName = "mbid")] public string Mbid { get; set; }
+
+        [XmlElement(ElementName = "listeners")]
+        public string Listeners { get; set; }
+
+        [XmlElement(ElementName = "playcount")]
+        public string Playcount { get; set; }
+        
+        [XmlElement(ElementName = "tags")] public List<Tag> Tags { get; set; }
+        
+        [XmlElement(ElementName = "image")] public List<Image> Image { get; set; }
+        
+        public string AlbumTitle => Name;
+        public string ExtraLargeCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.extralarge)?.Url;
+        public string LargeCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.large)?.Url;
+        public string MediumCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.medium)?.Url;
+        public string SmallCoverUrl => Image.FirstOrDefault(x => x?.CoverSize == AlbumCoverSize.small)?.Url;
     }
 
     [XmlRoot(ElementName = "error")]
@@ -120,6 +163,8 @@ namespace EspionSpotify.Models
         public string StatusMessage { get; set; }
 
         [XmlElement(ElementName = "track")] public LastFMTrack Track { get; set; }
+        
+        [XmlElement(ElementName = "album")] public LastFMAlbum Album { get; set; }
 
         [XmlElement(ElementName = "error")] public Error Error { get; set; }
 

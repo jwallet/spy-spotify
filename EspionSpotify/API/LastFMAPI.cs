@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using EspionSpotify.Enums;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Translations;
 using WebUtility = PCLWebUtility.WebUtility;
@@ -14,7 +15,7 @@ namespace EspionSpotify.API
 {
     public class LastFMAPI : ILastFMAPI, IExternalAPI
     {
-        private const string API_TRACK_URI = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo";
+        private const string API_URI = "http://ws.audioscrobbler.com/2.0/";
         private readonly string _selectedApiKey;
         private bool _loggedSilentExceptionOnce;
 
@@ -47,29 +48,37 @@ namespace EspionSpotify.API
         {
             track.Album = trackExtra.Album?.AlbumTitle;
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
-            track.Genres = trackExtra.Toptags?.Tag?.Select(x => x?.Name).Where(x => x != null).ToArray();
             track.Length = trackExtra.Duration.HasValue ? trackExtra.Duration / 1000 : null;
-            track.ArtExtraLargeUrl = trackExtra.Album?.ExtraLargeCoverUrl;
-            track.ArtLargeUrl = trackExtra.Album?.LargeCoverUrl;
-            track.ArtMediumUrl = trackExtra.Album?.MediumCoverUrl;
-            track.ArtSmallUrl = trackExtra.Album?.SmallCoverUrl;
+            track.Genres = new string[] { };
+            
+            var extraLarge = trackExtra.Album?.ExtraLargeCoverUrl;
+            var artLargeUrl = trackExtra.Album?.LargeCoverUrl;
+            var artMediumUrl = trackExtra.Album?.MediumCoverUrl;
+            var artSmallUrl = trackExtra.Album?.SmallCoverUrl;
+            var urls = new[] {extraLarge, artLargeUrl, artMediumUrl, artSmallUrl}.Where(i => i != null).ToArray();
+            track.AlbumArtUrl = urls.FirstOrDefault(url => new Regex(@"\/300x300\/|\/300s\/").IsMatch(url)) ??
+                                urls.FirstOrDefault();
+
+            var extraPerformers = track.ToString().ToPerformers();
+            var albumArtists = new[] {track.Artist};
+            track.Performers = albumArtists.Concat(extraPerformers).ToArray();
+            track.AlbumArtists = albumArtists;
         }
 
         private string GetTrackInfo(string artist, string title)
         {
-            return $"{API_TRACK_URI}&api_key={_selectedApiKey}&artist={artist}&track={title}";
+            return $"{API_URI}?method=track.getInfo&api_key={_selectedApiKey}&artist={artist}&track={title}";
+        }
+        
+        private string GetAlbumInfo(string artist, string album)
+        {
+            return $"{API_URI}?method=album.getInfo&api_key={_selectedApiKey}&artist={artist}&album={album}";
         }
 
-        #region LastFM Track updater
-
-        private async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
+        private async Task<LastFMNode> FetchFromAPI(string url)
         {
             var api = new XmlDocument();
-            var encodedArtist = WebUtility.UrlEncode(track.Artist);
-            var encodedTitle = WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
-
-            var url = GetTrackInfo(encodedArtist, encodedTitle);
-
+            
             try
             {
                 api.Load(url);
@@ -88,7 +97,7 @@ namespace EspionSpotify.API
                         _loggedSilentExceptionOnce = true;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch (WebException ex)
@@ -96,35 +105,49 @@ namespace EspionSpotify.API
                 // Silent other Web exception since it may be an issue on the user end.
                 Console.WriteLine(ex.Message);
                 FrmEspionSpotify.Instance.WriteIntoConsole(I18NKeys.LogException, ex.Message);
-                return false;
+                return null;
             }
             catch (XmlException ex)
             {
                 // Ignore XML exception since it's out of our control.
                 Console.WriteLine(ex.Message);
-                return false;
+                return null;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Program.ReportException(ex);
-                return false;
+                return null;
             }
-
+            
             var apiReturn = api.DocumentElement;
 
-            if (apiReturn == null) return false;
-
+            if (apiReturn == null) return null;
+            
             var serializer = new XmlSerializer(typeof(LastFMNode));
             var xmlNode = apiReturn.SelectSingleNode("/lfm");
-            if (xmlNode == null) return false;
+            if (xmlNode == null) return null;
 
             var node = serializer.Deserialize(new XmlNodeReader(xmlNode)) as LastFMNode;
 
-            if (node == null || node.Status != LastFMNodeStatus.ok || node.Track == null) return false;
+            return node?.Status == LastFMNodeStatus.ok ? node : null;
+        }
+        #region LastFM Track updater
+
+        private async Task<bool> UpdateTrack(Track track, string forceQueryTitle = null)
+        {
+            var encodedArtist = WebUtility.UrlEncode(track.Artist);
+            var encodedTitle = WebUtility.UrlEncode(forceQueryTitle ?? track.Title);
+
+            var url = GetTrackInfo(encodedArtist, encodedTitle);
+            var node = await FetchFromAPI(url);
+
+           if (node.Track == null) return false;
 
             var trackExtra = node.Track;
 
+            await FallbackToSingleAlbumIfNeeded(trackExtra);
+            
             if (trackExtra?.Album != null)
             {
                 MapLastFMTrackToTrack(track, trackExtra);
@@ -139,6 +162,22 @@ namespace EspionSpotify.API
         }
 
         #endregion LastFM Track updater
+
+        private async Task FallbackToSingleAlbumIfNeeded(LastFMTrack trackExtra)
+        {
+            if (trackExtra.Album != null && trackExtra.Album.Artist != "Various Artists") return;
+            
+            var encodedArtist = WebUtility.UrlEncode(trackExtra.Artist.Name);
+            var encodedTitle = WebUtility.UrlEncode(trackExtra.Name);
+
+            var url = GetAlbumInfo(encodedArtist, encodedTitle);
+            var node = await FetchFromAPI(url);
+            
+            if (node.Album == null) return;
+
+            trackExtra.Album ??= new Album();
+            trackExtra.Album.FromSingleAlbum(node.Album);
+        }
 
         private async Task<bool> ApiReload(XmlDocument api, string url)
         {
