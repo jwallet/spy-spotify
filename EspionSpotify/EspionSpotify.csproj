@@ -185,6 +185,12 @@
     <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\IAudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioThrottler.cs" />
+    <Compile Include="Controls\MetroBitratesUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MetroBitratesUserControl.Designer.cs">
+      <DependentUpon>MetroBitratesUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums\SilenceAnalyzer.cs" />
     <Compile Include="Extensions\JsonObjectExtensions.cs" />
     <Compile Include="Models\AudioWaveBuffer.cs" />
@@ -304,6 +310,9 @@
     <Compile Include="Translations\Languages.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="Watcher.cs" />
+    <EmbeddedResource Include="Controls\MetroBitratesUserControl.resx">
+      <DependentUpon>MetroBitratesUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MetroCredentialsForm.resx">
       <DependentUpon>MetroCredentialsForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -274,7 +274,13 @@ namespace EspionSpotify
             {
                 case MediaFormat.Mp3:
                     var supportedWaveFormat = GetWaveFormatMP3Supported(waveFormat);
-                    return new LameMP3FileWriter(stream, supportedWaveFormat, _userSettings.Bitrate);
+                    var lameConfig = new LameConfig()
+                    {
+                        VBR = VBRMode.Off,
+                        Mode = MPEGMode.Stereo,
+                        Preset = _userSettings.Bitrate
+                    };
+                    return new LameMP3FileWriter(stream, supportedWaveFormat, lameConfig);
                 case MediaFormat.Wav:
                     return new WaveFileWriter(stream, waveFormat);
                 default:
