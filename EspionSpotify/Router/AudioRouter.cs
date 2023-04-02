@@ -1,4 +1,6 @@
 ﻿using System;
+using EspionSpotify.AudioSessions;
+using System.Threading;
 using EspionSpotify.Native;
 using EspionSpotify.Router.Helpers;
 using NAudio.CoreAudioApi;
@@ -8,8 +10,9 @@ namespace EspionSpotify.Router
     /// <summary>
     /// Provides a service for controlling and interacting with the audio device of an application.
     /// </summary>
-    public class AudioRouter: IAudioRouter
+    public class AudioRouter: IAudioRouter, IDisposable
     {
+        private bool _disposed;
         /// <summary>
         /// The device interface string represents audio playback.
         /// </summary>
@@ -112,6 +115,25 @@ namespace EspionSpotify.Router
             {
                 Console.WriteLine($"{ex}");
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                ResetDefaultEndpoints();
+            }
+
+            _disposed = true;
         }
     }
 }

@@ -4,6 +4,5 @@
     {
         public byte[] Buffer;
         public int BytesRecordedCount;
-        public bool WithSilence;
     }
 }

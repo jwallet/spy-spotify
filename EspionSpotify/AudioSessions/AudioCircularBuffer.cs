@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Utils;
+using System;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -7,8 +8,9 @@ namespace EspionSpotify.AudioSessions
         private readonly byte[] _buffer;
         private readonly object _lockObject;
         private int _writePosition;
-        private int _readPosition;
-        private int _byteCount;
+        private int _totalBytesWritten;
+
+        private bool DidLoopOnce => _totalBytesWritten >= _buffer.Length;
 
         /// <summary>
         /// Maximum length of this circular buffer
@@ -16,29 +18,45 @@ namespace EspionSpotify.AudioSessions
         public int MaxLength => _buffer.Length;
 
         /// <summary>
-        /// Number of bytes currently stored in the circular buffer
+        /// Number of bytes left on the circular buffer before it needs to loop
         /// </summary>
-        public int Count
+        public int BytesAvailable
         {
             get
             {
                 lock (_lockObject)
                 {
-                    return _byteCount;
+                    return _buffer.Length - WritePosition;
                 }
             }
         }
-        
+
         /// <summary>
-        /// Read position of the circular buffer
+        /// Number of bytes currently stored in the circular buffer on its current loop
         /// </summary>
-        public int ReadPosition
+        public int BytesWritten
         {
             get
             {
                 lock (_lockObject)
                 {
-                    return _readPosition;
+                    if (_totalBytesWritten == 0) return 0;
+                    var bytesOver = _totalBytesWritten % _buffer.Length;
+                    return bytesOver == 0 ? _buffer.Length : bytesOver;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Number of bytes written in the circular buffer
+        /// </summary>
+        public int TotalBytesWritten
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return _totalBytesWritten;
                 }
             }
         }
@@ -56,7 +74,25 @@ namespace EspionSpotify.AudioSessions
                 }
             }
         }
-        
+
+
+        /// <summary>
+        /// Default read position of the circular buffer based on an offset of the write position
+        /// </summary>
+        /// <param name="offset">Offset of the read position</param>
+        public int GetDefaultReadPosition(int offset = 0)
+        {
+            lock (_lockObject)
+            {
+                if (offset == 0) return WritePosition;
+                if (!DidLoopOnce) return Math.Max(0, WritePosition - (offset % MaxLength));
+
+                var readOffset = WritePosition - offset;
+                return readOffset < 0 ? Math.Max(0, MaxLength + readOffset) : Math.Min(MaxLength, readOffset);
+            }
+        }
+
+
         /// <summary>
         /// Create a new circular buffer
         /// </summary>
@@ -71,130 +107,77 @@ namespace EspionSpotify.AudioSessions
         /// Write data to the buffer
         /// </summary>
         /// <param name="data">Data to write</param>
-        /// <param name="offset">Offset into data</param>
+        /// <param name="position">Write position into the buffer destination</param>
         /// <param name="count">Number of bytes to write</param>
         /// <returns>number of bytes written</returns>
-        public int Write(byte[] data, int offset, int count)
+        public int Write(byte[] data, int position, int count)
         {
+            var bytesToWrite = count > data.Length ? data.Length : count;
+            var cursor = position;
+            var previousTotalBytesWritten = _totalBytesWritten;
+
             lock (_lockObject)
             {
-                var bytesWritten = 0;
-                if (count > _buffer.Length - _byteCount)
+                while (bytesToWrite > 0)
                 {
-                    count = _buffer.Length - _byteCount;
+                    int bytesWritten = Math.Min(BytesAvailable, bytesToWrite);
+
+                    Array.Copy(data, cursor % MaxLength, _buffer, _writePosition, bytesWritten);
+
+                    _totalBytesWritten += bytesWritten;
+                    bytesToWrite -= bytesWritten;
+                    cursor += bytesWritten;
+                    _writePosition = _totalBytesWritten % MaxLength;
                 }
-                // write to end
-                int writeToEnd = Math.Min(_buffer.Length - _writePosition, count);
-                Array.Copy(data, offset, _buffer, _writePosition, writeToEnd);
-                _writePosition += writeToEnd;
-                _writePosition %= _buffer.Length; // if reaches end, resolves to position 0
-                bytesWritten += writeToEnd;
-                if (bytesWritten < count)
-                {
-                    // must have wrapped round. Write to start
-                    Array.Copy(data, offset + bytesWritten, _buffer, _writePosition, count - bytesWritten);
-                    _writePosition += (count - bytesWritten);
-                    bytesWritten = count;
-                }
-                _byteCount += bytesWritten;
-                return bytesWritten;
             }
+
+            return _totalBytesWritten - previousTotalBytesWritten;
         }
 
         /// <summary>
         /// Read from the buffer
         /// </summary>
-        /// <param name="data">Buffer to read into</param>
-        /// <param name="offset">Offset into read buffer</param>
+        /// <param name="data">Data read from the buffer</param>
+        /// <param name="position">Read position into the buffer based on total bytes written</param>
         /// <param name="count">Bytes to read</param>
         /// <returns>Number of bytes actually read</returns>
-        public int Read(out byte[] data, int offset, int count)
+        public int Read(out byte[] data, int position, int count)
         {
-            data = new byte[MaxLength];
+            var totalBuffer = Math.Min(_totalBytesWritten, MaxLength);
+
+            data = new byte[totalBuffer];
+            var bytesToRead = count;
+            var cursor = position;
+            var previousTotalBytesWritten = position;
+            var bytesRead = 0;
             
             lock (_lockObject)
             {
-                if (count > _byteCount)
+                while (bytesToRead > 0)
                 {
-                    count = _byteCount;
-                }
-                var bytesRead = 0;
-                var readToEnd = Math.Min(_buffer.Length - _readPosition, count);
-                Array.Copy(_buffer, _readPosition, data, offset, readToEnd);
-                bytesRead += readToEnd;
-                _readPosition += readToEnd;
-                _readPosition %= _buffer.Length;
+                    var writePositionFromTotalBytes = TotalBytesWritten - previousTotalBytesWritten;
+                    var currentPosition = cursor % MaxLength;
+                    var readToEnd = Math.Min(Math.Min(totalBuffer - currentPosition, bytesToRead), writePositionFromTotalBytes);
 
-                if (bytesRead < count)
-                {
-                    // must have wrapped round. Read from start
-                    Array.Copy(_buffer, _readPosition, data, offset + bytesRead, count - bytesRead);
-                    _readPosition += (count - bytesRead);
-                    bytesRead = count;
+                    if (readToEnd > 0)
+                    {
+                        Array.Copy(_buffer, currentPosition, data, bytesRead, readToEnd);
+                        bytesToRead -= readToEnd;
+                        position += readToEnd;
+                        bytesRead += readToEnd;
+                        cursor += readToEnd;
+                    }
+                    else
+                    {
+                        // prevent to continue if end is reached, cannot read any bytes
+                        bytesToRead = 0;
+                    }
                 }
-
-                _byteCount -= bytesRead;
-                return bytesRead;
-            }
-        }
-        
-        /// <summary>
-        /// Peek from the buffer
-        /// </summary>
-        /// <param name="data">Buffer to read into</param>
-        /// <param name="offset">Offset into read buffer</param>
-        /// <param name="count">Bytes to read</param>
-        /// <returns>Number of bytes actually read</returns>
-        public int Peek(out byte[] data, int offset, int count)
-        {
-            data = new byte[MaxLength];
-            var temporaryReadPosition = _readPosition;
-            var temporaryBytesRead = _byteCount;
-            lock (_lockObject)
-            {
-                if (count > temporaryBytesRead)
-                {
-                    count = temporaryBytesRead;
-                }
-                var bytesRead = 0;
-                var readToEnd = Math.Min(_buffer.Length - temporaryReadPosition, count);
-                Array.Copy(_buffer, temporaryReadPosition, data, offset, readToEnd);
-                bytesRead += readToEnd;
-                temporaryReadPosition += readToEnd;
-                temporaryReadPosition %= _buffer.Length;
-
-                if (bytesRead < count)
-                {
-                    // must have wrapped round. Read from start
-                    Array.Copy(_buffer, temporaryReadPosition, data, offset + bytesRead, count - bytesRead);
-                    bytesRead = count;
-                }
-
+              
                 return bytesRead;
             }
         }
 
-        /// <summary>
-        /// Advances the buffer, discarding bytes
-        /// </summary>
-        /// <param name="count">Bytes to advance</param>
-        public void Advance(int count)
-        {
-            lock (_lockObject)
-            {
-                if (count >= _byteCount)
-                {
-                    ResetInner();
-                }
-                else
-                {
-                    _byteCount -= count;
-                    _readPosition += count;
-                    _readPosition %= MaxLength;
-                }
-            }
-        }
-        
         /// <summary>
         /// Resets the buffer
         /// </summary>
@@ -202,17 +185,9 @@ namespace EspionSpotify.AudioSessions
         {
             lock (_lockObject)
             {
-                _byteCount = 0;
-                _readPosition = 0;
+                _totalBytesWritten = 0;
                 _writePosition = 0;
             }
-        }
-
-        private void ResetInner()
-        {
-            _byteCount = 0;
-            _readPosition = 0;
-            _writePosition = 0;
         }
     }
 }

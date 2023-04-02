@@ -107,6 +107,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioCircularBufferTest.cs" />
+    <Compile Include="AudioThrottlerTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="FileManagerTests.cs" />
     <Compile Include="SpotifyProcessTests.cs" />

@@ -16,6 +16,7 @@ namespace EspionSpotify.AudioSessions
 
         int AudioDeviceVolume { get; }
         bool IsAudioEndPointDeviceIndexAvailable { get; }
+        bool IsAudioEndpointDeviceActive { get; }
         void ClearSpotifyAudioSessionControls();
 
         void SetAudioDeviceVolume(int volume);

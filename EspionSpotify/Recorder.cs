@@ -39,6 +39,7 @@ namespace EspionSpotify
         private OutputFile _currentOutputFile;
         private Stream _tempWaveWriter;
         private IProcessManager _processManager;
+        private Guid _identifier;
 
         public Recorder()
         {
@@ -70,6 +71,7 @@ namespace EspionSpotify
             _track = track;
             _fileManager = new FileManager(_userSettings, _track, fileSystem);
             _processManager = processManager;
+            _identifier = Guid.NewGuid();
 
             _initiated = init && Init();
         }
@@ -118,7 +120,6 @@ namespace EspionSpotify
             _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
             Running = true;
 
-            // await _audioThrottler.WaitBufferReady();
             await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
             while (Running)
@@ -129,7 +130,7 @@ namespace EspionSpotify
             }
 
             await RecordAvailableData(SilenceAnalyzer.TrimEnd);
-
+            
             await RecordingStopped();
         }
 
@@ -140,9 +141,25 @@ namespace EspionSpotify
         private async Task RecordAvailableData(SilenceAnalyzer analyzer)
         {
             if (_tempWaveWriter == null) return;
-            
-            var audio = await _audioThrottler.Read(analyzer);
-            if (audio == null) return;
+
+            AudioWaveBuffer audio;
+
+            switch (analyzer)
+            {
+                case SilenceAnalyzer.TrimStart:
+                    _audioThrottler.AddWorker(_identifier);
+                    // await Task.Delay(1000); // used to have audio around worker position
+                    audio = await _audioThrottler.GetData(_identifier);
+                    return;
+                case SilenceAnalyzer.TrimEnd:
+                    audio = await _audioThrottler.GetData(_identifier);
+                    //_audioThrottler.TrimEndBufferForSilence(ref audio.Buffer);
+                    _audioThrottler.RemoveWorker(_identifier);
+                    break;
+                default:
+                    audio = await _audioThrottler.GetData(_identifier);
+                    break;
+            }
             
             await Task.Run(async () =>
             {

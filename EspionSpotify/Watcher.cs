@@ -14,6 +14,7 @@ using EspionSpotify.Native;
 using EspionSpotify.Properties;
 using EspionSpotify.Spotify;
 using EspionSpotify.Translations;
+using NAudio.Wave;
 using Timer = System.Timers.Timer;
 
 namespace EspionSpotify
@@ -351,6 +352,7 @@ namespace EspionSpotify
             }
             
             _audioThrottler.Running = false;
+            _audioThrottler.Dispose();
         }
 
         private void ResetSpotifyHandler()

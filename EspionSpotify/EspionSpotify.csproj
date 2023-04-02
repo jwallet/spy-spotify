@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -185,6 +185,11 @@
     <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\IAudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioThrottler.cs" />
+    <Compile Include="AudioSessions\NAudio\IAsyncDisposable.cs" />
+    <Compile Include="AudioSessions\NAudio\ISilencer.cs" />
+    <Compile Include="AudioSessions\NAudio\IAudioLoopbackCapture.cs" />
+    <Compile Include="AudioSessions\NAudio\Silencer.cs" />
+    <Compile Include="AudioSessions\NAudio\AudioLoopbackCapture.cs" />
     <Compile Include="Enums\SilenceAnalyzer.cs" />
     <Compile Include="Extensions\JsonObjectExtensions.cs" />
     <Compile Include="Models\AudioWaveBuffer.cs" />

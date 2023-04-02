@@ -62,6 +62,8 @@ namespace EspionSpotify.AudioSessions
         public bool IsAudioEndPointDeviceIndexAvailable =>
             AudioMMDevicesManager.AudioEndPointDeviceNames.IncludesKey(AudioMMDevicesManager.AudioEndPointDeviceID);
 
+        public bool IsAudioEndpointDeviceActive => AudioMMDevicesManager.AudioEndPointDevice != null;
+
         public ICollection<AudioSessionControl> SpotifyAudioSessionControls { get; private set; } =
             new List<AudioSessionControl>();
 
@@ -283,6 +285,7 @@ namespace EspionSpotify.AudioSessions
             if (disposing)
             {
                 SetSpotifyVolumeToHighAndOthersToMute(false);
+                UnrouteSpotifyAudioSessions();
                 AudioMMDevices.UnregisterEndpointNotificationCallback(AudioMMDevicesManager);
                 AudioMMDevices.Dispose();
                 AudioMMDevices = null;
