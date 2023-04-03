@@ -91,6 +91,7 @@ namespace EspionSpotify
 
         private bool Init()
         {
+            _audioThrottler.AddWorker(_identifier);
             _tempOriginalFile = _fileManager.GetTempFile();
 
             try
@@ -147,14 +148,12 @@ namespace EspionSpotify
             switch (analyzer)
             {
                 case SilenceAnalyzer.TrimStart:
-                    _audioThrottler.AddWorker(_identifier);
                     // await Task.Delay(1000); // used to have audio around worker position
                     audio = await _audioThrottler.GetData(_identifier);
                     return;
                 case SilenceAnalyzer.TrimEnd:
                     audio = await _audioThrottler.GetData(_identifier);
                     //_audioThrottler.TrimEndBufferForSilence(ref audio.Buffer);
-                    _audioThrottler.RemoveWorker(_identifier);
                     break;
                 default:
                     audio = await _audioThrottler.GetData(_identifier);
@@ -511,6 +510,7 @@ namespace EspionSpotify
             TempWaveWriterDispose();
 
             _fileManager.DeleteFile(_tempOriginalFile);
+            _audioThrottler.RemoveWorker(_identifier);
 
             if (_currentOutputFile != null) _fileManager.DeleteFile(_tempEncodeFile);
         }

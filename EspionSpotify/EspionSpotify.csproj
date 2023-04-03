@@ -6,6 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A02571B8-7CE5-4865-84F0-87613F895204}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <LangVersion>8.0</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EspionSpotify</RootNamespace>
     <AssemblyName>Spytify</AssemblyName>
@@ -185,10 +186,9 @@
     <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\IAudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioThrottler.cs" />
-    <Compile Include="AudioSessions\NAudio\IAsyncDisposable.cs" />
-    <Compile Include="AudioSessions\NAudio\ISilencer.cs" />
+    <Compile Include="AudioSessions\NAudio\IAudioWaveOut.cs" />
     <Compile Include="AudioSessions\NAudio\IAudioLoopbackCapture.cs" />
-    <Compile Include="AudioSessions\NAudio\Silencer.cs" />
+    <Compile Include="AudioSessions\NAudio\AudioWaveOut.cs" />
     <Compile Include="AudioSessions\NAudio\AudioLoopbackCapture.cs" />
     <Compile Include="Enums\SilenceAnalyzer.cs" />
     <Compile Include="Extensions\JsonObjectExtensions.cs" />

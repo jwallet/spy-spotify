@@ -5,6 +5,8 @@
     /// </summary>
     public interface IAudioRouter
     {
+        bool IsRouted { get; }
+
         /// <summary>
         /// Gets the default audio device for the specified process.
         /// </summary>

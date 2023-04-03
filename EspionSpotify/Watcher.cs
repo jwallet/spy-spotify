@@ -12,8 +12,10 @@ using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using EspionSpotify.Native;
 using EspionSpotify.Properties;
+using EspionSpotify.Router;
 using EspionSpotify.Spotify;
 using EspionSpotify.Translations;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using Timer = System.Timers.Timer;
 
@@ -23,8 +25,10 @@ namespace EspionSpotify
     {
         private const int WATCHER_DELAY_MS = 500;
         private readonly IMainAudioSession _audioSession;
-        private AudioThrottler _audioThrottler;
+        private IAudioThrottler _audioThrottler;
         private readonly IFileSystem _fileSystem;
+        private IAudioLoopback _audioLoopback;
+        private IAudioRouter _audioRouter;
 
         private readonly IFrmEspionSpotify _form;
         private readonly List<RecorderTask> _recorderTasks;
@@ -35,24 +39,36 @@ namespace EspionSpotify
 
         private Timer _recordingTimer;
         private bool _stopRecordingWhenSongEnds;
-        private readonly CancellationTokenSource _cancellationToken;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
-        internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings) :
-            this(form, audioSession, userSettings, new Track(), new FileSystem(), new List<RecorderTask>())
-        {
-        }
+        internal Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings) : this(
+            form,
+            audioSession,
+            userSettings,
+            new AudioThrottler(audioSession),
+            new AudioRouter(DataFlow.Render),
+            new AudioLoopback(
+                currentEndpointDevice: audioSession.AudioMMDevicesManager.AudioEndPointDevice,
+                defaultEndpointDevice: audioSession.AudioMMDevicesManager.AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia)),
+            new Track(),
+            new FileSystem(),
+            new List<RecorderTask>())
+        { }
 
-        public Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, Track track,
+        public Watcher(IFrmEspionSpotify form, IMainAudioSession audioSession, UserSettings userSettings, IAudioThrottler audioThrottler, IAudioRouter audioRouter, IAudioLoopback audioLoopback, Track track,
             IFileSystem fileSystem, List<RecorderTask> recorderTasks)
         {
             _form = form;
             _audioSession = audioSession;
             _userSettings = userSettings;
+            _audioThrottler = audioThrottler;
             _currentTrack = track;
             _fileSystem = fileSystem;
             _recorderTasks = recorderTasks;
+            _audioRouter = audioRouter;
+            _audioLoopback = audioLoopback;
             
-            _cancellationToken = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource();
             
             Settings.Default.app_console_logs = string.Empty;
             Settings.Default.Save();
@@ -259,7 +275,7 @@ namespace EspionSpotify
         private async Task<bool> SetSpotifyAudioSessionAndWaitToStart()
         {
             _audioSession.SetSpotifyProcesses();
-            _audioSession.RouteSpotifyAudioSessions(canRedirectPlayback: _userSettings.ListenToSpotifyPlaybackEnabled);
+            RouteSpotifyAudioSessions(canRedirectPlayback: _userSettings.ListenToSpotifyPlaybackEnabled);
             return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
@@ -294,9 +310,9 @@ namespace EspionSpotify
 
             _recorderTasks.Add(new RecorderTask
             {
-                Task = Task.Run(() => recorder.Run(_cancellationToken), _cancellationToken.Token),
+                Task = Task.Run(() => recorder.Run(_cancellationTokenSource), _cancellationTokenSource.Token),
                 Recorder = recorder,
-                Token = _cancellationToken
+                Token = _cancellationTokenSource
             });
             
             _form.UpdateIconSpotify(_isPlaying, true);
@@ -320,10 +336,7 @@ namespace EspionSpotify
 
             Spotify.ListenForEvents = true;
 
-            _audioThrottler = new AudioThrottler(_audioSession);
-#pragma warning disable CS4014
-            Task.Run(() => _audioThrottler.Run(_cancellationToken), _cancellationToken.Token);
-#pragma warning restore CS4014
+            Task.Run(() => _audioThrottler.Run(_cancellationTokenSource), _cancellationTokenSource.Token);
 
             if (_userSettings.HasRecordingTimerEnabled) await Task.Run(EnableRecordingTimer);
         }
@@ -343,16 +356,21 @@ namespace EspionSpotify
 
         private void ResetAudioSession()
         {
-            if (_audioSession != null)
+            MutesSpotifyAds(false);
+            _audioSession.SetSpotifyVolumeToHighAndOthersToMute(mute: false);
+            _audioSession.ClearSpotifyAudioSessionControls();
+
+            if (_audioThrottler.Running)
             {
-                MutesSpotifyAds(false);
-                _audioSession.SetSpotifyVolumeToHighAndOthersToMute(mute: false);
-                _audioSession.ClearSpotifyAudioSessionControls();
-                _audioSession.UnrouteSpotifyAudioSessions();
+                _audioThrottler.Running = false;
             }
-            
-            _audioThrottler.Running = false;
-            _audioThrottler.Dispose();
+
+            if (_audioLoopback.Running)
+            {
+                _audioLoopback.Running = false;
+            }
+
+            _audioRouter.ResetDefaultEndpoints();
         }
 
         private void ResetSpotifyHandler()
@@ -413,6 +431,21 @@ namespace EspionSpotify
             if (_userSettings.MuteAdsEnabled) _audioSession.SetSpotifyVolumeToHighAndOthersToMute(value);
         }
 
+        private void RouteSpotifyAudioSessions(bool canRedirectPlayback)
+        {
+            foreach (var spotifyProcessesId in _audioSession.SpotifyProcessesIds)
+            {
+                _audioRouter.SetDefaultEndPoint(
+                    _audioSession.AudioMMDevicesManager.AudioEndPointDeviceID,
+                    spotifyProcessesId);
+            }
+
+            if (canRedirectPlayback)
+            {
+                Task.Run(() => _audioLoopback.Run(_cancellationTokenSource));
+            }
+        }
+
         private void Dispose(bool disposing)
         {
             if (_disposed) return;
@@ -442,8 +475,21 @@ namespace EspionSpotify
                     }
                 });
 
+                if (_audioRouter != null)
+                {
+                    _audioRouter.ResetDefaultEndpoints();
+                    _audioRouter = null;
+                }
+
+                if (_audioLoopback != null)
+                {
+                    _audioLoopback.Dispose();
+                    _audioLoopback = null;
+                }
+
                 if (_audioThrottler != null)
                 {
+                    _audioThrottler.Running = false;
                     _audioThrottler.Dispose();
                     _audioThrottler = null;
                 }

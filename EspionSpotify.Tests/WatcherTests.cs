@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Models;
+using EspionSpotify.Router;
 using Moq;
 using NAudio.Wave;
 using SpotifyAPI.Web.Models;
@@ -18,11 +19,17 @@ namespace EspionSpotify.Tests
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
         private readonly IFileSystem _fileSystem;
+        private readonly IAudioThrottler _audioThrottler;
+        private readonly IAudioRouter _audioRouter;
+        private readonly IAudioLoopback _audioLoopback;
 
         public WatcherTests()
         {
             _form = new Mock<IFrmEspionSpotify>().Object;
             _audioSession = new Mock<IMainAudioSession>().Object;
+            _audioThrottler = new Mock<IAudioThrottler>().Object;
+            _audioRouter = new Mock<IAudioRouter>().Object;
+            _audioLoopback = new Mock<IAudioLoopback>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             _userSettings = new UserSettings();
         }
@@ -40,6 +47,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track(),
                 _fileSystem,
                 new List<RecorderTask>());
@@ -54,6 +64,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track(),
                 _fileSystem,
                 new List<RecorderTask>()
@@ -76,6 +89,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track(),
                 _fileSystem,
                 new List<RecorderTask>()
@@ -105,6 +121,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = false, Artist = title},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -125,6 +144,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = true, Artist = title},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -140,6 +162,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast"},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -155,6 +180,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast", Ad = false},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -170,6 +198,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast", Ad = true},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -185,6 +216,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Playing = true, Artist = "#3", Title = "Podcast"},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -215,6 +249,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 track,
                 _fileSystem,
                 new List<RecorderTask>());
@@ -229,6 +266,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track {Artist = Constants.SPOTIFYFREE},
                 _fileSystem,
                 new List<RecorderTask>());
@@ -255,6 +295,9 @@ namespace EspionSpotify.Tests
                 _form,
                 _audioSession,
                 _userSettings,
+                _audioThrottler,
+                _audioRouter,
+                _audioLoopback,
                 new Track(),
                 _fileSystem,
                 new List<RecorderTask>());

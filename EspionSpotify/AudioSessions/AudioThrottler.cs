@@ -13,6 +13,7 @@ using NAudio.Utils;
 using NAudio.Wave;
 using Unosquare.Swan;
 using EspionSpotify.AudioSessions.NAudio;
+using TagLib.Riff;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -38,7 +39,7 @@ namespace EspionSpotify.AudioSessions
         private readonly IAudioLoopbackCapture _waveIn;
         private readonly IAudioCircularBuffer _audioBuffer;
         private readonly IDictionary<Guid, int> _workerReadPositions;
-        private readonly ISilencer _silencer;
+        private readonly IAudioWaveOut _silencer;
 
         private int WaveAverageBytesPerSecond => _waveIn.WaveFormat.AverageBytesPerSecond;
         private int BufferMaxLength => WaveAverageBytesPerSecond * _bufferSizeInSecond;
@@ -55,7 +56,7 @@ namespace EspionSpotify.AudioSessions
         internal AudioThrottler(IMainAudioSession audioSession): this(
             audioSession,
             new AudioLoopbackCapture(audioSession.AudioMMDevicesManager.AudioEndPointDevice),
-            new Silencer(),
+            new AudioWaveOut(),
             READ_TIMEOUT_MS,
             BUFFER_SIZE_IN_SECONDS,
             SILENCE_THRESHOLD,
@@ -66,7 +67,7 @@ namespace EspionSpotify.AudioSessions
         public AudioThrottler(
             IMainAudioSession audioSession,
             IAudioLoopbackCapture waveIn,
-            ISilencer silenceProvider,
+            IAudioWaveOut audioWaveOut,
             int readTimeoutMs = 0,
             int bufferTotalSizeInSeconds = BUFFER_SIZE_IN_SECONDS,
             float silenceThrehold = SILENCE_THRESHOLD,
@@ -82,8 +83,9 @@ namespace EspionSpotify.AudioSessions
 
             _audioBuffer = new AudioCircularBuffer(BufferMaxLength);
 
-            silenceProvider.CreateWaveOut(WaveFormat);
-            _silencer = silenceProvider;
+            var silenceProvider = new SilenceProvider(WaveFormat).ToSampleProvider();
+            audioWaveOut.CreateSilencer(silenceProvider);
+            _silencer = audioWaveOut;
 
             _readTimeoutMs = readTimeoutMs;
             _bufferSizeInSecond = bufferTotalSizeInSeconds;
@@ -91,7 +93,7 @@ namespace EspionSpotify.AudioSessions
             _captureCycleMs = captureCycleMs;
             _delayedCaptureMs = delayedCaptureMs;
         }
-        
+
         public async Task Run(CancellationTokenSource cancellationTokenSource)
         {
             _cancellationTokenSource = cancellationTokenSource;
@@ -257,7 +259,7 @@ namespace EspionSpotify.AudioSessions
         //    var received = new byte[buffer.Length];
         //    Array.Copy(buffer, 0, received, 0, buffer.Length);
         //    var atPositionList = new List<int>();
-            
+
         //    var bouncePerSample = (int) (SilenceAverageShortLength / 2.0);
         //    for (var i = 0; i < received.Length; i += bouncePerSample)
         //    {
@@ -363,7 +365,8 @@ namespace EspionSpotify.AudioSessions
                 }
                 if (_waveIn != null)
                 {
-                   _waveIn.Dispose();
+                    _waveIn.StopRecording();
+                    _waveIn.Dispose();
                 }
                 _workerReadPositions.Clear();
             }

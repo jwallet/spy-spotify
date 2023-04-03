@@ -25,7 +25,7 @@ namespace EspionSpotify.Tests
 
         private Mock<IMainAudioSession> _audioSessionMock;
         private Mock<IAudioLoopbackCapture> _waveInMock;
-        private Mock<ISilencer> _silencerMock;
+        private Mock<IAudioWaveOut> _silencerMock;
         private CancellationTokenSource _token;
 
         public AudioThrottlerTests()
@@ -37,7 +37,7 @@ namespace EspionSpotify.Tests
             _waveInMock.Setup(x => x.WaveFormat).Returns(_defaultWaveFormat);
             _waveInMock.Setup(x => x.CaptureState).Returns(NAudio.CoreAudioApi.CaptureState.Capturing);
 
-            _silencerMock = new Mock<ISilencer>();
+            _silencerMock = new Mock<IAudioWaveOut>();
 
             _token = new CancellationTokenSource();
         }
@@ -84,6 +84,7 @@ namespace EspionSpotify.Tests
 
             await StartTest(audioThrottler);
             audioThrottler.Dispose();
+            await Task.Delay(200);
 
             _silencerMock.Verify(x => x.Play());
             _waveInMock.Verify(x => x.StartRecording());

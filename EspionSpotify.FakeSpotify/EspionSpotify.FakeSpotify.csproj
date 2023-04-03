@@ -8,6 +8,7 @@
         <OutputType>WinExe</OutputType>
         <RootNamespace>EspionSpotify.FakeSpotify</RootNamespace>
         <AssemblyName>Spotify</AssemblyName>
+        <LangVersion>8.0</LangVersion>
         <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

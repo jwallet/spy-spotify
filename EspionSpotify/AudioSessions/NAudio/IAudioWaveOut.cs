@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace EspionSpotify.AudioSessions.NAudio
 {
-    public interface ISilencer
+    public interface IAudioWaveOut
     {
-        public void CreateWaveOut(WaveFormat waveFormat);
+        public void CreateSilencer(ISampleProvider waveProvider);
+        public void CreatePlayback(IWaveProvider waveProvider);
 
         public void Play();
         public void Stop();

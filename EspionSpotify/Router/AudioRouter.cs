@@ -30,11 +30,15 @@ namespace EspionSpotify.Router
 
         private IAudioPolicyConfigFactory _sharedPolicyConfig;
         private DataFlow _flow;
+
+        private bool _isRouted;
         
         public AudioRouter(DataFlow flow)
         {
             _flow = flow;
         }
+
+        public bool IsRouted { get => _isRouted; }
 
         private void EnsurePolicyConfig()
         {
@@ -78,6 +82,8 @@ namespace EspionSpotify.Router
                 _sharedPolicyConfig.SetPersistedDefaultAudioEndpoint((uint) processId, _flow, Role.Multimedia,
                     hstring);
                 _sharedPolicyConfig.SetPersistedDefaultAudioEndpoint((uint) processId, _flow, Role.Console, hstring);
+
+                _isRouted = true;
             }
             catch (Exception ex)
             {
@@ -110,6 +116,8 @@ namespace EspionSpotify.Router
                 EnsurePolicyConfig();
 
                 _sharedPolicyConfig.ClearAllPersistedApplicationDefaultEndpoints();
+
+                _isRouted = false;
             }
             catch (Exception ex)
             {

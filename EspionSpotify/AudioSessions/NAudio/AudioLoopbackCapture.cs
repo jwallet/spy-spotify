@@ -13,8 +13,6 @@ namespace EspionSpotify.AudioSessions.NAudio
     {
         private bool _disposed;
         private WasapiLoopbackCapture _wasapiLoopbackCapture;
-        private bool _stopped;
-        private int _timeoutDispose = 1000;
 
         public AudioLoopbackCapture(MMDevice device)
         {
@@ -42,13 +40,18 @@ namespace EspionSpotify.AudioSessions.NAudio
 
         private void RaisedDataAvailable(object sender, WaveInEventArgs e)
         {
-            DataAvailable.Invoke(this, e);
+            if (DataAvailable != null)
+            {
+                DataAvailable.Invoke(this, e);
+            }
         }
 
         private void RaisedRecordingStopped(object sender, StoppedEventArgs e)
         {
-            RecordingStopped.Invoke(this, e);
-            _stopped = true;
+            if (RecordingStopped != null)
+            {
+                RecordingStopped.Invoke(this, e);
+            }
         }
 
         public void Dispose()
@@ -58,18 +61,12 @@ namespace EspionSpotify.AudioSessions.NAudio
             GC.SuppressFinalize(this);
         }
 
-        private async void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 
             if (disposing)
             {
-                _wasapiLoopbackCapture.StopRecording();
-                while (!_stopped && _timeoutDispose > 0)
-                {
-                    await Task.Delay(100);
-                    _timeoutDispose -= 100;
-                }
                 _wasapiLoopbackCapture.DataAvailable -= RaisedDataAvailable;
                 _wasapiLoopbackCapture.RecordingStopped -= RaisedRecordingStopped;
                 _wasapiLoopbackCapture.Dispose();
