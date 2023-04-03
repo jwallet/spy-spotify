@@ -23,17 +23,17 @@ namespace EspionSpotify.AudioSessions
         public bool Running { get; set; }
 
 
-        internal AudioLoopback(MMDevice currentEndpointDevice, MMDevice defaultEndpointDevice) : this(
-            currentEndpointDevice,
-            defaultEndpointDevice,
+        internal AudioLoopback(MMDevice currentEndpointDevice, string defaultEndpointDeviceIdentifier) : this(
+            currentEndpointDevice.ID,
+            defaultEndpointDeviceIdentifier,
             new AudioLoopbackCapture(currentEndpointDevice),
             new AudioWaveOut())
         { }
 
 
-        public AudioLoopback(MMDevice currentEndpointDevice, MMDevice defaultEndpointDevice, IAudioLoopbackCapture waveInCapture, IAudioWaveOut audioWaveOut)
+        public AudioLoopback(string currentEndpointDeviceIdentifier, string defaultEndpointDeviceIdentifier, IAudioLoopbackCapture waveInCapture, IAudioWaveOut audioWaveOut)
         {
-            _canDo = currentEndpointDevice.ID != defaultEndpointDevice.ID;
+            _canDo = currentEndpointDeviceIdentifier != defaultEndpointDeviceIdentifier;
             
             _waveIn = waveInCapture;
             _waveIn.DataAvailable += OnDataAvailable;
@@ -86,6 +86,7 @@ namespace EspionSpotify.AudioSessions
 
             if (disposing)
             {
+                Running = false;
                 if (_audioLoopback != null)
                 {
                     _audioLoopback.Dispose();

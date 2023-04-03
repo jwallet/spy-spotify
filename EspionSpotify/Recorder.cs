@@ -200,7 +200,11 @@ namespace EspionSpotify
         
         private async Task RecordingStopped()
         {
-            while (TrackIsFetchingMetadata) await Task.Delay(100);
+            while (TrackIsFetchingMetadata)
+            {
+                await Task.Delay(100);
+            }
+
             var skipped = !_canBeSkippedValidated && await StopRecordingIfTrackCanBeSkipped();
             if (_tempWaveWriter == null || skipped)
             {

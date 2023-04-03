@@ -49,7 +49,7 @@ namespace EspionSpotify
             new AudioRouter(DataFlow.Render),
             new AudioLoopback(
                 currentEndpointDevice: audioSession.AudioMMDevicesManager.AudioEndPointDevice,
-                defaultEndpointDevice: audioSession.AudioMMDevicesManager.AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia)),
+                defaultEndpointDeviceIdentifier: audioSession.AudioMMDevicesManager.AudioMMDevices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia).ID),
             new Track(),
             new FileSystem(),
             new List<RecorderTask>())
@@ -416,12 +416,13 @@ namespace EspionSpotify
 
         private void StopLastRecorder()
         {
-            var recorder = _recorderTasks.LastOrDefault()?.Recorder;
-            if (recorder == null || _recorderTasks.Count == 0 || _recorderTasks.Last().Task.IsCompleted) return;
-            if (recorder.Running)
+            if (_recorderTasks.Count == 0) return;
+            var recorderTask = _recorderTasks.LastOrDefault();
+            if (recorderTask == null || recorderTask.Task.IsCompleted) return;
+            if (recorderTask.Recorder.Running)
             {
-                recorder.Running = false;
-                recorder.CountSeconds = CountSeconds;
+                recorderTask.Recorder.Running = false;
+                recorderTask.Recorder.CountSeconds = CountSeconds;
             }
         }
 
