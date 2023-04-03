@@ -109,7 +109,6 @@ namespace EspionSpotify.AudioSessions
 
             _waveIn.StartRecording();
 
-
             while (Running)
             {
                 if (_cancellationTokenSource.IsCancellationRequested) return;
@@ -131,7 +130,7 @@ namespace EspionSpotify.AudioSessions
 
             while (wait)
             {
-                var offsetNeeded = WaveAverageBytesPerSecond;
+                var offsetNeeded = WaveAverageBytesPerSecond * 2;
                 var lastReadPosition = GetWorkerPosition(identifier);
 
                 // if the worker's read position is null, it means it has not been initialized yet
@@ -182,7 +181,10 @@ namespace EspionSpotify.AudioSessions
                     _workerReadPositions.TryGetValue(identifier, out var readPosition);
 
                     // read data from the circular buffer starting at the worker's read position
-                    bytesRead = _audioBuffer.Read(out buffer, readPosition, WaveAverageBytesPerSecond);
+                    var workerReadPositionWithOffset = readPosition + (WaveAverageBytesPerSecond * 2);
+                    var readableBytesCount = _audioBuffer.TotalBytesWritten - workerReadPositionWithOffset;
+                    var readCount = readableBytesCount > 0 ? Math.Min(WaveAverageBytesPerSecond, readableBytesCount) : WaveAverageBytesPerSecond;
+                    bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
 
                     // Update the worker's read position
                     readPosition += bytesRead;

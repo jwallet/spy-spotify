@@ -111,7 +111,6 @@ namespace EspionSpotify.Tests
         [Fact]
         internal async void Worker_CanReadIfBufferReady()
         {
-            var batch = BUFFER_LENGTH / 4;
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
             var id = Guid.NewGuid();
@@ -119,13 +118,15 @@ namespace EspionSpotify.Tests
 
             await RunTest(audioThrottler, async () =>
             {
-                RaiseEvent(batch);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 Assert.Equal(0, (await audioThrottler.GetData(id)).BytesRecordedCount);
 
-                RaiseEvent(batch);
+                var someData = 1024;
+                RaiseEvent(someData);
 
-                Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
+                Assert.Equal(someData, (await audioThrottler.GetData(id)).BytesRecordedCount);
             });
         }
 
@@ -133,6 +134,7 @@ namespace EspionSpotify.Tests
         [InlineData(0)]
         [InlineData(AVERAGE_BYTES_PER_SECOND / 2)]
         [InlineData(AVERAGE_BYTES_PER_SECOND)]
+        [InlineData(AVERAGE_BYTES_PER_SECOND * 2)]
         // test if it skips reading if we have less data than the WaveAverageBytesPerSecond (threshold)
         internal async void Worker_AddThenReadNothing(int dataAdded)
         {
@@ -156,6 +158,7 @@ namespace EspionSpotify.Tests
         [InlineData(0)]
         [InlineData(AVERAGE_BYTES_PER_SECOND / 2)]
         [InlineData(AVERAGE_BYTES_PER_SECOND)]
+        [InlineData(AVERAGE_BYTES_PER_SECOND * 2)]
         // test if it skips reading if we have less data than the WaveAverageBytesPerSecond (threshold)
         internal async void Worker_AddWaitThenReadNothing(int dataAdded)
         {
@@ -190,7 +193,9 @@ namespace EspionSpotify.Tests
                 audioThrottler.AddWorker(id);
 
                 // it read as soon as it reached WaveAverageBytesPerSecond value;
-                RaiseEvent(AVERAGE_BYTES_PER_SECOND + 1);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND); // needed offset
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 var data = await audioThrottler.GetData(id);
 
@@ -214,7 +219,9 @@ namespace EspionSpotify.Tests
                 audioThrottler.AddWorker(id);
 
                 // it read as soon as it reached WaveAverageBytesPerSecond value;
-                RaiseEvent(AVERAGE_BYTES_PER_SECOND + 1);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND); // needed offset
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 var data = await audioThrottler.GetData(id);
 
@@ -243,7 +250,7 @@ namespace EspionSpotify.Tests
                 Assert.Equal(BUFFER_LENGTH, data.Buffer.Length);
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, data.BytesRecordedCount);
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
-                Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
+                // read only twice, buffer is x4 the WaveAverageBytesPerSecond, and the needed offset is x2, so x2 + x2 = x4
                 Assert.Equal(0, (await audioThrottler.GetData(id)).BytesRecordedCount);
             });
           
@@ -263,16 +270,18 @@ namespace EspionSpotify.Tests
 
                 Assert.Equal(0, (await audioThrottler.GetData(id)).BytesRecordedCount);
 
-                RaiseEvent(BUFFER_LENGTH / 2);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND); // needed offset
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND); // will start to read first event afer this event
 
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
                 Assert.Equal(0, (await audioThrottler.GetData(id)).BytesRecordedCount);
 
-                RaiseEvent(BUFFER_LENGTH / 2);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
-                Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(id)).BytesRecordedCount);
                 Assert.Equal(0, (await audioThrottler.GetData(id)).BytesRecordedCount);
+                // there is still x2 AverageBytesPerSecond to read: offset
             });
         }
 
@@ -299,22 +308,17 @@ namespace EspionSpotify.Tests
 
                 var workerPositionAfterDataReadTwoSeconds = audioThrottler.GetWorkerPosition(id);
 
-                await audioThrottler.GetData(id);
-
-                var workerPositionAfterDataReadThreeSeconds = audioThrottler.GetWorkerPosition(id);
-
                 await audioThrottler.GetData(id); // no more data available
 
                 // four seconds: no more data read; position did not move
-                var workerPositionAfterDataReadFourSeconds = audioThrottler.GetWorkerPosition(id);
+                var workerPositionAfterDataReadThreeSeconds = audioThrottler.GetWorkerPosition(id);
 
                 Assert.Equal(0, workerInitialPosition.Value);
                 Assert.Equal(0, workerPositionAfterDataAdded);
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, workerPositionAfterDataReadOneSecond.Value);
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND*2, workerPositionAfterDataReadTwoSeconds.Value);
-                Assert.Equal(AVERAGE_BYTES_PER_SECOND*3, workerPositionAfterDataReadThreeSeconds.Value);
-                // three seconds = four seconds
-                Assert.Equal(workerPositionAfterDataReadThreeSeconds.Value, workerPositionAfterDataReadFourSeconds.Value);
+                // three seconds = two seconds
+                Assert.Equal(workerPositionAfterDataReadTwoSeconds.Value, workerPositionAfterDataReadThreeSeconds.Value);
             });
         }
 
@@ -329,6 +333,7 @@ namespace EspionSpotify.Tests
             await RunTest(audioThrottler, async () =>
             {
                 RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 var secondWorkerId = Guid.NewGuid();
                 audioThrottler.AddWorker(secondWorkerId);
@@ -340,6 +345,12 @@ namespace EspionSpotify.Tests
                 RaiseEvent(AVERAGE_BYTES_PER_SECOND);
 
                 // only first read; it has enough data
+                Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(firstWorkerId)).BytesRecordedCount);
+                Assert.Equal(0, (await audioThrottler.GetData(secondWorkerId)).BytesRecordedCount);
+
+                RaiseEvent(AVERAGE_BYTES_PER_SECOND);
+
+                // only first read; second has not enough data yet
                 Assert.Equal(AVERAGE_BYTES_PER_SECOND, (await audioThrottler.GetData(firstWorkerId)).BytesRecordedCount);
                 Assert.Equal(0, (await audioThrottler.GetData(secondWorkerId)).BytesRecordedCount);
 
