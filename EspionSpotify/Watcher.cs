@@ -421,7 +421,7 @@ namespace EspionSpotify
             if (recorderTask == null || recorderTask.Task.IsCompleted) return;
             if (recorderTask.Recorder.Running)
             {
-                recorderTask.Recorder.Running = false;
+                recorderTask.Recorder.Stop();
                 recorderTask.Recorder.CountSeconds = CountSeconds;
             }
         }

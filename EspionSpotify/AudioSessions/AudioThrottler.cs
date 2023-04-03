@@ -17,33 +17,33 @@ using TagLib.Riff;
 
 namespace EspionSpotify.AudioSessions
 {
-    public sealed class AudioThrottler: IAudioThrottler, IDisposable
+    public sealed class AudioThrottler : IAudioThrottler, IDisposable
     {
         private bool _disposed;
         private readonly object _lockObject;
 
         // Defines the capture cycle in milliseconds
         public const int CAPTURE_CYCLE_MS = 100;
-        // Defines the delay to wait before starting the capture in milliseconds, this is give time for the silence to be applied.
-        public const int DELAYED_CAPTURE_MS = 100;
         // Defines a threshold for detecting silence (you may need to adjust this value based on your specific use case)
         public const float SILENCE_THRESHOLD = 0.01f;
         // Defines the buffer length based on seconds (it gets combined with the sample rate * channel * 4 (short to bytes)
         public const int BUFFER_SIZE_IN_SECONDS = 4;
         // Defines the timeout to wait for an offset of WaveAverageBytesPerSecond before reading the buffer with GetData
         private const int READ_TIMEOUT_MS = 1000;
-        
+
         private readonly IMainAudioSession _audioSession;
 
         private CancellationTokenSource _cancellationTokenSource;
         private readonly IAudioLoopbackCapture _waveIn;
         private readonly IAudioCircularBuffer _audioBuffer;
-        private readonly IDictionary<Guid, int> _workerReadPositions;
         private readonly IAudioWaveOut _silencer;
+
+        private readonly IDictionary<Guid, int> _workerReadPositions;
+        private readonly IDictionary<Guid, int> _workerStopPositions;
 
         private int WaveAverageBytesPerSecond => _waveIn.WaveFormat.AverageBytesPerSecond;
         private int BufferMaxLength => WaveAverageBytesPerSecond * _bufferSizeInSecond;
-        
+
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
 
@@ -51,17 +51,16 @@ namespace EspionSpotify.AudioSessions
         private readonly int _bufferSizeInSecond = BUFFER_SIZE_IN_SECONDS;
         private readonly float _silenceThreshold = SILENCE_THRESHOLD;
         private readonly int _captureCycleMs = CAPTURE_CYCLE_MS;
-        private readonly int _delayedCaptureMs = DELAYED_CAPTURE_MS;
+        private readonly int _delayedCaptureMs = 0;
 
-        internal AudioThrottler(IMainAudioSession audioSession): this(
+        internal AudioThrottler(IMainAudioSession audioSession) : this(
             audioSession,
             new AudioLoopbackCapture(audioSession.AudioMMDevicesManager.AudioEndPointDevice),
             new AudioWaveOut(),
             READ_TIMEOUT_MS,
             BUFFER_SIZE_IN_SECONDS,
             SILENCE_THRESHOLD,
-            CAPTURE_CYCLE_MS,
-            DELAYED_CAPTURE_MS)
+            CAPTURE_CYCLE_MS)
         { }
 
         public AudioThrottler(
@@ -71,12 +70,12 @@ namespace EspionSpotify.AudioSessions
             int readTimeoutMs = 0,
             int bufferTotalSizeInSeconds = BUFFER_SIZE_IN_SECONDS,
             float silenceThrehold = SILENCE_THRESHOLD,
-            int captureCycleMs = CAPTURE_CYCLE_MS,
-            int delayedCaptureMs = 0)
+            int captureCycleMs = CAPTURE_CYCLE_MS)
         {
             _audioSession = audioSession;
             _lockObject = new object();
             _workerReadPositions = new Dictionary<Guid, int>();
+            _workerStopPositions = new Dictionary<Guid, int>();
 
             _waveIn = waveIn;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -91,7 +90,6 @@ namespace EspionSpotify.AudioSessions
             _bufferSizeInSecond = bufferTotalSizeInSeconds;
             _silenceThreshold = silenceThrehold;
             _captureCycleMs = captureCycleMs;
-            _delayedCaptureMs = delayedCaptureMs;
         }
 
         public async Task Run(CancellationTokenSource cancellationTokenSource)
@@ -102,12 +100,10 @@ namespace EspionSpotify.AudioSessions
 
             Running = true;
 
+            _waveIn.StartRecording();
+
             // silencer outputs silence in the stream
             _silencer.Play();
-
-            await Task.Delay(_delayedCaptureMs);
-
-            _waveIn.StartRecording();
 
             while (Running)
             {
@@ -120,7 +116,7 @@ namespace EspionSpotify.AudioSessions
 
             _waveIn.StopRecording();
         }
-        
+
         public async Task<bool> WaitForWorkerPositionReady(Guid identifier, int timeout)
         {
             const int waitTimeMs = 100;
@@ -167,13 +163,31 @@ namespace EspionSpotify.AudioSessions
             return offset;
         }
 
-        public async Task<AudioWaveBuffer> GetData(Guid identifier)
+        public async Task<AudioWaveBuffer> GetData(Guid identifier) => await GetData(identifier, -1);
+
+        public async Task<AudioWaveBuffer> GetDataStart(Guid identifier)
+        {
+            var silenceOffsetPosition = (int?)null;
+            return await GetDataTo(identifier, silenceOffsetPosition ?? -1);
+        }
+
+        public async Task<AudioWaveBuffer> GetDataEnd(Guid identifier)
+        {
+            var silenceOffsetPosition = (int?)null;
+            _workerStopPositions.TryGetValue(identifier, out var defaultEndPosition);
+            return await GetDataTo(identifier, silenceOffsetPosition ?? defaultEndPosition);
+        }
+
+        private async Task<AudioWaveBuffer> GetDataTo(Guid identifier, int positionToReach) => await GetData(identifier, positionToReach);
+
+        private async Task<AudioWaveBuffer> GetData(Guid identifier, int forcePosition)
         {
             byte[] buffer;
             int bytesRead;
 
-            // Wait for data to be available in the circular buffer
-            if (await WaitForWorkerPositionReady(identifier, _readTimeoutMs))
+            // 1: Bypass if forcePosition is set
+            // 2: Wait for data to be available in the circular buffer
+            if (forcePosition != -1 || await WaitForWorkerPositionReady(identifier, _readTimeoutMs))
             {
                 lock (_lockObject)
                 {
@@ -181,9 +195,11 @@ namespace EspionSpotify.AudioSessions
                     _workerReadPositions.TryGetValue(identifier, out var readPosition);
 
                     // read data from the circular buffer starting at the worker's read position
-                    var workerReadPositionWithOffset = readPosition + (WaveAverageBytesPerSecond * 2);
-                    var readableBytesCount = _audioBuffer.TotalBytesWritten - workerReadPositionWithOffset;
-                    var readCount = readableBytesCount > 0 ? Math.Min(WaveAverageBytesPerSecond, readableBytesCount) : WaveAverageBytesPerSecond;
+                    var bytesAvailableAfterOffset = _audioBuffer.TotalBytesWritten - (readPosition + (WaveAverageBytesPerSecond * 2));
+                    var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
+                        ? Math.Min(WaveAverageBytesPerSecond, bytesAvailableAfterOffset)
+                        : WaveAverageBytesPerSecond;
+                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : Math.Max(0, forcePosition - readPosition);
                     bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
 
                     // Update the worker's read position
@@ -238,11 +254,25 @@ namespace EspionSpotify.AudioSessions
             return _workerReadPositions.TryGetValue(identifier, out var position) ? position : null;
         }
 
+        public void StopWorker(Guid identifier)
+        {
+            _workerStopPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
+        }
+
+        public bool StopWorkerExist(Guid identifier)
+        {
+            return _workerStopPositions.TryGetValue(identifier, out var position);
+        }
+
         public void RemoveWorker(Guid identifier)
         {
             if (_workerReadPositions.TryGetValue(identifier, out var position))
             {
                 _workerReadPositions.Remove(identifier);
+            }
+            if (_workerStopPositions.TryGetValue(identifier, out var stopPosition))
+            {
+                _workerStopPositions.Remove(identifier);
             }
         }
         
@@ -371,6 +401,7 @@ namespace EspionSpotify.AudioSessions
                     _waveIn.Dispose();
                 }
                 _workerReadPositions.Clear();
+                _workerStopPositions.Clear();
             }
 
             _disposed = true;

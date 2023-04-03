@@ -17,9 +17,13 @@ namespace EspionSpotify.AudioSessions
 
         void AddWorker(Guid identifier);
         int? GetWorkerPosition(Guid identifier);
+        void StopWorker(Guid identifier);
         void RemoveWorker(Guid identifier);
+        bool StopWorkerExist(Guid identifier);
 
         Task<AudioWaveBuffer> GetData(Guid identifier);
+        Task<AudioWaveBuffer> GetDataStart(Guid identifier);
+        Task<AudioWaveBuffer> GetDataEnd(Guid identifier);
 
         void TrimEndBufferForSilence(ref byte[] buffer);
 

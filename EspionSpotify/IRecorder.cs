@@ -8,7 +8,11 @@ namespace EspionSpotify
     {
         int CountSeconds { get; set; }
         Track Track { get; }
-        bool Running { get; set; }
+        bool Running { get; }
+
+        void Start();
+
+        void Stop();
 
         Task Run(CancellationTokenSource token);
 

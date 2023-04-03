@@ -31,6 +31,7 @@ namespace EspionSpotify
         private readonly IAudioThrottler _audioThrottler;
         private readonly UserSettings _userSettings;
 
+        private bool _running;
         private bool _disposed;
         private string _tempEncodeFile;
         private string _tempOriginalFile;
@@ -83,7 +84,7 @@ namespace EspionSpotify
             && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
 
         public int CountSeconds { get; set; }
-        public bool Running { get; set; }
+        public bool Running { get => _running; }
 
         private bool TrackIsFetchingMetadata => _track.MetaDataUpdated == null && !_userSettings.RecordEverythingEnabled && _userSettings.MediaFormat == MediaFormat.Mp3;
 
@@ -110,6 +111,17 @@ namespace EspionSpotify
             return true;
         }
 
+        public void Start()
+        {
+            _running = true;
+        }
+
+        public void Stop()
+        {
+            _running = false;
+            _audioThrottler.StopWorker(_identifier);
+        }
+
         #region RecorderStart
 
         public async Task Run(CancellationTokenSource cancellationTokenSource)
@@ -119,15 +131,20 @@ namespace EspionSpotify
             if (!_initiated || _userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
 
             _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
-            Running = true;
+            _running = true;
 
             await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
-            while (Running)
+            while (_running)
             {
                 if (_cancellationTokenSource.IsCancellationRequested) return;
                 if (await StopRecordingIfTrackCanBeSkipped()) return;
                 await RecordAvailableData(SilenceAnalyzer.None);
+            }
+
+            if (!_audioThrottler.StopWorkerExist(_identifier))
+            {
+                _audioThrottler.StopWorker(_identifier);
             }
 
             await RecordAvailableData(SilenceAnalyzer.TrimEnd);
@@ -149,10 +166,10 @@ namespace EspionSpotify
             {
                 case SilenceAnalyzer.TrimStart:
                     // await Task.Delay(1000); // used to have audio around worker position
-                    audio = await _audioThrottler.GetData(_identifier);
+                    audio = await _audioThrottler.GetDataStart(_identifier);
                     return;
                 case SilenceAnalyzer.TrimEnd:
-                    audio = await _audioThrottler.GetData(_identifier);
+                    audio = await _audioThrottler.GetDataEnd(_identifier);
                     //_audioThrottler.TrimEndBufferForSilence(ref audio.Buffer);
                     break;
                 default:
@@ -504,7 +521,7 @@ namespace EspionSpotify
         private void ForceStopRecording()
         {
             _form.UpdateIconSpotify(true);
-            Running = false;
+            _running = false;
 
             EndRecording();
         }
