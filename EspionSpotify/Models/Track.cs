@@ -41,6 +41,7 @@ namespace EspionSpotify.Models
 
             AlbumArtUrl = track.AlbumArtUrl;
             AlbumArtImage = track.AlbumArtImage;
+            Comment = track.Comment;
         }
 
         public string Artists
@@ -92,6 +93,8 @@ namespace EspionSpotify.Models
         public string AlbumArtUrl { get; set; }
         
         public byte[] AlbumArtImage { get; set; }
+        
+        public string Comment { get; set; }
 
         private bool IsNormal =>
             !string.IsNullOrEmpty(Artist)
