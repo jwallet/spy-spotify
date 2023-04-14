@@ -1,8 +1,8 @@
-﻿using NAudio.Utils;
-using System;
+﻿using System;
 
 namespace EspionSpotify.AudioSessions
 {
+    // https://github.com/naudio/NAudio/blob/master/NAudio.Core/Utils/CircularBuffer.cs
     public class AudioCircularBuffer: IAudioCircularBuffer
     {
         private readonly byte[] _buffer;

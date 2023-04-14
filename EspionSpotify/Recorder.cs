@@ -165,12 +165,10 @@ namespace EspionSpotify
             switch (analyzer)
             {
                 case SilenceAnalyzer.TrimStart:
-                    // await Task.Delay(1000); // used to have audio around worker position
-                    audio = await _audioThrottler.GetDataStart(_identifier);
+                    audio = await _audioThrottler.GetDataStart(_identifier, detectSilence: true);
                     return;
                 case SilenceAnalyzer.TrimEnd:
-                    audio = await _audioThrottler.GetDataEnd(_identifier);
-                    //_audioThrottler.TrimEndBufferForSilence(ref audio.Buffer);
+                    audio = await _audioThrottler.GetDataEnd(_identifier, detectSilence: true);
                     break;
                 default:
                     audio = await _audioThrottler.GetData(_identifier);

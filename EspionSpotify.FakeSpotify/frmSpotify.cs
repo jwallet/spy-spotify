@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,11 +14,15 @@ namespace EspionSpotify.FakeSpotify
         private int _lastPlayedIndice;
         private bool _isPlaying;
         private WaveOut _waveOut;
+        private object _lockObject = new object();
         
         public FrmSpotify()
         {
             InitializeComponent();
             _waveOut = CreateWave();
+
+            _waveOut.Volume = 0.0f;
+            this.tbVolume.Value = 0;
         }
 
         private void tbDelayTitle_Scroll(object sender, ScrollEventArgs e)
@@ -47,64 +52,71 @@ namespace EspionSpotify.FakeSpotify
 
         private void btnNextTrack_Click(object sender, EventArgs e)
         {
-            NextTrack().RunSynchronously();
+            NextTrack();
         }
 
         private async Task NextTrack()
         {
-            _lastPlayedIndice += 1;
-            if (_lastPlayedIndice >= this.lstPlaylist.Items.Count)
+            var t = new Task(async () =>
             {
-                _lastPlayedIndice = 0;
-            }
-
-            ChangeTitle(fromList: true);
-            
-            if (chkLockWindowTitleToPlaybackState.Checked)
-            {
-       
-
-                var vol = _waveOut.Volume;
-
-                var rand = new Random();
-                var div = rand.Next(1, 1000);
-
-                await Task.Run(() =>
+                _lastPlayedIndice += 1;
+                if (_lastPlayedIndice >= this.lstPlaylist.Items.Count)
                 {
+                    _lastPlayedIndice = 0;
+                }
+
+                ChangeTitle(fromList: true);
+
+                if (chkLockWindowTitleToPlaybackState.Checked)
+                {
+                    var vol = _waveOut.Volume;
+
+               
+
                     while (_waveOut.Volume > 0.001)
                     {
-                        _waveOut.Volume = _waveOut.Volume / 2;
-                        Thread.Sleep(100 / div);
+                        _waveOut.Volume = Math.Max(0, _waveOut.Volume / 2);
+                        Thread.Sleep(10);
                     }
 
                     _waveOut.Volume = 0.0f;
-                });
-                
-                Thread.Sleep(1000 / div);
-                
-                _waveOut.Dispose();
-                _waveOut = CreateWave();
-                ValidPlayback();
-                
-                await Task.Run(() => 
-                {
+
+                    var rand = new Random();
+                    var div = rand.Next(10, 400);
+                    Thread.Sleep(1000 / div);
+
+                    AccessFormPropertyThreadSafe(() =>
+                    {
+                        _waveOut.Dispose();
+                        _waveOut = CreateWave();
+                    });
+
+                    ValidPlayback();
+
                     _waveOut.Volume = 0.0001f;
                     while (_waveOut.Volume < vol)
                     {
-                        _waveOut.Volume = _waveOut.Volume * 2;
-                        Thread.Sleep(100 / div);
+                        _waveOut.Volume = Math.Min(_waveOut.Volume * 2, 1);
+                        Thread.Sleep(10);
                     }
-      
+
                     _waveOut.Volume = vol;
-                });
-            }
+                }
+            });
+
+            t.Start();
         }
 
         private void ChangeTitle(bool fromList)
         {
-            var title = fromList ? this.lstPlaylist.Items[_lastPlayedIndice].Text: this.txtWindowTitle.Text;
-            this.txtWindowTitle.Text = title;
-            
+            var title = "";
+          
+            AccessFormPropertyThreadSafe(() =>
+            {
+                title = fromList ? this.lstPlaylist.Items[_lastPlayedIndice].Text : this.txtWindowTitle.Text;
+                this.txtWindowTitle.Text = title;
+            });
+
             ChangeWindowTitle(title);
         }
 
@@ -113,7 +125,7 @@ namespace EspionSpotify.FakeSpotify
             var t = new Thread(() =>
             {
                 Thread.Sleep(tbDelayTitle.Value);
-                SetFormPropertyThreadSafe(() => this.Text = title);
+                AccessFormPropertyThreadSafe(() => this.Text = title);
             });
             t.Start();
         }
@@ -174,7 +186,7 @@ namespace EspionSpotify.FakeSpotify
             return waveOut;
         }
 
-        private void SetFormPropertyThreadSafe(MethodInvoker setter)
+        private void AccessFormPropertyThreadSafe(MethodInvoker setter)
         {
             lock (this)
             {
@@ -185,6 +197,7 @@ namespace EspionSpotify.FakeSpotify
                     setter();
             }
         }
+
 
         private void chkLockWindowTitleToPlaybackState_CheckedChanged(object sender, EventArgs e)
         {
@@ -203,6 +216,11 @@ namespace EspionSpotify.FakeSpotify
 
         private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (_lastPlayedIndice != this.lstPlaylist.SelectedIndices[0])
+            {
+                //NextTrack();
+            }
+
             _lastPlayedIndice = this.lstPlaylist.SelectedIndices[0];
             ChangeTitle(fromList: true);
             

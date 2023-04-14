@@ -214,7 +214,7 @@ namespace EspionSpotify
             chkRecordDuplicateRecordings.Checked =
                 Settings.Default.advanced_record_over_recordings_and_duplicate_enabled;
             chkRecordDuplicateRecordings.Visible = Settings.Default.advanced_record_over_recordings_enabled;
-
+            tgAlbumTrackNumberToFilePrefix.Checked = Settings.Default.advanced_file_album_track_number_prefix_enabled;
             tgRecordEverything.Checked = Settings.Default.advanced_record_everything;
             tgForceSpotifyToSkip.Checked = Settings.Default.advanced_watcher_force_spotify_to_skip;
             chkRecordAds.Enabled = Settings.Default.advanced_record_everything;

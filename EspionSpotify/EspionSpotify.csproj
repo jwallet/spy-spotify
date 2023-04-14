@@ -186,6 +186,7 @@
     <Compile Include="AudioSessions\IAudioCircularBuffer.cs" />
     <Compile Include="AudioSessions\IAudioLoopback.cs" />
     <Compile Include="AudioSessions\IAudioThrottler.cs" />
+    <Compile Include="AudioSessions\AudioUtil.cs" />
     <Compile Include="AudioSessions\NAudio\IAudioWaveOut.cs" />
     <Compile Include="AudioSessions\NAudio\IAudioLoopbackCapture.cs" />
     <Compile Include="AudioSessions\NAudio\AudioWaveOut.cs" />

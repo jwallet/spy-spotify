@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EspionSpotify.Enums;
 using EspionSpotify.Models;
 using NAudio.Wave;
 
@@ -11,9 +10,9 @@ namespace EspionSpotify.AudioSessions
     {
         bool Running { get; set; }
         WaveFormat WaveFormat { get; }
-        //bool BufferIsReady { get; }
 
-        Task<bool> WaitForWorkerPositionReady(Guid identifier, int timeout);
+        Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeout);
+        Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeout);
 
         void AddWorker(Guid identifier);
         int? GetWorkerPosition(Guid identifier);
@@ -22,10 +21,8 @@ namespace EspionSpotify.AudioSessions
         bool StopWorkerExist(Guid identifier);
 
         Task<AudioWaveBuffer> GetData(Guid identifier);
-        Task<AudioWaveBuffer> GetDataStart(Guid identifier);
-        Task<AudioWaveBuffer> GetDataEnd(Guid identifier);
-
-        void TrimEndBufferForSilence(ref byte[] buffer);
+        Task<AudioWaveBuffer> GetDataStart(Guid identifier, bool detectSilence);
+        Task<AudioWaveBuffer> GetDataEnd(Guid identifier, bool detectSilence);
 
         Task Run(CancellationTokenSource cancellationTokenSource);
 
