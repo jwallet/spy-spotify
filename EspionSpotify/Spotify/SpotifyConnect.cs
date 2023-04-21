@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EspionSpotify.Native;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
@@ -30,7 +31,7 @@ namespace EspionSpotify.Spotify
                     @"Spotify\Spotify.exe")
         };
 
-        public static async Task Run(IFileSystem fileSystem)
+        public static async Task Run(IFileSystem fileSystem, IProcessManager processManager)
         {
             if (!IsSpotifyInstalled(fileSystem)) return;
 
@@ -39,6 +40,14 @@ namespace EspionSpotify.Spotify
                 if (RunSpotify(fileSystem)) break;
 
                 await Task.Delay(RunSpotifyInterval);
+            }
+
+            var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler(processManager);
+            if (spotifyHandler.HasValue)
+            {
+                NativeMethods.SendKeyPressPauseMedia(spotifyHandler.Value);
+                await Task.Delay(1);
+                NativeMethods.SendKeyPressPauseMedia(spotifyHandler.Value);
             }
         }
 
