@@ -1,5 +1,5 @@
 ﻿using EspionSpotify.AudioSessions;
-using EspionSpotify.AudioSessions.NAudio;
+using EspionSpotify.AudioSessions.Audio;
 using Moq;
 using NAudio.Wave;
 using System;

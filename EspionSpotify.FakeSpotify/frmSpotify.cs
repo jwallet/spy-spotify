@@ -25,9 +25,14 @@ namespace EspionSpotify.FakeSpotify
             this.tbVolume.Value = 0;
         }
 
-        private void tbDelayTitle_Scroll(object sender, ScrollEventArgs e)
+        private void tbDelay_Scroll(object sender, ScrollEventArgs e)
         {
-            this.lblDelayTitle.Text = e.NewValue.ToString() + "ms";
+            this.lblDelay.Text = e.NewValue.ToString() + "ms";
+        }
+
+        private void tbSilence_Scroll(object sender, ScrollEventArgs e)
+        {
+            this.lblSilence.Text = e.NewValue.ToString() + "ms";
         }
 
         private void btnAddToPlaylist_Click(object sender, EventArgs e)
@@ -55,9 +60,17 @@ namespace EspionSpotify.FakeSpotify
             NextTrack();
         }
 
-        private async Task NextTrack()
+        private void NextTrack()
         {
-            var t = new Task(async () =>
+            var silenceMs = 0;
+            var silenceVolume = 0.0f;
+            AccessFormPropertyThreadSafe(() =>
+            {
+                silenceMs = tbSilence.Value;
+                silenceVolume = tbSilenceVolume.Value / 100.0f;
+            });
+
+            var t = new Task(() =>
             {
                 _lastPlayedIndice += 1;
                 if (_lastPlayedIndice >= this.lstPlaylist.Items.Count)
@@ -69,38 +82,41 @@ namespace EspionSpotify.FakeSpotify
 
                 if (chkLockWindowTitleToPlaybackState.Checked)
                 {
-                    var vol = _waveOut.Volume;
+                    var fromVolume = _waveOut.Volume;
+                    var toVolume = fromVolume * silenceVolume;
 
-               
-
-                    while (_waveOut.Volume > 0.001)
+                    while (_waveOut.Volume > toVolume)
                     {
                         _waveOut.Volume = Math.Max(0, _waveOut.Volume / 2);
-                        Thread.Sleep(10);
+                        Thread.Sleep(1);
                     }
 
-                    _waveOut.Volume = 0.0f;
+                    _waveOut.Volume = toVolume;
 
-                    var rand = new Random();
-                    var div = rand.Next(10, 400);
-                    Thread.Sleep(1000 / div);
+                    Thread.Sleep(silenceMs);
 
                     AccessFormPropertyThreadSafe(() =>
                     {
-                        _waveOut.Dispose();
+                        var prev = _waveOut;
                         _waveOut = CreateWave();
+                        prev.Dispose();
                     });
 
                     ValidPlayback();
 
-                    _waveOut.Volume = 0.0001f;
-                    while (_waveOut.Volume < vol)
+                    if (toVolume == 0f)
                     {
-                        _waveOut.Volume = Math.Min(_waveOut.Volume * 2, 1);
-                        Thread.Sleep(10);
+                        // to be able to run while loop
+                        _waveOut.Volume = 0.0001f;
                     }
 
-                    _waveOut.Volume = vol;
+                    while (_waveOut.Volume < fromVolume)
+                    {
+                        _waveOut.Volume = Math.Min(_waveOut.Volume * 2, 1);
+                        Thread.Sleep(1);
+                    }
+
+                    _waveOut.Volume = fromVolume;
                 }
             });
 
@@ -124,7 +140,7 @@ namespace EspionSpotify.FakeSpotify
         {
             var t = new Thread(() =>
             {
-                Thread.Sleep(tbDelayTitle.Value);
+                Thread.Sleep(tbDelay.Value);
                 AccessFormPropertyThreadSafe(() => this.Text = title);
             });
             t.Start();
@@ -211,7 +227,8 @@ namespace EspionSpotify.FakeSpotify
 
         private void tbVolume_Scroll(object sender, ScrollEventArgs e)
         {
-            _waveOut.Volume = this.tbVolume.Value/ 100.0f;
+            _waveOut.Volume = e.NewValue / 100.0f;
+            lblVolume.Text = e.NewValue.ToString() + "%";
         }
 
         private void lstPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -228,6 +245,11 @@ namespace EspionSpotify.FakeSpotify
             {
                 ValidPlayback();
             }
+        }
+
+        private void tbSilenceVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            lblSilenceVolume.Text = e.NewValue.ToString() + "%";
         }
     }
 }

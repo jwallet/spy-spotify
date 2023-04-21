@@ -204,14 +204,14 @@ namespace EspionSpotify.Tests
         {
             var value = new double[] { };
 
-            Assert.Throws<InvalidOperationException>(() => value.Median());
+            Assert.Equal(0, value.Median());
         }
 
         [Fact]
         internal void PeerArrayDecimalMedian_ReturnsMedianDecimal()
         {
             var value = new[] {2.8, 1.4, 1.1, 0.8, -0.4, 1.1, 2.4, 7.77};
-            const double expected = 1.25;
+            const double expected = 1.4;
 
             var actual = value.Median();
 

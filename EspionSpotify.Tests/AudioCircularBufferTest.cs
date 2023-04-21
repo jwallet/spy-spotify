@@ -1,4 +1,5 @@
 ﻿using EspionSpotify.AudioSessions;
+using System;
 using Xunit;
 
 namespace EspionSpotify.Tests
@@ -89,7 +90,7 @@ namespace EspionSpotify.Tests
             var count = dataToWrite.Length;
 
             var bytesWritten = buffer.Write(dataToWrite, 0, count);
-            var bytesRead = buffer.Read(out var dataRead, 0, buffer.TotalBytesWritten);
+            var bytesRead = buffer.Read(out var dataRead, 0, (int)buffer.TotalBytesWritten);
 
             Assert.Equal(count, bytesWritten);
             Assert.Equal(count, bytesRead);
@@ -108,7 +109,7 @@ namespace EspionSpotify.Tests
             var count = dataToWrite.Length;
 
             var bytesWritten = buffer.Write(dataToWrite, 0, count);
-            var bytesRead = buffer.Read(out var dataRead, 0, buffer.TotalBytesWritten);
+            var bytesRead = buffer.Read(out var dataRead, 0, (int)buffer.TotalBytesWritten);
 
             Assert.Equal(count, bytesWritten);
             Assert.Equal(count, bytesRead);
@@ -128,7 +129,7 @@ namespace EspionSpotify.Tests
 
             buffer.Write(dataToWrite, 0, count);
             var readOffset = 1;
-            var bytesToRead = buffer.TotalBytesWritten - 2;
+            var bytesToRead = (int)buffer.TotalBytesWritten - 2;
             var bytesRead = buffer.Read(out var dataRead, readOffset, bytesToRead);
 
             Assert.Equal(bytesToRead, bytesRead);

@@ -1,17 +1,12 @@
-﻿using Castle.Core.Internal;
-using EspionSpotify.AudioSessions;
-using EspionSpotify.AudioSessions.NAudio;
+﻿using EspionSpotify.AudioSessions;
+using EspionSpotify.AudioSessions.Audio;
 using Moq;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Unosquare.Swan;
 using Xunit;
-using static System.Windows.Forms.DataFormats;
 
 namespace EspionSpotify.Tests
 {

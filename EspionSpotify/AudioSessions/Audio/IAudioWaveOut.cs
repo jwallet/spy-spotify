@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EspionSpotify.AudioSessions.NAudio
+namespace EspionSpotify.AudioSessions.Audio
 {
     public interface IAudioWaveOut
     {

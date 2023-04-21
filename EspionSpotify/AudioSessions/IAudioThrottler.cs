@@ -15,7 +15,7 @@ namespace EspionSpotify.AudioSessions
         Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeout);
 
         void AddWorker(Guid identifier);
-        int? GetWorkerPosition(Guid identifier);
+        long? GetWorkerPosition(Guid identifier);
         void StopWorker(Guid identifier);
         void RemoveWorker(Guid identifier);
         bool StopWorkerExist(Guid identifier);

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EspionSpotify.AudioSessions
+namespace EspionSpotify.AudioSessions.Audio
 {
     public interface IAudioLoopbackCapture
     {

@@ -1,4 +1,4 @@
-using EspionSpotify.AudioSessions.NAudio;
+using EspionSpotify.AudioSessions.Audio;
 using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 using NAudio.Wave;
@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TagLib.Riff;
-using Unosquare.Swan;
 
 namespace EspionSpotify.AudioSessions
 {
@@ -19,10 +17,10 @@ namespace EspionSpotify.AudioSessions
 
         // Defines the capture cycle in milliseconds
         public const int CAPTURE_CYCLE_MS = 100;
-        // Defines a threshold for detecting silence (you may need to adjust this value based on your specific use case)
-        public const sbyte SILENCE_AMPLITUDE_THRESHOLD = -40;
+        // Defines a threshold for detecting silence
+        public const sbyte SILENCE_AMPLITUDE_THRESHOLD = -20;
         // Defines how long to collect silence bytes samples before testing it agains the silence threshold
-        public const int SILENCE_SAMPLER_MS = 200;
+        public const int SILENCE_SAMPLER_MS = 100;
         // Defines the buffer length based on seconds (it gets combined with the sample rate * channel * 4 (short to bytes)
         public const int BUFFER_SIZE_IN_SECONDS = 4;
         // Defines the timeout to wait for an offset of WaveAverageBytesPerSecond before reading the buffer with GetData
@@ -35,8 +33,8 @@ namespace EspionSpotify.AudioSessions
         private readonly IAudioCircularBuffer _audioBuffer;
         private readonly IAudioWaveOut _silencer;
 
-        private readonly IDictionary<Guid, int> _workerReadPositions;
-        private readonly IDictionary<Guid, int> _workerStopPositions;
+        private readonly IDictionary<Guid, long> _workerReadPositions;
+        private readonly IDictionary<Guid, long> _workerStopPositions;
 
         private int WaveAverageBytesPerSecond => _waveIn.WaveFormat.AverageBytesPerSecond;
         private int BufferMaxLength => WaveAverageBytesPerSecond * _bufferSizeInSecond;
@@ -73,8 +71,8 @@ namespace EspionSpotify.AudioSessions
         {
             _audioSession = audioSession;
             _lockObject = new object();
-            _workerReadPositions = new Dictionary<Guid, int>();
-            _workerStopPositions = new Dictionary<Guid, int>();
+            _workerReadPositions = new Dictionary<Guid, long>();
+            _workerStopPositions = new Dictionary<Guid, long>();
 
             _waveIn = waveIn;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -127,7 +125,7 @@ namespace EspionSpotify.AudioSessions
             return await WaitForWorkerPositionReadiness(_workerStopPositions, identifier, timeout);
         }
 
-        private async Task<bool> WaitForWorkerPositionReadiness(IDictionary<Guid, int> workers, Guid identifier,  int timeout)
+        private async Task<bool> WaitForWorkerPositionReadiness(IDictionary<Guid, long> workers, Guid identifier,  int timeout)
         {
             const int waitTimeMs = CAPTURE_CYCLE_MS;
             var timeoutLeft = timeout == -1 ? 0 : timeout;
@@ -136,7 +134,7 @@ namespace EspionSpotify.AudioSessions
 
             while (wait)
             {
-                var offsetNeeded = WaveAverageBytesPerSecond * 2;
+                var offsetNeeded = WaveAverageBytesPerSecond * 3;
                 var hasWorkerPosition = workers.TryGetValue(identifier, out var lastReadPosition);
 
                 // if the worker's position is unavailable, it means it has not been initialized yet
@@ -162,14 +160,14 @@ namespace EspionSpotify.AudioSessions
             return isReady;
         }
 
-        private int? MoveWorkerPositionToDetectedSilence(int? workerPosition)
+        private long? MoveWorkerPositionToDetectedSilence(long? workerPosition)
         {
-            int? offset = null;
+            long? offset = null;
             if (workerPosition.HasValue)
             {
-                var desiredOffset = WaveAverageBytesPerSecond / 2;
+                var desiredOffset = WaveAverageBytesPerSecond;
                 var fromPosition = Math.Max(0, workerPosition.Value - desiredOffset);
-                var toPosition = Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + desiredOffset);
+                var toPosition = (int)Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + desiredOffset);
                 lock (_lockObject)
                 {
                     _audioBuffer.Read(out var buffer, 0,_audioBuffer.MaxLength);
@@ -194,7 +192,7 @@ namespace EspionSpotify.AudioSessions
                 // detected silence will move the worker read position to the offset position
                 if (offset.HasValue)
                 {
-                    readPosition = offset.Value;
+                    _workerReadPositions[identifier] = offset.Value;
                 }
             }
 
@@ -214,15 +212,16 @@ namespace EspionSpotify.AudioSessions
                 if (offset.HasValue)
                 {
                     endingPosition = offset.Value;
+                    _workerStopPositions[identifier] = offset.Value;
                 }
             }
 
             return await GetDataTo(identifier, endingPosition);
         }
 
-        private async Task<AudioWaveBuffer> GetDataTo(Guid identifier, int positionToReach) => await GetData(identifier, positionToReach);
+        private async Task<AudioWaveBuffer> GetDataTo(Guid identifier, long positionToReach) => await GetData(identifier, positionToReach);
 
-        private async Task<AudioWaveBuffer> GetData(Guid identifier, int forcePosition)
+        private async Task<AudioWaveBuffer> GetData(Guid identifier, long forcePosition)
         {
             byte[] buffer;
             int bytesRead;
@@ -239,9 +238,9 @@ namespace EspionSpotify.AudioSessions
                     // read data from the circular buffer starting at the worker's read position
                     var bytesAvailableAfterOffset = _audioBuffer.TotalBytesWritten - (readPosition + (WaveAverageBytesPerSecond * 2));
                     var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
-                        ? Math.Min(WaveAverageBytesPerSecond, bytesAvailableAfterOffset)
+                        ? (int)Math.Min(WaveAverageBytesPerSecond, bytesAvailableAfterOffset)
                         : WaveAverageBytesPerSecond;
-                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : Math.Max(0, forcePosition - readPosition);
+                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : (int)Math.Max(0, forcePosition - readPosition);
                     bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
 
                     // Update the worker's read position
@@ -278,7 +277,7 @@ namespace EspionSpotify.AudioSessions
             _workerReadPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
         }
 
-        public int? GetWorkerPosition(Guid identifier)
+        public long? GetWorkerPosition(Guid identifier)
         {
             return _workerReadPositions.TryGetValue(identifier, out var position) ? position : null;
         }
@@ -329,7 +328,7 @@ namespace EspionSpotify.AudioSessions
             return null;
         }
 
-        public int? DetectSilencePosition(byte[] buffer, int fromPosition, int toPosition)
+        public long? DetectSilencePosition(byte[] buffer, long fromPosition, long toPosition)
         {
             var valuesLength = buffer.Length / 2;
             var minSilenceDurationMs = _silenceSamplerMs;
@@ -354,6 +353,8 @@ namespace EspionSpotify.AudioSessions
                     samples[i] = amplitude;
                 }
 
+                //var kk = values.Where(x => x < 2).ToArray();
+
                 // Find the median position of the silence
                 var a = samples.Select((value, index) => new { value, index });
                 var b = a.Where(x => AudioUtil.IsSilence(x.value, _silenceAmplitudeThreshold));
@@ -361,7 +362,7 @@ namespace EspionSpotify.AudioSessions
                 var d = c.Select(x => new { position = (x.Median(x => x.index) * 2) + fromPosition, count = x.Count() });
                 var e = d.OrderBy(x => x.count);
                 var f = e.FirstOrDefault(x => x.count > _silenceSamplerMs);
-
+                Console.WriteLine(f?.position);
                 return f?.position;
             }
             catch (Exception error)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EspionSpotify.AudioSessions.NAudio;
+using EspionSpotify.AudioSessions.Audio;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
