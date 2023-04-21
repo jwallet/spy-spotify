@@ -336,7 +336,8 @@ namespace EspionSpotify
 
             Spotify.ListenForEvents = true;
 
-            Task.Run(() => _audioThrottler.Run(_cancellationTokenSource), _cancellationTokenSource.Token);
+            var t = new Task(() => _audioThrottler.Run(_cancellationTokenSource), _cancellationTokenSource.Token);
+            t.RunSynchronously();
 
             if (_userSettings.HasRecordingTimerEnabled) await Task.Run(EnableRecordingTimer);
         }
