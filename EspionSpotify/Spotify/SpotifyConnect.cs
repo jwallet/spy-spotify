@@ -45,9 +45,9 @@ namespace EspionSpotify.Spotify
             var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler(processManager);
             if (spotifyHandler.HasValue)
             {
-                NativeMethods.SendKeyPressPauseMedia(spotifyHandler.Value);
+                NativeMethods.SendKeyPressPlayPauseMedia(spotifyHandler.Value);
                 await Task.Delay(1);
-                NativeMethods.SendKeyPressPauseMedia(spotifyHandler.Value);
+                NativeMethods.SendKeyPressStopMedia(spotifyHandler.Value);
             }
         }
 

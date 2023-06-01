@@ -21,10 +21,15 @@ namespace EspionSpotify.Native
             SendKeyPessMedia(process, SpotifyAction.NextTrack);
         }
 
-        internal static void SendKeyPressPauseMedia(IntPtr process)
+        internal static void SendKeyPressPlayPauseMedia(IntPtr process)
         {
             SendKeyPessMedia(process, SpotifyAction.PlayPause);
         }
+        internal static void SendKeyPressStopMedia(IntPtr process)
+        {
+            SendKeyPessMedia(process, SpotifyAction.Stop);
+        }
+
 
         private static void SendKeyPessMedia(IntPtr process, SpotifyAction action)
         {

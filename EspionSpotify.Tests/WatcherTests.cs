@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Models;
+using EspionSpotify.Native;
 using EspionSpotify.Router;
 using Moq;
 using NAudio.Wave;
@@ -19,6 +20,7 @@ namespace EspionSpotify.Tests
         private readonly IFrmEspionSpotify _form;
         private readonly UserSettings _userSettings;
         private readonly IFileSystem _fileSystem;
+        private readonly IProcessManager _processManager;
         private readonly IAudioThrottler _audioThrottler;
         private readonly IAudioRouter _audioRouter;
         private readonly IAudioLoopback _audioLoopback;
@@ -31,6 +33,7 @@ namespace EspionSpotify.Tests
             _audioRouter = new Mock<IAudioRouter>().Object;
             _audioLoopback = new Mock<IAudioLoopback>().Object;
             _fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
+            _processManager = new Mock<IProcessManager>().Object;
             _userSettings = new UserSettings();
         }
 
@@ -52,6 +55,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track(),
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.False(watcher.RecorderUpAndRunning);
@@ -69,6 +73,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track(),
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>()
                 {
                     new RecorderTask()
@@ -96,6 +101,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track(),
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>()
                 {
                     new RecorderTask()
@@ -125,6 +131,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = false, Artist = title},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
                 
 
@@ -148,6 +155,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = true, Artist = title},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
@@ -166,6 +174,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast"},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
@@ -184,6 +193,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast", Ad = false},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.True(watcher.IsRecordUnknownActive);
@@ -202,6 +212,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = true, Artist = "Podcast", Ad = true},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.True(watcher.IsRecordUnknownActive);
@@ -220,6 +231,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Playing = true, Artist = "#3", Title = "Podcast"},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.False(watcher.IsRecordUnknownActive);
@@ -253,6 +265,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 track,
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.Equal(expected, watcher.IsTypeAllowed);
@@ -270,6 +283,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track {Artist = Constants.SPOTIFYFREE},
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.False(watcher.IsNewTrack(null));
@@ -299,6 +313,7 @@ namespace EspionSpotify.Tests
                 _audioLoopback,
                 new Track(),
                 _fileSystem,
+                _processManager,
                 new List<RecorderTask>());
 
             Assert.Equal(expected, watcher.IsMaxOrderNumberAsFileExceeded);

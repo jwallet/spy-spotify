@@ -38,6 +38,9 @@ namespace EspionSpotify.AudioSessions
 
         private int WaveAverageBytesPerSecond => _waveIn.WaveFormat.AverageBytesPerSecond;
         private int BufferMaxLength => WaveAverageBytesPerSecond * _bufferSizeInSecond;
+        private int DataOffsetNeeded => (int)((BufferMaxLength / 4) * 3);
+        private int DataReadNeeded => (int)((BufferMaxLength / 4) * 2);
+        private int DataLeftNeeded => (int)(BufferMaxLength / 4);
 
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
@@ -134,7 +137,6 @@ namespace EspionSpotify.AudioSessions
 
             while (wait)
             {
-                var offsetNeeded = WaveAverageBytesPerSecond * 3;
                 var hasWorkerPosition = workers.TryGetValue(identifier, out var lastReadPosition);
 
                 // if the worker's position is unavailable, it means it has not been initialized yet
@@ -150,7 +152,7 @@ namespace EspionSpotify.AudioSessions
                     timeoutLeft = Math.Max(0, timeoutLeft - waitTimeMs);
 
                     var waiting = Running && (timeout == -1 || timeoutLeft > 0);
-                    isReady = bufferPosition > lastReadPosition && currentOffset > offsetNeeded;
+                    isReady = bufferPosition > lastReadPosition && currentOffset > DataOffsetNeeded;
                     wait = waiting && !isReady;
                 }
 
@@ -165,13 +167,13 @@ namespace EspionSpotify.AudioSessions
             long? offset = null;
             if (workerPosition.HasValue)
             {
-                var desiredOffset = WaveAverageBytesPerSecond;
-                var fromPosition = Math.Max(0, workerPosition.Value - desiredOffset);
-                var toPosition = (int)Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + desiredOffset);
+                var fromPosition = Math.Max(0, workerPosition.Value - DataLeftNeeded);
+                var toPosition = (int)Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + DataLeftNeeded);
                 lock (_lockObject)
                 {
                     _audioBuffer.Read(out var buffer, 0,_audioBuffer.MaxLength);
                     offset = DetectSilencePosition(buffer, fromPosition, toPosition);
+                    Console.WriteLine($"Detected position: {offset}");
                 }
             }
 
@@ -236,10 +238,10 @@ namespace EspionSpotify.AudioSessions
                     _workerReadPositions.TryGetValue(identifier, out var readPosition);
 
                     // read data from the circular buffer starting at the worker's read position
-                    var bytesAvailableAfterOffset = _audioBuffer.TotalBytesWritten - (readPosition + (WaveAverageBytesPerSecond * 2));
+                    var bytesAvailableAfterOffset = _audioBuffer.TotalBytesWritten - (readPosition + DataReadNeeded);
                     var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
-                        ? (int)Math.Min(WaveAverageBytesPerSecond, bytesAvailableAfterOffset)
-                        : WaveAverageBytesPerSecond;
+                        ? (int)Math.Min(DataLeftNeeded, bytesAvailableAfterOffset)
+                        : DataLeftNeeded;
                     var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : (int)Math.Max(0, forcePosition - readPosition);
                     bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
 
