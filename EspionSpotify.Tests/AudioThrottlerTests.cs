@@ -524,7 +524,7 @@ namespace EspionSpotify.Tests
                 var id = Guid.NewGuid();
                 audioThrottler.AddWorker(id);
 
-                var result = await audioThrottler.WaitForWorkerReadPositionReadiness(id, 2_000);
+                var result = await audioThrottler.WaitForWorkerReadPositionReadiness(id, 2);
 
                 Assert.False(result);
             });
@@ -543,7 +543,7 @@ namespace EspionSpotify.Tests
 
                 RaiseEvent();
 
-                var result = await audioThrottler.WaitForWorkerReadPositionReadiness(id, 2_000);
+                var result = await audioThrottler.WaitForWorkerReadPositionReadiness(id, 2);
 
                 Assert.True(result);
             });

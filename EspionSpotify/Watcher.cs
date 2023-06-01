@@ -244,6 +244,7 @@ namespace EspionSpotify
                 ? $"{_form.Rm?.GetString(I18NKeys.LblAd) ?? "Ad"}: "
                 : "";
             _form.UpdatePlayingTitle($"{adTitle}{_currentTrack}");
+            _form.UpdateRecordedTime(RecorderUpAndRunning ? 0 : null);
 
             // will mute even if the window title is "Spotify"
             MutesSpotifyAds(isAd || _currentTrack.ToString().IsNullOrAdOrSpotifyIdleState());
@@ -412,7 +413,12 @@ namespace EspionSpotify
         private void ManageRecorderTasks()
         {
             if (_recorderTasks.Count > 0) _form.UpdateNumUp();
-            _recorderTasks.RemoveAll(x => x.Task.Status == TaskStatus.RanToCompletion);
+            _recorderTasks.RemoveAll(x => new[]
+            {
+                TaskStatus.Canceled,
+                TaskStatus.RanToCompletion,
+                TaskStatus.Faulted,
+            }.Contains(x.Task.Status));
         }
 
         private void DoIKeepLastSong()

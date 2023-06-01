@@ -11,8 +11,8 @@ namespace EspionSpotify.AudioSessions
         bool Running { get; set; }
         WaveFormat WaveFormat { get; }
 
-        Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeout);
-        Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeout);
+        Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeoutInSeconds);
+        Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds);
 
         void AddWorker(Guid identifier);
         long? GetWorkerPosition(Guid identifier);

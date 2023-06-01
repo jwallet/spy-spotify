@@ -99,12 +99,14 @@ namespace EspionSpotify.Spotify
                             NewTrack = await SpotifyLatestStatus.GetTrack()
                         }));
                     }
-
-                    if (Track.CurrentPosition != null || newestTrack != null)
+                    else if (Track.CurrentPosition != null || newestTrack != null)
+                    {
                         _ = Task.Run(() => OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs
                         {
                             TrackTime = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : 0
                         }));
+                    }
+
                 }
 
                 if (newestTrack != null)

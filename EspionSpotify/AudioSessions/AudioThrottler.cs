@@ -24,7 +24,7 @@ namespace EspionSpotify.AudioSessions
         // Defines the buffer length based on seconds (it gets combined with the sample rate * channel * 4 (short to bytes)
         public const int BUFFER_SIZE_IN_SECONDS = 4;
         // Defines the timeout to wait for an offset of WaveAverageBytesPerSecond before reading the buffer with GetData
-        private const int READ_TIMEOUT_MS = 1000;
+        private const int READ_TIMEOUT_SECONDS = (int)(BUFFER_SIZE_IN_SECONDS / 2);
 
         private readonly IMainAudioSession _audioSession;
 
@@ -45,7 +45,7 @@ namespace EspionSpotify.AudioSessions
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
 
-        private readonly int _readTimeoutMs = READ_TIMEOUT_MS;
+        private readonly int _readTimeoutSeconds = READ_TIMEOUT_SECONDS;
         private readonly int _bufferSizeInSecond = BUFFER_SIZE_IN_SECONDS;
         private readonly sbyte _silenceAmplitudeThreshold = SILENCE_AMPLITUDE_THRESHOLD;
         private readonly int _silenceSamplerMs = SILENCE_SAMPLER_MS;
@@ -58,7 +58,7 @@ namespace EspionSpotify.AudioSessions
             BUFFER_SIZE_IN_SECONDS,
             SILENCE_AMPLITUDE_THRESHOLD,
             SILENCE_SAMPLER_MS,
-            READ_TIMEOUT_MS,
+            READ_TIMEOUT_SECONDS,
             CAPTURE_CYCLE_MS)
         { }
 
@@ -69,7 +69,7 @@ namespace EspionSpotify.AudioSessions
             int bufferTotalSizeInSeconds = BUFFER_SIZE_IN_SECONDS,
             sbyte silenceAmplitudeThrehold = SILENCE_AMPLITUDE_THRESHOLD,
             int silenceSamplerMs = SILENCE_SAMPLER_MS,
-            int readTimeoutMs = 0,
+            int readTimeoutSeconds = 0,
             int captureCycleMs = 0)
         {
             _audioSession = audioSession;
@@ -86,7 +86,7 @@ namespace EspionSpotify.AudioSessions
             audioWaveOut.CreateSilencer(silenceProvider);
             _silencer = audioWaveOut;
 
-            _readTimeoutMs = readTimeoutMs;
+            _readTimeoutSeconds = readTimeoutSeconds;
             _bufferSizeInSecond = bufferTotalSizeInSeconds;
             _silenceAmplitudeThreshold = silenceAmplitudeThrehold;
             _captureCycleMs = captureCycleMs;
@@ -118,20 +118,21 @@ namespace EspionSpotify.AudioSessions
             _waveIn.StopRecording();
         }
 
-        public async Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeout)
+        public async Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeoutInSeconds)
         {
-            return await WaitForWorkerPositionReadiness(_workerReadPositions, identifier, timeout);
+            return await WaitForWorkerPositionReadiness(_workerReadPositions, identifier, timeoutInSeconds);
         }
 
-        public async Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeout)
+        public async Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds)
         {
-            return await WaitForWorkerPositionReadiness(_workerStopPositions, identifier, timeout);
+            return await WaitForWorkerPositionReadiness(_workerStopPositions, identifier, timeoutInSeconds);
         }
 
-        private async Task<bool> WaitForWorkerPositionReadiness(IDictionary<Guid, long> workers, Guid identifier,  int timeout)
+        private async Task<bool> WaitForWorkerPositionReadiness(IDictionary<Guid, long> workers, Guid identifier,  int timeoutInSeconds)
         {
             const int waitTimeMs = CAPTURE_CYCLE_MS;
-            var timeoutLeft = timeout == -1 ? 0 : timeout;
+            // use -1 to set no timeout, otherwise use the provided timeout + 1 cycle
+            var timeoutLeft = timeoutInSeconds == -1 ? 0 : (timeoutInSeconds * 1000) + CAPTURE_CYCLE_MS;
             var isReady = false;
             var wait = true;
 
@@ -151,7 +152,7 @@ namespace EspionSpotify.AudioSessions
                     var currentOffset = bufferPosition - lastReadPosition;
                     timeoutLeft = Math.Max(0, timeoutLeft - waitTimeMs);
 
-                    var waiting = Running && (timeout == -1 || timeoutLeft > 0);
+                    var waiting = Running && timeoutLeft > 0;
                     isReady = bufferPosition > lastReadPosition && currentOffset > DataOffsetNeeded;
                     wait = waiting && !isReady;
                 }
@@ -168,7 +169,8 @@ namespace EspionSpotify.AudioSessions
             if (workerPosition.HasValue)
             {
                 var fromPosition = Math.Max(0, workerPosition.Value - DataLeftNeeded);
-                var toPosition = (int)Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + DataLeftNeeded);
+                var toPosition = Math.Min(_audioBuffer.TotalBytesWritten, workerPosition.Value + DataLeftNeeded);
+                if (toPosition - fromPosition < 0) return null;
                 lock (_lockObject)
                 {
                     _audioBuffer.Read(out var buffer, 0,_audioBuffer.MaxLength);
@@ -188,7 +190,7 @@ namespace EspionSpotify.AudioSessions
 
             if (detectSilence)
             {
-                await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutMs);
+                await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutSeconds);
 
                 var offset = MoveWorkerPositionToDetectedSilence(readPosition);
                 // detected silence will move the worker read position to the offset position
@@ -207,7 +209,7 @@ namespace EspionSpotify.AudioSessions
 
             if (detectSilence)
             {
-                await WaitForWorkerStopPositionReadiness(identifier, _readTimeoutMs);
+                await WaitForWorkerStopPositionReadiness(identifier, _readTimeoutSeconds);
 
                 var offset = MoveWorkerPositionToDetectedSilence(endingPosition);
                 // detected silence will move the worker stop position to the offset position
@@ -230,7 +232,7 @@ namespace EspionSpotify.AudioSessions
 
             // 1: Bypass if forcePosition is set
             // 2: Wait for data to be available in the circular buffer
-            if (forcePosition != -1 || await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutMs))
+            if (forcePosition != -1 || await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutSeconds))
             {
                 lock (_lockObject)
                 {
