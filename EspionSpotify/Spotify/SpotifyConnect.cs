@@ -31,7 +31,7 @@ namespace EspionSpotify.Spotify
                     @"Spotify\Spotify.exe")
         };
 
-        public static async Task Run(IFileSystem fileSystem, IProcessManager processManager)
+        public static async Task Run(IFileSystem fileSystem)
         {
             if (!IsSpotifyInstalled(fileSystem)) return;
 
@@ -41,7 +41,10 @@ namespace EspionSpotify.Spotify
 
                 await Task.Delay(RunSpotifyInterval);
             }
+        }
 
+        public static async Task StartAudioSession(IProcessManager processManager)
+        {
             var spotifyHandler = SpotifyProcess.GetMainSpotifyHandler(processManager);
             if (spotifyHandler.HasValue)
             {

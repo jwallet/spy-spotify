@@ -269,7 +269,7 @@ namespace EspionSpotify
                 if (!SpotifyConnect.IsSpotifyRunning())
                 {
                     _form.WriteIntoConsole(I18NKeys.LogSpotifyConnecting);
-                    await SpotifyConnect.Run(_fileSystem, _processManager);
+                    await SpotifyConnect.Run(_fileSystem);
                 }
             };
 
@@ -280,6 +280,7 @@ namespace EspionSpotify
         {
             _audioSession.SetSpotifyProcesses();
             RouteSpotifyAudioSessions(canRedirectPlayback: _userSettings.ListenToSpotifyPlaybackEnabled);
+            await SpotifyConnect.StartAudioSession(_processManager);
             return await _audioSession.WaitSpotifyAudioSessionToStart(Running);
         }
 
