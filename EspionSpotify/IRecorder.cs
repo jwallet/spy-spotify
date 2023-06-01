@@ -6,13 +6,14 @@ namespace EspionSpotify
 {
     public interface IRecorder
     {
-        int CountSeconds { get; set; }
         Track Track { get; }
         bool Running { get; }
 
         void Start();
 
         void Stop();
+
+        void UpdateTrackPosition(int? position);
 
         Task Run(CancellationTokenSource token);
 

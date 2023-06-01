@@ -5,7 +5,6 @@ namespace EspionSpotify
 {
     public interface IWatcher
     {
-        int CountSeconds { get; set; }
         ISpotifyHandler Spotify { get; set; }
 
         bool RecorderUpAndRunning { get; }

@@ -694,9 +694,6 @@ namespace EspionSpotify
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (_watcher == null) return;
-            _watcher.CountSeconds++;
-
             if (!Watcher.Running && !Watcher.Ready) StopRecording();
         }
 

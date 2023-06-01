@@ -94,7 +94,6 @@ namespace EspionSpotify
             GC.SuppressFinalize(this);
         }
 
-        public int CountSeconds { get; set; }
         public ISpotifyHandler Spotify { get; set; }
 
         public bool RecorderUpAndRunning => _recorderTasks.Any(x => 
@@ -198,7 +197,16 @@ namespace EspionSpotify
 
         private void OnTrackChanged(object sender, TrackChangeEventArgs e)
         {
-            if (!IsNewTrack(e.NewTrack)) return;
+            if (!IsNewTrack(e.NewTrack, e.OldTrack)) return;
+
+            // update current recorder with latest old track state
+            if (RecorderUpAndRunning)
+            {
+                _recorderTasks.First(x => x.Recorder.Running).Recorder.UpdateTrackPosition(e.OldTrack.CurrentPosition);
+            }
+
+            _currentTrack = e.NewTrack;
+            _isPlaying = _currentTrack.Playing;
 
             StopLastRecorder();
 
@@ -246,18 +254,15 @@ namespace EspionSpotify
             }
         }
 
-        public bool IsNewTrack(Track track)
+        public bool IsNewTrack(Track newTrack, Track oldTrack)
         {
-            if (track == null || new Track().Equals(track)) return false;
+            if (newTrack == null || new Track().Equals(newTrack)) return false;
 
-            if (_currentTrack.Equals(track))
+            if (oldTrack.Equals(newTrack))
             {
                 _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
                 return false;
             }
-
-            _currentTrack = track;
-            _isPlaying = _currentTrack.Playing;
 
             return true;
         }
@@ -304,7 +309,6 @@ namespace EspionSpotify
             }
 
             ManageRecorderTasks();
-            CountSeconds = 0;
 
             var recorder = new Recorder(
                 form: _form, 
@@ -416,7 +420,7 @@ namespace EspionSpotify
             // always increment when session ends
             if (!Running && _recorderTasks.Any(t => t.Task.Status != TaskStatus.RanToCompletion)) _form.UpdateNumUp();
             // valid if the track is removed, go back one count
-            if (RecorderUpAndRunning && CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
+            if (RecorderUpAndRunning && _currentTrack.CurrentPosition < _userSettings.MinimumRecordedLengthSeconds)
                 _form.UpdateNumDown();
         }
 
@@ -428,7 +432,6 @@ namespace EspionSpotify
             if (recorderTask.Recorder.Running)
             {
                 recorderTask.Recorder.Stop();
-                recorderTask.Recorder.CountSeconds = CountSeconds;
             }
         }
 

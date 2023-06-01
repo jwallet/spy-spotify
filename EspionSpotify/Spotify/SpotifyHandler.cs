@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using EspionSpotify.AudioSessions;
 using EspionSpotify.Events;
+using EspionSpotify.Extensions;
 using EspionSpotify.Models;
 
 namespace EspionSpotify.Spotify
@@ -90,10 +91,11 @@ namespace EspionSpotify.Spotify
 
                     if (!newestTrack.Equals(Track))
                     {
+                        var oldTrack = new Track(Track);
                         SongTimer?.Start();
                         _ = Task.Run(async () => OnTrackChange?.Invoke(this, new TrackChangeEventArgs
                         {
-                            OldTrack = Track,
+                            OldTrack = oldTrack,
                             NewTrack = await SpotifyLatestStatus.GetTrack()
                         }));
                     }
@@ -107,8 +109,10 @@ namespace EspionSpotify.Spotify
 
                 if (newestTrack != null)
                 {
-                    newestTrack.CurrentPosition = newestTrack.Equals(Track) ? Track?.CurrentPosition ?? 0 : (int?) null;
-                    Track = newestTrack;
+                    if (!newestTrack.Equals(Track))
+                    {
+                        Track = newestTrack;
+                    }
                 }
             }
 

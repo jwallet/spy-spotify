@@ -81,7 +81,10 @@ namespace EspionSpotify.Models
         public string[] Genres { get; set; }
         public int? AlbumPosition { get; set; }
 
-        public int? CurrentPosition { get; set; }
+        public int? CurrentPosition { 
+            get;
+            set;
+        }
         public int? Length { get; set; }
 
         public string[] Performers { get; set; }

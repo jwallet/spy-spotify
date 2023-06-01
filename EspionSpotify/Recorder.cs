@@ -27,7 +27,7 @@ namespace EspionSpotify
         private readonly FileManager _fileManager;
         private readonly IFileSystem _fileSystem;
         private readonly IFrmEspionSpotify _form;
-        private readonly Track _track;
+        private Track _track;
         private readonly IAudioThrottler _audioThrottler;
         private readonly UserSettings _userSettings;
 
@@ -77,13 +77,12 @@ namespace EspionSpotify
             _initiated = init && Init();
         }
 
-        public Track Track => _track;
+        public Track Track { get => _track; }
 
         public bool IsSkipTrackActive =>
             _userSettings.RecordRecordingsStatus == RecordRecordingsStatus.Skip
             && _fileManager.IsPathFileNameExists(_track, _userSettings, _fileSystem);
 
-        public int CountSeconds { get; set; }
         public bool Running { get => _running; }
 
         private bool TrackIsFetchingMetadata => _track.MetaDataUpdated == null && !_userSettings.RecordEverythingEnabled && _userSettings.MediaFormat == MediaFormat.Mp3;
@@ -120,6 +119,11 @@ namespace EspionSpotify
         {
             _running = false;
             _audioThrottler.StopWorker(_identifier);
+        }
+
+        public void UpdateTrackPosition(int? position)
+        {
+            _track.CurrentPosition = position;
         }
 
         #region RecorderStart
@@ -257,7 +261,7 @@ namespace EspionSpotify
 
             _currentOutputFile = _fileManager.GetOutputFileAndInitDirectories();
 
-            if (CountSeconds < _userSettings.MinimumRecordedLengthSeconds)
+            if (_track.CurrentPosition < _userSettings.MinimumRecordedLengthSeconds)
             {
                 _form.WriteIntoConsole(I18NKeys.LogDeleting, _currentOutputFile.ToString(),
                     _userSettings.MinimumRecordedLengthSeconds);
@@ -291,7 +295,7 @@ namespace EspionSpotify
                 return;
             }
 
-            var length = TimeSpan.FromSeconds(CountSeconds).ToString(@"mm\:ss");
+            var length = TimeSpan.FromSeconds(_track.CurrentPosition ?? 0).ToString(@"mm\:ss");
             _form.WriteIntoConsole(I18NKeys.LogRecorded, _currentOutputFile.ToString(), length);
 
             await UpdateMediaTagsFileBasedOnMediaFormat();
