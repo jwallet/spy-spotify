@@ -215,6 +215,7 @@ namespace EspionSpotify
                 Settings.Default.advanced_record_over_recordings_and_duplicate_enabled;
             chkRecordDuplicateRecordings.Visible = Settings.Default.advanced_record_over_recordings_enabled;
             tgAlbumTrackNumberToFilePrefix.Checked = Settings.Default.advanced_file_album_track_number_prefix_enabled;
+            tgUpdateRecordingsID3Tags.Checked = Settings.Default.advanced_id3_update_recordings_tags_enabled;
             tgRecordEverything.Checked = Settings.Default.advanced_record_everything;
             tgForceSpotifyToSkip.Checked = Settings.Default.advanced_watcher_force_spotify_to_skip;
             chkRecordAds.Enabled = Settings.Default.advanced_record_everything;
@@ -1150,10 +1151,6 @@ namespace EspionSpotify
                     $"move-extra-title-to-subtitle?enabled={tgExtraTitleToSubtitle.GetPropertyThreadSafe(c => c.Checked)}"));
         }
 
-        private void TgUpdateRecordingsID3Tags_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show();
@@ -1197,6 +1194,18 @@ namespace EspionSpotify
             Task.Run(async () =>
                 await _analytics.LogAction(
                     $"force-spotify-to-skip?enabled={tgForceSpotifyToSkip.GetPropertyThreadSafe(c => c.Checked)}"));
+        }
+
+        private void tgUpdateRecordingsID3Tags_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Settings.Default.advanced_id3_update_recordings_tags_enabled == tgUpdateRecordingsID3Tags.Checked) return;
+
+            _userSettings.UpdateRecordingsID3TagsEnabled = tgUpdateRecordingsID3Tags.Checked;
+            Settings.Default.advanced_id3_update_recordings_tags_enabled = tgUpdateRecordingsID3Tags.Checked;
+            Settings.Default.Save();
+            Task.Run(async () =>
+                await _analytics.LogAction(
+                    $"update-id3-tags?enabled={tgUpdateRecordingsID3Tags.GetPropertyThreadSafe(c => c.Checked)}"));
         }
     }
 }

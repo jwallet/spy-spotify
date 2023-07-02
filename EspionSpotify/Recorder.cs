@@ -169,10 +169,10 @@ namespace EspionSpotify
             switch (analyzer)
             {
                 case SilenceAnalyzer.TrimStart:
-                    audio = await _audioThrottler.GetDataStart(_identifier, detectSilence: true);
+                    audio = await _audioThrottler.GetDataStart(_identifier, detectSilence: false);
                     return;
                 case SilenceAnalyzer.TrimEnd:
-                    audio = await _audioThrottler.GetDataEnd(_identifier, detectSilence: true);
+                    audio = await _audioThrottler.GetDataEnd(_identifier, detectSilence: false);
                     break;
                 default:
                     audio = await _audioThrottler.GetData(_identifier);

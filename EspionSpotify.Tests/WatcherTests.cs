@@ -286,10 +286,10 @@ namespace EspionSpotify.Tests
                 _processManager,
                 new List<RecorderTask>());
 
-            Assert.False(watcher.IsNewTrack(null));
-            Assert.False(watcher.IsNewTrack(new Track()));
-            Assert.False(watcher.IsNewTrack(new Track {Artist = Constants.SPOTIFYFREE}));
-            Assert.True(watcher.IsNewTrack(new Track {Artist = "Artist", Title = "Title"}));
+            Assert.False(watcher.IsNewTrack(null, null));
+            Assert.False(watcher.IsNewTrack(new Track(), null));
+            Assert.False(watcher.IsNewTrack(new Track {Artist = Constants.SPOTIFYFREE}, null));
+            Assert.True(watcher.IsNewTrack(new Track {Artist = "Artist", Title = "Title"}, null));
         }
 
         [Theory]

@@ -199,16 +199,11 @@ namespace EspionSpotify
         {
             if (!IsNewTrack(e.NewTrack, e.OldTrack)) return;
 
-            // update current recorder with latest old track state
-            if (RecorderUpAndRunning)
-            {
-                _recorderTasks.First(x => x.Recorder.Running).Recorder.UpdateTrackPosition(e.OldTrack.CurrentPosition);
-            }
+            StopLastRecorder();
+            UpdateTrackPositionOfLastRecorder(e.OldTrack.CurrentPosition);
 
             _currentTrack = e.NewTrack;
             _isPlaying = _currentTrack.Playing;
-
-            StopLastRecorder();
 
             var canRecord = _isPlaying && !RecorderUpAndRunning && IsTypeAllowed && !IsMaxOrderNumberAsFileExceeded;
             if (canRecord)
@@ -259,7 +254,7 @@ namespace EspionSpotify
         {
             if (newTrack == null || new Track().Equals(newTrack)) return false;
 
-            if (oldTrack.Equals(newTrack))
+            if (oldTrack is Track && oldTrack.Equals(newTrack))
             {
                 _form.UpdateIconSpotify(_isPlaying, RecorderUpAndRunning);
                 return false;
@@ -428,6 +423,14 @@ namespace EspionSpotify
             // valid if the track is removed, go back one count
             if (RecorderUpAndRunning && _currentTrack.CurrentPosition < _userSettings.MinimumRecordedLengthSeconds)
                 _form.UpdateNumDown();
+        }
+
+        private void UpdateTrackPositionOfLastRecorder(int? trackPosition)
+        {
+            if (_recorderTasks.Count == 0 || !trackPosition.HasValue) return;
+            var recorderTask = _recorderTasks.LastOrDefault();
+            if (recorderTask == null || recorderTask.Task.IsCompleted) return;
+            recorderTask.Recorder.Track.CurrentPosition = trackPosition;
         }
 
         private void StopLastRecorder()

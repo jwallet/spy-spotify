@@ -186,7 +186,10 @@ namespace EspionSpotify.AudioSessions
 
         public async Task<AudioWaveBuffer> GetDataStart(Guid identifier, bool detectSilence)
         {
-            _workerReadPositions.TryGetValue(identifier, out var readPosition);
+            if (!_workerReadPositions.TryGetValue(identifier, out var readPosition))
+            {
+                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
+            }
 
             if (detectSilence)
             {
@@ -205,7 +208,10 @@ namespace EspionSpotify.AudioSessions
 
         public async Task<AudioWaveBuffer> GetDataEnd(Guid identifier, bool detectSilence)
         {
-            _workerStopPositions.TryGetValue(identifier, out var endingPosition);
+            if (!_workerStopPositions.TryGetValue(identifier, out var endingPosition))
+            {
+                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
+            }
 
             if (detectSilence)
             {
@@ -240,11 +246,11 @@ namespace EspionSpotify.AudioSessions
                     _workerReadPositions.TryGetValue(identifier, out var readPosition);
 
                     // read data from the circular buffer starting at the worker's read position
-                    var bytesAvailableAfterOffset = _audioBuffer.TotalBytesWritten - (readPosition + DataReadNeeded);
+                    var bytesAvailableAfterOffset = (int)(_audioBuffer.TotalBytesWritten - (readPosition + DataReadNeeded));
                     var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
-                        ? (int)Math.Min(DataLeftNeeded, bytesAvailableAfterOffset)
+                        ? Math.Min(DataLeftNeeded, bytesAvailableAfterOffset)
                         : DataLeftNeeded;
-                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : (int)Math.Max(0, forcePosition - readPosition);
+                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : Math.Max(0, (int)(forcePosition - readPosition));
                     bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
 
                     // Update the worker's read position

@@ -1648,7 +1648,7 @@ namespace EspionSpotify
             this.tgUpdateRecordingsID3Tags.Text = "Off";
             this.tgUpdateRecordingsID3Tags.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tgUpdateRecordingsID3Tags.UseSelectable = true;
-            this.tgUpdateRecordingsID3Tags.CheckedChanged += new System.EventHandler(this.TgUpdateRecordingsID3Tags_CheckedChanged);
+            this.tgUpdateRecordingsID3Tags.CheckedChanged += new System.EventHandler(this.tgUpdateRecordingsID3Tags_CheckedChanged);
             // 
             // lblUpdateRecordingsID3Tags
             // 
