@@ -675,6 +675,5 @@ namespace EspionSpotify.Tests
             }
             return bytes;
         }
-
     }
 }
