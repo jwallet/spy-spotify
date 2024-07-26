@@ -4,3 +4,7 @@ _site/
 EspionSpotify/
 EspionSpotify.Tests/
 packages/
+/.idea
+EspionSpotify.FakeSpotify/
+EspionSpotify.Updater/
+EspionSpotify.sln.DotSettings.user
