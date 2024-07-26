@@ -120,16 +120,16 @@ Do you enjoy Spytify?
             {% endfor %}
         </ol>
         {% for donor in sortedDonors %}
-            {% if forloop.index > 100 %}
+            {% if forloop.index > 200 %}
                 {% if forloop.last %}<span class="donor" style="font-size:70%;color:#ccc;">...</span>{% endif %}
             {% elsif forloop.index > 80 %}
-                <span class="donor" style="font-size:60%;color:#ccc;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span class="donor" title="${{ donor.donation }}" style="font-size:60%;color:#ccc;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 40 %}
-                <span class="donor" style="font-size:70%;color:#aaa;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span class="donor" title="${{ donor.donation }}"  style="font-size:70%;color:#aaa;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 20 %}
-                <span class="donor" style="font-size:80%;color:#888;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span class="donor" title="${{ donor.donation }}" style="font-size:80%;color:#888;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% elsif forloop.index > 10 %}
-                <span class="donor" style="font-size:90%;color:#666;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
+                <span class="donor" title="${{ donor.donation }}" style="font-size:90%;color:#666;">{{ donor.name }}{% if forloop.last == false %},{% endif %}</span>
             {% endif %}
         {% else %}
             <pre>No Donors</pre>
