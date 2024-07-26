@@ -8,7 +8,7 @@ namespace EspionSpotify.AudioSessions
         private readonly byte[] _buffer;
         private readonly object _lockObject;
         private int _writePosition;
-        private long _totalBytesWritten;
+        private int _totalBytesWritten;
 
         private bool DidLoopOnce => _totalBytesWritten >= _buffer.Length;
 
@@ -50,7 +50,7 @@ namespace EspionSpotify.AudioSessions
         /// <summary>
         /// Number of bytes written in the circular buffer
         /// </summary>
-        public long TotalBytesWritten
+        public int TotalBytesWritten
         {
             get
             {
@@ -113,7 +113,7 @@ namespace EspionSpotify.AudioSessions
         public int Write(byte[] data, int offset, int count)
         {
             var bytesToWrite = count > data.Length ? data.Length : count;
-            var cursor = offset;
+            var cursor = offset % MaxLength;
             var previousTotalBytesWritten = _totalBytesWritten;
 
             lock (_lockObject)
@@ -124,7 +124,7 @@ namespace EspionSpotify.AudioSessions
       
                     try
                     {
-                        Array.Copy(data, cursor % MaxLength, _buffer, _writePosition, bytesWritten);
+                        Array.Copy(data, cursor, _buffer, _writePosition, bytesWritten);
                     }
                     catch (Exception ex)
                     {
@@ -142,14 +142,14 @@ namespace EspionSpotify.AudioSessions
                         throw ex;
                     }
 
-                    _totalBytesWritten += bytesWritten;
-                    bytesToWrite -= bytesWritten;
-                    cursor += bytesWritten;
-                    _writePosition = (int)(_totalBytesWritten % MaxLength);
+                    _totalBytesWritten = (_totalBytesWritten + bytesWritten) % int.MaxValue;
+                    bytesToWrite = Math.Max(0, bytesToWrite - bytesWritten);
+                    cursor = (cursor + bytesWritten) % MaxLength;
+                    _writePosition = _totalBytesWritten % MaxLength;
                 }
             }
 
-            return (int)(_totalBytesWritten - previousTotalBytesWritten);
+            return Math.Max(0, _totalBytesWritten - previousTotalBytesWritten);
         }
 
         /// <summary>
@@ -159,39 +159,36 @@ namespace EspionSpotify.AudioSessions
         /// <param name="position">Read position into the buffer based on total bytes written</param>
         /// <param name="count">Bytes to read</param>
         /// <returns>Number of bytes actually read</returns>
-        public int Read(out byte[] data, long position, int count)
+        public int Read(out byte[] data, int position, int count)
         {
-            var totalBuffer = (int)Math.Min(_totalBytesWritten, MaxLength);
+            var totalBuffer = Math.Min(_totalBytesWritten, MaxLength);
 
             data = new byte[totalBuffer];
             var bytesToRead = count;
-            var cursor = position;
-            var previousTotalBytesWritten = position;
+            var cursor = position % MaxLength;
+            // var previousTotalBytesWritten = position;
             var bytesRead = 0;
             
             lock (_lockObject)
             {
                 while (bytesToRead > 0)
                 {
-                    var writePositionFromTotalBytes = (int)(TotalBytesWritten - previousTotalBytesWritten);
-                    var currentPosition = cursor % MaxLength;
-                    var readToEnd = Math.Min((int)Math.Min(totalBuffer - currentPosition, bytesToRead), writePositionFromTotalBytes);
+                    var readToEnd = Math.Min(totalBuffer - cursor, bytesToRead);
 
                     if (readToEnd > 0)
                     {
                         try
                         {
-                            Array.Copy(_buffer, currentPosition, data, bytesRead, readToEnd);
+                            Array.Copy(_buffer, cursor, data, bytesRead, readToEnd);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine("AudioCircularBuffer: Error reading buffer");
                             Program.ReportException(ex);
                         }
-                        bytesToRead -= readToEnd;
-                        position += readToEnd;
+                        bytesToRead = Math.Max(0, bytesToRead - readToEnd);
                         bytesRead += readToEnd;
-                        cursor += readToEnd;
+                        cursor = (cursor + readToEnd) % MaxLength;
                     }
                     else
                     {

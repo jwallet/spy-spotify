@@ -16,11 +16,11 @@ namespace EspionSpotify.AudioSessions
         private readonly object _lockObject;
 
         // Defines the capture cycle in milliseconds
-        public const int CAPTURE_CYCLE_MS = 100;
+        private const int CAPTURE_CYCLE_MS = 100;
         // Defines a threshold for detecting silence
-        public const sbyte SILENCE_AMPLITUDE_THRESHOLD = -20;
+        private const sbyte SILENCE_AMPLITUDE_THRESHOLD = -20;
         // Defines how long to collect silence bytes samples before testing it agains the silence threshold
-        public const int SILENCE_SAMPLER_MS = 100;
+        private const int SILENCE_SAMPLER_MS = 100;
         // Defines the buffer length based on seconds (it gets combined with the sample rate * channel * 4 (short to bytes)
         public const int BUFFER_SIZE_IN_SECONDS = 4;
         // Defines the timeout to wait for an offset of WaveAverageBytesPerSecond before reading the buffer with GetData
@@ -33,23 +33,20 @@ namespace EspionSpotify.AudioSessions
         private readonly IAudioCircularBuffer _audioBuffer;
         private readonly IAudioWaveOut _silencer;
 
-        private readonly IDictionary<Guid, long> _workerReadPositions;
-        private readonly IDictionary<Guid, long> _workerStopPositions;
+        private readonly IDictionary<Guid, int> _workerReadPositions;
+        private readonly IDictionary<Guid, int> _workerStopPositions;
 
         private int WaveAverageBytesPerSecond => _waveIn.WaveFormat.AverageBytesPerSecond;
         private int BufferMaxLength => WaveAverageBytesPerSecond * _bufferSizeInSecond;
-        private int DataOffsetNeeded => (int)((BufferMaxLength / 4) * 3);
-        private int DataReadNeeded => (int)((BufferMaxLength / 4) * 2);
         private int DataLeftNeeded => (int)(BufferMaxLength / 4);
 
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
 
-        private readonly int _readTimeoutSeconds = READ_TIMEOUT_SECONDS;
-        private readonly int _bufferSizeInSecond = BUFFER_SIZE_IN_SECONDS;
-        private readonly sbyte _silenceAmplitudeThreshold = SILENCE_AMPLITUDE_THRESHOLD;
-        private readonly int _silenceSamplerMs = SILENCE_SAMPLER_MS;
-        private readonly int _captureCycleMs = CAPTURE_CYCLE_MS;
+        private readonly int _bufferSizeInSecond;
+        private readonly sbyte _silenceAmplitudeThreshold;
+        private readonly int _silenceSamplerMs;
+        private readonly int _captureCycleMs;
 
         internal AudioThrottler(IMainAudioSession audioSession) : this(
             audioSession,
@@ -67,16 +64,21 @@ namespace EspionSpotify.AudioSessions
             IAudioLoopbackCapture waveIn,
             IAudioWaveOut audioWaveOut,
             int bufferTotalSizeInSeconds = BUFFER_SIZE_IN_SECONDS,
-            sbyte silenceAmplitudeThrehold = SILENCE_AMPLITUDE_THRESHOLD,
+            sbyte silenceAmplitudeThreshold = SILENCE_AMPLITUDE_THRESHOLD,
             int silenceSamplerMs = SILENCE_SAMPLER_MS,
             int readTimeoutSeconds = 0,
             int captureCycleMs = 0)
         {
             _audioSession = audioSession;
             _lockObject = new object();
-            _workerReadPositions = new Dictionary<Guid, long>();
-            _workerStopPositions = new Dictionary<Guid, long>();
+            _workerReadPositions = new Dictionary<Guid, int>();
+            _workerStopPositions = new Dictionary<Guid, int>();
 
+            _bufferSizeInSecond = bufferTotalSizeInSeconds;
+            _silenceAmplitudeThreshold = silenceAmplitudeThreshold;
+            _captureCycleMs = captureCycleMs;
+            _silenceSamplerMs = silenceSamplerMs;
+            
             _waveIn = waveIn;
             _waveIn.DataAvailable += WaveIn_DataAvailable;
 
@@ -86,11 +88,6 @@ namespace EspionSpotify.AudioSessions
             audioWaveOut.CreateSilencer(silenceProvider);
             _silencer = audioWaveOut;
 
-            _readTimeoutSeconds = readTimeoutSeconds;
-            _bufferSizeInSecond = bufferTotalSizeInSeconds;
-            _silenceAmplitudeThreshold = silenceAmplitudeThrehold;
-            _captureCycleMs = captureCycleMs;
-            _silenceSamplerMs = silenceSamplerMs;
         }
 
         public async Task Run(CancellationTokenSource cancellationTokenSource)
@@ -118,16 +115,216 @@ namespace EspionSpotify.AudioSessions
             _waveIn.StopRecording();
         }
 
+        public async Task<AudioWaveBuffer> GetData(Guid identifier) => await GetData(identifier, -1);
+
+        public async Task<AudioWaveBuffer> GetDataStart(Guid identifier, bool detectSilence)
+        {
+            if (!_workerReadPositions.TryGetValue(identifier, out _))
+            {
+                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
+            }
+            
+            if (detectSilence)
+            {
+                var offset = await GetMedianSilencePosition();
+                // detected silence will move the worker read position to the offset position
+                if (offset.HasValue)
+                {
+                    _workerReadPositions[identifier] = offset.Value;
+                }
+            }
+
+            return await GetDataTo(identifier, -1);
+        }
+
+        public async Task<AudioWaveBuffer> GetDataEnd(Guid identifier, bool detectSilence)
+        {
+            if (!_workerStopPositions.TryGetValue(identifier, out var currentPosition))
+            {
+                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
+            }
+
+            var endingPosition = currentPosition;
+            if (detectSilence)
+            {
+                var offset = await GetMedianSilencePosition(currentPosition);
+                // detected silence will move the worker stop position to the offset position
+                if (offset.HasValue)
+                {
+                    endingPosition = offset.Value;
+                    _workerStopPositions[identifier] = offset.Value;
+                }
+            }
+
+            return await GetDataTo(identifier, endingPosition);
+        }
+
+        private async Task<AudioWaveBuffer> GetDataTo(Guid identifier, int positionToReach) => await GetData(identifier, positionToReach);
+
+        private async Task<AudioWaveBuffer> GetData(Guid identifier, int forcePosition)
+        {
+            byte[] buffer;
+            int bytesRead;
+
+            // 1: Bypass if forcePosition is set
+            // 2: Wait for data to be available in the circular buffer
+            // if (forcePosition != -1 || await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutSeconds))
+            // {
+                lock (_lockObject)
+                {
+                    // get the current read position for the worker, or set it to the silence offset if it has not been initialized yet
+                    _workerReadPositions.TryGetValue(identifier, out var readPosition);
+
+                    // read data from the circular buffer starting at the worker's read position
+                    var bytesAvailableAfterOffset = (int)(_audioBuffer.TotalBytesWritten - (readPosition));
+                    var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
+                        ? Math.Min(DataLeftNeeded, bytesAvailableAfterOffset)
+                        : DataLeftNeeded;
+                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : Math.Max(0, (int)(forcePosition - readPosition));
+                    bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
+
+                    // Update the worker's read position
+                    readPosition += bytesRead;
+
+                    _workerReadPositions[identifier] = readPosition;
+                }
+            // }
+            // else
+            // {
+            //     buffer = new byte[] { };
+            //     bytesRead = 0;
+            // }
+
+            return new AudioWaveBuffer()
+            {
+                Buffer = buffer,
+                BytesRecordedCount = bytesRead,
+            };
+        }
+
+        //private void TrimEndBufferForSilence(ref byte[] buffer)
+        //{
+        //    var silenceAt = DetectSilencePosition(buffer, 0, _audioBuffer.MaxLength);
+        //    if (silenceAt.HasValue)
+        //    {
+        //        var sequenceToRemove = buffer.SubArray(silenceAt.Value, buffer.Length);
+        //        buffer = buffer.TrimEnd(sequenceToRemove);
+        //    }
+        //}
+
+        public void AddWorker(Guid identifier)
+        {
+            _workerReadPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
+        }
+
+        public int? GetWorkerPosition(Guid identifier)
+        {
+            return _workerReadPositions.TryGetValue(identifier, out var position) ? position : null;
+        }
+
+        public void StopWorker(Guid identifier)
+        {
+            _workerStopPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
+        }
+
+        public bool StopWorkerExist(Guid identifier)
+        {
+            return _workerStopPositions.TryGetValue(identifier, out _);
+        }
+
+        public void RemoveWorker(Guid identifier)
+        {
+            if (_workerReadPositions.TryGetValue(identifier, out _))
+            {
+                _workerReadPositions.Remove(identifier);
+            }
+            if (_workerStopPositions.TryGetValue(identifier, out _))
+            {
+                _workerStopPositions.Remove(identifier);
+            }
+        }
+        
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            if (!Running) return;
+
+            lock (_lockObject)
+            {
+                _audioBuffer.Write(e.Buffer, 0, e.BytesRecorded);
+            }
+        }
+        
+        private List<int> DetectSilencePositions(byte[] buffer)
+        {
+            List<int> silencePositions = new List<int>();
+            List<int> currentSilence = new List<int>();
+            
+            int minSilenceLengthSamples = (_silenceSamplerMs * _waveIn.WaveFormat.SampleRate) / 1000;
+
+            for (int i = 0; i < buffer.Length; i += 2)
+            {
+                short sample = BitConverter.ToInt16(buffer, i);
+                if (Math.Abs(sample) <= _silenceAmplitudeThreshold)
+                {
+                    currentSilence.Add(i / 2); // Divide by 2 to convert byte index to sample index
+                }
+                else
+                {
+                    if (currentSilence.Count >= minSilenceLengthSamples)
+                    {
+                        silencePositions.AddRange(currentSilence);
+                    }
+                    currentSilence.Clear();
+                }
+            }
+
+            // Check the last segment of silence
+            if (currentSilence.Count >= minSilenceLengthSamples)
+            {
+                silencePositions.AddRange(currentSilence);
+            }
+
+            return silencePositions;
+        }
+
+        private int FindMedianPosition(List<int> positions)
+        {
+            if (positions.Count == 0)
+                return -1;
+
+            positions.Sort();
+            int medianIndex = positions.Count / 2;
+
+            return positions[medianIndex];
+        }
+
+        private async Task<int?> GetMedianSilencePosition(int readPosition = 0)
+        {
+            await Task.Delay(READ_TIMEOUT_SECONDS);
+            
+            _audioBuffer.Read(out var buffer, readPosition, _audioBuffer.MaxLength);
+            
+            List<int> silencePositions = DetectSilencePositions(buffer);
+
+            if (silencePositions.Count == 0) return null;
+
+            return FindMedianPosition(silencePositions);
+        }
+        
+        #region deadcode
+        /*
         public async Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeoutInSeconds)
         {
             return await WaitForWorkerPositionReadiness(_workerReadPositions, identifier, timeoutInSeconds);
         }
+        */
 
-        public async Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds)
+        /*public async Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds)
         {
             return await WaitForWorkerPositionReadiness(_workerStopPositions, identifier, timeoutInSeconds);
-        }
+        }*/
 
+        /*
         private async Task<bool> WaitForWorkerPositionReadiness(IDictionary<Guid, long> workers, Guid identifier,  int timeoutInSeconds)
         {
             const int waitTimeMs = CAPTURE_CYCLE_MS;
@@ -181,147 +378,22 @@ namespace EspionSpotify.AudioSessions
 
             return offset;
         }
+        */
 
-        public async Task<AudioWaveBuffer> GetData(Guid identifier) => await GetData(identifier, -1);
-
-        public async Task<AudioWaveBuffer> GetDataStart(Guid identifier, bool detectSilence)
-        {
-            if (!_workerReadPositions.TryGetValue(identifier, out var readPosition))
-            {
-                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
-            }
-
-            if (detectSilence)
-            {
-                await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutSeconds);
-
-                var offset = MoveWorkerPositionToDetectedSilence(readPosition);
-                // detected silence will move the worker read position to the offset position
-                if (offset.HasValue)
-                {
-                    _workerReadPositions[identifier] = offset.Value;
-                }
-            }
-
-            return await GetDataTo(identifier, -1);
-        }
-
-        public async Task<AudioWaveBuffer> GetDataEnd(Guid identifier, bool detectSilence)
-        {
-            if (!_workerStopPositions.TryGetValue(identifier, out var endingPosition))
-            {
-                throw new ArgumentException($"Worker with identifier {identifier} not found", nameof(identifier));
-            }
-
-            if (detectSilence)
-            {
-                await WaitForWorkerStopPositionReadiness(identifier, _readTimeoutSeconds);
-
-                var offset = MoveWorkerPositionToDetectedSilence(endingPosition);
-                // detected silence will move the worker stop position to the offset position
-                if (offset.HasValue)
-                {
-                    endingPosition = offset.Value;
-                    _workerStopPositions[identifier] = offset.Value;
-                }
-            }
-
-            return await GetDataTo(identifier, endingPosition);
-        }
-
-        private async Task<AudioWaveBuffer> GetDataTo(Guid identifier, long positionToReach) => await GetData(identifier, positionToReach);
-
-        private async Task<AudioWaveBuffer> GetData(Guid identifier, long forcePosition)
-        {
-            byte[] buffer;
-            int bytesRead;
-
-            // 1: Bypass if forcePosition is set
-            // 2: Wait for data to be available in the circular buffer
-            if (forcePosition != -1 || await WaitForWorkerReadPositionReadiness(identifier, _readTimeoutSeconds))
-            {
-                lock (_lockObject)
-                {
-                    // get the current read position for the worker, or set it to the silence offset if it has not been initialized yet
-                    _workerReadPositions.TryGetValue(identifier, out var readPosition);
-
-                    // read data from the circular buffer starting at the worker's read position
-                    var bytesAvailableAfterOffset = (int)(_audioBuffer.TotalBytesWritten - (readPosition + DataReadNeeded));
-                    var bytesAvailableOrMaxDefault = bytesAvailableAfterOffset > 0
-                        ? Math.Min(DataLeftNeeded, bytesAvailableAfterOffset)
-                        : DataLeftNeeded;
-                    var readCount = forcePosition == -1 ? bytesAvailableOrMaxDefault : Math.Max(0, (int)(forcePosition - readPosition));
-                    bytesRead = _audioBuffer.Read(out buffer, readPosition, readCount);
-
-                    // Update the worker's read position
-                    readPosition += bytesRead;
-
-                    _workerReadPositions[identifier] = readPosition;
-                }
-            }
-            else
-            {
-                buffer = new byte[] { };
-                bytesRead = 0;
-            }
-
-            return new AudioWaveBuffer()
-            {
-                Buffer = buffer,
-                BytesRecordedCount = bytesRead,
-            };
-        }
-
-        //private void TrimEndBufferForSilence(ref byte[] buffer)
-        //{
-        //    var silenceAt = DetectSilencePosition(buffer, 0, _audioBuffer.MaxLength);
-        //    if (silenceAt.HasValue)
-        //    {
-        //        var sequenceToRemove = buffer.SubArray(silenceAt.Value, buffer.Length);
-        //        buffer = buffer.TrimEnd(sequenceToRemove);
-        //    }
-        //}
-
-        public void AddWorker(Guid identifier)
-        {
-            _workerReadPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
-        }
-
-        public long? GetWorkerPosition(Guid identifier)
-        {
-            return _workerReadPositions.TryGetValue(identifier, out var position) ? position : null;
-        }
-
-        public void StopWorker(Guid identifier)
-        {
-            _workerStopPositions.Add(identifier, _audioBuffer.TotalBytesWritten);
-        }
-
-        public bool StopWorkerExist(Guid identifier)
-        {
-            return _workerStopPositions.TryGetValue(identifier, out var position);
-        }
-
-        public void RemoveWorker(Guid identifier)
-        {
-            if (_workerReadPositions.TryGetValue(identifier, out var position))
-            {
-                _workerReadPositions.Remove(identifier);
-            }
-            if (_workerStopPositions.TryGetValue(identifier, out var stopPosition))
-            {
-                _workerStopPositions.Remove(identifier);
-            }
-        }
         
-        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        /*
+        public bool IsSilence(byte[] data)
         {
-            if (!Running) return;
-
-            lock (_lockObject)
+            // Implement silence detection by checking if audio samples are below a certain threshold
+            for (int i = 0; i < data.Length; i += 2)
             {
-                _audioBuffer.Write(e.Buffer, 0, e.BytesRecorded);
+                short sample = BitConverter.ToInt16(data, i);
+                if (Math.Abs(sample) > _silenceAmplitudeThreshold)
+                {
+                    return false;
+                }
             }
+            return true;
         }
 
         public int? DetectSilencePosition2(byte[] buffer, int fromPosition, int toPosition)
@@ -337,7 +409,9 @@ namespace EspionSpotify.AudioSessions
             var t = DetectSilencePosition2(buffer, fromPosition, toPosition);
             return null;
         }
+        */
 
+        /*
         public long? DetectSilencePosition(byte[] buffer, long fromPosition, long toPosition)
         {
             var valuesLength = buffer.Length / 2;
@@ -381,7 +455,9 @@ namespace EspionSpotify.AudioSessions
                 return null;
             }
         }
+        */
 
+        /*
         public int? DetectSilencePosition7(byte[] buffer, int fromPosition, int toPosition)
         {
             WaveFormat waveFormat = _waveIn.WaveFormat;
@@ -566,8 +642,10 @@ namespace EspionSpotify.AudioSessions
 
             return silencePositions.Count > 0 ? (int?)silencePositions.Median() : null;
         }
+        */
 
         // Define a function to calculate the RMS amplitude of a buffer
+        /*
         public float CalculateRMSAmplitude(byte[] buffer)
         {
             // Calculate the number of samples in the buffer (assuming 16-bit samples)
@@ -598,6 +676,9 @@ namespace EspionSpotify.AudioSessions
 
             return rmsAmplitude;
         }
+        */
+        
+      #endregion
 
 
         #region Dispose

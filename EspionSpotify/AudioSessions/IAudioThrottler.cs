@@ -11,11 +11,11 @@ namespace EspionSpotify.AudioSessions
         bool Running { get; set; }
         WaveFormat WaveFormat { get; }
 
-        Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeoutInSeconds);
-        Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds);
+        // Task<bool> WaitForWorkerReadPositionReadiness(Guid identifier, int timeoutInSeconds);
+        // Task<bool> WaitForWorkerStopPositionReadiness(Guid identifier, int timeoutInSeconds);
 
         void AddWorker(Guid identifier);
-        long? GetWorkerPosition(Guid identifier);
+        int? GetWorkerPosition(Guid identifier);
         void StopWorker(Guid identifier);
         void RemoveWorker(Guid identifier);
         bool StopWorkerExist(Guid identifier);

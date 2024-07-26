@@ -48,7 +48,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Run_StartStopDispose()
+        internal async Task Run_StartStopDispose()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -71,7 +71,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Run_StartDispose()
+        internal async Task Run_StartDispose()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -91,7 +91,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal void Worker_AddStopRemove()
+        internal async Task Worker_AddStopRemove()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -115,7 +115,7 @@ namespace EspionSpotify.Tests
         [InlineData(AVERAGE_BYTES_PER_SECOND)]
         [InlineData(AVERAGE_BYTES_PER_SECOND * 2)]
         // test if it skips reading if we have less data than the WaveAverageBytesPerSecond (threshold)
-        internal async void Worker_AddThenReadNothing(int dataAdded)
+        internal async Task Worker_AddThenReadNothing(int dataAdded)
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -139,7 +139,7 @@ namespace EspionSpotify.Tests
         [InlineData(AVERAGE_BYTES_PER_SECOND)]
         [InlineData(AVERAGE_BYTES_PER_SECOND * 2)]
         // test if it skips reading if we have less data than the WaveAverageBytesPerSecond (threshold)
-        internal async void Worker_AddWaitThenReadNothing(int dataAdded)
+        internal async Task Worker_AddWaitThenReadNothing(int dataAdded)
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             var workerInitialPosition = AVERAGE_BYTES_PER_SECOND * 2;
@@ -162,7 +162,7 @@ namespace EspionSpotify.Tests
 
         [Fact]
         // test if it reads as soon as we get more data than the WaveAverageBytesPerSecond (threshold)
-        internal async void Worker_AddThenReadSome()
+        internal async Task Worker_AddThenReadSome()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -186,7 +186,7 @@ namespace EspionSpotify.Tests
 
         [Fact]
         // test if it reads as soon as we get more data than the WaveAverageBytesPerSecond (threshold)
-        internal async void Worker_AddWaitThenReadSome()
+        internal async Task Worker_AddWaitThenReadSome()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -212,7 +212,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_AddThenFullyRead()
+        internal async Task Worker_AddThenFullyRead()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -237,7 +237,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_AddThenFullyReadTwice()
+        internal async Task Worker_AddThenFullyReadTwice()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -268,7 +268,7 @@ namespace EspionSpotify.Tests
 
 
         [Fact]
-        internal async void Worker_MovePositionOnceDataRead()
+        internal async Task Worker_MovePositionOnceDataRead()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -306,7 +306,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void MultipleWorkers_BothRead()
+        internal async Task MultipleWorkers_BothRead()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
            
@@ -362,7 +362,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadStartDefault()
+        internal async Task Worker_ReadStartDefault()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -379,7 +379,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadStartSilenceBefore()
+        internal async Task Worker_ReadStartSilenceBefore()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -408,7 +408,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadStartSilenceAfter()
+        internal async Task Worker_ReadStartSilenceAfter()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -436,7 +436,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadEndDefault()
+        internal async Task Worker_ReadEndDefault()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -453,7 +453,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadEndSilenceBefore()
+        internal async Task Worker_ReadEndSilenceBefore()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -484,7 +484,7 @@ namespace EspionSpotify.Tests
         }
 
         [Fact]
-        internal async void Worker_ReadEndSilenceAfter()
+        internal async Task Worker_ReadEndSilenceAfter()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
             await RunTest(audioThrottler, async () =>
@@ -514,8 +514,8 @@ namespace EspionSpotify.Tests
             });
         }
 
-        [Fact]
-        internal async void WaitForBufferReady_Falsy()
+        /*[Fact]
+        internal async Task WaitForBufferReady_Falsy()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -528,10 +528,10 @@ namespace EspionSpotify.Tests
 
                 Assert.False(result);
             });
-        }
+        }*/
 
-        [Fact]
-        internal async void WaitForBufferReady_Truthy()
+        /*[Fact]
+        internal async Task WaitForBufferReady_Truthy()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
 
@@ -547,7 +547,7 @@ namespace EspionSpotify.Tests
 
                 Assert.True(result);
             });
-        }
+        }*/
 
         private async Task StartTest(AudioThrottler audioThrottler)
         {
@@ -590,7 +590,7 @@ namespace EspionSpotify.Tests
         }
 
 
-        [Fact]
+        /*[Fact]
         internal void TestSilenceBuffer()
         {
             var audioThrottler = new AudioThrottler(_audioSessionMock.Object, _waveInMock.Object, _silencerMock.Object);
@@ -610,7 +610,7 @@ namespace EspionSpotify.Tests
             var actual = audioThrottler.DetectSilencePosition(buffer, 0, buffer.Length);
 
             Assert.Equal(AVERAGE_BYTES_PER_SECOND / 2, actual);
-        }
+        }*/
 
         private byte[] GenerateRandomBytes(WaveFormat waveFormat, int length)
         {

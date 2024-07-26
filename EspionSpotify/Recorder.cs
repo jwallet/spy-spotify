@@ -91,7 +91,6 @@ namespace EspionSpotify
 
         private bool Init()
         {
-            _audioThrottler.AddWorker(_identifier);
             _tempOriginalFile = _fileManager.GetTempFile();
 
             try
@@ -118,7 +117,6 @@ namespace EspionSpotify
         public void Stop()
         {
             _running = false;
-            _audioThrottler.StopWorker(_identifier);
         }
 
         public void UpdateTrackPosition(int? position)
@@ -130,6 +128,8 @@ namespace EspionSpotify
 
         public async Task Run(CancellationTokenSource cancellationTokenSource)
         {
+            _audioThrottler.AddWorker(_identifier);
+
             _cancellationTokenSource = cancellationTokenSource;
 
             if (!_initiated || _userSettings.InternalOrderNumber > _userSettings.OrderNumberMax) return;
@@ -169,10 +169,10 @@ namespace EspionSpotify
             switch (analyzer)
             {
                 case SilenceAnalyzer.TrimStart:
-                    audio = await _audioThrottler.GetDataStart(_identifier, detectSilence: false);
-                    return;
+                    audio = await _audioThrottler.GetDataStart(_identifier, detectSilence: true);
+                    break;
                 case SilenceAnalyzer.TrimEnd:
-                    audio = await _audioThrottler.GetDataEnd(_identifier, detectSilence: false);
+                    audio = await _audioThrottler.GetDataEnd(_identifier, detectSilence: true);
                     break;
                 default:
                     audio = await _audioThrottler.GetData(_identifier);
