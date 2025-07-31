@@ -85,6 +85,7 @@ namespace EspionSpotify.API
             track.AlbumPosition = spotifyTrack.TrackNumber;
             track.Performers = performers;
             track.Disc = spotifyTrack.DiscNumber;
+            track.Comment = spotifyTrack.Uri;
         }
 
         public void MapSpotifyAlbumToTrack(Track track, FullAlbum spotifyAlbum)

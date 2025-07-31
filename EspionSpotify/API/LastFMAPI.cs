@@ -50,6 +50,7 @@ namespace EspionSpotify.API
             track.AlbumPosition = trackExtra.Album?.TrackPosition;
             track.Length = trackExtra.Duration.HasValue ? trackExtra.Duration / 1000 : null;
             track.Genres = new string[] { };
+            track.Comment = trackExtra.Url;
             
             var extraLarge = trackExtra.Album?.ExtraLargeCoverUrl;
             var artLargeUrl = trackExtra.Album?.LargeCoverUrl;

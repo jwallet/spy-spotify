@@ -69,6 +69,8 @@ namespace EspionSpotify.API
 
             tags.Disc = (uint) (Track.Disc ?? 0);
             tags.Year = (uint) (Track.Year ?? 0);
+            
+            tags.Comment = Track.Comment;
 
             await FetchMediaPicture();
             var albumArtCover = GetAlbumCoverToPicture(Track.AlbumArtImage);
