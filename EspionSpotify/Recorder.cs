@@ -30,6 +30,7 @@ namespace EspionSpotify
         private readonly Track _track;
         private readonly IAudioThrottler _audioThrottler;
         private readonly UserSettings _userSettings;
+        private readonly IProcessManager _processManager;
 
         private bool _disposed;
         private string _tempEncodeFile;
@@ -38,7 +39,6 @@ namespace EspionSpotify
         private CancellationTokenSource _cancellationTokenSource;
         private OutputFile _currentOutputFile;
         private Stream _tempWaveWriter;
-        private IProcessManager _processManager;
 
         public Recorder()
         {
