@@ -17,7 +17,7 @@ namespace EspionSpotify.API
 {
     public sealed class SpotifyAPI : ISpotifyAPI, IExternalAPI, IDisposable
     {
-        public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://localhost:4002";
+        public const string SPOTIFY_API_DEFAULT_REDIRECT_URL = "http://127.0.0.1:4002";
         public const string SPOTIFY_API_DASHBOARD_URL = "https://developer.spotify.com/dashboard";
         private readonly AuthorizationCodeAuth _auth;
         private readonly LastFMAPI _lastFmApi;
