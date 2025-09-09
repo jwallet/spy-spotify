@@ -337,7 +337,7 @@ namespace EspionSpotify.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:4002")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1:4002")]
         public string app_spotify_api_redirect_url {
             get {
                 return ((string)(this["app_spotify_api_redirect_url"]));
