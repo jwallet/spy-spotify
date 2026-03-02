@@ -124,6 +124,10 @@ namespace EspionSpotify.AudioSessions
                         // {
                         //     _buffer.Advance(readPosition);
                         // }
+                        // Discard the first second after track boundaries to avoid carrying over
+                        // transition artifacts from the previous song.
+                        _buffer.Read(out _, 0, _waveIn.WaveFormat.AverageBytesPerSecond);
+
                         var read = _buffer.Read(out var data, 0, _waveIn.WaveFormat.AverageBytesPerSecond);
                         if (read > 0)
                         {
