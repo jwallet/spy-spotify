@@ -18,6 +18,8 @@ namespace EspionSpotify.AudioSessions
     {
         private bool _disposed;
         private const int DETECTED_SILENCE_MS = 500;
+        private const int SKIP_START_MS = 1000; // Skip first 1 second to prevent audio overlap
+        
         private readonly object _lockObject;
         
         private const int BUFFER_TOTAL_SIZE_IN_SECOND = 4;
@@ -32,6 +34,7 @@ namespace EspionSpotify.AudioSessions
         private int BufferReadOffset => (int)(_waveIn.WaveFormat.AverageBytesPerSecond * (BUFFER_TOTAL_SIZE_IN_SECOND / 4.0));
         private int BufferMaxLength => _waveIn.WaveFormat.AverageBytesPerSecond * BUFFER_TOTAL_SIZE_IN_SECOND;
         private int SilenceAverageShortLength => (int)(DETECTED_SILENCE_MS / 1_000.0 * WaveAverageShortPerSecond);
+        private int SkipStartByteLength => (int)(SKIP_START_MS / 1_000.0 * _waveIn.WaveFormat.AverageBytesPerSecond);
         
         public bool Running { get; set; }
         public WaveFormat WaveFormat => _waveIn.WaveFormat;
@@ -157,6 +160,30 @@ namespace EspionSpotify.AudioSessions
                         {
                             var read = _buffer.Read(out var data, 0,
                             _waveIn.WaveFormat.AverageBytesPerSecond);
+                            if (read > 0)
+                            {
+                                result = ToAudioWaveBuffer(data, read);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                case SilenceAnalyzer.SkipStart:
+                {
+                    lock (_lockObject)
+                    {
+                        // Skip the first X milliseconds to prevent audio overlap from previous track
+                        var skipBytes = Math.Min(SkipStartByteLength, _buffer.Count);
+                        if (skipBytes > 0)
+                        {
+                            _buffer.Advance(skipBytes);
+                        }
+                        
+                        // Now read the actual data
+                        if (_buffer.Count >= BufferReadOffset)
+                        {
+                            var read = _buffer.Read(out var data, 0, _waveIn.WaveFormat.AverageBytesPerSecond);
                             if (read > 0)
                             {
                                 result = ToAudioWaveBuffer(data, read);
