@@ -4,6 +4,7 @@
     {  
         None,
         TrimEnd,
-        TrimStart
+        TrimStart,
+        SkipStart, // Skip first X milliseconds to prevent audio overlap from previous track
     }
 }
