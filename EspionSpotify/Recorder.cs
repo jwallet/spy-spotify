@@ -118,6 +118,14 @@ namespace EspionSpotify
             _form.WriteIntoConsole(I18NKeys.LogRecording, _track.ToString());
             Running = true;
 
+            // Wait briefly to let WasapiLoopbackCapture flush stale audio
+            // from the previous track before starting fresh recording.
+            // The WasapiLoopbackCapture fires DataAvailable events asynchronously
+            // and may still have buffered audio from the previous track when
+            // OnTrackChanged fires. Without this delay, ~1s of old-track audio
+            // leaks into the new recording.
+            await Task.Delay(1000);
+
             // await _audioThrottler.WaitBufferReady();
             await RecordAvailableData(SilenceAnalyzer.TrimStart);
             
